@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.ChatMapper">
+	    
+	<insert id="insertChat" parameterType="com.pj2.shoecream.vo.ChatMsgVO">
+		INSERT INTO chat_msg
+		VALUES(
+			null 
+			,#{chat_room_idx}
+			,#{chat_writer}
+			,#{chat_content}   
+			,now()
+		)
+	</insert>
+	<insert id="insertChatRoom" parameterType="com.pj2.shoecream.vo.ChatRoomVO">
+		INSERT INTO chat_rooms
+		VALUES(
+			null ,
+			#{room_title}
+		)
+	</insert>
+
+	<select id="selectChatList" resultType="com.pj2.shoecream.vo.ChatMsgVO">
+		SELECT * 
+		FROM chat_msg
+		WHERE 
+			chat_room_idx = #{chat_room_idx}
+		ORDER BY 
+			chat_date
+		;
+	</select>
+	<select id="selectChatRoomList" resultType="com.pj2.shoecream.vo.ChatRoomVO">
+		SELECT * 
+		FROM chat_rooms
+		;
+	</select>
+	<select id="selectChatRoom" resultType="com.pj2.shoecream.vo.ChatRoomVO">
+		SELECT * 
+		FROM chat_rooms
+		WHERE
+			chat_room_idx = #{chat_room_idx}
+		;
+	</select>
+</mapper>
