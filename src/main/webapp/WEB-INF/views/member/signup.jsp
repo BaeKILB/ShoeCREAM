@@ -6,7 +6,7 @@
 	<title>회원가입</title>
 
 	<%-- css --%>
-	<link href="${pageContext.request.contextPath }/resources/css/common.css" rel="styleSheet">
+	<link href="${pageContext.request.contextPath }/resources/css/member/common.css" rel="styleSheet">
 	<link href="${pageContext.request.contextPath }/resources/css/member/login/signup.css" rel="styleSheet">
 	<link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
 	<link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">

@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
-	<link href="${pageContext.request.contextPath }/resources/css/common.css"  rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/resources/css/member/common.css"  rel="stylesheet">
     <link href="${pageContext.request.contextPath }/resources/css/member/login/login.css" rel="styleSheet">
     <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
     <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
