@@ -1,0 +1,118 @@
+@charset "utf-8";
+
+
+#sec_con.w3-container-main {
+	max-width: 100%;
+	background: #f5f5f5;
+}
+
+.find_wrap {
+	max-width: 1200px;
+	margin: 0 auto;
+	background: #fff;
+	border-radius: 15px;
+	box-shadow: 1px 0 40px rgba(0, 0, 0, 0.021);
+}
+
+.cont_box {
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 60px 0;
+}
+
+.find_tit {
+	display: flex;
+	justify-content: space-between;
+}
+
+.find_tab {
+	width: 50%;
+	text-align: center;
+	height: 60px;
+	line-height: 60px;
+	cursor: pointer;
+}
+
+.find_tab p {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+	font-size: 19px;
+}
+
+.find_tab.off {
+	border-bottom: 4px solid #ff6600;
+	font-weight:600;
+}
+
+.find_cont {
+	padding-top: 40px;
+	text-align: center;
+}
+
+.find_txt {
+	font-size: 24px;
+}
+
+.fir_tit {
+	font-size: 24px;
+}
+
+.pad5tf {
+	font-size: 24px;
+	margin-top: 10px;
+}
+
+.fir_tit strong {
+	color: #0080ff;
+	font-size: 24px;
+}
+
+.isbox {
+	margin-top: 30px;
+}
+
+.isbox input {
+	width: 50%;
+	padding: 15px 10px;
+	border: 1px solid #ddd;
+	font-size: 16px;
+}
+
+.isbox li:nth-child(n+2) {
+	margin-top: 5px;
+}
+
+.btn-wrap {
+	margin-top: 40px;
+}
+
+.btn_write{
+	cursor: pointer;
+	display:table;
+	clear:both;
+	width: 50%;
+	margin: 0 auto;
+    height: 55px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    background: #ff6600;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 1400px) {
+	.w3-container-main.inr {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.cont_box {
+		max-width: 90%;
+		margin: 0 auto;
+	}
+}
+
+
