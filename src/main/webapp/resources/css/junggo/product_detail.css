@@ -5,10 +5,7 @@
 	padding-top: 150px;
 }
 
-.upperContainner{
-	display: flex;
-	align-items: center;
-}
+
 
 /*사진 슬라이드*/
 .slide_wrap {
@@ -16,7 +13,7 @@
 	position: relative;
 }
 
-.slide_container {
+.slide {
   width : 100%;
   position: relative;
 }
@@ -85,7 +82,7 @@
   background-color: #BA55D3;
 }
 
-.row {
+.G1 {
 	display: flex;
 	justify-content: space-between;
 }
@@ -221,11 +218,7 @@
 	margin-right: 2.5%;
 }
 
-.dawnContainner{
-	display: flex;
-	align-items: center;
-	border: 1px solid red;
-}
+
 
 /*상품정보 텍스트박스 관련*/
 

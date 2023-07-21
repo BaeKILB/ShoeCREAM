@@ -9,6 +9,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>해당 품목 상세보기</title>
+	<link
+	href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css"
+	rel="stylesheet">
+	<script
+	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 	<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/junggo/product_detail.css" rel="stylesheet">
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
@@ -24,10 +29,11 @@
 <%-- 		<input type="hidden" name="car_model" value="${map.car_info.car_model}"/> --%>
 		
 		<section id="sec_con" class="inr product_view">
-		<div class="upperContainner">
+		<div class="container">
+			<div class= "row">
 		<%-- 슬라이드 쇼 --%>
-			<div class="slide_wrap">
-				<div class="slide_container">
+			<div class="slide_wrap col-sm-12 col-6">
+				<div class="slide">
 					<div class="mySlides">
 						<div class="numbertext">1&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
 						<img src="${pageContext.request.contextPath}/resources/upload/car/${map.car_info.car_file_path}/${map.car_info.car_file2}">
@@ -50,7 +56,7 @@
 					<a class="prev" onclick="plusSlides(-1)">❮</a> <a class="next" onclick="plusSlides(1)">❯</a>
 				</div>
 
-				<div class="row">
+				<div class="G1">
 					<div class="column">
 						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/car/${map.car_info.car_file_path}/${map.car_info.car_file2}" onclick="currentSlide(1)">
 					</div>
@@ -101,24 +107,23 @@
 			<%-- 슬라이드쇼 끝 --%>
 			
 			
-			<div class="view_info">
+			<div class="view_info col-sm-12 col-6">
 
 				<div class="view_cont">
-					<p class="product_catrgory">홈 / 패션의류 / 남성의류 / 바지 / 팬츠 / 청바지 / 블랙야크 남성 기모바지 (33)</p>
+					<p class="product_catrgory">HOME > 신발 - (중,경))lc_code > 운동화 - (중,경)mc_code > 스니커즈 - (중,경)sm_code</p>
 					<div class="product_name">
-						<h4>블랙야크 남성 기모바지 (33)</h4><span class="product_progress">예약중</span>
-						<p>25,000원</p>
+						<h4>나이키 감마 포스 - (중,경)product_title </h4><span class="product_progress">예약중 - (중)product_sell_status</span>
+						<p>25,000원 - (중)product_price</p>
 					</div>
 					<div class="product_viewStatus">
-						🕐&nbsp; 07-12&nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; 10&nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  5
+						🕐&nbsp; 07-12 - (중,경)product_date &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; 10 - (중,경)product_readcount &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  5 - Count(dibs type_num)
 					</div>
 					<div class="product_productStatus">
-						상품 상태 : 중고(상급)<br>
-						사이즈 : 265	mm<br>
-						브랜드 : NIKE<br>
-						배송비 : 배송비 포함<br>
-						거래지역 : 부산시 남구 대연동<br>
-						거래 방법 : 안전페이, 직거래<br>					
+						상품 상태 : 중고(상급) - (중)product_status<br>
+						사이즈 : 265 - (중,경)product_size	mm<br>
+						브랜드 : NIKE - (중,경)product_brand<br>
+						거래지역 : 부산시 남구 대연동 - (중)product_location<br>
+						거래 방법 : 안전페이, 직거래- (중,경)product_payment<br>					
 					</div>
 <!-- 						<div class="product_tag"> -->
 <!-- 						#바지 #바지 #바지 #바지 #바지 -->
@@ -127,20 +132,21 @@
 						<%-- 이후에 IF문 사용해서 찜 버튼 두개로 만들기(해제, 등록) --%>
 						<a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
 	                             &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="favorite_btn">
-	                    	♥ 찜 해제
+	                    	♥ 찜 해제 - dibs_check
 	                    </a>
 	                    <a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
 	                             &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="chat_btn">
-	                    	1:1 대화톡
+	                    	1:1 대화톡 
 	                    </a>
                     </div>
 				</div>
+
 			</div>
 		</div>
 		
-		<div class="downContainner">
-
-			<div class="view_more_info more_wrap_box">
+		<div class="container">
+			<div class="row">
+			<div class="view_more_info more_wrap_box col-sm-12 col-6">
 				<p class="view_title">상품 정보</p>
 				<div class="more_box">
 					<div>
@@ -156,22 +162,23 @@
 					쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라
 					쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라
 					쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라
+					 - (중,경)product_info
 				</div>
 			</div>
 			
-			<div class="seller_wrap more_wrap_box">
+			<div class="seller_wrap more_wrap_box col-sm-12 col-6">
 	
 				<div class="seller_profile_wrap">
 					<img class="seller_profile" src="${pageContext.request.contextPath}/resources/img/junggo/profile_m.png">
-					<p class="seller_name">꾸미꾸미꾸</p>
-					<p class="seller_Lv">브론즈 Lv1</p>
+					<p class="seller_name">꾸미꾸미꾸 - (중,경)mem_idx>mem_nickname</p> 
+					<p class="seller_Lv">브론즈 Lv1 - (중,경)mem_idx>mem_rank</p>
 				</div>
 				<div class="seller_products">
-					<p class="seller_products_title">꾸미꾸미꾸님의 상품정보</p>
+					<p class="seller_products_title">꾸미꾸미꾸 - (중,경)mem_idx>mem_nickname님의 상품정보</p>
 					<div class="more_product">
 						<div>
 							<img class="more_product_img" src="${pageContext.request.contextPath}/resources/img/junggo/first.jpg">
-							<p class="more_product_name">사제 군장</p>
+							<p class="more_product_name">사제 군장- (중,경)mem_idx>mem_</p>
 							<span>15,000원</span>
 						</div>
 						<div>
@@ -260,7 +267,7 @@
 				</div>
 			</div>
 		</div>
-		
+	 </div>
 	</section>
 	<footer>
 	<%--footer 풋터 활성화 시 css도 살려야함--%>

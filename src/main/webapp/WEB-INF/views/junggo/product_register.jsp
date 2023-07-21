@@ -29,7 +29,7 @@
 	</header>
 	<%--입력하지 않은 자료 보낼 때--%>
 <%-- 		<input type="hidden" name="car_model" value="${map.car_info.car_model}"/> --%>
-		
+		<form action="registProductPro" method="post">
 		<section id="sec_con" class="inr register_view">
 			<div class="titleContainner">
 				<p class="title_title">기본 정보</p>
@@ -181,6 +181,7 @@
 			</div>
 			
 		</section>
+		</form>
 	<footer>
 	<%--footer 풋터 활성화 시 css도 살려야함--%>
 <%-- 		<jsp:include page="../../../inc/footer.jsp"></jsp:include> --%>
