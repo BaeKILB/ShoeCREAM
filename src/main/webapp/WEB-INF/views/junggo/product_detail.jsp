@@ -1,26 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>  
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%--최신본 인증!--%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>해당 품목 상세보기</title>
-	<link
-	href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css"
-	rel="stylesheet">
-	<script
-	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
-	<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Insert title here</title>
 	<link href="${pageContext.request.contextPath}/resources/css/junggo/product_detail.css" rel="stylesheet">
-<%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
-<%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
+	<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
+	<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
 </head>
 <body>
+
 	<header>
 	<%--top 탑 활성화시 css도 살려야함--%>
 <%-- <jsp:include page="../../../inc/top1.jsp"></jsp:include> --%>
@@ -146,7 +138,7 @@
 		
 		<div class="container">
 			<div class="row">
-			<div class="view_more_info more_wrap_box col-sm-12 col-6">
+			<div class="view_more_info more_wrap_box col-6 col-sm-12">
 				<p class="view_title">상품 정보</p>
 				<div class="more_box">
 					<div>
@@ -166,7 +158,7 @@
 				</div>
 			</div>
 			
-			<div class="seller_wrap more_wrap_box col-sm-12 col-6">
+			<div class="seller_wrap more_wrap_box col-6 col-sm-12 ">
 	
 				<div class="seller_profile_wrap">
 					<img class="seller_profile" src="${pageContext.request.contextPath}/resources/img/junggo/profile_m.png">
@@ -275,7 +267,3 @@
 	</footer>
 </body>
 </html>
-
-
-
-
