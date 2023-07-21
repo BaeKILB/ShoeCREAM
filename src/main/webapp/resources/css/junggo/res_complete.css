@@ -1,0 +1,129 @@
+@charset "UTF-8";
+	/* 예약 완료 */
+
+	#sec_con.com_cont {
+		max-width: 1000px;
+		letter-spacing: 0;
+	}
+	.res_com_txt {
+		padding: 50px 0 30px;
+	}
+	
+	.res_com_txt h1 {
+		margin-top: 20px;
+		font-size: 40px;
+		color: #333;
+	}
+	
+	.res_com_txt p {
+		color: #777;
+		margin-top: 12px;
+		font-size: 16px;
+	}
+	
+	.res_info_wrapper {
+		background-color: #f7f7f7;
+		padding: 23px;
+		border-radius: 10px;
+	}
+	
+	.com_wrap {
+		padding: 25px 10% 30px;
+	}
+	
+	.com_wrap h3 {
+		font-size: 20px;
+		font-weight: 600;
+		color: #BA55D3;
+	}
+	
+	.com_wrap em {
+		font-style: normal;
+		font-size: 17px;
+		color: #999;
+		font-weight: 600;
+		display: inline-block;
+		width: 20%
+	}
+	
+	.com_wrap span {
+		font-size: 17px;
+		font-weight: 400;
+	}
+
+	.res_info {   
+		background-color: #FFF;
+		border-radius: 10px;
+	}
+	
+	.com_line {
+		width: 100%;
+	    height: 1px;
+	    background-color: #ddd;
+	    margin: 15px 0;
+    }
+
+	.payment_info {       
+		background-color: #FFF;
+		border-radius: 10px;
+	}
+
+	.res_info li {
+		margin-top: 17px;
+	}
+
+	.payment_info li {
+		margin-top: 20px;
+	}
+
+	.com_wrap h3 {
+		text-align: center;
+	}
+
+	.finish_btn {
+		margin-top: 25px;
+	}
+
+	.finish_btn button{
+		width: 30%;
+		padding: 5px 0;
+		font-size: 17px;
+		color: #fff;
+		text-align: center;
+		line-height: 40px;
+		background: rgb(10, 10, 49);
+		border-radius: 5px;
+		transition: all 0.4s;
+		cursor: pointer;
+	}
+	
+	.finish_btn a:nth-child(n+2) {
+		margin-left: 10px;
+	}
+	
+	.finish_btn button:hover {
+		background-color: #BA55D3;
+	}
+
+@media screen and (max-width: 680px) {
+	.res_com_txt {
+		padding: 20px 0 30px;
+	}
+	.com_wrap {
+		padding: 25px 30px 30px;
+	}
+	.com_wrap em {
+		width: 25%;
+	}
+}
+
+@media screen and (max-width: 550px) {
+	.com_wrap {
+		text-align: center;
+	}
+	.com_wrap em {
+		display: block;
+		width: auto;
+		margin-bottom: 7px;
+	}
+}
