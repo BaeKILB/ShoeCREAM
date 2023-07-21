@@ -21,15 +21,15 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-<!--     <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 <!--         <beans:property name="maxUploadSize" value="10485760" /> 업로드 최대 파일 크기(10MB) -->
-<!--           <beans:property name="maxUploadSize" value="31457280" />  업로드 최대 파일 크기(30MB) -->
-<!--         <beans:property name="defaultEncoding" value="UTF-8" /> 한글 파일명 인코딩 방식 -->
-<!--     </beans:bean> -->
+
+			<!-- 업로드 최대 파일 크기(30MB) -->
+          <beans:property name="maxUploadSize" value="31457280" />  
+<!--           한글 파일명 인코딩 방식 -->
+        <beans:property name="defaultEncoding" value="UTF-8" /> 
+    </beans:bean>
 	
 	<!-- @Controller 를 비롯한 어노테이션을 통해 자동 주입될 클래스가 포함되는 패키지 지정 -->
 	<context:component-scan base-package="com.pj2.shoecream" />
-	
-	
-	
 </beans:beans>

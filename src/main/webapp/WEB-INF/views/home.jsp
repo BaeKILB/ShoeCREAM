@@ -16,7 +16,7 @@
 <body>
 	<h1>ShoeCREAM</h1>
 	<h2>Shoes Collection Rules Everything Around Me</h2>
-	<a href="chatHome">chat test</a>
+<!-- 	<a href="chatHome">chat test</a> -->
 </body>
 </html>
 
