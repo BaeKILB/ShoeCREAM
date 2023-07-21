@@ -23,10 +23,11 @@
 				<li class="cont_item_wrap">
 					<a class="cont_item_a nSub" href="#">
 						<i class="fa fa-home" aria-hidden="true"></i>
-						메인페이지
+						DashBoard
 					</a>
 				</li>
 				<li class="cont_item">
+					<p class="cont_item_tit">회원</p>
 					<ul class="cont_item_ul">
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
@@ -35,102 +36,113 @@
 							</a>
 							<ul class="cont_li_wrap">
 								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Profile</a>
-								</li>
-								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">settings</a>
-								</li>
-							</ul>
-						</li>
-						<li class="cont_item_wrap">
-							<a class="cont_item_a sub" href="#">
-								<i class="fa fa-bullhorn" aria-hidden="true"></i>
-								신고 관리
-							</a>
-							<ul class="cont_li_wrap">
-								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign In</a>
-								</li>
-								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign Up</a>
-								</li>
-							</ul>
-						</li>
-						<li class="cont_item_wrap">
-							<a class="cont_item_a sub" href="#">
-								 <i class="fa fa-cubes" aria-hidden="true"></i>
-								크림
-							</a>
-							<ul class="cont_li_wrap">
-								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign In</a>
-								</li>
-								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign Up</a>
+									<a class="cont_item_list" href="#">회원 목록 조회</a>
 								</li>
 							</ul>
 						</li>
 					</ul>
 				</li>
-				<li class="cont_item_wrap">
+				<li class="cont_item">
+					<p class="cont_item_tit">게시글 관리</p>
+					<ul class="cont_item_ul">
+						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
-								 <i class="fa fa-comments" aria-hidden="true"></i>
-								1:1문의게시판
+								<i class="fa fa-user" aria-hidden="true"></i>
+								경매 관리
 							</a>
 							<ul class="cont_li_wrap">
 								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign In</a>
+									<a class="cont_item_list" href="#">경매 상품 관리</a>
 								</li>
 								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign Up</a>
+									<a class="cont_item_list" href="#">경매 상품 승인</a>
 								</li>
 							</ul>
 						</li>
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
-								<i class="fa fa-th-list" aria-hidden="true"></i>
-								공지사항
+								<i class="fa fa-user" aria-hidden="true"></i>
+								중고 관리
 							</a>
 							<ul class="cont_li_wrap">
 								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign In</a>
-								</li>
-								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign Up</a>
-								</li>
-							</ul>
-						</li>
-						<li class="cont_item_wrap">
-							<a class="cont_item_a sub" href="#">
-								 <i class="fa fa-krw" aria-hidden="true"></i>
-								결제(페이)
-							</a>
-							<ul class="cont_li_wrap">
-								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign In</a>
-								</li>
-								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign Up</a>
-								</li>
-							</ul>
-						</li>
-						<li class="cont_item_wrap">
-							<a class="cont_item_a sub" href="#">
-								<i class="fa fa-clipboard" aria-hidden="true"></i>
-								게시글관리
-							</a>
-							<ul class="cont_li_wrap">
-								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign In</a>
-								</li>
-								<li class="cont_item_b">
-									<a class="cont_item_list" href="#">Sign Up</a>
+									<a class="cont_item_list" href="#">중고 상품 관리</a>
 								</li>
 							</ul>
 						</li>
 					</ul>
-				</div>
-			</div>
+				</li>
+				<li class="cont_item">
+					<p class="cont_item_tit">페이 관리</p>
+					<ul class="cont_item_ul">
+						<li class="cont_item_wrap">
+							<a class="cont_item_a sub" href="#">
+								<i class="fa fa-user" aria-hidden="true"></i>
+								계좌 관리
+							</a>
+							<ul class="cont_li_wrap">
+								<li class="cont_item_b">
+									<a class="cont_item_list" href="#">계좌 조회</a>
+								</li>
+							</ul>
+						</li>
+						<li class="cont_item_wrap">
+							<a class="cont_item_a sub" href="#">
+								<i class="fa fa-user" aria-hidden="true"></i>
+								입출금 내역
+							</a>
+							<ul class="cont_li_wrap">
+								<li class="cont_item_b">
+									<a class="cont_item_list" href="#">포인트 입출금 내역</a>
+								</li>
+								<li class="cont_item_b">
+									<a class="cont_item_list" href="#">거래 입출금 내역</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="cont_item">
+					<p class="cont_item_tit">고객센터</p>
+					<ul class="cont_item_ul">
+						<li class="cont_item_wrap">
+							<a class="cont_item_a sub" href="#">
+								<i class="fa fa-user" aria-hidden="true"></i>
+								신고 관리
+							</a>
+							<ul class="cont_li_wrap">
+								<li class="cont_item_b">
+									<a class="cont_item_list" href="#">신고 목록 조회</a>
+								</li>
+							</ul>
+						</li>
+						<li class="cont_item_wrap">
+							<a class="cont_item_a sub" href="#">
+								<i class="fa fa-user" aria-hidden="true"></i>
+								1:1 문의
+							</a>
+							<ul class="cont_li_wrap">
+								<li class="cont_item_b">
+									<a class="cont_item_list" href="#">1:1 문의 조회</a>
+								</li>
+							</ul>
+						</li>
+						<li class="cont_item_wrap">
+							<a class="cont_item_a sub" href="#">
+								<i class="fa fa-user" aria-hidden="true"></i>
+								공지사항
+							</a>
+							<ul class="cont_li_wrap">
+								<li class="cont_item_b">
+									<a class="cont_item_list" href="#">공지사항 목록</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
 	<script>
 		$('.cont_item_a').click(function () {
 		    $(this).siblings('.cont_li_wrap').slideToggle();
