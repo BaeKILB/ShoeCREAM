@@ -1,0 +1,269 @@
+@charset "UTF-8";
+/* 로그인 */
+#sign {
+	padding-top: 80px;
+	padding-bottom: 40px;
+}
+
+#contents {
+	background-color: #f5f5f5;
+}
+
+.sign_in {
+	max-width: 1200px;
+	margin: 0 auto;
+	margin-top: 60px;
+	margin-bottom: 70px;
+}
+
+.pageTitle {
+	text-align: center;
+	padding: 0 0 50px;
+}
+
+.pageTitle h2 {
+	font-size: 50px;
+}
+
+.container {
+	background-color: #fff;
+	border-radius: 15px;
+	box-shadow: 1px 0 40px rgba(0, 0, 0, 0.021);
+}
+
+.layout2 {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 60px 0;
+}
+
+.t_tit1 {
+	font-size: 24px;
+	margin-bottom: 30px;
+}
+
+.inp_bundle {
+	width: 100%;
+	height: 70px;
+	background-color: #f3f3f3;
+	border-radius: 5px;
+	position: relative;
+}
+
+.inp_bundle:last-child {
+	margin-top: 10px;
+}
+
+.inp_bundle .inp {
+	width: 90%;
+	height: 100%;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: transparent;
+	font-size: 16px;
+}
+
+#sign .sign_in .input_bottom {
+	display: flex;
+	align-items: center;
+	margin-top: 20px;
+}
+
+/* 로그인 checkbox */
+.checkbox_ui {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.checkbox_ui.type1 input[type="checkbox"]+label {
+	position: relative;
+	width: auto;
+	min-height: 26px;
+	font-family: "Noto Sans KR";
+	font-weight: 400;
+	font-size: 18px;
+	color: #111;
+	padding-left: 34px;
+}
+
+.checkbox_ui.type1 input[type="checkbox"]+label::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 1px;
+	width: 26px;
+	height: 26px;
+	background-image:
+		url("https://www.h-point.co.kr/assets/app/img/common/chk_bg1.png");
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	background-position: 0 0;
+}
+
+.checkbox_ui.type1 input[type="checkbox"]+label.no_word {
+	width: 26px;
+	padding-left: 0;
+}
+
+.checkbox_ui.type1 input[type="checkbox"]:checked+label::before {
+	background-position: 0 -26px;
+}
+
+input[type=checkbox] {
+	position: absolute;
+	z-index: -1000;
+	left: -1000px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+}
+
+#sign .sign_in .input_bottom .find_btns {
+	margin-left: auto;
+}
+
+#sign .sign_in .input_bottom .find_btns a:first-child {
+	position: relative;
+/* 	padding-right: 23px; */
+/* 	margin-right: 15px; */
+}
+
+#sign .sign_in .input_bottom .find_btns a:first-child::after {
+/* 	content: ""; */
+	position: absolute;
+	right: 0;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background: #dcdee5;
+}
+
+#sign .sign_in .input_bottom .find_btns a {
+	display: inline-block;
+	font-family: "Noto Sans KR";
+	font-weight: 400;
+	font-size: 18px;
+	color: #111;
+	letter-spacing: -0.8px;
+}
+
+#sign .sign_in .btn_login {
+	width: 100%;
+	margin-top: 40px;
+	display: inline-block;
+	text-align: center;
+}
+
+.btn_typeB2 {
+	display: inline-block;
+	width: auto;
+	min-width: 220px;
+	height: 70px;
+	font-weight: 600;
+	font-size: 22px;
+	color: #fff;
+	text-align: center;
+	line-height: 70px;
+	background: rgb(246, 95, 19);
+	border-radius: 5px;
+	padding: 0 30px;
+	transition: all 0.4s;
+}
+
+.btn_typeB2 span {
+	font-size: 22px;
+	color: #fff;
+	display: inline-block;
+}
+
+.login_other {
+	margin-top: 20px;
+}
+
+.clear {
+	padding-bottom: 40px;
+	border-bottom: 1px solid #eee;
+}
+
+.clear li {
+/* 	border: 1px solid #ddd; */
+	text-align: center;
+	padding: 20px 0;
+}
+
+.clear li span:first-child {
+	width: 24px;
+	height: 24px;
+	display: inline-block;
+/* 	background: url(../../../img/member/login/login/naver.png) no-repeat center; */
+	background-size: contain;
+	position: relative;
+	top: 4px;
+	left: -10px;
+}
+
+.clear li a {
+	display: inline-block;
+}
+
+.clear li a span {
+	font-size: 18px;
+	color: black;
+}
+
+.join {
+	margin-top: 40px;
+	text-align: center;
+}
+
+.join p {
+	display: inline-block;
+}
+
+.join a {
+	margin-left: 15px;
+	border-bottom: 1px solid;
+	font-size: 18px;
+	font-weight: bold;
+	color: rgb(240, 108, 20);
+}
+
+@media screen and (max-width: 1200px) {
+	.sign_in {
+		width: 95%;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.layout2 {
+		max-width: 90%;
+	}
+}
+
+@media screen and (max-width: 550px) {
+	#sign .sign_in .input_bottom {
+		display: block;
+	}
+	#sign .sign_in .input_bottom .find_btns {
+		margin-top: 20px;
+	}
+	#sign .sign_in .input_bottom .find_btns a {
+		font-size: 15px;
+	}
+	#sign .sign_in .input_bottom .find_btns a:first-child {
+		position: relative;
+		padding-right: 15px;
+		margin-right: 5px;
+	}
+}
