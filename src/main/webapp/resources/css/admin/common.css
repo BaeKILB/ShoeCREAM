@@ -1,0 +1,16 @@
+@charset "UTF-8";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+* {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Pretendard, sans-serif;
+}
+a {
+	text-decoration: none;
+	color: black;
+}
+ul, li {
+	list-style: none;
+}
