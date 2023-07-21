@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 	<link href="${pageContext.request.contextPath}/resources/css/junggo/product_detail.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
+	<%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
+	<%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
 	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 	<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
@@ -24,7 +28,7 @@
 		<div class="container">
 			<div class= "row">
 		<%-- 슬라이드 쇼 --%>
-			<div class="slide_wrap col-sm-12 col-6">
+			<div class="slide_wrap col-sm-12 col-lg-6">
 				<div class="slide">
 					<div class="mySlides">
 						<div class="numbertext">1&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
@@ -99,7 +103,7 @@
 			<%-- 슬라이드쇼 끝 --%>
 			
 			
-			<div class="view_info col-sm-12 col-6">
+			<div class="view_info col-sm-12 col-lg-6">
 
 				<div class="view_cont">
 					<p class="product_catrgory">HOME > 신발 - (중,경))lc_code > 운동화 - (중,경)mc_code > 스니커즈 - (중,경)sm_code</p>
@@ -138,7 +142,7 @@
 		
 		<div class="container">
 			<div class="row">
-			<div class="view_more_info more_wrap_box col-6 col-sm-12">
+			<div class="view_more_info more_wrap_box col-sm-12 col-lg-6">
 				<p class="view_title">상품 정보</p>
 				<div class="more_box">
 					<div>
@@ -158,7 +162,7 @@
 				</div>
 			</div>
 			
-			<div class="seller_wrap more_wrap_box col-6 col-sm-12 ">
+			<div class="seller_wrap more_wrap_box col-sm-12 col-lg-6">
 	
 				<div class="seller_profile_wrap">
 					<img class="seller_profile" src="${pageContext.request.contextPath}/resources/img/junggo/profile_m.png">
