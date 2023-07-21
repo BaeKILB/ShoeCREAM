@@ -14,9 +14,11 @@
 	src="${pageContext.request.contextPath }/resources/js/etc/jquery-3.7.0.js"></script>
 </head>
 <body>
+	
 	<h1>ShoeCREAM</h1>
 	<h2>Shoes Collection Rules Everything Around Me</h2>
-<!-- 	<a href="chatHome">chat test</a> -->
+	<a href="chatHome">chat test</a>
+	
 </body>
 </html>
 

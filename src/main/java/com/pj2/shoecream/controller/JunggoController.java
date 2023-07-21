@@ -12,7 +12,7 @@ public class JunggoController {
 	
 	@GetMapping("JunggoSearch")
 	public String junggoSearch(@RequestParam Map<String,Object> map, Model model) {
-		return "";
+		return "/junggo/junggo_product_search";
 	}
 	@GetMapping("JungChat")
 	public String jungChat(@RequestParam Map<String,Object> map, Model model) {

@@ -1,0 +1,7 @@
+.sideCategory *{
+	list-style: none;
+}
+
+.sideCategory a{
+	text-decoration: none;
+}

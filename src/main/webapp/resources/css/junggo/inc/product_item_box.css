@@ -1,0 +1,47 @@
+.itemWrap {
+  border: 1px solid black;
+  width: 230px;
+  height: 300px;
+  text-align: center;
+}
+
+.imgWrap {
+  height: 70%;
+}
+
+.junggoImg {
+  height: 100%;
+  width: 230px;
+  
+  /* 태그 안 이미지 출력 방식 설정 */
+  object-fit: cover;
+}
+
+.itemSimpleInfoWrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  height: 30%;
+}
+
+.itemSimpleInfo,
+.itemSimpleInfoBtn {
+  display: inline-block;
+  border: 1px solid black;
+  width: 49%;
+  height: 100%;
+}
+
+.itemSimpleInfo li{
+	list-style: none;
+}
+
+.itemSimpleInfoBtn input {
+  display: block;
+}
+
+.itemWrap:hover {
+	box-shadow: 3px 0 20px rgba(0, 0, 0, 0.05);
+	transition: all 0.2s ease-out;
+}
