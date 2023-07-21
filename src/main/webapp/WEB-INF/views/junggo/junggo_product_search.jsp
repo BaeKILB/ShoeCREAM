@@ -18,6 +18,7 @@
 		<article class="row">
 			<section class="sideCategoryWrap col-2" style="border:1px solid black">
 				<jsp:include page="../inc/side_category.jsp"></jsp:include>
+				<jsp:include page="../inc/side_category_mc.jsp"></jsp:include>
 			</section>
 			<section class="itemListWrap col-10 container" style="border:1px solid black">
 				<div class="row row-cols-auto">
@@ -36,18 +37,13 @@
 						<div class="col mt-2">
 							<jsp:include page="./inc/product_item_box.jsp"></jsp:include>
 						</div>
-						<div class="col mt-2">
-							<jsp:include page="./inc/product_item_box.jsp"></jsp:include>
-						</div>
-						<div class="col mt-2">
-							<jsp:include page="./inc/product_item_box.jsp"></jsp:include>
-						</div>
-						<div class="col mt-2">
-							<jsp:include page="./inc/product_item_box.jsp"></jsp:include>
-						</div>
+
 				</div>
 			</section>
 		</article>
 	</main>
+	
+<script	src="${pageContext.request.contextPath }/resources/js/inc/side_category.js"></script>
+
 </body>
 </html>

@@ -5,30 +5,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<style type="text/css">
-		
-	</style>
 </head>
 <body>
-	<div class="categoryTop categoryList">
+	<div class="ct_mc_1 categoryList">
 		<ul>
 			<li>
-				<a href="" id="ct_lc_1">브랜드</a>
+				<a href="" id="ct_sc_1">브랜드 상세1</a>
 			</li>
 			<li>
-				<a href="" id="ct_lc_2">운동화</a>
+				<a href="" id="ct_sc_2">브랜드 상세2</a>
 			</li>
 			<li>
-				<a href="" id="ct_lc_3">캐주얼</a>
+				<a href="" id="ct_sc_3">브랜드 상세3</a>
 			</li>
 			<li>
-				<a href="" id="ct_lc_4">남성단화</a>
+				<a href="" id="ct_sc_4">브랜드 상세4</a>
 			</li>
 			<li>
-				<a href="" id="ct_lc_5">여성단화</a>
+				<a href="" id="ct_sc_5">브랜드 상세5</a>
 			</li>
 		</ul>
 	</div>
-	
 </body>
 </html>

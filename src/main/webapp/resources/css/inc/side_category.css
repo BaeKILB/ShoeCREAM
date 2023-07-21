@@ -1,7 +1,15 @@
-.sideCategory *{
+.categoryList *{
 	list-style: none;
 }
 
-.sideCategory a{
+.categoryList a{
 	text-decoration: none;
+}
+
+.categoryList{
+	display: none;
+}
+
+.categoryTop{
+	display: block;
 }
