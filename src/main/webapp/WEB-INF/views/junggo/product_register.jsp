@@ -13,6 +13,8 @@
 	<link href="${pageContext.request.contextPath}/resources/css/junggo/product_register.css" rel="stylesheet">
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
+	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
+	<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
 	<script type="text/javascript">
 	
