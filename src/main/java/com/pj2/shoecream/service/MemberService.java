@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pj2.shoecream.mapper.MemberMapper;
 import com.pj2.shoecream.vo.MemberVO;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

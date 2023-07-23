@@ -2,8 +2,9 @@ package com.pj2.shoecream.vo;
 
 import java.sql.Date;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import lombok.Data;
 
 @Data
