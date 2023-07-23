@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 public class MemberVO {
-    @Size(min = 2, max = 20, message="아이디는 2자 이상 20자 이내로 입력해주세요.")
-	@NotBlank
+	@NotBlank(message = "아이디는 필수 항목입니다.")
+	@Size(min = 2, max = 20, message = "아이디는 2자 이상 20자 이내로 입력해주세요.")
 	private String mem_id;
 	@NotBlank
 	private String mem_name;

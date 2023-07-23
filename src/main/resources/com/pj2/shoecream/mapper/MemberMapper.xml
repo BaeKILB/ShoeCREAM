@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.MemberMapper">
-   <insert id="insertMember">
-		INSERT
-			INTO mem_info
-			VALUES (
-				null 
-				, #{mem_id} 
-				, #{mem_name}  
-				, #{mem_passwd} 
-				, #{mem_email} 
-				, CONCAT(#{phone1}, '-', #{phone2}, '-', #{phone3})  
-				, CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})  
-				, #{mem_birthday}
-				, #{role}
-				, now()
-			)
-	</insert>
+<!--    <insert id="insertMember"> -->
+<!-- 		INSERT -->
+<!-- 			INTO mem_info -->
+<!-- 			VALUES ( -->
+<!-- 				null  -->
+<!-- 				, #{mem_id}  -->
+<!-- 				, #{mem_name}   -->
+<!-- 				, #{mem_passwd}  -->
+<!-- 				, #{mem_email}  -->
+<!-- 				, CONCAT(#{phone1}, '-', #{phone2}, '-', #{phone3})   -->
+<!-- 				, CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})   -->
+<!-- 				, #{mem_birthday} -->
+<!-- 				, #{role} -->
+<!-- 				, now() -->
+<!-- 			) -->
+<!-- 	</insert> -->
 
+		<insert id="insertMember">
+		    INSERT INTO mem_info
+		    VALUES (null, #{mem_id}, #{mem_name}, #{mem_passwd}, #{mem_email},
+		        null, null, null, #{role}, now())
+		</insert>
 
 </mapper>

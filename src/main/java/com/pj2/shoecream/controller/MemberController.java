@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.SignupVO;
 
 import jakarta.validation.Valid;
 
@@ -43,29 +44,33 @@ public class MemberController {
 	}
 	
 	@PostMapping("MemberJoinPro")
-	public String signup(@ModelAttribute @Valid MemberVO member, BindingResult bindingResult, Model model) {
+	public String signup(@ModelAttribute @Valid SignupVO signupVO, BindingResult bindingResult) {
 		
 //		if(member.getMem_id().length() > 20) {
 //			System.out.println("너 길이 초과했어");
 //		}
 		
-	    if(bindingResult.hasErrors()) {
-	        Map<String, String> errorMap = new HashMap<>();
-	        for(FieldError error:bindingResult.getFieldErrors()) {
-	            errorMap.put(error.getField(), error.getDefaultMessage());
-	            System.out.println("============================");
-	            System.out.println(error.getDefaultMessage());
-	            System.out.println("============================");
-	        }
-	        throw new CustomValidationException("유효성검사 실패함", errorMap);
+		if (bindingResult.hasErrors()) {
+			System.out.println("여기까지오긴 오니 ..?");
+		     Map<String, String> errorMap = new HashMap<>();
+		     for (FieldError error : bindingResult.getFieldErrors()) {
+		         errorMap.put(error.getField(), error.getDefaultMessage());
+		         System.out.println("================");
+		         System.out.println(error.getDefaultMessage());
+		         System.out.println("================");
+		     }
+		     throw new CustomValidationException("회원 가입 실패", errorMap);
 	    } else {
 	    	
-	    	int memberEntity = memberService.registMember(member);
-	    	System.out.println(memberEntity);
-	    	return "redirect:/login";
-//	    	return "member/login";
-	    }
+//	        if(signupVO.getMem_id().length() > 20) {
+//	            throw new CustomValidationException("아이디의 길이가 20자를 초과했습니다.", Map.of("mem_id", "아이디는 2자 이상 20자 이내로 입력해주세요."));
+//	        }
 	        
+	        MemberVO member = signupVO.toMemberVO();
+	        MemberVO memberEntity = memberService.registMember(member);
+	        System.out.println(memberEntity);
+	        return "member/login";
+	    }
 	}
 	
 	

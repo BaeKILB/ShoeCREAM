@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 
+
 @RestController
 @ControllerAdvice
 public class ControllerExcepionHandler {
@@ -15,4 +16,6 @@ public class ControllerExcepionHandler {
 	public Map<String, String> validationException(CustomValidationException e) {
 		return e.getErrorMap();
 	}
+	
+    
 }

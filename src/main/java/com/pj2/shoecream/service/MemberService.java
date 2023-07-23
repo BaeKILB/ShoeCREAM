@@ -15,24 +15,18 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class MemberService {
 	
-	@Autowired
-	private MemberMapper mapper;
-	
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	@Transactional
-	public int registMember(MemberVO member) {
-		String rawPassword = member.getMem_passwd();
-		String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-		member.setMem_passwd(encPassword);
-		member.setRole("ROLE_USER"); // 관리자 ROLE_ADMIN
-	    return mapper.insertMember(member);
+    @Autowired
+    private MemberMapper memberMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//	    int insertCount = mapper.insertMember(member);
-//	    if (insertCount > 0) {
-//	        return member;
-//	    } else {
-//	        return null;
-//	    }
-	}
+    @Transactional
+    public MemberVO registMember(MemberVO member) {
+        // 회원가입 진행
+        String rawPassword = member.getMem_passwd();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        member.setMem_passwd(encPassword);
+        member.setRole("ROLE_USER");
+        memberMapper.insertMember(member);
+        return member;
+    }
 }
