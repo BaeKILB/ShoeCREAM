@@ -2,14 +2,35 @@
 	list-style: none;
 }
 
-.categoryList a{
+.categoryList li a{
 	text-decoration: none;
+	display: inline-block;
+	width:110%;
 }
 
 .categoryList{
 	display: none;
+	width:200px;
 }
 
 .categoryTop{
-	display: block;
+	display: inline-block;
+	
+}
+
+/* 카테고리 항목들 마진 주기 */
+.ct_mc_list{
+	padding-left:2rem;
+}
+.ct_sc_list{
+	padding-left:3rem;
+}
+
+
+/* hover */
+.ct_lc_item:hover > div { 
+	display:inline-block;
+}
+.ct_mc_item:hover > div { 
+	display:inline-block;
 }
