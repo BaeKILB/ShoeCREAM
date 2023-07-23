@@ -28,19 +28,12 @@
 			 	<div class="signup_cont">
 				    <div class="sign_wrapper">  
 
-<div class="id">
-    <p>아이디</p>
-    <span class="sign_mark">*</span><br>
-    <input id="mem_id" name="mem_id" type="text" placeholder="아이디를 입력해 주세요.." required="required">
-    <div id="idError" class="error"></div>
-</div>
-
-<!-- 						<div class="id"> -->
-<!-- 						    <p>아이디</p> -->
-<!-- 						    <span class="sign_mark">*</span><br> -->
-<!-- 						    <input id="mem_id" name="mem_id" type="text" onfocusout="checkId()" oninput="validateId()" placeholder="아이디를 입력해 주세요.." required="required"> -->
-<!-- 						    <div id="idError" class="error"></div> -->
-<!-- 						</div> -->
+						<div class="id">
+						    <p>아이디</p>
+						    <span class="sign_mark">*</span><br>
+						    <input id="mem_id" name="mem_id" type="text" placeholder="아이디를 입력해 주세요.." required="required">
+						    <div id="idError" class="error"></div>
+						</div>
 
 				        <div class="name">
 				        	<p>이름</p>

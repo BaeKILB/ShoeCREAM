@@ -46,18 +46,7 @@ public class MemberController {
 	public String signupform() {
 		return "member/signup";
 	}
-	
-
-    
-	
-	
-//	@PostMapping("/idCheck")
-//	@ResponseBody
-//	public int idCheck(@RequestParam("id") String id) {
-//		int cnt = memberService.idCheck(id);
-//		return cnt;
-//	}
-	
+		
 	// 회원가입
 	@PostMapping("MemberJoinPro")
 	public String signup(@ModelAttribute @Valid MemberVO member, BindingResult bindingResult) {
