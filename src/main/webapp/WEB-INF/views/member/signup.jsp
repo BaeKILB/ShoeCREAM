@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,25 +10,14 @@
 	<%-- css --%>
 	<link href="${pageContext.request.contextPath }/resources/css/member/common.css" rel="styleSheet">
 	<link href="${pageContext.request.contextPath }/resources/css/member/login/signup.css" rel="styleSheet">
-	<link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
-	<link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
+<%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
+<%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet"> --%>
 	
 	<%-- js --%>
-	<script src="${pageContext.request.contextPath }/resources/js/inc/jquery-3.7.0.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script>
-<!-- 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
-	<script>
-// document.getElementById('fr').addEventListener('submit', function(event) {
-//     // 추가할 유효성 검사 코드 부분
-//     var mem_id = document.getElementById('mem_id').value;
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-//     if (mem_id.length < 2 || mem_id.length > 20) {
-//         alert('아이디는 2자 이상 20자 이하로 입력해주세요');
-//         event.preventDefault(); // Form submission 전에 이 코드를 추가하여 오류 발생시 submit를 방지할 수 있습니다.
-//         return;
-//     }
-// });
-</script>
 </head>
 
 <body>
@@ -37,13 +28,19 @@
 			 	<div class="signup_cont">
 				    <div class="sign_wrapper">  
 
-				        <div class="id">
-				        	<p>아이디</p>
-				        	<span class="sign_mark">*</span><br>
-   							<input id="mem_id" name="mem_id" type="text" placeholder="아이디를 입력해 주세요.." required="required" oninput="validateId()">
-   							<div id="idError" class="error"></div>
-<!-- 				            <div id="nameError" class="error"></div> -->
-				        </div>
+<div class="id">
+    <p>아이디</p>
+    <span class="sign_mark">*</span><br>
+    <input id="mem_id" name="mem_id" type="text" placeholder="아이디를 입력해 주세요.." required="required">
+    <div id="idError" class="error"></div>
+</div>
+
+<!-- 						<div class="id"> -->
+<!-- 						    <p>아이디</p> -->
+<!-- 						    <span class="sign_mark">*</span><br> -->
+<!-- 						    <input id="mem_id" name="mem_id" type="text" onfocusout="checkId()" oninput="validateId()" placeholder="아이디를 입력해 주세요.." required="required"> -->
+<!-- 						    <div id="idError" class="error"></div> -->
+<!-- 						</div> -->
 
 				        <div class="name">
 				        	<p>이름</p>
@@ -85,9 +82,9 @@
 				            <div id="addrError" class="error"></div>
 				        </div>
 				        
+				       <div class ="phoneAuth">
      				        <p>휴대폰번호</p>
 				        	<span class="sign_mark">*</span><br>
-				       <div class ="phoneAuth">
 				        
 				        <div class="phone" >
 				            <input id="phone1"  name="phone1" type="text" size="1" maxlength="3" oninput="changePhone1()" > -

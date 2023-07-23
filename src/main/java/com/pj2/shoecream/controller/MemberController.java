@@ -14,6 +14,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.MemberService;
@@ -45,10 +47,26 @@ public class MemberController {
 		return "member/signup";
 	}
 	
+
+    
+	
+	
+//	@PostMapping("/idCheck")
+//	@ResponseBody
+//	public int idCheck(@RequestParam("id") String id) {
+//		int cnt = memberService.idCheck(id);
+//		return cnt;
+//	}
+	
 	// 회원가입
 	@PostMapping("MemberJoinPro")
 	public String signup(@ModelAttribute @Valid MemberVO member, BindingResult bindingResult) {
 //		public String signup(@ModelAttribute @Valid SignupVO signupVO, BindingResult bindingResult) {
+		
+	    if (memberService.isMemberIdDuplicated(member.getMem_id())) {
+	        bindingResult.rejectValue("mem_id", "", "이미 사용 중인 아이디입니다.");
+	    }
+		
 		
 		if (bindingResult.hasErrors()) {
 			System.out.println("여기까지오긴 오니 ..?");
@@ -73,5 +91,11 @@ public class MemberController {
 	    }
 	}
 	
+	//id 중복 확인
+    @ResponseBody
+	@GetMapping("idCheck")
+	public int idCheck(@RequestParam Map<String,String> map) {
+		return memberService.memIdCheck(map);
+	}
 	
 }
