@@ -40,21 +40,22 @@
 				        <div class="id">
 				        	<p>아이디</p>
 				        	<span class="sign_mark">*</span><br>
-				            <input id="mem_id"  name="mem_id" type="text"  placeholder="아아디를 입력해 주세요.." required="required">
+   							<input id="mem_id" name="mem_id" type="text" placeholder="아이디를 입력해 주세요.." required="required" oninput="validateId()">
+   							<div id="idError" class="error"></div>
 <!-- 				            <div id="nameError" class="error"></div> -->
 				        </div>
 
 				        <div class="name">
 				        	<p>이름</p>
 				        	<span class="sign_mark">*</span><br>
-				            <input id="mem_name"  name="mem_name" type="text"  placeholder="이름을 입력해 주세요." required="required">
+				            <input id="mem_name"  name="mem_name" type="text"  placeholder="이름을 입력해 주세요." >
 				            <div id="nameError" class="error"></div>
 				        </div>
 				        
 				        <div class="password">
 				        	<p>비밀번호</p>
 				        	<span class="sign_mark">*</span><br>
-				            <input id="mem_passwd" name="mem_passwd" type="password" placeholder="영문,숫자,특수문자 포함 8~20글자 이상." required="required" >
+				            <input id="mem_passwd" name="mem_passwd" type="password" placeholder="영문,숫자,특수문자 포함 8~20글자 이상." >
 				            <div id="passwordError" class="error"></div>
 				        </div>
 				        
@@ -69,7 +70,7 @@
 				        <div class="birthDate">
 				        	<p>생년월일</p>
 				        	<span class="sign_mark">*</span><br>
-				            <input id="mem_birthday" name="mem_birthday" type="date" required="required" min="1990-01-01" onblur='validateBirth()' >
+				            <input id="mem_birthday" name="mem_birthday" type="date"  min="1990-01-01" onblur='validateBirth()' >
 				            <div id="birthError" class="error"></div>
 				        </div>
 				        

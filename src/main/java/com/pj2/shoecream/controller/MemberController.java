@@ -27,27 +27,28 @@ import com.pj2.shoecream.vo.SignupVO;
 @Controller
 public class MemberController {
 	
+	// 로그 확인
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 
 	@Autowired
 	private MemberService memberService;
 	
+	// 로그인 폼
 	@GetMapping("login")
 	public String loginform() {
 		return "member/login";
 	}
 	
+	// 회원가입 폼
 	@GetMapping("SignUpForm") 
 	public String signupform() {
 		return "member/signup";
 	}
 	
+	// 회원가입
 	@PostMapping("MemberJoinPro")
-	public String signup(@ModelAttribute @Valid SignupVO signupVO, BindingResult bindingResult) {
-		
-//		if(member.getMem_id().length() > 20) {
-//			System.out.println("너 길이 초과했어");
-//		}
+	public String signup(@ModelAttribute @Valid MemberVO member, BindingResult bindingResult) {
+//		public String signup(@ModelAttribute @Valid SignupVO signupVO, BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()) {
 			System.out.println("여기까지오긴 오니 ..?");
@@ -65,7 +66,7 @@ public class MemberController {
 //	            throw new CustomValidationException("아이디의 길이가 20자를 초과했습니다.", Map.of("mem_id", "아이디는 2자 이상 20자 이내로 입력해주세요."));
 //	        }
 	        
-	        MemberVO member = signupVO.toMemberVO();
+//	        MemberVO member = signupVO.toMemberVO(); // signupVO 쓸 필요 없을 듯 ? 
 	        MemberVO memberEntity = memberService.registMember(member);
 	        System.out.println(memberEntity);
 	        return "member/login";

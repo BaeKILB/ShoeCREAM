@@ -1,3 +1,20 @@
+var idC = false;
+
+function validateId() {
+    const mem_id = document.getElementById("mem_id").value.trim();
+    const span = document.querySelector("#idError");
+
+    if (!/^[A-Za-z0-9]{2,20}$/.test(mem_id)) {
+        span.innerHTML = "아이디는 2자 이상 20자 이내의 영문자, 숫자로만 구성해주세요.";
+        idC = false;
+    } else {
+        span.innerHTML = "";
+        idC = true;
+    }
+}
+
+
+
 //let check = false; //submit 단계에서 확인할 변수
 //
 //
