@@ -2,10 +2,11 @@ package com.pj2.shoecream.vo;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -20,7 +21,7 @@ public class UserVO {
 	private String mem_passwd;
 	@NotBlank
 	private String mem_email;
-	@NotBlank
+	
 	private Date mem_birthday;
 	private	String mem_bir1;
 	private	String mem_bir2;

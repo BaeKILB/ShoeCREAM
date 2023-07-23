@@ -6,8 +6,5 @@ import com.pj2.shoecream.vo.MemberVO;
 
 @Mapper
 public interface MemberMapper {
-
-	int insertMember(MemberVO member);
-
-	
+    int insertMember(MemberVO member);
 }
