@@ -3,16 +3,16 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-	<style type="text/css">
+<!-- <!DOCTYPE html> -->
+<!-- <html> -->
+<!-- <head> -->
+<!-- <meta charset="UTF-8"> -->
+<!-- <title>Insert title here</title> -->
+<!-- 	<style type="text/css"> -->
 		
-	</style>
-</head>
-<body>
+<!-- 	</style> -->
+<!-- </head> -->
+<!-- <body> -->
 	<div class="categoryTop ct_lc_list categoryList">
 		<ul>
 			<li class="ct_lc_item" >
@@ -53,5 +53,5 @@
 		</ul>
 	</div>
 	
-</body>
-</html>
+<!-- </body> -->
+<!-- </html> -->

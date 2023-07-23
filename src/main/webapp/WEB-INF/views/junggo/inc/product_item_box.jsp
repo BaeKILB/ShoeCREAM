@@ -7,7 +7,7 @@
 <!-- <title>Insert title here</title> -->
 <!-- </head> -->
 <!-- <body> -->
-      <div class="itemWrap" onclick="location.href='./'">
+      <div class="itemWrap" onclick="location.href='./productDetail'">
         <div class="imgWrap">
           <img class="junggoImg" src="src/junggo.jpg" />
         </div>

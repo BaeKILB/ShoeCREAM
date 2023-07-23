@@ -2,13 +2,13 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<!-- <!DOCTYPE html> -->
+<!-- <html> -->
+<!-- <head> -->
+<!-- <meta charset="UTF-8"> -->
+<!-- <title>Insert title here</title> -->
+<!-- </head> -->
+<!-- <body> -->
 
 	<c:set var="i" value="${param.mc_id }"></c:set>
 	<div class="ct_sc_list ct_mc_${i } categoryList">
@@ -30,5 +30,5 @@
 			</li>
 		</ul>
 	</div>
-</body>
-</html>
+<!-- </body> -->
+<!-- </html> -->
