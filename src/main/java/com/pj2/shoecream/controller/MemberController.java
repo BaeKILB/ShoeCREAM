@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.MemberService;
@@ -41,28 +43,29 @@ public class MemberController {
 	}
 	
 	@PostMapping("MemberJoinPro")
-	public String signup(@Valid MemberVO member, Model model, BindingResult bindingResult) {
+	public String signup(@ModelAttribute @Valid MemberVO member, BindingResult bindingResult, Model model) {
 		
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			for(FieldError error:bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
+//		if(member.getMem_id().length() > 20) {
+//			System.out.println("너 길이 초과했어");
+//		}
+		
+	    if(bindingResult.hasErrors()) {
+	        Map<String, String> errorMap = new HashMap<>();
+	        for(FieldError error:bindingResult.getFieldErrors()) {
+	            errorMap.put(error.getField(), error.getDefaultMessage());
 	            System.out.println("============================");
-				System.out.println(error.getDefaultMessage());
-				System.out.println("============================");
-				
-			}
-			throw new CustomValidationException("유효성검사 실패함", errorMap);
-		}
-		
-//		log.info(member.toString()); // 잘 들고 오나 확인 
-		int insertCount = memberService.registMember(member);
-		if(insertCount == 0) {
-			model.addAttribute("msg", "회원 가입 실패!");
-			return "member/fail_back";
-		}
-		
-		return "redirect:/login";
+	            System.out.println(error.getDefaultMessage());
+	            System.out.println("============================");
+	        }
+	        throw new CustomValidationException("유효성검사 실패함", errorMap);
+	    } else {
+	    	
+	    	int memberEntity = memberService.registMember(member);
+	    	System.out.println(memberEntity);
+	    	return "redirect:/login";
+//	    	return "member/login";
+	    }
+	        
 	}
 	
 	

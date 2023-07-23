@@ -13,6 +13,7 @@
 				, CONCAT(#{phone1}, '-', #{phone2}, '-', #{phone3})  
 				, CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})  
 				, #{mem_birthday}
+				, #{role}
 				, now()
 			)
 	</insert>

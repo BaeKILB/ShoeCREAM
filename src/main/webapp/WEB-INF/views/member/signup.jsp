@@ -15,7 +15,18 @@
 	<script src="${pageContext.request.contextPath }/resources/js/inc/jquery-3.7.0.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script>
 <!-- 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
-	
+	<script>
+// document.getElementById('fr').addEventListener('submit', function(event) {
+//     // 추가할 유효성 검사 코드 부분
+//     var mem_id = document.getElementById('mem_id').value;
+
+//     if (mem_id.length < 2 || mem_id.length > 20) {
+//         alert('아이디는 2자 이상 20자 이하로 입력해주세요');
+//         event.preventDefault(); // Form submission 전에 이 코드를 추가하여 오류 발생시 submit를 방지할 수 있습니다.
+//         return;
+//     }
+// });
+</script>
 </head>
 
 <body>
