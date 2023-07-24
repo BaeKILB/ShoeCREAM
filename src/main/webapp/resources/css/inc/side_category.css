@@ -4,8 +4,7 @@
 
 .categoryList li a{
 	text-decoration: none;
-	display: inline-block;
-	width:110%;
+	color: black;
 }
 
 .categoryList{
@@ -15,7 +14,20 @@
 
 .categoryTop{
 	display: inline-block;
-	
+}
+
+
+
+.ct_lc_item_btn{
+	display: flex;
+	justify-content: space-between;
+}
+.ct_lc_item_btn button{
+	width:24px;
+	height: 24px;	
+	background-repeat:no-repeat;
+	background-color: inherit;
+	transition: all 0.5s ;
 }
 
 /* 카테고리 항목들 마진 주기 */
@@ -26,11 +38,24 @@
 	padding-left:3rem;
 }
 
+/* 카테고리 펼치고 숨기기 */
+.ct_show{
+	display:inline-block;
+}
+
+/* 이미지 토글 */
+.ct_up_down_btn{
+
+	background-image: url("../../../resources/img/junggo/inc/side_category/down.svg");
+}
+.ct_img_up{
+	background-image: url("../../../resources/img/junggo/inc/side_category/up.svg");	
+}
 
 /* hover */
-.ct_lc_item:hover > div { 
-	display:inline-block;
-}
-.ct_mc_item:hover > div { 
-	display:inline-block;
-}
+/* .ct_lc_item:hover > div {  */
+/* 	display:inline-block; */
+/* } */
+/* .ct_mc_item:hover > div {  */
+/* 	display:inline-block; */
+/* } */

@@ -4,7 +4,7 @@
 
 // 카테고리 확장 테스트
 // dom 로드시 자동 동작
-document.addEventListener("DOMContentLoaded", function () {
+/*document.addEventListener("DOMContentLoaded", function () {
 	
 	// 대분류 항목
     let ctLc = document.querySelectorAll(".ct_lc_item");
@@ -132,4 +132,27 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 	
-});
+});*/
+
+
+const categoryBtnDrop = (e) => {
+	let ct_list = document.querySelector("." + e.id);
+	
+	e.classList.toggle("ct_img_up");
+	ct_list.classList.toggle("ct_show");
+};
+
+const allScListHidden = (e) => {
+	document.querySelectorAll(".ct_sc_list").forEach(t => {
+		if(!t.className.includes(e.id)){
+			t.classList.remove("ct_show")			
+		}
+	});	
+}
+const allMcListHidden = (e) => {
+	document.querySelectorAll(".ct_mc_list").forEach(t => {
+		if(!t.className.includes(e.id)){
+			t.classList.remove("ct_show")
+		}
+	});	
+}

@@ -1,6 +1,6 @@
 .itemWrap {
   border: 1px solid black;
-  width: 230px;
+  width: 210px;
   height: 300px;
   text-align: center;
 }
@@ -11,7 +11,7 @@
 
 .junggoImg {
   height: 100%;
-  width: 230px;
+  width: 210px;
   
   /* 태그 안 이미지 출력 방식 설정 */
   object-fit: cover;
