@@ -35,13 +35,13 @@ public class MemberController {
 	// 로그인 폼
 	@GetMapping("login")
 	public String loginform() {
-		return "member/login";
+		return "member/auth/login";
 	}
 	
 	// 회원가입 폼
 	@GetMapping("SignUpForm") 
 	public String signupform() {
-		return "member/signup";
+		return "member/auth/signup";
 	}
 		
 	// 회원가입
@@ -54,7 +54,7 @@ public class MemberController {
 	    	throw new CustomValidationException("이미 사용 중인 아이디입니다.", null);
 	    }
 		
-	    // 회원가입 유효성 검사 - 유효성 검사 에러 난 애들 한 곳에 모아서(bindingResult에 의해) 처리 errorMap에 담긴 메세지는 Vaildation 에 의해서 자동으로 적절한게 간다.
+	    // 회원가입 유효성 검사 - 유효성 검사 에러 난 애들 한 곳에 모아서(bindingResult에 의해) 처리 errorMap에 담긴 메세지는 @Vaildation 에 의해서 자동으로 적절한게 간다.
 		if (bindingResult.hasErrors()) {
 			System.out.println("여기까지오긴 오니 ..?");
 		     Map<String, String> errorMap = new HashMap<>();
@@ -74,7 +74,7 @@ public class MemberController {
 //	        MemberVO member = signupVO.toMemberVO(); // signupVO 쓸 필요 없을 듯 ? 
 	        MemberVO memberEntity = memberService.registMember(member);
 	        System.out.println(memberEntity);
-	        return "member/login";
+	        return "member/auth/login";
 	    }
 	}
 	
@@ -85,4 +85,18 @@ public class MemberController {
 		return memberService.memIdCheck(map);
 	}
 	
+    // 회원수정 폼
+    @GetMapping("MemberUpdateForm")
+    public String updateForm() {
+    	return "member/mypage/update";
+    }
+    
+    // 회원수정 폼
+    @GetMapping("MemberDeleteForm")
+    public String deletForm() {
+    	return "member/mypage/delete";
+    }
+    
+    
+    
 }

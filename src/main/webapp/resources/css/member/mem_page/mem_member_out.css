@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+#sec_con.out_con {
+	max-width: 100%;
+	background: #f5f5f5;
+}
+
+#out_wrapper {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 70px;
+	background: #fff;
+	border-radius: 15px;
+}
+.out_con_wrap{
+	max-width: 100%;
+    background: #f5f5f5;
+}
+
+.c_header {
+	text-align: center;
+}
+
+.c_header p {
+	font-size: 22px;
+	margin-top: 20px;
+}
+
+.contxt span {
+	color: #0080ff;
+	font-size: 22px;
+	font-weight: 600;
+}
+
+.c_delete {
+	font-size: 17px;
+	width: 90%;
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid #ddd;
+	margin-top: 30px;
+}
+
+.coment{
+	font-weight: bold;
+	color: #f13035;
+	font-size: 17px;
+	margin-top: 8px;
+}
+
+#check {
+	width: 90%;
+	margin: 0 auto;
+	text-align: right;
+	margin-top: 15px;
+}
+
+#check input {
+	margin-right: 5px;
+	width: 18px;
+	height: 18px;
+	position: relative;
+	top: 2px;
+}
+
+#check span {
+	font-size: 18px;
+}
+
+.ok {
+	width: 90%;
+    margin: 0 auto;
+	margin-top: 40px;
+}
+
+.ok button {
+    cursor:pointer;
+    width: 100%;
+    height: 55px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    line-height: 55px;
+    background: rgb(10, 10, 49);
+    border-radius: 5px;
+    transition: all 0.4s;
+}
+
+.ok button:hover {
+	background: #ff6600;
+}
+.box_wrap {
+    position: relative;
+    display: block;
+    width: 90%;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.frm_pass {
+	margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+
+}
+
+
+
+
+

@@ -1,0 +1,173 @@
+@charset "UTF-8";
+
+/* 사이드바 */
+
+
+/* 디테일 */
+.res-detail-cont {
+	width: 73%;
+	margin-left: 2%;
+}
+#sec_con.detail_p {
+/* 	max-width: 900px; */
+}
+
+/* 차량이미지,차량 상태 크기조정 */
+.res_detail_article1 {
+	width: 70%;
+	margin: 0 auto;
+	position: relative;
+	height: 350px;
+}
+
+.res_detail_article1 > div {
+	height: 100%;
+	padding: 25px;
+	overflow: hidden;
+	border-radius: 5px; 
+}
+
+/* 차량이미지 */
+.res_detail_article1 img {
+/*     width: auto; */
+    height: 100%;
+    margin: 0 auto;
+    display: block;
+    border-radius: 5px;
+    position: relative;
+/*     top: 50%; */
+/*     left: 50%; */
+/*     transform: translate(-50%, -50%); */
+}
+
+/* 차량 상태 */
+.res_detail_article1 b {
+	font-size:19px;
+	padding: 7px 13px;
+	position:absolute;
+	background: #ff6600;
+	border: 1px solid #ff6600;
+	color: #fff;
+	border-radius: 5px;	
+	top: 25px;
+	right: 25px;
+	font-weight: 600;
+}
+
+.res_detail_article2 {
+	width: 70%;
+	margin: 0 auto;
+}
+
+/* 최종 결제금액 색상 및 사이즈 변경 */
+.res-detail-cont .res_con_wrap .res_detail_totalcost {
+	color: #f00;
+	font-size: 1.2em;
+}
+
+.res-detail-cont .side_menu ul {
+	display: inline-block;
+	vertical-align: top;
+}
+
+/* 아코디언 */
+.res-detail-cont .side_menu {
+    margin-top: 20px;
+    border: 1px solid #e7e7e7;
+    border-radius: 10px;
+    position: relative;
+}
+
+.res_con_wrap {
+	display: flex;
+	justify-content: space-between;
+    border-bottom: 1px solid #e7e7e7
+}
+
+.res-detail-cont .side_menu .menu_tit {
+    position: relative;
+    border-bottom: 1px solid #e7e7e7;
+    padding: 17px;
+    cursor: pointer;
+}
+
+.res-detail-cont .side_menu .menu_tit span {
+    font-size: 17px;
+    position: relative;
+    padding-left: 28px;
+    display: inline-block;
+    width: 100%;
+}
+
+.res-detail-cont .side_menu .menu_tit span:hover {
+	color: #ff6600;
+	transition: 0.1s;
+}
+
+.res-detail-cont .side_menu .menu_tit span:before {
+    content: '';
+    position: absolute;
+    top:2px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    background: url(../../../img/car_img_storage/test_img/sports-car.png) no-repeat center;
+    background-size: contain;
+}
+
+.res-detail-cont .side_menu .menu_tit span:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 0;
+    width: 17px;
+    height: 17px;
+    background: url(../../../img/member/mem_page/mem_res_detail/arrow.png) no-repeat center;
+    background-size: contain;
+}
+
+.res-detail-cont .side_menu .menu_tit span.on:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 0;
+    width: 17px;
+    height: 17px;
+    background: url(../img/arrow.png) no-repeat center;
+    background-size: contain;
+    transform: rotate(180deg);
+}
+
+.res-detail-cont .side_menu .side_sub {
+	width: 50%;
+    padding: 30px;
+    border-bottom: 0;
+}
+
+.side_sub.ss_r {
+	text-align: right;
+}
+
+.side_sub.ss_r li {
+	font-size: 17px;
+}
+
+.res-detail-cont .side_sub li:nth-child(n+2) {
+    margin-top: 10px;
+}
+
+.res-detail-cont .side_sub > li {
+	width: 100%;
+	min-width: 140px;
+}
+
+.side_sub.ss_t li {
+	font-size: 17px;
+	font-weight: 600;
+	color: #888;
+	
+}
+
+#insu_s {
+	border-bottom: 0;
+}

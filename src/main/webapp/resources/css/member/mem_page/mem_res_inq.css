@@ -1,0 +1,162 @@
+@charset "UTF-8";
+
+/* 예약 조회 */
+.inq_list {
+	width: 73%;
+	margin-left: 2%;
+}
+
+.inq_list ul li {
+	width: 100%;
+	position: relative;
+	display: flex;
+	border: 1px solid #e7e7e7;
+	border-radius: 7px;
+}
+
+.inq_list ul li:nth-child(n+2) {
+	margin-top: 20px;
+}
+
+.list_car_info {
+	width: 60%;
+}
+
+.res_car_img {
+	width: 40%;
+	height: auto;
+	display: flex;
+	align-items: center;
+}
+
+.res_car_img>div {
+	width: 92%;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	height: 90%;
+	/* border: 1px solid #e7e7e7; */
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.res_car_img>div>img {
+	width: 100%;
+	height: auto;
+	vertical-align: middle;
+}
+
+.list_res_car p:first-child {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.list_res_car {
+	position: relative;
+	padding: 25px;
+	padding-left: 30px;
+	border-bottom: 1px solid #e7e7e7;
+}
+
+.list_res_car p:last-child {
+	width: 100px;
+	position: absolute;
+	top: 22px;
+	right: 25px;
+	font-size: 13px;
+	background-color: #ff6600;
+	padding: 10px;
+	color: #fff;
+	border-radius: 25px;
+	text-align: center;
+}
+
+.list_res_car p.ret_car {
+	background-color: #888;
+}
+
+.list_res_date {
+	padding: 25px;
+	padding-left: 30px;
+}
+
+.list_res_date dl {
+	display: flex;
+	margin-top: 7px;
+}
+
+.list_res_date dt {
+	font-weight: bold;
+	position: relative;
+	width: 40%;
+}
+
+.list_res_date dd {
+	width: 60%;
+}
+
+.inq_btn {
+	text-align: center;
+	/* padding-bottom: 25px; */
+	display: flex;
+	margin: 0 auto;
+	padding: 0 25px 25px;
+}
+
+.inq_btn button {
+	width: 50%;
+	padding: 15px;
+	border-radius: 10px;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.inq_btn button:nth-child(1) {
+	background-color: rgb(10, 10, 49);
+	color: white;
+	font-weight: bold;
+}
+
+.inq_btn button:nth-child(2) {
+	background-color: #ececec;
+}
+
+.inq_btn button.ret_rev {
+	background-color: rgb(135, 163, 202);
+	color: white;
+}
+
+.inq_btn button:nth-child(n+2) {
+	margin-left: 10px;
+}
+
+/* 미디어쿼리 */
+@media screen and (max-width: 1400px) {
+	.inr {
+		width: 97%;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.inq_list ul li {
+		display: block;
+	}
+	.res_car_img {
+		width: 100%;
+		padding: 15px;
+	}
+	.res_car_img>div {
+		width: 70%;
+		padding: 0 15px;
+	}
+	.list_car_info {
+		width: 100%;
+	}
+}
+
+#resc{
+	width: 100%;
+	background-color: #E7E7E7;
+	align-content: center;
+	color: black;
+}
