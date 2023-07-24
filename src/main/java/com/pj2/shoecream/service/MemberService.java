@@ -38,12 +38,13 @@ public class MemberService {
 	}
 
 	//아이디 중복체크 mapper 접근
-	public int idCheck(String id) {
-		int cnt = memberMapper.idCheck(id);
-		System.out.println("cnt: " + cnt);
-		return cnt;
-	}
-
+//	public int idCheck(String id) {
+//		int cnt = memberMapper.idCheck(id);
+//		System.out.println("cnt: " + cnt);
+//		return cnt;
+//	}
+	
+	// 프론트단 아이디 중복체크
 	public int memIdCheck(Map<String, String> map) {
 		return memberMapper.selectIdCheck(map);
 	}

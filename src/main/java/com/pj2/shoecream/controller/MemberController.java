@@ -22,9 +22,6 @@ import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.SignupVO;
 
-
-
-
 //@RequiredArgsConstructor
 @Controller
 public class MemberController {
