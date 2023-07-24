@@ -16,7 +16,7 @@ public class AuctionController {
 		return "auction/auction_main";
 	}
 	
-    @PostMapping("AuctionDetail")
+    @GetMapping("AuctionDetail")
     public String AuctionDetail() { //경매 제품상세
         return "auction/auction_detail";
     }

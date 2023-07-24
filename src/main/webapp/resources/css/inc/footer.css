@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+#footer>div {
+	display: inline-block;
+	vertical-align: top;
+}
