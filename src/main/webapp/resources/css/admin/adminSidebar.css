@@ -98,21 +98,30 @@ a.sub.rotate:after {
 	display: none;
 }
 
-@media screen and (max-width: 768px) {
-	.sidebar_wrap {
-		display: none;
-	}
-}
-
 /* header */
 .header_wrap {
     margin-left: 15.625rem;
+    width: 100%;
+    height: 53px;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 .header {
 	padding: 1rem 1.5rem;
 	background-color: #fff;
     box-shadow: 0 2px 4px rgba(0,0,20,.03), 0 1px 2px rgba(0,0,20,.03);
 }
+
+@media screen and (max-width: 768px) {
+	.sidebar_wrap {
+		margin-left: -100%;
+	}
+	.header_wrap {
+		margin-left: 0;
+	}
+}
+
 .toggle_wrap i {
     font-size: 20px;
     color: #454f5b;
