@@ -5,12 +5,12 @@
 .categoryList li a{
 	text-decoration: none;
 	display: inline-block;
-	width:110%;
+	width:100%;
 }
 
 .categoryList{
 	display: none;
-	width:200px;
+	width:150px;
 }
 
 .categoryTop{
