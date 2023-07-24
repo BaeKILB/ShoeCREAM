@@ -145,6 +145,7 @@
 	</div>
 	<script>
 		$('.cont_item_a').click(function () {
+			$('.cont_li_wrap').not($(this).siblings('.cont_li_wrap')).slideUp();
 		    $(this).siblings('.cont_li_wrap').slideToggle();
 		    $(this).toggleClass('rotate');
 		});
