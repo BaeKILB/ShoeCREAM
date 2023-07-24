@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+img {
+	width: 150px;
+	height: 150px;
+}
+
+.auctionItem {
+	display: inline-block;
+}
