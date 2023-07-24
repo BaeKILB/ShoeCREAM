@@ -22,7 +22,7 @@ public class MemberVO {
 	@NotBlank(message = "비밀번호를 입력해주세요.") @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$" ,message = "비밀번호는 영문, 숫자, 특수문자 포함 8~20글자 이상 입력해주세요.")
 	private String mem_passwd;
 //	@Unique(field = "mem_email", message = "이미 사용 중인 이메일입니다.")
-	@NotBlank
+	@NotBlank(message = "이메일을 입력해주세요.")
 	private String mem_email;
 	
 //    @NotNull(message = "생년월일을 입력해 주세요")
