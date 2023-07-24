@@ -20,8 +20,7 @@ public class MemberService {
     private MemberMapper memberMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     
-    
-    
+ 
     @Transactional
     public MemberVO registMember(MemberVO member) {
         // 회원가입 진행
@@ -33,14 +32,10 @@ public class MemberService {
         return member;
     }
 
-
-
 	public boolean isMemberIdDuplicated(String mem_id) {
 	    return memberMapper.isMemberIdDuplicated(mem_id) > 0;
 
 	}
-
-
 
 	//아이디 중복체크 mapper 접근
 	public int idCheck(String id) {
@@ -48,8 +43,6 @@ public class MemberService {
 		System.out.println("cnt: " + cnt);
 		return cnt;
 	}
-
-
 
 	public int memIdCheck(Map<String, String> map) {
 		return memberMapper.selectIdCheck(map);

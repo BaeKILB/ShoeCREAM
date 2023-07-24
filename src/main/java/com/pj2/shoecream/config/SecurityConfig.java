@@ -30,9 +30,11 @@ public class SecurityConfig {
 	        .anyRequest().permitAll()
 	    .and()
 	    .formLogin()
-	    	.loginPage("/login") // GET
-	        .loginProcessingUrl("/MemberLoginPro") // POST -> 스프링 시큐리티가 로그인 프로세스 진행
-	        .defaultSuccessUrl("/", true);
+		    .usernameParameter("mem_id")
+		    .passwordParameter("mem_passwd")
+		    .loginPage("/login") // GET
+		    .loginProcessingUrl("/MemberLoginPro") // POST -> 스프링 시큐리티가 로그인 프로세스 진행
+		    .defaultSuccessUrl("/", true);
 	    return http.build();
 	}
 }

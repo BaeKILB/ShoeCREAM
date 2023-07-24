@@ -15,6 +15,9 @@ public interface MemberMapper {
 	int idCheck(String id);
 
 	int selectIdCheck(Map<String, String> map);
+	
+    MemberVO findMemberById(String mem_id);
+
 
 //	Object selectMemberById(String mem_id);
 //

@@ -38,7 +38,11 @@
 	    SELECT COUNT(*) FROM mem_info WHERE mem_id = #{mem_id}
 	</select>	
 	
-	
+	  <select id="findMemberById" resultType="com.pj2.shoecream.vo.MemberVO">
+	    SELECT * FROM mem_info WHERE mem_id = #{mem_id}
+	  </select>
+  
+  
 	
 	  <select id="selectMemberById" resultType="com.pj2.shoecream.vo.MemberVO">
     SELECT * FROM mem_info WHERE mem_id = #{mem_id}
