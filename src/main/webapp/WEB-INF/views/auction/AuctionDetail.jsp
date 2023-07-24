@@ -24,7 +24,7 @@
 	<hr>
 	
 	<h4>입찰수 n회 (총 판매수량 : n개)</h4> <a href="#">경매기록</a>
-	<h4>남은시간</h4>
+	<h4>남은시간;</h4>
 	<input type="button" value="입찰-팝업" onclick="tenderPopup();">	
 	<input type="button" value="즉시구매-팝업" onclick="buyingPopup();">	
 	
