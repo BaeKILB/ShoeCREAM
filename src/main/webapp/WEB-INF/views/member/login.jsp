@@ -13,7 +13,7 @@
     <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
     <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
 
-    <script src="${pageContext.request.contextPath }/resources/js/inc/jquery-3.7.0.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
     
     <%-- 0627 배경인 수정 네이버 로그인 js --%>
 <!--     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script> -->
