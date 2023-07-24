@@ -1,3 +1,104 @@
+// 아이디 유효성 검사
+var idC = false;
+
+function validateId() {
+    const mem_id = document.getElementById("mem_id").value.trim();
+    const span = document.querySelector("#idError");
+
+    if (!/^[A-Za-z0-9]{2,20}$/.test(mem_id)) {
+        span.innerHTML = "아이디는 2자 이상 20자 이내의 영문자, 숫자로만 구성해주세요.";
+        idC = false;
+    } else {
+        span.innerHTML = "";
+        idC = true;
+    }
+}
+
+function checkConstraints() {
+    if (!idC) {
+        document.getElementById("mem_id").focus();
+    }
+}
+
+// 중복 확인 함수
+function checkDuplicateId() {
+    const mem_id = document.getElementById("mem_id").value.trim();
+
+    if (mem_id !== '' && idC) {
+        $.ajax({
+            type: "get",
+            url: "idCheck",
+            data: {
+                "mem_id": mem_id
+            }
+        }).done(function (result) {
+            // 아이디가 중복되었을 때
+            if (result == "1") {
+                $("#idError").html(mem_id + "은 등록되어있는 아이디입니다.");
+                $("input[name=mem_id]").val('').focus();
+            } else {
+                $("#idError").html(""); // 중복되지 않았을 경우, 결과 메시지를 제거합니다.
+            }
+        });
+    } else {
+        checkConstraints();
+    }
+}
+
+// 페이지 로드 시 이벤트 리스너를 추가합니다.
+$(document).ready(function () {
+    $("input[name=mem_id]").on("input", validateId);
+    $("input[name=mem_id]").on("focusout", checkDuplicateId);
+});
+
+
+//var idC = false;
+//
+//function validateId() {
+//    const mem_id = document.getElementById("mem_id").value.trim();
+//    const span = document.querySelector("#idError");
+//
+//    if (!/^[A-Za-z0-9]{2,20}$/.test(mem_id)) {
+//        span.innerHTML = "아이디는 2자 이상 20자 이내의 영문자, 숫자로만 구성해주세요.";
+//        document.getElementById("mem_id").focus();
+//        idC = false;
+//    } else {
+//        span.innerHTML = "";
+//        idC = true;
+//    }
+//}
+//
+//$(document).ready(function () {
+//    let isChecked = false;
+//
+//    $("input[name=mem_id]").on("blur", function () {
+//        const mem_id = $(this).val();
+//
+//        if (mem_id !== '') {
+//            $.ajax({
+//                type: "get",
+//                url: "idCheck",
+//                data: {
+//                    'mem_id': mem_id
+//                }
+//            }).done(function (result) {
+//                // 아이디가 중복되었을 때
+//                if (result == '1') {
+//                    // jQuery 선택자를 #idError로 변경하여 결과를 표시합니다.
+//                    $("#idError").html(mem_id + "은 등록되어있는 아이디입니다.");
+//                    $("input[name=mem_id]").val('').focus();
+//                    isChecked = false;
+//                } else {
+//                    $("#idError").html(''); // 중복되지 않았을 경우, 결과 메시지를 제거합니다.
+//                    isChecked = true;
+//                }
+//            });
+//        }
+//    });
+//});
+
+
+
 //let check = false; //submit 단계에서 확인할 변수
 //
 //

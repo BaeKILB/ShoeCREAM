@@ -1,27 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.MemberMapper">
-<!--    <insert id="insertMember"> -->
-<!-- 		INSERT -->
-<!-- 			INTO mem_info -->
-<!-- 			VALUES ( -->
-<!-- 				null  -->
-<!-- 				, #{mem_id}  -->
-<!-- 				, #{mem_name}   -->
-<!-- 				, #{mem_passwd}  -->
-<!-- 				, #{mem_email}  -->
-<!-- 				, CONCAT(#{phone1}, '-', #{phone2}, '-', #{phone3})   -->
-<!-- 				, CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})   -->
-<!-- 				, #{mem_birthday} -->
-<!-- 				, #{role} -->
-<!-- 				, now() -->
-<!-- 			) -->
-<!-- 	</insert> -->
+   <insert id="insertMember">
+		INSERT
+			INTO mem_info
+			VALUES (
+				null 
+				, #{mem_id} 
+				, #{mem_name}  
+				, #{mem_passwd} 
+				, #{mem_email} 
+				, CONCAT(#{phone1}, '-', #{phone2}, '-', #{phone3})  
+				, CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})  
+				, #{mem_birthday}
+				, #{role}
+				, now()
+			)
+	</insert>
+	
+	<select id="selectIdCheck">
+		select
+			count(*)
+		from
+			mem_info
+			<choose>
+				<when test="!mem_id.equals('')">
+					where mem_id = #{mem_id}					
+				</when>
+			</choose>
+	</select>
+	
+	 <select id="idCheck" parameterType="String" resultType="int">
+		SELECT COUNT(mem_id) FROM mem_info WHERE mem_id=#{mem_id}
+	</select>
+	
+	<select id="isMemberIdDuplicated" resultType="int" parameterType="string">
+	    SELECT COUNT(*) FROM mem_info WHERE mem_id = #{mem_id}
+	</select>	
+	
+	
+	
+	  <select id="selectMemberById" resultType="com.pj2.shoecream.vo.MemberVO">
+    SELECT * FROM mem_info WHERE mem_id = #{mem_id}
+  </select>
 
-		<insert id="insertMember">
-		    INSERT INTO mem_info
-		    VALUES (null, #{mem_id}, #{mem_name}, #{mem_passwd}, #{mem_email},
-		        null, null, null, #{role}, now())
-		</insert>
+  <select id="selectMemberByName" resultType="com.pj2.shoecream.vo.MemberVO">
+    SELECT * FROM mem_info WHERE mem_name = #{mem_name}
+  </select>
+
+  <select id="selectMemberByEmail" resultType="com.pj2.shoecream.vo.MemberVO">
+    SELECT * FROM mem_info WHERE mem_email = #{mem_email}
+  </select>
+
+  <select id="selectMemberByMtel" resultType="com.pj2.shoecream.vo.MemberVO">
+    SELECT * FROM mem_info WHERE mem_mtel = #{mem_mtel}
+  </select>
+	
+<!-- 		<insert id="insertMember"> -->
+<!-- 		    INSERT INTO mem_info -->
+<!-- 		    VALUES ( -->
+<!-- 			    null -->
+<!-- 			    , #{mem_id} -->
+<!-- 			    , #{mem_name} -->
+<!-- 			    , #{mem_passwd} -->
+<!-- 			    , #{mem_email} -->
+<!-- 			    , null -->
+<!-- 			    , null -->
+<!-- 			    , null -->
+<!-- 			    , #{role} -->
+<!-- 			    , now()) -->
+<!-- 		</insert> -->
 
 </mapper>

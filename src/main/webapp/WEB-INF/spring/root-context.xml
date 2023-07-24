@@ -19,7 +19,8 @@
 		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://localhost:3306/shoecream"></property>
 <!-- 		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://dbxbqm7.iptime.org:3306/shoecream"></property> -->
 		<property name="username" value="root"></property> 
-		<property name="password" value="qwe123"></property>
+<!-- 		<property name="password" value="qwe123"></property> -->
+		<property name="password" value="1234"></property>
 	</bean> 
 	
 	<!-- 2. HikariCP 를 통해 커넥션을 관리하는 DataSource 객체(HikariDataSource) 설정 -->

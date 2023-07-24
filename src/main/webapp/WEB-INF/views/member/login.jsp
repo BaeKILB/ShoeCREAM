@@ -41,19 +41,16 @@
                         <div class="wrap_box">
                             <div class="inner600">
                                 <h3 class="t_tit1">로그인</h3>
-				
+								<!-- 아이디 -->
                                 <div class="login_input">
                                     <div class="inp_bundle">
                                         <input type="text" name="mem_id"  value="${cookie.REMEMBER_ID.value}" class="inp" placeholder="아이디" />
-                                    </div>
-                                    <!--// 아이디 -->
-
+                                    </div>   
                                     <!-- 비밀번호 -->
                                     <div class="inp_bundle">
                                         <input type="password" name="mem_passwd" class="inp flex"
                                             placeholder="비밀번호 (영문, 숫자, 특수문자 포함 8~30자)" />
                                     </div>
-                                    <!--// 비밀번호 -->
                                 </div>
 
                                 <div class="input_bottom">
@@ -67,8 +64,8 @@
                                     </div>
                                 </div>
 
-
-                                <input type="submit" class="btn_login btn_typeB2" value="로그인">
+								<button class="btn_login btn_typeB2" >로그인</button>
+<!--                                 <input type="submit" class="btn_login btn_typeB2" value="로그인"> -->
                                 <div class="join">
                                     <p>아이디가 없으신가요? </p>
                                     <a href="SignUpForm">회원가입</a>
