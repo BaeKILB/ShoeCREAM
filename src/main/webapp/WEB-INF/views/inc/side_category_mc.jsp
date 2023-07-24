@@ -13,34 +13,48 @@
 	<div class="ct_mc_list ct_lc_${i} categoryList" >
 		<ul>
 			<li class="ct_mc_item">
-				<a href="" class="ct_lc_${i }" id="ct_mc_${1 + (5 * (i-1)) }">브랜드1 ${1 + (5 * (i-1)) }</a>
-			
+				<div class="ct_lc_item_btn">
+					<a href="" class="ct_lc_${i }" id="">브랜드1 ${1 + (5 * (i-1)) }</a>
+					<button id="ct_mc_${1 + (5 * (i-1)) }" class="ct_up_down_btn" onclick="allScListHidden(this); categoryBtnDrop(this);"></button>
+				</div>
 				<jsp:include page="../inc/side_category_sc.jsp">
-					<jsp:param value="1" name="mc_id"/>
+					<jsp:param value="${1 + (5 * (i-1)) }" name="mc_id"/>
 				</jsp:include>
 			</li>
 			<li class="ct_mc_item">
-				<a href="" class="ct_lc_${i }" id="ct_mc_${2 + (5 * (i-1)) }">브랜드2 ${2 + (5 * (i-1)) }</a>
+				<div class="ct_lc_item_btn">
+					<a href="" class="ct_lc_${i }" id="">브랜드2 ${2 + (5 * (i-1)) }</a>
+					<button id="ct_mc_${2 + (5 * (i-1)) }" class="ct_up_down_btn" onclick="allScListHidden(this); categoryBtnDrop(this); "></button>
+				</div>
 				<jsp:include page="../inc/side_category_sc.jsp">
-					<jsp:param value="2" name="mc_id"/>
+					<jsp:param value="${2 + (5 * (i-1)) }" name="mc_id"/>
 				</jsp:include>
 			</li>
 			<li class="ct_mc_item">
-				<a href="" class="ct_lc_${i }" id="ct_mc_${3 + (5 * (i-1)) }">브랜드3 ${3 + (5 * (i-1)) }</a>
+				<div class="ct_lc_item_btn">
+					<a href="" class="ct_lc_${i }" id="">브랜드3 ${3 + (5 * (i-1)) }</a>
+					<button id="ct_mc_${3 + (5 * (i-1)) }" class="ct_up_down_btn" onclick="allScListHidden(this); categoryBtnDrop(this);"></button>
+				</div>
 				<jsp:include page="../inc/side_category_sc.jsp">
-					<jsp:param value="3" name="mc_id"/>
+					<jsp:param value="${3 + (5 * (i-1)) }" name="mc_id"/>
 				</jsp:include>
 			</li>
 			<li class="ct_mc_item">
-				<a href="" class="ct_lc_${i }" id="ct_mc_${4 + (5 * (i-1)) }">브랜드4 ${4 + (5 * (i-1)) }</a>
+				<div class="ct_lc_item_btn">
+					<a href="" class="ct_lc_${i }" id="">브랜드4 ${4 + (5 * (i-1)) }</a>
+					<button id="ct_mc_${4 + (5 * (i-1)) }" class="ct_up_down_btn" onclick="allScListHidden(this); categoryBtnDrop(this);"></button>
+				</div>
 				<jsp:include page="../inc/side_category_sc.jsp">
-					<jsp:param value="4" name="mc_id"/>
+					<jsp:param value="${4 + (5 * (i-1)) }" name="mc_id"/>
 				</jsp:include>
 			</li>
 			<li class="ct_mc_item">
-				<a href="" class="ct_lc_${i }" id="ct_mc_${5 + (5 * (i-1)) }">브랜드5 ${5 + (5 * (i-1)) }</a>
+				<div class="ct_lc_item_btn">
+					<a href="" class="ct_lc_${i }" id="">브랜드5 ${5 + (5 * (i-1)) }</a>
+					<button id="ct_mc_${5 + (5 * (i-1)) }" class="ct_up_down_btn" onclick="allScListHidden(this); categoryBtnDrop(this);"></button>
+				</div>
 				<jsp:include page="../inc/side_category_sc.jsp">
-					<jsp:param value="5" name="mc_id"/>
+					<jsp:param value="${5 + (5 * (i-1)) }" name="mc_id"/>
 				</jsp:include>
 			</li>
 		</ul>
