@@ -41,6 +41,19 @@ public class JungGoNohVO {
 	
 	//====================================그 이외 필요한 VO==================================
 	
+	//============================파일=====================================
+	// 파일명을 저장할 변수 선언
+		private String product_image1;
+		private String product_image2;
+		private String product_image3;
+		private String product_image4;
+		// 주의! 폼에서 전달받는 실제 파일 자체를 다룰 MultipartFile 타입 변수 선언도 필요
+		// => 이 때, 멤버변수명은 input type="file" 태그의 name 속성명(파라미터명)과 동일해야함
+		private MultipartFile file1;
+		private MultipartFile file2;
+		private MultipartFile file3;
+		private MultipartFile file4;
+	
 	//================================찜======================================
 	
 	
