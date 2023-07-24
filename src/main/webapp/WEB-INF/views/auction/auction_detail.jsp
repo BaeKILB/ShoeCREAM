@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- 자바스크립트 파일 -->
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/auction/auctionDetail.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/auction/auction_detail.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 
 <!-- css파일  -->
@@ -23,8 +23,8 @@
 	
 	<hr>
 	
-	<h4>입찰수 n회 (총 판매수량 : n개)</h4> <a href="#">경매기록</a>
-	<h4>남은시간;</h4>
+	<h4>입찰수 n회 (총 판매수량 : n개) el</h4> <a href="#">경매기록</a>
+	<h4>남은시간; db에서 어떻게 받아올지 봐야함</h4>
 	<input type="button" value="입찰-팝업" onclick="tenderPopup();">	
 	<input type="button" value="즉시구매-팝업" onclick="buyingPopup();">	
 	

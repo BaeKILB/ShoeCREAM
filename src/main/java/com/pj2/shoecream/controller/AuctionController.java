@@ -18,11 +18,11 @@ public class AuctionController {
 	
     @PostMapping("AuctionDetail")
     public String AuctionDetail() { //경매 제품상세
-        return "";
+        return "auction/auction_detail";
     }
 
     @GetMapping("AuctionRecord")
     public String AuctionRecord() { //경매 기록
-        return "";
+        return "auction/auction_record";
     }
 }
