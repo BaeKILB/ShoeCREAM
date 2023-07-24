@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.BoardMapper">
+<select id="getNoticeListPaging" resultType="com.pj2.shoecream.vo.NoticeVO">
+		SELECT *
+			FROM (
+                SELECT
+                	bo_idx
+                	, bo_title
+                	, bo_content
+                	, bo_sysdate
+                	, bo_readcount
+              	FROM board_notice
+              	) AS n1
+              	<if test="!searchKeyword.equals('')">
+					WHERE 
+					<choose>
+						<when test="searchType.equals('title')">
+							bo_title LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+						<when test="searchType.equals('content')">
+							bo_content LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+						<when test="searchType.equals('title_content')">
+							bo_title LIKE CONCAT('%', #{searchKeyword},'%')
+							OR bo_content LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+					</choose>
+				</if>
+              	ORDER BY bo_idx DESC 
+		        LIMIT #{cri.skip}, #{cri.amount}
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(*)
+			FROM board_notice
+	</select>
+</mapper>
