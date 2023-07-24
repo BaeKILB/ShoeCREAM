@@ -1,7 +1,10 @@
 @charset "UTF-8";
 
+body {
+	width:1000px;
+}
 
-#sec_con.product_view {
+#sec_con.register_view {
 	padding-top: 150px;
 }
 
@@ -25,7 +28,7 @@
 }
 
 .first_title {
-	width:10%;
+	width:15%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -69,7 +72,7 @@
 }
 
 .second_title {
-	width:10%;
+	width:15%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -101,7 +104,7 @@
 }
 
 .third_title {
-	width:10%;
+	width:15%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -162,7 +165,7 @@
 }
 
 .fourth_title {
-	width:10%;
+	width:15%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -206,7 +209,7 @@
 }
 
 .fifth_title {
-	width:10%;
+	width:15%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -224,7 +227,7 @@
 }
 
 .radio_box {
-	width:30%;
+	width:40%;
 }
 
 label {
@@ -234,7 +237,7 @@ label {
 }
 
 
-#contact {
+#product_status {
 	width:10%;
 	height:30px;
 	font-size: 15px;
@@ -265,7 +268,7 @@ label {
 }
 
 .sixth_title {
-	width:10%;
+	width:15%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -283,7 +286,7 @@ label {
 }
 
 .size_box {
-	width:50%;
+	width:60%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -300,6 +303,10 @@ label {
 	clear:both;
 }
 
+.size_label{
+	width: 50%;
+}
+
 .sizeTableBtn {
 	width:20%;
 	height:30px;
@@ -312,7 +319,7 @@ label {
 }
 
 .size {
-	width:15%;
+	width:20%;
 	height:30px;
 	font-size: 15px;
 	font-weight: 300;
@@ -354,7 +361,7 @@ label {
 }
 
 .seventh_title {
-	width:10%;
+	width:15%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -380,7 +387,7 @@ label {
 	color: #333;
 	margin-left:10px;
 	border:1px solid #ddd;
-	text-align: right;
+	text-align: left;
 }
 
 .eighthContainner {
@@ -391,7 +398,7 @@ label {
 }
 
 .eighth_title {
-	width:10%;
+	width:15%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -456,7 +463,7 @@ label {
 }
 
 .tenth_title {
-	width:10%;
+	width:15%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -474,7 +481,7 @@ label {
 }
 
 .check_box {
-	width:30%;
+	width:35%;
 }
 	
 
@@ -487,7 +494,7 @@ label {
 }
 
 .duplication_Ok {
-	width:10%;
+	width:20%;
 	margin-left:10px;
 	margin-top:8px;
 	font-size:15px;

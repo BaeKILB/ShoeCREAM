@@ -1,16 +1,32 @@
 package com.pj2.shoecream.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.pj2.shoecream.vo.JungGoNohVO;
 
 
 @Controller
 public class JunggoController {
+	
 	
 	@GetMapping("JunggoSearch")
 	public String junggoSearch(@RequestParam Map<String,Object> map, Model model) {
@@ -43,25 +59,10 @@ public class JunggoController {
 	
 	//------------------ 물건 등록 프로 ---------------------------
 	@PostMapping("registProductPro")
-	public String registProductPro() {
-		System.out.println();
-		
-		// StudentService - registStudent() 메서드를 호출하여 학생 정보 등록 요청
-		// => 파라미터 : StudentVO 객체   리턴타입 : int(insertCount)
-//		StudentService service = new StudentService(); // 객체 자동 주입으로 인해 객체 생성 불필요
-		// => 단, @Service 어노테이션이 적용된 Service 클래스 정의 및 @Autowired 필수!
-		// => 해당 인스턴스 생성 없이도 자동 주입되므로 service 멤버변수를 바로 사용 가능
-		//int insertCount = service.registProduct();
-		
-		// 등록 실패(insertCount == 0) 시 Model 객체에 "등록 실패!" 저장(속성명 msg) 후 fail_back.jsp 로 포워딩
-//		if(insertCount == 0) {
-//			model.addAttribute("msg", "등록 실패!");
-//			return "fail_back";
-//		}
-		
-		// studentList 서블릿 주소로 리다이렉트
-		return "redirect:/junggo/JunggoSearch";
-	}
+	public String registProductPro(HttpSession session, @RequestParam Map<String,Object> map, JungGoNohVO jungGoNoh, Model model, HttpServletRequest request) {
+		String sId = (String)session.getAttribute("sId");
+				return "redirect:/JunggoSearch";
+			}
 
 	
 	

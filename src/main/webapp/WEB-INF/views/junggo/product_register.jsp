@@ -32,7 +32,7 @@
 	<%--입력하지 않은 자료 보낼 때--%>
 <%-- 		<input type="hidden" name="car_model" value="${map.car_info.car_model}"/> --%>
 		<form action="registProductPro" method="post">
-		<section id="sec_con" class="inr register_view">
+		<section id="sec_con" class="register_view inr">
 			<div class="titleContainner">
 				<p class="title_title">기본 정보</p>
 			</div>
@@ -41,10 +41,10 @@
 				<div class="first_title">상품 이미지()</div>
 				<div class="first_content">
 					<div class=image_box>
-						<div class="image_content"></div>
-						<div class="image_content"></div>
-						<div class="image_content"></div>
-						<div class="image_content"></div>
+						<div class="image_content" name="file1"></div>
+						<div class="image_content" name="file2"></div>
+						<div class="image_content" name="file3"></div>
+						<div class="image_content" name="file4"></div>
 					</div>
 					<div class="warning_text">
 					* 상품 이미지는 640x640에 최적화 되어 있습니다.<br>
@@ -59,7 +59,7 @@
 			<div class="secondContainner">
 				<div class="second_title">제목</div>	
 				<div class="second_content">
-					<input type="text" class="product_name" value="품목을 입력해주세요." onfocus="this.select()"/>
+					<input type="text" class="product_name" name="product_title" value="품목을 입력해주세요." onfocus="this.select()"/>
 				</div>
 			</div>
 			
@@ -67,9 +67,9 @@
 				<div class="third_title">카테고리</div>	
 				<div class="third_content">
 					<div class="category_box">
-						<div class="category_content_l">제1분류</div>
-						<div class="category_content_m">제2분류</div>
-						<div class="category_content_s">제3분류</div>
+						<div class="category_content_l" >제1분류</div>
+						<div class="category_content_m" >제2분류</div>
+						<div class="category_content_s" >제3분류</div>
 					</div>
 					<p class="selected_category" >선택한 카테고리 : </p>	
 				</div>
@@ -78,8 +78,8 @@
 			<div class="fourthContainner">
 				<div class="fourth_title">거래지역</div>	
 				<div class="fourth_content">
-					<button class="location_btn" onclick="window.open('address','width=502,height=500,location=no,status=no,scrollbars=yes');">주소검색</button>
-					<input type="text" class="seller_location" value="주소검색을 통해 주소를 입력해주세요." disabled="disabled"/>
+					<button type="button" class="location_btn" onclick="window.open('address','width=502,height=500,location=no,status=no,scrollbars=yes');">주소검색</button>
+					<input type="text" class="seller_location" name="product_location" value="주소검색을 통해 주소를 입력해주세요." disabled="disabled"/>
 				</div>
 			</div>
 			
@@ -88,15 +88,15 @@
 				<div class="fifth_content">
 					<div class="radio_box">
 						<label>
-	    					<input type="radio" name="contact" value="중고(상급)"/>
+	    					<input type="radio" name="product_status" value="중고(상급)"/>
 	   						<span>중고(상급)</span>
 	  					</label>
 	  					<label>
-						  	<input type="radio" name="contact" value="중고(하급)"/>
+						  	<input type="radio" name="product_status" value="중고(하급)"/>
 						   	<span>중고(하급)</span>
 						</label>
 						<label>
-						  	<input type="radio" name="contact" value="미개봉"/>
+						  	<input type="radio" name="product_status" value="미개봉"/>
 						   	<span>미개봉</span>
 						</label>
 					</div>
@@ -108,16 +108,16 @@
 				<div class="sixth_title">사이즈, 브랜드</div>	
 				<div class="sixth_content">
 					<div class="size_box">
-						<label>
+						<label class="size_label">
 	    					<span>사이즈</span>
-	   						<input type="text" class="size" onfocus="this.select()"/> mm 
+	   						<input type="text" class="size" name="product_size" onfocus="this.select()"/> mm 
 	  					</label>
-							<button class="sizeTableBtn" onclick="window.open('${pageContext.request.contextPath}/resources/img/junggo/sizeTable.png','사이즈 표','width=502,height=500,location=no,status=no,scrollbars=yes');">사이즈표</button>
+							<button type="button" class="sizeTableBtn" onclick="window.open('${pageContext.request.contextPath}/resources/img/junggo/sizeTable.png','사이즈 표','width=502,height=500,location=no,status=no,scrollbars=yes');">사이즈표</button>
 					</div>
 					<div class="brand_box">
 						<label>
 						  	<span>브랜드</span>
-						  	 <input type="text" class="brand"/>
+						  	 <input type="text" class="brand" name="product_brand"/>
 						  		<select name="inputBrand" onchange="sellectBrand(this.value)">
 									<option value="">기타(직접입력)</option>
 									<option value="ADIDAS">ADIDAS</option>
@@ -144,7 +144,7 @@
 <!-- 					<label>  -->
 <!-- 					 	<input type="checkbox" class="delivery_fee" checked="checked">&nbsp; 배송비 포함 -->
 <!-- 					</label>  -->
-					<input type="text" class="total_fee" value="금액을 입력해주세요. 단위는 원(₩)입니다." onfocus="this.select()"/>&nbsp;원(₩) 
+					<input type="text" class="total_fee" name="product_price" value="금액을 입력해주세요." onfocus="this.select()"/>&nbsp;원(₩) 
 					
 				</div>
 			</div>
@@ -152,7 +152,7 @@
 			<div class="eighthContainner">
 				<div class="eighth_title">상품설명</div>	
 				<div class="eighth_content">
-					 <textarea class="product_detail" rows="" cols="" onfocus="this.select()">상품에 대한 설명을 작성해주세요</textarea> 
+					 <textarea class="product_detail" name="product_info" rows="" cols="" onfocus="this.select()">상품에 대한 설명을 작성해주세요</textarea> 
 				</div>
 			</div>
 			
@@ -178,8 +178,8 @@
 			</div>
 			
 			<div class="lastContainner">
-				<button class="register_btn" onclick="location.href='address'">등록하기</button>
-				<button class="back_btn" onclick="location.href='address'">돌아가기</button>
+				<button type="submit" class="register_btn" onclick="location.href='address'">등록하기</button>
+				<button type="button" class="back_btn" onclick="location.href='address'">돌아가기</button>
 			</div>
 			
 		</section>
