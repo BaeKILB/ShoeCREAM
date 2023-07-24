@@ -1,55 +1,52 @@
-.categoryList *{
-	list-style: none;
+.categoryList * {
+  list-style: none;
 }
 
-.categoryList li a{
-	text-decoration: none;
-	color: black;
+.categoryList li a {
+  text-decoration: none;
+  color: black;
 }
 
-.categoryList{
-	display: none;
-	width:200px;
+.categoryList {
+  display: none;
+  width: 150px;
 }
 
-.categoryTop{
-	display: inline-block;
+.categoryTop {
+  display: inline-block;
 }
 
-
-
-.ct_lc_item_btn{
-	display: flex;
-	justify-content: space-between;
+.ct_lc_item_btn {
+  display: flex;
+  justify-content: space-between;
 }
-.ct_lc_item_btn button{
-	width:24px;
-	height: 24px;	
-	background-repeat:no-repeat;
-	background-color: inherit;
-	transition: all 0.5s ;
+.ct_lc_item_btn button {
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-color: inherit;
+  transition: all 0.5s;
 }
 
 /* 카테고리 항목들 마진 주기 */
-.ct_mc_list{
-	padding-left:2rem;
+.ct_mc_list {
+  padding-left: 2rem;
 }
-.ct_sc_list{
-	padding-left:3rem;
+.ct_sc_list {
+  padding-left: 3rem;
 }
 
 /* 카테고리 펼치고 숨기기 */
-.ct_show{
-	display:inline-block;
+.ct_show {
+  display: inline-block;
 }
 
 /* 이미지 토글 */
-.ct_up_down_btn{
-
-	background-image: url("../../../resources/img/junggo/inc/side_category/down.svg");
+.ct_up_down_btn {
+  background-image: url("../../../resources/img/junggo/inc/side_category/down.svg");
 }
-.ct_img_up{
-	background-image: url("../../../resources/img/junggo/inc/side_category/up.svg");	
+.ct_img_up {
+  background-image: url("../../../resources/img/junggo/inc/side_category/up.svg");
 }
 
 /* hover */

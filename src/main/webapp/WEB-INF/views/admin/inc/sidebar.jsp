@@ -47,7 +47,7 @@
 					<ul class="cont_item_ul">
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
-								<i class="fa fa-user" aria-hidden="true"></i>
+								<i class="fa fa-gavel" aria-hidden="true"></i>
 								경매 관리
 							</a>
 							<ul class="cont_li_wrap">
@@ -61,7 +61,7 @@
 						</li>
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
-								<i class="fa fa-user" aria-hidden="true"></i>
+								<i class="fa fa-cubes" aria-hidden="true"></i>
 								중고 관리
 							</a>
 							<ul class="cont_li_wrap">
@@ -77,7 +77,7 @@
 					<ul class="cont_item_ul">
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
-								<i class="fa fa-user" aria-hidden="true"></i>
+								  <i class="fa fa-krw" aria-hidden="true"></i>
 								계좌 관리
 							</a>
 							<ul class="cont_li_wrap">
@@ -88,7 +88,7 @@
 						</li>
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
-								<i class="fa fa-user" aria-hidden="true"></i>
+								<i class="fa fa-credit-card-alt" aria-hidden="true"></i>
 								입출금 내역
 							</a>
 							<ul class="cont_li_wrap">
@@ -107,7 +107,7 @@
 					<ul class="cont_item_ul">
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
-								<i class="fa fa-user" aria-hidden="true"></i>
+								 <i class="fa fa-bullhorn" aria-hidden="true"></i>
 								신고 관리
 							</a>
 							<ul class="cont_li_wrap">
@@ -118,7 +118,7 @@
 						</li>
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
-								<i class="fa fa-user" aria-hidden="true"></i>
+								  <i class="fa fa-comments" aria-hidden="true"></i>
 								1:1 문의
 							</a>
 							<ul class="cont_li_wrap">
@@ -129,7 +129,7 @@
 						</li>
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
-								<i class="fa fa-user" aria-hidden="true"></i>
+								<i class="fa fa-th-list" aria-hidden="true"></i>
 								공지사항
 							</a>
 							<ul class="cont_li_wrap">
@@ -145,6 +145,7 @@
 	</div>
 	<script>
 		$('.cont_item_a').click(function () {
+			$('.cont_li_wrap').not($(this).siblings('.cont_li_wrap')).slideUp();
 		    $(this).siblings('.cont_li_wrap').slideToggle();
 		    $(this).toggleClass('rotate');
 		});

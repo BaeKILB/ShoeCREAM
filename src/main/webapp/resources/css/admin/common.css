@@ -14,3 +14,14 @@ a {
 ul, li {
 	list-style: none;
 }
+#admin_cont {
+	margin-left: 15.625rem;
+    padding: 5rem 2rem;
+    background: #F1F5F9;
+	min-height: 100vh
+}
+@media screen and (max-width: 768px) {
+	#admin_cont {
+		margin-left: 0;
+	}
+}
