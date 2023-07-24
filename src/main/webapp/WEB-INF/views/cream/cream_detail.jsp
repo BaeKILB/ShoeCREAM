@@ -15,6 +15,27 @@
 <!-- css파일  -->
 <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 
+<!-- 탭용 임시 css -->
+<style>
+    /* 탭 메뉴 스타일 설정 */
+    .find_tab {
+        cursor: pointer;
+        padding: 10px;
+        background-color: #f2f2f2;
+        display: inline-block;
+        margin-right: 5px;
+    }
+    .find_tab.off {
+        background-color: #ccc;
+    }
+    .find_cont {
+        display: none;
+    }
+    .find_cont.active {
+        display: block;
+    }
+</style>
+
 </head>
 <body>
 <h1>CREAM</h1>
@@ -53,29 +74,123 @@
 <%-- 		</c:forEach> --%>
 		</table>
 	
-	<h3>시세</h3>	
+		
 	<!-- 비번찾기 find.jsp에서 소스따오기 -->
 	<!-- 1개월 3개월 6개월 1년 전ㅊㅔ.. 많은데 좀 줄일까요? -->
 	<!-- 그래프로 나타냅니다 -->
-	
-	<!-- 체결거래/판매입찰/구매입찰 -->
-	<!-- 카테고리에 들어갈 내용은 이하와 같음 -->
-		<table>
-			<tr>
-				<th>사이즈</th>
-				<th>거래가</th>
-				<th>거래일</th>
-				<!-- 거래일 23/07/24 형태로 fmt추가 완료 -->
-			</tr>
+<div id="sec_con" class="w3-container-main inr">
+    <h1 class="con_title">시세조회</h1>
+    
+    <!-- 1개월, 3개월, 6개월, 1년, 전체 탭 그룹 -->
+    <div class="find_wrap">
+        <div class="cont_box">
+            <div class="find_tit">
+                <div class="find_tab">
+                    <p>1개월</p>
+                </div>
+                <div class="find_tab">
+                    <p>3개월</p>
+                </div>
+                <div class="find_tab">
+                    <p>6개월</p>
+                </div>
+                <div class="find_tab">
+                    <p>1년</p>
+                </div>
+                <div class="find_tab">
+                    <p>전체</p>
+                </div>
+            </div>
+            <div class="find_cont active">
+                차트 넣기 1
+            </div>
+            <div class="find_cont">
+                차트 넣기 3
+            </div>
+            <div class="find_cont">
+                차트 넣기 6
+            </div>
+            <div class="find_cont">
+                차트 넣기 1년
+            </div>
+            <div class="find_cont">
+                차트 넣기 전체
+            </div>
+        </div>
+    </div>
+    
+  <!-- 사이즈, 거래일, 거래가 탭 그룹 -->
+    <div class="find_wrap">
+        <div class="cont_box">
+            <div class="find_tit">
+                <div class="find_tab">
+                    <p>체결거래</p>
+                </div>
+                <div class="find_tab">
+                    <p>판매입찰</p>
+                </div>
+                <div class="find_tab">
+                    <p>구매입찰</p>
+                </div>
+            </div>
+            <div class="find_cont active">
+                <table border="1">
+					<tr>
+						<th>사이즈</th>
+						<th>거래가</th>
+						<th>거래일</th>
+						<!-- 거래일 23/07/24 형태로 fmt추가 완료 -->
+					</tr>
 			
-<%-- 		<c:forEach var="member" items="${memberList }"> --%>
-<!-- 			<tr> -->
-<%-- 				<td>${member.idx }</td> --%>
-<%-- 				<td>${member.name }</td> --%>
-<%-- 				<td><fmt:formatDate value="${board.board_date }" pattern="yy-MM-dd" />  --%>
-<!-- 			</tr> -->
-<%-- 		</c:forEach> --%>
-		</table>
+<%-- 				<c:forEach var="member" items="${memberList }"> --%>
+<!-- 				<tr> -->
+	<%-- 				<td>${member.idx }</td> --%>
+	<%-- 				<td>${member.name }</td> --%>
+	<%-- 				<td><fmt:formatDate value="${board.board_date }" pattern="yy-MM-dd" />  --%>
+<!-- 				</tr> -->
+<%-- 				</c:forEach> --%>
+				</table>
+            </div>
+            <div class="find_cont">
+                <table border="1">
+					<tr>
+						<th>사이즈2</th>
+						<th>거래가</th>
+						<th>거래일</th>
+						<!-- 거래일 23/07/24 형태로 fmt추가 완료 -->
+					</tr>
+			
+<%-- 				<c:forEach var="member" items="${memberList }"> --%>
+<!-- 				<tr> -->
+	<%-- 				<td>${member.idx }</td> --%>
+	<%-- 				<td>${member.name }</td> --%>
+	<%-- 				<td><fmt:formatDate value="${board.board_date }" pattern="yy-MM-dd" />  --%>
+<!-- 				</tr> -->
+<%-- 				</c:forEach> --%>
+				</table>
+            </div>
+            <div class="find_cont">
+                <table border="1">
+					<tr>
+						<th>사이즈</th>
+						<th>거래가</th>
+						<th>거래일</th>
+						<!-- 거래일 23/07/24 형태로 fmt추가 완료 -->
+					</tr>
+			
+<%-- 				<c:forEach var="member" items="${memberList }"> --%>
+<!-- 				<tr> -->
+	<%-- 				<td>${member.idx }</td> --%>
+	<%-- 				<td>${member.name }</td> --%>
+	<%-- 				<td><fmt:formatDate value="${board.board_date }" pattern="yy-MM-dd" />  --%>
+<!-- 				</tr> -->
+<%-- 				</c:forEach> --%>
+				</table>
+            </div>
+        </div>
+    </div>
+</div>
+	
 		<button onclick="dealsListPopup()">체결 거래 내역 더 보기- popup</button>
 	
 	<h1>연관상품</h1>
