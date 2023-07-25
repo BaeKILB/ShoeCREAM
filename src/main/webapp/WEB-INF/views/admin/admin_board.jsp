@@ -141,66 +141,58 @@
 									value="${param.searchKeyword}" id="searchKeyword"> <input
 									type="submit" value="검색" class="searchSubmit">
 							</div>
-							<table id="adm_mem_list" class="adm_mem_list">
-								<tr id="adm_mem_title">
-									<td width="100px">글번호</td>
-									<td width="100px">제목</td>
-									<td width="100px">내용</td>
-									<td width="100px">날짜</td>
-									<td width="100px">조회수</td>
-								</tr>
-								<c:forEach var="noticeListP"  items="${noticeListP}">
-									<tr>
-										<td>${noticeListP.bo_idx}</td>
-										<td>${noticeListP.bo_title}</td>
-										<td>${noticeListP.bo_content}</td>
-										<td>${noticeListP.bo_sysdate}</td>
-										<td>${noticeListP.bo_readcount}</td>
+<!-- 							<ul class="list"> -->
+
+								<table>
+									<tr class="list_head">
+										<th class="list_num">번호</th>
+										<th class="txt_prev">
+											<h4>제목</h4>
+										</th>
+										<th class="writter"><span class="writter_name">글쓴이</span></th>
+										<th class="date">날짜</th>
 									</tr>
-								</c:forEach>
-							</table>
-							
-							<!--  페이징 처리 -->
-							<section id="pageList">
-
-								<c:choose>
-									<c:when test="${pageNum > 1 }">
-										<input type="button" value="이전"
-											onclick="location.href='BoardList?pageNum=${pageNum - 1}'">
-									</c:when>
-									<c:otherwise>
-										<input type="button" value="이전" disabled="disabled">
-									</c:otherwise>
-								</c:choose>
-
-
-								<c:forEach var="i" begin="${pageInfo.startPage }"
-									end="${pageInfo.endPage }">
-
-									<c:choose>
-										<c:when test="${pageNum eq i }">
-											<b>${i }</b>
-										</c:when>
-										<c:otherwise>
-											<a href="BoardList?pageNum=${i }">${i }</a>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-
-								<c:choose>
-									<c:when test="${pageNum < pageInfo.maxPage }">
-										<input type="button" value="다음"
-											onclick="location.href='BoardList?pageNum=${pageNum + 1}'">
-									</c:when>
-									<c:otherwise>
-										<input type="button" value="다음" disabled="disabled">
-									</c:otherwise>
-								</c:choose>
-							</section>
-						</div>
-						<div class="hanabutton">
-							<button type="submit" class="btn btn-primary" onclick="">수정하기</button>
-							<button type="button" class="btn btn-primary" onclick="">삭제하기</button>
+									<c:forEach var="NoticeList" items="${noticeListP}">
+										<tr class="list_cont">
+											<td class="list_num">${NoticeList.bo_idx}</td>
+											<td class="txt_prev"><a
+												href="noticeDetail?pageNum=${pageMaker.cri.pageNum}&bo_idx=${NoticeList.bo_idx}">
+													<h4>${NoticeList.bo_title}</h4>
+											</a></td>
+											<td class="writter"><span class="writter_name"><span
+													class="sv_member">관리자</span></span></td>
+											<td class="date"><fmt:formatDate
+													value="${NoticeList.bo_sysdate}" pattern="YY-MM-dd" /></td>
+										</tr>
+									</c:forEach>
+								</table>
+								<div class="write_btn">
+<%-- 									<c:if test="${sessionScope.sId eq 'admin@admin.com'}"> --%>
+										<a href="noticeWriteForm">글쓰기</a>
+<%-- 									</c:if> --%>
+								</div>
+								<div class="list_pager_wrap">
+									<nav class="pg_wrap">
+										<span class="pg">
+											<c:if test="${pageMaker.cri.pageNum > 1 }">											
+												<a href="NoticeList?pageNum=${pageMaker.cri.pageNum - 1 }" class="pg_page pg_prev" >이전</a>
+											</c:if>
+											<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+													<c:choose>
+														<c:when test="${pageMaker.cri.pageNum == num }">
+															<strong class="pg_current">${num}</strong>
+														</c:when>
+														<c:otherwise>
+															<a href="NoticeList?pageNum=${num }" class="pg_page">${num }</a>
+														</c:otherwise>
+													</c:choose>
+											</c:forEach>
+											<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">											
+												<a href="NoticeList?pageNum=${pageMaker.cri.pageNum + 1 }" class="pg_page pg_next" >다음</a>
+											</c:if>
+										</span>
+									</nav>
+								</div>
 						</div>
 					</div>
 				</form>

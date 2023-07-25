@@ -15,4 +15,16 @@ public interface BoardMapper {
 
 	int getTotal();
 
+	NoticeVO noticeDetail(NoticeVO notice);
+
+	int modifyBoard(NoticeVO notice);
+
+	int deleteNotice(NoticeVO notice);
+
+	int updateIdx(NoticeVO notice);
+
+	int selectMaxIdx();
+
+	int insertNotice(NoticeVO notice);
+
 }

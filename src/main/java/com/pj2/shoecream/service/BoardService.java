@@ -19,7 +19,27 @@ public class BoardService {
 	public int getTotal() {
 		return mapper.getTotal();
 	}
-
+	public NoticeVO noticeDetail(NoticeVO notice) {
+		return mapper.noticeDetail(notice);
+	}
+	public int modifyBoard(NoticeVO notice) {
+		return mapper.modifyBoard(notice);
+	}
+	public int deleteNotice(NoticeVO notice) {
+		return mapper.deleteNotice(notice);
+	}
+	public int updateIdx(NoticeVO notice) {
+		return mapper.updateIdx(notice);
+	}
+	
+	public int insertNotice(NoticeVO notice) {
+		// 최대 글번호 선택
+		int maxIdx = mapper.selectMaxIdx();
+		notice.setBo_idx(maxIdx);
+		return mapper.insertNotice(notice);
+	}
+	
+	
 	
 	
 }
