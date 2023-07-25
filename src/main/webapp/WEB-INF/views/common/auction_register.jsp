@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<form action="registProductPro" method="post">
+<form action="AuctionRegister" method="post">
 	<h1>경매 상품등록</h1>
 	<div class="titleContainner">
 		<p class="title_title">기본 정보</p>
@@ -117,17 +117,42 @@
 		</div>
 	</div>
 	<div class="eighthContainner">
+		<div class="container">
+		   <div class='col-md-5'>
+		      <div class="form-group">
+		         <div class='input-group date' id='datetimepicker6'>
+		            <input type='text' class="form-control" />
+		            <span class="input-group-addon">
+		            <span class="glyphicon glyphicon-calendar"></span>
+		            </span>
+		         </div>
+		      </div>
+		   </div>
+		   <div class='col-md-5'>
+		      <div class="form-group">
+		         <div class='input-group date' id='datetimepicker7'>
+		            <input type='text' class="form-control" />
+		            <span class="input-group-addon">
+		            <span class="glyphicon glyphicon-calendar"></span>
+		            </span>
+		         </div>
+		      </div>
+		   </div>
+		</div>		
+	
+	
+	
 		<div class="eighth_title">경매시작일</div>	
 		<div class="eighth_content">
-			<input type="date"> 
+			<input type="date" name="auc_regist_date"> 
 		</div>
 		<div class="eighth_title">경매마감일</div>	
 		<div class="eighth_content">
-			<input type="date"> 
+			<input type="date" name="auc_close_date"> 
 		</div>
 	</div>
-	<div class="ninthContainner">ninthContainner
-		<div class="ninth_title">상품설명</div>eighthContainner
+	<div class="ninthContainner">
+		<div class="ninth_title">상품설명</div>
 		<div class="ninth_content">
 			<textarea class="product_detail" name="product_info" placeholder="상품에 대한 설명을 작성해주세요" ></textarea>
 		</div>
