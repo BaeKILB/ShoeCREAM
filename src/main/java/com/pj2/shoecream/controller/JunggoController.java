@@ -55,21 +55,18 @@ public class JunggoController {
 	//==================================노용석================================================
 	
 	//------------------- 물건 등록 폼 이동---------------------
-	@GetMapping("productRegister")
-	public String productRegister(Model model) {
-	    return "junggo/product_register";
-	}
+	//주소창에 RegisterForm
 	
 	//------------------ 물건 등록 프로 ---------------------------
 	@PostMapping("registProductPro")
 	public String writePro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
-		String sId = (String)session.getAttribute("sId");
-		if(sId == null) {
-			model.addAttribute("msg", "잘못된 접근입니다!");
-			return "fail_back";
-		}
+//		String sId = (String)session.getAttribute("sId");
+//		if(sId == null) {
+//			model.addAttribute("msg", "잘못된 접근입니다!");
+//			return "fail_back";
+//		}
 		
-//		System.out.println(board);
+	//System.out.println(jungGoNoh);
 		
 		// 이클립스 프로젝트 상에 업로드 폴더(upload) 생성 필요 
 		// => 주의! 외부에서 접근하도록 하려면 resources 폴더 내에 upload 폴더 생성
