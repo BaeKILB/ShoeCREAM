@@ -8,23 +8,34 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.vo.MemberVO;
-import com.pj2.shoecream.vo.SignupVO;
 
 //@RequiredArgsConstructor
 @Controller
 public class MemberController {
+	// 로그인 폼
+	@GetMapping("/")
+	public String mainform() {
+		return "main_ex";
+	}
+	
+//	==========================Member(auth)==================
 	
 	// 로그 확인
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
@@ -39,7 +50,7 @@ public class MemberController {
 	}
 	
 	// 회원가입 폼
-	@GetMapping("SignUpForm") 
+	@GetMapping("signup") 
 	public String signupform() {
 		return "member/auth/signup";
 	}
@@ -85,18 +96,38 @@ public class MemberController {
 		return memberService.memIdCheck(map);
 	}
 	
-    // 회원수정 폼
-    @GetMapping("MemberUpdateForm")
-    public String updateForm() {
-    	return "member/mypage/update";
+//    ===========================MyPage===========================
+    
+    
+    // 마이페이지 폼
+    @GetMapping("mypage/{mem_idx}")
+    public String myPageForm(@PathVariable int mem_idx) {
+    	return "member/mypage/mypage";
     }
     
     // 회원수정 폼
-    @GetMapping("MemberDeleteForm")
+    @GetMapping("mypage/{mem_idx}/update")
+//    public String updateForm(@PathVariable int mem_idx, @AuthenticationPrincipal PrincipalDetails principalDetails) {//@AuthenticationPrincipal 이녀석을 통해 시큐리티가 저장한 세션을 접근할 수 있다.
+	public String updateForm(@PathVariable int mem_idx, @AuthenticationPrincipal(expression = "member") MemberVO member) {
+//    	System.out.println("세션 정보 :" + principalDetails.getMember());
+		
+    	// 1. 성공 ! 
+    	System.out.println("세션 정보 :" + member);
+    	
+    	// 2. 쓰읍 이 방법을 써야하는가 .. 
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		System.out.println("세션 정보2 : " + mPrincipalDetails.getMember());
+    	
+    	return "member/mypage/update";
+    }
+    
+    // 회원탈퇴 폼
+    @GetMapping("mypage/delete")
     public String deletForm() {
     	return "member/mypage/delete";
     }
     
-    
+//    =========================style============================
     
 }

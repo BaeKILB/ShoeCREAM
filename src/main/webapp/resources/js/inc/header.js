@@ -8,6 +8,10 @@ const joinForm = () => {
 	location.href="JoinForm";
 }
 
+const registerForm = () => {
+	location.href="RegisterForm";
+}
+
 $(function(){ // onload
 	// 검색
 	$("#search").on("click",function() {

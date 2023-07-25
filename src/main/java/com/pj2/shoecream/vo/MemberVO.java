@@ -1,6 +1,6 @@
 package com.pj2.shoecream.vo;
-
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -10,6 +10,18 @@ import lombok.Data;
 
 @Data
 public class MemberVO {
+	
+	// 회원 항목 추가
+	private int mem_idx;
+	private String mem_nickname;
+	private String mem_interest;
+	private String mem_account_auth;
+	private String mem_rank;
+	private int mem_point;
+	private int charge_point;
+	private int mem_balance;
+	private String mem_status;
+	
 //	@Unique(field = "mem_id", message = "이미 사용 중인 ID입니다.")
     @Size(min = 2, max = 20, message = "아이디는 2자 이상 20자 이내로 입력해주세요.")
     @NotBlank(message = "아이디를 입력해 주세요")
@@ -26,7 +38,7 @@ public class MemberVO {
 	private String mem_email;
 	
 //    @NotNull(message = "생년월일을 입력해 주세요")
-	private Date mem_birthday;
+	private Timestamp mem_birthday;
 	private	String mem_bir1;
 	private	String mem_bir2;
 	private	String mem_bir3;

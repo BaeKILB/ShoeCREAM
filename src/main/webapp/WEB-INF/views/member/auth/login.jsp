@@ -19,6 +19,8 @@
 <!--     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script> -->
 </head>
 <body>
+
+	<jsp:include page="../../inc_ex/header.jsp" />	
 	
  <div id="contents" class="subPage">
         <div id="sign">
@@ -68,7 +70,7 @@
 <!--                                 <input type="submit" class="btn_login btn_typeB2" value="로그인"> -->
                                 <div class="join">
                                     <p>아이디가 없으신가요? </p>
-                                    <a href="SignUpForm">회원가입</a>
+                                    <a href="signup">회원가입</a>
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,205 @@
+/*모달창*/
+div[class^="modal_"]{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+.bg {
+    width: 100%;
+    height: 100%;
+    background: rgba(51, 51, 51, 0.6);
+}
+.return_modal, .decide_modal, .review_modal{
+    text-align: center;
+    position: absolute;
+    background-color: #fff;
+    padding: 24px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    width: 300px;
+}
+.return_modal h2, .decide_modal h2, .review_modal h2{
+    font-size: 18px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+.return_modal p, .decide_modal p {
+    font-size: 1rem;
+    margin: 1rem 0px 1.5rem;
+    line-height: 1.5;
+    letter-spacing: -1px;
+}
+.review_modal p {
+    color: rgb(127, 127, 127);
+    font-size: 1rem;
+    margin: 1rem 0px 1.5rem;
+    line-height: 1.5;
+    letter-spacing: -1px;
+}
+div[class^="modal_"] .btn_area {
+    display: flex;
+    line-height: 1;
+}
+div[class^="modal_"] .btn_area a:hover {
+    color: #fff;
+}
+.btn_no {
+    margin-right: 0.5rem;
+    outline: none;
+    border: none;
+    background-color: #f4f4fa;
+    color: #72707f;
+}
+.btn_yes, .btn_yes:visited {
+    display: inline-block;
+    background-color: #ff5058;
+    color: #fff;
+}
+.btn_no, .btn_yes {
+    width: 120px;
+    font-size: 1rem;
+    padding: 1rem 0;
+    border: none;
+    outline: none;
+}
+
+div.hidden {
+    display: none;
+}
+
+/*필터 영역*/
+.filter_nav {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    height: 4rem;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.status_filter button {
+    padding: 0px 0.5rem;
+    height: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 13px;
+    color: rgb(155, 153, 169);
+    background-color: rgb(244, 244, 250);
+    border: none;
+    outline: none;
+}
+.status_filter button.active{
+    color: #fff;
+    background: rgb(255, 80, 88);
+}
+.pay_filter button {
+    background-color: #fff;
+    border: none;
+    outline: none;
+}
+
+/*상품내용*/
+.goods_one {
+    margin-top: 1rem;
+}
+.goods_one > a {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.goods_one .goods_image{
+    position: relative;
+    width: 96px;
+    height: 96px;
+}
+.goods_one img {
+    width: 96px;
+    height: 96px;
+}
+.goods_image span.goods_front {
+    position: absolute;
+    width: 96px;
+    height: 96px;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    background: rgba(30, 29, 41, 0.56);
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: #fff;
+    line-height: 1;
+}
+.goods_image span.goods_front i {
+    font-size: 1.2rem;
+}
+
+.goods_info {
+    color: rgb(30, 29, 41);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: 0.5rem;
+}
+.goods_info h2.goods_title {
+    font-size: 0.875rem;
+}
+.goods_info p.goods_price {
+    padding: 4px 0px;
+    font-size: 0.8125rem;
+    line-height: 0.8125rem;
+}
+.goods_info p.goods_price .bold {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+.goods_info .goods_shop, .goods_info .goods_date{
+    line-height: 1rem;
+    color: rgb(94, 92, 107);
+    font-size: 0.75rem;
+}
+
+/*버튼*/
+.goods_one > a+button, .goods_one > a + div.btn_area {
+    margin-top: 0.5rem;
+}
+.goods_one button {
+    outline: none;
+    border: none;
+    font-weight: 600;
+    line-height: 3rem;
+    font-size: 0.85rem;
+    color: rgb(30, 29, 41);
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid rgb(220, 219, 228);
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+}
+.goods_one > a+button {
+    width: 100%;
+}
+.goods_one > a + div.btn_area {
+    display: flex;
+}
+.goods_one > a + div.btn_area > button{
+    flex-basis: 100%;
+}
+.goods_one > a + div.btn_area > button:first-child {
+    margin-right: 0.3rem;
+}

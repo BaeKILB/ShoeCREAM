@@ -1,0 +1,91 @@
+@charset "utf-8";
+
+/*배너 & QR*/
+.carousel-control-next {
+    justify-content: right;
+    padding-right: 10px;
+}
+.carousel-control-prev {
+    justify-content: left;
+    padding-left: 10px;
+}
+.banner_wrap {
+    position: relative;
+}
+.qr_wrap {
+    position: absolute;
+    width: 94px;
+    height: 94px;
+    padding: 8px;
+    top: 53px;
+    left: 155px;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 12%) 0px 0px 7px 0px;
+}
+.image_qr {
+    width: 100%
+}
+
+/*상품 영역*/
+.main_goods {
+    padding: 3.5rem 0px 1.5rem;
+}
+.main_goods > h2{
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.goods_wrap {
+    display: flex;
+    flex-wrap: wrap;
+/*     justify-content: center; */
+}
+.goods_wrap > .goods {
+    display: inline-block;
+    width: 196px;
+    margin-right: 11px;
+    margin-bottom: 11px;
+    border: 1px solid #eee;
+}
+.goods_wrap > .goods:nth-child(5n) {
+    margin-right: 0;
+}
+.goods_image {
+    position: relative;
+    z-index: 1;
+    width: 194px;
+    height: 194px;
+}
+.goods_image > img:nth-child(2) {
+    position: absolute;
+    z-index: 10;
+    bottom: 10px;
+    left: 10px;
+}
+.goods_info {
+    padding: 15px 10px;
+    height: 80px;
+    font-size: 14px;
+    box-sizing: border-box;
+    line-height: 1;
+}
+.goods_info > .goods_title {
+    padding-bottom: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #121212;
+}
+.goods_price_date {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 20px;
+}
+.goods_price {
+    font-weight: 600;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #121212;
+}

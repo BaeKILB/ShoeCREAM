@@ -15,6 +15,7 @@
 		<img id="search" alt="searchIcon" src="">
 	</span>
 	<span id="memberPannel">
+		<button onclick="registerForm()">판매하기</button>
 		<button onclick="loginForm()">로그인</button>
 		<button onclick="joinForm()"> 회원가입</button>
 	</span>
