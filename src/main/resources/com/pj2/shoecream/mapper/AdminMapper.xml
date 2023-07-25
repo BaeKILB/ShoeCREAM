@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.AdminMapper">
+	<!-- 회원 조회 -->
+	<select id="selectMemberInfo" resultType="com.pj2.shoecream.vo.MemberVO">
+		SELECT *
+			FROM MEMBER
+				<if test="!searchKeyword.equals('')">
+					WHERE 
+					<choose>
+						<when test="searchType.equals('mem_id')">
+							mem_id LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+						<when test="searchType.equals('mem_name')">
+							mem_name LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+						<when test="searchType.equals('mem_nickname')">
+							mem_nickname LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+						<when test="searchType.equals('mem_rank')">
+							mem_rank LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+					</choose>
+				</if>
+			LIMIT
+				#{startRow}
+				, #{listLimit}
+	</select>
+	<select id="selectMemberListCount" resultType="int">
+		SELECT COUNT(*)
+			FROM MEMBER
+				<if test="!searchKeyword.equals('')">
+					WHERE 
+					<choose>
+						<when test="searchType.equals('mem_id')">
+							mem_id LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+						<when test="searchType.equals('mem_name')">
+							mem_name LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+						<when test="searchType.equals('mem_nickname')">
+							mem_nickname LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+						<when test="searchType.equals('mem_rank')">
+							mem_rank LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+					</choose>
+				</if>
+	</select>
+</mapper>
