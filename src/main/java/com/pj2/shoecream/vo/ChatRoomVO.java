@@ -10,7 +10,13 @@ import lombok.Data;
 @Data
 public class ChatRoomVO {
 	private int chat_room_idx;
-	private String room_title;
+	private int product_idx;
+	private int mem_seller_idx;
+	private int mem_buyer_idx;
+	private String chat_room_area;
+	
+	
+	
 	private Set<WebSocketSession> sessions = new HashSet<>();
 	
 }

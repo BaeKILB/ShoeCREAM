@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
-<configuration></configuration>
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.pj2.shoecream.vo.ChatMsgVO" alias="ChatMsgVO"/>
+		<typeAlias type="com.pj2.shoecream.vo.ChatRoomVO" alias="ChatRoomVO"/>
+		<typeAlias type="com.pj2.shoecream.vo.ProductVO" alias="ProductVO"/>
+		<typeAlias type="com.pj2.shoecream.vo.JungProductVO" alias="JungProductVO"/>
+		<typeAlias type="com.pj2.shoecream.vo.LCategory" alias="LCategory"/>
+		<typeAlias type="com.pj2.shoecream.vo.MCategory" alias="MCategory"/>
+		<typeAlias type="com.pj2.shoecream.vo.SCategory" alias="SCategory"/>
+	</typeAliases>
+</configuration>

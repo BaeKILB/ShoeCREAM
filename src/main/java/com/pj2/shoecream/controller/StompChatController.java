@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class StompChatController {
 	//채팅 db 활용 위한 서비스
 	@Autowired
-	ChatService service;
+	private ChatService service;
 	
     private final SimpMessagingTemplate template; //특정 Broker로 메세지를 전달
 	// 클라이언트가 보낼(send)수 있는 경로
@@ -26,7 +26,7 @@ public class StompChatController {
     
     /*
      * ex )  페이지의 js 코드에 
-     * stomp.subscribe("/topic/room" + room_id, [콜백함수]) 로 구독을 한다 하면
+     * stomp.subscribe("/topic/room" + chat_room_idx, [콜백함수]) 로 구독을 한다 하면
      * 아래 코드의 주소도 같은 주소로 이루어져야함
      * 고정되는 주소라면 @SendTo 로 쓰면 되지만
      * 유동되는 주소면 아래와같이 
@@ -37,14 +37,14 @@ public class StompChatController {
     
 	@MessageMapping("enter")
 	public void enter(ChatMsgVO msg) {
-		msg.setChat_content(msg.getChat_writer() + "님이 채팅방에 참여하였습니다.");
+		msg.setChat_msg_content(msg.getChat_msg_content() + "님이 채팅방에 참여하였습니다.");
 		template.convertAndSend("/topic/room" + msg.getChat_room_idx(),msg);
 	}
 
 	@MessageMapping("message")
 	public void message(ChatMsgVO msg) {
 		if(service.addChat(msg) < 0) {
-			msg.setChat_content("메시지 저장에 실패하였습니다!");
+			msg.setChat_msg_content("메시지 저장에 실패하였습니다!");
 			template.convertAndSend("/topic/room" + msg.getChat_room_idx(),msg);			
 		}
 		else {			

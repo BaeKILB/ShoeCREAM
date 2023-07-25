@@ -7,9 +7,10 @@ import lombok.Data;
 
 @Data
 public class ChatMsgVO {
-	private int	chat_id;
-    private int chat_room_idx;
-    private String chat_writer;
-    private String chat_content;
-    private Timestamp chat_date;
+	private int chat_msg_idx;
+	private int chat_room_idx;
+	private int mem_idx;
+	private String chat_msg_content;
+	private Timestamp chat_msg_date;
+    
 }

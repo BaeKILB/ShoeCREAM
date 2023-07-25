@@ -2,25 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.ChatMapper">
 	    
-	<insert id="insertChat" parameterType="com.pj2.shoecream.vo.ChatMsgVO">
+	<insert id="insertChat" parameterType="ChatMsgVO">
 		INSERT INTO chat_msg
 		VALUES(
 			null 
 			,#{chat_room_idx}
-			,#{chat_writer}
-			,#{chat_content}   
+			,#{mem_idx}
+			,#{chat_msg_content}   
 			,now()
 		)
 	</insert>
-	<insert id="insertChatRoom" parameterType="com.pj2.shoecream.vo.ChatRoomVO">
+	<insert id="insertChatRoom" parameterType="ChatRoomVO">
 		INSERT INTO chat_rooms
 		VALUES(
-			null ,
-			#{room_title}
+			null
+			,#{product_idx}
+			,#{mem_seller_idx}
+			,#{mem_buyer_idx}
+			,#{chat_room_area}
 		)
 	</insert>
 
-	<select id="selectChatList" resultType="com.pj2.shoecream.vo.ChatMsgVO">
+	<select id="selectChatList" resultType="ChatMsgVO">
 		SELECT * 
 		FROM chat_msg
 		WHERE 
@@ -29,16 +32,40 @@
 			chat_date
 		;
 	</select>
-	<select id="selectChatRoomList" resultType="com.pj2.shoecream.vo.ChatRoomVO">
+	<select id="selectChatRoomListSeller" resultType="ChatRoomVO">
 		SELECT * 
 		FROM chat_rooms
+		WHERE 
+			mem_seller_idx = #{mem_idx}
+			AND chat_room_area = #{chat_room_area}
 		;
 	</select>
-	<select id="selectChatRoom" resultType="com.pj2.shoecream.vo.ChatRoomVO">
+	<select id="selectChatRoomListBuyer" resultType="ChatRoomVO">
+		SELECT * 
+		FROM chat_rooms
+		WHERE 
+			mem_buyer_idx = #{mem_idx}
+			AND chat_room_area = #{chat_room_area}
+		;
+	</select>
+	<select id="selectChatRoom" resultType="ChatRoomVO">
 		SELECT * 
 		FROM chat_rooms
 		WHERE
 			chat_room_idx = #{chat_room_idx}
 		;
 	</select>
+	
+	<select id="selectChatCheckAuth">
+		SELECT * 
+		FROM chat_rooms
+		WHERE 
+			(
+				mem_buyer_idx = #{mem_idx}
+				or mem_seller_idx = #{mem_idx}
+			)
+			AND chat_room_idx = #{chat_room_idx}
+		;
+	</select>
+	
 </mapper>

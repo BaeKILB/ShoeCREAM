@@ -13,6 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pj2.shoecream.service.ChatService;
+import com.pj2.shoecream.service.JungProductService;
+import com.pj2.shoecream.vo.ChatRoomVO;
+import com.pj2.shoecream.vo.JungProductVO;
+
+
 
 
 
@@ -21,6 +26,9 @@ public class StompController {
 	
 	@Autowired
 	private ChatService chatService;
+	
+	@Autowired
+	private JungProductService jungProductService;
 
 	// 웹 소켓(stomp) 받을 경로
 	// StompHandler 에서 설정한 setApplicationDestinationPrefixes 경로가 병합 
@@ -59,11 +67,11 @@ public class StompController {
     public ModelAndView rooms(HttpServletRequest request){
     	HttpSession session = request.getSession();
     	ModelAndView mv = null;
-    	if(session.getAttribute("sId") == null || session.getAttribute("sId").equals("")) {    		
-    		return new ModelAndView("/home");
-    	}
+//    	if(session.getAttribute("sId") == null || session.getAttribute("sId").equals("")) {    		
+//    		return new ModelAndView("/home");
+//    	}
         mv = new ModelAndView("/inc/chat/rooms");
-        mv.addObject("list",chatService.getChatRoomList());
+//        mv.addObject("list",chatService.getChatRoomList());
 
         return mv;
     }
@@ -71,10 +79,14 @@ public class StompController {
 	//RedirectAttributes 란? : 모델(Model) 의 확장형 객체
 	// 흔히 post 후 redirect 시 사용됨
 	@PostMapping("room")
-	public String createRoom(@RequestParam String name, RedirectAttributes rttr) {
+	public String createRoom(@RequestParam ChatRoomVO chatRoom, RedirectAttributes rttr) {
+		JungProductVO jProduct = jungProductService.getJungProduct(chatRoom.getProduct_idx());
 		
-		if( chatService.makeChatRoom(name) > 0) {
-			rttr.addFlashAttribute("createRoomMsg", name + "방이 개설되었습니다.");
+		if(jProduct != null || jProduct.getProduct_title().equals("")) {
+			chatRoom.setChat_room_area("중고");
+			if(chatService.makeChatRoom(chatRoom) > 0) {
+				rttr.addFlashAttribute("createRoomMsg", jProduct.getProduct_title() + "방이 개설되었습니다.");
+			}
 		}
 		else {
 			rttr.addFlashAttribute("createRoomMsg", "방 개설에 문제가 발생하였습니다!");
