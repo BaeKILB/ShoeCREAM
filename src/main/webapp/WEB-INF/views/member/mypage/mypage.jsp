@@ -120,7 +120,7 @@ function payAuction(idx, price, id, title){
 					</c:forEach>
 				</div>
 				<div>
-					<p>${member.member_name}님</p>
+					<p>${member.member_id}님</p>
 					<p>등급 : ${member.member_rank}</p>
 				</div>
 				<div>

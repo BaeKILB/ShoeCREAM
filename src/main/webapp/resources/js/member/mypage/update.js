@@ -1,0 +1,6 @@
+/**
+ * 
+ */
+ function update() {
+	alert("update");
+}

@@ -1,0 +1,141 @@
+@charset "UTF-8";
+
+.mypage_sidebar ol,ul {
+  padding-left: 0rem;
+}
+
+.inq_container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.mypage_sidebar {
+    width: 25%;
+}
+
+.user_profile {
+    text-align: center;
+    padding: 32px 0;
+    border-radius: 10px;
+    background-color: #f3f3f3;
+}
+
+.user_info dt {
+    font-size: 20px;
+    color: #555;
+}
+
+.user_info b {
+    font-size: 24px;
+    color: #333;
+}
+
+.user_info dd {
+    margin-top: 10px;
+}
+
+.side_menu {
+    margin-top: 20px;
+    border: 1px solid #e7e7e7;
+    border-radius: 10px;
+    position: relative;
+}
+
+.info_manage {
+    margin-top: 30px;
+    width: 140px;
+    padding: 10px 0;
+    border-radius: 20px;
+    border: 0;
+    background: #ff6600;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto; 
+   
+}
+.side_menu .menu_tit {
+    position: relative;
+    border-bottom: 1px solid #e7e7e7;
+    padding: 17px;
+}
+
+.side_menu .menu_tit span {
+    font-size: 17px;
+    position: relative;
+    padding-left: 28px;
+    display: inline-block;
+    width: 100%;
+}
+
+.side_menu .menu_tit span:before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    background: url(../../img/car_img_storage/test_img/sports-car.png) no-repeat center;
+    background-size: contain;
+   
+}
+
+.side_menu .menu_tit.mt_user span:before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    background: url(../../img/inc/mem_sidebar/man-user.png) no-repeat center;
+    background-size: contain;
+}
+
+.side_menu .menu_tit.mt_call span:before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background: url(../../img/inc/mem_sidebar/phone-call.png) no-repeat center;
+    background-size: contain;
+}
+
+.side_menu .menu_tit span:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 0;
+    width: 17px;
+    height: 17px;
+    background: url(../../img/inc/mem_sidebar/arrow.png) no-repeat center;
+    background-size: contain;
+    transition: all 0.4s;
+}
+
+.side_menu .menu_tit span.on:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 0;
+    width: 17px;
+    height: 17px;
+    background: url(../../img/inc/mem_sidebar/arrow.png) no-repeat center;
+    background-size: contain;
+    transform: rotate(180deg);
+}
+
+.side_menu .side_sub {
+    padding: 17px;
+    padding-left: 30px;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.side_sub li:nth-child(n+2) {
+    margin-top: 10px;
+}

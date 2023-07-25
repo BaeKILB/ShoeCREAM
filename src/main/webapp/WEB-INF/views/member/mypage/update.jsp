@@ -70,9 +70,9 @@ function validatePassword() {
 <!--    </header> -->
    <form action="MemberModify" method="post" name="fr" onsubmit='return signUpCheck();'>
    <section id="sec_con">
-      <h1 class="con_title">내 정보 수정</h1>
+<!--       <h1 class="con_title">내 정보 수정</h1> -->
       <div class="inq_container">
-<%--          <jsp:include page="../../../inc/mem_sidebar.jsp"></jsp:include> --%>
+         <jsp:include page="../../inc_ex/mem_sidebar.jsp"></jsp:include>
 
          <div class="member-update-cont">
             <ul>
@@ -173,6 +173,7 @@ function validatePassword() {
             </ul>
             <div class="btn_info_update cr">
                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" >
+<!-- 			<button onclick="update()" ate="회원정보수정" class="upd_btn">수정하기</button> -->
             </div>
          </div>
       </div>
@@ -181,6 +182,7 @@ function validatePassword() {
 <!--    <footer> -->
 <%--       <jsp:include page="../../../inc/footer.jsp"></jsp:include> --%>
 <!--    </footer> -->
+	<script src="${pageContext.request.contextPath }/resources/js/member/mypage/update.js"></script>
 	<script type="text/javascript">
 	   
 	function signUpCheck() {

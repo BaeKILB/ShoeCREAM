@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 //	/**
 //	 * Simply selects the home view to render by returning its name.
 //	 */
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	@RequestMapping(value = "123asjdlkajasd", method = RequestMethod.GET)
 //	public String home(Locale locale, Model model) {
 //		logger.info("Welcome home! The client locale is {}.", locale);
 //		
@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 //		
 //		model.addAttribute("serverTime", formattedDate );
 //		
-//		return "main_ex";
+//		return "home";
 //	}
 //	
 //}
