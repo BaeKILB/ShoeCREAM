@@ -1,0 +1,250 @@
+@charset "utf-8";
+/*배경*/
+#background_main{
+    background-color: rgb(249, 249, 249);
+    padding-top: 30px;
+}
+
+/* 카테고리 */
+#category {
+    height: 40px;
+    font-size: 13px;
+}
+#category::after {
+    clear: both;
+}
+#category ul {
+    float: left;
+    width: 140px;
+    height: 25.5px;
+    line-height: 15px;
+    padding-left: 10px;
+    border: 1px solid rgb(238, 238, 238);
+}
+#category ul li {
+    height: 25.5px;
+}
+#category ul li a {
+    display: inline-block;
+    width: 100%;
+    height: 22.5px;
+    padding: 3px 0;
+    color: #121212;
+}
+#category ul li a:hover {
+    color: red;
+}
+#category_left, #category_right {
+    padding-top: 20px;
+}
+#category_left {
+    width: 600px;
+}
+#home {
+    float: left;
+}
+#home > span:nth-child(1) {
+    margin-right: 3px;
+}
+#home > span:nth-child(1) > img {
+    width: 15px;
+}
+
+.hidden_menu {
+    border: 1px solid rgb(238, 238, 238);
+    width: 140px;
+    padding: 0;
+    margin: 0;
+    padding-left: 10px;
+    margin-left: -11px;
+    margin-top: -2px;
+    display: none;
+    background-color: #fff; 
+}
+#entire {
+    float: left;
+    margin-left: 8px;
+}
+#entire > span:nth-child(1), #category_clothes > span:nth-child(1), #category_acc > span:nth-child(1) {
+    margin-right: 8px;
+}
+
+#category_clothes, #category_acc {
+    float: left;
+}
+#category_right {
+    float: right;
+    width: 418px;
+    text-align: right;
+}
+#category_right > img {
+    width: 216px;
+    position: relative;
+    top: -20px;
+}
+.entire_bar, .category_clothes_bar, .category_acc_bar {
+    position: relative;
+    top: -4px;
+    padding-top: 3px;
+    background-color: #fff; 
+}
+.under_direction {
+    float: left;
+    position: relative;
+    left: -20px;
+}
+
+/*하단 카테고리*/
+.category_under {
+    width: 100%;
+    display: flex;
+    margin-top: 20px;
+}
+.category_box {
+    width: 203.8px;
+    background-color: #fff;
+    padding: 13px 20px;
+    margin: 0px 1px 1px 0px;
+    box-shadow: rgb(238 238 238) 0px 1px 1px 0px;
+}
+.category_box > a {
+    font-size: 12px;
+    font-weight: 500;
+    color: #121212;
+}
+
+/*상품 영역*/
+.main_goods {
+    padding: 3.5rem 0px 1.5rem;
+}
+.goods_wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+.goods_wrap > .goods {
+    display: inline-block;
+    width: 196px;
+    margin-right: 11px;
+    margin-bottom: 11px;
+    border: 1px solid #eee;
+    background-color: #fff;
+}
+.goods_wrap > .goods:nth-child(5n) {
+    margin-right: 0;
+}
+.goods_image {
+    position: relative;
+    z-index: 1;
+    width: 194px;
+    height: 194px;
+}
+.goods_image > img:nth-child(2) {
+    position: absolute;
+    z-index: 10;
+    bottom: 10px;
+    left: 10px;
+}
+.goods_image > span {
+    position: absolute;
+    z-index: 10;
+    bottom: 10px;
+    left: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    padding: 2px 3px 3px;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+.goods_image > span:nth-child(3) {
+    left: 50px;
+}
+.goods_info {
+    padding: 15px 10px;
+    height: 80px;
+    font-size: 14px;
+    box-sizing: border-box;
+    line-height: 1;
+}
+.goods_info > .goods_title {
+    padding-bottom: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #121212;
+}
+.goods_price_date {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 20px;
+}
+.goods_price {
+    font-weight: 600;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #121212;
+}
+
+/*상품 영역*/
+.main_goods {
+    padding: 3.5rem 0px 1.5rem;
+}
+.goods_wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+.goods_wrap > .goods {
+    display: inline-block;
+    width: 196px;
+    margin-right: 11px;
+    margin-bottom: 11px;
+    border: 1px solid #eee;
+}
+.goods_wrap > .goods:nth-child(5n) {
+    margin-right: 0;
+}
+.goods_image {
+    position: relative;
+    z-index: 1;
+    width: 194px;
+    height: 194px;
+}
+.goods_image > img:nth-child(2) {
+    position: absolute;
+    z-index: 10;
+    bottom: 10px;
+    left: 10px;
+}
+.goods_info {
+    padding: 15px 10px;
+    height: 80px;
+    font-size: 14px;
+    box-sizing: border-box;
+    line-height: 1;
+}
+.goods_info > .goods_title {
+    padding-bottom: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #121212;
+}
+.goods_price_date {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 20px;
+}
+.goods_price {
+    font-weight: 600;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #121212;
+}

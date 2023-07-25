@@ -1,0 +1,220 @@
+html, body, div, header, nav, section, aside, article, footer, ul, ol, li, dl, dt, dd, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+ul {
+    list-style: none;
+}
+
+/* 링크 스타일 */
+a {
+    color: rgb(33, 33, 33);
+    text-decoration: none;
+}
+
+/* 기본 스타일 */
+body {
+    color: rgb(33, 33, 33);
+    font-size: 15px;
+}
+
+/* 건너뛰기 링크 */
+#skipNav {
+    position: absolute;
+    left: -9999px;
+}
+#skipNav:focus {
+    left: 50%;
+    margin: 3px 0 0 -3em;
+    padding: 5px 15px;
+    background-color: #000;
+    color: #fff;
+    outline: 0;
+    z-index: 10;
+}
+
+/* 전체적인 레이아웃 설계 */
+#main_content, header, footer {
+    width: 640px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/*헤더*/
+header {
+    position: relative;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(30, 29, 41);
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+}
+header h1 {
+    line-height: 3.125rem;
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+header a {
+    padding: 15px 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    vertical-align: middle;
+    outline: none;
+    border: none;
+    background-color: #fff;
+}
+
+/*굿즈 내용*/
+.goods {
+    position: relative;
+    display: flex;
+    background: rgb(255, 255, 255);
+    padding: 0.5rem;
+    border-bottom: 1px solid rgb(220, 219, 228);
+}
+.image_area {
+    width: 40px;
+    height: 40px;
+}
+.image_area img {
+    width: 100%;
+}
+.goods_info {
+    margin-left: 0.5rem;
+}
+.goods_info span.status{
+    padding: 0px 0.375rem;
+    height: 1.125rem;
+    transform: translateY(1px);
+    font-weight: bold;
+    display: inline-block;
+    line-height: 1.125rem;
+    font-size: 0.625rem;
+    border: 1px solid rgb(210, 210, 210);
+    color: rgb(102, 102, 102);
+    vertical-align: middle;
+}
+.goods_info span.status+span {
+    font-weight: 600;
+}
+.goods_info > p+p {
+    margin: 0.25rem 0.5rem 0px 0px;
+    font-size: 0.875rem;
+    line-height: 1.075rem;
+}
+p.change_message{
+    background-color: rgb(56, 154, 255);
+    border-radius: 1px;
+    padding: 0.75rem 1rem;
+    color: rgb(255, 255, 255);
+    font-size: 0.875rem;
+    letter-spacing: -0.5px;
+    text-align: center;
+}
+
+/*정산정보*/
+div.calculate_info {
+    padding: 1.5rem 1rem;
+}
+div.calculate_info > h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+div.calculate_info > p{
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+div.calculate_info > p > .calc_status{
+    margin-left: 0.25rem;
+    color: rgb(56, 154, 255);
+    background-color: rgb(228, 241, 255);
+    border: none;
+    padding: 1px 0.375rem;
+    font-size: 0.75rem;
+    height: 1.125rem;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    -ms-border-radius: 9px;
+    -o-border-radius: 9px;
+}
+div.calculate_info > div {
+    display: flex;
+    justify-content: space-between;
+}
+div.calculate_info > div:nth-child(n+1){
+    margin-top: 0.6875rem;
+}
+div.calculate_info > div > span:first-child {
+    color: rgb(102, 102, 102);
+}
+div.calculate_account a {
+    font-weight: bold;
+    color: rgb(0, 165, 135);
+    outline: none;
+    border: none;
+    background-color: #fff;
+}
+div.calculate_account a > img{
+    width: 24px;
+    height: 24px;
+    vertical-align: top;
+}
+
+/*거래정보*/
+div.change_info, div.charge_info{
+    text-align: left;
+    padding: 1.5rem 1rem;
+}
+div.change_info > h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+div.change_info > div:not(.charge_info), div.charge_info > div {
+    display: flex;
+    justify-content: space-between;
+}
+div.change_info > div:nth-child(n+1){
+    margin-top: 0.6875rem;
+}
+div.change_info > div > span:first-child,
+div.charge_info > div > span:first-child {
+    color: rgb(102, 102, 102);
+}
+div.charge_info {
+    background-color: rgb(250, 250, 250);
+}
+div.charge_info > div:nth-child(n+1){
+    margin-top: 0.5rem;
+}
+
+/*운송 정보*/
+div.delivery_info{
+    padding: 1.5rem 1rem;
+}
+div.delivery_info > h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+div.delivery_info > div {
+    display: flex;
+    justify-content: space-between;
+}
+div.delivery_info > div:nth-child(n+1){
+    margin-top: 0.6875rem;
+}
+div.delivery_info > div > span:first-child{
+    color: rgb(102, 102, 102);
+}
+
+/*푸터*/
+footer {
+    font-size: 10px;
+    padding: 20px;
+    background-color: rgb(250, 250, 250);
+    color: rgb(153, 153, 153);
+}

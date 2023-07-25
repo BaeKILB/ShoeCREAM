@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+       <div class="footer">
+           <div class="copyright">
+               <p>Clever 관리자 페이지</p>
+           </div>
+       </div>
 </body>
 </html>

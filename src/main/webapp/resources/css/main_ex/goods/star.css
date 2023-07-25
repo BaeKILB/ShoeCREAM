@@ -1,0 +1,52 @@
+.rate-area {
+    display: inline-block;
+    border-style: none;
+}
+
+.rate-area:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rate-area:not(:checked) > label {
+    float: right;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 32px;
+    color: lightgrey;
+    margin-bottom: 10px !important;
+}
+.rate-area:not(:checked) > label:nth-child(4n) {
+    display: inline;
+    position: relative;
+    width: 11px;
+    left: 11px;
+}
+.rate-area > input:checked ~ label {
+    color: rgb(255, 204, 0);
+    text-shadow: none;
+}
+
+.rate-area:not(:checked) > label:hover,
+.rate-area:not(:checked) > label:hover ~ label {
+    color: rgb(255, 204, 0);
+}
+
+.rate-area > input:checked + label:hover,
+.rate-area > input:checked + label:hover ~ label,
+.rate-area > input:checked ~ label:hover,
+.rate-area > input:checked ~ label:hover ~ label,
+.rate-area > label:hover ~ input:checked ~ label {
+    color: rgb(255, 204, 0);
+    text-shadow: none;
+    
+}
+
+.rate-area > label:active {
+    position:relative;
+    top:0px;
+    left:0px; 
+}
