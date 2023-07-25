@@ -193,12 +193,12 @@
 										</span>
 									</nav>
 								</div>
+							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				</section>
 			</section>
 		</section>
-	</section>
 
 
 
