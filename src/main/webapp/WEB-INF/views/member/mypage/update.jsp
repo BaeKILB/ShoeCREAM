@@ -14,51 +14,51 @@
    <link href="${pageContext.request.contextPath }/resources/css/member/mem_page/mem_info_update.css" rel="stylesheet">
    <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
    <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
-   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!--    <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-   <script src="${pageContext.request.contextPath }/resources/js/inc/jquery-3.7.0.js"></script>
+   <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script type="text/javascript">
-$(function(){
-     const passWd = document.getElementById("mem_passwd");
-     const validateMessage = document.getElementById('passwordError');
+// $(function(){
+//      const passWd = document.getElementById("mem_passwd");
+//      const validateMessage = document.getElementById('passwordError');
 
-     passWd.addEventListener("input", function() {
-       const pass = passWd.value;
-       if (validateEmail(pass)) {
-         validateMessage.textContent = '';
-       } else {
-         validateMessage.textContent = '영문,숫자,특수문자 포함 8~20글자 이상 입력 해주세요.';
-       }
-     });
+//      passWd.addEventListener("input", function() {
+//        const pass = passWd.value;
+//        if (validateEmail(pass)) {
+//          validateMessage.textContent = '';
+//        } else {
+//          validateMessage.textContent = '영문,숫자,특수문자 포함 8~20글자 이상 입력 해주세요.';
+//        }
+//      });
      
-     function validateEmail(pass) {
-       const re = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
-       return re.test(pass);
-     }
-   });
+//      function validateEmail(pass) {
+//        const re = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+//        return re.test(pass);
+//      }
+//    });
    
-//비밀번호 중복 확인검사 
-function validatePassword() {
-  var passwd = document.getElementById("mem_passwd").value;
-  var repeatPasswd = document.getElementById("passwordCheck").value;
-  var span = document.querySelector("#passwordCheckError");
+// //비밀번호 중복 확인검사 
+// function validatePassword() {
+//   var passwd = document.getElementById("mem_passwd").value;
+//   var repeatPasswd = document.getElementById("passwordCheck").value;
+//   var span = document.querySelector("#passwordCheckError");
 
-  if (passwd != repeatPasswd) {
-   span.innerHTML= '패스워드가 일치하지 않습니다.' 
+//   if (passwd != repeatPasswd) {
+//    span.innerHTML= '패스워드가 일치하지 않습니다.' 
    
-    return false;
-  }else{
-   span.innerHTML= '' 
+//     return false;
+//   }else{
+//    span.innerHTML= '' 
    
-  return true;
-}
+//   return true;
+// }
 
-}
+// }
 
 
 
 </script>
-<script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script>
+<%-- <script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script> --%>
    
 </head>
 
@@ -68,7 +68,9 @@ function validatePassword() {
 <%--       <jsp:include page="../../../inc/top1.jsp"></jsp:include> --%>
 		<jsp:include page="../../inc_ex/header.jsp" />
 <!--    </header> -->
-   <form action="MemberModify" method="post" name="fr" onsubmit='return signUpCheck();'>
+
+<!--    <form action="MemberModify" method="post" name="fr" onsubmit='return signUpCheck();'> -->
+   <form id="memberUpdate" name="fr">
    <section id="sec_con">
 <!--       <h1 class="con_title">내 정보 수정</h1> -->
       <div class="inq_container">
@@ -151,10 +153,7 @@ function validatePassword() {
                         -
                         <input type="text" name="phone2" id="phone2" type="text" maxlength="4" class="form-phone1" value="${member.phone2}" readonly="readonly">
                         -
-                        <input type="text" name="phone3" id="phone3" type="text" maxlength="4" class="form-phone1" value="${member.phone3}" readonly="readonly"
-                        
-                        \
-                        >
+                        <input type="text" name="phone3" id="phone3" type="text" maxlength="4" class="form-phone1" value="${member.phone3}" readonly="readonly">
                      </div>
                   </div>
                </li>
@@ -172,8 +171,8 @@ function validatePassword() {
                </li>
             </ul>
             <div class="btn_info_update cr">
-               <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" >
-<!-- 			<button onclick="update()" ate="회원정보수정" class="upd_btn">수정하기</button> -->
+<!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
+			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button>
             </div>
          </div>
       </div>
@@ -183,22 +182,22 @@ function validatePassword() {
 <%--       <jsp:include page="../../../inc/footer.jsp"></jsp:include> --%>
 <!--    </footer> -->
 	<script src="${pageContext.request.contextPath }/resources/js/member/mypage/update.js"></script>
-	<script type="text/javascript">
+<!-- 	<script type="text/javascript"> -->
 	   
-	function signUpCheck() {
+<!-- // 	function signUpCheck() { -->
 
-		let password = document.getElementById("mem_passwd").value
-	    let passwordCheck = document.getElementById("passwordCheck").value
+<!-- // 		let password = document.getElementById("mem_passwd").value -->
+<!-- // 	    let passwordCheck = document.getElementById("passwordCheck").value -->
 	    
-	    if(password != null && passwordCheck != null && password != "" && passwordCheck != "" ){
-		    if (!validatePassword(password) || !validatePassword(passwordCheck) ) {
-		      alert('영문,숫자,특수문자 포함 8~20글자 이상 입력 해주세요.');
-		      return false;
-		    }	    	
-	    }
-		return true;
-	}  
-	</script>
+<!-- // 	    if(password != null && passwordCheck != null && password != "" && passwordCheck != "" ){ -->
+<!-- // 		    if (!validatePassword(password) || !validatePassword(passwordCheck) ) { -->
+<!-- // 		      alert('영문,숫자,특수문자 포함 8~20글자 이상 입력 해주세요.'); -->
+<!-- // 		      return false; -->
+<!-- // 		    }	    	 -->
+<!-- // 	    } -->
+<!-- // 		return true; -->
+<!-- // 	}   -->
+<!-- 	</script> -->
 </body>
 
 </html>

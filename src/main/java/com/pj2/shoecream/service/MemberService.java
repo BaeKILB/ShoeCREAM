@@ -28,6 +28,9 @@ public class MemberService {
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         member.setMem_passwd(encPassword);
         member.setRole("ROLE_USER");
+        member.setMem_account_auth("N");
+        member.setMem_status("1");
+        
         memberMapper.insertMember(member);
         return member;
     }
@@ -47,6 +50,24 @@ public class MemberService {
 	// 프론트단 아이디 중복체크
 	public int memIdCheck(Map<String, String> map) {
 		return memberMapper.selectIdCheck(map);
+	}
+	
+	@Transactional
+	public MemberVO updateMemberInfo(int mem_idx, MemberVO member) {
+		
+		MemberVO memberEntity = memberMapper.updateMember(mem_idx, member);
+		
+        String rawPassword = member.getMem_passwd();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        
+        memberEntity.setMem_passwd(encPassword);
+        memberEntity.setMem_name(member.getMem_name());
+        memberEntity.setMem_email(member.getMem_email());
+        memberEntity.setMem_birthday(member.getMem_birthday());
+        memberEntity.setMem_address(member.getMem_address());
+        
+		return memberEntity;
+		
 	}
 
     

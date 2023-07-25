@@ -1,5 +1,7 @@
 package com.pj2.shoecream.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.protobuf.TextFormat.ParseException;
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.MemberService;
@@ -67,10 +70,17 @@ public class MemberController {
 	public String signup(@ModelAttribute @Valid MemberVO member, BindingResult bindingResult) {
 //		public String signup(@ModelAttribute @Valid SignupVO signupVO, BindingResult bindingResult) {
 		
+		
 		// 아이디 중복 유효성 검사
 	    if (memberService.isMemberIdDuplicated(member.getMem_id())) {
 	    	throw new CustomValidationException("이미 사용 중인 아이디입니다.", null);
 	    }
+	    
+		// 생년월일 유효성 검사
+		Date mem_birthday = member.getMem_birthday();
+		if (mem_birthday == null) {
+			throw new CustomValidationException("생년월일을 입력해주세요.", null);
+		}
 		
 	    // 회원가입 유효성 검사 - 유효성 검사 에러 난 애들 한 곳에 모아서(bindingResult에 의해) 처리 errorMap에 담긴 메세지는 @Vaildation 에 의해서 자동으로 적절한게 간다.
 		if (bindingResult.hasErrors()) {
@@ -94,6 +104,7 @@ public class MemberController {
 	        System.out.println(memberEntity);
 	        return "member/auth/login";
 	    }
+
 	}
 	
 	//id 중복 확인

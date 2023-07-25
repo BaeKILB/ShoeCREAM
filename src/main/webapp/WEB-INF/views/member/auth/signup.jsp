@@ -42,6 +42,13 @@
 				            <div id="nameError" class="error"></div>
 				        </div>
 				        
+				        <div class="name">
+				        	<p>닉네임</p>
+				        	<span class="sign_mark">*</span><br>
+				            <input id="mem_nickname"  name="mem_nickname" type="text"  placeholder="별명을 입력해 주세요." >
+				            <div id="nicknameError" class="error"></div>
+				        </div>
+				        
 				        <div class="password">
 				        	<p>비밀번호</p>
 				        	<span class="sign_mark">*</span><br>
@@ -49,20 +56,7 @@
 				            <div id="passwordError" class="error"></div>
 				        </div>
 				        
-				        <div class="email">
-				        	<p>이메일</p>
-				        	<span class="sign_mark">*</span><br>
-				            <input id="mem_email" name="mem_email" type="text" placeholder="이메일을 입력해 주세요." >
-				            <div id="emailError" class="error"></div> 
-				            <div id="emailError" class="error"><span class="id_already"></span></div> 
-				        </div>
-				        
-				        <div class="birthDate">
-				        	<p>생년월일</p>
-				        	<span class="sign_mark">*</span><br>
-				            <input id="mem_birthday" name="mem_birthday" type="date"  min="1990-01-01" onblur='validateBirth()' >
-				            <div id="birthError" class="error"></div>
-				        </div>
+ 
 				        
 				        <div class="addr">
 				        	<p>주소</p>
@@ -75,9 +69,48 @@
 				            <div id="addrError" class="error"></div>
 				        </div>
 				        
-				       <div class ="phoneAuth">
-     				        <p>휴대폰번호</p>
+				        <div class="birthDate">
+				        	<p>생년월일</p>
 				        	<span class="sign_mark">*</span><br>
+				            <input id="mem_birthday" name="mem_birthday" type="date"  min="1990-01-01" onblur='validateBirth()' >
+				            <div id="birthError" class="error"></div>
+				        </div>
+				        
+				        <div class="name">
+       					    <tr>
+						        <td class="col1">관심카테고리</td>
+						        <span class="sign_mark">*</span>
+						        <td class="col2"><select name="mem_interest" id="mem_interest">
+						            <option value="slc1" selected>선택</option>
+						            <option value="여성의류">여성의류</option>
+						            <option value="남성의류">남성의류</option>
+						            <option value="언더웨어">언더웨어</option>
+						            <option value="신발">신발</option>
+						            <option value="가방/잡화">가방/잡화</option>
+						            <option value="쥬얼리/시계">쥬얼리/시계</option>
+						            <option value="반려동물용품">반려동물용품</option>
+						            <option value="악기/취미">악기/취미</option>
+						            <option value="문구/사무용품">문구/사무용품</option>
+						            <option value="PC주변기기">PC주변기기</option>
+						            <option value="화장품/향수">화장품/향수</option>
+						            <option value="스포츠용품">스포츠용품</option>
+						            <option value="생활용품">생활용품</option>
+						            <option value="자동차용품">자동차용품</option>
+						        </select>
+						    </tr>
+				        </div>
+				        <br>
+				        <div class="email">
+				        	<p>이메일</p>
+				        	<span class="sign_mark">*</span><br>
+				            <input id="mem_email" name="mem_email" type="text" placeholder="이메일을 입력해 주세요." >
+				            <div id="emailError" class="error"></div> 
+				            <div id="emailError" class="error"><span class="id_already"></span></div> 
+				        </div>
+				        
+				         <p>휴대폰번호</p>
+				        	<span class="sign_mark">*</span><br>
+				       <div class ="phoneAuth">
 				        
 				        <div class="phone" >
 				            <input id="phone1"  name="phone1" type="text" size="1" maxlength="3" oninput="changePhone1()" > -
@@ -86,17 +119,17 @@
 				            <button type="button" disabled id="sendMessage" onclick="sendMsg()">인증번호 전송</button>
 				       			        
 				       </div>
+				        
 						<div class="confirm">
 				            <input type="text" id="cert" name="memberPhoneCertify" maxlength="4"  required disabled placeholder="인증번호를 입력 해주세요">
 				            <button type="button" disabled id="certifyCheck" onclick="verifyCode()" >인증확인</button>
-				        </div>
 				        
+				        </div>
 				        
 				        <div class="signUp">
 				           <button>가입하기</button>
 				        </div>
-						
-						
+									
 <!-- 				        <div class="email"> -->
 <!-- 				        	<p>아이디</p> -->
 <!-- 				        	<span class="sign_mark">*</span><br> -->

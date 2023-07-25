@@ -24,6 +24,10 @@ public interface MemberMapper {
 	// 시큐리티에 mem_id 셀렉해주기
     MemberVO findMemberById(String mem_id);
 
+	MemberVO updateMember(int mem_idx, MemberVO member);
+
+	Object findMemberById(int mem_idx);
+
 
 //	Object selectMemberById(String mem_id);
 //

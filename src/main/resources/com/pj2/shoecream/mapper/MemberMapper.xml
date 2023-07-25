@@ -8,13 +8,21 @@
 				null 
 				, #{mem_id} 
 				, #{mem_name}  
+				, #{mem_nickname}  
 				, #{mem_passwd} 
-				, #{mem_email} 
-				, CONCAT(#{phone1}, '-', #{phone2}, '-', #{phone3})  
 				, CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})  
 				, #{mem_birthday}
-				, #{role}
-				, now()
+				, #{mem_interest}
+				, #{mem_email} 
+				, CONCAT(#{phone1}, '-', #{phone2}, '-', #{phone3}) -- 휴대폰 번호  
+				, #{role} 							-- 멤버 권한
+				, #{mem_account_auth} 				-- 계좌 인증 여부
+				, #{mem_status} 					-- 회원 상태
+				, null 								-- 회원 등급
+				, null 								-- 회원 회원 포인트
+				, null 								-- 회원 충전포인트
+				, null 								-- 회원 잔액
+				, now() 							-- 회원 가입일
 			)
 	</insert>
 	
@@ -42,7 +50,19 @@
 	    SELECT * FROM mem_info WHERE mem_id = #{mem_id}
 	  </select>
   
-  
+  	
+	  <update id="updateMember" parameterType="com.pj2.shoecream.vo.MemberVO">
+        UPDATE mem_info
+        SET
+            mem_name=#{mem_name},
+            mem_email=#{mem_email},
+            , mem_birthday = CONCAT(#{member.mem_bir1}, '-', #{member.mem_bir2}, '-', #{member.mem_bir3}) 
+			, mem_address = CONCAT(#{member.sample6_postcode},'/',#{member.sample6_address},'/',#{member.sample6_detailAddress},'/',#{member.sample6_extraAddress})
+        WHERE mem_idx=#{mem_idx}
+     </update>
+	
+	
+	
 	
 	  <select id="selectMemberById" resultType="com.pj2.shoecream.vo.MemberVO">
     SELECT * FROM mem_info WHERE mem_id = #{mem_id}

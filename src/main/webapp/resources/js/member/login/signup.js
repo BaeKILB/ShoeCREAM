@@ -202,30 +202,30 @@ $(document).ready(function () {
 //			}
 //}
 //
-////생년월일 선택 max 오늘이후 선택 불가
-//let maxDate;
-//$(function(){
-//    $('[type="date"]').prop('max', function(){
-//        maxDate = new Date().toJSON().split('T')[0];
-//        return maxDate;
-//    });
-//});
+//생년월일 선택 max 오늘이후 선택 불가
+let maxDate;
+$(function(){
+    $('[type="date"]').prop('max', function(){
+        maxDate = new Date().toJSON().split('T')[0];
+        return maxDate;
+    });
+});
 //
-//var birC = false;
-//function validateBirth(){
-//	const birthDate = document.getElementById("mem_birthday").value;
-//	
-//	const span = document.querySelector("#birthError");
-//	console.log(birthDate);
-//	if(birthDate<'1900-01-01'||birthDate>maxDate){
-//		span.innerHTML= '유효한 생년월일을 입력해 주세요';
-//		document.getElementById("mem_birthday").value = "";
-//		birC = false;
-//	}else{
-//		span.innerHTML= '';
-//		birC = true;
-//	}
-//}
+var birC = false;
+function validateBirth(){
+	const birthDate = document.getElementById("mem_birthday").value;
+	
+	const span = document.querySelector("#birthError");
+	console.log(birthDate);
+	if(birthDate<'1900-01-01'||birthDate>maxDate){
+		span.innerHTML= '유효한 생년월일을 입력해 주세요';
+		document.getElementById("mem_birthday").value = "";
+		birC = false;
+	}else{
+		span.innerHTML= '';
+		birC = true;
+	}
+}
 //
 //주소찾기 
 function sample6_execDaumPostcode() {
