@@ -1,0 +1,239 @@
+/*모달창*/
+.hidden{
+    display: none;
+}
+
+
+/*하위메뉴*/
+.content_nav{
+    display: flex;
+    font-size: 13px;
+    height: 63px;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.content_nav > a {
+    color: rgb(33, 33, 33);
+    margin-right: 2rem;
+    padding: 0.5rem;
+    padding-right: 0;
+}
+.content_nav > a.active {
+    color: rgb(88, 80, 255);
+}
+.content_nav > a:first-child {
+    padding-left: 0;
+}
+.content_nav > a::after {
+    content: "";
+    width: 1px;
+    height: 14px;
+    border-right: 1px solid rgb(210, 210, 210);
+    margin-left: 2rem;
+}
+.content_nav > a:last-child::after {
+    border: 0;
+}
+
+/*본문 필터*/
+.goods_filter_area {
+    display: flex;
+    margin: 2.5rem 0px 2rem;
+}
+.goods_filter_area > form {
+    width: 400px;
+    margin-right: 1rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: 1px solid rgb(195, 194, 204);
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+}
+.goods_filter_area > form > input {
+    width: 100%;
+    height: 100%;
+    padding: 0px 68px 0px 1rem;
+    border: none;
+    outline: none;
+}
+.goods_filter_area > form > button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 52px;
+    height: 100%;
+    border: none;
+    outline: none;
+    background-color: #fff;
+}
+.goods_filter_area > form > button > i {
+    transform: scale(1.4);
+    -webkit-transform: scale(1.4);
+    -moz-transform: scale(1.4);
+    -ms-transform: scale(1.4);
+    -o-transform: scale(1.4);
+}
+.goods_filter_area > ul,
+.goods_manage_area tbody td ul {
+    width: 7rem;
+    height: 3rem;
+    margin-right: 1rem;
+    border: 1px solid rgb(195, 194, 204);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.goods_filter_area > ul li,
+.goods_manage_area tbody td ul li {
+    height: 2.5rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex: 1 1 0%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+li.option {
+    color: #121212;
+}
+.goods_filter_area > ul > li:first-child,
+.goods_manage_area tbody td ul > li:first-child {
+    height: 3rem;
+    padding: 2px 8px;
+    margin: 0;
+}
+.goods_filter_area > ul div,
+.goods_manage_area tbody td ul div {
+    border: 1px solid rgb(195, 194, 204);
+    box-shadow: -2px 2px 3px rgb(235, 234, 240);
+}
+.goods_filter_area > ul div li:hover,
+.goods_manage_area tbody td ul div li:hover {
+    background-color: rgb(235, 234, 240);
+}
+.goods_filter_area > ul > li:first-child > span:first-child,
+.goods_manage_area tbody td ul > li:first-child > span:first-child{
+    padding: 0 3px;
+}
+.goods_filter_area > ul .gray_arrow,
+.goods_manage_area tbody td ul .gray_arrow {
+    background-image:  url("../../images/goods/gray_arrow.svg");
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+    width: 1.6rem;
+    height: 100%;
+}
+
+/*본문영역*/
+.goods_manage_area{
+    font-size: 14px;
+}
+.goods_manage_area thead{
+    font-weight: 500;
+    border-top: 1px solid rgb(30, 29, 41);
+    border-bottom: 1px solid rgb(30, 29, 41);
+}
+.goods_manage_area thead > tr{
+    height: 2.5rem;
+    text-align: center;
+}
+.goods_manage_area tbody > tr{
+    height: 9.5rem;
+    border-bottom: 1px solid rgb(220, 219, 228);
+}
+.goods_manage_area tbody > tr > td {
+    padding: 0.5rem;
+    text-align: center;
+}
+.goods_manage_area tbody > tr ul {
+    margin: 0;
+}
+.goods_manage_area tr >th:nth-child(1),
+.goods_manage_area tbody tr >td:nth-child(1) {
+    width: 10.5rem;
+}
+.goods_manage_area tbody tr >td:nth-child(1) > img {
+    width: 100%;
+}
+.goods_manage_area tr >th:nth-child(2),
+.goods_manage_area tbody tr >td:nth-child(2) {
+    width: 8rem;
+}
+.goods_manage_area tr >th:nth-child(3),
+.goods_manage_area tbody tr >td:nth-child(3) {
+    width: 15.5rem;
+}
+.goods_manage_area tbody tr >td:nth-child(3) >a {
+    color: rgb(0, 114, 230);
+}
+.goods_manage_area tr >th:nth-child(4),
+.goods_manage_area tbody tr >td:nth-child(4) {
+    width: 6.5rem;
+}
+.goods_manage_area tr >th:nth-child(5),
+.goods_manage_area tbody tr >td:nth-child(5) {
+    width: 7.5rem;
+}
+.goods_manage_area tr >th:nth-child(6),
+.goods_manage_area tbody tr >td:nth-child(6) {
+    width: 4.5rem;
+}
+.goods_manage_area tr >th:nth-child(7),
+.goods_manage_area tbody tr >td:nth-child(7) {
+    width: 7.5rem;
+}
+.goods_manage_area tr >th:nth-child(8),
+.goods_manage_area tbody tr >td:nth-child(8) {
+    width: 2.5rem;
+}
+.goods_manage_area tbody tr >td:nth-child(8) > button {
+    width: 3.25rem;
+    height: 2rem;
+    text-align: center;
+    border-radius: 2px;
+    border: 1px solid rgb(195, 194, 204);
+    color: rgb(88, 80, 255);
+    background-color: #fff;
+    margin-bottom: 0.5rem;
+}
+.goods_manage_area tbody tr >td:nth-child(8) > a {
+    width: 3.25rem;
+    height: 2rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-radius: 2px;
+    border: 1px solid rgb(195, 194, 204);
+    color: rgb(0, 114, 230);
+}
+.paging{
+    padding: 2rem 0px 3rem;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.paging > a{
+    width: 33px;
+    height: 33px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-right: 12px;
+    border: 1px solid rgb(88, 80, 255);
+    border-radius: 2px;
+    color: rgb(255, 255, 255);
+    background: rgb(88, 80, 255);
+}

@@ -12,12 +12,15 @@ public class NoticeVO {
 	private String bo_content;
 	private Date bo_sysdate;
 	private int bo_readcount;
-	private String file1;
-	private String file2;
-	private String file3;
-	private MultipartFile bo_file1;
-	private MultipartFile bo_file2;
-	private MultipartFile bo_file3;
+	
+	// 파일명을 저장할 변수 선언
+	private String bo_file1;
+	private String bo_file2;
+	private String bo_file3;
+	
+	private MultipartFile file1;
+	private MultipartFile file2;
+	private MultipartFile file3;
 	
 }
 

@@ -66,6 +66,7 @@ function validatePassword() {
 <body>
 <!--    <header> -->
 <%--       <jsp:include page="../../../inc/top1.jsp"></jsp:include> --%>
+		<jsp:include page="../../inc_ex/header.jsp" />
 <!--    </header> -->
    <form action="MemberModify" method="post" name="fr" onsubmit='return signUpCheck();'>
    <section id="sec_con">
