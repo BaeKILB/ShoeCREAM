@@ -191,7 +191,16 @@ body {
 	border-radius: 10px;
 }
 
-#sample4_roadAddress {
+#guide {
+	width:50%;
+	font-size: 15px;
+	font-weight: 300;
+	color: #333;
+	margin-left:10px;
+	border:1px solid #ddd;
+}
+
+#sample4_jibunAddress {
 	width:50%;
 	font-size: 15px;
 	font-weight: 300;

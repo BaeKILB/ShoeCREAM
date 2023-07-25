@@ -47,8 +47,8 @@
 	
 	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
 	             //   document.getElementById('sample4_postcode').value = data.zonecode;
-	                document.getElementById("sample4_roadAddress").value = roadAddr;
-	             //	document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+// 	                document.getElementById("sample4_roadAddress").value = roadAddr;
+	             	document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
 	                
 	                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
 // 	                if(roadAddr !== ''){
@@ -144,9 +144,9 @@
 				<div class="fourth_content">
 <!-- 					<input type="hidden" id="sample4_postcode" placeholder="우편번호"> -->
 					<button type="button" class="location_btn" onclick="sample4_execDaumPostcode();">주소검색</button>
-					<input type="text" id="sample4_roadAddress"  name="product_location" placeholder="주소검색을 통해 주소를 입력해주세요." disabled="disabled"/>
-<!-- 					<input type="hidden" id="sample4_jibunAddress" placeholder="지번주소"> -->
-<!-- 					<span id="guide" style="color:#999;display:none"></span> -->
+<!-- 					<input type="hidden" id="sample4_roadAddress" placeholder="지번주소"> -->
+					<input type="text" id="sample4_jibunAddress"  name="product_location" placeholder="주소검색을 통해 주소를 입력해주세요." disabled="disabled"/>
+<!-- 					<span id="guide" style="color:#999;display:none"</span> -->
 <!-- 					<input type="hidden" id="sample4_detailAddress" placeholder="상세주소"> -->
 <!-- 					<input type="hidden" id="sample4_extraAddress" placeholder="참고항목"> -->
 				</div>
@@ -197,6 +197,7 @@
 									<option value="NASSAU">NASSAU</option>
 									<option value="NEW BALANCE">NEW BALANCE</option>
 									<option value="NIKE">NIKE</option>
+									<option value="NUOVO">NUOVO</option>
 									<option value="PRO-SPECS">PRO-SPECS</option>
 									<option value="PUMA">PUMA</option>
 									<option value="REEBOK">REEBOK</option>
@@ -237,8 +238,8 @@
 				<div class="tenth_content">
 					<div class="check_box">
 						<label> 
-					 		<input type="checkbox" name="safe_pay" checked="checked"/>&nbsp; 안전페이 가능 &nbsp;&nbsp;&nbsp;&nbsp;
-					 		<input type="checkbox" name="direct_trade" checked="checked"/>&nbsp; 직거래 가능
+					 		<input type="checkbox" name="product_payment" checked="checked" value="안전페이"/>&nbsp; 안전페이 가능 &nbsp;&nbsp;&nbsp;&nbsp;
+					 		<input type="checkbox" name="product_payment" checked="checked" value="직거래"/>&nbsp; 직거래 가능
 						</label> 
 						
 					</div>
