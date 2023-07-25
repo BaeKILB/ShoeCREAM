@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<form action="AuctionRegister" method="post">
+<form action="AuctionRegister" method="post" enctype="multipart/form-data">
 	<h1>경매 상품등록</h1>
 	<div class="titleContainner">
 		<p class="title_title">기본 정보</p>
@@ -117,38 +117,13 @@
 		</div>
 	</div>
 	<div class="eighthContainner">
-		<div class="container">
-		   <div class='col-md-5'>
-		      <div class="form-group">
-		         <div class='input-group date' id='datetimepicker6'>
-		            <input type='text' class="form-control" />
-		            <span class="input-group-addon">
-		            <span class="glyphicon glyphicon-calendar"></span>
-		            </span>
-		         </div>
-		      </div>
-		   </div>
-		   <div class='col-md-5'>
-		      <div class="form-group">
-		         <div class='input-group date' id='datetimepicker7'>
-		            <input type='text' class="form-control" />
-		            <span class="input-group-addon">
-		            <span class="glyphicon glyphicon-calendar"></span>
-		            </span>
-		         </div>
-		      </div>
-		   </div>
-		</div>		
-	
-	
-	
 		<div class="eighth_title">경매시작일</div>	
 		<div class="eighth_content">
-			<input type="date" name="auc_regist_date"> 
+			<input type="text" name="auc_regist_date" id="dateStart" class="date-start"> 
 		</div>
 		<div class="eighth_title">경매마감일</div>	
 		<div class="eighth_content">
-			<input type="date" name="auc_close_date"> 
+			<input type="text" name="auc_close_date" id="dateEnd" class="date-end"> 
 		</div>
 	</div>
 	<div class="ninthContainner">

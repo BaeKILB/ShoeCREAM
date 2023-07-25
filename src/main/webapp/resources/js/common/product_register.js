@@ -53,6 +53,14 @@ function sample4_execDaumPostcode() {
         }
     }).open();
 }
+// 중고, 경매 선택
+$(function() {
+    $(".methodSpan").on("click",function() {
+        let page = $(this).children('input').val();
+    location.href = "RegisterForm?page="+page+"_register.jsp";
+    });
+});
+
 
 // 브랜드 선택
 function sellectBrand(selBrand){
@@ -69,3 +77,57 @@ const selectSize = (size) => {
 	}
 	inputBox.val(size);
 }
+// 시간
+$(function() {
+    $.datetimepicker.setLocale('kr');
+    let today = new Date();
+    $("#dateStart").datetimepicker({
+        showOn: "both",
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        format:'Y-m-d H:i',
+        step: 60,
+        defaultSelect: false,
+        defaultDate: today,
+        defaultTime: today,
+        minDate: today,
+        minTime: today,
+        onSelectDate: function(ct){
+            $("#dateEnd").datetimepicker('setOptions', { minDate: ct });
+            $("#dateEnd").datetimepicker('setOptions', { minTime: ct });
+        },
+        onSelectTime: function(ct){
+            $("#dateEnd").datetimepicker('setOptions', { minDate: ct });
+            $("#dateEnd").datetimepicker('setOptions', { minTime: ct });
+        }
+    });
+    $("#dateEnd").datetimepicker({
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        format:'Y-m-d H:i', // 포맷 형식 지정
+        step: 60, // 분 단위
+        defaultSelect: false,
+        onClose: function(ct) { // 창 종료시 실행함수
+            let startDateInput = $("#dateStart");
+            if($("#dateStart").val() != ''){
+                let tempStartDate = new Date(startDateInput.val());
+                let tempEndDate = new Date(ct);
+                if(tempStartDate > tempEndDate){
+                    startDateInput.val(getFormatDateTime(ct));
+                }
+            }else {
+                startDateInput.val(getFormatDateTime(ct));
+            }
+        },
+        onSelectDate:function(ct){
+            $("#dateStart").datetimepicker('setOptions', { maxDate: ct });
+            $("#dateStart").datetimepicker('setOptions', { maxTime: ct });
+        },
+        onSelectTime:function(ct){
+            $("#dateStart").datetimepicker('setOptions', { maxDate: ct });
+            $("#dateStart").datetimepicker('setOptions', { maxTime: ct });
+        },
+    });
+});

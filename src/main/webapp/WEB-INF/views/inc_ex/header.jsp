@@ -122,7 +122,7 @@ div #test_area ul { /* 카테고리 css */
                             </c:choose>
                         </div>
                         <div class="col-1 b_h_left_menu">
-                            <a href="product_upload?member_id=${sessionScope.sId }"> 
+                            <a href="RegisterForm"> 
                                 <img src="${pageContext.request.contextPath }/resources/img/main_ex/market/sell.png" alt="판매하기">
                                 판매하기
                             </a>
