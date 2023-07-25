@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.JungGoNohMapper">
+	<!-- 상품 작성 - INSERT -->
+	<insert id="insertProduct">
+		<selectKey keyProperty="product_idx" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(board_num), 0) FROM board
+		</selectKey>
+		INSERT
+			INTO board
+			VALUES (
+				#{board_num} + 1    -- board_num
+				, #{board_name}     -- board_name
+				, #{board_subject}  -- board_subject
+				, #{board_content}  -- board_content
+				, #{board_file1}    -- board_file1
+				, #{board_file2}    -- board_file2
+				, #{board_file3}    -- board_file3
+				, #{board_num} + 1  -- board_re_ref
+				, 0                 -- board_re_lev
+				, 0                 -- board_re_seq
+				, 0                 -- board_readcount
+				, now()             -- board_date
+			)
+	</insert>
+	
+		<!-- 상품 상세보기 - SELECT -->
+	<select id="selectProduct" resultType="com.pj2.shoecream.vo.JungGoNohVO">
+		SELECT *
+			FROM board
+			WHERE
+				board_num = #{board_num}
+	</select>
+	
+		<!-- 게시물 조회수 증가 - UPDATE -->
+	<!-- selectKey 를 활용하여 조회수 증가 후의 board_readcount 값을 조회하여 BoardVO 객체에 저장 -->
+	<!-- 조회된 결과값을 저장할 변수가 파라미터로 전달받은 객체의 멤버변수명과 동일할 경우 해당 객체에 저장 -->
+	<!-- 이 때, 객체를 별도로 리턴 선언하지 않고도, 객체는 공유되므로 외부에서 변경된 값을 사용 가능 -->
+	<update id="updateReadcount">
+		<!-- selectKey 태그는 위치와 상관없이 order 속성값에 따라 실행됨 -->
+		<selectKey keyProperty="product_readcount" resultType="int" order="AFTER">
+			SELECT board_readcount
+				FROM board
+				WHERE
+					board_num = #{board_num}
+		</selectKey>
+		UPDATE board
+			SET 
+				board_readcount = board_readcount + 1
+			WHERE
+				board_num = #{board_num}
+	</update>
+		
+		<!-- 글 삭제 - DELETE -->
+	<!-- 글번호가 일치하는 레코드 삭제 -->
+	<delete id="deleteProduct">
+		DELETE
+			FROM board
+			WHERE
+				board_num = #{board_num}
+	</delete>
+	
+</mapper>

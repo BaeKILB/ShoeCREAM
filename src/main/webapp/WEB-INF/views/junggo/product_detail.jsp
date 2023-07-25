@@ -98,7 +98,16 @@
 				}
 				slides[slideIndex - 1].style.display = "block";
 				dots[slideIndex - 1].className += " active";
+			}
+			
+	
+			
+			function changeFavorite(selFav){
+
 				}
+
+
+
 			</script>
 			<%-- 슬라이드쇼 끝 --%>
 			
@@ -125,11 +134,9 @@
 <!-- 						#바지 #바지 #바지 #바지 #바지 -->
 					</div>
 					<div class="button_array">
-						<%-- 이후에 IF문 사용해서 찜 버튼 두개로 만들기(해제, 등록) --%>
-						<a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
-	                             &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="favorite_btn">
-	                    	♥ 찜 해제 - dibs_check
-	                    </a>
+						<%-- 이후에 IF문 사용해서 찜 버튼 두개로 만들기(찜 해제, 등록) --%>
+						<button type="button"  class="favorite_btn" onclick="sample1();">♥ 찜 해제 - dibs_check</button>
+	                    <%-- 이후에 IF문 사용해서 찜 버튼 두개로 만들기(1:1대화톡(글쓴이 이외), 삭제(글쓴이)) --%>
 	                    <a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
 	                             &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="chat_btn">
 	                    	1:1 대화톡 

@@ -95,7 +95,7 @@
 	</header>
 	<%--입력하지 않은 자료 보낼 때--%>
 <%-- 		<input type="hidden" name="car_model" value="${map.car_info.car_model}"/> --%>
-		<form action="registProductPro" method="post">
+		<form action="registProductPro" name="writeForm" method="post" enctype="multipart/form-data">
 		<section id="sec_con" class="register_view inr">
 			<div class="titleContainner">
 				<p class="title_title">기본 정보</p>
@@ -248,7 +248,7 @@
 			</div>
 			
 			<div class="lastContainner">
-				<button type="submit" class="register_btn" onclick="location.href='address'">등록하기</button>
+				<button type="submit" class="register_btn" >등록하기</button>
 				<button type="button" class="back_btn" onclick="location.href='address'">돌아가기</button>
 			</div>
 			
