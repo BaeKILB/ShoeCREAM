@@ -74,8 +74,7 @@
 				        	<span class="sign_mark">*</span><br>
 				            <input id="mem_birthday" name="mem_birthday" type="date"  min="1990-01-01" onblur='validateBirth()' >
 				            <div id="birthError" class="error"></div>
-				        </div>
-				        
+				        </div>        
 				        <div class="name">
        					    <tr>
 						        <td class="col1">관심카테고리</td>

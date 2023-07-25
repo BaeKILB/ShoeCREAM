@@ -91,6 +91,12 @@
                   </div>
                </li>
                <li>
+                  <label for="name">닉네임</label>
+                  <div class="form-input">
+                     <input type="text" name="mem_name" id="name" class="form-control" value="${member.mem_nickname }"  readonly="readonly">
+                  </div>
+               </li>
+               <li>
                   <label for="name">현재 비밀번호</label>
                   <div class="form-input">
                      <input type="password" name="mem_passwd"  class="form-control" >
@@ -102,7 +108,6 @@
                      <input type="password"  name="newPasswd" id="mem_passwd"  autoComplete="off" class="form-control"  placeholder="비밀변호 변경 시 입력하세요" oninput="checkPassword()">
                     <div id="passwordError" class="error"></div>
                   </div>
-               
                </li>
                <li>
                   <label for="name">비밀번호 변경 확인</label>
@@ -110,8 +115,18 @@
                      <input type="password" name="newPasswd1" oninput='validatePassword()'  id="passwordCheck" class="form-control" placeholder="비밀변호 변경 시 입력하세요">
                       <div id="passwordCheckError" class="error"></div>
                   </div>
-               
-               </li>
+               </li> 
+               <li id="ad">
+                  <label for="name">주소</label>
+                    <div class="addr">
+                        <input id="sample6_postcode" name="sample6_postcode" type="text" placeholder="우편번호" value="${member.sample6_postcode}" >
+                        <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+                        <input type="text" id="sample6_address" name="sample6_address" placeholder="주소"  value="${member.sample6_address}"><br>
+                     <input type="text" id="sample6_detailAddress"  name="sample6_detailAddress" placeholder="상세주소"  value="${member.sample6_detailAddress}">
+                     <input type="text" id="sample6_extraAddress"  name="sample6_extraAddress"  placeholder="참고항목" value="${member.sample6_extraAddress}">
+                        <div id="nameError" class="error"></div>
+                    </div>
+               </li>  
                <li id="mem_birthday"><label for="name">생년월일</label>
                   <div class="form-input">
                      <div class="form-select">
@@ -138,6 +153,37 @@
                      </div>
                   </div>
                </li>
+              		
+        				<div class="name">
+       					    <tr>
+						        <td class="col1">관심카테고리</td>
+						        <td class="col2"><select name="mem_interest" id="mem_interest">
+						            <option value="slc1" selected>선택</option>
+						            <option value="여성의류">여성의류</option>
+						            <option value="남성의류">남성의류</option>
+						            <option value="언더웨어">언더웨어</option>
+						            <option value="신발">신발</option>
+						            <option value="가방/잡화">가방/잡화</option>
+						            <option value="쥬얼리/시계">쥬얼리/시계</option>
+						            <option value="반려동물용품">반려동물용품</option>
+						            <option value="악기/취미">악기/취미</option>
+						            <option value="문구/사무용품">문구/사무용품</option>
+						            <option value="PC주변기기">PC주변기기</option>
+						            <option value="화장품/향수">화장품/향수</option>
+						            <option value="스포츠용품">스포츠용품</option>
+						            <option value="생활용품">생활용품</option>
+						            <option value="자동차용품">자동차용품</option>
+						        </select>
+						    </tr>
+				        </div>
+				        
+               <li>
+                  <label for="name">이메일</label>
+                  <div class="form-input">
+                     <input type="text" name="mem_email"  class="form-control" readonly="readonly"  value="${member.mem_email }">
+                  </div>
+               </li>
+       
                <li id="call_num">
                   <label for="name">휴대폰번호</label>
                   <div class="form-input">
@@ -158,17 +204,6 @@
                   </div>
                </li>
 
-               <li id="ad">
-                  <label for="name">주소</label>
-                    <div class="addr">
-                        <input id="sample6_postcode" name="sample6_postcode" type="text" placeholder="우편번호" value="${member.sample6_postcode}" >
-                        <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-                        <input type="text" id="sample6_address" name="sample6_address" placeholder="주소"  value="${member.sample6_address}"><br>
-                     <input type="text" id="sample6_detailAddress"  name="sample6_detailAddress" placeholder="상세주소"  value="${member.sample6_detailAddress}">
-                     <input type="text" id="sample6_extraAddress"  name="sample6_extraAddress"  placeholder="참고항목" value="${member.sample6_extraAddress}">
-                        <div id="nameError" class="error"></div>
-                    </div>
-               </li>
             </ul>
             <div class="btn_info_update cr">
 <!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->

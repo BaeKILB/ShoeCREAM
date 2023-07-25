@@ -94,14 +94,8 @@ public class MemberController {
 		     }
 		     throw new CustomValidationException("회원 가입 실패", errorMap);
 	    } else {
-	    	
-//	        if(signupVO.getMem_id().length() > 20) {
-//	            throw new CustomValidationException("아이디의 길이가 20자를 초과했습니다.", Map.of("mem_id", "아이디는 2자 이상 20자 이내로 입력해주세요."));
-//	        }
-	        
-//	        MemberVO member = signupVO.toMemberVO(); // signupVO 쓸 필요 없을 듯 ? 
 	        MemberVO memberEntity = memberService.registMember(member);
-	        System.out.println(memberEntity);
+	        System.out.println("회원가입 성공 값들 " + memberEntity);
 	        return "member/auth/login";
 	    }
 

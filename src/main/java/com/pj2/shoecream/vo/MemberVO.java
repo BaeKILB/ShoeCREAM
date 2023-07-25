@@ -47,8 +47,8 @@ public class MemberVO {
 //	-------------------------------------------------
 	private String mem_interest;
 //	-------------------------------------------------
+//	@NotBlank
 	@Pattern(regexp = "/01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/",message = "유효한 핸드폰 번호를 입력 해 주세요.")
-	@NotBlank
 	private String mem_mtel;
 	@Size(max = 3) 
 	private String phone1;//ㅇ
