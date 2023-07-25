@@ -14,6 +14,7 @@
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
 	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/resources/css/common/product_register.css" rel="stylesheet">
 	<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 	<script	src="${pageContext.request.contextPath }/resources/js/common/product_register.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
@@ -23,13 +24,14 @@
 	<script type="text/javascript">
 		function sellectBrand(selBrand){
      	   $(".brand").val(selBrand);
-   		 }
+   		}
 	</script>
 	<script type="text/javascript">
 		$(function() {
-			$("input[name=method]").on("change",function() {
-				location.href = "RegisterForm?page="+$(this).val()+"_register.jsp";
-			}) 
+			$(".methodSpan").on("click",function() {
+				let page = $(this).children('input').val();
+				location.href = "RegisterForm?page="+page+"_register.jsp";
+			})
 		})
 	</script>
 </head>
@@ -42,8 +44,8 @@
 <%-- 		<input type="hidden" name="car_model" value="${map.car_info.car_model}"/> --%>
 	<main>
 		<div id="MethodBox">
-			<input type="radio" name="method" value="junggo">중고
-			<input type="radio" name="method" value="auction">경매
+			<span class="methodSpan"><input type="hidden" value="junggo">중고</span>
+			<span class="methodSpan"><input type="hidden" value="auction">경매</span>
 		</div>
 		<section id="sec_con" class="register_view inr">
 			<jsp:include page="${param.page }" />
