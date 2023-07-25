@@ -21,6 +21,10 @@ public class PrincipalDetails implements UserDetails{
 		this.member = member;
 	}
 	
+//    public MemberVO getMember(MemberVO member) {
+//        return member;
+//    }
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
