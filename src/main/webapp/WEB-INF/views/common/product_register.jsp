@@ -14,25 +14,18 @@
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
 	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath }/resources/css/common/product_register.css" rel="stylesheet">
 	<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 	<script	src="${pageContext.request.contextPath }/resources/js/common/product_register.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
 <%--주소 관련 코드--%>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	
 	<script type="text/javascript">
-		function sellectBrand(selBrand){
-     	   $(".brand").val(selBrand);
-   		}
-	</script>
-	<script type="text/javascript">
-		$(function() {
-			$(".methodSpan").on("click",function() {
-				let page = $(this).children('input').val();
-				location.href = "RegisterForm?page="+page+"_register.jsp";
-			})
-		})
+	$(function() {
+		$(".methodSpan").on("click",function() {
+			let page = $(this).children('input').val();
+			location.href = "RegisterForm?page="+page+"_register.jsp";
+		});
+	})
 	</script>
 </head>
 <body>

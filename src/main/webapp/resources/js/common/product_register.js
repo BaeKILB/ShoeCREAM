@@ -53,3 +53,19 @@ function sample4_execDaumPostcode() {
         }
     }).open();
 }
+
+// 브랜드 선택
+function sellectBrand(selBrand){
+   $(".brand").val(selBrand);
+}
+
+// 경매
+const selectSize = (size) => {
+	let inputBox = $("input[name=product_size]"); 
+	if (size == "") {
+		inputBox.attr('disabled',false);
+	} else {
+		inputBox.attr('disabled',true);
+	}
+	inputBox.val(size);
+}
