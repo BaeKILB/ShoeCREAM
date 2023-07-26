@@ -206,7 +206,8 @@
 
             </ul>
             <div class="btn_info_update cr">
-               <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" >
+<!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
+				           <button class="upd_btn" >수정하기</button>
 <%-- 			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button> --%>
             </div>
          </div>

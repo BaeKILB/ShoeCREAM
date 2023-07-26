@@ -67,19 +67,6 @@ public class MemberController {
 		return "member/auth/login";
 	}
 	
-	// 로그인 프로
-//	@PostMapping("login")
-//	public String loginPro(HttpSession session, Model model) {
-//		
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//		String sId = mPrincipalDetails.getMember().getMem_id();
-//		System.out.println("세션에 저장된 sId(로그인누르면) : " + sId);
-//		
-//		return "redirect:/";
-//	}
-	
-	
 	// 회원가입 폼
 	@GetMapping("signup") 
 	public String signupform() {
@@ -116,10 +103,6 @@ public class MemberController {
 		     throw new CustomValidationException("회원 가입 실패", errorMap);
 	    } else {
 	        MemberVO memberEntity = memberService.registMember(member);
-//	        System.out.println("getMem_mtel 값들(controller) : "+member.getMem_mtel());
-//	        System.out.println("getMem_address 값들(controller) : "+member.getMem_address());
-//	        System.out.println("getMem_birthday 값들(controller) : "+member.getMem_birthday());
-//	        System.out.println("member 값들(controller) : "+ member);
 	        System.out.println("회원가입 성공 값들 " + memberEntity);
 	        return "member/auth/login";
 	    }
@@ -134,8 +117,6 @@ public class MemberController {
 	}
 	
 //    ===========================MyPage===========================
-    
-    
     // 마이페이지 폼
     @GetMapping("mypage")
     public String myPageForm(MemberVO member, Model model) {
@@ -179,7 +160,8 @@ public class MemberController {
 		
     	return "member/mypage/update";
     }	
-    
+    	
+//    회원 수정 - ajax
 //    @PostMapping("MemberUpdatePro")
 //    public CMRespDto<?> updatePro(
 //    	    @PathVariable int mem_idx, MemberVO member) {
@@ -190,10 +172,11 @@ public class MemberController {
 //        return new CMRespDto<>(1,"회원수정완료",memberEntity);
 //    }
     
+    // 회원수정
     @PostMapping("MemberUpdatePro")
     public String updatePro(
-    		MemberVO member, @RequestParam String newPasswd, @RequestParam String newPasswd1,HttpSession session, Model model) {
-    	System.out.println("여기까지 오니?");
+    		MemberVO member, @RequestParam String newPasswd, @RequestParam String newPasswd1,HttpSession session, Model model, BindingResult bindingResult) {
+//    	System.out.println("여기까지 오니?");
     	
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -217,13 +200,30 @@ public class MemberController {
 				return "member/fail_back";
 			}
 			
-			memberService.ModifyMember(member, newPasswd1, bCryptPasswordEncoder.encode(newPasswd));
-			// " 회원 정보 수정 성공! " 메세지 출력 및 포워딩
-			model.addAttribute("msg", "회원 정보 수정 성공!");
+		    // 회원정보수정 유효성 검사 - 유효성 검사 에러 난 애들 한 곳에 모아서(bindingResult에 의해) 처리 errorMap에 담긴 메세지는 @Vaildation 에 의해서 자동으로 적절한게 간다.
+			if (bindingResult.hasErrors()) {
+				System.out.println("여기까지오긴 오니(회원정보수정) ..?");
+			     Map<String, String> errorMap = new HashMap<>();
+			     for (FieldError error : bindingResult.getFieldErrors()) {
+			         errorMap.put(error.getField(), error.getDefaultMessage());
+			         System.out.println("================");
+			         System.out.println(error.getDefaultMessage());
+			         System.out.println("================");
+			     }
+			     throw new CustomValidationException("회원 정보 수정 실패", errorMap);
+		    } else {
+		        memberService.ModifyMember(member, newPasswd1, bCryptPasswordEncoder.encode(newPasswd));
+		        System.out.println("회원정보성공해서 member에 뭐가 들었음 ? " + member);
+		        // " 회원 정보 수정 성공! " 메세지 출력 및 포워딩
+		        model.addAttribute("msg", "회원 정보 수정 성공!");
+		        model.addAttribute("member", member);
 //			model.addAttribute("targetURL", "mypage/{1}/update");
-			model.addAttribute("targetURL", "mypage/update");
-
-			return "member/success_forward";	
+//		        model.addAttribute("targetURL", "mypage/update");
+		        
+//		        return "member/success_forward";	
+		        return "redirect:/mypage/update";	
+		    }
+			
 			
 //		
     }
@@ -241,8 +241,8 @@ public class MemberController {
 	}
     
     
-	@GetMapping("/social/{mem_id}")
-	public String profile(@PathVariable int mem_id, Model model) {
+	@GetMapping("/social/{mem_idx}")
+	public String profile(@PathVariable int mem_idx, Model model) {
 //		User userEntity = userService.회원프로필(id);
 //		model.addAttribute("user", userEntity);
 		return "member/social/profile";

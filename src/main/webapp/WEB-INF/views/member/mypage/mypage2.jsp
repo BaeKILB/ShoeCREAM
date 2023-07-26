@@ -129,7 +129,7 @@ function payAuction(idx, price, id, title){
 			<div class="my_store_right">
 				<div id="my_store_right_top">
 					<div>
-						<h2>${principal.member.mem_id}님</h2>
+						<h2>${principal.member.mem_nickname}님</h2>
 						<button onclick="location.href='${pageContext.request.contextPath }/mypage/update'">내 정보 수정</button>
 						<button onclick="location.href='${pageContext.request.contextPath }/social/1'">소셜</button>
 						<button onclick="location.href='bank_memberInfo'">계좌관리</button>

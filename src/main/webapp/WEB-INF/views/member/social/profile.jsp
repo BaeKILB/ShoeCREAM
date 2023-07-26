@@ -25,7 +25,7 @@
 		<!--유저정보 및 사진등록 구독하기-->
 		<div class="profile-right">
 			<div class="name-group">
-				<h2>TeaSic</h2>
+				<h2>${principal.member.mem_nickname}</h2>
 
 				<button class="cta" onclick="location.href='/image/upload'">사진등록</button>
 				<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
@@ -101,8 +101,8 @@
 <div class="modal-info" onclick="modalInfo()">
 	<div class="modal">
 <!-- 		<button onclick="location.href='/user/1/update'">회원정보 변경</button> -->
-		<button onclick="location.href='/mypage/update'">회원정보 변경</button>
-		<button onclick="location.href='/logout'">로그아웃</button>
+		<button onclick="location.href='${pageContext.request.contextPath }/mypage/update'">회원정보 변경</button>
+		<button onclick="location.href='${pageContext.request.contextPath }/logout'">로그아웃</button>
 		<button onclick="closePopup('.modal-info')">취소</button>
 	</div>
 </div>
