@@ -69,8 +69,8 @@
 		<jsp:include page="../../inc_ex/header.jsp" />
 <!--    </header> -->
 
-   <form action="${pageContext.request.contextPath }/MemberUpdatePro" method="post" name="fr" onsubmit='return signUpCheck();'>
-<!--    <form id="memberUpdate" name="fr"> -->
+<!--    <form action="MemberModify" method="post" name="fr" onsubmit='return signUpCheck();'> -->
+   <form id="memberUpdate" name="fr">
    <section id="sec_con">
 <!--       <h1 class="con_title">내 정보 수정</h1> -->
       <div class="inq_container">
@@ -93,7 +93,7 @@
                <li>
                   <label for="name">닉네임</label>
                   <div class="form-input">
-                     <input type="text" name="mem_nickname" id="nickname" class="form-control" value="${member.mem_nickname }" >
+                     <input type="text" name="mem_name" id="name" class="form-control" value="${member.mem_nickname }"  readonly="readonly">
                   </div>
                </li>
                <li>
@@ -206,8 +206,8 @@
 
             </ul>
             <div class="btn_info_update cr">
-               <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" >
-<%-- 			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button> --%>
+<!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
+			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button>
             </div>
          </div>
       </div>
