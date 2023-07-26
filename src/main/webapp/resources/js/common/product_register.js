@@ -78,21 +78,16 @@ $(function() {
 });
 // 추가된 이미지 삭제
 const imgDelete = (currentId) => {
-	console.log(currentId);
 	$("button[value="+currentId+"]").remove();
 	$("#"+currentId).removeClass("hidden").val('');	
 	count--;
 	if(count < 4) {
 		$(".image_box").removeClass("hidden");
-	}
-}
+	};
+};
 // 이미지 등록시 사진출력
 const setImages = (e) => {
-	console.log(e.target.name);
-	console.log(e.target.value);
-	
 	let currentId = e.target.name;
-	
 	$("#"+currentId).next().removeClass("hidden");
 	$("#"+currentId).addClass("hidden");
 	
@@ -109,12 +104,10 @@ const setImages = (e) => {
 		reader.readAsDataURL(image);
 	}; 
 	count ++;
-	console.log(count);
 	if(count >= 4) {
 		$(".image_box").addClass("hidden");
-	}
-}
-
+	};
+};
 // 경매
 const selectSize = (size) => {
 	let inputBox = $("input[name=product_size]"); 
@@ -125,6 +118,7 @@ const selectSize = (size) => {
 	}
 	inputBox.val(size);
 };
+
 // 시간
 $(function() {
     $.datetimepicker.setLocale('kr');
