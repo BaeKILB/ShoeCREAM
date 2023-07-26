@@ -239,6 +239,19 @@ public class MemberController {
     	return "member/mypage/delete";
     }
     
-//    =========================style============================
+//    =========================social============================
+	@GetMapping("/social")
+	public String story() {
+		return "member/social/story";
+	}
+    
+    
+	@GetMapping("/social/{mem_id}")
+	public String profile(@PathVariable int mem_id, Model model) {
+//		User userEntity = userService.회원프로필(id);
+//		model.addAttribute("user", userEntity);
+		return "member/social/profile";
+	}
+    
     
 }

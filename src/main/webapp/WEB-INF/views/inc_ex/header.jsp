@@ -121,12 +121,12 @@ div #test_area ul { /* 카테고리 css */
 	                            </c:otherwise>
                             </c:choose>
                         </div>
-                        <div class="col-1 b_h_left_menu">
-                            <a href="RegisterForm"> 
-                                <img src="${pageContext.request.contextPath }/resources/img/main_ex/market/sell.png" alt="판매하기">
-                                판매하기
-                            </a>
-                        </div>
+<!--                         <div class="col-1 b_h_left_menu"> -->
+<!--                             <a href="RegisterForm">  -->
+<%--                                 <img src="${pageContext.request.contextPath }/resources/img/main_ex/market/sell.png" alt="판매하기"> --%>
+<!--                                 판매하기 -->
+<!--                             </a> -->
+<!--                         </div> -->
                         <div class="col-1 b_h_left_menu store">
                             <a href="${pageContext.request.contextPath }/mypage">
                                 <img src="${pageContext.request.contextPath }/resources/img/main_ex/market/my_store.png" alt="마이페이지">
@@ -139,6 +139,20 @@ div #test_area ul { /* 카테고리 css */
                                 채팅
                             </a>
                         </div>
+                        <div class="col-1 b_h_left_menu">
+                            <a href="${pageContext.request.contextPath }/social">
+                                <img src="${pageContext.request.contextPath }/resources/img/member/social/logo2.png" alt="Social">
+                                소셜
+                            </a>
+                        </div>
+                        
+<!-- 		            <nav class="navi"> -->
+<!-- 						<ul class="navi-list"> -->
+<!-- 							<li class="navi-item"><a href="/user/1"> -->
+<!-- 									<i class="far fa-user"></i> -->
+<!-- 								</a></li> -->
+<!-- 						</ul> -->
+<!-- 					</nav> -->
                     </div>
                 </div>
                 <div class="container text-center hamburger_area">
