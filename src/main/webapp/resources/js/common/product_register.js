@@ -67,6 +67,54 @@ function sellectBrand(selBrand){
    $(".brand").val(selBrand);
 }
 
+// 이미지 관련
+let count = 0;
+$(function() {
+	// 숨김 처리
+	$("input[type=file]").not("#image1").each(function(index) {
+		console.log($(this).attr('id'));
+		$(this).addClass("hidden");
+	})
+});
+// 추가된 이미지 삭제
+const imgDelete = (currentId) => {
+	console.log(currentId);
+	$("button[value="+currentId+"]").remove();
+	$("#"+currentId).removeClass("hidden").val('');	
+	count--;
+	if(count < 4) {
+		$(".image_box").removeClass("hidden");
+	}
+}
+// 이미지 등록시 사진출력
+const setImages = (e) => {
+	console.log(e.target.name);
+	console.log(e.target.value);
+	
+	let currentId = e.target.name;
+	
+	$("#"+currentId).next().removeClass("hidden");
+	$("#"+currentId).addClass("hidden");
+	
+	let reader = new FileReader();
+	for(let image of e.target.files) {
+		reader.onload = function (event) {
+			let result = (
+				"<button type='button' class='imgDelete' onclick='imgDelete(this.value)' value='"+currentId+"'>"
+				+"<img class='imageView' src='"+event.target.result+"'>"
+				+"</button>"
+			);
+			$(".ivBox").append(result);
+		};
+		reader.readAsDataURL(image);
+	}; 
+	count ++;
+	console.log(count);
+	if(count >= 4) {
+		$(".image_box").addClass("hidden");
+	}
+}
+
 // 경매
 const selectSize = (size) => {
 	let inputBox = $("input[name=product_size]"); 
@@ -76,13 +124,12 @@ const selectSize = (size) => {
 		inputBox.attr('disabled',true);
 	}
 	inputBox.val(size);
-}
+};
 // 시간
 $(function() {
     $.datetimepicker.setLocale('kr');
     let today = new Date();
     $("#dateStart").datetimepicker({
-        showOn: "both",
         changeMonth: true,
         changeYear: true,
         showButtonPanel: true,

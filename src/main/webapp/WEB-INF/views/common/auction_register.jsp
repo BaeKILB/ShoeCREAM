@@ -8,16 +8,19 @@
 		<p class="title_title">기본 정보</p>
 	</div>
 	<div class="firstContainner">
-		<div class="first_title">상품 이미지
-			<input type="file" name="image">
+		<div class="first_title">상품 이미지	
+			<div class="image_box">
+			    <div>
+			        이미지 등록
+			        <input type="file" id="image1" name="image1" accept="image/*" onchange="setImages(event)">
+			        <input type="file" id="image2" name="image2" accept="image/*" onchange="setImages(event)">
+			        <input type="file" id="image3" name="image3" accept="image/*" onchange="setImages(event)">
+			        <input type="file" id="image4" name="image4" accept="image/*" onchange="setImages(event)">
+			    </div>
+			</div>
 		</div>
 		<div class="first_content">
-			<div class=image_box>
-				<div class="image_content" name="file1"></div>
-				<div class="image_content" name="file2"></div>
-				<div class="image_content" name="file3"></div>
-				<div class="image_content" name="file4"></div>
-			</div>
+		    <div class="ivBox"></div>
 			<div class="warning_text">
 				* 상품 이미지는 640x640에 최적화 되어 있습니다.<br> - 상품 이미지는 PC에서는 1:1, 모바일에서는
 				1:1.23 비율로 보여집니다.<br> - 이미지는 상품 등록 시 정사각형으로 잘려서 등록됩니다.<br>
