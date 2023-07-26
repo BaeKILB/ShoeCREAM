@@ -27,6 +27,7 @@ public class JungGoNohVO {
 	private int product_idx; // 상품코드
 	private int mem_idx;	// 회원 번호; 판매자 식별 번호
 	private String mem_id; // 회원 id, 판매자
+	private String buyier; // 회원 id, 사는 사람
 	private String product_title; // 상품 명
 	private String product_info; // 상품 정보
 	private String product_payment; //결제수단

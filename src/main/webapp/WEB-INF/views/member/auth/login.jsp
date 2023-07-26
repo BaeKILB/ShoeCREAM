@@ -37,7 +37,7 @@
                 <!--// pageTitle -->
 
                 <!-- 로그인 -->
-                <form action="MemberLoginPro" method="post">
+                <form action="login" method="post">
                 <section class="container">
                     <div class="layout2">
                         <div class="wrap_box">

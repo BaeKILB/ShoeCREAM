@@ -17,14 +17,11 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	
 	<link href="${pageContext.request.contextPath }/resources/css/junggo/common.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath }/resources/css/junggo/product_register.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/resources/css/common/product_register.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath }/resources/css/etc/jquery.datetimepicker.min.css" rel="stylesheet">
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
-	
-	<script type="text/javascript">
-	</script>
 </head>
 <body>
 	<header>

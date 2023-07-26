@@ -30,7 +30,8 @@ public class MemberVO {
 	@NotBlank(message = "비밀번호를 입력해주세요.") @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$" ,message = "비밀번호는 영문, 숫자, 특수문자 포함 8~20글자 이상 입력해주세요.")
 	private String mem_passwd;
 //	-------------------------------------------------
-	@NotBlank(message = "주소를 입력해 주세요")
+//	@NotBlank(message = "주소를 입력해 주세요")
+	private String mem_address;
 	private String sample6_address;//하고
 	private String sample6_detailAddress;
 	private String sample6_extraAddress;
@@ -60,7 +61,6 @@ public class MemberVO {
 	private String role; // 권한
 	private String mem_account_auth;
 	private String mem_status;
-	private String mem_address;
 	private String mem_rank;
 	private int mem_point;
 	private int charge_point;

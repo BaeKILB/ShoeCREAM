@@ -102,7 +102,7 @@
 			</div>
 			
 			<div class="firstContainner">
-				<div class="first_title">상품 이미지()</div>
+				<div class="first_title">상품 이미지</div>
 				<div class="first_content">
 					<div class=image_box>
 						<div class="image_content" name="file1"></div>
@@ -249,7 +249,7 @@
 			
 			<div class="lastContainner">
 				<button type="submit" class="register_btn" >등록하기</button>
-				<button type="button" class="back_btn" onclick="location.href='address'">돌아가기</button>
+				<button type="button" class="back_btn" onclick="location.href='${pageContext.request.contextPath}/WEB-INF/views/inc/fail_back.jsp'">돌아가기</button>
 			</div>
 			
 		</section>
