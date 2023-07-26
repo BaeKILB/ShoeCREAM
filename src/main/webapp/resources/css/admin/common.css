@@ -38,3 +38,9 @@ ul, li {
     background: #dfe3e8;
     margin: 1.4rem 0;
 }
+
+textarea{
+	resize: none;
+	outline: 0;
+	
+}
