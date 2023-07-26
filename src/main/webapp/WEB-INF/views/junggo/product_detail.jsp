@@ -20,6 +20,22 @@
 	<header>
 	<%--top 탑 활성화시 css도 살려야함--%>
 <%-- <jsp:include page="../../../inc/top1.jsp"></jsp:include> --%>
+
+<script type="text/javascript">
+	function deleteConfirm() {
+		if(!confirm("게시글을 삭제 하시겠습니까?")) {
+			return false;
+		} else {
+			location.href="${pageContext.request.contextPath}/productDelete?product_idx=${jungGoNoh.product_idx}";
+		}
+	}
+	
+
+</script>
+
+
+
+
 	</header>
 	<%--입력하지 않은 자료 보낼 때--%>
 <%-- 		<input type="hidden" name="car_model" value="${map.car_info.car_model}"/> --%>
@@ -134,13 +150,28 @@
 <!-- 						#바지 #바지 #바지 #바지 #바지 -->
 					</div>
 					<div class="button_array">
-						<%-- 이후에 IF문 사용해서 찜 버튼 두개로 만들기(찜 해제, 등록) --%>
-						<button type="button"  class="favorite_btn" onclick="sample1();">♥ 찜 해제 - dibs_check</button>
-	                    <%-- 이후에 IF문 사용해서 찜 버튼 두개로 만들기(1:1대화톡(글쓴이 이외), 삭제(글쓴이)) --%>
-	                    <a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
+												
+						<c:choose>
+							<c:when test="${dibs.dibs_check eq 'N' }">
+								<button type="button"  class="favorite_btn" onclick="sample1();">♥ 찜 등록 - dibs_check</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button"  class="UnFavorite_btn" onclick="sample2();">💔 찜 해제 - dibs_check</button>
+							</c:otherwise>
+						</c:choose>
+						
+	                    <c:choose>
+							<c:when test="${session.sId eq 'member.member_id' }">
+								<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>
+							</c:when>
+							<c:otherwise>
+								<a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
 	                             &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="chat_btn">
 	                    	1:1 대화톡 
-	                    </a>
+	                    		</a>
+							</c:otherwise>
+						</c:choose>
+	                    
                     </div>
 				</div>
 

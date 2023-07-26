@@ -214,12 +214,13 @@ public class JunggoController {
 	
 	//------------------ 물건 상세 안내 폼 이동---------------------
 	@GetMapping("productDetail")
-	public String productDetail(@RequestParam int product_idx, Model model) {
+	public String productDetail() {
+			//@RequestParam int product_idx, HttpSession session, Model model) {
 		
-		JungGoNohVO jungGoNoh = jungGoNohService.getProduct(product_idx);
-		
-		// 상세정보 조회 결과 저장
-		model.addAttribute("jungGoNoh", jungGoNoh);
+//		JungGoNohVO jungGoNoh = jungGoNohService.getProduct(product_idx);
+//		
+//		// 상세정보 조회 결과 저장
+//		model.addAttribute("jungGoNoh", jungGoNoh);
 		
 	    return "junggo/product_detail";
 	}
@@ -228,9 +229,7 @@ public class JunggoController {
 	//------------------ 물건 삭제 프로 -----------------------------
 	
 	@GetMapping("productDelete")
-	public String delete(
-			@RequestParam int product_idx, 
-			HttpSession session, Model model) {
+	public String delete(@RequestParam int product_idx, HttpSession session, Model model) {
 		// 세션 아이디가 존재하지 않으면(미로그인) "잘못된 접근입니다!" 출력 후 이전 페이지 돌아가기 처리
 		String sId = (String)session.getAttribute("sId");
 		if(sId == null) {

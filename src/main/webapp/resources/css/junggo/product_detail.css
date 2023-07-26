@@ -53,6 +53,7 @@
   	border-radius: 50%;
   	background: #fff;
   	text-align: center;
+  	text-decoration: none;
 }
 
 .next {
@@ -70,6 +71,7 @@
   	border-radius: 50%;
   	background: #fff;
   	text-align: center;
+  	text-decoration: none;
 }
 
 .numbertext {
@@ -120,6 +122,7 @@
 .view_info {
 	width : 50%;
 	/*border: 1px solid red;*/
+	padding-bottom :15px;
 }
 
 .view_cont {
@@ -189,12 +192,27 @@
 	margin-top: 10%;
 }
 
-.favorite_btn {
+.UnFavorite_btn {
 	display: inline-block;
 	width: 45%;
 	padding: 19px 0;
 	font-size: 21px;
 	background: #BA55D3;
+	text-align: center;
+	color: #fff;
+	font-weight: 700;
+	letter-spacing: 0.9px;
+	border-radius: 5px;
+	margin-right: 5%;
+	margin-left: 2.5%;
+}
+
+.favorite_btn {
+	display: inline-block;
+	width: 45%;
+	padding: 19px 0;
+	font-size: 21px;
+	background: #BEBEBE;
 	text-align: center;
 	color: #fff;
 	font-weight: 700;
@@ -216,6 +234,21 @@
 	letter-spacing: 0.9px;
 	border-radius: 5px;
 	margin-right: 2.5%;
+	text-decoration : none;
+}
+
+.delete_btn {
+	display: inline-block;
+	width: 45%;
+	padding: 19px 0;
+	font-size: 21px;
+	background: rgb(10, 10, 49);
+	text-align: center;
+	color: #fff;
+	font-weight: 700;
+	letter-spacing: 0.9px;
+	border-radius: 5px;
+	margin-right: 2.5%;
 }
 
 
@@ -223,6 +256,7 @@
 /*상품정보 텍스트박스 관련*/
 
 .view_more_info{
+	padding-top:15px;
 	float: left;
 	padding-right: 15px;
 	/*border: 1px solid blue;*/
@@ -274,6 +308,7 @@
 
 /*판매자 정보 관련*/
 .seller_wrap {
+	padding-top:15px;
 	float: left;
 	height:1000px;
 	/*border: 1px solid red;*/
@@ -312,7 +347,7 @@
 .seller_products {
 	width: 100%;
 	height: 380px;
-	border-bottom: 1px solid #ddd;
+	
 }
 
 .seller_products_title {
@@ -371,6 +406,7 @@
 	display: flex;
 	align-items: flex-end;
 	width: 200%;
+	margin-top:10px;
 	padding-bottom: 20px;
 	border-bottom: 1px solid #ddd;
 	position: relative;
@@ -385,7 +421,7 @@
 	position: absolute;
 	right: 0;
 	font-size: 19px;
-	text-decoration: underline;
+	text-decoration: none;
 	color: #ff6600;
 }
 
