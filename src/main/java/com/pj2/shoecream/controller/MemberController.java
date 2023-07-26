@@ -33,7 +33,15 @@ import com.pj2.shoecream.vo.MemberVO;
 //@RequiredArgsConstructor
 @Controller
 public class MemberController {
-	// 로그인 폼
+	
+	// 로그 확인
+	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
+	
+	@Autowired
+	private MemberService memberService;
+	
+	
+	// 메인페이지
 	@GetMapping("/")
 	public String mainform(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
 //		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -47,11 +55,6 @@ public class MemberController {
 	
 //	==========================Member(auth)==================
 	
-	// 로그 확인
-	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
-
-	@Autowired
-	private MemberService memberService;
 	
 	// 로그인 폼
 	@GetMapping("login")
@@ -95,6 +98,10 @@ public class MemberController {
 		     throw new CustomValidationException("회원 가입 실패", errorMap);
 	    } else {
 	        MemberVO memberEntity = memberService.registMember(member);
+//	        System.out.println("getMem_mtel 값들(controller) : "+member.getMem_mtel());
+//	        System.out.println("getMem_address 값들(controller) : "+member.getMem_address());
+//	        System.out.println("getMem_birthday 값들(controller) : "+member.getMem_birthday());
+//	        System.out.println("member 값들(controller) : "+ member);
 	        System.out.println("회원가입 성공 값들 " + memberEntity);
 	        return "member/auth/login";
 	    }
@@ -128,15 +135,28 @@ public class MemberController {
     @GetMapping("mypage/{mem_idx}/update")
     public String updateForm(@PathVariable int mem_idx, @AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {//@AuthenticationPrincipal 이녀석을 통해 시큐리티가 저장한 세션을 접근할 수 있다.
 //	public String updateForm(@PathVariable int mem_idx, @AuthenticationPrincipal(expression = "member") MemberVO member, Model model) { // member 가 세션 정보가 자동으로 됨.
-    	// 실패..
+    	// 1. 실패..
     	System.out.println("세션 정보 :" + principalDetails.getMember());
 		
-    	// 실패
-//    	System.out.println("세션 정보 :" + member);
-    	
     	// 2. 쓰읍 이 방법을 써야하는가 .. 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+      // 주소 관련 값 설정
+		mPrincipalDetails.getMember().setSample6_address(mPrincipalDetails.getMember().getMem_address().split("/")[0]);  
+		mPrincipalDetails.getMember().setSample6_detailAddress(mPrincipalDetails.getMember().getMem_address().split("/")[1]);  
+		mPrincipalDetails.getMember().setSample6_extraAddress(mPrincipalDetails.getMember().getMem_address().split("/")[2]); 
+		mPrincipalDetails.getMember().setSample6_postcode(mPrincipalDetails.getMember().getMem_address().split("/")[3]); 
+
+      // 생년월일 관련 값 설정
+		mPrincipalDetails.getMember().setMem_bir1(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[0]);  
+		mPrincipalDetails.getMember().setMem_bir2(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[1]);  
+		mPrincipalDetails.getMember().setMem_bir3(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[2]);  
+
+      // 휴대폰번호 관련 값 설정
+		mPrincipalDetails.getMember().setPhone1(mPrincipalDetails.getMember().getMem_mtel().split("-")[0]);  
+		mPrincipalDetails.getMember().setPhone2(mPrincipalDetails.getMember().getMem_mtel().split("-")[1]);  
+		mPrincipalDetails.getMember().setPhone3(mPrincipalDetails.getMember().getMem_mtel().split("-")[2]); 
+		
 		System.out.println("세션 정보2 : " + mPrincipalDetails.getMember());
     	
 		model.addAttribute("member", mPrincipalDetails.getMember());

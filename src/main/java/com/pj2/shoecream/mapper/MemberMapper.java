@@ -27,13 +27,5 @@ public interface MemberMapper {
 	MemberVO updateMember(int mem_idx, MemberVO member);
 
 	Object findMemberById(int mem_idx);
-
-
-//	Object selectMemberById(String mem_id);
-//
-//	Object selectMemberByName(String mem_name);
-//
-//	Object selectMemberByEmail(String mem_email);
-//
-//	Object selectMemberByMtel(String mem_mtel);
+	
 }

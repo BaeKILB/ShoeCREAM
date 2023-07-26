@@ -2,6 +2,8 @@ package com.pj2.shoecream.service;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,18 +22,24 @@ public class MemberService {
     private MemberMapper memberMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     
- 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Transactional
     public MemberVO registMember(MemberVO member) {
         // 회원가입 진행
         String rawPassword = member.getMem_passwd();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        member.setMem_passwd(encPassword);
-        member.setRole("ROLE_USER");
-        member.setMem_account_auth("N");
-        member.setMem_status("1");
-        
+        member.setMem_passwd(encPassword); // 암호화 비번
+        member.setRole("ROLE_USER"); // 멤버 권한 디폴트
+        member.setMem_account_auth("N"); // 계좌 디폴트
+        member.setMem_status("1"); // 멤버 상태 디폴트
+        System.out.println(member.getMem_mtel());
+        System.out.println(member.getMem_address());
+        System.out.println(member.getMem_birthday());
+        System.out.println("member 값들(service) : "+ member);
+
         memberMapper.insertMember(member);
+        
         return member;
     }
 
