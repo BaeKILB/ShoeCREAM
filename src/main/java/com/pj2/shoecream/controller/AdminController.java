@@ -1,6 +1,8 @@
 package com.pj2.shoecream.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +24,7 @@ import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.NoticeVO;
 import com.pj2.shoecream.vo.PageDTO;
+import com.pj2.shoecream.vo.PageInfoVO;
 import com.pj2.shoecream.vo.ReportVO;
 
 
@@ -41,34 +44,51 @@ public class AdminController {
 	public String admin() {
 		return "admin/admin_main";
 	}
-
-
 	
 	// 관리자 회원 조회
-	@GetMapping("AdminMember")
-	public String adminMember() {
-		return "admin/admin_member";
-	}
-	@ResponseBody
-	@GetMapping("AdminMemberList")
-	public String adminListJson(@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue = "1") int pageNum, Model model) {
-		int listLimit = 10;
-		int startRow = (pageNum - 1) * listLimit;
+		@GetMapping("AdminMember")
+		public String adminMember() {
+			return "admin/admin_member";
+		}
+		@ResponseBody
+		@GetMapping("AdminMemberList")
+		public Map<String, Object> adminListJson(@RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+			Map<String, Object> result = new HashMap<String, Object>();
+			int listLimit = 10;
+			int startRow = (pageNum - 1) * listLimit;
+			
+			List<MemberVO> MemberList = service.getMemberInfo(searchType, searchKeyword, startRow, listLimit);
+			int listCount = service.getMemberListCount(searchType, searchKeyword);
+			
+			// 총 페이지
+			int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
+			
+			// 시작 페이지
+			int pageListLimit = 5;
+			int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+			
+			// 마지막 페이지
+			int endPage = startPage + pageListLimit - 1;
+			if(endPage > maxPage) {
+				endPage = maxPage;
+			}
+			
+			PageInfoVO pageInfo = new PageInfoVO(listCount, pageListLimit, maxPage, startPage, endPage);
+			result.put("memberList", MemberList);
+			result.put("pageNum", pageNum);
+			result.put("startPage", startPage);
+			result.put("endPage", endPage);
+			result.put("maxPage", maxPage);
+			
+			return result;
+		}
 		
-		List<MemberVO> MemberList = service.getMemberInfo(searchType, searchKeyword, startRow, listLimit);
-		System.out.println("멤버리스트" + MemberList);
-		int listCount = service.getMemberListCount(searchType, searchKeyword);
-		
-		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
-		
-		JSONObject jsonObject = new JSONObject();
-		// JSONXXX 객체의 put() 메서드를 사용하여 데이터 추가 가능
-		jsonObject.put("MemberList", MemberList);
-		jsonObject.put("maxPage", maxPage);
-		System.out.println("joson" + jsonObject.toString());
-		
-		return jsonObject.toString();
-	}
+		@GetMapping("MemberSelectInfo")
+		@ResponseBody
+		public MemberVO memberInfo(@RequestParam int mem_idx) {
+			MemberVO member = service.selectMember(mem_idx);
+			return member;
+		}
 	
 	// 공지사항 글 작성 폼
 		@GetMapping("noticeWriteForm")
