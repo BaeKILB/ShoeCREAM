@@ -112,7 +112,7 @@
 							</a>
 							<ul class="cont_li_wrap reportList">
 								<li class="cont_item_b">
-									<a class="cont_item_list repList" href="ReportList">신고 목록 조회</a>
+									<a class="cont_item_list repList" href="reportProcess">신고 목록 조회</a>
 								</li>
 							</ul>
 						</li>

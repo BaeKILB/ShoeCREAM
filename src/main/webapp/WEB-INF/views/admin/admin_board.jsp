@@ -57,11 +57,10 @@
 									<tr>
 										<td class="list_num">${NoticeList.bo_idx}</td>
 										<td class="txt_prev"><a href="noticeDetail?pageNum=${pageMaker.cri.pageNum}&bo_idx=${NoticeList.bo_idx}">
-											<h4>${NoticeList.bo_title}</h4>
+											<h4 class=title_co>${NoticeList.bo_title}</h4>
 											</a>
 										</td>
-										<td class="writter"><span class="writter_name"> <span
-												class="sv_member">관리자</span></span></td>
+										<td class="writter"><span class="writter_name"> <span class="sv_member">관리자</span></span></td>
 										<td class="date"><fmt:formatDate value="${NoticeList.bo_sysdate}" pattern="YYYY-MM-dd" /></td>
 									</tr>
 								</c:forEach>

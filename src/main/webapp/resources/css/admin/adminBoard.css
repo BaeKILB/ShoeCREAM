@@ -51,6 +51,7 @@ table, td, tfoot, th, thead, tr {
     border-bottom: 1px solid #d9dde0;
     text-align: center;
     color: #637381;
+    vertical-align: middle;
 }
 
 .moreBtn {
@@ -113,5 +114,29 @@ table, td, tfoot, th, thead, tr {
     display: flex;
     justify-content: end;
     padding: 1rem 0;
+    
+}
+
+.title_co{
+	color: #637381;
+    font-weight: 500;
+}
+
+.report_div .title_co{
+	color: #637381;
+    font-weight: 500;
+}
+
+
+.reportdel {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.reportdel .moreBtn {
+  display: inline-block;
+  float: none;
+  margin: 0;
 }
 

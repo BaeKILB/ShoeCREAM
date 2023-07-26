@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.ReportMapper">
+
+<select id="getReportListPaging" resultType="com.pj2.shoecream.vo.ReportVO">
+	SELECT *
+	FROM (
+		SELECT
+			report_idx
+			, report_content
+			, report_count
+			, product_idx
+			, report_div
+			, report_detail
+		FROM report
+	) AS n1
+	WHERE report_count >= 5
+	<if test="!searchKeyword.equals('')">
+		AND 
+		<choose>
+			<when test="searchType.equals('title')">
+				report_content LIKE CONCAT('%', #{searchKeyword},'%')
+			</when>
+			<when test="searchType.equals('content')">
+				report_div LIKE CONCAT('%', #{searchKeyword},'%')
+			</when>
+			<when test="searchType.equals('title_content')">
+				report_content LIKE CONCAT('%', #{searchKeyword},'%')
+				OR report_div LIKE CONCAT('%', #{searchKeyword},'%')
+			</when>
+		</choose>
+	</if>
+	ORDER BY report_idx ASC
+	 LIMIT #{cri.amount} OFFSET #{cri.skip}
+</select>
+
+<select id="getTotal" resultType="int">
+		SELECT COUNT(*)
+			FROM report
+</select>
+
+<delete id="deleteReport">
+DELETE
+	FROM report
+		WHERE product_idx = #{product_idx}
+</delete>
+
+<update id="updateIdx">
+		UPDATE report
+			SET report_idx =report_idx - 1
+			WHERE report_idx > #{report_idx}
+</update>
+
+<delete id="deleteProduct">
+ DELETE
+    FROM report
+        WHERE product_idx = #{product_idx};
+
+   
+</delete>
+
+<delete id="deletepro">
+ DELETE
+    FROM product
+        WHERE product_idx = #{product_idx};
+</delete>
+
+</mapper>

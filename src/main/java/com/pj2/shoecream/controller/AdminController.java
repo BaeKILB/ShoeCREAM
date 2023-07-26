@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj2.shoecream.service.AdminService;
 import com.pj2.shoecream.service.BoardService;
+import com.pj2.shoecream.service.ReportService;
 import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.NoticeVO;
 import com.pj2.shoecream.vo.PageDTO;
+import com.pj2.shoecream.vo.ReportVO;
 
 
 
@@ -31,6 +33,8 @@ public class AdminController {
 	private BoardService boardservice;
 	@Autowired
 	private AdminService service;
+	@Autowired
+	private ReportService reportservice;
 	
 	// 관리자메인
 	@GetMapping("AdminMain")
@@ -181,10 +185,47 @@ public class AdminController {
 
 		}
 
+		
+		// 신고 처리 목록
+		@GetMapping("reportProcess")
+		public String reportProcess(Model model, Criteria cri, @RequestParam(defaultValue = "") String searchType,
+				@RequestParam(defaultValue = "") String searchKeyword) {
+
+			List<ReportVO> reportProcessing = reportservice.getReportListPaging(cri, searchType, searchKeyword);
+			model.addAttribute("report", reportProcessing);
+//					System.out.println("가가가" + reportProcessing);
+
+			int total = reportservice.getTotal();
+			PageDTO pageMaker = new PageDTO(cri, total);
+			model.addAttribute("pageMaker", pageMaker);
+
+			return "admin/admin_report";
+		}
+
+		// 신고 처리하기(해당 상품 삭제)
+		@GetMapping("reportDelete")
+		public String reportDelete(HttpSession session, ReportVO report, Model model, @RequestParam int product_idx) {
+
+			int deleteReportCount = reportservice.deleteReport(report);
+
+			if (deleteReportCount < 0) {
+				model.addAttribute("msg", "삭제 실패");
+				return "inc/fail_back";
+			}
+
+			int updateCount = reportservice.updateIdx(report);
+			if (updateCount < 0) {
+				model.addAttribute("msg", "업데이트 실패");
+				return "inc/fail_back";
+			}
+
+			int deleteReport = reportservice.deleteProduct(product_idx);
+			int deleteProduct = reportservice.deletepro(product_idx);
+
+			return "redirect:/reportProcess";
+
+		}
+
 	}
-	
-
-
-	
 	
 
