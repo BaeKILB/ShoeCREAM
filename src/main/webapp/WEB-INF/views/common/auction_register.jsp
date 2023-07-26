@@ -39,9 +39,28 @@
 		<div class="third_title">카테고리</div>
 		<div class="third_content">
 			<div class="category_box">
-				<div class="category_content_l">제1분류</div>
-				<div class="category_content_m">제2분류</div>
-				<div class="category_content_s">제3분류</div>
+				<div class="category_content_l">
+				    <div>제1분류</div>
+				    <div>
+				        <ul id="lcList">
+				            <c:forEach var="lc" items="${lc_category }" >
+				                <li class="lcRecord" value="${lc.lc_code }">${lc.lc_name }</li>
+				            </c:forEach>
+				        </ul>
+				    </div>
+				</div>
+				<div class="category_content_m">
+				    <div>제2분류</div>
+				    <div>
+				        <ul id="mcList"></ul>
+				    </div>
+				</div>
+				<div class="category_content_s">
+				    <div>제3분류</div>
+				    <div>
+				        <ul id="scList"></ul>
+				    </div>
+				</div>
 			</div>
 			<p class="selected_category">선택한 카테고리 :</p>
 		</div>

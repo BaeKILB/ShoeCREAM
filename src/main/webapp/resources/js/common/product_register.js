@@ -66,13 +66,70 @@ $(function() {
 function sellectBrand(selBrand){
    $(".brand").val(selBrand);
 }
+// 카테고리 선택
+$(function() {
+    // 중분류 추가
+    const mrAdd = (data) => {
+        $(".mcRecord").remove();
+        $(".scRecord").remove();
+        for(let item of data) {
+            let result = (
+              "<li class='mcRecord' value='"+item.mc_code+"'>"+item.mc_name+"</li>"  
+            );
+            $("#mcList").append(result);
+        };
+    };
+    // 소분류 추가
+    const srAdd = (data) => {
+        $(".scRecord").remove();
+        for(let item of data) {
+            let result = (
+              "<li class='scRecord' value='"+item.sc_code+"'>"+item.sc_name+"</li>"  
+            );
+            $("#scList").append(result);
+        };     
+    };
+    // 카테고리 클릭 이벤트
+    $(".lcRecord").on("click",function() {
+        console.log("lc")
+        $.ajax({
+            type: "get",
+            url: "getMcList",
+            data: {
+                lc_code:$(this).val()
+            },
+            dataType: "json"
+        })
+        .done(function(data) {
+            mrAdd(data);
+            $(".mcRecord").on("click",function() {
+                $.ajax({
+                    type: "get",
+                    url: "getScList",
+                    data: {
+                        mc_code:$(this).val()
+                    },
+                    dataType: "json"
+                })
+                .done(function(data) {
+                    srAdd(data);
+                })
+                .fail(function() {
+                    
+                });
+            });            
+        })
+        .fail(function() {
+            
+        });
+    });
+});
 
 // 이미지 관련
 let count = 0;
 $(function() {
 	// 숨김 처리
 	$("input[type=file]").not("#image1").each(function(index) {
-		console.log($(this).attr('id'));
 		$(this).addClass("hidden");
 	})
 });

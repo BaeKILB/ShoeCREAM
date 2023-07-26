@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.CategoryMapper">
+    <select id="selectLcList" resultType="map">
+        select
+            *
+        from
+            large_category
+        order by
+            lc_code;
+	</select>
+    <select id="selectMcList" resultType="map">
+        select
+            *
+        from
+            middle_category
+        where
+            parent_code = #{code }
+        order by
+            mc_code;
+	</select>
+    <select id="selectScList" resultType="map">
+        select
+            *
+        from
+            small_category
+        where
+            parent_code = #{code }
+        order by
+            sc_code;
+	</select>
+</mapper>
