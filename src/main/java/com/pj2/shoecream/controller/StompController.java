@@ -1,5 +1,9 @@
 package com.pj2.shoecream.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -57,21 +62,43 @@ public class StompController {
 	@GetMapping("setSid")
 	public String setSid(@RequestParam String sId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(0);
 		session.setAttribute("sId", sId);
 		session.setMaxInactiveInterval(36000);
 		return "redirect:/chatHome";
 	}
 	
-    //채팅방 목록 조회
+    //채팅방 목록 조회후 채팅 페이지로 이동
     @GetMapping("rooms")
-    public ModelAndView rooms(HttpServletRequest request){
+    public ModelAndView rooms(@RequestParam Map<String,Object> map, HttpServletRequest request, Model model){
     	HttpSession session = request.getSession();
     	ModelAndView mv = null;
-//    	if(session.getAttribute("sId") == null || session.getAttribute("sId").equals("")) {    		
-//    		return new ModelAndView("/home");
-//    	}
+    	String sId = (String)session.getAttribute("sId");
+ 
+    	if(sId == null || sId.equals("") 
+    			|| map.get("chat_area") == null || map.get("chat_area").equals("")) {    		
+    			
+    		System.out.println(sId + " / " + map.get("chat_area"));
+    		mv = new ModelAndView("inc/fail_forward");
+    		mv.addObject("msg","로그인이 필요 합니다!");
+    		mv.addObject("targetURL","login");
+    		return mv;
+    	}
         mv = new ModelAndView("/inc/chat/rooms");
-//        mv.addObject("list",chatService.getChatRoomList());
+        try {        	
+        	int idx = chatService.getSIdIdx(sId);
+        	List<ChatRoomVO> chatList = chatService.getChatRoomList(idx,Integer.parseInt((String)map.get("chat_area")));
+        	List<JungProductVO> productList = new ArrayList<JungProductVO>();
+        	for(ChatRoomVO chat : chatList) {
+        		productList.add(jungProductService.getJungProduct(chat.getProduct_idx()));
+        	}
+        	mv.addObject("list",chatList);
+        	mv.addObject("productList", productList);
+        }
+        catch(NullPointerException e){
+        	e.printStackTrace();
+        	mv.addObject("list",null);
+        }
 
         return mv;
     }
@@ -83,7 +110,7 @@ public class StompController {
 		JungProductVO jProduct = jungProductService.getJungProduct(chatRoom.getProduct_idx());
 		
 		if(jProduct != null || jProduct.getProduct_title().equals("")) {
-			chatRoom.setChat_room_area("중고");
+			chatRoom.setChat_room_area(1);
 			if(chatService.makeChatRoom(chatRoom) > 0) {
 				rttr.addFlashAttribute("createRoomMsg", jProduct.getProduct_title() + "방이 개설되었습니다.");
 			}
@@ -96,16 +123,28 @@ public class StompController {
 	}
 	
 	@GetMapping("room")
-	public String getRoom(@RequestParam(defaultValue = "-1") String chat_room_idx, Model model ){
-		if(!chat_room_idx.equals("-1")) {
+	public String getRoom(@RequestParam(defaultValue = "-1") String chat_room_idx,HttpSession session , Model model ){
+		if(!chat_room_idx.equals("-1") && 
+				chatService.isChatMember((String)session.getAttribute("sId"), 
+						Integer.parseInt(chat_room_idx) )) {
 			model.addAttribute("room", chatService.getChatRoom(Integer.parseInt(chat_room_idx)));
 			model.addAttribute("chatList", chatService.getChatList(Integer.parseInt(chat_room_idx)));
+		
 			return "/inc/chat/room";
 		}
 		else {
 			model.addAttribute("msg","채팅방 입장에 실패하였습니다!");
 			return "/etc/fail_back";
 		}
+	}
+	
+	@GetMapping("getRoomAjax")
+	@ResponseBody
+	public String getRoomAjax(@RequestParam Map<String, Object> map ,
+			HttpSession session,
+			Model model) {
+		return "";
+		
 	}
 	
 }

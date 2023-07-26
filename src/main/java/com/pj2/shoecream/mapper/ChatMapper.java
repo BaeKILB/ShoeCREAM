@@ -12,12 +12,19 @@ import com.pj2.shoecream.vo.ChatMsgVO;
 
 @Mapper
 public interface ChatMapper {
-	
 	int insertChat(ChatMsgVO chat);
 	int insertChatRoom(ChatRoomVO chatRoom);
-	List<ChatRoomVO> selectChatRoomListSeller(@Param("mem_idx") int mem_idx,@Param("chat_room_area") String chat_room_area);
-	List<ChatRoomVO> selectChatRoomListBuyer(@Param("mem_idx") int mem_idx,@Param("chat_room_area") String chat_room_area);
+	
+	List<ChatRoomVO> selectChatRoomList(@Param("mem_idx") int mem_idx,
+			@Param("chat_room_area") int chat_room_area);
+	List<ChatRoomVO> selectChatRoomListSeller(@Param("mem_idx") int mem_idx,
+			@Param("chat_room_area") int chat_room_area);
+	List<ChatRoomVO> selectChatRoomListBuyer(@Param("mem_idx") int mem_idx,
+			@Param("chat_room_area") int chat_room_area);
 	List<ChatMsgVO> selectChatList(int chat_room_idx);
+	
 	ChatRoomVO selectChatRoom(int chat_room_idx);
-	int selectChatCheckAuth(@Param("mem_idx") int mem_idx,@Param("chat_room_idx") int chat_room_idx);
+	
+	int selectChatCheckAuth(@Param("mem_idx") int mem_idx,
+			@Param("chat_room_idx") int chat_room_idx);
 }
