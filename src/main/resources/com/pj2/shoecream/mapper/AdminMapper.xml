@@ -47,4 +47,10 @@
 					</choose>
 				</if>
 	</select>
+	<!-- 회원 정보 상세조회 -->
+	<select id="getMemberInfo" resultType="com.pj2.shoecream.vo.MemberVO">
+		SELECT *
+			FROM member
+			WHERE mem_idx = #{mem_idx}
+	</select>
 </mapper>

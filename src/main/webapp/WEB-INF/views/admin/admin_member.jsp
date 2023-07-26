@@ -10,6 +10,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminMember.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- 토스트 그리드 -->
 </head>
 <script type="text/javascript">
@@ -17,60 +18,182 @@
 	let maxPage = 1; // 최대 페이지 번호 미리 저장
 	
 	$(function() {
+		List(pageNum);
+	});
+	
+	function List(pageNum) {
 		let searchType = $("#searchType").val();
 		let searchKeyword = $("#searchKeyword").val();
-		loadList(searchType, searchKeyword);
+		let word = "AdminMemberList?pageNum=" + pageNum + "&searchType=" + searchType + "&searchKeyword=" + searchKeyword;
 		
-		function loadList(searchType, searchKeyword) {
-			let url;
-			url = "AdminMemberList?pageNum=" + pageNum + "&searchType=" + searchType + "&searchKeyword=" + searchKeyword;
-			
-			$.ajax({
-				type: "GET",
-				url: url,
-				dataType: "json",
-				success: function(data) {
-					maxPage = data.maxPage;
-					
-					for(let member of data.MemberList) {
-						$('tbody').append(
+		$.ajax({
+			type: "GET",
+			url: word,
+			dataType: "JSON",
+			data: {"pageNum": pageNum},
+			success: function(data) {
+				$('.tbody').empty();
+				$('#pageList').empty();
+	             
+	             for(let member of data.memberList) {
+						$('.tbody').append(
 								"<tr>"
 								+ "<td>"+ member.mem_idx +"</td>"
 								+ "<td>"+ member.mem_id +"</td>"
 								+ "<td>"+ member.mem_name +"</td>"
 								+ "<td>"+ member.mem_nickname +"</td>"
 								+ "<td>"+ member.mem_mtel +"</td>"
-								+ "<td>"+ getFormatDate(member.mem_birthday) +"</td>"
+								+ "<td>"+ member.mem_birthday +"</td>"
 								+ "<td>"+ member.mem_rank +"</td>"
-								+ "<td><button style='cursor: pointer;' class='moreBtn'>상세정보</button></td>"
+								+ "<td><button style='cursor: pointer;' class='moreBtn' onclick='openModal(" + member.mem_idx + ");'>상세정보</button></td>"
 								+ "</tr>"
 						);
-					}
-				},
-				error: function(MemberList) {
-					alert('글 목록 요청 실패');
+				 }
+	             
+	             if(pageNum > 1) {
+	            	 $("#pageList").append(
+		            	 	"<li>"
+        					+ "<a href='#' onclick='List(1)' class='allprev'><i class='fa fa-angle-double-left' aria-hidden='true'></i></a>"
+		            	 	+ "</li>"
+            	 	 );
+	             }
+	             if(pageNum > 1) {
+	            	 $("#pageList").append(
+		            	 	"<li>"
+        					+ "<a href='#' onclick='List(" + (pageNum - 1) + ")' class='prev'><i class='fa fa-angle-left' aria-hidden='true'></i></a>"
+		            	 	+ "</li>"
+            	 	 );
+	             }
+	             for (var num = data.startPage; num <= data.endPage; num++) {
+		             word = "List("+ num + ")";
+		             
+	                 if (num == data.pageNum) {
+	                	 $("#pageList").append(
+	                		"<li>"
+ 	                		+ "<a href='#' onclick='List(" + num + ")' class='pageNum current'><b>" + num + "</b></a>"
+	                		+ "</li>"
+	                	 );
+	                 } else {
+	                	 $("#pageList").append(
+ 	                		"<li>"
+ 	                		+ "<a href='#' onclick='List(" + num + ")' class='pageNum'>" + num + "</a>"
+ 	                		+ "</li>"
+	 	                 );
+	                 }
+	             }
+	             if(pageNum < data.maxPage) {
+	            	 $("#pageList").append(
+		            	 "<li>"
+    						+ "<a href='#' onclick='List(" + (pageNum + 1) + ")' class='next'><i class='fa fa-angle-right' aria-hidden='true'></i></a>"
+		                	+ "</a>"
+		            	 	+ "</li>"
+            	 	 );
+	             }
+	             if(pageNum < data.maxPage) {
+	            	 $("#pageList").append(
+		            	 "<li>"
+		                	+ "<a href='#' onclick='List(" + data.maxPage + ")' class='allnext'>"
+		                	+ "<i class='fa fa-angle-double-right' aria-hidden='true'></i>"	
+		                	+ "</a>"
+		            	 	+ "</li>"
+            	 	 );
+	             }
+			},
+			error: function() {
+				alert('데이터 불러오기 실패');
+			}
+		});
+	}
+	
+	function openModal(mem_idx) {
+		$('.modal_background').css('display', 'block').animate({opacity: 1}, 200);
+		$('.btn_close').on('click', function() {
+	        $('.modal_background').animate({
+	            opacity: 0
+	        }, 200, function () {
+	            $(this).css('display', 'none');
+	        });
+	    });
+		
+		$('.btn_primary').on('click', function() {
+	        $('.modal_background').animate({
+	            opacity: 0
+	        }, 200, function () {
+	            $(this).css('display', 'none');
+	        });
+	    });
+		
+		url = "MemberSelectInfo";
+		$.ajax({
+			type: "GET",
+			url: url,
+			dataType: "json",
+			data: {mem_idx: mem_idx},
+			success: function(data) {
+				let birth = new Date(data.mem_birthday);
+				let signDate = new Date(data.mem_sign_date);
+				
+				$('.mem_idx').empty();
+				$('.mem_id').empty();
+				$('.mem_name').empty();
+				$('.mem_nickname').empty();
+				$('.mem_mtel').empty();
+				$('.mem_birthday').empty();
+				$('.mem_address').empty();
+				$('.mem_rank').empty();
+				$('.mem_interest').empty();
+				$('.mem_sign_date').empty();
+				$('.mem_point').empty();
+				$('.mem_balance').empty();
+				$('.mem_b').empty();
+				$('.mem_account_auth').empty();
+				$('.mem_status').empty();
+				
+				$('.mem_idx').append(data.mem_idx);
+				$('.mem_id').append(data.mem_id);
+				$('.mem_name').append(data.mem_name);
+				$('.mem_nickname').append(data.mem_nickname);
+				$('.mem_mtel').append(data.mem_mtel);
+				$('.mem_birthday').append(getFormatDate(birth));
+				$('.mem_address').append(data.mem_address);
+				$('.mem_rank').append(data.mem_rank);
+				$('.mem_interest').append(data.mem_interest);
+				$('.mem_sign_date').append(getFormatDate(signDate));
+				$('.mem_point').append(data.mem_point);
+				$('.mem_balance').append(data.mem_balance);
+				if(data.mem_account_auth == 'N') {
+					$('.mem_account_auth').append('미인증');
+				} else {
+					$('.mem_account_auth').append('인증');
 				}
-			});
-		}
+				if(data.mem_status == 'Y') {
+					$('.mem_status').append('회원');
+				} else {
+					$('.mem_status').append('탈퇴');
+				}
+			},
+			error: function() {
+				alert("정보 불러오기 실패");
+			}
+        });
 		
 		function getFormatDate(date) {
-			let targetDate = /^(\d{4})-(\d{2})-(\d{2}).*/;
-			let formatDate = "$1-$2-$3";
-			return date.replace(targetDate, formatDate);
+			let year = date.getFullYear();
+			let month = String(date.getMonth() + 1).padStart(2, '0');
+			let day = String(date.getDate()).padStart(2, '0');
+			let formattedDate = year + "-" + month + "-" + day;
+			return formattedDate;
 		}
-		
-	});
+	}
 </script>
 <body>
 	<aside>
 		<jsp:include page="inc/sidebar.jsp" ></jsp:include>
 	</aside>
 	<c:set var="pageNum" value="1" />
-	
 	<c:if test="${not empty param.pageNum }">
 		<c:set var="pageNum" value="${param.pageNum }" />	
 	</c:if>
-	
 	<section id="admin_cont">
 		<h1 class="admin_tit">회원 목록 조회</h1>
 		<hr class="tit_line">
@@ -85,7 +208,7 @@
 							<option value="mem_rank" <c:if test="${param.searchType eq 'mem_rank' }">selected</c:if>>등급</option>			
 						</select>
 						<input type="text" name="searchKeyword" value="${param.searchKeyword }" id="searchKeyword">
-						<input type="submit" value="검색" class="searchSubmit">
+						<input type="submit" value="검색" class="searchSubmit" style="cursor: pointer;">
 					</form>
 				</div>
 				<div class="table_container">
@@ -102,21 +225,88 @@
 								<th scope="col">상세정보</th>
 							</tr>
 						</thead>
-						<tbody>
-<!-- 							<tr> -->
-<!-- 								<td>1</td> -->
-<!-- 								<td>hong</td> -->
-<!-- 								<td>홍길동</td> -->
-<!-- 								<td>길똥이</td> -->
-<!-- 								<td>010-1234-5678</td> -->
-<!-- 								<td>2000-05-05</td> -->
-<!-- 								<td>SILVER</td> -->
-<!-- 								<td> -->
-<!-- 									<button style="cursor: pointer;" class="moreBtn">상세정보</button> -->
-<!-- 								</td> -->
-<!-- 							</tr> -->
+						<tbody class="tbody">
 						</tbody>
 					</table>
+				</div>
+				<ul id="pageList">
+					
+				</ul>
+			</div>
+		</div>
+		<!-- 모달창 -->
+		<div class="modal_background">
+			<div class="modal_wrap">
+				<div class="modal_box">
+					<div class="modal_header">
+						<div class="modal_title">회원정보 상세조회</div>
+						<button type="button" class="btn_close" style="cursor: pointer;"></button>
+					</div>
+					<div class="modal_body">
+						<div class="table_container">
+							<table class="mem_list_modal_table table">
+								<tr>
+									<th>회원번호</th>
+									<td class="mem_idx"></td>
+								</tr>
+								<tr>
+									<th>아이디</th>
+									<td class="mem_id"></td>
+								</tr>
+								<tr>
+									<th>이름</th>
+									<td class="mem_name"></td>
+								</tr>
+								<tr>
+									<th>닉네임</th>
+									<td class="mem_nickname"></td>
+								</tr>
+								<tr>
+									<th>연락처</th>
+									<td class="mem_mtel"></td>
+								</tr>
+								<tr>
+									<th>생년월일</th>
+									<td class="mem_birthday"></td>
+								</tr>
+								<tr>
+									<th>주소</th>
+									<td class="mem_address"></td>
+								</tr>
+								<tr>
+									<th>관심분야</th>
+									<td class="mem_interest"></td>
+								</tr>
+								<tr>
+									<th>등급</th>
+									<td class="mem_rank"></td>
+								</tr>
+								<tr>
+									<th>가입일</th>
+									<td class="mem_sign_date"></td>
+								</tr>
+								<tr>
+									<th>계좌 인증 상태</th>
+									<td class="mem_account_auth"></td>
+								</tr>
+								<tr>
+									<th>포인트</th>
+									<td class="mem_point"></td>
+								</tr>
+								<tr>
+									<th>계좌 잔액</th>
+									<td class="mem_balance"></td>
+								</tr>
+								<tr>
+									<th>가입 상태</th>
+									<td class="mem_status"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="modal_footer">
+						<button class="btn_primary">Close</button>
+					</div>
 				</div>
 			</div>
 		</div>

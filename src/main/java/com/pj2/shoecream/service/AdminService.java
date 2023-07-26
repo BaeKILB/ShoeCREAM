@@ -20,5 +20,8 @@ public class AdminService {
 	public int getMemberListCount(String searchType, String searchKeyword) {
 		return mapper.selectMemberListCount(searchType, searchKeyword);
 	}
+	public MemberVO selectMember(int mem_idx) {
+		return mapper.getMemberInfo(mem_idx);
+	}
 
 }

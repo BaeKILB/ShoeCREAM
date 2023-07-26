@@ -12,4 +12,6 @@ public interface AdminMapper {
 	// 회원 목록 조회
 	List<MemberVO> selectMemberInfo(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
 	int selectMemberListCount(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+	// 회원 정보 상세 조회
+	MemberVO getMemberInfo(int mem_idx);
 }

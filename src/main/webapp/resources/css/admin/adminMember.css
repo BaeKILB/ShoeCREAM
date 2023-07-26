@@ -46,9 +46,17 @@ table, tbody, td, tfoot, th, thead, tr {
 .table>:not(caption)>*>* {
     padding: 0.75rem 1.5rem;
     background-color: transparent;
-    border-bottom: 1px solid #d9dde0;
+/*     border-bottom: 1px solid #d9dde0; */
     text-align: center;
     color: #637381;
+}
+
+.mem_list_table tr td {
+	border-bottom: 1px solid #d9dde0;
+}
+
+.mem_list_table tr:last-child td {
+	border-bottom: 0;
 }
 
 .moreBtn {
@@ -98,6 +106,139 @@ table, tbody, td, tfoot, th, thead, tr {
 .searchForm {
 	display: flex;
 }
+
+/* 모달 */
+.modal_background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.3);
+}
+.modal_wrap {
+	position: relative;
+    width: 100%; /* 뷰포트 너비에 꽉 차도록 설정 */
+    height: 100%; /* 뷰포트 높이에 꽉 차도록 설정 */
+    display: flex; /* .modal_box를 가운데 정렬하기 위해 flex 사용 */
+    justify-content: center;
+    align-items: center;
+}
+.modal_box {
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+ 	background-color: white;
+ 	justify-content: center;
+ 	align-items: center;
+ 	border-radius: 10px;
+ 	width: 40%;
+ 	height: auto;
+}
+@media screen and (max-width: 1080px) {
+	.modal_box {
+		width: 65%;
+	}
+}
+@media screen and (max-width: 680px) {
+	.modal_box {
+		width: 85%;
+	}
+}
+
+.modal_header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dfe3e8;
+}
+.modal_title {
+	margin-bottom: 0;
+    line-height: 1.5;
+    font-size: 1.125rem;
+}
+button {
+	background: none;
+}
+.btn_close {
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    padding: 0.25em;
+    color: #000;
+    background: transparent url(../../img/admin/close.svg) 50%/1em auto no-repeat;
+    border: 0;
+    border-radius: 0.375rem;
+    opacity: .5;
+}
+.modal_body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+.modal_footer {
+	display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: calc(1rem - 0.5rem*.5);
+    background-color: transparent;
+    border-top: 1px solid #dfe3e8;
+}
+.btn_primary {
+	padding: 0.5rem 1rem;
+	font-size: 0.9375rem;
+	font-weight: 500;
+	line-height: 1.5;
+	color: white;
+	background: #624bff;
+	border-radius: 0.375rem;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	cursor: pointer;
+}
+.btn_primary:hover {
+	background: #5340d9;
+}
+.mem_list_modal_table {
+	min-width: 100%;
+}
+.modal_background {
+	display: none;
+}
+.mem_list_modal_table tr th, .mem_list_modal_table tr td {
+	border-bottom: 1px solid #d9dde0;
+}
+.mem_list_modal_table tr th {
+	border-right: 1px solid #d9dde0;
+}
+.mem_list_modal_table tr:last-child th, .mem_list_modal_table tr:last-child td {
+	border-bottom: 0;
+}
+#pageList {
+	padding: 0.3rem;
+	font-size: 0.9375rem;
+}
+#pageList li {
+	padding: 0.375rem 0.75rem;
+	display: inline-block;
+	border: 1px solid #dfe3e8;
+}
+.allprev {
+	border-top-left-radius: 0.375rem;;
+    border-bottom-left-radius: 0.375rem;;
+}
+
+
+
+
+
 
 
 
