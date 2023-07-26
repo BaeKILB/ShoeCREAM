@@ -3,6 +3,7 @@ package com.pj2.shoecream.mapper;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.pj2.shoecream.vo.MemberVO;
 
@@ -27,5 +28,9 @@ public interface MemberMapper {
 	MemberVO updateMember(int mem_idx, MemberVO member);
 
 	Object findMemberById(int mem_idx);
+	
+	// 회원정보 수정 
+	int updateMember(@Param("member") MemberVO member, @Param("newPasswd") String newPasswd,
+			@Param("newPasswd1") String newPasswd1);
 	
 }

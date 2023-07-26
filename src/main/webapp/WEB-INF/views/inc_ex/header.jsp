@@ -128,7 +128,7 @@ div #test_area ul { /* 카테고리 css */
                             </a>
                         </div>
                         <div class="col-1 b_h_left_menu store">
-                            <a href="${pageContext.request.contextPath }/mypage/1">
+                            <a href="${pageContext.request.contextPath }/mypage">
                                 <img src="${pageContext.request.contextPath }/resources/img/main_ex/market/my_store.png" alt="마이페이지">
                                 마이페이지
                             </a>

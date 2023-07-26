@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pj2.shoecream.mapper.MemberMapper;
 import com.pj2.shoecream.vo.MemberVO;
@@ -20,6 +21,7 @@ public class MemberService {
 	
     @Autowired
     private MemberMapper memberMapper;
+    
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -69,14 +71,19 @@ public class MemberService {
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         
         memberEntity.setMem_passwd(encPassword);
-        memberEntity.setMem_name(member.getMem_name());
-        memberEntity.setMem_email(member.getMem_email());
+        memberEntity.setMem_nickname(member.getMem_nickname());
         memberEntity.setMem_birthday(member.getMem_birthday());
         memberEntity.setMem_address(member.getMem_address());
         
 		return memberEntity;
 		
 	}
+
+	public int ModifyMember(MemberVO member, String newPasswd, @RequestParam String newPasswd1) {
+		return memberMapper.updateMember(member,newPasswd, newPasswd1);
+		
+	}
+
 
     
     
