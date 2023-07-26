@@ -80,7 +80,6 @@ public class MemberController {
 //	}
 	
 	
-	
 	// 회원가입 폼
 	@GetMapping("signup") 
 	public String signupform() {
@@ -139,16 +138,12 @@ public class MemberController {
     
     // 마이페이지 폼
     @GetMapping("mypage")
-    public String myPageForm(Model model) {
+    public String myPageForm(MemberVO member, Model model) {
 //    	public String myPageForm(@PathVariable int mem_idx, Model model) {
+//    	System.out.println("마이페이지 member" + member);
+//		model.addAttribute("member", member);
     	
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//		System.out.println("세션 정보2 : " + mPrincipalDetails.getMember());
-//    	
-//		model.addAttribute("member", mPrincipalDetails.getMember());
-    	
-    	return "member/mypage/mypage";
+    	return "member/mypage/mypage2";
     }
     
     // 회원수정 폼

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ include file="../layout/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>클레버 - 마이페이지</title>
 <link rel="shortcut icon"href="${pageContext.request.contextPath }/resources/img/member/mem_mypage/shoecream-logo.png">
+
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
+
 
 <link href="${pageContext.request.contextPath }/resources/css/member/common.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/member/mem_page/mem_info_update.css" rel="stylesheet">
@@ -99,52 +103,40 @@ function payAuction(idx, price, id, title){
  
 </script>
 	<!-- 헤더 시작 -->
-	<jsp:include page="../../inc_ex/header.jsp" />
+	<jsp:include page="../../inc_ex/header_social.jsp" />
 	<!-- main_content 영역 -->
 	<div id="main_content">
 		<!-- 프로필 영역 -->
+		<section class="profile">
+		
 		<div id="my_store_area">
 			<div class="my_store_left">
-				<div>
-					<c:forEach items="${memberGrade }" var="memberGrade">
-						<c:choose>
-							<c:when test="${memberGrade.member_rank eq '브론즈' }">
-								<img src="${pageContext.request.contextPath }/resources/img/main_ex/브론즈.png" alt="브론즈">
-							</c:when>
-							<c:when test="${memberGrade.member_rank eq '실버' }">
-								<img src="${pageContext.request.contextPath }/resources/img/main_ex/실버.png" alt="실버">
-							</c:when>
-							<c:when test="${memberGrade.member_rank eq '골드' }">
-								<img src="${pageContext.request.contextPath }/resources/img/main_ex/골드.png" alt="골드">
-							</c:when>
-						</c:choose>
-					</c:forEach>
-				</div>
-				<div>
-					<p>${member.member_id}님</p>
-					<p>등급 : ${member.member_rank}</p>
-				</div>
-				<div>
-					<p>
-						<a href="#">적립금 : ${member.member_point}</a>
-					</p>
-					<p>
-						<a href="#">충전포인트 : ${member.charge_point}</a>
-					</p>
+				<div class="profile-left">
+					<div class="profile-img-wrap story-border"
+						onclick="popup('.modal-image')">
+						<form id="userProfileImageForm">
+							<input type="file" name="profileImageFile" style="display: none;"
+								id="userProfileImageInput" />
+						</form>
+		
+						<img class="profile-image" src="#"
+							onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person3.jpg'" id="userProfileImage"  
+							style=" width: 130px; height: 130px;"/>
+					</div>
 				</div>
 			</div>
 
 			<div class="my_store_right">
 				<div id="my_store_right_top">
 					<div>
-						<h2>${member.member_id}님</h2>
+						<h2>${principal.member.mem_id}님</h2>
 						<button onclick="location.href='${pageContext.request.contextPath }/mypage/update'">내 정보 수정</button>
 						<button onclick="location.href='${pageContext.request.contextPath }/social/1'">소셜</button>
 						<button onclick="location.href='bank_memberInfo'">계좌관리</button>
 					</div>
 					<div>
 						<c:choose>
-							<c:when test="${member.account_auth eq 'Y' }">
+							<c:when test="${principal.member.mem_account_auth eq 'Y' }">
 								<p>
 									<span>OK</span> 계좌 인증 완료
 								</p>
@@ -159,38 +151,17 @@ function payAuction(idx, price, id, title){
 				</div>
 				<div id="my_store_right_mid">
 				<div class='left-box'>
-					<img src="${pageContext.request.contextPath }/resources/img/main_ex/report.png" style="width: 30px; margin-bottom: 8px">나의 신고 내역 <br>
-					<div>
-					<c:forEach items="${reportList }" var="reportList" begin="0" end="4" step="1">
-						<c:choose>
-							<c:when test="${not empty reportList.seller_id }">
-								신고 사유 : ${reportList.report_content } <br>
-							</c:when>
-							<c:otherwise>
-								신고 내역이 없습니다.
-   							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-					</div>					
+				
+				
 				</div>
 				<div class='right-box'>
-					<img src="${pageContext.request.contextPath }/resources/img/main_ex/moneyimage.png" style="width: 30px; margin-bottom: 8px">&ensp;나의 입출금 내역 <br>
-					<div>
-					<c:forEach items="${dwHistory }" var="dwHistory" begin="0" end="4" step="1">
-						<c:choose>
-							<c:when test="${dwHistory.tran_type eq 'd' }">
-								출금 (-${dwHistory.tran_amount })<br>
-							</c:when>
-							<c:otherwise>
-								입금 (+${dwHistory.tran_amount })<br>
-   							</c:otherwise>
-							</c:choose>
-					</c:forEach>
-					</div>		
+				
+				
 				</div>
 				</div>
 			</div>
 		</div>
+		</section>
 		<!-- 프로필 영역 끝 -->
 
 		<!-- 하단 내역 부분 -->
