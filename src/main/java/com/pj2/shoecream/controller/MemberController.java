@@ -35,7 +35,9 @@ import com.pj2.shoecream.vo.MemberVO;
 public class MemberController {
 	// 로그인 폼
 	@GetMapping("/")
-	public String mainform(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+	public String mainform(
+			@AuthenticationPrincipal PrincipalDetails principalDetails, 
+			Model model) {
 //		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 //		System.out.println("세션 정보2 : " + mPrincipalDetails.getMember());

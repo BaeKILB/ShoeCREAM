@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.ChatMapper">
 	    
+	    <!-- 채팅 추가 -->
 	<insert id="insertChat" parameterType="ChatMsgVO">
 		INSERT INTO chat_msg
 		VALUES(
@@ -12,6 +13,8 @@
 			,now()
 		)
 	</insert>
+	
+	<!-- 채팅 방 추가 -->
 	<insert id="insertChatRoom" parameterType="ChatRoomVO">
 		INSERT INTO chat_rooms
 		VALUES(
@@ -23,6 +26,7 @@
 		)
 	</insert>
 
+	<!-- 채팅 방 채팅 불러오기 -->
 	<select id="selectChatList" resultType="ChatMsgVO">
 		SELECT * 
 		FROM chat_msg
@@ -30,6 +34,32 @@
 			chat_room_idx = #{chat_room_idx}
 		ORDER BY 
 			chat_date
+		;
+	</select>
+	
+	<!-- 채팅방 리스트 검색 -->
+	<!-- 상품 정보도 같이 불러오기 -->
+	<select id="selectChatRoomList" resultType="Map">
+		SELECT * 
+		FROM chat_rooms cr
+		JOIN (
+			SELECT jp.product_idx ,mem_idx,product_title,product_payment
+			,product_price,product_sell_status,product_location
+			FROM
+				product p  
+				JOIN jung_product jp 
+				ON jp.product_idx =p.product_idx
+			WHERE
+				product_selector = 1
+		) AS p
+		ON cr.product_idx = p.product_idx
+		WHERE 
+			(
+			mem_seller_idx = 1
+			OR mem_buyer_idx = 1
+			)
+			AND chat_room_area = 1
+		ORDER BY chat_room_idx desc
 		;
 	</select>
 	<select id="selectChatRoomListSeller" resultType="ChatRoomVO">
@@ -48,6 +78,8 @@
 			AND chat_room_area = #{chat_room_area}
 		;
 	</select>
+	
+	<!-- 채팅방 정보 가져오기 -->
 	<select id="selectChatRoom" resultType="ChatRoomVO">
 		SELECT * 
 		FROM chat_rooms
@@ -56,6 +88,7 @@
 		;
 	</select>
 	
+	<!-- 채팅방에 본인이 들어갈수 있는지 체크 -->
 	<select id="selectChatCheckAuth">
 		SELECT * 
 		FROM chat_rooms

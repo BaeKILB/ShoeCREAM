@@ -13,7 +13,7 @@ public class ChatRoomVO {
 	private int product_idx;
 	private int mem_seller_idx;
 	private int mem_buyer_idx;
-	private String chat_room_area;
+	private int chat_room_area;
 	
 	
 	
