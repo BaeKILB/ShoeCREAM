@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<form action="registProductPro" method="post">
+<form action="registProductPro" method="post" enctype="multipart/form-data">
 	<div class="titleContainner">
 		<p class="title_title">기본 정보</p>
 	</div>
@@ -33,13 +33,46 @@
 		<div class="third_title">카테고리</div>
 		<div class="third_content">
 			<div class="category_box">
-				<div class="category_content_l">제1분류</div>
+				<div class="category_content_l">제1분류<div>a</div><div>a</div></div>
 				<div class="category_content_m">제2분류</div>
 				<div class="category_content_s">제3분류</div>
 			</div>
 			<p class="selected_category">선택한 카테고리 :</p>
 		</div>
 	</div>
+	
+
+<!-- <select id="region" name="region">
+  <option value="">-- 본부 --</option>
+  <option value="A">강북본부</option>
+  <option value="B">강남본부</option>
+  <option value="C">서부본부</option>
+</select>
+<select id="maker" name="maker">
+  <option value="">-- 제조사 --</option>
+  <option class="A" value="hyundai">현대</option>
+  <option class="A" value="kia">기아</option>
+  <option class="B" value="benz">벤츠</option>
+  <option class="B" value="bmw">BMW</option>
+</select>
+<select id="size" name="size">
+  <option value="">-- 크기 --</option>
+  <option value="large" class="hyundai kia benz bmw">대형</option>
+  <option value="medium" class="hyundai kia benz">중형</option>
+  <option value="small" class="hyundai kia bmw">소형</option>
+</select>
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/jquery-chained/1.0.1/jquery.chained.min.js'></script>
+<script>
+  $("#maker").chained("#region");
+  $("#size").chained("#maker");
+</script>
+ -->	
+	
+	
+	
+	
 	<div class="fourthContainner">
 		<div class="fourth_title">거래지역</div>
 		<div class="fourth_content">
@@ -48,7 +81,7 @@
 				onclick="sample4_execDaumPostcode();">주소검색</button>
 			<!-- 					<input type="hidden" id="sample4_roadAddress" placeholder="지번주소"> -->
 			<input type="text" id="sample4_jibunAddress" name="product_location"
-				placeholder="주소검색을 통해 주소를 입력해주세요." disabled="disabled" />
+				placeholder="주소검색을 통해 주소를 입력해주세요."  readonly/><!-- disabled="disabled" -->
 			<!-- 					<span id="guide" style="color:#999;display:none"</span> -->
 			<!-- 					<input type="hidden" id="sample4_detailAddress" placeholder="상세주소"> -->
 			<!-- 					<input type="hidden" id="sample4_extraAddress" placeholder="참고항목"> -->
@@ -147,9 +180,9 @@
 		</div>
 	</div>
 
+
 	<div class="lastContainner">
-		<button type="submit" class="register_btn"
-			onclick="location.href='address'">등록하기</button>
+		<input type="submit" class="register_btn" value="등록">
 		<button type="button" class="back_btn"
 			onclick="location.href='address'">돌아가기</button>
 	</div>

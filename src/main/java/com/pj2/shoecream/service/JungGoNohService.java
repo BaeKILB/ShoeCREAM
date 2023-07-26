@@ -18,38 +18,39 @@ public class JungGoNohService {
 		return jungGoNohMapper.insertProduct(jungGoNoh);
 	}
 	
-
+	public int registJungProduct(JungGoNohVO jungGoNoh) {
+		return jungGoNohMapper.insertJungProduct(jungGoNoh);
+	}
 
 //========================중고 물품 상세보기==============================
 	
-		public JungGoNohVO getProduct(int product_idx) {
+	public JungGoNohVO getProduct(int product_idx) {
 
-			JungGoNohVO jungGoNoh = jungGoNohMapper.selectProduct(product_idx);
-				
-				if(jungGoNoh != null) {
+		JungGoNohVO jungGoNoh = jungGoNohMapper.selectProduct(product_idx);
+			
+			if(jungGoNoh != null) {
 
-					jungGoNohMapper.updateReadcount(jungGoNoh);
-				}
-				
+				jungGoNohMapper.updateReadcount(jungGoNoh);
+			}
 
-			return jungGoNoh;
-		}
+		return jungGoNoh;
+	}
 
 
 //========================== 작성자 확인========================================
 		
-		public boolean isProductWriter(int product_idx, String sId) {
-			String id = sId;
-			JungGoNohVO jungGoNoh = jungGoNohMapper.selectProduct(product_idx);
+	public boolean isProductWriter(int product_idx, String sId) {
+		String id = sId;
+		JungGoNohVO jungGoNoh = jungGoNohMapper.selectProduct(product_idx);
 
-			return id.equals(jungGoNoh.getMem_id());
+		return id.equals(jungGoNoh.getMem_id());
 
-		}
+	}
 
 //===========================삭제 프로============================================
 		
-		public int removeProduct(int product_idx) {
-			return jungGoNohMapper.deleteProduct(product_idx);
-		}
+	public int removeProduct(int product_idx) {
+		return jungGoNohMapper.deleteProduct(product_idx);
+	}
 		
 }

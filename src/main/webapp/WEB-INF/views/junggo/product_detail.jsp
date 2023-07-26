@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -131,13 +131,13 @@
 			<div class="view_info col-sm-12 col-lg-6">
 
 				<div class="view_cont">
-					<p class="product_catrgory">HOME > 신발 - (중,경))lc_code > 운동화 - (중,경)mc_code > 스니커즈 - (중,경)sm_code</p>
+					<p class="product_catrgory">HOME > ${jungGoNoh.lc_code} > ${jungGoNoh.mc_code} > ${jungGoNoh.sc_code}</p>
 					<div class="product_name">
-						<h4>나이키 감마 포스 - (중,경)product_title </h4><span class="product_progress">예약중 - (중)product_sell_status</span>
-						<p>25,000원 - (중)product_price</p>
+						<h4>${jungGoNoh.product_title} </h4><span class="product_progress">${jungGoNoh.product_sell_status}</span>
+						<p><fmt:formatNumber value="${jungGoNoh.product_price}" pattern="#,###"/></p>
 					</div>
 					<div class="product_viewStatus">
-						🕐&nbsp; 07-12 - (중,경)product_date &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; 10 - (중,경)product_readcount &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  5 - Count(dibs type_num)
+						🕐&nbsp;${jungGoNoh.product_date} &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  5 - Count(dibs type_num)
 					</div>
 					<div class="product_productStatus">
 						상품 상태 : 중고(상급) - (중)product_status<br>
