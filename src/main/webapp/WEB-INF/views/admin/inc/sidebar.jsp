@@ -168,7 +168,6 @@
 		</nav>
 	</div>
 	<script>
-
 		$('.toggle_wrap').click(function() {
 			var headerWrap = $('.header_wrap');
 			var sidebarWrap = $('.sidebar_wrap');

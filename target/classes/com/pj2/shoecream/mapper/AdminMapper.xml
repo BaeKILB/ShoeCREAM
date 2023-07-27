@@ -4,7 +4,7 @@
 	<!-- 회원 조회 -->
 	<select id="selectMemberInfo" resultType="com.pj2.shoecream.vo.MemberVO">
 		SELECT *
-			FROM MEMBER
+			FROM mem_info
 				<if test="!searchKeyword.equals('')">
 					WHERE 
 					<choose>
@@ -28,7 +28,7 @@
 	</select>
 	<select id="selectMemberListCount" resultType="int">
 		SELECT COUNT(*)
-			FROM MEMBER
+			FROM mem_info
 				<if test="!searchKeyword.equals('')">
 					WHERE 
 					<choose>
@@ -50,7 +50,7 @@
 	<!-- 회원 정보 상세조회 -->
 	<select id="getMemberInfo" resultType="com.pj2.shoecream.vo.MemberVO">
 		SELECT *
-			FROM member
+			FROM mem_info
 			WHERE mem_idx = #{mem_idx}
 	</select>
 	<!-- 회원 등업 업데이트 -->
@@ -61,7 +61,7 @@
 
 	<!-- 회원 삭제 처리 -->
 	<delete id="deleteMember">
-		DELETE FROM member
+		DELETE FROM mem_info
 			WHERE mem_idx = #{mem_idx}
 	</delete>
 	
