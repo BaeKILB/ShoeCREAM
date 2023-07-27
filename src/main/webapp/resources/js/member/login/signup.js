@@ -275,38 +275,49 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
-//
-//
-//// 휴대폰 번호 입력 부분
-//function changePhone1(){
-//    const phone1 = document.getElementById("phone1").value // 010
-//    if(phone1.length === 3){
-//        document.getElementById("phone2").focus();
-//        check = true;
-//    }
-//}
-//
-//function changePhone2(){
-//    const phone2 = document.getElementById("phone2").value // 010
-//    if(phone2.length === 4){
-//        document.getElementById("phone3").focus();
-//        
-//        check = true;
-//    }
-//}
-//
-//function changePhone3(){
-//    const phone3 = document.getElementById("phone3").value // 010
-//    if(phone3.length === 4){
-//      document.getElementById("sendMessage").focus();
-//      document.getElementById("sendMessage").setAttribute("style","background-color:#F0F0F0;")
-//      document.getElementById("sendMessage").disabled = false;
-//      
-//      check = true;
-//    }
-//    
-//}
-//
+
+
+// 휴대폰 번호 입력 부분
+function changePhone1(){
+    document.getElementsByName('mem_mtel')[0].value = document.getElementById('phone1').value + "-" + document.getElementById('phone2').value  + "-" + document.getElementById('phone3').value;
+    const phone1 = document.getElementById("phone1").value // 010
+    if(phone1.length === 3){
+        document.getElementById("phone2").focus();
+        check = true;
+    }
+}
+
+function changePhone2(){
+    const phone2 = document.getElementById("phone2").value // 010
+    if(phone2.length === 4){
+        document.getElementById("phone3").focus();
+        
+        check = true;
+    }
+}
+
+function changePhone3(){
+    const phone3 = document.getElementById("phone3").value // 010
+    if(phone3.length === 4){
+      document.getElementById("sendMessage").focus();
+      document.getElementById("sendMessage").setAttribute("style","background-color:#F0F0F0;")
+      document.getElementById("sendMessage").disabled = false;
+      
+      check = true;
+    }
+    
+}
+
+function combinePhoneNumbers() {
+    const phone1 = document.getElementById("phone1").value;
+    const phone2 = document.getElementById("phone2").value;
+    const phone3 = document.getElementById("phone3").value;
+
+    const mem_mtel = document.getElementById("mem_mtel");
+    mem_mtel.value = phone1 + '-' + phone2 + '-' + phone3;
+    return true;
+}
+
 ////핸드폰 번호 유효성 검사 및 인증번호 전송
 //function sendMsg(){
 //	var phone =$("#phone1").val()+"-"+$("#phone2").val()+"-"+$("#phone3").val();
