@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -37,7 +38,10 @@ public class AuctionController {
 	private static final Logger logger = LoggerFactory.getLogger(AuctionController.class);
 	
 	@GetMapping("Auction")
-	public String auctionMain() {
+	public String auctionMain(
+			Model model) {
+		List<Map<String, Object>> auctionList = service.auctionList();
+		model.addAttribute("auctionList",auctionList);
 		return "auction/auction_main";
 	}
 	
@@ -83,9 +87,6 @@ public class AuctionController {
     		, HttpSession session) {
     	session.setAttribute("sId", "1"); // 가상의 회원번호
     	
-//    	int id = Integer.parseInt((String)session.getAttribute("sId")); // 회원번호
-//    	int productId = id + Long.valueOf(new Date().getTime()).intValue(); // 상품번호
-    	
     	auction.setMem_idx(Integer.parseInt((String)session.getAttribute("sId"))); // 회원번호 추가
     	String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
     	auction.setAuction_idx(productId); // 상품번호 추가
@@ -106,7 +107,7 @@ public class AuctionController {
         }
 
         image.setProduct_idx(productId);
-        image.setImage_path(subDir);
+        image.setImage_path(uploadDir+"/"+subDir);
         
         MultipartFile mFile1 = image.getImage1();
         MultipartFile mFile2 = image.getImage2();
@@ -130,11 +131,23 @@ public class AuctionController {
 		if(!mFile3.getOriginalFilename().equals("")) image.setImage3_name(imageName3);
 		if(!mFile4.getOriginalFilename().equals("")) image.setImage4_name(imageName4);
         
+		System.out.println(auction.toString());
+		
 		int insertCount = isService.registProductImage(image);
     	
     	if (insertCount>0) {
-    		service.AuctionRegist(auction);
+    		try {
+				if(!mFile1.getOriginalFilename().equals("")) mFile1.transferTo(new File(saveDir, imageName1));
+				if(!mFile2.getOriginalFilename().equals("")) mFile2.transferTo(new File(saveDir, imageName2));
+				if(!mFile3.getOriginalFilename().equals("")) mFile3.transferTo(new File(saveDir, imageName3));
+				if(!mFile3.getOriginalFilename().equals("")) mFile4.transferTo(new File(saveDir, imageName4));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    		service.auctionRegist(auction);
     	}
-    	return "";
+    	return "redirect:/Auction";
     }
 }
