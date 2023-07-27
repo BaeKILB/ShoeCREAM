@@ -11,6 +11,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminMember.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- 토스트 그리드 -->
 </head>
 <script type="text/javascript">
@@ -36,6 +37,7 @@
 				$('#pageList').empty();
 	             
 	             for(let member of data.memberList) {
+		            	let birth = new Date(member.mem_birthday);
 						$('.tbody').append(
 								"<tr>"
 								+ "<td>"+ member.mem_idx +"</td>"
@@ -43,7 +45,7 @@
 								+ "<td>"+ member.mem_name +"</td>"
 								+ "<td>"+ member.mem_nickname +"</td>"
 								+ "<td>"+ member.mem_mtel +"</td>"
-								+ "<td>"+ member.mem_birthday +"</td>"
+								+ "<td>"+ getFormatDate(birth) +"</td>"
 								+ "<td>"+ member.mem_rank +"</td>"
 								+ "<td><button style='cursor: pointer;' class='moreBtn' onclick='openModal(" + member.mem_idx + ");'>상세정보</button></td>"
 								+ "</tr>"
@@ -52,15 +54,15 @@
 	             
 	             if(pageNum > 1) {
 	            	 $("#pageList").append(
-		            	 	"<li>"
-        					+ "<a href='#' onclick='List(1)' class='allprev'><i class='fa fa-angle-double-left' aria-hidden='true'></i></a>"
+		            	 	"<li class='pgi'>"
+        					+ "<a href='#' onclick='List(1)' class='allprev'><i class='fa fa-angle-double-left pgi' aria-hidden='true'></i></a>"
 		            	 	+ "</li>"
             	 	 );
 	             }
 	             if(pageNum > 1) {
 	            	 $("#pageList").append(
-		            	 	"<li>"
-        					+ "<a href='#' onclick='List(" + (pageNum - 1) + ")' class='prev'><i class='fa fa-angle-left' aria-hidden='true'></i></a>"
+		            	 	"<li class='pgi'>"
+        					+ "<a href='#' onclick='List(" + (pageNum - 1) + ")' class='prev'><i class='fa fa-angle-left pgi' aria-hidden='true'></i></a>"
 		            	 	+ "</li>"
             	 	 );
 	             }
@@ -83,17 +85,17 @@
 	             }
 	             if(pageNum < data.maxPage) {
 	            	 $("#pageList").append(
-		            	 "<li>"
-    						+ "<a href='#' onclick='List(" + (pageNum + 1) + ")' class='next'><i class='fa fa-angle-right' aria-hidden='true'></i></a>"
+		            	 "<li class='pgi'>"
+    						+ "<a href='#' onclick='List(" + (pageNum + 1) + ")' class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>"
 		                	+ "</a>"
 		            	 	+ "</li>"
             	 	 );
 	             }
 	             if(pageNum < data.maxPage) {
 	            	 $("#pageList").append(
-		            	 "<li>"
+		            	 "<li class='pgi'>"
 		                	+ "<a href='#' onclick='List(" + data.maxPage + ")' class='allnext'>"
-		                	+ "<i class='fa fa-angle-double-right' aria-hidden='true'></i>"	
+		                	+ "<i class='fa fa-angle-double-right pgi' aria-hidden='true'></i>"	
 		                	+ "</a>"
 		            	 	+ "</li>"
             	 	 );
@@ -103,6 +105,14 @@
 				alert('데이터 불러오기 실패');
 			}
 		});
+		
+		function getFormatDate(date) {
+			let year = date.getFullYear();
+			let month = String(date.getMonth() + 1).padStart(2, '0');
+			let day = String(date.getDate()).padStart(2, '0');
+			let formattedDate = year + "-" + month + "-" + day;
+			return formattedDate;
+		}
 	}
 	
 	function openModal(mem_idx) {
@@ -156,7 +166,10 @@
 				$('.mem_mtel').append(data.mem_mtel);
 				$('.mem_birthday').append(getFormatDate(birth));
 				$('.mem_address').append(data.mem_address);
-				$('.mem_rank').append(data.mem_rank);
+				$('.mem_rank').append(
+					data.mem_rank
+					+ "<button style='cursor: pointer;' class='moreBtn rankup' onclick='MemberLevelUp(" + data.mem_idx + ");'>등업하기</button>"
+				);
 				$('.mem_interest').append(data.mem_interest);
 				$('.mem_sign_date').append(getFormatDate(signDate));
 				$('.mem_point').append(data.mem_point);
@@ -184,6 +197,23 @@
 			let formattedDate = year + "-" + month + "-" + day;
 			return formattedDate;
 		}
+	}
+	
+	function MemberLevelUp(mem_idx) {
+		url: "MemberLevelUp";
+		$.ajax({
+			type: "GET",
+			url: url,
+			dataType: "json",
+			data: {mem_idx: mem_idx},
+			success: function(data) {
+				swal('등업 완료', '등업이 완료되었습니다', 'success');
+				
+			},
+			error: function() {
+				swal('등업 실패', '등업에 실패하였습니다', 'warning');
+			}
+		});
 	}
 </script>
 <body>
