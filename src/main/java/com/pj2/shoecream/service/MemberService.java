@@ -83,6 +83,11 @@ public class MemberService {
 		return memberMapper.updateMember(member,newPasswd, newPasswd1);
 		
 	}
+	// 회원 수정 새로운 정보 담기
+	public MemberVO loadMemberData(String mem_id) {
+		// TODO Auto-generated method stub
+		return memberMapper.selectMember(mem_id);
+	}
 
 
     

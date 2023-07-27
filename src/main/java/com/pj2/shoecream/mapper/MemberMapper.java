@@ -33,4 +33,7 @@ public interface MemberMapper {
 	int updateMember(@Param("member") MemberVO member, @Param("newPasswd") String newPasswd,
 			@Param("newPasswd1") String newPasswd1);
 	
+	// 회원정보 수정 새로운 값 셀렉
+	MemberVO selectMember(String mem_id);
+	
 }

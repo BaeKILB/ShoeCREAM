@@ -139,10 +139,10 @@ public class MemberController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
       // 주소 관련 값 설정
-		mPrincipalDetails.getMember().setSample6_address(mPrincipalDetails.getMember().getMem_address().split("/")[0]);  
-		mPrincipalDetails.getMember().setSample6_detailAddress(mPrincipalDetails.getMember().getMem_address().split("/")[1]);  
-		mPrincipalDetails.getMember().setSample6_extraAddress(mPrincipalDetails.getMember().getMem_address().split("/")[2]); 
-		mPrincipalDetails.getMember().setSample6_postcode(mPrincipalDetails.getMember().getMem_address().split("/")[3]); 
+		mPrincipalDetails.getMember().setSample6_postcode(mPrincipalDetails.getMember().getMem_address().split("/")[0]); 
+		mPrincipalDetails.getMember().setSample6_address(mPrincipalDetails.getMember().getMem_address().split("/")[1]);  
+		mPrincipalDetails.getMember().setSample6_detailAddress(mPrincipalDetails.getMember().getMem_address().split("/")[2]);  
+		mPrincipalDetails.getMember().setSample6_extraAddress(mPrincipalDetails.getMember().getMem_address().split("/")[3]); 
 
       // 생년월일 관련 값 설정
 		mPrincipalDetails.getMember().setMem_bir1(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[0]);  
@@ -175,14 +175,14 @@ public class MemberController {
     // 회원수정
     @PostMapping("MemberUpdatePro")
     public String updatePro(
-    		MemberVO member, @RequestParam String newPasswd, @RequestParam String newPasswd1,HttpSession session, Model model, BindingResult bindingResult) {
+    		MemberVO member,
+    		@RequestParam String newPasswd,
+    		@RequestParam String newPasswd1,
+    		HttpSession session, Model model, BindingResult bindingResult, Authentication authentication) {
 //    	System.out.println("여기까지 오니?");
     	
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-		String sId = mPrincipalDetails.getMember().getMem_id();
-		System.out.println("세션에 저장된 sId : " + sId);
-		
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal(); 
 		String securePasswd = member.getMem_passwd();
 		
 		String currentPasswd = mPrincipalDetails.getMember().getMem_passwd();
@@ -199,34 +199,87 @@ public class MemberController {
 				model.addAttribute("msg", "비밀번호 확인 불일치!"); 
 				return "member/fail_back";
 			}
-			
-		    // 회원정보수정 유효성 검사 - 유효성 검사 에러 난 애들 한 곳에 모아서(bindingResult에 의해) 처리 errorMap에 담긴 메세지는 @Vaildation 에 의해서 자동으로 적절한게 간다.
-			if (bindingResult.hasErrors()) {
-				System.out.println("여기까지오긴 오니(회원정보수정) ..?");
-			     Map<String, String> errorMap = new HashMap<>();
-			     for (FieldError error : bindingResult.getFieldErrors()) {
-			         errorMap.put(error.getField(), error.getDefaultMessage());
-			         System.out.println("================");
-			         System.out.println(error.getDefaultMessage());
-			         System.out.println("================");
-			     }
-			     throw new CustomValidationException("회원 정보 수정 실패", errorMap);
-		    } else {
-		        memberService.ModifyMember(member, newPasswd1, bCryptPasswordEncoder.encode(newPasswd));
-		        System.out.println("회원정보성공해서 member에 뭐가 들었음 ? " + member);
-		        // " 회원 정보 수정 성공! " 메세지 출력 및 포워딩
-		        model.addAttribute("msg", "회원 정보 수정 성공!");
-		        model.addAttribute("member", member);
-//			model.addAttribute("targetURL", "mypage/{1}/update");
-//		        model.addAttribute("targetURL", "mypage/update");
+
+		        int insertCount = memberService.ModifyMember(member, newPasswd1, bCryptPasswordEncoder.encode(newPasswd));
+		       
+		        if(insertCount > 0) {
+		            // 3. 성공적으로 회원 정보가 수정되었다면, 최신 데이터를 로드합니다.
+		            MemberVO updatedMember = memberService.loadMemberData(member.getMem_id());
+		            // 4. 사용자 세션 정보 업데이트
+		            mPrincipalDetails.setMember(updatedMember);
+		            // 5. Model 객체에 최신 회원 정보를 저장하여 update.jsp 페이지에 전달합니다.
+		            model.addAttribute("member", updatedMember);
+		        }
 		        
-//		        return "member/success_forward";	
+		        System.out.println("회원정보성공해서 member에 뭐가 들었음 ? " + mPrincipalDetails.getMember());
+//		        // " 회원 정보 수정 성공! " 메세지 출력 및 포워딩
+//		        model.addAttribute("msg", "회원 정보 수정 성공!");
+//		        model.addAttribute("member", member);
+////			model.addAttribute("targetURL", "mypage/{1}/update");
+////		        model.addAttribute("targetURL", "mypage/update");
+//		        
+////		        return "member/success_forward";	
 		        return "redirect:/mypage/update";	
-		    }
+		  
 			
 			
 //		
     }
+//    // 회원수정
+//    @PostMapping("MemberUpdatePro")
+//    public String updatePro(
+//    		MemberVO member, @RequestParam String newPasswd, @RequestParam String newPasswd1,HttpSession session, Model model, BindingResult bindingResult) {
+////    	System.out.println("여기까지 오니?");
+//    	
+//    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//    	PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//    	String sId = mPrincipalDetails.getMember().getMem_id();
+//    	System.out.println("세션에 저장된 sId : " + sId);
+//    	
+//    	String securePasswd = member.getMem_passwd();
+//    	
+//    	String currentPasswd = mPrincipalDetails.getMember().getMem_passwd();
+//    	System.out.println("currentPasswd : " + currentPasswd);
+//    	System.out.println("member는 무슨 값 들고 있냐 ? " + member);
+////
+//    	if (member.getMem_passwd() == null || member.getMem_passwd().equals("")) { // 패스워드가 입력되지 않았을 경우
+//    		model.addAttribute("msg", "패스워드 입력 필수!");
+//    		return "member/fail_back";
+//    	} else if (!bCryptPasswordEncoder.matches(member.getMem_passwd(), currentPasswd)) { // 현재 비밀번호가 일치하지 않았을 경우
+//    		model.addAttribute("msg", "현재 비밀번호 불일치!");
+//    		return "member/fail_back";
+//    	} else if (!newPasswd.equals(newPasswd1)) { // 새로운 비밀번호 두개가 일치하지 않았을 경우
+//    		model.addAttribute("msg", "비밀번호 확인 불일치!"); 
+//    		return "member/fail_back";
+//    	}
+//    	
+//    	// 회원정보수정 유효성 검사 - 유효성 검사 에러 난 애들 한 곳에 모아서(bindingResult에 의해) 처리 errorMap에 담긴 메세지는 @Vaildation 에 의해서 자동으로 적절한게 간다.
+//    	if (bindingResult.hasErrors()) {
+//    		System.out.println("여기까지오긴 오니(회원정보수정) ..?");
+//    		Map<String, String> errorMap = new HashMap<>();
+//    		for (FieldError error : bindingResult.getFieldErrors()) {
+//    			errorMap.put(error.getField(), error.getDefaultMessage());
+//    			System.out.println("================");
+//    			System.out.println(error.getDefaultMessage());
+//    			System.out.println("================");
+//    		}
+//    		throw new CustomValidationException("회원 정보 수정 실패", errorMap);
+//    	} else {
+//    		memberService.ModifyMember(member, newPasswd1, bCryptPasswordEncoder.encode(newPasswd));
+//    		System.out.println("회원정보성공해서 member에 뭐가 들었음 ? " + member);
+//    		// " 회원 정보 수정 성공! " 메세지 출력 및 포워딩
+//    		model.addAttribute("msg", "회원 정보 수정 성공!");
+//    		model.addAttribute("member", member);
+////			model.addAttribute("targetURL", "mypage/{1}/update");
+////		        model.addAttribute("targetURL", "mypage/update");
+//    		
+////		        return "member/success_forward";	
+//    		return "redirect:/mypage/update";	
+//    	}
+//    	
+//    	
+////		
+//    }
     
     // 회원탈퇴 폼
     @GetMapping("mypage/delete")

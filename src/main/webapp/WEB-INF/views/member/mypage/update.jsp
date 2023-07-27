@@ -15,6 +15,7 @@
    <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
    <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
 <!--    <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+	<script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script>
    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
    <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script type="text/javascript">
@@ -217,7 +218,6 @@
 <!--    <footer> -->
 <%--       <jsp:include page="../../../inc/footer.jsp"></jsp:include> --%>
 <!--    </footer> -->
-	<script src="${pageContext.request.contextPath }/resources/js/member/mypage/update.js"></script>
 <!-- 	<script type="text/javascript"> -->
 	   
 <!-- // 	function signUpCheck() { -->

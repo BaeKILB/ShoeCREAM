@@ -49,31 +49,26 @@
 	  <select id="findMemberById" resultType="com.pj2.shoecream.vo.MemberVO">
 	    SELECT * FROM mem_info WHERE mem_id = #{mem_id}
 	  </select>
-  
-  	<!--   정보 수정하기  -->
-<!-- 	  <update id="updateMember" parameterType="com.pj2.shoecream.vo.MemberVO"> -->
-<!--         UPDATE mem_info -->
-<!--         SET -->
-<!--             mem_nickname=#{mem_nickname}, -->
-<!--             , mem_birthday = CONCAT(#{member.mem_bir1}, '-', #{member.mem_bir2}, '-', #{member.mem_bir3})  -->
-<!-- 			, mem_address = CONCAT(#{member.sample6_postcode},'/',#{member.sample6_address},'/',#{member.sample6_detailAddress},'/',#{member.sample6_extraAddress}) -->
-<!--         WHERE mem_idx=#{mem_idx} -->
-<!--      </update> -->
-	
+ 
 	
 		<!--   정보 수정하기  -->
-<update id="updateMember">
-    UPDATE mem_info
-    SET mem_name=#{member.mem_name}
-    <if test="newPasswd neq ''"> 
-        , mem_passwd = #{newPasswd1} 
-    </if>
-    , mem_nickname=#{member.mem_nickname}
-    , mem_birthday = CONCAT(#{member.mem_bir1}, '-', #{member.mem_bir2}, '-', #{member.mem_bir3}) 
-    , mem_mtel = CONCAT(#{member.phone1}, '-', #{member.phone2}, '-', #{member.phone3}) 
-    , mem_address = CONCAT(#{member.sample6_postcode},'/',#{member.sample6_address},'/',#{member.sample6_detailAddress},'/',#{member.sample6_extraAddress})
-    WHERE mem_id = #{member.mem_id}
-</update>
+	<update id="updateMember">
+	    UPDATE mem_info
+	    SET mem_name=#{member.mem_name}
+	    <if test="newPasswd neq ''"> 
+	        , mem_passwd = #{newPasswd1} 
+	    </if>
+	    , mem_nickname=#{member.mem_nickname}
+	    , mem_birthday = CONCAT(#{member.mem_bir1}, '-', #{member.mem_bir2}, '-', #{member.mem_bir3}) 
+	    , mem_mtel = CONCAT(#{member.phone1}, '-', #{member.phone2}, '-', #{member.phone3}) 
+	    , mem_address = CONCAT(#{member.sample6_postcode},'/',#{member.sample6_address},'/',#{member.sample6_detailAddress},'/',#{member.sample6_extraAddress})
+	    WHERE mem_id = #{member.mem_id}
+	</update>
+	
+	<select id="selectMember" resultType="com.pj2.shoecream.vo.MemberVO">
+		SELECT * FROM mem_info 
+		WHERE mem_id = #{mem_id}
+	</select>
 	
 	
 	
