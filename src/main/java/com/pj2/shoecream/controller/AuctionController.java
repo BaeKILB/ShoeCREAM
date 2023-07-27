@@ -86,7 +86,6 @@ public class AuctionController {
     		, ProductImageVO image
     		, HttpSession session) {
     	session.setAttribute("sId", "1"); // 가상의 회원번호
-    	
     	auction.setMem_idx(Integer.parseInt((String)session.getAttribute("sId"))); // 회원번호 추가
     	String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
     	auction.setAuction_idx(productId); // 상품번호 추가
