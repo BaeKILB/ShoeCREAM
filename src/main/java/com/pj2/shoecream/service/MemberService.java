@@ -92,6 +92,13 @@ public class MemberService {
 	public MemberVO loadMemberData(String mem_id) {
 		return memberMapper.selectMember(mem_id);
 	}
+	
+	//핸드폰 중복확인
+	public int phoneCheck(String phone) {
+		int cnt = memberMapper.phoneCheck(phone);
+		System.out.println("cnt: " + cnt);
+		return cnt;
+	}
 
 
 

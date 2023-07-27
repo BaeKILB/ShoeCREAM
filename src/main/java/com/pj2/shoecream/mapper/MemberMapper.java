@@ -37,6 +37,9 @@ public interface MemberMapper {
 	// 회원정보 수정 새로운 값 셀렉
 	MemberVO selectMember(String mem_id);
 
+	//폰번호 중복확인
+	int phoneCheck(String phone);
+
 	
 
 	

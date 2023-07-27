@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.MemberService;
+import com.pj2.shoecream.util.FindUtil;
+import com.pj2.shoecream.util.SendUtil;
 import com.pj2.shoecream.vo.MemberVO;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +44,7 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	private Map<String, String> codeMap; 
 	
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -59,6 +63,48 @@ public class MemberController {
 	}
 	
 //	==========================Member(auth)==================
+	//폰 중복 확인
+	@PostMapping("/phondCheck")
+	@ResponseBody
+	public int phoneCheck(@RequestParam("phone") String phone) {
+		int cnt = memberService.phoneCheck(phone);
+		return cnt;
+	}
+	
+	
+	//문자인증
+	@PostMapping("/send-phone-authentication")
+	@ResponseBody
+    public String sendOne(@RequestParam("phone") String phone) {
+		
+		//인증번호 생성
+		String code  = FindUtil.getRandomNum();
+		String msg = "[슈크림 회원가입] 인증번호 ["+code+"]를 입력해 주세요.";
+//		SingleMessageSentResponse response = 
+		SendUtil.sendMsg(phone, msg);
+		
+		//코드랑 번호 저장
+		codeMap = new HashMap<String, String>();
+		codeMap.put("phone", code);
+
+		
+		return "0";
+    }
+	
+	@PostMapping("/verify-phone-authentication")
+	@ResponseBody
+	public boolean phoneAut(@RequestParam("newCode") String newCode, HttpServletRequest request) {
+		String code= codeMap.get("phone");
+	
+		boolean isCorrectCode = false;
+		
+		if(code.equals(newCode)) {
+			System.out.println("인증완료");
+			isCorrectCode = true;
+		}
+		
+		return isCorrectCode;//
+	}
 	
 	
 	// 로그인 폼

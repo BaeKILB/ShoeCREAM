@@ -118,17 +118,18 @@
 				            <input type="hidden" id="mem_mtel" name="mem_mtel">
 				            <button type="button" disabled id="sendMessage" onclick="sendMsg()">인증번호 전송</button>
 				       			        
-				       </div>
-				        
+				       </div>     
 						<div class="confirm">
 				            <input type="text" id="cert" name="memberPhoneCertify" maxlength="4"  required disabled placeholder="인증번호를 입력 해주세요">
 				            <button type="button" disabled id="certifyCheck" onclick="verifyCode()" >인증확인</button>
 				        
+				        </div>   
+				        <div class="signUp">
+				           <button type="button" id="signUpButton"'>가입하기</button>
+				           		<!-- 문자 인증 할때 열어두자 -->
+<!-- 				           <button type="button" id="signUpButton" onclick='signUpCheck()'>가입하기</button> -->
 				        </div>
 				        
-				        <div class="signUp">
-				           <button>가입하기</button>
-				        </div>
 									
 <!-- 				        <div class="email"> -->
 <!-- 				        	<p>아이디</p> -->

@@ -58,10 +58,19 @@
 	    SELECT COUNT(*) FROM mem_info WHERE mem_email = #{mem_email}
 	</select>	
 	
-	
+<!-- 	아이디 중복 체크 - 프론트 단 -->
 	  <select id="findMemberById" resultType="com.pj2.shoecream.vo.MemberVO">
 	    SELECT * FROM mem_info WHERE mem_id = #{mem_id}
 	  </select>
+	
+	
+    <!-- 핸드폰 번호 중복 확인 - colsms -->
+  	<select id="phoneCheck" parameterType="String" resultType="int">
+		SELECT COUNT(mem_mtel) FROM mem_info WHERE mem_mtel=#{mem_mtel}
+	</select>
+	
+	
+
  
 	
 	<!--  회원 정보 수정하기  -->
