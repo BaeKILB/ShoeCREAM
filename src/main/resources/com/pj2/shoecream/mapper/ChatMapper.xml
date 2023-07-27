@@ -4,11 +4,11 @@
 	    
 	    <!-- 채팅 추가 -->
 	<insert id="insertChat" parameterType="ChatMsgVO">
-		INSERT INTO chat_msg
+		INSERT INTO chat_msgs
 		VALUES(
 			null 
 			,#{chat_room_idx}
-			,#{mem_idx}
+			,#{chat_msg_writer}
 			,#{chat_msg_content}   
 			,now()
 		)
@@ -29,40 +29,73 @@
 	<!-- 채팅 방 채팅 불러오기 -->
 	<select id="selectChatList" resultType="ChatMsgVO">
 		SELECT * 
-		FROM chat_msg
+		FROM chat_msgs
 		WHERE 
 			chat_room_idx = #{chat_room_idx}
 		ORDER BY 
-			chat_date
+			chat_msg_date
 		;
 	</select>
 	
 	<!-- 채팅방 리스트 검색 -->
-	<!-- 상품 정보도 같이 불러오기 -->
+	<!-- 채팅방 멤버 닉네임과 상품 정보도 같이 불러오기 -->
+	<!-- 불러오는 컬럼
+	chat_room_idx|product_idx|
+	mem_seller_idx|mem_seller_nickname|
+	mem_buyer_idx|mem_buyer_nickname|
+	chat_room_area|
+	product_idx|mem_idx|product_title|product_payment
+	|product_price|product_sell_status|product_location| -->
 	<select id="selectChatRoomList" resultType="Map">
-		SELECT * 
-		FROM chat_rooms cr
-		JOIN (
-			SELECT jp.product_idx ,mem_idx,product_title,product_payment
-			,product_price,product_sell_status,product_location
+
+SELECT * 
+		FROM 
+		(
+			SELECT  mem_seller.chat_room_idx , product_idx,
+			mem_seller_idx, mem_seller_nickname, 
+			mem_buyer_idx ,mem_buyer_nickname ,chat_room_area
 			FROM
-				product p  
-				JOIN jung_product jp 
-				ON jp.product_idx =p.product_idx
+				(
+					SELECT chat_room_idx , product_idx ,mem_seller_idx, mem_nickname AS mem_seller_nickname 
+					FROM chat_rooms cr JOIN mem_info mi ON cr.mem_seller_idx = mi.mem_idx 
+				) as mem_seller
+				JOIN 
+				(
+					SELECT chat_room_idx ,mem_buyer_idx, mem_nickname AS mem_buyer_nickname ,chat_room_area
+					FROM chat_rooms cr JOIN mem_info mi ON cr.mem_buyer_idx = mi.mem_idx 
+				) AS mem_buyer
+				ON mem_seller.chat_room_idx = mem_buyer.chat_room_idx
 			WHERE
-				product_selector = 1
+			(
+				mem_seller_idx = #{mem_idx}
+				OR mem_buyer_idx = #{mem_idx}
+			)
+			AND chat_room_area = #{chat_room_area}
+				
+		) AS cr
+		JOIN (
+			SELECT p1.product_idx,mem_idx,product_title,
+			product_info,product_payment,product_price,
+			product_sell_status,product_location,image1,image_path
+			FROM product_image pi2
+			JOIN 
+			(
+				SELECT product_idx , mem_idx, product_title,product_info,
+				product_payment, product_price, product_sell_status, product_location
+				FROM
+					jung_product 
+				WHERE
+					product_selector = #{chat_room_area}
+			) AS p1
+			ON p1.product_idx = pi2.product_idx
 		) AS p
 		ON cr.product_idx = p.product_idx
-		WHERE 
-			(
-			mem_seller_idx = 1
-			OR mem_buyer_idx = 1
-			)
-			AND chat_room_area = 1
-		ORDER BY chat_room_idx desc
-		;
+	ORDER BY chat_room_idx DESC
+	;
+		
+	
 	</select>
-	<select id="selectChatRoomListSeller" resultType="ChatRoomVO">
+	<select id="selectChatRoomListSeller" resultType="Map">
 		SELECT * 
 		FROM chat_rooms
 		WHERE 
@@ -70,7 +103,7 @@
 			AND chat_room_area = #{chat_room_area}
 		;
 	</select>
-	<select id="selectChatRoomListBuyer" resultType="ChatRoomVO">
+	<select id="selectChatRoomListBuyer" resultType="Map">
 		SELECT * 
 		FROM chat_rooms
 		WHERE 

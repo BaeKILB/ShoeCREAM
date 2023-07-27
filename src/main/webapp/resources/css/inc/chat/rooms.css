@@ -1,2 +1,21 @@
 @charset "UTF-8";
 
+/* 채팅방 본인이 판매자인지 구매자인지 구분 */
+
+.chatSeller{	
+	background-color: orange;
+}
+
+.chatBuyer{
+	background-color: aqua;
+}
+
+/* 채팅 메시지 창 */
+.chat_msg_warp{
+	height: 100%;
+}
+
+.product_info_wrap, .chat_member{
+	height: 100px;
+	border: 1px solid gray;
+}

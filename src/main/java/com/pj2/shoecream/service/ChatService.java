@@ -1,6 +1,7 @@
 package com.pj2.shoecream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,11 +42,11 @@ public class ChatService {
 	}
 	
 	// 내가 있는 채팅방 검색
-	public List<ChatRoomVO> getChatRoomList(int mem_idx , int chat_room_area){
+	public List<Map<String,Object>> getChatRoomList(int mem_idx , int chat_room_area){
 		return mapper.selectChatRoomList(mem_idx, chat_room_area);
 	}
 	// 내가 있는 채팅방 검색 - sId 가지고 있을때
-	public List<ChatRoomVO> getChatRoomList(String sId , int chat_room_area){
+	public List<Map<String,Object>> getChatRoomList(String sId , int chat_room_area){
 		int mem_idx = getSIdIdx(sId);
 		if(mem_idx < 0) {
 			return null;

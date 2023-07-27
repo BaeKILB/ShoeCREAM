@@ -70,11 +70,11 @@ public class StompController {
 	
     //채팅방 목록 조회후 채팅 페이지로 이동
     @GetMapping("rooms")
-    public ModelAndView rooms(@RequestParam Map<String,Object> map, HttpServletRequest request, Model model){
+    public ModelAndView rooms(@RequestParam Map<String,Object> map, HttpServletRequest request){
     	HttpSession session = request.getSession();
     	ModelAndView mv = null;
     	String sId = (String)session.getAttribute("sId");
- 
+    	// sid 와 현재 채팅 구역(중고인지 경매인지) 값 있는지 체크
     	if(sId == null || sId.equals("") 
     			|| map.get("chat_area") == null || map.get("chat_area").equals("")) {    		
     			
@@ -86,14 +86,15 @@ public class StompController {
     	}
         mv = new ModelAndView("/inc/chat/rooms");
         try {        	
+        	// 현재 접속 id sid 불러오기(페이지 생성시에만 사용)
         	int idx = chatService.getSIdIdx(sId);
-        	List<ChatRoomVO> chatList = chatService.getChatRoomList(idx,Integer.parseInt((String)map.get("chat_area")));
-        	List<JungProductVO> productList = new ArrayList<JungProductVO>();
-        	for(ChatRoomVO chat : chatList) {
-        		productList.add(jungProductService.getJungProduct(chat.getProduct_idx()));
-        	}
+        	
+        	// 이 chat list 는 상품과 통합 되어서 반환됨
+        	List<Map<String,Object>> chatList 
+        	= chatService.getChatRoomList(idx,Integer.parseInt((String)map.get("chat_area")));
+        
         	mv.addObject("list",chatList);
-        	mv.addObject("productList", productList);
+        	mv.addObject("myIdx", idx);
         }
         catch(NullPointerException e){
         	e.printStackTrace();
@@ -129,7 +130,7 @@ public class StompController {
 						Integer.parseInt(chat_room_idx) )) {
 			model.addAttribute("room", chatService.getChatRoom(Integer.parseInt(chat_room_idx)));
 			model.addAttribute("chatList", chatService.getChatList(Integer.parseInt(chat_room_idx)));
-		
+			model.addAttribute("idx", chatService.getSIdIdx((String)session.getAttribute("sId")));
 			return "/inc/chat/room";
 		}
 		else {
