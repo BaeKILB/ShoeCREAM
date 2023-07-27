@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.ImageMapper">
+	<insert id="insertProductImage" parameterType="com.pj2.shoecream.vo.ProductImageVO" >
+		insert into
+			product_image
+		values(
+			#{product_idx}
+			, #{image1_name}
+			, #{image2_name}
+			, #{image3_name}
+			, #{image4_name}
+			, #{image_path}
+		)
+	</insert>
+
+</mapper>

@@ -1,17 +1,16 @@
 
 .side_chatroom_wrap {
-    min-width: 600px;
+    min-width: 500px;
     width: 70%;
     max-width: 850px;
     height: 600px;
-	border: 1px solid black;
+	box-shadow:  0  0 10px rgba(0, 0, 0, .1);
+	border-radius: 5px;
 }
 
 .chatroom_list{
-	min-width: 300px;
-    width: 50%;
-    max-width: 400px;
     height: 100%;
+   	border-radius: 5px;
 }
 
 .b-example-divider {

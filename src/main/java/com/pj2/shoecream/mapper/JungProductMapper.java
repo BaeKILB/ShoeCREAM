@@ -7,5 +7,5 @@ import com.pj2.shoecream.vo.ProductVO;
 
 @Mapper
 public interface JungProductMapper {
-	JungProductVO selectJungProductChat(int product_idx);
+	JungProductVO selectJungProductChat(String product_idx);
 }

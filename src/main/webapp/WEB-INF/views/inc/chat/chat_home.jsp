@@ -16,7 +16,7 @@
 	</form>
     
 	<section class="chatWrap">
-		<a href="rooms?chat_area=1">chat rooms</a>
+		<a href="rooms?chat_area=0">chat rooms</a>
 	</section>
 </body>
 </html>

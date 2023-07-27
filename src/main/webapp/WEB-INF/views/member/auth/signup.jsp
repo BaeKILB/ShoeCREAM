@@ -22,7 +22,7 @@
 
 <body>
 	<div id="contents">
-		<form action="MemberJoinPro" method="post" name="fr" id="fr">
+		<form action="MemberJoinPro" method="post" name="fr" id="fr" onsubmit="return combinePhoneNumbers();">
 			<section id="sec_con" class="inr signup_wrap">
 			 	<h1 class="con_title">ShoeCream 회원가입</h1>
 			 	<div class="signup_cont">
@@ -115,19 +115,21 @@
 				            <input id="phone1"  name="phone1" type="text" size="1" maxlength="3" oninput="changePhone1()" > -
 				            <input id="phone2" name="phone2" type="text" size="3" maxlength="4" oninput="changePhone2()" > -
 				            <input id="phone3" name="phone3" type="text" size="3" maxlength="4" oninput="changePhone3()" >
+				            <input type="hidden" id="mem_mtel" name="mem_mtel">
 				            <button type="button" disabled id="sendMessage" onclick="sendMsg()">인증번호 전송</button>
 				       			        
-				       </div>
-				        
+				       </div>     
 						<div class="confirm">
 				            <input type="text" id="cert" name="memberPhoneCertify" maxlength="4"  required disabled placeholder="인증번호를 입력 해주세요">
 				            <button type="button" disabled id="certifyCheck" onclick="verifyCode()" >인증확인</button>
 				        
-				        </div>
-				        
+				        </div>   
 				        <div class="signUp">
 				           <button>가입하기</button>
+				           		<!-- 문자 인증 할때 열어두자 -->
+<!-- 				           <button type="button" id="signUpButton" onclick='signUpCheck()'>가입하기</button> -->
 				        </div>
+				        
 									
 <!-- 				        <div class="email"> -->
 <!-- 				        	<p>아이디</p> -->

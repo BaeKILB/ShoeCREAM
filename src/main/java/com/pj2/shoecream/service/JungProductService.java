@@ -11,7 +11,7 @@ public class JungProductService {
 	@Autowired
 	private JungProductMapper mapper;
 	
-	public JungProductVO getJungProduct(int product_idx) {
+	public JungProductVO getJungProduct(String product_idx) {
 		return mapper.selectJungProductChat(product_idx);
 	}
 }

@@ -32,7 +32,7 @@
 	<div class="secondContainner">
 		<div class="second_title">제목</div>
 		<div class="second_content">
-			<input type="text" class="product_name" name="product_title" placeholder="품목을 입력해주세요."/>
+			<input type="text" class="product_name" name="auction_title" placeholder="품목을 입력해주세요."/>
 		</div>
 	</div>
 	<div class="thirdContainner">
@@ -40,6 +40,7 @@
 		<div class="third_content">
 			<div class="category_box">
 				<div class="category_content_l">
+					<input type="hidden" name="lc_code">
 				    <div>제1분류</div>
 				    <div>
 				        <ul id="lcList">
@@ -50,19 +51,28 @@
 				    </div>
 				</div>
 				<div class="category_content_m">
+					<input type="hidden" name="mc_code">
 				    <div>제2분류</div>
 				    <div>
 				        <ul id="mcList"></ul>
 				    </div>
 				</div>
-				<div class="category_content_s">
-				    <div>제3분류</div>
-				    <div>
-				        <ul id="scList"></ul>
-				    </div>
-				</div>
+<!-- 				<div class="category_content_s"> -->
+<!-- 					<input type="hidden" name="sc_code"> -->
+<!-- 				    <div>제3분류</div> -->
+<!-- 				    <div> -->
+<!-- 				        <ul id="scList"></ul> -->
+<!-- 				    </div> -->
+<!-- 				</div> -->
 			</div>
-			<p class="selected_category">선택한 카테고리 :</p>
+			<p class="selected_category">
+				<span>선택한 카테고리 :</span>
+				<span id="selectCategory">
+					<span id="selectLcn"></span>
+					<span id="selectMcn"></span>
+<!-- 					<span id="selectScn"></span> -->
+				</span>
+			</p>
 		</div>
 	</div>
 <!-- 	<div class="fourthContainner"> -->
@@ -85,7 +95,7 @@
 			<div class="brand_box">
 				<label> 
 					<span>브랜드</span> 
-					<input type="text" class="brand" name="product_brand" />
+					<input type="text" class="brand" name="auction_brand" />
 					<select name="inputBrand" onchange="sellectBrand(this.value)">
 						<option value="">기타(직접입력)</option>
 						<option value="ADIDAS">ADIDAS</option>
@@ -112,7 +122,7 @@
 			<div class="size_box">
 				<label class="size_label"> 
 					<span>사이즈</span> 
-					<input type="text" class="size" name="product_size" />
+					<input type="text" class="size" name="auction_size" />
 					<select name="inputSize" onchange="selectSize(this.value)">
 						<option value="" selected="selected">직접 입력</option>
 						<c:forEach begin="220" step="5" end="310" varStatus="status">
@@ -139,19 +149,23 @@
 		</div>
 	</div>
 	<div class="eighthContainner">
-		<div class="eighth_title">경매시작일</div>	
-		<div class="eighth_content">
-			<input type="text" name="auc_regist_date" id="dateStart" class="date-start"> 
+		<div id="st_wrap">
+			<div class="eighth_title">경매시작일</div>	
+			<div class="eighth_content">
+				<input type="text" name="auc_regist_date" id="dateStart" class="date-start" readonly="readonly" required="required"> 
+			</div>
 		</div>
-		<div class="eighth_title">경매마감일</div>	
-		<div class="eighth_content">
-			<input type="text" name="auc_close_date" id="dateEnd" class="date-end"> 
+		<div id="et_wrap" class="hidden">
+			<div class="eighth_title">경매마감일</div>	
+			<div class="eighth_content">
+				<input type="text" name="auc_close_date" id="dateEnd" class="date-end" readonly="readonly" required="required"> 
+			</div>
 		</div>
 	</div>
 	<div class="ninthContainner">
 		<div class="ninth_title">상품설명</div>
 		<div class="ninth_content">
-			<textarea class="product_detail" name="product_info" placeholder="상품에 대한 설명을 작성해주세요" ></textarea>
+			<textarea class="product_detail" name="auction_info" placeholder="상품에 대한 설명을 작성해주세요" ></textarea>
 		</div>
 	</div>
 <!-- 	<div class="tenthContainner"> -->

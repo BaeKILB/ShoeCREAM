@@ -1,6 +1,7 @@
 package com.pj2.shoecream.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,11 +16,11 @@ public interface ChatMapper {
 	int insertChat(ChatMsgVO chat);
 	int insertChatRoom(ChatRoomVO chatRoom);
 	
-	List<ChatRoomVO> selectChatRoomList(@Param("mem_idx") int mem_idx,
+	List<Map<String,Object>> selectChatRoomList(@Param("mem_idx") int mem_idx,
 			@Param("chat_room_area") int chat_room_area);
-	List<ChatRoomVO> selectChatRoomListSeller(@Param("mem_idx") int mem_idx,
+	List<Map<String,Object>> selectChatRoomListSeller(@Param("mem_idx") int mem_idx,
 			@Param("chat_room_area") int chat_room_area);
-	List<ChatRoomVO> selectChatRoomListBuyer(@Param("mem_idx") int mem_idx,
+	List<Map<String,Object>> selectChatRoomListBuyer(@Param("mem_idx") int mem_idx,
 			@Param("chat_room_area") int chat_room_area);
 	List<ChatMsgVO> selectChatList(int chat_room_idx);
 	

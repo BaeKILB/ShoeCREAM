@@ -23,6 +23,24 @@ function scrolDown() {
 	}
 }
 
+const chatAdder = (content) => {
+	
+	
+	   let str = '';
+	
+       str = "<div class='col-6'>";
+       if(content.chat_msg_idx == content.my_idx){	
+       		str += "<div class='alert alert-secondary'>";
+		}
+		else{
+			str += "<div class='alert alert-danger'>";
+		}
+       str += "<b>" + content.mem_nickname + " : " + content.chat_msg_content + "</b>";
+       str += "</div></div>";
+       $("#msgArea").append(str);
+	   
+}
+
 const getRoomAjax = (chat_room_idx) => {
 	$.ajax({
 		type : "GET"
@@ -43,26 +61,8 @@ const connectStart = () => {
        stomp.subscribe("/topic/room" + chat_room_idx, function (chat) {
     	   
 		console.log("STOMP Connection On")
-		   let content = JSON.parse(chat.body);
-		
-		   let chat_writer = content.chat_writer;
-		   let str = '';
-		
-		   if(chat_writer === username){
-		       str = "<div class='col-6'>";
-		       str += "<div class='alert alert-secondary'>";
-		       str += "<b>" + chat_writer + " : " + content.chat_content + "</b>";
-		       str += "</div></div>";
-		       $("#msgArea").append(str);
-		   }
-		   else{
-		       str = "<div class='col-6'>";
-		       str += "<div class='alert alert-warning'>";
-		       str += "<b>" + chat_writer + " : " + content.chat_content + "</b>";
-		       str += "</div></div>";
-		       $("#msgArea").append(str);
-		   }
-			
+		 
+			chatAdder(JSON.parse(chat.body));
 			scrolDown();
 			myLoad = false;
 			
@@ -80,29 +80,31 @@ const initChatMsg = (pName, chatRoomIdx, userName) => {
 	//연결 종료
 	stomp.disconnect();
 	
+	// 채팅창 구역 비우기
+	$("#msgArea").empty();
+	
 	sockJs = new SockJS("stomp_chat");
 	
 	// 초기값 셋팅
 	productName = pName;
 	chat_room_idx = chatRoomIdx;
 	username = userName;
-	
+	console.log("test");
 	connectStart();
+	
+	console.log("test2");
+	scrolDown();
 }
 
 
 $(document).ready(function(){
 
-	
-
     $("#button-send").on("click", function(e){
         let msg = document.getElementById("msg");
 
         console.log(username + ":" + msg.value);
-        stomp.send('/pub/message', {}, JSON.stringify({chat_room_idx: chat_room_idx, chat_content: msg.value, chat_writer: username}));
+        stomp.send('/pub/message', {}, JSON.stringify({chat_room_idx: chat_room_idx, chat_msg_content: msg.value, chat_msg_idx:chat_msg_idx ,sId:username}));
         msg.value = '';
         myLoad = true;
     });   
 });
-
-scrolDown();
