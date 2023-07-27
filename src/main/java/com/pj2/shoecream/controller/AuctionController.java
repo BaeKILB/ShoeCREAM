@@ -89,9 +89,7 @@ public class AuctionController {
     	auction.setMem_idx(Integer.parseInt((String)session.getAttribute("sId"))); // 회원번호 추가
     	String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
     	auction.setAuction_idx(productId); // 상품번호 추가
-        map.put("auction_idx", productId); 
         image.setProduct_idx(productId);
-        System.out.println("!!!"+map.toString());
         
     	String uploadDir = "/resources/upload/auction";
         String saveDir = session.getServletContext().getRealPath(uploadDir);
@@ -106,7 +104,6 @@ public class AuctionController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
 
         image.setProduct_idx(productId);
         image.setImage_path(subDir);
@@ -136,7 +133,7 @@ public class AuctionController {
 		int insertCount = isService.registProductImage(image);
     	
     	if (insertCount>0) {
-    		service.AuctionRegist(map);
+    		service.AuctionRegist(auction);
     	}
     	return "";
     }
