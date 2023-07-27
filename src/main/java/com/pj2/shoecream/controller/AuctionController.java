@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pj2.shoecream.service.AuctionService;
 import com.pj2.shoecream.service.ImageService;
+import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.ProductImageVO;
 
 @Controller
@@ -77,7 +78,7 @@ public class AuctionController {
     
     @PostMapping("AuctionRegister")
     public String auctionRegister(
-    		@RequestParam Map<String, Object> map
+    		AuctionVO auction
     		, ProductImageVO image
     		, HttpSession session) {
     	session.setAttribute("sId", "1"); // 가상의 회원번호
@@ -85,10 +86,10 @@ public class AuctionController {
 //    	int id = Integer.parseInt((String)session.getAttribute("sId")); // 회원번호
 //    	int productId = id + Long.valueOf(new Date().getTime()).intValue(); // 상품번호
     	
-    	String id = (String)session.getAttribute("sId"); // 회원번호
-    	map.put("mem_idx", id); // 회원번호 map 추가
-    	String productId = id + String.valueOf(new Date().getTime()); // 상품번호
-        map.put("auction_idx", productId); // 상품번호 map 추가
+    	auction.setMem_idx(Integer.parseInt((String)session.getAttribute("sId"))); // 회원번호 추가
+    	String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
+    	auction.setAuction_idx(productId); // 상품번호 추가
+        map.put("auction_idx", productId); 
         image.setProduct_idx(productId);
         System.out.println("!!!"+map.toString());
         
