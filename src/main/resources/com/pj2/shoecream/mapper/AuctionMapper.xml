@@ -2,11 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.AuctionMapper">
 	<insert id="insertAuctionItem">
-<!-- 		insert into -->
-<!-- 			product -->
-<!-- 		values( -->
-			
-<!-- 		) -->
+		insert into
+			auction_item
+		values(
+			#{auction_idx}
+			, #{mem_idx}
+			, #{auction_title}
+			, #{auction_info}
+			, 'pay'
+			, #{lc_code}
+			, #{mc_code}
+			, now()
+			, '0'
+			, #{auction_brand}
+			, #{auction_size}
+			, '1'
+			, #{auc_start_price}
+			, #{auc_buy_instantly}
+			, #{auc_bid_unit}
+			, #{auc_regist_date}
+			, #{auc_clse_date}
+			, '등록대기'
+		)
 	</insert>
 
 </mapper>

@@ -57,15 +57,15 @@ function sample4_execDaumPostcode() {
 $(function() {
     $(".methodSpan").on("click",function() {
         let page = $(this).children('input').val();
-    location.href = "RegisterForm?page="+page+"_register.jsp";
+    location.href = "RegisterForm?page="+page;
     });
 });
-
 
 // 브랜드 선택
 function sellectBrand(selBrand){
    $(".brand").val(selBrand);
 }
+
 // 카테고리 선택
 $(function() {
     // 중분류 추가
@@ -80,43 +80,62 @@ $(function() {
         };
     };
     // 소분류 추가
-    const srAdd = (data) => {
-        $(".scRecord").remove();
-        for(let item of data) {
-            let result = (
-              "<li class='scRecord' value='"+item.sc_code+"'>"+item.sc_name+"</li>"  
-            );
-            $("#scList").append(result);
-        };     
-    };
+//    const srAdd = (data) => {
+//        $(".scRecord").remove();
+//        for(let item of data) {
+//            let result = (
+//              "<li class='scRecord' value='"+item.sc_code+"'>"+item.sc_name+"</li>"  
+//            );
+//            $("#scList").append(result);
+//        };     
+//    };
     // 카테고리 클릭 이벤트
     $(".lcRecord").on("click",function() {
-        console.log("lc")
+		let lc_code = $(this).val();
+		$("input[name=lc_code]").val(lc_code);
+		$("input[name=mc_code]").val('');
+//		$("input[name=sc_code]").val('');
+		let lc_name = $(this).text();
+		$("#selectLcn").text(lc_name);
+		$("#selectMcn").text('');
+//		$("#selectScn").text('');
         $.ajax({
             type: "get",
             url: "getMcList",
             data: {
-                lc_code:$(this).val()
+                lc_code : lc_code
             },
             dataType: "json"
         })
         .done(function(data) {
             mrAdd(data);
             $(".mcRecord").on("click",function() {
-                $.ajax({
-                    type: "get",
-                    url: "getScList",
-                    data: {
-                        mc_code:$(this).val()
-                    },
-                    dataType: "json"
-                })
-                .done(function(data) {
-                    srAdd(data);
-                })
-                .fail(function() {
+				let mc_code = $(this).val();
+				$("input[name=mc_code]").val(mc_code);
+				$("input[name=sc_code]").val('');
+				let mc_name = $(this).text();
+				$("#selectMcn").text(" > " + mc_name);
+//				$("#selectScn").text('');
+//                $.ajax({
+//                    type: "get",
+//                    url: "getScList",
+//                    data: {
+//                        mc_code : mc_code
+//                    },
+//                    dataType: "json"
+//                })
+//                .done(function(data) {
+//                    srAdd(data);
+//                    $(".scRecord").on("click",function() {
+//						let sc_code = $(this).val();
+//						$("input[name=sc_code]").val(sc_code);
+//						let sc_name = $(this).text();
+//						$("#selectScn").text(" > "+sc_name);
+//		            }); 
+//                })
+//                .fail(function() {
                     
-                });
+//                });
             });            
         })
         .fail(function() {
@@ -129,7 +148,7 @@ $(function() {
 let count = 0;
 $(function() {
 	// 숨김 처리
-	$("input[type=file]").not("#image1").each(function(index) {
+	$("input[type=file]").not("input[name=image1]").each(function(index) {
 		$(this).addClass("hidden");
 	})
 });
@@ -198,6 +217,7 @@ $(function() {
         onSelectTime: function(ct){
             $("#dateEnd").datetimepicker('setOptions', { minDate: ct });
             $("#dateEnd").datetimepicker('setOptions', { minTime: ct });
+            $("#et_wrap").removeClass("hidden");
         }
     });
     $("#dateEnd").datetimepicker({
