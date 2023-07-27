@@ -308,6 +308,7 @@ function changePhone3(){
     
 }
 
+// 휴대폰 번호 합쳐서 뷰페이지에 보내기
 function combinePhoneNumbers() {
     const phone1 = document.getElementById("phone1").value;
     const phone2 = document.getElementById("phone2").value;

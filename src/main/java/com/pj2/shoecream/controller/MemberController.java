@@ -80,9 +80,9 @@ public class MemberController {
 		
 		
 		// 아이디 중복 유효성 검사
-	    if (memberService.isMemberIdDuplicated(member.getMem_id())) {
-	    	throw new CustomValidationException("이미 사용 중인 아이디입니다.", null);
-	    }
+//	    if (memberService.isMemberIdDuplicated(member.getMem_id())) {
+//	    	throw new CustomValidationException("이미 사용 중인 아이디입니다.", null);
+//	    }
 
 		// 생년월일 유효성 검사
 		Date mem_birthday = member.getMem_birthday();
@@ -95,7 +95,10 @@ public class MemberController {
 			throw new CustomValidationException("이미 사용 중인 번호입니다.", null);
 		}  
 			
-		
+		// 이메일 유효성 검사
+		if (memberService.isMemberEmailDuplicated(member.getMem_email())) {
+			throw new CustomValidationException("이미 사용 중인 이메일입니다.", null);
+		}
 		
 	    // 회원가입 유효성 검사 - 유효성 검사 에러 난 애들 한 곳에 모아서(bindingResult에 의해) 처리 errorMap에 담긴 메세지는 @Vaildation 에 의해서 자동으로 적절한게 간다.
 		if (bindingResult.hasErrors()) {

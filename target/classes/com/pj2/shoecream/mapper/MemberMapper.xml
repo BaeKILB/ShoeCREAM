@@ -53,6 +53,11 @@
 	    SELECT COUNT(*) FROM mem_info WHERE mem_mtel = #{mem_mtel}
 	</select>	
 	
+	<!-- 	폰 중복 체크 - 백엔드단 -->
+	<select id="isMemberEmailDuplicated" resultType="int" parameterType="string">
+	    SELECT COUNT(*) FROM mem_info WHERE mem_email = #{mem_email}
+	</select>	
+	
 	
 	  <select id="findMemberById" resultType="com.pj2.shoecream.vo.MemberVO">
 	    SELECT * FROM mem_info WHERE mem_id = #{mem_id}

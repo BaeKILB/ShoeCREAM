@@ -54,8 +54,14 @@ public class MemberService {
 		System.out.println("isMemberPhoneDuplicated 여기까지 오긴 오냐 ");
 		return memberMapper.isMemberPhoneDuplicated(mem_mtel) > 0;
 	}
-	
+	public boolean isMemberEmailDuplicated(String mem_email) {
+		System.out.println("isMemberEmailDuplicated 여기까지 오긴 오냐 ");
+		return memberMapper.isMemberEmailDuplicated(mem_email) > 0;
+	}
 
+	
+	
+	
 	// 프론트단 아이디 중복체크
 	public int memIdCheck(Map<String, String> map) {
 		return memberMapper.selectIdCheck(map);
@@ -86,6 +92,7 @@ public class MemberService {
 	public MemberVO loadMemberData(String mem_id) {
 		return memberMapper.selectMember(mem_id);
 	}
+
 
 
 

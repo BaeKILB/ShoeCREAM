@@ -1,4 +1,4 @@
-package com.pj2.shoecream.handler;
+package com.pj2.shoecream.valid;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
