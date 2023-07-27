@@ -125,7 +125,7 @@
 				        
 				        </div>   
 				        <div class="signUp">
-				           <button type="button" id="signUpButton"'>가입하기</button>
+				           <button type="button" id="signUpButton">가입하기</button>
 				           		<!-- 문자 인증 할때 열어두자 -->
 <!-- 				           <button type="button" id="signUpButton" onclick='signUpCheck()'>가입하기</button> -->
 				        </div>
