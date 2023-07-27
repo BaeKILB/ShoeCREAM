@@ -26,5 +26,8 @@ public class AdminService {
 //	public MemberVO updateMemberRank(int mem_idx) {
 //		return mapper.updateMemberRank(mem_idx);
 //	}
+	public boolean deleteMember(int mem_idx) {
+		return mapper.deleteMember(mem_idx);
+	}
 
 }

@@ -88,6 +88,20 @@ public class AdminController {
 			MemberVO member = service.selectMember(mem_idx);
 			return member;
 		}
+		
+		@GetMapping("MemberDelete")
+		@ResponseBody
+		public String memberDelete(@RequestParam int mem_idx) {
+			String isDeleteMember;
+			boolean isDelete = service.deleteMember(mem_idx);
+			if(isDelete) {
+				isDeleteMember = "true";
+			} else {
+				isDeleteMember = "false";
+			}
+			
+			return isDeleteMember;
+		}
 	
 	// 공지사항 글 작성 폼
 		@GetMapping("noticeWriteForm")

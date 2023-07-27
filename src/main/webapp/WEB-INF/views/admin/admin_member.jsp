@@ -11,7 +11,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminMember.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- 토스트 그리드 -->
 </head>
 <script type="text/javascript">
@@ -39,7 +39,7 @@
 	             for(let member of data.memberList) {
 		            	let birth = new Date(member.mem_birthday);
 						$('.tbody').append(
-								"<tr>"
+								"<tr class='member" + member.mem_idx + "'>"
 								+ "<td>"+ member.mem_idx +"</td>"
 								+ "<td>"+ member.mem_id +"</td>"
 								+ "<td>"+ member.mem_name +"</td>"
@@ -158,6 +158,7 @@
 				$('.mem_b').empty();
 				$('.mem_account_auth').empty();
 				$('.mem_status').empty();
+				$('.modal_footer button.mem_delete').remove();
 				
 				$('.mem_idx').append(data.mem_idx);
 				$('.mem_id').append(data.mem_id);
@@ -184,6 +185,9 @@
 				} else {
 					$('.mem_status').append('탈퇴');
 				}
+				$('.modal_footer').prepend(
+					"<button style='cursor: pointer;' class='btn_primary mem_delete' onclick='MemberDelete(" + data.mem_idx + ");'>회원 삭제하기</button>"
+				);
 			},
 			error: function() {
 				alert("정보 불러오기 실패");
@@ -199,22 +203,62 @@
 		}
 	}
 	
-	function MemberLevelUp(mem_idx) {
-		url: "MemberLevelUp";
-		$.ajax({
-			type: "GET",
-			url: url,
-			dataType: "json",
-			data: {mem_idx: mem_idx},
-			success: function(data) {
-				swal('등업 완료', '등업이 완료되었습니다', 'success');
+// 	function MemberLevelUp(mem_idx) {
+// 		url: "MemberLevelUp";
+// 		$.ajax({
+// 			type: "GET",
+// 			url: url,
+// 			dataType: "json",
+// 			data: {mem_idx: mem_idx},
+// 			success: function(data) {
+// 				swal('등업 완료', '등업이 완료되었습니다', 'success');
 				
-			},
-			error: function() {
-				swal('등업 실패', '등업에 실패하였습니다', 'warning');
+// 			},
+// 			error: function() {
+// 				swal('등업 실패', '등업에 실패하였습니다', 'warning');
+// 			}
+// 		});
+// 	}
+
+
+	function MemberDelete(mem_idx) {
+		Swal.fire({
+			title: "회원을 삭제하시겠습니까?",
+			text: "해당 회원은 DB에서 삭제처리됩니다.",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "삭제",
+			cancelButtonText: "취소",
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: "GET",
+					url: "MemberDelete",
+					dataType: "text",
+					data: {mem_idx: mem_idx},
+					success: function(data) {
+						if(data === "true") {
+							Swal.fire('회원 삭제 완료', '회원 삭제 처리가 완료되었습니다', 'success');
+							$('.modal_background').animate({
+					            opacity: 0
+					        }, 200, function () {
+					            $(this).css('display', 'none');
+					        });
+							$('.member' + mem_idx).remove();
+						}
+					},
+					error: function() {
+						Swal.fire('회원 삭제 실패', '회원 삭제 처리에 실패했습니다', 'warning');
+					}
+				});
+			} else if(result.dismiss === Swal.DismissReason.cancel) {
+				return false;
 			}
-		});
+		})
 	}
+
+
 </script>
 <body>
 	<aside>

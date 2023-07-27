@@ -283,7 +283,19 @@ i.fa.pgi {
 	background: #888;
 	color: white;
 }
-
+.btn_primary:nth-child(n+2) {
+	margin-left: 10px;
+}
+.btn_primary.mem_delete {
+	color: #624bff;
+	background: transparent;
+	border: 1px solid;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.btn_primary.mem_delete:hover {
+	color: white;
+	background: #624bff;
+}
 
 
 

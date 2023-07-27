@@ -58,4 +58,11 @@
 <!-- 		UPDATE MEMBER -->
 <!-- 			SET mem_rank -->
 <!-- 	</update> -->
+
+	<!-- 회원 삭제 처리 -->
+	<delete id="deleteMember">
+		DELETE FROM member
+			WHERE mem_idx = #{mem_idx}
+	</delete>
+	
 </mapper>

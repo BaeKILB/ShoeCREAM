@@ -16,4 +16,6 @@ public interface AdminMapper {
 	MemberVO getMemberInfo(int mem_idx);
 	// 회원 등업 업데이트
 //	MemberVO updateMemberRank(int mem_idx);
+	// 회원 삭제
+	boolean deleteMember(int mem_idx);
 }
