@@ -36,7 +36,9 @@
 			<span class="methodSpan"><input type="hidden" value="auction">경매</span>
 		</div>
 		<section id="sec_con" class="register_view inr">
-			<jsp:include page="${param.page }" />
+			<c:if test="${!empty param.page }">
+				<jsp:include page="${param.page }_register.jsp" />
+			</c:if>
 		</section>
 	</main>
 	<footer>

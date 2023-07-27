@@ -275,170 +275,182 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
+
+
+// 휴대폰 번호 입력 부분
+function changePhone1(){
+    document.getElementsByName('mem_mtel')[0].value = document.getElementById('phone1').value + "-" + document.getElementById('phone2').value  + "-" + document.getElementById('phone3').value;
+    const phone1 = document.getElementById("phone1").value // 010
+    if(phone1.length === 3){
+        document.getElementById("phone2").focus();
+        check = true;
+    }
+}
+
+function changePhone2(){
+    const phone2 = document.getElementById("phone2").value // 010
+    if(phone2.length === 4){
+        document.getElementById("phone3").focus();
+        
+        check = true;
+    }
+}
+
+function changePhone3(){
+    const phone3 = document.getElementById("phone3").value // 010
+    if(phone3.length === 4){
+      document.getElementById("sendMessage").focus();
+      document.getElementById("sendMessage").setAttribute("style","background-color:#F0F0F0;")
+      document.getElementById("sendMessage").disabled = false;
+      
+      check = true;
+    }
+    
+}
+
+// 휴대폰 번호 합쳐서 뷰페이지에 보내기
+function combinePhoneNumbers() {
+    const phone1 = document.getElementById("phone1").value;
+    const phone2 = document.getElementById("phone2").value;
+    const phone3 = document.getElementById("phone3").value;
+
+    const mem_mtel = document.getElementById("mem_mtel");
+    mem_mtel.value = phone1 + '-' + phone2 + '-' + phone3;
+    return true;
+}
+
+//핸드폰 번호 유효성 검사 및 인증번호 전송
+function sendMsg(){
+	var phone =$("#phone1").val()+"-"+$("#phone2").val()+"-"+$("#phone3").val();
+	//패턴 확인용
+	var patternPhone = /^010-(?!0*(\d)\1{3})[1-9]\d{3}-\d{4}$/;
+//	var patternPhone = /^01[01]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+	
+	 if(!patternPhone.test(phone)){
+		alert('유효한 핸드폰 번호를 입력 해 주세요.')
+   		document.getElementById("sendMessage").disabled = true;
+		document.getElementById("phone1").value = ""; // phone1 입력란 내용 지우기
+		document.getElementById("phone2").value = ""; // phone1 입력란 내용 지우기
+		document.getElementById("phone3").value = ""; // phone1 입력란 내용 지우기
+   		document.getElementById("phone1").focus();
+   		
+   		return false;
+		}else{
+	  $.ajax({ //중복 확인 시작
+	     url:'./phondCheck', //Controller에서 요청 받을 주소
+	     type:'post', //POST 방식으로 전달
+	     data:{phone:phone},
+		 success:function(data){ //컨트롤러에서 넘어온 cnt값을 받는다 
+         const count = data;
+	         if(count == 0){ //cnt가 0일경우 -> 사용 가능한 아이디 
+	             $.ajax({//메세지 전송 시작
+				     url:'./send-phone-authentication', //Controller에서 요청 받을 주소
+				     type:'post', //POST 방식으로 전달
+				     data:{phone:phone},
+				     success:function(phone){ 
+				    	 console.log("서버 응답 데이터:", phone); // 디버깅용 로그 출력
+				          alert("인증번호가 전송되었습니다.");
+				          $("#cert").attr("disabled", false);
+				          $("#certifyCheck").attr("disabled", false);
+				          $("#phone1").attr("readonly", true);
+				          $("#phone2").attr("readonly", true);
+				          $("#phone3").attr("readonly", true);
+				          //타이머 작동
+				          startTimer();
+	          
+	         			  return true;
+			    					 },
+				     error:function(){
+				         alert("에러입니다");
+				     }
+ 						});
+        	   }else{
+				  alert("이미 사용중인 번호 입니다.");
+	              $('#phone1').val('');
+	              $('#phone2').val('');
+	              $('#phone3').val('');
+				  $('#phone1').focus();
+    			  check = false;}
+    		 },
+	     error:function(){
+	         alert("에러입니다");
+	     }
+ 		});
+	};
+}
+	
 //
+//인증번호 확인
+var vCheck = false;
+function verifyCode(){
+	var newCode = $("#cert").val()
+	 $.ajax({
+     url:'./verify-phone-authentication', //Controller에서 요청 받을 주소
+     type:'post', //POST 방식으로 전달
+     data:{newCode:newCode},
+     success:function(data){ 
+   	  const isCorrectCode = data;	
+   	  if(isCorrectCode == true){
+         alert("인증 되었습니다.");
+         
+         vCheck =  true;
+		}else{
+		alert("인증번호가 일치하지 않습니다.")
+		
+		 check =  false;
+		}
+     },
+     error:function(){
+         alert("에러입니다");
+     }
+ });	
+}
 //
-//// 휴대폰 번호 입력 부분
-//function changePhone1(){
-//    const phone1 = document.getElementById("phone1").value // 010
-//    if(phone1.length === 3){
-//        document.getElementById("phone2").focus();
-//        check = true;
-//    }
-//}
-//
-//function changePhone2(){
-//    const phone2 = document.getElementById("phone2").value // 010
-//    if(phone2.length === 4){
-//        document.getElementById("phone3").focus();
-//        
-//        check = true;
-//    }
-//}
-//
-//function changePhone3(){
-//    const phone3 = document.getElementById("phone3").value // 010
-//    if(phone3.length === 4){
-//      document.getElementById("sendMessage").focus();
-//      document.getElementById("sendMessage").setAttribute("style","background-color:#F0F0F0;")
-//      document.getElementById("sendMessage").disabled = false;
-//      
-//      check = true;
-//    }
-//    
-//}
-//
-////핸드폰 번호 유효성 검사 및 인증번호 전송
-//function sendMsg(){
-//	var phone =$("#phone1").val()+"-"+$("#phone2").val()+"-"+$("#phone3").val();
-//	//패턴 확인용
-//	var patternPhone = /^010-(?!0*(\d)\1{3})[1-9]\d{3}-\d{4}$/;
-////	var patternPhone = /^01[01]-[^0][0-9]{2,3}-[0-9]{3,4}/;
-//	
-//	 if(!patternPhone.test(phone)){
-//		alert('유효한 핸드폰 번호를 입력 해 주세요.')
-//   		document.getElementById("sendMessage").disabled = true;
-//		document.getElementById("phone1").value = ""; // phone1 입력란 내용 지우기
-//		document.getElementById("phone2").value = ""; // phone1 입력란 내용 지우기
-//		document.getElementById("phone3").value = ""; // phone1 입력란 내용 지우기
-//   		document.getElementById("phone1").focus();
-//   		
-//   		return false;
-//		}else{
-//	  $.ajax({ //중복 확인 시작
-//	     url:'./phondCheck', //Controller에서 요청 받을 주소
-//	     type:'post', //POST 방식으로 전달
-//	     data:{phone:phone},
-//		 success:function(data){ //컨트롤러에서 넘어온 cnt값을 받는다 
-//         const count = data;
-//	         if(count == 0){ //cnt가 0일경우 -> 사용 가능한 아이디 
-//	             $.ajax({//메세지 전송 시작
-//				     url:'./send-phone-authentication', //Controller에서 요청 받을 주소
-//				     type:'post', //POST 방식으로 전달
-//				     data:{phone:phone},
-//				     success:function(phone){ 
-//				    	 console.log("서버 응답 데이터:", phone); // 디버깅용 로그 출력
-//				          alert("인증번호가 전송되었습니다.");
-//				          $("#cert").attr("disabled", false);
-//				          $("#certifyCheck").attr("disabled", false);
-//				          $("#phone1").attr("readonly", true);
-//				          $("#phone2").attr("readonly", true);
-//				          $("#phone3").attr("readonly", true);
-//				          //타이머 작동
-//				          startTimer();
-//	          
-//	         			  return true;
-//			    					 },
-//				     error:function(){
-//				         alert("에러입니다");
-//				     }
-// 						});
-//        	   }else{
-//				  alert("이미 사용중인 번호 입니다.");
-//	              $('#phone1').val('');
-//	              $('#phone2').val('');
-//	              $('#phone3').val('');
-//				  $('#phone1').focus();
-//    			  check = false;}
-//    		 },
-//	     error:function(){
-//	         alert("에러입니다");
-//	     }
-// 		});
-//	};
-//}
-//	
-//
-////인증번호 확인
-//var vCheck = false;
-//function verifyCode(){
-//	var newCode = $("#cert").val()
-//	 $.ajax({
-//     url:'./verify-phone-authentication', //Controller에서 요청 받을 주소
-//     type:'post', //POST 방식으로 전달
-//     data:{newCode:newCode},
-//     success:function(data){ 
-//   	  const isCorrectCode = data;	
-//   	  if(isCorrectCode == true){
-//         alert("인증 되었습니다.");
-//         
-//         vCheck =  true;
-//		}else{
-//		alert("인증번호가 일치하지 않습니다.")
-//		
-//		 check =  false;
-//		}
-//     },
-//     error:function(){
-//         alert("에러입니다");
-//     }
-// });	
-//}
-//
-////타이머
-//let timer; // 타이머 변수
-//
-//function startTimer() {
-//  let seconds = 180; // 타이머 초기 시간 (3분)
-//  timer = setInterval(function() {
-//    let minutes = Math.floor(seconds / 60);
-//    let remainingSeconds = seconds % 60;
-//
-//    // 타이머 시간을 cert 칸에 표시
-//    document.getElementById("cert").placeholder = minutes + "분 " + remainingSeconds + "초 남았습니다.";
-//
-//    if (seconds <= 0) {
-//      // 타이머 시간 초과
-//      clearInterval(timer);
-//      alert("시간이 초과되었습니다.");
-//      document.getElementById("cert").disabled = true; // memberPhoneCertify 칸 비활성화
-//      document.getElementById("cert").placeholder = "인증번호를 입력 해주세요"; 
-//    }else if(vCheck == true){
-//	  clearInterval(timer);
-//      document.getElementById("cert").disabled = true; // memberPhoneCertify 칸 비활성화
-//      document.getElementById("cert").value; 
-//	
-//}
-//
-//    seconds--;
-//  }, 1000);
-//}
-//
+//타이머
+let timer; // 타이머 변수
+
+function startTimer() {
+  let seconds = 180; // 타이머 초기 시간 (3분)
+  timer = setInterval(function() {
+    let minutes = Math.floor(seconds / 60);
+    let remainingSeconds = seconds % 60;
+
+    // 타이머 시간을 cert 칸에 표시
+    document.getElementById("cert").placeholder = minutes + "분 " + remainingSeconds + "초 남았습니다.";
+
+    if (seconds <= 0) {
+      // 타이머 시간 초과
+      clearInterval(timer);
+      alert("시간이 초과되었습니다.");
+      document.getElementById("cert").disabled = true; // memberPhoneCertify 칸 비활성화
+      document.getElementById("cert").placeholder = "인증번호를 입력 해주세요"; 
+    }else if(vCheck == true){
+	  clearInterval(timer);
+      document.getElementById("cert").disabled = true; // memberPhoneCertify 칸 비활성화
+      document.getElementById("cert").value; 
+	
+}
+
+    seconds--;
+  }, 1000);
+}
+
 //
 //
 //// 회원가입 버튼
 //
-//function signUpCheck(){
+function signUpCheck(){
 //  let email = document.getElementById("mem_id").value
 //  let password = document.getElementById("mem_passwd").value
 //  let passwordCheck = document.getElementById("passwordCheck").value
 //  let name = document.getElementById("mem_name").value
-//  let phone1 = document.getElementById("phone1").value
-//  let phone2 = document.getElementById("phone2").value
-//  let phone3 = document.getElementById("phone3").value
+  let phone1 = document.getElementById("phone1").value
+  let phone2 = document.getElementById("phone2").value
+  let phone3 = document.getElementById("phone3").value
 //  let addr1 = document.getElementById("sample6_postcode").value
 //  let addr2 = document.getElementById("sample6_address").value
 //  let birthDate = document.getElementById("mem_birthday").value
-////  let check = true;
+  let check = true;
 //
 //  // 이메일 확인
 //  if (email === "") {
@@ -516,16 +528,16 @@ function sample6_execDaumPostcode() {
 //    return;
 //  }
 //
-//  // 인증 확인
-//  if (phone1 !== "" && phone2 !== "" && phone3 !== "" && vCheck === false) {
-//    document.getElementById("phone1").focus();
-//    alert("핸드폰 인증을 진행해 주세요.");
-//    return;
-//  }
+  // 인증 확인
+  if (phone1 !== "" && phone2 !== "" && phone3 !== "" && vCheck === false) {
+    document.getElementById("phone1").focus();
+    alert("핸드폰 인증을 진행해 주세요.");
+    return;
+  }
 //
-//    // 모든 항목이 유효할 때 폼 제출
-//    document.getElementById("fr").submit();
-//    alert("회원가입이 완료되었습니다.");
-//  }
+    // 모든 항목이 유효할 때 폼 제출
+    document.getElementById("fr").submit();
+    alert("회원가입이 완료되었습니다.");
+  }
 //
 //  

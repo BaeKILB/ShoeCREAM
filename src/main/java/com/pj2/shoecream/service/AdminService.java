@@ -23,5 +23,8 @@ public class AdminService {
 	public MemberVO selectMember(int mem_idx) {
 		return mapper.getMemberInfo(mem_idx);
 	}
+//	public MemberVO updateMemberRank(int mem_idx) {
+//		return mapper.updateMemberRank(mem_idx);
+//	}
 
 }

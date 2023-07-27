@@ -155,11 +155,11 @@
 
 		<!-- https://mvnrepository.com/artifact/net.nurigo/sdk -->
 		<!-- CoolSMS 문자인증 이온 -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>net.nurigo</groupId> -->
-<!-- 		    <artifactId>sdk</artifactId> -->
-<!-- 		    <version>4.3.0</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+		    <groupId>net.nurigo</groupId>
+		    <artifactId>sdk</artifactId>
+		    <version>4.3.0</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
 		<!-- 임시 비밀번호 발송용  -->

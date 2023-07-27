@@ -53,4 +53,9 @@
 			FROM member
 			WHERE mem_idx = #{mem_idx}
 	</select>
+	<!-- 회원 등업 업데이트 -->
+<!-- 	<update id="updateMemberRank"> -->
+<!-- 		UPDATE MEMBER -->
+<!-- 			SET mem_rank -->
+<!-- 	</update> -->
 </mapper>

@@ -44,18 +44,23 @@ public class MemberService {
         
         return member;
     }
-
-	public boolean isMemberIdDuplicated(String mem_id) {
+    // -----------------백엔드단 중복체크 -----------------------------
+	// 아이디 중복 체크
+    public boolean isMemberIdDuplicated(String mem_id) {
 	    return memberMapper.isMemberIdDuplicated(mem_id) > 0;
-
+	}
+    // 폰 중복 체크
+	public boolean isMemberPhoneDuplicated(String mem_mtel) {
+		System.out.println("isMemberPhoneDuplicated 여기까지 오긴 오냐 ");
+		return memberMapper.isMemberPhoneDuplicated(mem_mtel) > 0;
+	}
+	public boolean isMemberEmailDuplicated(String mem_email) {
+		System.out.println("isMemberEmailDuplicated 여기까지 오긴 오냐 ");
+		return memberMapper.isMemberEmailDuplicated(mem_email) > 0;
 	}
 
-	//아이디 중복체크 mapper 접근
-//	public int idCheck(String id) {
-//		int cnt = memberMapper.idCheck(id);
-//		System.out.println("cnt: " + cnt);
-//		return cnt;
-//	}
+	
+	
 	
 	// 프론트단 아이디 중복체크
 	public int memIdCheck(Map<String, String> map) {
@@ -85,27 +90,24 @@ public class MemberService {
 	}
 	// 회원 수정 새로운 정보 담기
 	public MemberVO loadMemberData(String mem_id) {
-		// TODO Auto-generated method stub
 		return memberMapper.selectMember(mem_id);
+	}
+	
+	//핸드폰 중복확인
+	public int phoneCheck(String phone) {
+		int cnt = memberMapper.phoneCheck(phone);
+		System.out.println("cnt: " + cnt);
+		return cnt;
 	}
 
 
-    
-    
-    
-//    public boolean isIdUnique(String mem_id) {
-//        return memberMapper.selectMemberById(mem_id) == null;
-//    }
-//
-//    public boolean isNameUnique(String mem_name) {
-//        return memberMapper.selectMemberByName(mem_name) == null;
-//    }
-//
-//    public boolean isEmailUnique(String mem_email) {
-//        return memberMapper.selectMemberByEmail(mem_email) == null;
-//    }
-//
-//    public boolean isMtelUnique(String mem_mtel) {
-//        return memberMapper.selectMemberByMtel(mem_mtel) == null;
-//    }
+
+
+
+	//아이디 중복체크 mapper 접근
+//	public int idCheck(String id) {
+//		int cnt = memberMapper.idCheck(id);
+//		System.out.println("cnt: " + cnt);
+//		return cnt;
+//	}
 }

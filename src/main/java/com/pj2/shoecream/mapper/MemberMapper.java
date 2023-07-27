@@ -15,12 +15,13 @@ public interface MemberMapper {
 	
     // MemberControllor 백엔드단 아이디 중복 검사
 	int isMemberIdDuplicated(String mem_id);
-	
-	// MemberControllor 백엔드단 아이디 중복 검사
-//	int idCheck(String id);
-	
+    // MemberControllor 백엔드단 폰 중복 검사
+	int isMemberPhoneDuplicated(String mem_mtel);
+	// MemberControllor 백엔드단 이메일 중복 검사
+	int isMemberEmailDuplicated(String mem_email);
 	// signup.js 프론트단 아이디 중복 검사
 	int selectIdCheck(Map<String, String> map);
+	
 	
 	// 시큐리티에 mem_id 셀렉해주기
     MemberVO findMemberById(String mem_id);
@@ -35,5 +36,12 @@ public interface MemberMapper {
 	
 	// 회원정보 수정 새로운 값 셀렉
 	MemberVO selectMember(String mem_id);
+
+	//폰번호 중복확인
+	int phoneCheck(String phone);
+
+	
+
+	
 	
 }
