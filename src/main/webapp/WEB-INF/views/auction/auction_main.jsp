@@ -40,18 +40,18 @@
 <%-- 				<jsp:include page="" /> --%>
 			</aside>
 			<div id="itemList"> <!-- 상품 리스트 -->
-				<c:forEach varStatus="status" step="1" end="10" begin="0">
-					<a href="auctionDetail?code=">
-						<div class="auctionItem"> <!-- 상품1 -->
-							<img alt="테스트이미지" src="${pageContext.request.contextPath }/resources/img/auction/img1.jpg"> 
-							<div> <!-- 상품명 -->
-								상품명${status.index }
+				<c:forEach var="auction" items="${auctionList }">
+					<a href="auctionDetail?code=${auction.auction_idx }">
+						<div class="auctionItem">
+							<img alt="테스트이미지" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }"> 
+							<div> 상품명
+								${auction.auction_title }
 							</div>
-							<div> <!-- 상품가격 -->
-								상품가격
+							<div> 상품가격
+								${auction.auc_start_price }
 							</div>
-							<div> <!-- 등록일 -->
-								등록일
+							<div> 등록일
+								${auction.auc_regist_date }
 							</div>
 						</div>
 					</a>

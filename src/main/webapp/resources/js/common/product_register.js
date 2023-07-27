@@ -186,7 +186,7 @@ const setImages = (e) => {
 };
 // 경매
 const selectSize = (size) => {
-	let inputBox = $("input[name=product_size]"); 
+	let inputBox = $("input[name=auction_size]"); 
 	if (size == "") {
 		inputBox.attr('disabled',false);
 	} else {

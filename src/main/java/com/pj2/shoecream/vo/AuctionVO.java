@@ -1,7 +1,8 @@
 package com.pj2.shoecream.vo;
 
-import java.sql.Timestamp;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -15,7 +16,7 @@ public class AuctionVO {
     private int lc_code; // 대분류
     private int mc_code; // 중분류
 //    private int sc_code; // 소분류
-    private Timestamp auction_date; // 작성시간
+    private Date auction_date; // 작성시간
     private int auction_readcount; // 조회수
     private String auction_brand; // 브랜드
     private int auction_size; // 사이즈
@@ -23,8 +24,10 @@ public class AuctionVO {
     private int auc_start_price; // 경매시작가
     private int auc_buy_instantly; // 즉시구매가
     private int auc_bid_unit; // 입찰단위
-    private Timestamp auc_regist_date; // 경매등록일
-    private Timestamp auc_close_date; // 경매등록일
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private Date auc_regist_date; // 경매등록일
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    private Date auc_close_date; // 경매등록일
     private String auc_state; // 상태코드
     
     // 신규 추가하신것
@@ -32,6 +35,4 @@ public class AuctionVO {
     private int bidCcount; //입찰수
     private int de; //보증금
     private String mem_nickname; //판매자 닉넴
-    
-    
 }
