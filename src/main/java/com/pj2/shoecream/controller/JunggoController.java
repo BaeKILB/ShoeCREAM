@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.vo.JungGoNohVO;
 
@@ -30,6 +33,7 @@ public class JunggoController {
 	
 	@Autowired
 	private JungGoNohService jungGoNohService;
+	private ChatService chatService;
 	
 	@GetMapping("JunggoSearch")
 	public String junggoSearch(@RequestParam Map<String,Object> map, Model model) {
@@ -60,8 +64,10 @@ public class JunggoController {
 	//------------------ 물건 등록 프로 ---------------------------
 	@PostMapping("registProductPro")
 	public String writePro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
-/*//		String sId = (String)session.getAttribute("sId");
-//		if(sId == null) {
+
+		
+		String sId = (String)session.getAttribute("sId");
+/*//		if(sId == null) {
 //			model.addAttribute("msg", "잘못된 접근입니다!");
 //			return "fail_back";
 //		}
@@ -168,6 +174,16 @@ public class JunggoController {
 		// BoardService - registBoard() 메서드를 호출하여 게시물 등록 작업 요청
 		// => 파라미터 : JungGoNohVO 객체    리턴타입 : int(insertCount)
 	
+		int session_idx = chatService.getSIdIdx(sId);
+		LocalDateTime localDateTime = LocalDateTime.now(); // 시스템의 현재 날짜 및 시각 정보 리턴
+		
+		// java.time.DateTimeFormatter 클래스를 활용하여 포맷 변경
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		localDateTime.format(dateTimeFormatter);
+		
+		jungGoNoh.setProduct_idx(Integer.toString(session_idx) +  localDateTime);
+		
+		
 		
 		int insertCountJung = jungGoNohService.registJungProduct(jungGoNoh);
 		
