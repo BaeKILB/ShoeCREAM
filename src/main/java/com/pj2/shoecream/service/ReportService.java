@@ -30,14 +30,29 @@ public class ReportService {
 		return mapper.updateIdx(report);
 	}
 
-	public int deleteProduct(int product_idx) {
+
+	public int deleteProduct(String product_idx) {
 		
 		return mapper.deleteProduct(product_idx);
 	}
 
-	public int deletepro(int product_idx) {
-		
-		return mapper.deletepro(product_idx);
+	public List<ReportVO> getAuctionReportListPaging(Criteria cri, String searchType, String searchKeyword) {
+		return mapper.getAuctionReportListPaging(cri, searchType, searchKeyword);
 	}
+
+	public int deleteAuctionlist(ReportVO report) {
+		
+		return mapper.deleteAuctionlist(report);
+	}
+
+	public int deleteAuction(String product_idx) {
 	
+		return mapper.deleteAuction(product_idx);
+	}
 }
+
+
+	
+	
+	
+

@@ -207,16 +207,16 @@ $(function() {
         step: 60,
         defaultSelect: false,
         defaultDate: today,
-        defaultTime: today,
+        defaultTime: today.getHours,
         minDate: today,
-        minTime: today,
+//        minTime: today,
         onSelectDate: function(ct){
             $("#dateEnd").datetimepicker('setOptions', { minDate: ct });
-            $("#dateEnd").datetimepicker('setOptions', { minTime: ct });
+//            $("#dateEnd").datetimepicker('setOptions', { minTime: ct });
         },
         onSelectTime: function(ct){
             $("#dateEnd").datetimepicker('setOptions', { minDate: ct });
-            $("#dateEnd").datetimepicker('setOptions', { minTime: ct });
+//            $("#dateEnd").datetimepicker('setOptions', { minTime: ct });
             $("#et_wrap").removeClass("hidden");
         }
     });
@@ -235,17 +235,18 @@ $(function() {
                 if(tempStartDate > tempEndDate){
                     startDateInput.val(getFormatDateTime(ct));
                 }
+                
             }else {
                 startDateInput.val(getFormatDateTime(ct));
             }
         },
         onSelectDate:function(ct){
             $("#dateStart").datetimepicker('setOptions', { maxDate: ct });
-            $("#dateStart").datetimepicker('setOptions', { maxTime: ct });
+//            $("#dateStart").datetimepicker('setOptions', { maxTime: ct });
         },
         onSelectTime:function(ct){
             $("#dateStart").datetimepicker('setOptions', { maxDate: ct });
-            $("#dateStart").datetimepicker('setOptions', { maxTime: ct });
+//            $("#dateStart").datetimepicker('setOptions', { maxTime: ct });
         },
     });
 });

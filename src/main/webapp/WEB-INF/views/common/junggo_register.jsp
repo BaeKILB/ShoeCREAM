@@ -13,6 +13,29 @@
 				<div class="image_content" name="file2"></div>
 				<div class="image_content" name="file3"></div>
 				<div class="image_content" name="file4"></div>
+
+<!-- <input type="file" id="image" accept="image/*" onchange="setThumbnail(event);" multiple/>
+    <div id="image_container"></div>
+
+    <script>
+      function setThumbnail(event) {
+        for (var image of event.target.files) {
+          var reader = new FileReader();
+
+          reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            document.querySelector("div#image_container").appendChild(img);
+          };
+
+          console.log(image);
+          reader.readAsDataURL(image);
+        }
+      }
+    </script>
+	 -->	
+	
+				
 			</div>
 			<div class="warning_text">
 				* 상품 이미지는 640x640에 최적화 되어 있습니다.<br> - 상품 이미지는 PC에서는 1:1, 모바일에서는
@@ -69,6 +92,111 @@
   $("#size").chained("#maker");
 </script>
  -->	
+	
+	
+	
+
+<!--<script type="text/javascript">
+ 
+$(document).ready(function() {
+    
+    //Main 카테고리를 선택 할때 마다 AJAX를 호출할 수 있지만 DB접속을 매번 해야 하기 때문에 main, sub카테고리 전체을 들고온다.
+    
+    //****************이부분은 DB로 셋팅하세요.
+    //Main 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
+    var mainCategoryArray = new Array();
+    var mainCategoryObject = new Object();
+    
+    mainCategoryObject = new Object();
+    mainCategoryObject.main_category_id = "1";
+    mainCategoryObject.main_category_name = "스포츠";
+    mainCategoryArray.push(mainCategoryObject);
+    
+    mainCategoryObject = new Object();
+    mainCategoryObject.main_category_id = "2";
+    mainCategoryObject.main_category_name = "공연";
+    mainCategoryArray.push(mainCategoryObject);
+    
+    //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
+    var subCategoryArray = new Array();
+    var subCategoryObject = new Object();
+    
+    //스포츠에 해당하는 sub category 리스트
+    subCategoryObject = new Object();
+    subCategoryObject.main_category_id = "1";
+    subCategoryObject.sub_category_id = "1"
+    subCategoryObject.sub_category_name = "야구"    
+    subCategoryArray.push(subCategoryObject);
+    
+    subCategoryObject = new Object();
+    subCategoryObject.main_category_id = "1";
+    subCategoryObject.sub_category_id = "2"
+    subCategoryObject.sub_category_name = "농구"    
+    subCategoryArray.push(subCategoryObject);
+   
+    //공연에 해당하는 sub category 리스트
+    subCategoryObject = new Object();
+    subCategoryObject.main_category_id = "2";
+    subCategoryObject.sub_category_id = "1"
+    subCategoryObject.sub_category_name = "연극"    
+    subCategoryArray.push(subCategoryObject);
+    
+    subCategoryObject = new Object();
+    subCategoryObject.main_category_id = "2";
+    subCategoryObject.sub_category_id = "2"
+    subCategoryObject.sub_category_name = "뮤지컬"    
+    subCategoryArray.push(subCategoryObject);
+    
+    
+    //****************이부분은 DB로 셋팅하세요.
+    
+    
+    //메인 카테고리 셋팅
+    var mainCategorySelectBox = $("select[name='mainCategory']");
+    
+    for(var i=0;i<mainCategoryArray.length;i++){
+        mainCategorySelectBox.append("<option value='"+mainCategoryArray[i].main_category_id+"'>"+mainCategoryArray[i].main_category_name+"</option>");
+    }
+    
+    //*********** 1depth카테고리 선택 후 2depth 생성 START ***********
+    $(document).on("change","select[name='mainCategory']",function(){
+        
+        //두번째 셀렉트 박스를 삭제 시킨다.
+        var subCategorySelectBox = $("select[name='subCategory']");
+        subCategorySelectBox.children().remove(); //기존 리스트 삭제
+        
+        //선택한 첫번째 박스의 값을 가져와 일치하는 값을 두번째 셀렉트 박스에 넣는다.
+        $("option:selected", this).each(function(){
+            var selectValue = $(this).val(); //main category 에서 선택한 값
+            subCategorySelectBox.append("<option value=''>전체</option>");
+            for(var i=0;i<subCategoryArray.length;i++){
+                if(selectValue == subCategoryArray[i].main_category_id){
+                    
+                    subCategorySelectBox.append("<option value='"+subCategoryArray[i].sub_category_id+"'>"+subCategoryArray[i].sub_category_name+"</option>");
+                    
+                }
+            }
+        });
+        
+    });
+    //*********** 1depth카테고리 선택 후 2depth 생성 END ***********
+        
+});
+
+function changeHtml()
+{
+	var mainCategory = document.getElementById("mainCategory").value;
+	var subCategory = document.getElementById("subCategory").value;
+	if(mainCategory == 1 && subCategory == 1){document.getElementById('selected_category').innerHTML="스포츠 > 야구"}
+	if(mainCategory == 1 && subCategory == 2){document.getElementById('selected_category').innerHTML="스포츠 > 농구"}
+	if(mainCategory == 2 && subCategory == 1){document.getElementById('selected_category').innerHTML="공연 > 연극"}
+	if(mainCategory == 2 && subCategory == 2){document.getElementById('selected_category').innerHTML="공연 > 뮤지컬"}
+}
+</script>-->
+
+
+
+
 	
 	
 	

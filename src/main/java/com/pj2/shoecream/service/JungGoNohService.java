@@ -12,45 +12,42 @@ public class JungGoNohService {
 	@Autowired
 	JungGoNohMapper jungGoNohMapper;
 
-//============================중고 물품 등록======================================
+	//============================중고 물품 등록======================================
 
-	public int registProduct(JungGoNohVO jungGoNoh) {
-		return jungGoNohMapper.insertProduct(jungGoNoh);
-	}
-	
-	public int registJungProduct(JungGoNohVO jungGoNoh) {
-		return jungGoNohMapper.insertJungProduct(jungGoNoh);
-	}
+		public int registJungProduct(JungGoNohVO jungGoNoh) {
+			return jungGoNohMapper.insertJungProduct(jungGoNoh);
+		}
 
-//========================중고 물품 상세보기==============================
-	
-	public JungGoNohVO getProduct(int product_idx) {
+	//========================중고 물품 상세보기==============================
+		
+		public JungGoNohVO getProduct(int product_idx) {
 
-		JungGoNohVO jungGoNoh = jungGoNohMapper.selectProduct(product_idx);
+			JungGoNohVO jungGoNoh = jungGoNohMapper.selectProduct(product_idx);
+				
+				if(jungGoNoh != null) {
+
+					jungGoNohMapper.updateReadcount(jungGoNoh);
+				}
+
+			return jungGoNoh;
+		}
+
+
+	//========================== 작성자 확인========================================
 			
-			if(jungGoNoh != null) {
+		public boolean isProductWriter(int product_idx, String sId) {
+			String id = sId;
+			JungGoNohVO jungGoNoh = jungGoNohMapper.selectProduct(product_idx);
 
-				jungGoNohMapper.updateReadcount(jungGoNoh);
-			}
+			return id.equals(jungGoNoh.getMem_id());
 
-		return jungGoNoh;
-	}
+		}
 
-
-//========================== 작성자 확인========================================
-		
-	public boolean isProductWriter(int product_idx, String sId) {
-		String id = sId;
-		JungGoNohVO jungGoNoh = jungGoNohMapper.selectProduct(product_idx);
-
-		return id.equals(jungGoNoh.getMem_id());
-
-	}
-
-//===========================삭제 프로============================================
-		
-	public int removeProduct(int product_idx) {
-		return jungGoNohMapper.deleteProduct(product_idx);
-	}
+	//===========================삭제 프로============================================
+			
+		public int removeProduct(int product_idx) {
+			return jungGoNohMapper.deleteProduct(product_idx);
+		}
+			
 		
 }

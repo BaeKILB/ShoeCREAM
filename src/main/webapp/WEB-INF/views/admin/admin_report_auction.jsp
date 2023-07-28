@@ -25,7 +25,7 @@ function deleteReport(product_idx) {
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
-            location.href = "reportDelete?product_idx=" + product_idx;
+            location.href = "auctionDelete?product_idx=" + product_idx;
         } else {
             // 취소 버튼을 눌렀을 경우 동작을 추가할 수 있습니다. (예: 아무 동작 없음)
         }
@@ -38,14 +38,14 @@ function deleteReport(product_idx) {
 		<jsp:include page="inc/sidebar.jsp" ></jsp:include>
 	</aside>
 	<section id="admin_cont">
-		<h1 class="admin_tit">중고 상품 신고관리</h1>
+		<h1 class="admin_tit">경매 상품 신고관리</h1>
 		<hr class="tit_line">
 		<div class="board_cont">
 			<div class="board_list_wrap">
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }"> 
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 				<div class="search_wrap">
-						<form name="reportlist" id="reportlist" action="" method="get">
+						<form name="auctionreport" id="auctionreport" action="" method="get">
 							<select name="searchType" id="searchType">
 								<option value="title"
 									<c:if test="${param.searchType eq 'title'}" >selected</c:if>>신고유형</option>
@@ -73,16 +73,17 @@ function deleteReport(product_idx) {
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="reportProcess" items="${report}">
+
+								<c:forEach var="auctionReport" items="${auction}">
 									<tr>
 										<td class="txt_prev"><a href="#">
-											<h4 class="title_co">${reportProcess.report_content}</h4>
+											<h4 class="title_co">${auctionReport.report_content}</h4>
 											</a>
-											<td class="count"><span class="report_count"> <span class="sv_member">${reportProcess.report_count}</span></span></td>
-											<td class= "product">${reportProcess.product_idx}
-											<th class="report_div title_co" >${reportProcess.report_div}
-											<th class="detail title_co">${reportProcess.report_detail}
-											<th class="reportdel"> <button style="cursor: pointer;" class="moreBtn" onclick="deleteReport('${reportProcess.product_idx}')">처리하기</button>
+											<td class="count"><span class="report_count"> <span class="sv_member">${auctionReport.report_count}</span></span></td>
+											<td class= "product">${auctionReport.product_idx}
+											<th class="report_div title_co" >${auctionReport.report_div}
+											<th class="detail title_co">${auctionReport.report_detail}
+											<th class="reportdel"> <button style="cursor: pointer;" class="moreBtn" onclick="deleteReport('${auctionReport.product_idx}')">처리하기</button>
 									</tr>
 								</c:forEach>
 						</tbody>	
@@ -92,7 +93,7 @@ function deleteReport(product_idx) {
 						<nav class="pg_wrap">
 							<span class="pg"> 
 							<c:if test="${pageMaker.cri.pageNum > 1 }">
-									<a href="reportProcess?pageNum=${pageMaker.cri.pageNum - 1 }" class="pg_page pg_prev">이전</a>
+									<a href="auctionReport?pageNum=${pageMaker.cri.pageNum - 1 }" class="pg_page pg_prev">이전</a>
 							</c:if> 
 								<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
 									<c:choose>
@@ -100,12 +101,12 @@ function deleteReport(product_idx) {
 											<strong class="pg_current">${num}</strong>
 										</c:when>
 										<c:otherwise>
-											<a href="reportProcess?pageNum=${num }" class="pg_page">${num }</a>
+											<a href="auctionReport?pageNum=${num }" class="pg_page">${num }</a>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach> 
 								<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
-									<a href="reportProcess?pageNum=${pageMaker.cri.pageNum + 1 }" class="pg_page pg_next">다음</a>
+									<a href="auctionReport?pageNum=${pageMaker.cri.pageNum + 1 }" class="pg_page pg_next">다음</a>
 								</c:if>
 							</span>
 						</nav>
