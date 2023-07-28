@@ -15,13 +15,17 @@ public class AuctionService {
 	@Autowired
 	private AuctionMapper mapper;
 	
-	public int auctionRegist(AuctionVO auction) {
+	public int registAuctionItem(AuctionVO auction) {
 		return mapper.insertAuctionItem(auction);
 	}
 
-	public List<Map<String, Object>> auctionList(Map<String, Object> map) {
+	public List<Map<String, Object>> getAuctionList(Map<String, Object> map) {
 		return mapper.selectAuctionList(map);
 	}
+
+  public Map<String, Object> getAuctionItem(String auction_idx) {
+    return mapper.selectAuction(auction_idx);
+  }
 
 
 }

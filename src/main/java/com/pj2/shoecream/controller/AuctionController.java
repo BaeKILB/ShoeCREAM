@@ -43,20 +43,24 @@ public class AuctionController {
 	private static final Logger logger = LoggerFactory.getLogger(AuctionController.class);
 	
 	@GetMapping("Auction")
-	public String auctionMain(
-			Model model) {
+	public String auctionMain() {
 		return "auction/auction_main";
 	}
     @GetMapping("AuctionDetail")
-    public String AuctionDetail(HttpSession session, Model model, @RequestParam int product_idx) { //경매 제품상세
+    public String AuctionDetail(
+        HttpSession session
+        , Model model
+        , @RequestParam String auction_idx) { //경매 제품상세
     	//로그인 해야 이용 가능한걸로.. 버튼마다 session 체크 귀찮으니까..;
 		String sId = (String)session.getAttribute("sId");
 		
-		if(sId == null) {
-			model.addAttribute("msg","로그인 후 이용해주세요!");
-			model.addAttribute("target","auction_loginForm");
-			return "success";
-		}
+		Map<String, Object> auction = service.getAuctionItem(auction_idx);
+		model.addAttribute("auction",auction);
+//		if(sId == null) {
+//			model.addAttribute("msg","로그인 후 이용해주세요!");
+//			model.addAttribute("target","auction_loginForm");
+//			return "success";
+//		}
 		
     	
     	//상품idx만 파라미터에 붙이면 되지 않을까?
@@ -123,18 +127,18 @@ public class AuctionController {
         image.setImage4_name("");
         
         String imageName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
-		String imageName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
-		String imageName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
-		String imageName4 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
-		
-		if(!mFile1.getOriginalFilename().equals("")) image.setImage1_name(imageName1);
-		if(!mFile2.getOriginalFilename().equals("")) image.setImage2_name(imageName2);
-		if(!mFile3.getOriginalFilename().equals("")) image.setImage3_name(imageName3);
-		if(!mFile4.getOriginalFilename().equals("")) image.setImage4_name(imageName4);
-        
-		System.out.println(auction.toString());
-		
-		int insertCount = isService.registProductImage(image);
+    		String imageName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
+    		String imageName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+    		String imageName4 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+    		
+    		if(!mFile1.getOriginalFilename().equals("")) image.setImage1_name(imageName1);
+    		if(!mFile2.getOriginalFilename().equals("")) image.setImage2_name(imageName2);
+    		if(!mFile3.getOriginalFilename().equals("")) image.setImage3_name(imageName3);
+    		if(!mFile4.getOriginalFilename().equals("")) image.setImage4_name(imageName4);
+            
+    		System.out.println(auction.toString());
+    		
+    		int insertCount = isService.registProductImage(image);
     	
     	if (insertCount>0) {
     		try {
@@ -147,7 +151,7 @@ public class AuctionController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-    		service.auctionRegist(auction);
+    		service.registAuctionItem(auction);
     	}
     	return "redirect:/Auction";
     }
@@ -166,12 +170,12 @@ public class AuctionController {
 		map.put("startRow", startRow);
 		map.put("listLimit", listLimit);
 		
-		List<Map<String, Object>> auctionList = service.auctionList(map);
+		List<Map<String, Object>> auctionList = service.getAuctionList(map);
 		
 		map.remove("startRow");
 		map.remove("listLimit");
 		
-		int listCount = service.auctionList(map).size();
+		int listCount = service.getAuctionList(map).size();
 		int pageListLimit = 20;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
 		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
@@ -189,6 +193,8 @@ public class AuctionController {
 		pageInfo.put("pageNum", pageNum);
 		
 		auctionList.add(pageInfo);
+		
+		System.out.println(auctionList.toString());
 		
 		JSONArray jsonArray = new JSONArray(auctionList);
     	return jsonArray.toString();

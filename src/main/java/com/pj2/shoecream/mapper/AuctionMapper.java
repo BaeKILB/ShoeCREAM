@@ -14,4 +14,6 @@ public interface AuctionMapper {
 
 	List<Map<String, Object>> selectAuctionList(Map<String, Object> map);
 
+  Map<String, Object> selectAuction(String auction_idx);
+
 }

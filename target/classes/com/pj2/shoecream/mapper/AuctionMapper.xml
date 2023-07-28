@@ -33,5 +33,38 @@
 			on ai.auction_idx = pi.product_idx
 		where
 			auc_state = '진행'
+		<if test="!orderMethod.equals('')">
+<!-- 		    order by  -->
+		    <choose>
+		        <when test="orderMethod.equals('recommended')">
+		            <!-- 추천순 정렬 -->
+		        </when>
+		        <when test="orderMethod.equals('dateorder')">
+                    <!-- 최신순 정렬 -->		            
+		        </when>
+		        <when test="orderMethod.equals('lowPrice')">
+                    <!-- 낮은가격순 정렬 -->		            
+		        </when>
+		        <when test="orderMethod.equals('highPrice')">
+                    <!-- 높은가격순 정렬 -->		            
+		        </when>
+		    </choose>
+		</if>
+        <if test="startRow != null and listLimit != null">
+	        limit
+	            #{startRow}
+	            , #{listLimit}
+        </if>
+	</select>
+	<select id="selectAuction">
+	   select
+	       *
+	   from
+	       auction_item ai join product_image pi 
+	       on ai.auction_idx = pi.product_idx join large_category lc
+	       on ai.lc_code = lc.lc_code join middle_category mc
+	       on ai.mc_code = mc.mc_code
+	   where
+	       auction_idx = #{auctionx_idx}
 	</select>
 </mapper>

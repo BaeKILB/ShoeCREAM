@@ -184,13 +184,13 @@ const setImages = (e) => {
 		$(".image_box").addClass("hidden");
 	};
 };
-// 경매
+// 신발
 const selectSize = (size) => {
 	let inputBox = $("input[name=auction_size]"); 
 	if (size == "") {
-		inputBox.attr('disabled',false);
+		inputBox.attr('required',false);
 	} else {
-		inputBox.attr('disabled',true);
+		inputBox.attr('required',true);
 	}
 	inputBox.val(size);
 };
