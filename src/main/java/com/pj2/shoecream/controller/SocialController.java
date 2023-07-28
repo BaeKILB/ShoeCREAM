@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.SocialImageService;
 import com.pj2.shoecream.vo.SocialVO;
 
@@ -52,7 +53,12 @@ public class SocialController {
 		// 서비스 호출
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-        mPrincipalDetails.getMember().getMem_id();
+        mPrincipalDetails.getMember().getMem_idx();
+        
+        if(socialVO.getFile1().isEmpty()) {
+//        	System.out.println("이미지가 첨부 안됐으");
+        	throw new CustomValidationException("이미지가 첨부되지 않았습니다.", null);
+        }
         
         SocialImageService.ImageUpload(socialVO, mPrincipalDetails, session, model);
 		return "redirect:/social/"+mPrincipalDetails.getMember().getMem_idx();
