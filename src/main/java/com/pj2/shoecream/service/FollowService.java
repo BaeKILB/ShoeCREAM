@@ -13,17 +13,24 @@ public class FollowService {
 	@Autowired
 	private FollowMapper followMapper;
 	
-	// 1.번 방법
+	// 1번 방법
 //	@Transactional
 //	public int registFollow(int follower_idx, int followee_idx) {
 //		int insertCount = followMapper.registFollow(follower_idx, followee_idx);
 //		return insertCount;
 //	}
 	
-	// 2.번 방법
+	// 2번 방법
+	// 팔로우 하기
 	@Transactional
 	public void registFollow(FollowVO followVO) {
 		followMapper.registFollow(followVO);
+	}
+	
+	// 팔로우 중복 확인
+	@Transactional
+	public int countExistingFollow(FollowVO followVO) {
+		return followMapper.countExistingFollow(followVO);
 	}
 	
 	@Transactional
@@ -31,9 +38,5 @@ public class FollowService {
 		followMapper.deleteFollow(follower_idx, followee_idx);
 	}
 	
-	@Transactional
-	public int countExistingFollow(FollowVO followVO) {
-	    return followMapper.countExistingFollow(followVO);
-	}
 	
 }
