@@ -18,4 +18,11 @@
 			WHERE follow_idx = #{follow_idx} 
 			AND followee_idx = #{followee_idx}
 	</delete>
+	
+	<select id="countExistingFollow" parameterType="com.pj2.shoecream.vo.FollowVO" resultType="int">
+	    SELECT COUNT(*)
+	   	 	FROM social_follows
+	   	 	WHERE follower_idx = #{follower_idx}
+	   	 	AND followee_idx = #{followee_idx}
+</select>
 </mapper>

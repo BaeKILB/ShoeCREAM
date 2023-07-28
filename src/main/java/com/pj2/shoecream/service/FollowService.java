@@ -30,4 +30,10 @@ public class FollowService {
 	public void deleteFollow(int follower_idx, int followee_idx) {
 		followMapper.deleteFollow(follower_idx, followee_idx);
 	}
+	
+	@Transactional
+	public int countExistingFollow(FollowVO followVO) {
+	    return followMapper.countExistingFollow(followVO);
+	}
+	
 }

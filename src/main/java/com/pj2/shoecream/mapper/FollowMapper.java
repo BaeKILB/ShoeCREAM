@@ -10,6 +10,8 @@ public interface FollowMapper {
 	void registFollow(FollowVO followVO);
 
 	void deleteFollow(int follower_idx, int followee_idx);
-
+	
+	// 팔로우 한 사람 다시 못하게 
+	int countExistingFollow(FollowVO followVO);
 
 }

@@ -36,13 +36,23 @@ public class FollowApiController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
         
+        if (mPrincipalDetails.getMember().getMem_idx() == followee_idx) {
+            return new ResponseEntity<>(new CMRespDto<>(-1, "자신을 팔로우할 수 없습니다.", null), HttpStatus.BAD_REQUEST);
+        }
+        
         // 파라미터를 포함하는 FollowVO 객체를 생성합니다.
         FollowVO followVO = new FollowVO();
         followVO.setFollower_idx(mPrincipalDetails.getMember().getMem_idx());
         followVO.setFollowee_idx(followee_idx);
         
-        followService.registFollow(followVO);
-		return new ResponseEntity<>(new CMRespDto<>(1, "구독하기 성공", null), HttpStatus.OK);
+        // 이미 팔로우한 사용자인지 확인합니다.
+        int existingFollowCount = followService.countExistingFollow(followVO);
+        if (existingFollowCount > 0) {
+            return new ResponseEntity<>(new CMRespDto<>(-1, "이미 팔로우한 사용자입니다.", null), HttpStatus.BAD_REQUEST);
+        } else {
+            followService.registFollow(followVO);
+            return new ResponseEntity<>(new CMRespDto<>(1, "구독하기 성공", null), HttpStatus.OK);
+        }
 	}
 	
 	@DeleteMapping("/api/subscribe/{followee_idx}")
