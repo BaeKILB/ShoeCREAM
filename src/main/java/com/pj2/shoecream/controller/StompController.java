@@ -127,7 +127,7 @@ public class StompController {
 	public String getRoom(@RequestParam(defaultValue = "-1") String chat_room_idx,HttpSession session , Model model ){
 		if(!chat_room_idx.equals("-1") && 
 				chatService.isChatMember((String)session.getAttribute("sId"), 
-						Integer.parseInt(chat_room_idx) )) {
+				Integer.parseInt(chat_room_idx) )) {
 			model.addAttribute("room", chatService.getChatRoom(Integer.parseInt(chat_room_idx)));
 			model.addAttribute("chatList", chatService.getChatList(Integer.parseInt(chat_room_idx)));
 			model.addAttribute("idx", chatService.getSIdIdx((String)session.getAttribute("sId")));

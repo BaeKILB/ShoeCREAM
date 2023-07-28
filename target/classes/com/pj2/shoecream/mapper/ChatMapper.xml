@@ -3,7 +3,7 @@
 <mapper namespace="com.pj2.shoecream.mapper.ChatMapper">
 	    
 	    <!-- 채팅 추가 -->
-	<insert id="insertChat" parameterType="ChatMsgVO">
+	<insert id="insertChat" parameterType="map">
 		INSERT INTO chat_msgs
 		VALUES(
 			null 
@@ -122,7 +122,7 @@ SELECT *
 	</select>
 	
 	<!-- 채팅방에 본인이 들어갈수 있는지 체크 -->
-	<select id="selectChatCheckAuth">
+	<select id="selectChatCheckAuth" resultType="Integer">
 		SELECT * 
 		FROM chat_rooms
 		WHERE 
