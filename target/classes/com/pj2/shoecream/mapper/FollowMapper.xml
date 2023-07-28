@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.FollowMapper">
+	<insert id="registFollow" parameterType="com.pj2.shoecream.vo.FollowVO">
+		INSERT 
+			INTO social_follows
+			VALUES (
+				null 
+				, #{follower_idx}  
+				, #{followee_idx}  
+				, now() 
+			)
+	</insert>
+	
+	<delete id="deleteFollow">
+		DELETE 
+			FROM social_follows
+			WHERE follow_idx = #{follow_idx} 
+			AND followee_idx = #{followee_idx}
+	</delete>
+</mapper>
