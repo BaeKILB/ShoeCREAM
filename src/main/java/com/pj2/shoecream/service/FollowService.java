@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pj2.shoecream.mapper.FollowMapper;
+import com.pj2.shoecream.vo.FollowVO;
 
 @Service
 public class FollowService {
@@ -21,8 +22,8 @@ public class FollowService {
 	
 	// 2.번 방법
 	@Transactional
-	public void registFollow(int follower_idx, int followee_idx) {
-		followMapper.registFollow(follower_idx, followee_idx);
+	public void registFollow(FollowVO followVO) {
+		followMapper.registFollow(followVO);
 	}
 	
 	@Transactional

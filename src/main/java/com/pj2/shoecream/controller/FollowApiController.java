@@ -36,7 +36,12 @@ public class FollowApiController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
         
-		followService.registFollow(mPrincipalDetails.getMember().getMem_idx(), followee_idx);
+        // 파라미터를 포함하는 FollowVO 객체를 생성합니다.
+        FollowVO followVO = new FollowVO();
+        followVO.setFollower_idx(mPrincipalDetails.getMember().getMem_idx());
+        followVO.setFollowee_idx(followee_idx);
+        
+        followService.registFollow(followVO);
 		return new ResponseEntity<>(new CMRespDto<>(1, "구독하기 성공", null), HttpStatus.OK);
 	}
 	
