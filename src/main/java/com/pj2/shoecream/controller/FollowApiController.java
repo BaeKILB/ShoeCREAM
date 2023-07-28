@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.handler.CustomApiException;
 import com.pj2.shoecream.service.FollowService;
 import com.pj2.shoecream.vo.CMRespDto;
 import com.pj2.shoecream.vo.FollowVO;
@@ -38,7 +39,8 @@ public class FollowApiController {
         int sId = mPrincipalDetails.getMember().getMem_idx(); // 세션에 저장된 mem_idx
         
         if (sId == followee_idx) {
-            return new ResponseEntity<>(new CMRespDto<>(-1, "자신을 팔로우할 수 없습니다.", null), HttpStatus.BAD_REQUEST);
+//            return new ResponseEntity<>(new CMRespDto<>(-1, "자신을 팔로우할 수 없습니다.", null), HttpStatus.BAD_REQUEST);
+      	  	throw new CustomApiException("자신을 팔로우할 수 없습니다.");
         }
         
         // 파라미터를 포함하는 FollowVO 객체를 생성
@@ -49,7 +51,8 @@ public class FollowApiController {
         // 이미 팔로우한 사용자인지 확인
         int existingFollowCount = followService.countExistingFollow(followVO);
         if (existingFollowCount > 0) {
-            return new ResponseEntity<>(new CMRespDto<>(-1, "이미 팔로우한 사용자입니다.", null), HttpStatus.BAD_REQUEST);
+//            return new ResponseEntity<>(new CMRespDto<>(-1, "이미 팔로우한 사용자입니다.", null), HttpStatus.BAD_REQUEST);
+        	  throw new CustomApiException("이미 팔로우한 사용자입니다.");
         } else {
             followService.registFollow(followVO);
             return new ResponseEntity<>(new CMRespDto<>(1, "구독하기 성공", null), HttpStatus.OK);
