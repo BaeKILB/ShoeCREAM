@@ -19,8 +19,13 @@ public interface ReportMapper {
 
 	int updateIdx(ReportVO report);
 
-	int deleteProduct(int product_idx);
+	int deleteProduct(String product_idx);
 
-	int deletepro(int product_idx);
+	List<ReportVO> getAuctionReportListPaging(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+
+	int deleteAuctionlist(ReportVO report);
+//
+	int deleteAuction(String product_idx);
+
 
 }
