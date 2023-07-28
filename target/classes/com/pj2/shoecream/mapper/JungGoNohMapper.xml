@@ -8,22 +8,22 @@
 		INSERT
 			INTO jung_product
 			VALUES (
-				5    -- product_idx
-				, #{mem_idx}     -- mem_idx
-				, #{product_title}  -- product_title
-				, #{product_info}  -- product_info
-				, #{product_payment}    -- product_payment
-				, #{lc_code}    -- lc_code
-				, #{mc_code}    -- mc_code
-				, now()             -- product_date
-				, #{product_readcount} -- readcount
-				, #{product_brand} -- brand
-				, #{product_size} -- size
-				, 1 -- 중고
-				, #{product_price}     -- product_price
-				, #{product_status}  -- product_status
-				, '대기중'  -- product_sell_status
-				, #{product_location}    -- product_location
+				  #{product_idx} -- product_idx
+				, #{mem_idx} -- mem_idx
+				, #{product_title} -- product_title
+				, #{product_info} -- product_info
+				, #{product_payment} -- product_payment
+				, #{lc_code} -- lc_code
+				, #{mc_code} -- mc_code
+				, now() -- product_date
+				, #{product_readcount} -- product_readcount
+				, #{product_brand} -- product_brand
+				, #{product_size} -- product_size
+				, 1 -- 식별코드 중고
+				, #{product_price} -- product_price
+				, #{product_status} -- product_status
+				, '대기중' -- product_sell_status
+				, #{product_location} -- product_location
 			)
 	</insert>
 	

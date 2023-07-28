@@ -181,7 +181,7 @@ public class JunggoController {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		localDateTime.format(dateTimeFormatter);
 		
-		jungGoNoh.setProduct_idx(Integer.toString(session_idx) +  localDateTime);
+		jungGoNoh.setProduct_idx(Integer.toString(session_idx) + localDateTime);
 		
 		
 		
