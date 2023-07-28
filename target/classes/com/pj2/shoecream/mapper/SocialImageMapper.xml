@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.SocialImageMapper">
+	<insert id="insertPosts" parameterType="com.pj2.shoecream.vo.SocialVO" >
+		insert into
+			social_posts
+		values(
+			#{posts_idx}	
+			, #{mem_idx}
+			, #{mem_nickname}
+			, #{posts_content}
+			, #{posts_image1}
+			, now()
+		)
+	</insert>
+
+</mapper>

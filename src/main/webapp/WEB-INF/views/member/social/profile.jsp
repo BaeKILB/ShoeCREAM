@@ -27,7 +27,7 @@
 			<div class="name-group">
 				<h2>${principal.member.mem_nickname}</h2>
 
-				<button class="cta" onclick="location.href='/image/upload'">사진등록</button>
+				<button class="cta" onclick="location.href='${pageContext.request.contextPath }/image/upload'">사진등록</button>
 				<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
 				<button class="modi" onclick="popup('.modal-info')">
 					<i class="fas fa-cog"></i>

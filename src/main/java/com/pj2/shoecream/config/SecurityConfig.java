@@ -26,14 +26,14 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		http.csrf().disable(); // 이제 csrf 토큰 검사 안함
 		http.authorizeRequests()
-			.antMatchers("/mypage/**","/social/**","/api/**").authenticated()
+			.antMatchers("/mypage/**","/social/**","/api/**").authenticated() // 인증(로그인)한 유저만 갈 수 있는 페이지
 	        .anyRequest().permitAll()
 	    .and()
 	    .formLogin()
 		    .usernameParameter("mem_id") // 시큐리티 설정된 username 을 mem_id 로 바꿈
 		    .passwordParameter("mem_passwd") // 시큐리티 설정된 password 을 mem_passwd 로 바꿈
-		    .loginPage("/login") // GET
-		    .loginProcessingUrl("/login") // POST -> 스프링 시큐리티가 로그인 프로세스 진행
+		    .loginPage("/login") // GET 방식 : 로그인 페이지는 매핑을 "/login" 이다 라고 지정 
+		    .loginProcessingUrl("/login") // POST 로 요청된 login(내가 지정한 매핑주소) -> 스프링 시큐리티가 로그인 프로세스 진행
 		    .defaultSuccessUrl("/", true);
 	    return http.build();
 	}

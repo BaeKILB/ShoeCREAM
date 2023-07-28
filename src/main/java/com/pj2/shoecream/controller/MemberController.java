@@ -298,19 +298,27 @@ public class MemberController {
     	return "member/mypage/delete";
     }
     
-//    =========================social============================
-	@GetMapping("/social")
-	public String story() {
-		return "member/social/story";
-	}
-    
-    
-	@GetMapping("/social/{mem_idx}")
-	public String profile(@PathVariable int mem_idx, Model model) {
-//		User userEntity = userService.회원프로필(id);
-//		model.addAttribute("user", userEntity);
-		return "member/social/profile";
-	}
-    
+////    =========================social============================
+//	// 소셜 스토리 페이지
+//    @GetMapping("/social")
+//	public String story() {
+//		return "member/social/story";
+//	}
+//    
+//    // 소셜 개인 프로필 페이지
+//	@GetMapping("/social/{mem_idx}")
+//	public String profile(@PathVariable int mem_idx, Model model) {
+////		User userEntity = userService.회원프로필(id);
+////		model.addAttribute("user", userEntity);
+//		return "member/social/profile";
+//	}
+//    
+////	=======================social-image========================
+//	
+//	// 소셜 포스트 페이지
+//	@GetMapping("/image/upload")
+//	public String upload() {
+//		return "member/image/upload";
+//	}
     
 }

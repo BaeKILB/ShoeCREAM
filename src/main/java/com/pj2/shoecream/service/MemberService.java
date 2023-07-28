@@ -59,9 +59,6 @@ public class MemberService {
 		return memberMapper.isMemberEmailDuplicated(mem_email) > 0;
 	}
 
-	
-	
-	
 	// 프론트단 아이디 중복체크
 	public int memIdCheck(Map<String, String> map) {
 		return memberMapper.selectIdCheck(map);
