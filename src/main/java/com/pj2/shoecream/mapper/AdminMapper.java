@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.MemberVO;
 
 @Mapper
@@ -18,4 +19,7 @@ public interface AdminMapper {
 //	MemberVO updateMemberRank(int mem_idx);
 	// 회원 삭제
 	boolean deleteMember(int mem_idx);
+	// 일대일 문의 조회
+	List<InquiryBoardVO> selectQstBoard(@Param("searchType") String searchType, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
+	int getQstListCount(String searchType);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pj2.shoecream.mapper.AdminMapper;
+import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.MemberVO;
 
 @Service
@@ -28,6 +29,13 @@ public class AdminService {
 //	}
 	public boolean deleteMember(int mem_idx) {
 		return mapper.deleteMember(mem_idx);
+	}
+	// 일대일 문의 게시판 조회
+	public List<InquiryBoardVO> getQstBoard(String searchType, int startRow, int listLimit) {
+		return mapper.selectQstBoard(searchType, startRow, listLimit);
+	}
+	public int getQstListCount(String searchType) {
+		return mapper.getQstListCount(searchType);
 	}
 
 }

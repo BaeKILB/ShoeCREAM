@@ -20,6 +20,7 @@ import com.pj2.shoecream.service.AdminService;
 import com.pj2.shoecream.service.BoardService;
 import com.pj2.shoecream.service.ReportService;
 import com.pj2.shoecream.vo.Criteria;
+import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.NoticeVO;
 import com.pj2.shoecream.vo.PageDTO;
@@ -104,11 +105,29 @@ public class AdminController {
 		return isDeleteMember;
 	}
 	
-	// 일대일 문의
+	// 일대일 문의 목록 조회
 	@GetMapping("InquiryList")
-	public String inquiry() {
+	public String inquiry(HttpSession session, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "") String searchType, Model model) {
 		
+		int listLimit = 10;
+		int startRow = (pageNum - 1) * listLimit;
 		
+		List<InquiryBoardVO> qstList = service.getQstBoard(searchType, startRow, listLimit);
+		System.out.println("★★★★★★★★★★★★★★★★★★★" + qstList);
+		int listCount = service.getQstListCount(searchType);
+		
+		int pageListLimit = 5;
+		
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		PageInfoVO pageInfo = new PageInfoVO(listCount, pageListLimit, maxPage, startPage, endPage);
+		model.addAttribute("qstList", qstList);
+		model.addAttribute("pageInfo", pageInfo);
 		
 		return "admin/admin_question";
 	}
