@@ -1,10 +1,15 @@
 package com.pj2.shoecream.controller;
 
+import java.util.Map;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.pj2.shoecream.handler.JsonHandler;
 import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.vo.ChatMsgVO;
 
@@ -15,9 +20,14 @@ import lombok.RequiredArgsConstructor;
 public class StompChatController {
 	//채팅 db 활용 위한 서비스
 	@Autowired
-	private ChatService service;
+	ChatService service;
 	
+	@Autowired
     private final SimpMessagingTemplate template; //특정 Broker로 메세지를 전달
+	
+	@Autowired
+	private	JsonHandler jsonHandler; 
+	
 	// 클라이언트가 보낼(send)수 있는 경로
 	// StompHandler 에서 설정한 setApplicationDestinationPrefixes 경로가 병합 
 	// 해당 매핑을 이용하기 위해선 우선
@@ -36,29 +46,32 @@ public class StompChatController {
 
     
 	@MessageMapping("enter")
-	public void enter(ChatMsgVO msg) {
-		msg.setChat_msg_content(msg.getChat_msg_writer() + "님이 채팅방에 참여하였습니다.");
-		template.convertAndSend("/topic/room" + msg.getChat_room_idx(),msg);
+	public void enter(@RequestParam Map<String,String> msg) {
+		msg.put("chat_msg_content", msg.get("sId")+ "님이 채팅방에 참여하였습니다.");
+		
+		System.out.println("test : " + msg);
+		JSONObject jo = jsonHandler.map2Json(msg);
+		
+		template.convertAndSend("/topic/room" + msg.get("chat_room_idx"),jo.toString());
 	}
 
 	@MessageMapping("message")
-	public void message(ChatMsgVO msg) {
+	public void message(@RequestParam Map<String,String> msg) {
 		System.out.println("test : " + msg);
-		if(!service.isChatMember(msg.getSId(),msg.getChat_room_idx())
-				&& !msg.getSId().equals("admin")) {
-			msg.setChat_msg_content("메시지 전송 권한이 없습니다!");
-			template.convertAndSend("/topic/room" + msg.getChat_room_idx(),msg);	
-			System.out.println("test1");
+		if(!service.isChatMember(msg.get("sId"),Integer.parseInt(msg.get("chat_room_idx")))
+				&& !msg.get("sId").equals("admin")) {
+			msg.put("chat_msg_content","메시지 전송 권한이 없습니다!");
+			JSONObject jo = jsonHandler.map2Json(msg);
+			template.convertAndSend("/topic/room" + msg.get("chat_room_idx"),jo.toString());	
 		}	
 		else if(service.addChat(msg) < 0) {
-			msg.setChat_msg_content("메시지 저장에 실패하였습니다!");
-			template.convertAndSend("/topic/room" + msg.getChat_room_idx(),msg);			
-			System.out.println("test2");
+			msg.put("chat_msg_content","메시지 저장에 실패하였습니다!");
+			JSONObject jo = jsonHandler.map2Json(msg);
+			template.convertAndSend("/topic/room" + msg.get("chat_room_idx"),jo.toString());
 		}
 		else {			
-			template.convertAndSend("/topic/room" + msg.getChat_room_idx(),msg);
-			System.out.println("test3");
+			JSONObject jo = jsonHandler.map2Json(msg);
+			template.convertAndSend("/topic/room" + msg.get("chat_room_idx"),jo.toString());
 		}
-		System.out.println("test4");
 	}
 }

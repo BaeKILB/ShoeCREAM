@@ -2,10 +2,12 @@ package com.pj2.shoecream.vo;
 
 import java.sql.Timestamp;
 
+
 import lombok.Data;
 
 
 @Data
+
 public class ChatMsgVO {
 	private int chat_msg_idx;
 	private int chat_room_idx;

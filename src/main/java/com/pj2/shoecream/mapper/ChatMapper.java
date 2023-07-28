@@ -13,7 +13,7 @@ import com.pj2.shoecream.vo.ChatMsgVO;
 
 @Mapper
 public interface ChatMapper {
-	int insertChat(ChatMsgVO chat);
+	int insertChat(Map<String,String> chat);
 	int insertChatRoom(ChatRoomVO chatRoom);
 	
 	List<Map<String,Object>> selectChatRoomList(@Param("mem_idx") int mem_idx,
@@ -26,6 +26,6 @@ public interface ChatMapper {
 	
 	ChatRoomVO selectChatRoom(int chat_room_idx);
 	
-	int selectChatCheckAuth(@Param("mem_idx") int mem_idx,
+	Integer selectChatCheckAuth(@Param("mem_idx") int mem_idx,
 			@Param("chat_room_idx") int chat_room_idx);
 }

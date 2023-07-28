@@ -2,6 +2,7 @@ package com.pj2.shoecream.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ChatService {
 	@Autowired
 	private MemberMapper memMapper;
 	
-	public int addChat(ChatMsgVO chat) {
+	public int addChat(Map<String,String> chat) {
 		return mapper.insertChat(chat);
 	}
 	
@@ -65,7 +66,12 @@ public class ChatService {
 		if(mem == null) {
 			return false;
 		}
-		return mapper.selectChatCheckAuth(mem.getMem_idx(), chat_room_idx) > 0;
+		Integer result = mapper.selectChatCheckAuth(mem.getMem_idx(), chat_room_idx);
+		//null 체크
+		if(!Objects.nonNull(result)) {
+			return false;
+		}
+		return result > 0;
 	}
 	
 	
