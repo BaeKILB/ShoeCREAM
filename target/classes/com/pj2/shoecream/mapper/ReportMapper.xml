@@ -12,21 +12,20 @@
 			, product_idx
 			, report_div
 			, report_detail
-		FROM report
+		FROM joonggo_report
 	) AS n1
 	WHERE report_count >= 5
 	<if test="!searchKeyword.equals('')">
 		AND 
 		<choose>
 			<when test="searchType.equals('title')">
-				report_content LIKE CONCAT('%', #{searchKeyword},'%')
+				report_div LIKE CONCAT('%', #{searchKeyword},'%')
 			</when>
 			<when test="searchType.equals('content')">
-				report_div LIKE CONCAT('%', #{searchKeyword},'%')
+				report_detail LIKE CONCAT('%', #{searchKeyword},'%')
 			</when>
 			<when test="searchType.equals('title_content')">
 				report_content LIKE CONCAT('%', #{searchKeyword},'%')
-				OR report_div LIKE CONCAT('%', #{searchKeyword},'%')
 			</when>
 		</choose>
 	</if>
@@ -36,33 +35,70 @@
 
 <select id="getTotal" resultType="int">
 		SELECT COUNT(*)
-			FROM report
+			FROM joonggo_report
 </select>
 
 <delete id="deleteReport">
 DELETE
-	FROM report
+	FROM joonggo_report
 		WHERE product_idx = #{product_idx}
 </delete>
 
 <update id="updateIdx">
-		UPDATE report
+		UPDATE joonggo_report
 			SET report_idx =report_idx - 1
 			WHERE report_idx > #{report_idx}
 </update>
-
 <delete id="deleteProduct">
  DELETE
-    FROM report
+    FROM jung_product
         WHERE product_idx = #{product_idx};
-
    
 </delete>
 
-<delete id="deletepro">
- DELETE
-    FROM product
-        WHERE product_idx = #{product_idx};
+<!--  경매 신고 -->
+<select id="getAuctionReportListPaging" resultType="com.pj2.shoecream.vo.ReportVO">
+	SELECT *
+	FROM (
+		SELECT
+			auction_report_idx
+			, report_content
+			, report_count
+			, product_idx
+			, report_div
+			, report_detail
+		FROM auction_report
+	) AS n1
+	WHERE report_count >= 5
+	<if test="!searchKeyword.equals('')">
+		AND 
+		<choose>
+			<when test="searchType.equals('title')">
+				report_div LIKE CONCAT('%', #{searchKeyword},'%')
+			</when>
+			<when test="searchType.equals('content')">
+				report_detail LIKE CONCAT('%', #{searchKeyword},'%')
+			</when>
+			<when test="searchType.equals('title_content')">
+				report_content LIKE CONCAT('%', #{searchKeyword},'%')
+			</when>
+		</choose>
+	</if>
+	ORDER BY auction_report_idx ASC
+	 LIMIT #{cri.amount} OFFSET #{cri.skip}
+</select>
+<delete id="deleteAuctionlist">
+DELETE
+	FROM auction_report
+		WHERE product_idx = #{product_idx}
 </delete>
+
+<delete id="deleteAuction">
+ DELETE
+    FROM auction_item
+        WHERE auction_idx = #{auction_idx};
+   
+</delete>
+
 
 </mapper>

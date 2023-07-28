@@ -14,7 +14,6 @@ import com.pj2.shoecream.vo.JungGoNohVO;
 public interface JungGoNohMapper {
 	
 	//물품 등록(중고)
-	int insertProduct(JungGoNohVO jungGoNoh);
 	int insertJungProduct(JungGoNohVO jungGoNoh);
 	
 	
@@ -30,6 +29,7 @@ public interface JungGoNohMapper {
 	
 	
 	
+
 
 	
 

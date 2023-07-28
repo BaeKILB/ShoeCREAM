@@ -131,7 +131,7 @@
 			<div class="view_info col-sm-12 col-lg-6">
 
 				<div class="view_cont">
-					<p class="product_catrgory">HOME > ${jungGoNoh.lc_code} > ${jungGoNoh.mc_code} > ${jungGoNoh.sc_code}</p>
+					<p class="product_catrgory">HOME > ${jungGoNoh.lc_code} > ${jungGoNoh.mc_code} </p>
 					<div class="product_name">
 						<h4>${jungGoNoh.product_title} </h4><span class="product_progress">${jungGoNoh.product_sell_status}</span>
 						<p><fmt:formatNumber value="${jungGoNoh.product_price}" pattern="#,###"/></p>
@@ -140,11 +140,11 @@
 						🕐&nbsp;${jungGoNoh.product_date} &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  5 - Count(dibs type_num)
 					</div>
 					<div class="product_productStatus">
-						상품 상태 : 중고(상급) - (중)product_status<br>
-						사이즈 : 265 - (중,경)product_size	mm<br>
-						브랜드 : NIKE - (중,경)product_brand<br>
-						거래지역 : 부산시 남구 대연동 - (중)product_location<br>
-						거래 방법 : 안전페이, 직거래- (중,경)product_payment<br>					
+						상품 상태 : ${jungGoNoh.product_status}<br>
+						사이즈 : ${jungGoNoh.product_size}	mm<br>
+						브랜드 : ${jungGoNoh.product_brand}<br>
+						거래지역 : ${jungGoNoh.product_location}<br>
+						거래 방법 : ${jungGoNoh.product_payment}<br>					
 					</div>
 <!-- 						<div class="product_tag"> -->
 <!-- 						#바지 #바지 #바지 #바지 #바지 -->
@@ -152,16 +152,16 @@
 					<div class="button_array">
 												
 						<c:choose>
-							<c:when test="${dibs.dibs_check eq 'N' }">
-								<button type="button"  class="favorite_btn" onclick="sample1();">♥ 찜 등록 - dibs_check</button>
+						<c:when test="'N' eq 'N' "> <%--${jungGoNoh.dibs_check}--%> 
+								<button type="button"  class="favorite_btn" onclick="sample1();">♥ 찜 등록</button>
 							</c:when>
 							<c:otherwise>
-								<button type="button"  class="UnFavorite_btn" onclick="sample2();">💔 찜 해제 - dibs_check</button>
+								<button type="button"  class="UnFavorite_btn" onclick="sample2();">💔 찜 해제</button>
 							</c:otherwise>
 						</c:choose>
 						
 	                    <c:choose>
-							<c:when test="${session.sId eq 'member.member_id' }">
+							<c:when test="'N' eq 'N' "><%--${session.sId eq jungGoNoh.member_id }--%>
 								<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>
 							</c:when>
 							<c:otherwise>
@@ -192,11 +192,7 @@
 					</div>
 				</div>
 				<div class="product_content">
-					쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라
-					쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라
-					쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라
-					쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라쏼라
-					 - (중,경)product_info
+					${jungGoNoh.product_info}
 				</div>
 			</div>
 			
@@ -204,11 +200,11 @@
 	
 				<div class="seller_profile_wrap">
 					<img class="seller_profile" src="${pageContext.request.contextPath}/resources/img/junggo/profile_m.png">
-					<p class="seller_name">꾸미꾸미꾸 - (중,경)mem_idx>mem_nickname</p> 
-					<p class="seller_Lv">브론즈 Lv1 - (중,경)mem_idx>mem_rank</p>
+					<p class="seller_name"></p><%--${jungGoNoh.mem_nickname} --%>
+					<p class="seller_Lv"></p><%--${jungGoNoh.mem_rank}--%>
 				</div>
 				<div class="seller_products">
-					<p class="seller_products_title">꾸미꾸미꾸 - (중,경)mem_idx>mem_nickname님의 상품정보</p>
+					<p class="seller_products_title">님의 상품정보</p><%--${jungGoNoh.mem_nickname}--%>
 					<div class="more_product">
 						<div>
 							<img class="more_product_img" src="${pageContext.request.contextPath}/resources/img/junggo/first.jpg">

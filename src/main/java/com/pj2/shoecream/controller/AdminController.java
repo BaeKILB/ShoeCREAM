@@ -205,46 +205,94 @@ public class AdminController {
 		}
 
 		
-		// 신고 처리 목록
-		@GetMapping("reportProcess")
-		public String reportProcess(Model model, Criteria cri, @RequestParam(defaultValue = "") String searchType,
-				@RequestParam(defaultValue = "") String searchKeyword) {
+		// 중고 신고 처리 목록
+			@GetMapping("reportProcess")
+			public String reportProcess(Model model, Criteria cri, @RequestParam(defaultValue = "") String searchType,
+					@RequestParam(defaultValue = "") String searchKeyword) {
 
-			List<ReportVO> reportProcessing = reportservice.getReportListPaging(cri, searchType, searchKeyword);
-			model.addAttribute("report", reportProcessing);
-//					System.out.println("가가가" + reportProcessing);
+				List<ReportVO> reportProcessing = reportservice.getReportListPaging(cri, searchType, searchKeyword);
+				model.addAttribute("report", reportProcessing);
+//							System.out.println("가가가" + reportProcessing);
 
-			int total = reportservice.getTotal();
-			PageDTO pageMaker = new PageDTO(cri, total);
-			model.addAttribute("pageMaker", pageMaker);
+				int total = reportservice.getTotal();
+				PageDTO pageMaker = new PageDTO(cri, total);
+				model.addAttribute("pageMaker", pageMaker);
 
-			return "admin/admin_report";
-		}
-
-		// 신고 처리하기(해당 상품 삭제)
-		@GetMapping("reportDelete")
-		public String reportDelete(HttpSession session, ReportVO report, Model model, @RequestParam int product_idx) {
-
-			int deleteReportCount = reportservice.deleteReport(report);
-
-			if (deleteReportCount < 0) {
-				model.addAttribute("msg", "삭제 실패");
-				return "inc/fail_back";
+				return "admin/admin_report";
 			}
 
-			int updateCount = reportservice.updateIdx(report);
-			if (updateCount < 0) {
-				model.addAttribute("msg", "업데이트 실패");
-				return "inc/fail_back";
+			// 중고 신고 처리하기(해당 상품 삭제)
+			@GetMapping("reportDelete")
+			public String reportDelete(HttpSession session, ReportVO report, Model model, @RequestParam String product_idx) {
+
+				
+				int deleteReportCount = reportservice.deleteReport(report);
+				System.out.println("나오냐고요" + report);
+				
+				if (deleteReportCount < 0) {
+					model.addAttribute("msg", "삭제 실패");
+					return "inc/fail_back";
+				}
+
+				int updateCount = reportservice.updateIdx(report);
+				if (updateCount < 0) {
+					model.addAttribute("msg", "업데이트 실패");
+					return "inc/fail_back";
+				}
+				
+				int deleteReport = reportservice.deleteProduct(product_idx);
+
+				return "redirect:/reportProcess";
+
+			}
+			
+			// 경매 신고 처리 목록
+			@GetMapping("auctionReport")
+			public String auctionReport(Model model, Criteria cri,
+					@RequestParam(defaultValue = "") String searchType,
+					@RequestParam(defaultValue = "") String searchKeyword) {
+
+				List<ReportVO> auctionReporting = reportservice.getAuctionReportListPaging(cri, searchType,
+						searchKeyword);
+				model.addAttribute("auction", auctionReporting);
+				System.out.println("가나다" + auctionReporting);
+
+				int total = reportservice.getTotal();
+				PageDTO pageMaker = new PageDTO(cri, total);
+				model.addAttribute("pageMaker", pageMaker);
+
+				return "admin/admin_report_auction";
 			}
 
-			int deleteReport = reportservice.deleteProduct(product_idx);
-			int deleteProduct = reportservice.deletepro(product_idx);
+			// 경매 신고 처리하기(해당 상품 삭제)
+			@GetMapping("auctionDelete")
+			public String auctionDelete(HttpSession session, ReportVO report, Model model,
+					@RequestParam String product_idx) {
+//					
+				int auctionReportCount = reportservice.deleteAuctionlist(report);
+//				
+				if (auctionReportCount < 0) {
+					model.addAttribute("msg", "삭제 실패");
+					return "inc/fail_back";
+				}
 
-			return "redirect:/reportProcess";
+				int updateCount = reportservice.updateIdx(report);
+				if (updateCount < 0) {
+					model.addAttribute("msg", "업데이트 실패");
+					return "inc/fail_back";
+				}
+
+				int deleteAuction = reportservice.deleteAuction(product_idx);
+				//
+//					
+//					
+//					
+				return "redirect:/auctionReport";
+//					
+
+			}
 
 		}
+		
 
-	}
-	
 
