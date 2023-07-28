@@ -167,7 +167,8 @@ public class JunggoController {
 		// -----------------------------------------------------------------------------------
 		// BoardService - registBoard() 메서드를 호출하여 게시물 등록 작업 요청
 		// => 파라미터 : JungGoNohVO 객체    리턴타입 : int(insertCount)
-		int insertCount = jungGoNohService.registProduct(jungGoNoh);
+	
+		
 		int insertCountJung = jungGoNohService.registJungProduct(jungGoNoh);
 		
 		
@@ -176,7 +177,7 @@ public class JunggoController {
 		// 게시물 등록 작업 요청 결과 판별
 		// => 성공 시 업로드 파일을 실제 디렉토리에 이동시킨 후 BoardList 서블릿 리다이렉트
 		// => 실패 시 "글 쓰기 실패!" 메세지 출력 후 이전페이지 돌아가기 처리
-		if(insertCount > 0 && insertCountJung > 0) { // 성공
+		if(insertCountJung > 0) { // 성공
 			try {
 				// 업로드 된 파일은 MultipartFile 객체에 의해 임시 디렉토리에 저장되어 있으며
 				// 글쓰기 작업 성공 시 임시 디렉토리 -> 실제 디렉토리로 이동 작업 필요

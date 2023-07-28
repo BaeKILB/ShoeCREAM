@@ -1,38 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.JungGoNohMapper">
-	<!-- 상품 작성 - INSERT -->
-	<insert id="insertProduct">
-		<selectKey keyProperty="product_idx" resultType="int" order="BEFORE">
-			SELECT IFNULL(MAX(product_idx), 0) FROM product
-		</selectKey>
+		<!-- 상품 작성 - INSERT -->
+	
+	<insert id="insertJungProduct">
+	
 		INSERT
-			INTO product
+			INTO jung_product
 			VALUES (
-				#{product_idx} + 1    -- product_idx
+				5    -- product_idx
 				, #{mem_idx}     -- mem_idx
 				, #{product_title}  -- product_title
 				, #{product_info}  -- product_info
 				, #{product_payment}    -- product_payment
 				, #{lc_code}    -- lc_code
 				, #{mc_code}    -- mc_code
-				, #{sc_code}  -- sc_code
 				, now()             -- product_date
-				, #{product_readcount} 
-				, #{product_brand}
-				, #{product_size}
+				, #{product_readcount} -- readcount
+				, #{product_brand} -- brand
+				, #{product_size} -- size
 				, 1 -- 중고
-			)
-	</insert>
-	
-	<insert id="insertJungProduct">
-		<selectKey keyProperty="product_idx" resultType="int" order="BEFORE">
-			SELECT IFNULL(MAX(product_idx), 0) FROM product
-		</selectKey>
-		INSERT
-			INTO jung_product
-			VALUES (
-				#{product_idx}     -- product_idx
 				, #{product_price}     -- product_price
 				, #{product_status}  -- product_status
 				, '대기중'  -- product_sell_status
@@ -44,15 +31,13 @@
 	<!-- 상품 상세보기 - SELECT -->
 	<select id="selectProduct" resultType="com.pj2.shoecream.vo.JungGoNohVO">
 		SELECT jpd.product_idx, jpd.product_price, jpd.product_status, jpd.product_sell_status, jpd.product_location
-		, pd.product_title, pd.product_info, pd.product_payment, pd.lc_code, pd.mc_code, pd.sc_code
-		, pd.product_date, pd.product_readcount, pd.product_brand, pd.product_size, pd.product_selector
+		, jpd.product_title, jpd.product_info, jpd.product_payment, jpd.lc_code, jpd.mc_code
+		, jpd.product_date, jpd.product_readcount, jpd.product_brand, jpd.product_size, jpd.product_selector
 		, mi.mem_idx, mi.mem_id
-		  FROM product pd
-		  JOIN jung_product jpd
-		    ON pd.product_idx = jpd.product_idx
+		  FROM jung_product jpd
 		  JOIN mem_info mi
-		    ON pd.mem_idx = mi.mem_idx
-	     WHERE pd.product_idx = #{product_idx}
+		    ON jpd.mem_idx = mi.mem_idx
+	     WHERE jpd.product_idx = #{product_idx}
 	</select>
 	
 		<!-- 게시물 조회수 증가 - UPDATE -->
@@ -63,10 +48,10 @@
 		<!-- selectKey 태그는 위치와 상관없이 order 속성값에 따라 실행됨 -->
 		<selectKey keyProperty="product_readcount" resultType="int" order="AFTER">
 			SELECT product_readcount
-			  FROM product
+			  FROM jung_product
 			 WHERE product_idx = #{product_idx}
 		</selectKey>
-		UPDATE product
+		UPDATE jung_product
 		   SET product_readcount = product_readcount + 1
 		 WHERE product_idx = #{product_idx}
 	</update>
@@ -75,8 +60,9 @@
 	<!-- 글번호가 일치하는 레코드 삭제 -->
 	<delete id="deleteProduct">
 		DELETE 
-		  FROM product
+		  FROM jung_product
 		 WHERE product_idx = #{product_idx}
 	</delete>
+	
 	
 </mapper>
