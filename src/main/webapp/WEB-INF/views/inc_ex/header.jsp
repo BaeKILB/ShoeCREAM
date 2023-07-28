@@ -163,7 +163,7 @@ div #test_area ul { /* 카테고리 css */
                         <div class="col-md-4 sell_center">
                             <p style="width: 280px">
 	                            <a href="product_list" style="color: black;">중고거래　</a>
-	                            <a href="auction" style="color: black;">경매하기　</a>
+	                            <a href="Auction" style="color: black;">경매하기　</a>
 	                            <a href="goodsStore.ad" style="color: black;">굿즈 스토어　</a>
 	                            <a href="community" style="color: black;">커뮤니티　</a>
 	                        </p>

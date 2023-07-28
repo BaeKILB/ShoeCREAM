@@ -7,12 +7,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pj2.shoecream.service.AuctionService;
@@ -40,11 +45,8 @@ public class AuctionController {
 	@GetMapping("Auction")
 	public String auctionMain(
 			Model model) {
-		List<Map<String, Object>> auctionList = service.auctionList();
-		model.addAttribute("auctionList",auctionList);
 		return "auction/auction_main";
 	}
-	
     @GetMapping("AuctionDetail")
     public String AuctionDetail(HttpSession session, Model model, @RequestParam int product_idx) { //경매 제품상세
     	//로그인 해야 이용 가능한걸로.. 버튼마다 session 체크 귀찮으니까..;
@@ -149,4 +151,47 @@ public class AuctionController {
     	}
     	return "redirect:/Auction";
     }
+    
+    @ResponseBody
+    @RequestMapping(value= "getAucList", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
+    public String getAucList(
+    		@RequestParam Map<String, Object> map
+    		) {
+    	System.out.println("!@#$"+map.toString());
+    	
+		int pageNum = Integer.parseInt(String.valueOf(map.get("pageNum")));
+		int listLimit = 20;
+		int startRow = (pageNum -1) * listLimit;
+    	
+		map.put("startRow", startRow);
+		map.put("listLimit", listLimit);
+		
+		List<Map<String, Object>> auctionList = service.auctionList(map);
+		
+		map.remove("startRow");
+		map.remove("listLimit");
+		
+		int listCount = service.auctionList(map).size();
+		int pageListLimit = 20;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		Map<String, Object> pageInfo = new HashMap<String, Object>();
+		pageInfo.put("listCount", listCount);
+		pageInfo.put("pageListLimit", pageListLimit);
+		pageInfo.put("maxPage", maxPage);
+		pageInfo.put("startPage", startPage);
+		pageInfo.put("endPage", endPage);
+		pageInfo.put("pageNum", pageNum);
+		
+		auctionList.add(pageInfo);
+		
+		JSONArray jsonArray = new JSONArray(auctionList);
+    	return jsonArray.toString();
+    }
+    
 }

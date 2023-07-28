@@ -196,57 +196,101 @@ const selectSize = (size) => {
 };
 
 // 시간
+const dateFormat = (date) => {
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
+
+    month = month >= 10 ? month : '0' + month;
+    day = day >= 10 ? day : '0' + day;
+    hour = hour >= 10 ? hour : '0' + hour;
+    minute = minute >= 10 ? minute : '0' + minute;
+    second = second >= 10 ? second : '0' + second;
+
+    return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute;
+}
+
 $(function() {
     $.datetimepicker.setLocale('kr');
     let today = new Date();
-    $("#dateStart").datetimepicker({
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        format:'Y-m-d H:i',
-        step: 60,
-        defaultSelect: false,
-        defaultDate: today,
-        defaultTime: today.getHours,
-        minDate: today,
-//        minTime: today,
-        onSelectDate: function(ct){
-            $("#dateEnd").datetimepicker('setOptions', { minDate: ct });
-//            $("#dateEnd").datetimepicker('setOptions', { minTime: ct });
-        },
-        onSelectTime: function(ct){
-            $("#dateEnd").datetimepicker('setOptions', { minDate: ct });
-//            $("#dateEnd").datetimepicker('setOptions', { minTime: ct });
-            $("#et_wrap").removeClass("hidden");
-        }
-    });
-    $("#dateEnd").datetimepicker({
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        format:'Y-m-d H:i', // 포맷 형식 지정
-        step: 60, // 분 단위
-        defaultSelect: false,
-        onClose: function(ct) { // 창 종료시 실행함수
-            let startDateInput = $("#dateStart");
-            if($("#dateStart").val() != ''){
-                let tempStartDate = new Date(startDateInput.val());
-                let tempEndDate = new Date(ct);
-                if(tempStartDate > tempEndDate){
-                    startDateInput.val(getFormatDateTime(ct));
-                }
-                
-            }else {
-                startDateInput.val(getFormatDateTime(ct));
-            }
-        },
-        onSelectDate:function(ct){
-            $("#dateStart").datetimepicker('setOptions', { maxDate: ct });
-//            $("#dateStart").datetimepicker('setOptions', { maxTime: ct });
-        },
-        onSelectTime:function(ct){
-            $("#dateStart").datetimepicker('setOptions', { maxDate: ct });
-//            $("#dateStart").datetimepicker('setOptions', { maxTime: ct });
-        },
-    });
+	let startDate = $("#dateStart");
+	let startTime = $("#timeStart");
+	let endDate = $("#dateEnd");
+	let endTime = $("#timeEnd");
+	
+	startTime.datetimepicker({
+		datepicker: false,
+		format: 'H:i',
+		step: 60,
+		timepickerScrollbar: false,
+		onSelectTime: function(ct) {
+			let ctTemp = new Date(ct);
+			let stdTemp = new Date(startDate.val());
+			if (ctTemp.getHours() == '23') {
+				endDate.datetimepicker('setOptions',{ minDate: stdTemp.getTime()+(1000*60*60*1*24) });
+			} else {
+				endDate.datetimepicker('setOptions',{ minDate: stdTemp.getTime() });
+				endTime.datetimepicker('setOptions',{ minTime: '00:00', defaultTime: '00:00' });
+			}
+			$("input[name=auc_regist_date]").removeClass('hidden').val(startDate.val()+" "+startTime.val());
+			$("#sdtw").addClass('hidden');
+		},
+		onClose: function() {
+			$("#et_wrap").removeClass("hidden");
+		} 
+	});
+	
+	endTime.datetimepicker({
+		datepicker: false,
+		format: 'H:i',
+		step: 60,
+		timepickerScrollbar: false,
+		onSelectTime: function() {
+			$("input[name=auc_close_date]").removeClass('hidden').val(endDate.val()+" "+endTime.val());
+			$("#edtw").addClass('hidden');
+		}
+	});
+	
+	startDate.datetimepicker({
+		timepicker: false,
+	    changeMonth: true,
+	    changeYear: true,
+	    showButtonPanel: true,
+	    format:'Y-m-d',
+	    minDate: today,
+	    scrollMonth : false,
+	    onSelectDate: function(ct) {
+			let ctTemp = new Date(ct);
+			if (ctTemp.getDate() == today.getDate()) {
+				startTime.datetimepicker('setOptions', {minTime: ct ,defaultTime: ct});
+			} else {
+				startTime.datetimepicker('setOptions', {minTime: '00:00', defaultTime: '00:00'});
+			}
+		},
+		onClose: function() {
+			startTime.removeClass('hidden').focus();
+		}
+	});
+	
+	endDate.datetimepicker({
+		timepicker: false,
+	    changeMonth: true,
+	    changeYear: true,
+	    showButtonPanel: true,
+	    format:'Y-m-d',
+	    scrollMonth : false,
+	    onSelectDate: function(ct) {
+			let ctdTemp = new Date(ct);
+			let stdTemp = new Date(startDate.val());
+			let sttTemp = new Date(startTime.val());
+			if (ctdTemp.getDate() == stdTemp.getDate()) {
+				endTime.datetimepicker('setOptions', {minTime: sttTemp.getTime()+(1000*60*60*1)});
+			} else {
+				endTime.datetimepicker('setOptions', {minTime: '00:00', defaultTime: '00:00'});
+			}
+			endTime.removeClass('hidden').focus();
+		},
+	});
 });

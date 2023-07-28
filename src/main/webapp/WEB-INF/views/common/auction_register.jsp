@@ -152,13 +152,21 @@
 		<div id="st_wrap">
 			<div class="eighth_title">경매시작일</div>	
 			<div class="eighth_content">
-				<input type="text" id="dateStart" name="auc_regist_date" class="date-start" readonly="readonly" required="required">
+				<input type="text" name="auc_regist_date" class="hidden date-start" readonly="readonly" required="required">
+				<div id="sdtw">
+					<input type="text" id="dateStart" class="date-start" readonly="readonly" required="required">
+					<input type="text" id="timeStart" class="date-start hidden" readonly="readonly" required="required">
+				</div>
 			</div>
 		</div>
 		<div id="et_wrap" class="hidden">
 			<div class="eighth_title">경매마감일</div>	
 			<div class="eighth_content">
-				<input type="text" id="dateEnd" name="auc_close_date" class="date-end" readonly="readonly" required="required">
+				<input type="text" name="auc_close_date" class="hidden" readonly="readonly" required="required">
+				<div id="edtw">
+					<input type="text" id="dateEnd" class="date-end" readonly="readonly" required="required">
+					<input type="text" id="timeEnd" class="time-end hidden" readonly="readonly" required="required">
+				</div>
 			</div>
 		</div>
 	</div>

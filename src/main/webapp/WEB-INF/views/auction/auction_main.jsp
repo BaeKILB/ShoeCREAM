@@ -10,7 +10,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/auction/auction_main.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/inc/header.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/auction/auction_main.css"	rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/css/inc/nav.css" rel="stylesheet" >
+<%-- <link href="${pageContext.request.contextPath }/resources/css/inc/nav.css" rel="stylesheet" > --%>
 <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="stylesheet" >
 </head>
 <body>
@@ -40,22 +40,22 @@
 <%-- 				<jsp:include page="" /> --%>
 			</aside>
 			<div id="itemList"> <!-- 상품 리스트 -->
-				<c:forEach var="auction" items="${auctionList }">
-					<a href="auctionDetail?code=${auction.auction_idx }">
-						<div class="auctionItem">
-							<img alt="테스트이미지" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }"> 
-							<div> 상품명
-								${auction.auction_title }
-							</div>
-							<div> 상품가격
-								${auction.auc_start_price }
-							</div>
-							<div> 등록일
-								${auction.auc_regist_date }
-							</div>
-						</div>
-					</a>
-				</c:forEach>
+<%-- 				<c:forEach var="auction" items="${auctionList }"> --%>
+<%-- 					<a href="auctionDetail?code=${auction.auction_idx }"> --%>
+<!-- 						<div class="auctionItem"> -->
+<%-- 							<img alt="테스트이미지" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }">  --%>
+<!-- 							<div> 상품명 -->
+<%-- 								${auction.auction_title } --%>
+<!-- 							</div> -->
+<!-- 							<div> 상품가격 -->
+<%-- 								${auction.auc_start_price } --%>
+<!-- 							</div> -->
+<!-- 							<div> 등록일 -->
+<%-- 								${auction.auc_regist_date } --%>
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</a> -->
+<%-- 				</c:forEach> --%>
 			</div>
 		</section>
 	</main>

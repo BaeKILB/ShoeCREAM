@@ -22,7 +22,7 @@
 			, #{auc_bid_unit}
 			, #{auc_regist_date}
 			, #{auc_close_date}
-			, '등록대기'
+			, '대기'
 		)
 	</insert>
 	<select id="selectAuctionList" resultType="map">
@@ -31,5 +31,7 @@
 		from
 			auction_item ai join product_image pi
 			on ai.auction_idx = pi.product_idx
+		where
+			auc_state = '진행'
 	</select>
 </mapper>

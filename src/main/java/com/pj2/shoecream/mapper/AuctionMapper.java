@@ -12,6 +12,6 @@ public interface AuctionMapper {
 
 	int insertAuctionItem(AuctionVO auction);
 
-	List<Map<String, Object>> selectAuctionList();
+	List<Map<String, Object>> selectAuctionList(Map<String, Object> map);
 
 }

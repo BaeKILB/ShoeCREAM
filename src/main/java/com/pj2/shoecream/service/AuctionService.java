@@ -19,8 +19,8 @@ public class AuctionService {
 		return mapper.insertAuctionItem(auction);
 	}
 
-	public List<Map<String, Object>> auctionList() {
-		return mapper.selectAuctionList();
+	public List<Map<String, Object>> auctionList(Map<String, Object> map) {
+		return mapper.selectAuctionList(map);
 	}
 
 
