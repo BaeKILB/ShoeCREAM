@@ -194,7 +194,7 @@ public class MemberController {
     	// 2. 쓰읍 이 방법을 써야하는가 .. 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-      
+		
 		// 주소 관련 값 설정
 		if(mPrincipalDetails.getMember().getMem_address() != null) {
 			mPrincipalDetails.getMember().setSample6_postcode(mPrincipalDetails.getMember().getMem_address().split("/")[0]); 

@@ -35,6 +35,7 @@ public class MemberService {
         member.setRole("ROLE_USER"); // 멤버 권한 디폴트
         member.setMem_account_auth("N"); // 계좌 디폴트
         member.setMem_status("1"); // 멤버 상태 디폴트
+        member.setMem_bio("반갑습니다."); // 멤버 상태 디폴트
         System.out.println(member.getMem_mtel());
         System.out.println(member.getMem_address());
         System.out.println(member.getMem_birthday());
@@ -64,6 +65,7 @@ public class MemberService {
 		return memberMapper.selectIdCheck(map);
 	}
 	
+	// 회원 정보 수정
 	@Transactional
 	public MemberVO updateMemberInfo(int mem_idx, MemberVO member) {
 		
@@ -78,7 +80,6 @@ public class MemberService {
         memberEntity.setMem_address(member.getMem_address());
         
 		return memberEntity;
-		
 	}
 
 	public int ModifyMember(MemberVO member, String newPasswd, @RequestParam String newPasswd1) {
@@ -97,7 +98,18 @@ public class MemberService {
 		return cnt;
 	}
 
-
+// ------------------------소셜 프로필--------------------------------
+//	// 프로필 사진 나오기 (로그인 한 사람이 아니라 각 회원 mem_idx 에 해당하는 프로필이 떠야함)
+//	public void MemberProfile(int MemIdx) { // MemId = "/social/{mem_idx}" 여기의 {mem_idx} 요녀석 받아서 처리 할 거임
+//		// SELECT * FROM social_posts WHRER MemId = :MemId; 이렇게 써보자
+////		MemberVO memberEntity = memberMapper.findMemberByIdx(MemIdx);
+//	}
+	public MemberVO memberProfile(int mem_idx) { // MemId = "/social/{mem_idx}" 여기의 {mem_idx} 요녀석 받아서 처리 할 거임
+		
+		MemberVO memberEntity = memberMapper.findMemberByMemIdx(mem_idx);
+		
+		return memberEntity;
+	}
 
 
 

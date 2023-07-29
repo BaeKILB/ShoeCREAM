@@ -19,7 +19,7 @@ public class SignupVO { // 혹시 가입할때 여러개의 조건이 달리면 
     @NotBlank
     private String mem_name;
 
-    public MemberVO toMemberVO() {
+    public MemberVO toEntity() {
         MemberVO member = new MemberVO();
         member.setMem_id(mem_id);
         member.setMem_passwd(mem_passwd);

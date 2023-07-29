@@ -25,6 +25,14 @@ public class SocialVO {
 	private MultipartFile file3;
 	private MultipartFile file4;
 	
+//    public MemberVO toMemberVO() {
+//        MemberVO member = new MemberVO();
+//        member.setMem_id(mem_id);
+//        member.setMem_passwd(mem_passwd);
+//        member.setMem_email(mem_email);
+//        member.setMem_name(mem_name);
+//        return member;
+//    }
 	
 //	@JoinColumn(name="userId")
 //	@ManyToOne

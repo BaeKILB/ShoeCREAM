@@ -1,97 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.MemberMapper">
-   <insert id="insertMember">
+	<insert id="insertMember">
 		INSERT
-			INTO mem_info
-			VALUES (
-				null 
-				, #{mem_id} 
-				, #{mem_name}  
-				, #{mem_nickname}  
-				, #{mem_passwd} 
-				, CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})  
-				, #{mem_birthday}
-				, #{mem_interest}
-				, #{mem_email} 
-				, CONCAT(#{phone1}, '-', #{phone2}, '-', #{phone3}) -- 휴대폰 번호  
-				, #{role} 							-- 멤버 권한
-				, #{mem_account_auth} 				-- 계좌 인증 여부
-				, #{mem_status} 					-- 회원 상태
-				, 0 								-- 회원 등급
-				, 0 								-- 회원 회원 포인트
-				, 0 								-- 회원 충전포인트
-				, 0 								-- 회원 잔액
-				, now() 							-- 회원 가입일
-			)
+		INTO mem_info
+		VALUES (
+		null
+		, #{mem_id}
+		, #{mem_name}
+		, #{mem_nickname}
+		, #{mem_passwd}
+		,
+		CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})
+		, #{mem_birthday}
+		, #{mem_interest}
+		, #{mem_email}
+		, CONCAT(#{phone1}, '-', #{phone2}, '-', #{phone3}) -- 휴대폰 번호
+		, #{role} -- 멤버 권한
+		, #{mem_bio} -- 프로필 자기소개
+		, #{mem_account_auth} -- 계좌 인증 여부
+		, #{mem_status} -- 회원 상태
+		, 0 -- 회원 등급
+		, 0 -- 회원 회원 포인트
+		, 0 -- 회원 충전포인트
+		, 0 -- 회원 잔액
+		, now() -- 회원 가입일
+		)
 	</insert>
-	
+
 	<select id="selectIdCheck">
 		select
-			count(*)
+		count(*)
 		from
-			mem_info
-			<choose>
-				<when test="!mem_id.equals('')">
-					where mem_id = #{mem_id}					
-				</when>
-			</choose>
+		mem_info
+		<choose>
+			<when test="!mem_id.equals('')">
+				where mem_id = #{mem_id}
+			</when>
+		</choose>
 	</select>
-	
-<!-- 	아이디 중복 체크 - signup.js -->
-	 <select id="idCheck" parameterType="String" resultType="int">
-		SELECT COUNT(mem_id) FROM mem_info WHERE mem_id=#{mem_id}
+
+	<!-- 아이디 중복 체크 - signup.js -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT
+		COUNT(mem_id) FROM mem_info WHERE mem_id=#{mem_id}
 	</select>
-	
-	<!-- 	아이디 중복 체크 - 백엔드단 -->
-	<select id="isMemberIdDuplicated" resultType="int" parameterType="string">
-	    SELECT COUNT(*) FROM mem_info WHERE mem_id = #{mem_id}
-	</select>	
-	
-	<!-- 	폰 중복 체크 - 백엔드단 -->
-	<select id="isMemberPhoneDuplicated" resultType="int" parameterType="string">
-	    SELECT COUNT(*) FROM mem_info WHERE mem_mtel = #{mem_mtel}
-	</select>	
-	
-	<!-- 	폰 중복 체크 - 백엔드단 -->
-	<select id="isMemberEmailDuplicated" resultType="int" parameterType="string">
-	    SELECT COUNT(*) FROM mem_info WHERE mem_email = #{mem_email}
-	</select>	
-	
-<!-- 	아이디 중복 체크 - 프론트 단 -->
-	  <select id="findMemberById" resultType="com.pj2.shoecream.vo.MemberVO">
-	    SELECT * FROM mem_info WHERE mem_id = #{mem_id}
-	  </select>
-	
-	
-    <!-- 핸드폰 번호 중복 확인 - colsms -->
-  	<select id="phoneCheck" parameterType="String" resultType="int">
+
+	<!-- 아이디 중복 체크 - 백엔드단 -->
+	<select id="isMemberIdDuplicated" resultType="int"
+		parameterType="string">
+		SELECT COUNT(*) FROM mem_info WHERE mem_id = #{mem_id}
+	</select>
+
+	<!-- 폰 중복 체크 - 백엔드단 -->
+	<select id="isMemberPhoneDuplicated" resultType="int"
+		parameterType="string">
+		SELECT COUNT(*) FROM mem_info WHERE mem_mtel = #{mem_mtel}
+	</select>
+
+	<!-- 폰 중복 체크 - 백엔드단 -->
+	<select id="isMemberEmailDuplicated" resultType="int"
+		parameterType="string">
+		SELECT COUNT(*) FROM mem_info WHERE mem_email = #{mem_email}
+	</select>
+
+	<!-- 아이디 중복 체크 - 프론트 단 -->
+	<select id="findMemberById"
+		resultType="com.pj2.shoecream.vo.MemberVO">
+		SELECT * FROM mem_info WHERE mem_id = #{mem_id}
+	</select>
+
+
+	<!-- 핸드폰 번호 중복 확인 - colsms -->
+	<select id="phoneCheck" parameterType="String" resultType="int">
 		SELECT COUNT(mem_mtel) FROM mem_info WHERE mem_mtel=#{mem_mtel}
 	</select>
-	
-	
 
- 
-	
-	<!--  회원 정보 수정하기  -->
+
+
+
+
+	<!-- 회원 정보 수정하기 -->
 	<update id="updateMember">
-	    UPDATE mem_info
-	    SET mem_name=#{member.mem_name}
-	    <if test="newPasswd neq ''"> 
-	        , mem_passwd = #{newPasswd1} 
-	    </if>
-	    , mem_nickname=#{member.mem_nickname}
-	    , mem_birthday = CONCAT(#{member.mem_bir1}, '-', #{member.mem_bir2}, '-', #{member.mem_bir3}) 
-	    , mem_mtel = CONCAT(#{member.phone1}, '-', #{member.phone2}, '-', #{member.phone3}) 
-	    , mem_address = CONCAT(#{member.sample6_postcode},'/',#{member.sample6_address},'/',#{member.sample6_detailAddress},'/',#{member.sample6_extraAddress})
-	    WHERE mem_id = #{member.mem_id}
+		UPDATE mem_info
+		SET mem_name=#{member.mem_name}
+		<if test="newPasswd neq ''">
+			, mem_passwd = #{newPasswd1}
+		</if>
+		, mem_nickname=#{member.mem_nickname}
+		, mem_birthday = CONCAT(#{member.mem_bir1}, '-', #{member.mem_bir2},
+		'-', #{member.mem_bir3})
+		, mem_mtel = CONCAT(#{member.phone1}, '-', #{member.phone2}, '-',
+		#{member.phone3})
+		, mem_address =
+		CONCAT(#{member.sample6_postcode},'/',#{member.sample6_address},'/',#{member.sample6_detailAddress},'/',#{member.sample6_extraAddress})
+		WHERE mem_id = #{member.mem_id}
 	</update>
-	
+
 	<!-- 회원 정보 수정 후 바로 정보 교체 -->
-	<select id="selectMember" resultType="com.pj2.shoecream.vo.MemberVO">
-		SELECT * FROM mem_info 
+	<select id="selectMember"
+		resultType="com.pj2.shoecream.vo.MemberVO">
+		SELECT * FROM mem_info
 		WHERE mem_id = #{mem_id}
 	</select>
-	
+
+	<!-- 해당 회원 프로필 mem_idx 셀렉 -->
+	<select id="findMemberByMemIdx"
+		resultType="com.pj2.shoecream.vo.MemberVO">
+		SELECT * FROM mem_info WHERE mem_idx = #{mem_idx}
+	</select>
 
 </mapper>
