@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.service.AuctionService;
+import com.pj2.shoecream.service.BidService;
 import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.ProductImageVO;
@@ -42,6 +43,9 @@ public class AuctionController {
    private AuctionService service;
    @Autowired
    private ImageService isService;
+   
+   @Autowired
+   private BidService bidService;
    
    private static final Logger logger = LoggerFactory.getLogger(AuctionController.class);
    
@@ -61,32 +65,10 @@ public class AuctionController {
       
       Map<String, Object> auction = service.getAuctionItem(auction_idx);
       model.addAttribute("auction",auction);
-//      if(sId == null) {
-//         model.addAttribute("msg","로그인 후 이용해주세요!");
-//         model.addAttribute("target","auction_loginForm");
-//         return "success";
-//      }
-//      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//        int sId = mPrincipalDetails.getMember().getMem_idx();
-        
-        
-        System.out.println("★★★★★★★★"+sId);
        
        //상품idx만 파라미터에 붙이면 되지 않을까?
        //카테고리 붙인 이유가 뭐지? 카테고리만 눌렀을때 나오게 할려구여 아마도
        //<a href="auction_detail?auction_idx=${product.auction_idx}&param=${product.auction_Scategory}">
-       
-       //가장 기본적인 가져와야할 정보 불러오자
-       //product 테이블의 정보 받아오기 
-//       Map<String, String> product = service.product(product_idx);
-       
-       
-       //auction 테이블 정보 가져오기
-//       Map<String, String> auction = service.auction(product_idx);
-       
-       //이미지 테이블 정보 가져오기
-//       List<String> images = service.image(product_idx);
        
         return "auction/auction_detail";
     }
@@ -221,13 +203,9 @@ public class AuctionController {
       Map<String, Object> auction = service.getAuctionItem(auction_idx);
       model.addAttribute("auction",auction);
       
-      //입력받은값 db에 insert 해야함
-      //일단 idx 받아오기
-      
-      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-        int sId = mPrincipalDetails.getMember().getMem_idx();
-        
+      //bid_table에서도 자료 불러온다 bid_price
+      String bid_price = bidService.getBidPrice(auction_idx);
+      model.addAttribute("bid_price",bid_price);
         
         
         
@@ -254,9 +232,18 @@ public class AuctionController {
     
     
     @PostMapping("biddingPro")
-    public String insertBid(@RequestParam String auction_idx) {
-       
-       return "";
+    public String insertBid(
+    		@RequestParam Map<String, Object> map
+    		, Model model
+    		, HttpSession session) {
+    	
+    	int sId = 2;
+    	map.put("sId", sId);
+    	int insertCount = bidService.insertBidList(map);
+    	if(insertCount>0) {
+    	}
+    
+       return "auction/auction_main";
     }
     
 }

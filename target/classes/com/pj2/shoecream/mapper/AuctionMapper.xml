@@ -88,4 +88,29 @@
 	   where
 	       auction_idx = #{auctionx_idx}
 	</select>
+	
+		<select id="selectBidPrice" resultType="String">
+		SELECT 
+		  COALESCE(MAX(bid_list.bid_price), auction_item.auc_start_price) AS result_price
+		FROM 
+		  auction_item
+		LEFT JOIN 
+		  bid_list ON auction_item.auction_idx = bid_list.auction_idx
+		WHERE 
+		  auction_item.auction_idx = #{auctionx_idx}
+	</select>
+	
+	<insert id="insertBidList">
+		insert into
+			bid_list
+		values(
+			#{auction_idx}
+			, #{sId}
+			, #{bid_price}
+			, now()
+			, #{deposit}
+			, '입찰'
+		)
+	</insert>
+	
 </mapper>
