@@ -1,5 +1,7 @@
 let pageNum = 1;
 let maxPage = 1;
+let listCount = '';
+let pageListLimit = '';
 let orderMethod = "";
 
 $(function() { // onload
@@ -50,8 +52,13 @@ function getList() {
 const doneResult = data => {
     let pageInfo = data.pop();
     let path = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
-    maxPage = pageInfo.maxPage
+    maxPage = pageInfo.maxPage;
+    listCount = pageInfo.listCount;
+    pageListLimit = pageInfo.pageListLimit;
     
+    console.log(pageInfo)
+    
+	let index = 0;
     for (let item of data) {
         let result =
             "<a href='AuctionDetail?auction_idx="+ item.auction_idx +"'>"
@@ -66,18 +73,67 @@ const doneResult = data => {
                             + item.auc_start_price
                         +"</div>"
                         +"<div>"
-                            + "등록일"
-                            + dateFormat(item.auction_date)
+                        	+"<div id='data"+index+"'>"
+                        		+"<input type=hidden name='auction_idx' value='"+item.auction_idx+"'>"
+                        		+"<input type=hidden name='auc_close_date' value='"+item.auc_close_date+"'>"
+                        	+"</div>"
+	                        +"<div id='remainingTime"+item.auction_idx+"'>"
+	                        +"</div>"
                         +"</div>"
                     +"</div>"
                 +"</a>";        
         $("#itemList").append(result);
+        index++;
     }
 };
 
 const failResult = () => {
     console.log("fail");
 };
+
+// 시간카운트
+const updateTimer = (idx, data) => {
+	const future = Date.parse(data);
+	const now = new Date();
+	const diff = future - now;
+	
+	const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+	const hours = Math.floor(diff / (1000 * 60 * 60));
+	const mins = Math.floor(diff / (1000 * 60));
+	const secs = Math.floor(diff / 1000);
+	
+	const d = days;
+	const h = hours - days * 24;
+	const m = mins - hours * 60;
+	const s = secs - mins * 60;
+	
+	let result =  
+	'<span>' + d + '<span>일</span>' +
+	'<span>' + h + '<span>시</span>' +
+	'<span>' + m + '<span>분</span>' +
+	'<span>' + s + '<span>초</span>';
+	
+	$("#remainingTime"+idx).html(result)
+}
+
+setInterval(() => {
+	if (pageNum < maxPage) {
+		let length = pageNum*pageListLimit;
+		for(let i=0; i<length; i++) {
+			let idx = $('div[id^=data]').eq(i).children('input[name^=auction]').val();
+			let date = $('div[id^=data]').eq(i).children('input[name^=auc_close]').val();
+			updateTimer(idx,date);
+		}
+	} else if(pageNum == maxPage) {
+		let length = listCount;
+		for(let i=0; i<=length; i++) {
+			let idx = $('div[id^=data]').eq(i).children('input[name^=auction]').val();
+			let date = $('div[id^=data]').eq(i).children('input[name^=auc_close]').val();
+			updateTimer(idx,date);
+		}
+	}
+	updateTimer()
+}, 1000);
 
 // 시간
 const dateFormat = (data) => {
