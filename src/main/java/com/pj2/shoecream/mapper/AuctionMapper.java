@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.pj2.shoecream.vo.AuctionVO;
 
@@ -17,10 +16,6 @@ public interface AuctionMapper {
 
 	Map<String, Object> selectAuction(String auction_idx);
   
-	//입찰금액 받아옴
-	String selectBidPrice(String auction_idx);
-
-	//입찰내역 넣기
-	int insertBidList(Map<String, Object> map);
+	int updateItemReadCount(String auction_idx);
 
 }

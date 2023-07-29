@@ -66,8 +66,7 @@
 	   where
 	       auction_idx = #{auctionx_idx}
 	</select>
-	
-		<select id="selectBidPrice" resultType="String">
+	<select id="selectBidPrice" resultType="String">
 		SELECT 
 		  COALESCE(MAX(bid_list.bid_price), auction_item.auc_start_price) AS result_price
 		FROM 
@@ -77,7 +76,6 @@
 		WHERE 
 		  auction_item.auction_idx = #{auctionx_idx}
 	</select>
-	
 	<insert id="insertBidList">
 		insert into
 			bid_list
@@ -90,5 +88,13 @@
 			, '입찰'
 		)
 	</insert>
+	<update id="updateItemReadCount">
+	   update
+	       auction_item
+	   set
+	       auction_readcount = auction_readcount + 1
+	   where
+	       auction_idx = #{auction_idx }
+	</update>
 	
 </mapper>

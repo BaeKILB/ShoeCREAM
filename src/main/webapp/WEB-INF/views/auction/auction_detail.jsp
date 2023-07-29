@@ -97,6 +97,8 @@ to {
    <h1>경매</h1>
    <input type="hidden" value="${auction.auction_idx }" id="auction_idx">
    ${auction }
+   <hr>
+   ${bid }
    <!-- 가지고 올 정보 
    from 공통테이블
    1. 카테고리 대 중 소 
@@ -118,65 +120,73 @@ to {
             <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" style="width: 100%">
 
    <section>
-<!--       <div class="slideshow-container"> -->
-<!--          <!-- Full-width images with number and caption text --> -->
-<!--          <div class="mySlides fade"> -->
-<%--             <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }" style="width: 100%"> --%>
-<!--          </div> -->
-<!--          <div class="mySlides fade"> -->
-<%--             <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }" style="width: 100%"> --%>
-<!--          </div> -->
-<!--          <div class="mySlides fade"> -->
-<%--             <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }" style="width: 100%"> --%>
-<!--          </div> -->
-<!--          <div class="mySlides fade"> -->
-<%--             <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" style="width: 100%"> --%>
-<!--          </div> -->
-<!--          <!-- Next and previous buttons --> -->
-<!--          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>  -->
-<!--          <a class="next" onclick="plusSlides(1)">&#10095;</a> -->
-<!--       </div> -->
-<!--       <!-- The dots/circles --> -->
-<!--       <div style="text-align: center"> -->
-<!--          <span class="dot" onclick="currentSlide(1)"></span>  -->
-<!--          <span class="dot" onclick="currentSlide(2)"></span>  -->
-<!--          <span class="dot" onclick="currentSlide(3)"></span>  -->
-<!--          <span class="dot" onclick="currentSlide(4)"></span> -->
-<!--       </div> -->
-      <div>
-          <span id="">${auction.lc_name }</span>
-          <span> > </span>
-          <span id="">${auction.mc_name }</span>
-        </div>
-      <div>
-         <span>${auction.auction_title }</span> 
-         <label>
-                <img alt="하트 아이콘(찜)" src="#">
-                <span>?찜 수? ajax</span>
-         </label>
-      </div>
-      <div>
-            <span>
-              <span>현재가격 : </span>
-              <span>50,000원-el - max로 가져오기</span>
-          </span>
-         <span>
-              <span>시작가격 : </span>
-              <span>${auction.auc_start_price }</span>
-         </span>
-         <div>
-              <span>즉시구매가 : </span>
-              <span>${auction.auc_buy_instantly }</span>
+      <div class="slideshow-container">
+         <!-- Full-width images with number and caption text -->
+         <div class="mySlides fade">
+            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }" style="width: 100%">
          </div>
-              
+         <div class="mySlides fade">
+            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }" style="width: 100%">
+         </div>
+         <div class="mySlides fade">
+            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }" style="width: 100%">
+         </div>
+         <div class="mySlides fade">
+            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" style="width: 100%">
+         </div>
+         <!-- Next and previous buttons -->
+         <a class="prev" onclick="plusSlides(-1)">&#10094;</a> 
+         <a class="next" onclick="plusSlides(1)">&#10095;</a>
       </div>
-      <hr>
-      <div>
-         <span>입찰수 n회 (총 판매수량 : n개) el</span> <!-- 입찰내역 count -->
-         <span id="">경매기록</span> <!-- const auctionHistory() -->
+      <!-- The dots/circles -->
+      <div style="text-align: center">
+         <span class="dot" onclick="currentSlide(1)"></span> 
+         <span class="dot" onclick="currentSlide(2)"></span> 
+         <span class="dot" onclick="currentSlide(3)"></span> 
+         <span class="dot" onclick="currentSlide(4)"></span>
       </div>
-      <div>${auction.auc_close_date } </div> <!-- const closeTimeCheck() -->
-      <div>
+        <div>
+	        <span id="">${auction.lc_name }</span>
+	        <span> > </span>
+	        <span id="">${auction.mc_name }</span>
+        </div>
+        <div>
+            <span>${auction.auction_title }</span> 
+			<label>
+			       <img alt="하트 아이콘(찜)" src="#">
+			       <span>?찜 수? ajax</span>
+			</label>
+        </div>
+	    <div>
+	        <span>
+	              <span>현재가격 : </span>
+	              <span>
+	                   <c:choose>
+	                       <c:when test="${bid eq null }">
+	                           ${auction.auc_start_price } 원
+	                       </c:when>
+	                       <c:otherwise>
+	                           ${bid.bid_price } 원
+	                       </c:otherwise>
+	                   </c:choose>
+	              </span>
+	        </span>
+	        <span>
+	              <span>시작가격 : </span>
+	              <span>${auction.auc_start_price }</span>
+	        </span>
+	        <div>
+	              <span>즉시구매가 : </span>
+	              <span>${auction.auc_buy_instantly }</span>
+	        </div>
+	    </div>
+        <hr>
+        <div>
+            <span>입찰수 n회 (총 판매수량 : n개) el</span> <!-- 입찰내역 count -->
+            <span id="">경매기록</span> <!-- const auctionHistory() -->
+        </div>
+        <div>${auction.auc_close_date } </div> <!-- const closeTimeCheck() -->
+        <div>
 <%--           <c:choose> --%>
 <%--             <c:when test="${auction.mem_id eq sessionScope.sId }"> --%>
 <!--                <input type="button" value="수정" -->

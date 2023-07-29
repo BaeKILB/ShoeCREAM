@@ -43,7 +43,6 @@ public class AuctionController {
    private AuctionService service;
    @Autowired
    private ImageService isService;
-   
    @Autowired
    private BidService bidService;
    
@@ -61,20 +60,29 @@ public class AuctionController {
         , Model model
         , @RequestParam String auction_idx) { //경매 제품상세
        //로그인 해야 이용 가능한걸로.. 버튼마다 session 체크 귀찮으니까..;
-      String sId = (String)session.getAttribute("sId");
-      
-      Map<String, Object> auction = service.getAuctionItem(auction_idx);
-      model.addAttribute("auction",auction);
+	// 회원번호
+//	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//        int sId = mPrincipalDetails.getMember().getMem_idx();
+	
+	// 조회수 카운트
+	String readAuction = (String)session.getAttribute("readAuction");
+        if ( readAuction == null || !readAuction.equals(auction_idx)) {
+            int updateCount = service.updateReadCount(auction_idx);
+            if(updateCount > 0) session.setAttribute("readAuction",auction_idx);
+        }
+        
+	Map<String, Object> auction = service.getAuction(auction_idx);
+	model.addAttribute("auction",auction);
        
        //상품idx만 파라미터에 붙이면 되지 않을까?
        //카테고리 붙인 이유가 뭐지? 카테고리만 눌렀을때 나오게 할려구여 아마도
        //<a href="auction_detail?auction_idx=${product.auction_idx}&param=${product.auction_Scategory}">
       
-      //현재가격이랑 
-      //입찰수
-      Map<String, Object> bidding = BidService.getBidDetail(auction_idx);
-      model.addAttribute("bidding",bidding);
-      
+       // 현재가격이랑
+       //입찰수
+	Map<String, Object> bid = bidService.getBid(auction_idx);
+	model.addAttribute("bid",bid);
         return "auction/auction_detail";
     }
 
@@ -88,16 +96,21 @@ public class AuctionController {
           AuctionVO auction
           , ProductImageVO image
           , HttpSession session) {
-       session.setAttribute("sId", "1"); // 가상의 회원번호
-       auction.setMem_idx(Integer.parseInt((String)session.getAttribute("sId"))); // 회원번호 추가
-       String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
-       auction.setAuction_idx(productId); // 상품번호 추가
-        image.setProduct_idx(productId);
-        
-       String uploadDir = "/resources/upload/auction";
-        String saveDir = session.getServletContext().getRealPath(uploadDir);
-        String subDir = "";
-        try {
+
+	// sId 받아오기
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        int sId = mPrincipalDetails.getMember().getMem_idx();
+
+		auction.setMem_idx(sId); // 회원번호 추가
+		String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
+		auction.setAuction_idx(productId); // 상품번호 추가
+		image.setProduct_idx(productId);
+
+		String uploadDir = "/resources/upload/auction";
+		String saveDir = session.getServletContext().getRealPath(uploadDir);
+		String subDir = "";
+		try {
            Date date = new Date();
            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
            subDir = sdf.format(date);
@@ -124,33 +137,33 @@ public class AuctionController {
         image.setImage4_name("");
         
         String imageName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
-          String imageName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
-          String imageName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
-          String imageName4 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
-          
-          if(!mFile1.getOriginalFilename().equals("")) image.setImage1_name(imageName1);
-          if(!mFile2.getOriginalFilename().equals("")) image.setImage2_name(imageName2);
-          if(!mFile3.getOriginalFilename().equals("")) image.setImage3_name(imageName3);
-          if(!mFile4.getOriginalFilename().equals("")) image.setImage4_name(imageName4);
-            
-          System.out.println(auction.toString());
-          
-          int insertCount = isService.registProductImage(image);
-       
-       if (insertCount>0) {
-          try {
-            if(!mFile1.getOriginalFilename().equals("")) mFile1.transferTo(new File(saveDir, imageName1));
-            if(!mFile2.getOriginalFilename().equals("")) mFile2.transferTo(new File(saveDir, imageName2));
-            if(!mFile3.getOriginalFilename().equals("")) mFile3.transferTo(new File(saveDir, imageName3));
-            if(!mFile3.getOriginalFilename().equals("")) mFile4.transferTo(new File(saveDir, imageName4));
-         } catch (IllegalStateException e) {
-            e.printStackTrace();
-         } catch (IOException e) {
-            e.printStackTrace();
-         }
-          service.registAuctionItem(auction);
-       }
-       return "redirect:/Auction";
+		String imageName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
+		String imageName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+		String imageName4 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+	      
+		if(!mFile1.getOriginalFilename().equals("")) image.setImage1_name(imageName1);
+		if(!mFile2.getOriginalFilename().equals("")) image.setImage2_name(imageName2);
+		if(!mFile3.getOriginalFilename().equals("")) image.setImage3_name(imageName3);
+		if(!mFile4.getOriginalFilename().equals("")) image.setImage4_name(imageName4);
+	        
+		System.out.println(auction.toString());
+	      
+		int insertCount = isService.registProductImage(image);
+	       
+		if (insertCount > 0) {
+		    try {
+			if (!mFile1.getOriginalFilename().equals("")) mFile1.transferTo(new File(saveDir, imageName1));
+			if (!mFile2.getOriginalFilename().equals("")) mFile2.transferTo(new File(saveDir, imageName2));
+			if (!mFile3.getOriginalFilename().equals("")) mFile3.transferTo(new File(saveDir, imageName3));
+			if (!mFile3.getOriginalFilename().equals("")) mFile4.transferTo(new File(saveDir, imageName4));
+		    } catch (IllegalStateException e) {
+			e.printStackTrace();
+		    } catch (IOException e) {
+			e.printStackTrace();
+		    }
+		    service.registAuctionItem(auction);
+		}
+		return "redirect:/Auction";
     }
     
     @ResponseBody
@@ -200,22 +213,18 @@ public class AuctionController {
     
     //입찰하기
     @GetMapping("biddingPopup")
-    public String biddingPopup(HttpSession session
-                         , Model model
-                         , @RequestParam String auction_idx) {
-      
+	public String biddingPopup(
+			@RequestParam String auction_idx
+			, Model model
+			, HttpSession session) {
+
        //db에서 자료 불러온다
-      Map<String, Object> auction = service.getAuctionItem(auction_idx);
-      model.addAttribute("auction",auction);
+      Map<String, Object> auction = service.getAuction(auction_idx);
+      model.addAttribute("auction", auction);
       
       //bid_table에서도 자료 불러온다 bid_price
-      String bid_price = bidService.getBidPrice(auction_idx);
-      model.addAttribute("bid_price",bid_price);
-        
-        
-        
-       
-       
+      Map<String, Object> bid = bidService.getBid(auction_idx);
+      model.addAttribute("bid", bid);
        return "auction/bidding_popup";
     }
     
@@ -228,7 +237,7 @@ public class AuctionController {
        
        String sId = (String)session.getAttribute("sId");
       
-      Map<String, Object> auction = service.getAuctionItem(auction_idx);
+      Map<String, Object> auction = service.getAuction(auction_idx);
       model.addAttribute("auction",auction);
       
       
@@ -241,9 +250,6 @@ public class AuctionController {
     		@RequestParam Map<String, Object> map
     		, Model model
     		, HttpSession session) {
-    	
-//    	int sId = 2;
-//    	map.put("sId", sId);
     	
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();

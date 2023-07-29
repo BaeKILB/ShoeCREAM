@@ -60,12 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
 //     // 이 부분은 입찰이 성공했을 때 실행되어야 할 내용을 넣어주시면 됩니다.
 //     alert("입찰이 완료되었습니다!");
 //   }
-  
-  
-
-  
-  
-
 </script>
 </head>
 <body>
