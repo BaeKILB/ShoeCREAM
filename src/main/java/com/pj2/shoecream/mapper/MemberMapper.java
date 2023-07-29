@@ -39,6 +39,10 @@ public interface MemberMapper {
 
 	//폰번호 중복확인
 	int phoneCheck(String phone);
+	
+	
+	// 소셜 프로필 가져올 memIdx
+	MemberVO findMemberByMemIdx(int mem_idx);
 
 	
 

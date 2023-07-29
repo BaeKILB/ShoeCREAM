@@ -73,12 +73,14 @@ public class MemberVO {
 	@NotBlank
 	private String phone3;//ㅇ
 //	-------------------------------------------------
-	private String role; // 권한
-	private String mem_account_auth;
-	private String mem_status;
-	private String mem_rank;
+	private String mem_bio; // 회원 프로필 자기소개 
+	private String role; // 시큐리티 권한
+	private String mem_account_auth; // 계좌 인증 여부
+	private String mem_status; // 회원 상태 ex) 1 활동 2 탈퇴 
+	private String mem_rank; // 회원 등급
 	private int mem_point;
 	private int charge_point;
 	private int mem_balance;
+	
 	private Date mem_sign_date; //now()
 }

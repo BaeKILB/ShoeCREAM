@@ -14,4 +14,12 @@
 		)
 	</insert>
 
+
+	<select id="findPostImageByMemIdx" resultType="String">
+	SELECT sp.posts_image1
+	FROM mem_info mi
+	JOIN social_posts sp ON mi.mem_idx = sp.mem_idx
+	WHERE mi.mem_idx = #{mem_idx}
+	</select>
+	
 </mapper>

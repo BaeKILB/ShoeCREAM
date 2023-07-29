@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -29,6 +30,7 @@ public class SocialImageService {
 	
 //	private String uploadDir = "C:/Users/kikir/Documents/itwill/workspace_spring5/ShoeCREAM/src/main/webapp/resources/upload/";
 	
+	// 포스트 등록
 //	public void ImageUpload(SocialVO socialVO, PrincipalDetails mPrincipalDetails, HttpSession session) {
 		public void ImageUpload(SocialVO socialVO, PrincipalDetails mPrincipalDetails, HttpSession session, Model model) {
 		
@@ -67,17 +69,11 @@ public class SocialImageService {
 		String subDir = ""; // 서브디렉토리(날짜 구분)
 		
 		try {
-			// 1. Date 객체 생성(기본 생성자 호출하여 시스템 날짜 정보 활용)
 			Date date = new Date(); // Mon Jun 19 11:26:52 KST 2023
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			// 3. 기존 업로드 경로에 날짜 경로 결합하여 저장
 			subDir = sdf.format(date);
 			saveDir += "/" + subDir;
-			// --------------------------------------------------------------
 			Path path = Paths.get(saveDir);
-			
-			// Files 클래스의 createDirectories() 메서드를 호출하여
-			// Path 객체가 관리하는 경로 생성(존재하지 않으면 거쳐가는 경로들 중 없는 경로 모두 생성)
 			Files.createDirectories(path);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -104,15 +100,12 @@ public class SocialImageService {
 		if(!mFile1.getOriginalFilename().equals("")) {
 			socialVO.setPosts_image1(subDir + "/" + fileName1);
 		}
-//		
 //		if(!mFile2.getOriginalFilename().equals("")) {
 //			socialVO.setPosts_image2(subDir + "/" + fileName2);
 //		}
-//		
 //		if(!mFile3.getOriginalFilename().equals("")) {
 //			socialVO.setPosts_image3(subDir + "/" + fileName3);
 //		}
-//		
 //		if(!mFile4.getOriginalFilename().equals("")) {
 //			socialVO.setPosts_image4(subDir + "/" + fileName4);
 //		}
@@ -126,11 +119,9 @@ public class SocialImageService {
 				if(!mFile1.getOriginalFilename().equals("")) {
 					mFile1.transferTo(new File(saveDir, fileName1));
 				}
-				
 //				if(!mFile2.getOriginalFilename().equals("")) {
 //					mFile2.transferTo(new File(saveDir, fileName2));
 //				}
-//				
 //				if(!mFile3.getOriginalFilename().equals("")) {
 //					mFile3.transferTo(new File(saveDir, fileName3));
 //				}
@@ -145,6 +136,13 @@ public class SocialImageService {
 		
 		System.out.println("socialVO 에 뭐가 들었니 ? " + socialVO);
 	}
+
+
+		
+		// 
+		public List<String> findPostImagesByMemIdx(int mem_idx) {
+		    return socialImageMapper.findPostImageByMemIdx(mem_idx);
+		}
 	
 }
 

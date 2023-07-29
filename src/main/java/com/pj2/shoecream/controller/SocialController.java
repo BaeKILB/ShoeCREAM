@@ -1,5 +1,7 @@
 package com.pj2.shoecream.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.CustomValidationException;
+import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.service.SocialImageService;
+import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.SocialVO;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +29,9 @@ public class SocialController {
 	
 	@Autowired
 	private SocialImageService SocialImageService;
+	
+	@Autowired
+	private MemberService memberService;
 //  =========================social============================
 	// 소셜 스토리 페이지
   @GetMapping("/social")
@@ -37,6 +44,11 @@ public class SocialController {
 	public String profile(@PathVariable int mem_idx, Model model) {
 //		User userEntity = userService.회원프로필(id);
 //		model.addAttribute("user", userEntity);
+		MemberVO memberEntity = memberService.memberProfile(mem_idx);
+		model.addAttribute("member", memberEntity);
+		List<String> posts_image1 = SocialImageService.findPostImagesByMemIdx(mem_idx);
+		model.addAttribute("posts_image1", posts_image1);
+
 		return "member/social/profile";
 	}
   
