@@ -51,11 +51,6 @@ const doneResult = data => {
     let pageInfo = data.pop();
     let path = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
     maxPage = pageInfo.maxPage
-    function getFormatDate(date) {
-        let targetDate = /(\d\d)(\d\d)-(\d\d)-(\d\d)\s(\d\d):(\d\d):(\d\d).(\d)/g;
-        let formatDate = "$2-$3-$4 $5:$6";
-        return date.replace(targetDate, formatDate);
-    }
     
     for (let item of data) {
         let result =
@@ -72,7 +67,7 @@ const doneResult = data => {
                         +"</div>"
                         +"<div>"
                             + "등록일"
-                            + getFormatDate(item.auction_date)
+                            + dateFormat(item.auction_date)
                         +"</div>"
                     +"</div>"
                 +"</a>";        
@@ -83,3 +78,21 @@ const doneResult = data => {
 const failResult = () => {
     console.log("fail");
 };
+
+// 시간
+const dateFormat = (data) => {
+	let date = new Date(data)
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
+
+    month = month >= 10 ? month : '0' + month;
+    day = day >= 10 ? day : '0' + day;
+    hour = hour >= 10 ? hour : '0' + hour;
+    minute = minute >= 10 ? minute : '0' + minute;
+//    second = second >= 10 ? second : '0' + second;
+
+    return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute;
+}

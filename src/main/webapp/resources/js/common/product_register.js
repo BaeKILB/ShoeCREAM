@@ -195,23 +195,7 @@ const selectSize = (size) => {
 	inputBox.val(size);
 };
 
-// 시간
-const dateFormat = (date) => {
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    let second = date.getSeconds();
-
-    month = month >= 10 ? month : '0' + month;
-    day = day >= 10 ? day : '0' + day;
-    hour = hour >= 10 ? hour : '0' + hour;
-    minute = minute >= 10 ? minute : '0' + minute;
-    second = second >= 10 ? second : '0' + second;
-
-    return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute;
-}
-
+// 경매시간
 $(function() {
     $.datetimepicker.setLocale('kr');
     let today = new Date();
@@ -284,9 +268,14 @@ $(function() {
 	    onSelectDate: function(ct) {
 			let ctdTemp = new Date(ct);
 			let stdTemp = new Date(startDate.val());
-			let sttTemp = new Date(startTime.val());
+			let temp = new Date(startDate.val());
+			
+			let sttTemp = startTime.val().split(":");
+			temp.setHours(sttTemp[0]);
+			temp.setMinutes(sttTemp[1]);
+			
 			if (ctdTemp.getDate() == stdTemp.getDate()) {
-				endTime.datetimepicker('setOptions', {minTime: sttTemp.getTime()+(1000*60*60*1)});
+				endTime.datetimepicker('setOptions', {minTime: temp.getTime()+(1000*60*60*1), defaultTime: temp.getTime()+(1000*60*60*1)});
 			} else {
 				endTime.datetimepicker('setOptions', {minTime: '00:00', defaultTime: '00:00'});
 			}
