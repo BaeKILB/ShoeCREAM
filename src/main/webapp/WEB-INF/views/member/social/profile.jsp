@@ -63,7 +63,8 @@
 				<!--아이템들-->
 				<c:forEach var="imageName" items="${posts_image1}">
 				    <div class="img-box">
-				        <a href=""> <img src="${pageContext.request.contextPath }/upload/social/${imageName}" />
+<%-- 				        <a href=""> <img src="${pageContext.request.contextPath }/upload/social/${imageName}" /> --%>
+				        <a href=""> <img src="${pageContext.request.contextPath }/resources/upload/social/${imageName}" />
 				        </a>
 				        <div class="comment">
 				            <a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
