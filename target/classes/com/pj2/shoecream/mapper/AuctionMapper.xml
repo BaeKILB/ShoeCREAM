@@ -27,29 +27,7 @@
 	</insert>
 	<select id="selectAuctionList" resultType="map">
 		select
-		    auction_idx
-		    , mem_idx
-		    , auction_title
-		    , auction_info
-		    , auction_payment
-		    , lc_code
-		    , mc_code
-		    , auction_date
-		    , auction_readcount
-		    , auction_brand
-		    , auction_size
-		    , auction_selector
-		    , auc_start_price
-		    , auc_buy_instantly
-		    , auc_bid_unit
-		    , auc_regist_date
-		    , auc_close_date
-		    , auc_state
-		    , image1
-		    , image2
-		    , image3
-		    , image4
-		    , image_path
+		    *
 		from
 			auction_item ai join product_image pi
 			on ai.auction_idx = pi.product_idx
