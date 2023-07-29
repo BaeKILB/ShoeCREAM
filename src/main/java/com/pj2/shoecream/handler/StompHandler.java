@@ -12,6 +12,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class StompHandler implements WebSocketMessageBrokerConfigurer{
 
+	
 	//메시지 브로커 설정
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -33,6 +34,7 @@ public class StompHandler implements WebSocketMessageBrokerConfigurer{
 		// 나중에 페이지 script 부분에서 SockJS 객체 생성시 사용 
 		registry.addEndpoint("/stomp_chat")
 		.withSockJS();
+		registry.addEndpoint("/stomp_chat");
 	}
 
 	

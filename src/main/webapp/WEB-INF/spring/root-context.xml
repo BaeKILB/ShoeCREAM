@@ -17,7 +17,7 @@
 <!-- 		<property name="password" value="1234"></property> -->
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://localhost:3306/shoecream"></property>
-<!-- 		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://15.165.158.255:3306/shoecream"></property> -->
+<!-- 		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://dbxbqm7.iptime.org:3306/shoecream"></property> -->
 		<property name="username" value="root"></property> 
 		<property name="password" value="1234"></property>
 	</bean> 

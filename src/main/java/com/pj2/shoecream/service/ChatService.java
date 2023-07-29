@@ -41,6 +41,12 @@ public class ChatService {
 			return -1;
 		return mem.getMem_idx();
 	}
+	public String getSid(int idx) {
+		MemberVO mem = memMapper.findMemberByMemIdx(idx);
+		if(mem == null)
+			return "";
+		return mem.getMem_id();
+	}
 	
 	// 내가 있는 채팅방 검색
 	public List<Map<String,Object>> getChatRoomList(int mem_idx , int chat_room_area){
@@ -61,8 +67,8 @@ public class ChatService {
 	}
 	
 	// 현재 자신이 채팅방 인원인지확인
-	public boolean isChatMember(String sId , int chat_room_idx) {
-		MemberVO mem = memMapper.findMemberById(sId);
+	public boolean isChatMember(int idx , int chat_room_idx) {
+		MemberVO mem = memMapper.findMemberByMemIdx(idx);
 		if(mem == null) {
 			return false;
 		}

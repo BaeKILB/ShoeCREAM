@@ -58,13 +58,16 @@ public class StompChatController {
 	@MessageMapping("message")
 	public void message(@RequestParam Map<String,String> msg) {
 		System.out.println("test : " + msg);
-		if(!service.isChatMember(msg.get("sId"),Integer.parseInt(msg.get("chat_room_idx")))
+		int idx = service.getSIdIdx(msg.get("sId"));
+		if(!service.isChatMember(idx,Integer.parseInt(msg.get("chat_room_idx")))
 				&& !msg.get("sId").equals("admin")) {
 			msg.put("chat_msg_content","메시지 전송 권한이 없습니다!");
 			JSONObject jo = jsonHandler.map2Json(msg);
 			template.convertAndSend("/topic/room" + msg.get("chat_room_idx"),jo.toString());	
 		}	
-		else if(service.addChat(msg) < 0) {
+		
+		msg.put("chat_msg_writer", Integer.toString(idx));
+		if(service.addChat(msg) < 0) {
 			msg.put("chat_msg_content","메시지 저장에 실패하였습니다!");
 			JSONObject jo = jsonHandler.map2Json(msg);
 			template.convertAndSend("/topic/room" + msg.get("chat_room_idx"),jo.toString());

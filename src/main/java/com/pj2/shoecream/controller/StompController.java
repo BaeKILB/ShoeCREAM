@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.service.JungProductService;
 import com.pj2.shoecream.vo.ChatRoomVO;
@@ -69,36 +73,65 @@ public class StompController {
 	}
 	
     //채팅방 목록 조회후 채팅 페이지로 이동
-    @GetMapping("rooms")
-    public ModelAndView rooms(@RequestParam Map<String,Object> map, HttpServletRequest request){
-    	HttpSession session = request.getSession();
+    @GetMapping("chatRooms")
+    public ModelAndView chatRooms(@RequestParam Map<String,Object> map, 
+    		@AuthenticationPrincipal PrincipalDetails principalDetails, HttpSession session){    	
     	ModelAndView mv = null;
-    	String sId = (String)session.getAttribute("sId");
-    	// sid 와 현재 채팅 구역(중고인지 경매인지) 값 있는지 체크
-    	if(sId == null || sId.equals("") 
-    			|| map.get("chat_area") == null || map.get("chat_area").equals("")) {    		
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        int idx = -1;
+        PrincipalDetails mPrincipalDetails = null;
+        try {        	
+        	mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        	idx = mPrincipalDetails.getMember().getMem_idx(); // 세션에 저장된 mem_idx
+        }
+        catch(Exception e){
+        
+        }
+		
+
+    	// idx 값 있는지 체크
+    	if(idx < 0) {    		
     			
-    		System.out.println(sId + " / " + map.get("chat_area"));
     		mv = new ModelAndView("inc/fail_forward");
     		mv.addObject("msg","로그인이 필요 합니다!");
     		mv.addObject("targetURL","login");
     		return mv;
     	}
+    	if(map.get("chat_area") == null || map.get("chat_area").equals("")) {    		
+    		mv = new ModelAndView("inc/fail_back");
+    		mv.addObject("msg","잘못된 url 입니다");
+    		return mv;
+    	}
         mv = new ModelAndView("/inc/chat/rooms");
         try {        	
-        	// 현재 접속 id sid 불러오기(페이지 생성시에만 사용)
-        	int idx = chatService.getSIdIdx(sId);
         	
         	// 이 chat list 는 상품과 통합 되어서 반환됨
-        	List<Map<String,Object>> chatList 
+        	List<Map<String,Object>> chatRoomList 
         	= chatService.getChatRoomList(idx,Integer.parseInt((String)map.get("chat_area")));
         
-        	mv.addObject("list",chatList);
+        	mv.addObject("list",chatRoomList);
         	mv.addObject("myIdx", idx);
         }
         catch(NullPointerException e){
         	e.printStackTrace();
         	mv.addObject("list",null);
+        }
+        
+        if(map.get("chat_room_idx") != null) {
+        	String chat_room_idx = (String)map.get("chat_room_idx");
+    		if(!chat_room_idx.equals("-1") && 
+    				chatService.isChatMember(idx, 
+    				Integer.parseInt(chat_room_idx))) {
+    			mv.addObject("room", chatService.getChatRoom(Integer.parseInt(chat_room_idx)));
+    			mv.addObject("chatList", chatService.getChatList(Integer.parseInt(chat_room_idx)));
+    			mv.addObject("sId", chatService.getSid(idx));
+    			
+    		}
+    		else {
+    			mv.addObject("msg","채팅방 입장에 실패하였습니다!");
+    			return new ModelAndView("/etc/fail_back");
+    		}
         }
 
         return mv;
@@ -124,9 +157,15 @@ public class StompController {
 	}
 	
 	@GetMapping("room")
-	public String getRoom(@RequestParam(defaultValue = "-1") String chat_room_idx,HttpSession session , Model model ){
+	public String getRoom(@RequestParam(defaultValue = "-1") String chat_room_idx,
+			 @AuthenticationPrincipal PrincipalDetails principalDetails,
+			HttpSession session , Model model ){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int idx = mPrincipalDetails.getMember().getMem_idx();
+		
 		if(!chat_room_idx.equals("-1") && 
-				chatService.isChatMember((String)session.getAttribute("sId"), 
+				chatService.isChatMember(idx, 
 				Integer.parseInt(chat_room_idx) )) {
 			model.addAttribute("room", chatService.getChatRoom(Integer.parseInt(chat_room_idx)));
 			model.addAttribute("chatList", chatService.getChatList(Integer.parseInt(chat_room_idx)));
