@@ -56,10 +56,7 @@ const doneResult = data => {
     listCount = pageInfo.listCount;
     pageListLimit = pageInfo.pageListLimit;
     
-    console.log(pageInfo)
-    
 	let index = 0;
-	console.log(data[0]);
     for (let item of data) {
         let result =
             "<a href='AuctionDetail?auction_idx="+ item.auction_idx +"'>"
