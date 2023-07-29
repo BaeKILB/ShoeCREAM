@@ -62,12 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //   }
   
   
-//   function test(){
-// 		 alert("입찰완");
-// 		 window.close();
 
-// 	 }
-  
   
   
 
@@ -100,7 +95,7 @@ ${auction}
 <input type="button" value="보증금 결제하기" onclick="">
 <!-- 보증금 입찰 금액의 10퍼 -->
 <br>
-<input type="submit" value="입찰하기(테스트용)" >
+<input type="submit" value="입찰하기(테스트용)" onclick="location.href='close'" >
 <!-- <input type="button" value="입찰하기" onclick="placeBid()" id="bidButton" disabled> -->
 <!-- 보증금 결제 로직 완료되면 사용하기 -->
 </form>

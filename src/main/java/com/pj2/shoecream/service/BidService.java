@@ -13,14 +13,18 @@ public class BidService {
 	@Autowired
 	private AuctionMapper mapper;
 
+	
 	public String getBidPrice(String auction_idx) {
-		// TODO Auto-generated method stub
 		return mapper.selectBidPrice(auction_idx);
 	}
 
+	//입찰하기
 	public int insertBidList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return mapper.insertBidList(map);
+	}
+
+	public static Map<String, Object> getBidDetail(String auction_idx) {
+		return null;
 	}
 
 }

@@ -69,7 +69,12 @@ public class AuctionController {
        //상품idx만 파라미터에 붙이면 되지 않을까?
        //카테고리 붙인 이유가 뭐지? 카테고리만 눌렀을때 나오게 할려구여 아마도
        //<a href="auction_detail?auction_idx=${product.auction_idx}&param=${product.auction_Scategory}">
-       
+      
+      //현재가격이랑 
+      //입찰수
+      Map<String, Object> bidding = BidService.getBidDetail(auction_idx);
+      model.addAttribute("bidding",bidding);
+      
         return "auction/auction_detail";
     }
 
@@ -237,9 +242,16 @@ public class AuctionController {
     		, Model model
     		, HttpSession session) {
     	
-    	int sId = 2;
-    	map.put("sId", sId);
-    	int insertCount = bidService.insertBidList(map);
+//    	int sId = 2;
+//    	map.put("sId", sId);
+    	
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        int sId = mPrincipalDetails.getMember().getMem_idx();
+        
+        System.out.println("sId ? " + sId);
+    	
+        int insertCount = bidService.insertBidList(map);
     	if(insertCount>0) {
     	}
     
