@@ -9,20 +9,20 @@
  */
 
 function tenderPopup() { 
-	window.open("bidding_popup.jsp", "입찰하기", "width=400, height=800, left=100, top=50"); }
+   window.open("biddingPopup?auction_idx="+$("#auction_idx").val(), "입찰하기", "width=400, height=800, left=100, top=50"); }
 
 function buyingPopup() { 
-	window.open("buying_popup.jsp", "즉시구매하기", "width=400, height=800, left=100, top=50"); }
-	
-	
-//삭제버튼 클릭시	
+   window.open("buyingPopup", "즉시구매하기", "width=400, height=800, left=100, top=50"); }
+   
+   
+//삭제버튼 클릭시   
 function confirmDelete() {
 let isDelete = confirm("게시물을 삭제하시겠습니까?");
 
-	// isDelete 가 true 일 때 BoardDelete 서블릿 요청
-	if(isDelete) {
-		location.href='BoardDelete?board_num=${board.board_num}&pageNum=${param.pageNum}';
-	}
+   // isDelete 가 true 일 때 BoardDelete 서블릿 요청
+   if(isDelete) {
+      location.href='BoardDelete?board_num=${board.board_num}&pageNum=${param.pageNum}';
+   }
 }
 
 //이미지 슬라이드
