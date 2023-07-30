@@ -51,7 +51,6 @@ public class MemberController {
 	// 메인페이지
 	@GetMapping("/")
 	public String mainform(
-			@AuthenticationPrincipal PrincipalDetails principalDetails, 
 			Model model) {
 //		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
