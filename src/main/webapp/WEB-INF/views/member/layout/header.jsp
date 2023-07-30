@@ -46,7 +46,7 @@
 					<li class="navi-item"><a href="/image/popular">
 							<i class="far fa-compass"></i>
 						</a></li>
-					<li class="navi-item"><a href="${pageContext.request.contextPath }/social/1">
+					<li class="navi-item"><a href="${pageContext.request.contextPath }/social/${principal.member.mem_idx}">
 							<i class="far fa-user"></i>
 						</a></li>
 				</ul>

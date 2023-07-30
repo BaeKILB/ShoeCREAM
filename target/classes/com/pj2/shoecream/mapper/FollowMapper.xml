@@ -9,38 +9,47 @@
 		VALUES (
 		null
 		, #{follower_idx}
-		, #{followee_idx}
+		,
+		#{followee_idx}
 		, now()
 		)
 	</insert>
 
-	<!-- 팔로우 중복 확인 -->
-	<select id="countExistingFollow"
-		parameterType="com.pj2.shoecream.vo.FollowVO" resultType="int">
-		SELECT COUNT(*)
-		FROM social_follows
-		WHERE follower_idx = #{follower_idx}
-		AND followee_idx = #{followee_idx}
-	</select>
-
+	<!-- 팔로우 취소하기 -->
 	<delete id="deleteFollow">
 		DELETE
 		FROM social_follows
-		WHERE follow_idx = #{follow_idx}
+		WHERE follower_idx =
+		#{follower_idx}
 		AND followee_idx = #{followee_idx}
 	</delete>
 
+	<!-- 팔로우 중복 확인 -->
+	<select id="countExistingFollow"
+		parameterType="com.pj2.shoecream.vo.FollowVO" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM social_follows
+		WHERE follower_idx = #{follower_idx}
+		AND
+		followee_idx = #{followee_idx}
+	</select>
+
+	<!-- 팔로우 상태 -->
 	<select id="mfollowState" parameterType="map">
 		SELECT COUNT(*)
-		FROM social_follows
-		WHERE follow_idx = #{sId}
+		FROM
+		social_follows
+		WHERE follower_idx = #{sId}
 		AND followee_idx = #{mem_idx}
 	</select>
 
+	<!-- 팔로우 수 -->
 	<select id="mfollowCount" parameterType="int">
 		SELECT COUNT(*)
-		FROM social_follows
-		WHERE follow_idx = #{mem_idx}
+		FROM
+		social_follows
+		WHERE follower_idx = #{mem_idx}
 	</select>
 
 
