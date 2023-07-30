@@ -96,5 +96,38 @@
 	   where
 	       auction_idx = #{auction_idx }
 	</update>
-	
+	<select id="selectAuctionDibs">
+	   select
+	       *
+	   from
+	       dibs
+	   where
+	       product_idx = #{auction_idx }
+	       and mem_idx = #{mem_idx }
+	</select>
+	<insert id="insertDibs">
+	   insert into
+	       dibs
+	   values(
+	       null
+	       , #{mem_idx }
+	       , #{auction_idx }
+	       , 'Y'
+	   )
+	</insert>
+	<delete id="deleteDibs">
+	   delete from
+	       dibs
+	   where
+	       mem_idx = #{mem_idx }
+	       and product_idx = #{auction_idx }
+	</delete>
+	<select id="selectDibsCount">
+        SELECT 
+            count(product_idx) 
+        FROM 
+            dibs 
+        WHERE 
+            product_idx=${auction_idx }
+	</select>
 </mapper>

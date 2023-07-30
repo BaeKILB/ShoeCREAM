@@ -15,6 +15,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,31 +59,47 @@ public class AuctionController {
     public String AuctionDetail(
         HttpSession session
         , Model model
-        , @RequestParam String auction_idx) { //경매 제품상세
-       //로그인 해야 이용 가능한걸로.. 버튼마다 session 체크 귀찮으니까..;
-	// 회원번호
-//	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        , @RequestParam Map<String, Object> map) { //경매 제품상세
+    	//로그인 해야 이용 가능한걸로.. 버튼마다 session 체크 귀찮으니까..;
+		// 회원번호
+//    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 //        int sId = mPrincipalDetails.getMember().getMem_idx();
+    	
+    	int sId = 2;
+    	map.put("mem_idx", sId);
 	
-	// 조회수 카운트
-	String readAuction = (String)session.getAttribute("readAuction");
-        if ( readAuction == null || !readAuction.equals(auction_idx)) {
-            int updateCount = service.updateReadCount(auction_idx);
-            if(updateCount > 0) session.setAttribute("readAuction",auction_idx);
-        }
-        
-	Map<String, Object> auction = service.getAuction(auction_idx);
-	model.addAttribute("auction",auction);
-       
-       //상품idx만 파라미터에 붙이면 되지 않을까?
-       //카테고리 붙인 이유가 뭐지? 카테고리만 눌렀을때 나오게 할려구여 아마도
-       //<a href="auction_detail?auction_idx=${product.auction_idx}&param=${product.auction_Scategory}">
-      
-       // 현재가격이랑
-       //입찰수
-	Map<String, Object> bid = bidService.getBid(auction_idx);
-	model.addAttribute("bid",bid);
+    	String auction_idx = (String)map.get("auction_idx");
+    	
+    	// 조회수 카운트
+		String readAuction = (String) session.getAttribute("readAuction");
+		if (readAuction == null || !readAuction.equals(auction_idx)) {
+			int updateCount = service.updateReadCount(auction_idx);
+			if (updateCount > 0)
+				session.setAttribute("readAuction", auction_idx);
+		}
+	
+		Map<String, Object> auction = service.getAuction(auction_idx);
+		model.addAttribute("auction", auction);
+
+		// 상품idx만 파라미터에 붙이면 되지 않을까?
+		// 카테고리 붙인 이유가 뭐지? 카테고리만 눌렀을때 나오게 할려구여 아마도
+		// <a
+		// href="auction_detail?auction_idx=${product.auction_idx}&param=${product.auction_Scategory}">
+
+		// 현재가격이랑
+		// 입찰내역
+		Map<String, Object> bid = bidService.getBid(auction_idx);
+		model.addAttribute("bid", bid);
+
+		// 찜
+		Map<String, Object> dibs = service.getAuctionDibs(map);
+		model.addAttribute("dibs", dibs);
+		
+		// 찜카운트
+		int count = service.getDibsCount(map);
+		model.addAttribute("dibsCount", count);
+		
         return "auction/auction_detail";
     }
 
@@ -98,9 +115,11 @@ public class AuctionController {
           , HttpSession session) {
 
 	// sId 받아오기
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-        int sId = mPrincipalDetails.getMember().getMem_idx();
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//        int sId = mPrincipalDetails.getMember().getMem_idx();
+    	
+    	int sId = 1; // 판매자 회원번호
 
 		auction.setMem_idx(sId); // 회원번호 추가
 		String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
@@ -169,9 +188,7 @@ public class AuctionController {
     @ResponseBody
     @RequestMapping(value= "getAucList", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
     public String getAucList(
-          @RequestParam Map<String, Object> map
-          ) {
-       System.out.println("!@#$"+map.toString());
+          @RequestParam Map<String, Object> map) {
        
       int pageNum = Integer.parseInt(String.valueOf(map.get("pageNum")));
       int listLimit = 20;
@@ -203,8 +220,6 @@ public class AuctionController {
       pageInfo.put("pageNum", pageNum);
       
       auctionList.add(pageInfo);
-      
-      System.out.println(auctionList.toString());
       
       JSONArray jsonArray = new JSONArray(auctionList);
        return jsonArray.toString();
@@ -263,5 +278,40 @@ public class AuctionController {
     
        return "auction/auction_main";
     }
+    
+    @ResponseBody
+    @RequestMapping(value= "dibsEvent", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
+    public String dibsEvent(
+    		@RequestParam Map<String,Object> map
+    		, Model model) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//        int sId = mPrincipalDetails.getMember().getMem_idx();
+    	
+    	int sId = 2;
+    	map.put("mem_idx", sId);
+    	
+    	Map<String, Object> dibs = service.getAuctionDibs(map);
+    	
+    	if (dibs == null) {
+    		service.registDibs(map);
+    		dibs = service.getAuctionDibs(map);
+    		dibs.put("result", true);
+    	} else {
+    		service.deleteDibs(map);
+    		dibs = service.getAuctionDibs(map);
+    		dibs = new HashMap<String, Object>();
+    		dibs.put("result", false);
+    	}
+    
+    	int count = service.getDibsCount(map);
+    	dibs.put("dibsCount", count);
+    	
+    	JSONObject jsonObject = new JSONObject(dibs);
+		return jsonObject.toString();
+    }
+
+    
+    
     
 }

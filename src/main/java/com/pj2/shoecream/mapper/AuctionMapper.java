@@ -18,4 +18,12 @@ public interface AuctionMapper {
   
 	int updateItemReadCount(String auction_idx);
 
+	Map<String, Object> selectAuctionDibs(Map<String, Object> map);
+
+	void insertDibs(Map<String, Object> map);
+
+	void deleteDibs(Map<String, Object> map);
+
+	int selectDibsCount(Map<String, Object> map);
+
 }

@@ -10,9 +10,9 @@
 <title>Insert title here</title>
 <!-- 자바스크립트 파일 -->
 <script type="text/javascript"
-   src="${pageContext.request.contextPath }/resources/js/auction/auction_detail.js"></script>
-<script type="text/javascript"
    src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<script type="text/javascript"
+   src="${pageContext.request.contextPath }/resources/js/auction/auction_detail.js"></script>
 
 <!-- css파일  -->
 <link
@@ -91,14 +91,20 @@ to {
    opacity: 1
 }
 }
+
+#dibsBox {
+    cursor: pointer;
+}
+
+.dibsImage {
+    width: 20px;
+    height: 20px;
+}
 </style>
 </head>
 <body>
    <h1>경매</h1>
    <input type="hidden" value="${auction.auction_idx }" id="auction_idx">
-   ${auction }
-   <hr>
-   ${bid }
    <!-- 가지고 올 정보 
    from 공통테이블
    1. 카테고리 대 중 소 
@@ -151,11 +157,19 @@ to {
 	        <span id="">${auction.mc_name }</span>
         </div>
         <div>
-            <span>${auction.auction_title }</span> 
-			<label>
-			       <img alt="하트 아이콘(찜)" src="#">
-			       <span>?찜 수? ajax</span>
-			</label>
+            <span>${auction.auction_title }</span>
+            <span id="dibsBox"> 
+                <c:choose>
+					<c:when test="${dibs eq null }">
+						<img class="dibsImage" alt="하트 아이콘하트)" src="${pageContext.request.contextPath }/resources/img/auction/favorite-heart-false.svg">
+						<span>${dibsCount }</span>
+                    </c:when>
+					<c:otherwise>
+						<img class="dibsImage" alt="하트 아이콘(빈하트)" src="${pageContext.request.contextPath }/resources/img/auction/favorite-heart-true.svg">
+						<span>${dibsCount }</span>
+                    </c:otherwise>
+				</c:choose> 
+			</span>
         </div>
 	    <div>
 	        <span>

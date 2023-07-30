@@ -51,6 +51,45 @@ function showSlides(n) {
   for (i = 0; i < dots.length; i++) {
     dots[i].className = dots[i].className.replace(" active", "");
   }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
+//  slides[slideIndex-1].style.display = "block";
+//  dots[slideIndex-1].className += " active";
 }
+
+$(function() {
+        
+    $("#dibsBox").on("click",function() {
+        dibsCheck();
+    }); 
+});
+
+const dibsCheck = () => {
+    $.ajax({
+        type: "post"
+        , url: "dibsEvent"
+        , data: {
+            auction_idx: $("#auction_idx").val()
+        }
+        , dataType: "json"
+        , success: function(data) {
+            dibsResult(data)
+        }
+        ,error: function() {
+            console.log("error");  
+        }
+    })
+}
+
+const dibsResult = (data) => {
+    let path = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+    if (data.result) {
+        let result = "<img class='dibsImage' src='"+path+"/resources/img/auction/favorite-heart-true.svg'><span>"+data.dibsCount+"</span>"
+        $("#dibsBox").empty();
+        $("#dibsBox").append(result);
+    } else {
+        let result = "<img  class='dibsImage' src='"+path+"/resources/img/auction/favorite-heart-false.svg'><span>"+data.dibsCount+"</span>"
+        $("#dibsBox").empty();
+        $("#dibsBox").append(result);
+    }
+}
+
+

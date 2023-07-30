@@ -31,4 +31,20 @@ public class AuctionService {
 	return mapper.updateItemReadCount(auction_idx);
     }
 
+	public Map<String, Object> getAuctionDibs(Map<String, Object> map) {
+		return mapper.selectAuctionDibs(map);
+	}
+
+	public void registDibs(Map<String, Object> map) {
+		mapper.insertDibs(map);
+	}
+
+	public void deleteDibs(Map<String, Object> map) {
+		mapper.deleteDibs(map);
+	}
+
+	public int getDibsCount(Map<String, Object> map) {
+		return mapper.selectDibsCount(map);
+	}
+
 }
