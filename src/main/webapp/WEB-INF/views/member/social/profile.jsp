@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
 <!--프로필 섹션-->
 <section class="profile">
 	<!--유저정보 컨테이너-->
@@ -17,7 +18,8 @@
 				</form>
 
 				<img class="profile-image" src="#"
-					onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person3.jpg'" id="userProfileImage" />
+					onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person3.jpg'"
+					id="userProfileImage" />
 			</div>
 		</div>
 		<!--유저이미지end-->
@@ -25,10 +27,26 @@
 		<!--유저정보 및 사진등록 구독하기-->
 		<div class="profile-right">
 			<div class="name-group">
-				<h2>${member.mem_nickname}</h2>
-
-				<button class="cta" onclick="location.href='${pageContext.request.contextPath }/image/upload'">사진등록</button>
-				<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
+				<h2>${dto.member.mem_nickname}</h2>
+				<!--  원래 방법 하지만 뷰페이지에서 연산은 별로 안좋다 -->
+<%-- 				<c:choose> --%>
+<%-- 					<c:when test="${principal.member.mem_idx eq member.mem_idx}"> --%>
+<!-- 						<button class="cta" -->
+<%-- 							onclick="location.href='${pageContext.request.contextPath }/image/upload'">사진등록</button> --%>
+<%-- 					</c:when> --%>
+<%-- 					<c:otherwise> --%>
+<!-- 						<button class="cta" onclick="toggleSubscribe(this)">구독하기</button> -->
+<%-- 					</c:otherwise> --%>
+<%-- 				</c:choose> --%>
+				<c:choose>
+					<c:when test="${dto.pageOwnerState}">
+						<button class="cta"
+							onclick="location.href='${pageContext.request.contextPath }/image/upload'">사진등록</button>
+					</c:when>
+					<c:otherwise>
+						<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
+					</c:otherwise>
+				</c:choose>
 				<button class="modi" onclick="popup('.modal-info')">
 					<i class="fas fa-cog"></i>
 				</button>
@@ -36,15 +54,15 @@
 
 			<div class="subscribe">
 				<ul>
-					<li><a href=""> 게시물<span>3</span>
+					<li><a href=""> 게시물<span>${posts_image1.size()}</span>
 					</a></li>
 					<li><a href="javascript:subscribeInfoModalOpen();"> 구독정보<span>2</span>
 					</a></li>
 				</ul>
 			</div>
 			<div class="state">
-				<h4>${member.mem_bio }</h4>
-<!-- 				<h4>죽겠습니다.</h4> -->
+				<h4>${dto.member.mem_bio }</h4>
+				<!-- 				<h4>죽겠습니다.</h4> -->
 			</div>
 		</div>
 		<!--유저정보 및 사진등록 구독하기-->
@@ -62,15 +80,16 @@
 			<div class="tab-1-content-inner">
 				<!--아이템들-->
 				<c:forEach var="imageName" items="${posts_image1}">
-				    <div class="img-box">
-<%-- 				        <a href=""> <img src="${pageContext.request.contextPath }/upload/social/${imageName}" /> --%>
-				        <a href=""> <img src="${pageContext.request.contextPath }/resources/upload/social/${imageName}" />
-				        </a>
-				        <div class="comment">
-				            <a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
-				            </a>
-				        </div>
-				    </div>
+					<div class="img-box">
+						<%-- 				        <a href=""> <img src="${pageContext.request.contextPath }/upload/social/${imageName}" /> --%>
+						<a href=""> <img
+							src="${pageContext.request.contextPath }/resources/upload/social/${imageName}" />
+						</a>
+						<div class="comment">
+							<a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
+							</a>
+						</div>
+					</div>
 				</c:forEach>
 				<!--아이템들end-->
 			</div>
@@ -81,9 +100,12 @@
 <!--로그아웃, 회원정보변경 모달-->
 <div class="modal-info" onclick="modalInfo()">
 	<div class="modal">
-<!-- 		<button onclick="location.href='/user/1/update'">회원정보 변경</button> -->
-		<button onclick="location.href='${pageContext.request.contextPath }/mypage/update'">회원정보 변경</button>
-		<button onclick="location.href='${pageContext.request.contextPath }/logout'">로그아웃</button>
+		<!-- 		<button onclick="location.href='/user/1/update'">회원정보 변경</button> -->
+		<button
+			onclick="location.href='${pageContext.request.contextPath }/mypage/update'">회원정보
+			변경</button>
+		<button
+			onclick="location.href='${pageContext.request.contextPath }/logout'">로그아웃</button>
 		<button onclick="closePopup('.modal-info')">취소</button>
 	</div>
 </div>
@@ -113,7 +135,8 @@
 
 			<div class="subscribe__item" id="subscribeModalItem-1">
 				<div class="subscribe__img">
-					<img src="#" onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person.jpeg'"/>
+					<img src="#"
+						onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person.jpeg'" />
 				</div>
 				<div class="subscribe__text">
 					<h2>love</h2>
@@ -126,7 +149,8 @@
 
 			<div class="subscribe__item" id="subscribeModalItem-2">
 				<div class="subscribe__img">
-					<img src="#" onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person.jpeg'"/>
+					<img src="#"
+						onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person.jpeg'" />
 				</div>
 				<div class="subscribe__text">
 					<h2>ssar</h2>
@@ -141,6 +165,7 @@
 </div>
 
 
-<script src="${pageContext.request.contextPath }/resources/js/member/social/profile.js"></script>
+<script
+	src="${pageContext.request.contextPath }/resources/js/member/social/profile.js"></script>
 
 <%@ include file="../../inc_ex/footer.jsp"%>

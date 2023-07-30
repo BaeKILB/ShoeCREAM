@@ -58,7 +58,6 @@ public class MemberController {
 //		System.out.println("세션 정보2 : " + mPrincipalDetails.getMember());
 //		
 //		model.addAttribute("member", mPrincipalDetails.getMember());
-
 		return "main_ex";
 	}
 	
@@ -186,15 +185,14 @@ public class MemberController {
     // 회원수정 폼
 //    @GetMapping("mypage/{mem_idx}/update")
     @GetMapping("mypage/update")
-    public String updateForm(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {//@AuthenticationPrincipal 이녀석을 통해 시큐리티가 저장한 세션을 접근할 수 있다.
+    public String updateForm(Model model) {//@AuthenticationPrincipal 이녀석을 통해 시큐리티가 저장한 세션을 접근할 수 있다.
 //    	public String updateForm(@PathVariable int mem_idx, @AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {//@AuthenticationPrincipal 이녀석을 통해 시큐리티가 저장한 세션을 접근할 수 있다.
     	// 1. 실패..
-    	System.out.println("세션 정보 :" + principalDetails.getMember());
+//    	System.out.println("세션 정보 :" + principalDetails.getMember());
 		
     	// 2. 쓰읍 이 방법을 써야하는가 .. 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-		
 		// 주소 관련 값 설정
 		if(mPrincipalDetails.getMember().getMem_address() != null) {
 			mPrincipalDetails.getMember().setSample6_postcode(mPrincipalDetails.getMember().getMem_address().split("/")[0]); 

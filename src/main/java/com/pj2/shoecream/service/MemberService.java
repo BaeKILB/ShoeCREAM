@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pj2.shoecream.mapper.MemberMapper;
+import com.pj2.shoecream.vo.MemberProfileDto;
 import com.pj2.shoecream.vo.MemberVO;
 
 import lombok.RequiredArgsConstructor;
@@ -104,11 +105,14 @@ public class MemberService {
 //		// SELECT * FROM social_posts WHRER MemId = :MemId; 이렇게 써보자
 ////		MemberVO memberEntity = memberMapper.findMemberByIdx(MemIdx);
 //	}
-	public MemberVO memberProfile(int mem_idx) { // MemId = "/social/{mem_idx}" 여기의 {mem_idx} 요녀석 받아서 처리 할 거임
+	public MemberProfileDto memberProfile(int mem_idx, int sId) { // MemId = "/social/{mem_idx}" 여기의 {mem_idx} 요녀석 받아서 처리 할 거임
+		MemberProfileDto dto = new MemberProfileDto();
 		
 		MemberVO memberEntity = memberMapper.findMemberByMemIdx(mem_idx);
 		
-		return memberEntity;
+		dto.setMember(memberEntity);
+		dto.setPageOwnerState(mem_idx == sId);
+		return dto;
 	}
 
 

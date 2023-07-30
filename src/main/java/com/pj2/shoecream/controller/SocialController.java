@@ -18,7 +18,7 @@ import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.service.SocialImageService;
-import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.MemberProfileDto;
 import com.pj2.shoecream.vo.SocialVO;
 
 import lombok.RequiredArgsConstructor;
@@ -44,11 +44,15 @@ public class SocialController {
 	public String profile(@PathVariable int mem_idx, Model model) {
 //		User userEntity = userService.회원프로필(id);
 //		model.addAttribute("user", userEntity);
-		MemberVO memberEntity = memberService.memberProfile(mem_idx);
-		model.addAttribute("member", memberEntity);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int sId = mPrincipalDetails.getMember().getMem_idx();
+        
+		MemberProfileDto dto = memberService.memberProfile(mem_idx, mPrincipalDetails.getMember().getMem_idx());
+		model.addAttribute("dto", dto);
 		List<String> posts_image1 = SocialImageService.findPostImagesByMemIdx(mem_idx);
 		model.addAttribute("posts_image1", posts_image1);
-
+		
 		return "member/social/profile";
 	}
   
