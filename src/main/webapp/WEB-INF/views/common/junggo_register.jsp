@@ -1,6 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"  %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
+
+
+
 <form action="registProductPro" method="post" enctype="multipart/form-data">
 	<div class="titleContainner">
 		<p class="title_title">기본 정보</p>
@@ -9,33 +14,10 @@
 		<div class="first_title">상품 이미지()</div>
 		<div class="first_content">
 			<div class=image_box>
-				<div class="image_content" name="file1"></div>
-				<div class="image_content" name="file2"></div>
-				<div class="image_content" name="file3"></div>
-				<div class="image_content" name="file4"></div>
-
-<!-- <input type="file" id="image" accept="image/*" onchange="setThumbnail(event);" multiple/>
-    <div id="image_container"></div>
-
-    <script>
-      function setThumbnail(event) {
-        for (var image of event.target.files) {
-          var reader = new FileReader();
-
-          reader.onload = function(event) {
-            var img = document.createElement("img");
-            img.setAttribute("src", event.target.result);
-            document.querySelector("div#image_container").appendChild(img);
-          };
-
-          console.log(image);
-          reader.readAsDataURL(image);
-        }
-      }
-    </script>
-	 -->	
-	
-				
+				<input type="file" name="file1" /><br>
+				<input type="file" name="file2" /><br>
+				<input type="file" name="file3" /><br>
+				<input type="file" name="file4" /><br>
 			</div>
 			<div class="warning_text">
 				* 상품 이미지는 640x640에 최적화 되어 있습니다.<br> - 상품 이미지는 PC에서는 1:1, 모바일에서는
@@ -45,6 +27,7 @@
 			</div>
 		</div>
 	</div>
+		
 	<div class="secondContainner">
 		<div class="second_title">제목</div>
 		<div class="second_content">
@@ -52,51 +35,28 @@
 				value="품목을 입력해주세요." onfocus="this.select()" />
 		</div>
 	</div>
+	
 	<div class="thirdContainner">
 		<div class="third_title">카테고리</div>
 		<div class="third_content">
 			<div class="category_box">
-				<div class="category_content_l">제1분류<div>a</div><div>a</div></div>
+				
+				제1분류 : <select name="lc_code" id="lc_code" style="width:200px">
+			        <option value="">전체</option>
+			    </select>
+			    제2분류 : <select name="mc_code" id="mc_code" style="width:200px" onchange="changeHtml();">
+			       	<option value="">전체</option>
+			    </select>
+				<!-- <div class="category_content_l">제1분류<div>a</div><div>a</div></div>
 				<div class="category_content_m">제2분류</div>
-				<div class="category_content_s">제3분류</div>
+				<div class="category_content_s">제3분류</div>  -->
 			</div>
-			<p class="selected_category">선택한 카테고리 :</p>
+			<p class="selected_category">선택한 카테고리 :<div id="selected_category" name="selected_category"></div></p>
 		</div>
 	</div>
 	
 
-<!-- <select id="region" name="region">
-  <option value="">-- 본부 --</option>
-  <option value="A">강북본부</option>
-  <option value="B">강남본부</option>
-  <option value="C">서부본부</option>
-</select>
-<select id="maker" name="maker">
-  <option value="">-- 제조사 --</option>
-  <option class="A" value="hyundai">현대</option>
-  <option class="A" value="kia">기아</option>
-  <option class="B" value="benz">벤츠</option>
-  <option class="B" value="bmw">BMW</option>
-</select>
-<select id="size" name="size">
-  <option value="">-- 크기 --</option>
-  <option value="large" class="hyundai kia benz bmw">대형</option>
-  <option value="medium" class="hyundai kia benz">중형</option>
-  <option value="small" class="hyundai kia bmw">소형</option>
-</select>
-
-<script src="//code.jquery.com/jquery.min.js"></script>
-<script src='//cdnjs.cloudflare.com/ajax/libs/jquery-chained/1.0.1/jquery.chained.min.js'></script>
-<script>
-  $("#maker").chained("#region");
-  $("#size").chained("#maker");
-</script>
- -->	
-	
-	
-	
-
-<!--<script type="text/javascript">
+<script type="text/javascript">
  
 $(document).ready(function() {
     
@@ -104,75 +64,75 @@ $(document).ready(function() {
     
     //****************이부분은 DB로 셋팅하세요.
     //Main 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
-    var mainCategoryArray = new Array();
-    var mainCategoryObject = new Object();
+    var lc_codeArray = new Array();
+    var lc_codeObject = new Object();
     
-    mainCategoryObject = new Object();
-    mainCategoryObject.main_category_id = "1";
-    mainCategoryObject.main_category_name = "스포츠";
-    mainCategoryArray.push(mainCategoryObject);
+    lc_codeObject = new Object();
+    lc_codeObject.lc_code_id = "1";
+    lc_codeObject.lc_code_name = "스포츠";
+    lc_codeArray.push(lc_codeObject);
     
-    mainCategoryObject = new Object();
-    mainCategoryObject.main_category_id = "2";
-    mainCategoryObject.main_category_name = "공연";
-    mainCategoryArray.push(mainCategoryObject);
+    lc_codeObject = new Object();
+    lc_codeObject.lc_code_id = "2";
+    lc_codeObject.lc_code_name = "공연";
+    lc_codeArray.push(lc_codeObject);
     
     //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
-    var subCategoryArray = new Array();
-    var subCategoryObject = new Object();
+    var mc_codeArray = new Array();
+    var mc_codeObject = new Object();
     
     //스포츠에 해당하는 sub category 리스트
-    subCategoryObject = new Object();
-    subCategoryObject.main_category_id = "1";
-    subCategoryObject.sub_category_id = "1"
-    subCategoryObject.sub_category_name = "야구"    
-    subCategoryArray.push(subCategoryObject);
+    mc_codeObject = new Object();
+    mc_codeObject.lc_code_id = "1";
+    mc_codeObject.mc_code_id = "1"
+    mc_codeObject.mc_code_name = "야구"    
+    mc_codeArray.push(mc_codeObject);
     
-    subCategoryObject = new Object();
-    subCategoryObject.main_category_id = "1";
-    subCategoryObject.sub_category_id = "2"
-    subCategoryObject.sub_category_name = "농구"    
-    subCategoryArray.push(subCategoryObject);
+    mc_codeObject = new Object();
+    mc_codeObject.lc_code_id = "1";
+    mc_codeObject.mc_code_id = "2"
+    mc_codeObject.mc_code_name = "농구"    
+    mc_codeArray.push(mc_codeObject);
    
     //공연에 해당하는 sub category 리스트
-    subCategoryObject = new Object();
-    subCategoryObject.main_category_id = "2";
-    subCategoryObject.sub_category_id = "1"
-    subCategoryObject.sub_category_name = "연극"    
-    subCategoryArray.push(subCategoryObject);
+    mc_codeObject = new Object();
+    mc_codeObject.lc_code_id = "2";
+    mc_codeObject.mc_code_id = "1"
+    mc_codeObject.mc_code_name = "연극"    
+    mc_codeArray.push(mc_codeObject);
     
-    subCategoryObject = new Object();
-    subCategoryObject.main_category_id = "2";
-    subCategoryObject.sub_category_id = "2"
-    subCategoryObject.sub_category_name = "뮤지컬"    
-    subCategoryArray.push(subCategoryObject);
+    mc_codeObject = new Object();
+    mc_codeObject.lc_code_id = "2";
+    mc_codeObject.mc_code_id = "2"
+    mc_codeObject.mc_code_name = "뮤지컬"    
+    mc_codeArray.push(mc_codeObject);
     
     
     //****************이부분은 DB로 셋팅하세요.
     
     
     //메인 카테고리 셋팅
-    var mainCategorySelectBox = $("select[name='mainCategory']");
+    var lc_codeSelectBox = $("select[name='lc_code']");
     
-    for(var i=0;i<mainCategoryArray.length;i++){
-        mainCategorySelectBox.append("<option value='"+mainCategoryArray[i].main_category_id+"'>"+mainCategoryArray[i].main_category_name+"</option>");
+    for(var i=0;i<lc_codeArray.length;i++){
+        lc_codeSelectBox.append("<option value='"+lc_codeArray[i].lc_code_id+"'>"+lc_codeArray[i].lc_code_name+"</option>");
     }
     
     //*********** 1depth카테고리 선택 후 2depth 생성 START ***********
-    $(document).on("change","select[name='mainCategory']",function(){
+    $(document).on("change","select[name='lc_code']",function(){
         
         //두번째 셀렉트 박스를 삭제 시킨다.
-        var subCategorySelectBox = $("select[name='subCategory']");
-        subCategorySelectBox.children().remove(); //기존 리스트 삭제
+        var mc_codeSelectBox = $("select[name='mc_code']");
+        mc_codeSelectBox.children().remove(); //기존 리스트 삭제
         
         //선택한 첫번째 박스의 값을 가져와 일치하는 값을 두번째 셀렉트 박스에 넣는다.
         $("option:selected", this).each(function(){
             var selectValue = $(this).val(); //main category 에서 선택한 값
-            subCategorySelectBox.append("<option value=''>전체</option>");
-            for(var i=0;i<subCategoryArray.length;i++){
-                if(selectValue == subCategoryArray[i].main_category_id){
+            mc_codeSelectBox.append("<option value=''>전체</option>");
+            for(var i=0;i<mc_codeArray.length;i++){
+                if(selectValue == mc_codeArray[i].lc_code_id){
                     
-                    subCategorySelectBox.append("<option value='"+subCategoryArray[i].sub_category_id+"'>"+subCategoryArray[i].sub_category_name+"</option>");
+                    mc_codeSelectBox.append("<option value='"+mc_codeArray[i].mc_code_id+"'>"+mc_codeArray[i].mc_code_name+"</option>");
                     
                 }
             }
@@ -185,15 +145,14 @@ $(document).ready(function() {
 
 function changeHtml()
 {
-	var mainCategory = document.getElementById("mainCategory").value;
-	var subCategory = document.getElementById("subCategory").value;
-	if(mainCategory == 1 && subCategory == 1){document.getElementById('selected_category').innerHTML="스포츠 > 야구"}
-	if(mainCategory == 1 && subCategory == 2){document.getElementById('selected_category').innerHTML="스포츠 > 농구"}
-	if(mainCategory == 2 && subCategory == 1){document.getElementById('selected_category').innerHTML="공연 > 연극"}
-	if(mainCategory == 2 && subCategory == 2){document.getElementById('selected_category').innerHTML="공연 > 뮤지컬"}
+	var lc_code = document.getElementById("lc_code").value;
+	var mc_code = document.getElementById("mc_code").value;
+	if(lc_code == 1 && mc_code == 1){document.getElementById('selected_category').innerHTML="스포츠 > 야구"}
+	if(lc_code == 1 && mc_code == 2){document.getElementById('selected_category').innerHTML="스포츠 > 농구"}
+	if(lc_code == 2 && mc_code == 1){document.getElementById('selected_category').innerHTML="공연 > 연극"}
+	if(lc_code == 2 && mc_code == 2){document.getElementById('selected_category').innerHTML="공연 > 뮤지컬"}
 }
-</script>-->
-
+</script>
 
 
 
@@ -311,7 +270,6 @@ function changeHtml()
 
 	<div class="lastContainner">
 		<input type="submit" class="register_btn" value="등록">
-		<button type="button" class="back_btn"
-			onclick="location.href='address'">돌아가기</button>
+		<button type="button" class="back_btn" onclick="location.href='address'">돌아가기</button>
 	</div>
 </form>

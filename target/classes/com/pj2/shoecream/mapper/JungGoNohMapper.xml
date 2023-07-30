@@ -27,17 +27,47 @@
 			)
 	</insert>
 	
+	<!-- 물건 사진 등록 -->
+	<insert id="insertProductImage">
+	
+		INSERT
+			INTO product_image
+			VALUES (
+				  #{product_idx} -- product_idx
+				, #{image1} -- image1
+				, #{image2} -- image2
+				, #{image3} -- image3
+				, #{image4} -- image4
+				, '/resources/upload' -- path
+			)
+	</insert>
 	
 	<!-- 상품 상세보기 - SELECT -->
 	<select id="selectProduct" resultType="com.pj2.shoecream.vo.JungGoNohVO">
 		SELECT jpd.product_idx, jpd.product_price, jpd.product_status, jpd.product_sell_status, jpd.product_location
 		, jpd.product_title, jpd.product_info, jpd.product_payment, jpd.lc_code, jpd.mc_code
 		, jpd.product_date, jpd.product_readcount, jpd.product_brand, jpd.product_size, jpd.product_selector
-		, mi.mem_idx, mi.mem_id
-		  FROM jung_product jpd
+		, mi.mem_idx, mi.mem_id, mi.mem_nickname, mi.mem_rank
+		, pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path 
+		, (select count(*) from dibs di where jpd.product_idx = di.product_idx) dibs_count
+		FROM jung_product jpd
 		  JOIN mem_info mi
 		    ON jpd.mem_idx = mi.mem_idx
+LEFT OUTER JOIN product_image pi
+		    ON jpd.product_idx = pi.product_idx
 	     WHERE jpd.product_idx = #{product_idx}
+	</select>
+	
+	<!-- 찜 검색 -->
+	<select id="selectDibs" resultType="com.pj2.shoecream.vo.JungGoNohVO">
+		SELECT di.product_idx, di.favorite_check
+		FROM jung_product jpd
+		  JOIN dibs di
+		    ON jpd.product_idx = di.product_idx
+		  JOIN mem_info mi
+		    ON jpd.mem_idx = mi.mem_idx  
+		 WHERE jpd.product_idx = #{product_idx}
+		 AND jpd.mem_idx = ${mem_idx}
 	</select>
 	
 		<!-- 게시물 조회수 증가 - UPDATE -->
@@ -63,6 +93,42 @@
 		  FROM jung_product
 		 WHERE product_idx = #{product_idx}
 	</delete>
+	
+	<!-- 찜등록 -->
+	<insert id="insertDibs">
+	INSERT INTO dibs
+		 VALUES 
+		 (#{dibs_idx}
+	     ,#{mem_idx}
+	     ,#{product_idx}
+	     ,'Y')
+	</insert>
+	
+	<!-- 찜해제 -->
+	<delete id="deleteDibs">
+		DELETE 
+		  FROM dibs
+		 WHERE product_idx = #{product_idx}
+		   AND mem_idx = #{mem_idx}
+	</delete>
+	
+	
+	<!-- 더 많은 상품 목록 리스트 3개 -->
+	<select id="getMoreProductListSmall" resultType="map" parameterType="com.pj2.shoecream.vo.JungGoNohVO">
+	   SELECT jpd.product_idx, jpd.product_price, jpd.product_status, jpd.product_sell_status, jpd.product_location
+		, jpd.product_title, jpd.product_info, jpd.product_payment, jpd.lc_code, jpd.mc_code
+		, jpd.product_date, jpd.product_readcount, jpd.product_brand, jpd.product_size, jpd.product_selector
+		, mi.mem_idx, mi.mem_id, mi.mem_nickname, mi.mem_rank
+		, pi.image1
+		FROM jung_product jpd
+		JOIN mem_info mi
+		  ON jpd.mem_idx = mi.mem_idx
+		JOIN product_image pi
+		  ON jpd.product_idx = pi.product_idx
+	   WHERE mi.mem_idx = ${mem_idx}	
+    ORDER BY jpd.product_idx desc 
+	   LIMIT 3;
+	</select>
 	
 	
 </mapper>

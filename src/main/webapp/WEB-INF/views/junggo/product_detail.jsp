@@ -48,38 +48,38 @@
 				<div class="slide">
 					<div class="mySlides">
 						<div class="numbertext">1&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-						<img src="${pageContext.request.contextPath}/resources/upload/car/${map.car_info.car_file_path}/${map.car_info.car_file2}">
+						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image1}">
 					</div>
 
 					<div class="mySlides">
 						<div class="numbertext">2&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-						<img src="${pageContext.request.contextPath}/resources/upload/car/${map.car_info.car_file_path}/${map.car_info.car_file3}">
+						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2}">
 					</div>
 
 					<div class="mySlides">
 						<div class="numbertext">3&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-						<img src="${pageContext.request.contextPath}/resources/upload/car/${map.car_info.car_file_path}/${map.car_info.car_file4}">
+						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3}">
 					</div>
 
 					<div class="mySlides">
 						<div class="numbertext">4&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-						<img src="${pageContext.request.contextPath}/resources/upload/car/${map.car_info.car_file_path}/${map.car_info.car_file5}">
+						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4}">
 					</div>
 					<a class="prev" onclick="plusSlides(-1)">❮</a> <a class="next" onclick="plusSlides(1)">❯</a>
 				</div>
 
 				<div class="G1">
 					<div class="column">
-						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/car/${map.car_info.car_file_path}/${map.car_info.car_file2}" onclick="currentSlide(1)">
+						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image1}" onclick="currentSlide(1)">
 					</div>
 					<div class="column">
-						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/car/${map.car_info.car_file_path}/${map.car_info.car_file3}" onclick="currentSlide(2)">
+						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2}" onclick="currentSlide(2)">
 					</div>
 					<div class="column">
-						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/car/${map.car_info.car_file_path}/${map.car_info.car_file4}" onclick="currentSlide(3)">
+						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3}" onclick="currentSlide(3)">
 					</div>
 					<div class="column">
-						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/car/${map.car_info.car_file_path}/${map.car_info.car_file5}" onclick="currentSlide(4)">
+						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4}" onclick="currentSlide(4)">
 					</div>
 				</div>
 			</div>
@@ -131,13 +131,32 @@
 			<div class="view_info col-sm-12 col-lg-6">
 
 				<div class="view_cont">
-					<p class="product_catrgory">HOME > ${jungGoNoh.lc_code} > ${jungGoNoh.mc_code} </p>
+					<p class="product_catrgory">HOME > 
+						<c:choose>
+							<c:when test="${jungGoNoh.lc_code == '1'}">
+								스포츠 >
+								<c:choose>
+									<c:when test="${jungGoNoh.mc_code == 1}">야구</c:when>
+									<c:when test="${jungGoNoh.mc_code == 2}">농구</c:when>						
+								</c:choose>
+							</c:when>
+							<c:when test="${jungGoNoh.lc_code == '2'}">
+								공연 > 
+								<c:choose>
+									<c:when test="${jungGoNoh.mc_code == 1}">연극</c:when>
+									<c:when test="${jungGoNoh.mc_code == 2}">뮤지컬</c:when>						
+								</c:choose>
+							</c:when>
+						</c:choose>
+					 
+					</p>
 					<div class="product_name">
 						<h4>${jungGoNoh.product_title} </h4><span class="product_progress">${jungGoNoh.product_sell_status}</span>
-						<p><fmt:formatNumber value="${jungGoNoh.product_price}" pattern="#,###"/></p>
+						<p><fmt:formatNumber value="${jungGoNoh.product_price}" pattern="#,###"/>원(₩)</p>
 					</div>
 					<div class="product_viewStatus">
-						🕐&nbsp;${jungGoNoh.product_date} &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  5 - Count(dibs type_num)
+						🕐&nbsp;${jungGoNoh.product_date} &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  ${jungGoNoh.dibs_count }
+						&nbsp;&nbsp;&nbsp;&nbsp; ‼&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  class="report_btn" value="신고하기"></button>
 					</div>
 					<div class="product_productStatus">
 						상품 상태 : ${jungGoNoh.product_status}<br>
@@ -150,15 +169,22 @@
 <!-- 						#바지 #바지 #바지 #바지 #바지 -->
 					</div>
 					<div class="button_array">
-												
-						<c:choose>
-						<c:when test="'N' eq 'N' "> <%--${jungGoNoh.dibs_check}--%> 
-								<button type="button"  class="favorite_btn" onclick="sample1();">♥ 찜 등록</button>
-							</c:when>
-							<c:otherwise>
-								<button type="button"  class="UnFavorite_btn" onclick="sample2();">💔 찜 해제</button>
-							</c:otherwise>
-						</c:choose>
+						
+						<form action="dibsPro" method="post" enctype="multipart/form-data">						
+							<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNoh.product_idx}"/>
+							<input type="hidden" name="favorite_check" id="favorite_check" value="${dibs.favorite_check}"/>
+							<input type="hidden" name="mem_idx" id="mem_idx" value="1"/><!-- session 변경 필요 -->
+							
+							<c:choose>
+								<c:when test="${dibs.favorite_check =='Y' }">
+									<input type="submit"  class="UnFavorite_btn" value="💔 찜 해제">
+								</c:when>
+								<c:otherwise>
+									<input type="submit" class="favorite_btn" value="♥ 찜 등록"/>		
+								</c:otherwise>
+							</c:choose>
+						</form>						
+						
 						
 	                    <c:choose>
 							<c:when test="'N' eq 'N' "><%--${session.sId eq jungGoNoh.member_id }--%>
@@ -188,7 +214,7 @@
 						<br>
 						판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<br>
 						유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<br>
-						<span>중고나라 고객센터로 신고해주시기 바랍니다.</span>
+						<span><a href="${pageContext.request.contextPath }/reviewList">중고나라 고객센터로 신고해주시기 바랍니다.</a></span>
 					</div>
 				</div>
 				<div class="product_content">
@@ -200,27 +226,24 @@
 	
 				<div class="seller_profile_wrap">
 					<img class="seller_profile" src="${pageContext.request.contextPath}/resources/img/junggo/profile_m.png">
-					<p class="seller_name"></p><%--${jungGoNoh.mem_nickname} --%>
-					<p class="seller_Lv"></p><%--${jungGoNoh.mem_rank}--%>
+					<p class="seller_name">${jungGoNoh.mem_nickname}</p>
+					<p class="seller_Lv">${jungGoNoh.mem_rank}</p>
 				</div>
 				<div class="seller_products">
-					<p class="seller_products_title">님의 상품정보</p><%--${jungGoNoh.mem_nickname}--%>
+					<p class="seller_products_title">${jungGoNoh.mem_nickname}님의 상품정보</p>
 					<div class="more_product">
-						<div>
-							<img class="more_product_img" src="${pageContext.request.contextPath}/resources/img/junggo/first.jpg">
-							<p class="more_product_name">사제 군장- (중,경)mem_idx>mem_</p>
-							<span>15,000원</span>
-						</div>
-						<div>
-							<img class="more_product_img" src="${pageContext.request.contextPath}/resources/img/junggo/second.jpg">
-							<p class="more_product_name">마우스</p>	
-							<span>5,000원</span>
-						</div>
-						<div>
-							<img class="more_product_img" src="${pageContext.request.contextPath}/resources/img/junggo/third.jpg">
-							<p class="more_product_name">마우스2</p>
-							<span>3,000원</span>
-						</div>					
+						<c:forEach var="moreProductListSmall" items="${moreProductListSmall}">
+					
+						
+						
+							<div>
+								<img class="more_product_img" src="${pageContext.request.contextPath}/resources/upload/${moreProductListSmall.image1}">
+								<p class="more_product_name">${moreProductListSmall.product_title}</p>
+								<span><fmt:formatNumber value="${moreProductListSmall.product_price}" pattern="#,###"/>원</span>
+							</div>
+							
+						</c:forEach>	
+										
 					</div>						
 					<div class="review_wrap more_wrap_box">
 						<div class="view_tit_sec">

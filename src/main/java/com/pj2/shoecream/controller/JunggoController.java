@@ -8,14 +8,14 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.*;
+import org.springframework.security.core.context.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pj2.shoecream.config.*;
 import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.vo.JungGoNohVO;
@@ -65,9 +66,10 @@ public class JunggoController {
 	@PostMapping("registProductPro")
 	public String writePro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
 
-		
-		String sId = (String)session.getAttribute("sId");
-/*//		if(sId == null) {
+
+		String sId = "admin";
+	//	String sId = (String)session.getAttribute("sId");
+//		if(sId == null) {
 //			model.addAttribute("msg", "잘못된 접근입니다!");
 //			return "fail_back";
 //		}
@@ -84,8 +86,8 @@ public class JunggoController {
 //		String saveDir = request.getServletContext().getRealPath(uploadDir); // 사용 가능
 		String saveDir = session.getServletContext().getRealPath(uploadDir);
 //		System.out.println("실제 업로드 경로 : "+ saveDir);
-		// 실제 업로드 경로 : D:\Shared\Spring\workspace_spring5\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Spring_MVC_Board\resources\ upload
-		
+		// 실제 업로드 경로 : C:\STS4\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ShoeCREAM\resources/upload/날짜
+
 		String subDir = ""; // 서브디렉토리(날짜 구분)
 		
 		try {
@@ -121,9 +123,76 @@ public class JunggoController {
 		MultipartFile mFile2 = jungGoNoh.getFile2();
 		MultipartFile mFile3 = jungGoNoh.getFile3();
 		MultipartFile mFile4 = jungGoNoh.getFile4();
-//		System.out.println("원본파일명1 : " + mFile1.getOriginalFilename());
-//		System.out.println("원본파일명2 : " + mFile2.getOriginalFilename());
-//		System.out.println("원본파일명3 : " + mFile3.getOriginalFilename());
+
+		String filename1 = mFile1.getOriginalFilename();
+		String filename2 = mFile2.getOriginalFilename();
+		String filename3 = mFile3.getOriginalFilename();
+		String filename4 = mFile4.getOriginalFilename();
+		String fileext1 = filename1.substring(filename1.lastIndexOf(".") + 1);
+		String fileext2 = filename2.substring(filename2.lastIndexOf(".") + 1);
+		String fileext3 = filename3.substring(filename3.lastIndexOf(".") + 1);
+		String fileext4 = filename4.substring(filename3.lastIndexOf(".") + 1);
+		
+		if((fileext1 == null || fileext1.length() == 0))
+		{	
+		}
+		else
+		{	
+			if(fileext1.equals("png") || fileext1.equals("jpg") || fileext1.equals("jpeg"))
+			{
+			}
+			else 
+			{
+				model.addAttribute("msg", "첫번째 파일 업로드는 이미지만 업로드 가능합니다.");
+				return "inc/fail_back";
+			}
+		}
+		
+		if((fileext2 == null || fileext2.length() == 0))
+		{	
+		}
+		else
+		{	
+			if(fileext2.equals("png") || fileext2.equals("jpg") || fileext2.equals("jpeg"))
+			{
+			}
+			else 
+			{
+				model.addAttribute("msg", "두번째 파일 업로드는 이미지만 업로드 가능합니다.");
+				return "inc/fail_back";
+			}
+		}
+		
+		if((fileext3 == null || fileext3.length() == 0))
+		{	
+		}
+		else
+		{	
+			if(fileext3.equals("png") || fileext3.equals("jpg") || fileext3.equals("jpeg"))
+			{
+			}
+			else 
+			{
+				model.addAttribute("msg", "세번째 파일 업로드는 이미지만 업로드 가능합니다.");
+				return "inc/fail_back";
+			}
+		}
+		
+		if((fileext4 == null || fileext4.length() == 0))
+		{	
+		}
+		else
+		{	
+			if(fileext4.equals("png") || fileext4.equals("jpg") || fileext3.equals("jpeg"))
+			{
+			}
+			else 
+			{
+				model.addAttribute("msg", "세번째 파일 업로드는 이미지만 업로드 가능합니다.");
+				return "inc/fail_back";
+			}
+		}
+		
 		
 		// 파일명 중복 방지를 위한 대첵
 		// 현재 시스템(서버)에서 랜덤ID 값을 추출하여 파일명 앞에 붙여서
@@ -139,10 +208,10 @@ public class JunggoController {
 //		System.out.println(uuid.substring(0, 8));
 		// 생성된 UUID 값(8자리 추출)과 업로드 파일명을 결합하여 JungGoNohVO 객체에 저장(구분자로 _ 기호 추가)
 		// => 단, 파일명이 존재하는 경우에만 파일명 생성(없을 경우를 대비하여 기본 파일명 널스트링으로 처리)
-		jungGoNoh.setProduct_image1("");
-		jungGoNoh.setProduct_image2("");
-		jungGoNoh.setProduct_image3("");
-		jungGoNoh.setProduct_image4("");
+		jungGoNoh.setImage1("");
+		jungGoNoh.setImage2("");
+		jungGoNoh.setImage3("");
+		jungGoNoh.setImage4("");
 		
 		// 파일명을 저장할 변수 선언
 		String fileName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
@@ -151,40 +220,58 @@ public class JunggoController {
 		String fileName4 = uuid.substring(0, 8) + "_" + mFile4.getOriginalFilename();
 		
 		if(!mFile1.getOriginalFilename().equals("")) {
-			jungGoNoh.setProduct_image1(subDir + "/" + fileName1);
+			jungGoNoh.setImage1(subDir + "/" + fileName1);
 		}
 		
 		if(!mFile2.getOriginalFilename().equals("")) {
-			jungGoNoh.setProduct_image2(subDir + "/" + fileName2);
+			jungGoNoh.setImage2(subDir + "/" + fileName2);
 		}
 		
 		if(!mFile3.getOriginalFilename().equals("")) {
-			jungGoNoh.setProduct_image3(subDir + "/" + fileName3);
+			jungGoNoh.setImage3(subDir + "/" + fileName3);
 		}
 		
 		if(!mFile4.getOriginalFilename().equals("")) {
-			jungGoNoh.setProduct_image4(subDir + "/" + fileName4);
+			jungGoNoh.setImage4(subDir + "/" + fileName4);
 		}
-		System.out.println("실제 업로드 파일명1 : " + jungGoNoh.getProduct_image1());
-		System.out.println("실제 업로드 파일명2 : " + jungGoNoh.getProduct_image2());
-		System.out.println("실제 업로드 파일명3 : " + jungGoNoh.getProduct_image3());
-		System.out.println("실제 업로드 파일명3 : " + jungGoNoh.getProduct_image4());
-*/		
-		// -----------------------------------------------------------------------------------
+		System.out.println("실제 업로드 파일명1 : " + jungGoNoh.getImage1());
+		System.out.println("실제 업로드 파일명2 : " + jungGoNoh.getImage2());
+		System.out.println("실제 업로드 파일명3 : " + jungGoNoh.getImage3());
+		System.out.println("실제 업로드 파일명3 : " + jungGoNoh.getImage4());
+	
+	
+		// -----------------------------필터링-------------------------------------------
+		String product_info = jungGoNoh.getProduct_info();
+		
+		String trashArr[] = jungGoNoh.getTrashArr();
+
+		int len = trashArr.length;   
+		System.out.println("=====================trashArr.length"+trashArr.length);
+		
+		int i=0;
+		for (i=0;i<=len-1;i++)
+		{
+			product_info = product_info.replaceAll(trashArr[i], "*");
+		}
+		jungGoNoh.setProduct_info(product_info);
+		System.out.println("==========================================product_info" + product_info);
+		
 		// BoardService - registBoard() 메서드를 호출하여 게시물 등록 작업 요청
 		// => 파라미터 : JungGoNohVO 객체    리턴타입 : int(insertCount)
 	
-		int session_idx = chatService.getSIdIdx(sId);
+		int session_idx = 1;
+		//int session_idx = chatService.getSIdIdx(sId);
+		jungGoNoh.setMem_idx(session_idx);
 		LocalDateTime localDateTime = LocalDateTime.now(); // 시스템의 현재 날짜 및 시각 정보 리턴
 		
 		// java.time.DateTimeFormatter 클래스를 활용하여 포맷 변경
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-		localDateTime.format(dateTimeFormatter);
-		
-		jungGoNoh.setProduct_idx(Integer.toString(session_idx) + localDateTime);
 		
 		
+		jungGoNoh.setProduct_idx(Integer.toString(session_idx) + localDateTime.format(dateTimeFormatter));
 		
+		
+		int insertProductImage = jungGoNohService.registProductImage(jungGoNoh);
 		int insertCountJung = jungGoNohService.registJungProduct(jungGoNoh);
 		
 		
@@ -201,7 +288,7 @@ public class JunggoController {
 				// => 비어있는 파일은 이동할 수 없으므로(= 예외 발생) 제외
 				// => File 객체 생성 시 지정한 디렉토리에 지정한 이름으로 파일이 이동(생성)됨
 				//    따라서, 이동할 위치의 파일명도 UUID 가 결합된 파일명을 지정해야한다!
-/*				if(!mFile1.getOriginalFilename().equals("")) {
+				if(!mFile1.getOriginalFilename().equals("")) {
 					mFile1.transferTo(new File(saveDir, fileName1));
 				}
 				
@@ -216,12 +303,12 @@ public class JunggoController {
 				if(!mFile4.getOriginalFilename().equals("")) {
 					mFile4.transferTo(new File(saveDir, fileName4));
 				}
-*/				
+				
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
-			} /*catch (IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
-			}*/
+			}
 			
 			// 글쓰기 작업 성공 시 글목록(BoardList)으로 리다이렉트
 			return "junggo/junggo_product_search";
@@ -232,26 +319,86 @@ public class JunggoController {
 		
 	}
 	
-	
+			
 	
 	//------------------ 물건 상세 안내 폼 이동---------------------
 	@GetMapping("productDetail")
 	public String productDetail(
-			@RequestParam int product_idx, HttpSession session, Model model) {
+		@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+//		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
+//		System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBB"+mem_idx);
 		
-		JungGoNohVO jungGoNoh = jungGoNohService.getProduct(product_idx);
+		//String sId = "admin";
+		//jungGoNoh.setMem_idx(mem_idx);
+		jungGoNoh.setMem_idx(1);
+		int mem_idx = jungGoNoh.getMem_idx();
 		
+		
+		JungGoNohVO product = jungGoNohService.getProduct(product_idx);
+		JungGoNohVO dibs = jungGoNohService.getDibs(jungGoNoh);
+		List<JungGoNohVO> moreProductListSmall =jungGoNohService.moreProductListSmall(mem_idx);
+		
+	
 		// 상세정보 조회 결과 저장
-		model.addAttribute("jungGoNoh", jungGoNoh);
+		model.addAttribute("jungGoNoh", product);
+		model.addAttribute("dibs", dibs);
+		model.addAttribute("moreProductListSmall", moreProductListSmall);
 		
 	    return "junggo/product_detail";
 	}
 
+	//------------------ 찜 입력---------------------
+	
+	@PostMapping("dibsPro")
+	public String dibsPro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
+		
+		jungGoNoh.setMem_idx(1);
+		
+		String product_idx = jungGoNoh.getProduct_idx();
+		
+		int countDibs = 0;
+		if(jungGoNoh.getFavorite_check() =="Y" || jungGoNoh.getFavorite_check().equals("Y"))
+		{
+			countDibs = jungGoNohService.removeDibs(jungGoNoh);
+		}
+		else
+		{	
+			countDibs = jungGoNohService.registDibs(jungGoNoh);
+		}
+		
+		// 게시물 등록 작업 요청 결과 판별
+		// => 성공 시 업로드 파일을 실제 디렉토리에 이동시킨 후 BoardList 서블릿 리다이렉트
+		// => 실패 시 "글 쓰기 실패!" 메세지 출력 후 이전페이지 돌아가기 처리
+		if(countDibs > 0) 
+		{ // 성공
+			try {
+				
+				
+			} 
+			catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+			
+			// 글쓰기 작업 성공 시 글목록(BoardList)으로 리다이렉트
+			return "redirect:/productDetail?product_idx="+product_idx; 
+		} else { // 실패
+			model.addAttribute("msg", "글 쓰기 실패!");
+			return "inc/fail_back";
+		}
+		
+		
+	}
+	
+	//------------------  --------------------------
+	
 	
 	//------------------ 물건 삭제 프로 -----------------------------
 	
 	@GetMapping("productDelete")
-	public String delete(@RequestParam int product_idx, HttpSession session, Model model) {
+	public String delete(@RequestParam String product_idx, HttpSession session, Model model) {
 		// 세션 아이디가 존재하지 않으면(미로그인) "잘못된 접근입니다!" 출력 후 이전 페이지 돌아가기 처리
 		String sId = (String)session.getAttribute("sId");
 		if(sId == null) {
