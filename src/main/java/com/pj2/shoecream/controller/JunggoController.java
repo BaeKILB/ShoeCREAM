@@ -67,7 +67,11 @@ public class JunggoController {
 	public String writePro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
 
 
-		String sId = "admin";
+		//String sId = "admin";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
+		jungGoNoh.setMem_idx(mem_idx);
 	//	String sId = (String)session.getAttribute("sId");
 //		if(sId == null) {
 //			model.addAttribute("msg", "잘못된 접근입니다!");
@@ -325,18 +329,14 @@ public class JunggoController {
 	@GetMapping("productDetail")
 	public String productDetail(
 		@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-//		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
-//		System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBB"+mem_idx);
-		
-		//String sId = "admin";
-		//jungGoNoh.setMem_idx(mem_idx);
-		jungGoNoh.setMem_idx(1);
-		int mem_idx = jungGoNoh.getMem_idx();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+
+		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
 		
 		
+		jungGoNoh.setMem_idx(mem_idx);
+	
 		JungGoNohVO product = jungGoNohService.getProduct(product_idx);
 		JungGoNohVO dibs = jungGoNohService.getDibs(jungGoNoh);
 		List<JungGoNohVO> moreProductListSmall =jungGoNohService.moreProductListSmall(mem_idx);
@@ -346,7 +346,6 @@ public class JunggoController {
 		model.addAttribute("jungGoNoh", product);
 		model.addAttribute("dibs", dibs);
 		model.addAttribute("moreProductListSmall", moreProductListSmall);
-		
 	    return "junggo/product_detail";
 	}
 
@@ -354,9 +353,7 @@ public class JunggoController {
 	
 	@PostMapping("dibsPro")
 	public String dibsPro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
-		
-		jungGoNoh.setMem_idx(1);
-		
+				
 		String product_idx = jungGoNoh.getProduct_idx();
 		
 		int countDibs = 0;

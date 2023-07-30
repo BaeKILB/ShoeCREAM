@@ -173,8 +173,7 @@
 						<form action="dibsPro" method="post" enctype="multipart/form-data">						
 							<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNoh.product_idx}"/>
 							<input type="hidden" name="favorite_check" id="favorite_check" value="${dibs.favorite_check}"/>
-							<input type="hidden" name="mem_idx" id="mem_idx" value="1"/><!-- session 변경 필요 -->
-							
+							<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNoh.mem_idx}"/>
 							<c:choose>
 								<c:when test="${dibs.favorite_check =='Y' }">
 									<input type="submit"  class="UnFavorite_btn" value="💔 찜 해제">
