@@ -62,11 +62,12 @@ public class AuctionController {
         , @RequestParam Map<String, Object> map) { //경매 제품상세
     	//로그인 해야 이용 가능한걸로.. 버튼마다 session 체크 귀찮으니까..;
 		// 회원번호
-//    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//        int sId = mPrincipalDetails.getMember().getMem_idx();
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        int sId = mPrincipalDetails.getMember().getMem_idx();
     	
-    	int sId = 2;
+//    	int sId = 2;
+        
     	map.put("mem_idx", sId);
 	
     	String auction_idx = (String)map.get("auction_idx");
@@ -87,18 +88,31 @@ public class AuctionController {
 		// <a
 		// href="auction_detail?auction_idx=${product.auction_idx}&param=${product.auction_Scategory}">
 
-		// 현재가격이랑
 		// 입찰내역
 		Map<String, Object> bid = bidService.getBid(auction_idx);
 		model.addAttribute("bid", bid);
+		
+		// 입찰 횟수
+		int bidCount = bidService.getBidCount(auction_idx);
+		model.addAttribute("bidCount", bidCount);
 
 		// 찜
 		Map<String, Object> dibs = service.getAuctionDibs(map);
 		model.addAttribute("dibs", dibs);
 		
 		// 찜카운트
-		int count = service.getDibsCount(map);
-		model.addAttribute("dibsCount", count);
+		int dibsCount = service.getDibsCount(map);
+		model.addAttribute("dibsCount", dibsCount);
+		
+		// 판매자정보
+//		int mem_idx = Integer.parseInt((String)map.get("mem_idx")); 
+		
+		// 판매자 정보가 안가져와진다.. 20230730 21:49
+		/* java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.String (java.lang.Integer and java.lang.String are in module java.base of loader 'bootstrap')
+			at com.pj2.shoecream.controller.AuctionController.AuctionDetail(AuctionController.java:108) */
+		
+//		Map<String, Object> sellerInfo = service.getSellerInfo(mem_idx);
+//		model.addAttribute("sellerInfo",sellerInfo);
 		
         return "auction/auction_detail";
     }
@@ -114,12 +128,12 @@ public class AuctionController {
           , ProductImageVO image
           , HttpSession session) {
 
-	// sId 받아오기
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//        int sId = mPrincipalDetails.getMember().getMem_idx();
+    	// sId 받아오기
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        int sId = mPrincipalDetails.getMember().getMem_idx();
     	
-    	int sId = 1; // 판매자 회원번호
+//    	int sId = 1; // 판매자 회원번호
 
 		auction.setMem_idx(sId); // 회원번호 추가
 		String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
@@ -190,40 +204,40 @@ public class AuctionController {
     public String getAucList(
           @RequestParam Map<String, Object> map) {
        
-      int pageNum = Integer.parseInt(String.valueOf(map.get("pageNum")));
-      int listLimit = 20;
-      int startRow = (pageNum -1) * listLimit;
+		int pageNum = Integer.parseInt(String.valueOf(map.get("pageNum")));
+		int listLimit = 20;
+		int startRow = (pageNum - 1) * listLimit;
        
-      map.put("startRow", startRow);
-      map.put("listLimit", listLimit);
+		map.put("startRow", startRow);
+		map.put("listLimit", listLimit);
       
-      List<Map<String, Object>> auctionList = service.getAuctionList(map);
-      
-      map.remove("startRow");
-      map.remove("listLimit");
-      
-      int listCount = service.getAuctionList(map).size();
-      int pageListLimit = 20;
-      int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
-      int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
-      int endPage = startPage + pageListLimit - 1;
-      if(endPage > maxPage) {
-         endPage = maxPage;
-      }
-      
-      Map<String, Object> pageInfo = new HashMap<String, Object>();
-      pageInfo.put("listCount", listCount);
-      pageInfo.put("pageListLimit", pageListLimit);
-      pageInfo.put("maxPage", maxPage);
-      pageInfo.put("startPage", startPage);
-      pageInfo.put("endPage", endPage);
-      pageInfo.put("pageNum", pageNum);
-      
-      auctionList.add(pageInfo);
-      
-      JSONArray jsonArray = new JSONArray(auctionList);
-       return jsonArray.toString();
-    }
+		List<Map<String, Object>> auctionList = service.getAuctionList(map);
+
+		map.remove("startRow");
+		map.remove("listLimit");
+
+		int listCount = service.getAuctionList(map).size();
+		int pageListLimit = 20;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		if (endPage > maxPage) {
+			endPage = maxPage;
+		}
+
+		Map<String, Object> pageInfo = new HashMap<String, Object>();
+		pageInfo.put("listCount", listCount);
+		pageInfo.put("pageListLimit", pageListLimit);
+		pageInfo.put("maxPage", maxPage);
+		pageInfo.put("startPage", startPage);
+		pageInfo.put("endPage", endPage);
+		pageInfo.put("pageNum", pageNum);
+
+		auctionList.add(pageInfo);
+
+		JSONArray jsonArray = new JSONArray(auctionList);
+		return jsonArray.toString();
+	}
     
     
     //입찰하기
@@ -233,15 +247,15 @@ public class AuctionController {
 			, Model model
 			, HttpSession session) {
 
-       //db에서 자료 불러온다
-      Map<String, Object> auction = service.getAuction(auction_idx);
-      model.addAttribute("auction", auction);
-      
-      //bid_table에서도 자료 불러온다 bid_price
-      Map<String, Object> bid = bidService.getBid(auction_idx);
-      model.addAttribute("bid", bid);
-       return "auction/bidding_popup";
-    }
+		// db에서 자료 불러온다
+		Map<String, Object> auction = service.getAuction(auction_idx);
+		model.addAttribute("auction", auction);
+
+		// bid_table에서도 자료 불러온다 bid_price
+		Map<String, Object> bid = bidService.getBid(auction_idx);
+		model.addAttribute("bid", bid);
+		return "auction/bidding_popup";
+	}
     
     
     //즉시구매
@@ -250,8 +264,6 @@ public class AuctionController {
          , Model model
          , @RequestParam String auction_idx) {
        
-       String sId = (String)session.getAttribute("sId");
-      
       Map<String, Object> auction = service.getAuction(auction_idx);
       model.addAttribute("auction",auction);
       
@@ -266,17 +278,18 @@ public class AuctionController {
     		, Model model
     		, HttpSession session) {
     	
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-        int sId = mPrincipalDetails.getMember().getMem_idx();
-        
-        System.out.println("sId ? " + sId);
-    	
-        int insertCount = bidService.insertBidList(map);
-    	if(insertCount>0) {
-    	}
-    
-       return "auction/auction_main";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int sId = mPrincipalDetails.getMember().getMem_idx();
+
+		map.put("mem_idx", sId);
+
+		int insertCount = bidService.insertBid(map);
+		if (insertCount > 0) {
+			return "inc/close";
+		} else {
+			return "fail_back";
+		}
     }
     
     @ResponseBody
@@ -284,11 +297,10 @@ public class AuctionController {
     public String dibsEvent(
     		@RequestParam Map<String,Object> map
     		, Model model) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//        int sId = mPrincipalDetails.getMember().getMem_idx();
-    	
-    	int sId = 2;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        int sId = mPrincipalDetails.getMember().getMem_idx();
+        
     	map.put("mem_idx", sId);
     	
     	Map<String, Object> dibs = service.getAuctionDibs(map);
