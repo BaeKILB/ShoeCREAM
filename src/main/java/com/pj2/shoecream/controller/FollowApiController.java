@@ -20,54 +20,53 @@ import com.pj2.shoecream.vo.FollowVO;
 
 @RestController
 public class FollowApiController {
-	
+
 	@Autowired
 	private FollowService followService;
-	
-	@PostMapping("/api/follow/{followee_idx}")
-	public ResponseEntity<?> follow(
-			FollowVO Follow, @AuthenticationPrincipal PrincipalDetails principalDetails,
-			@PathVariable int followee_idx, BindingResult bindingResult) {
-//		int insertCount = followService.registFollow(follower_idx, followee_idx);
-		// 1. 기존 방식
-//		int insertCount = followService.registFollow(principalDetails.getMember().getMem_idx(), followee_idx);
-//		return new ResponseEntity<>(new CMRespDto<>(insertCount, "구독하기 성공", null), HttpStatus.OK);
-		// 2. 다른 방식
-		// 세션 정보 가져오기
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-        int sId = mPrincipalDetails.getMember().getMem_idx(); // 세션에 저장된 mem_idx
-        
-        if (sId == followee_idx) {
+
+	@PostMapping("/api/follow/{mem_idx}")
+	public ResponseEntity<?> follow(FollowVO Follow, @AuthenticationPrincipal PrincipalDetails principalDetails,
+			@PathVariable int mem_idx, BindingResult bindingResult) {
+
+		// 현재 로그인한 mem_idx 값 들고 오기
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int sId = mPrincipalDetails.getMember().getMem_idx(); // 세션에 저장된 mem_idx
+		if (sId == mem_idx) {
 //            return new ResponseEntity<>(new CMRespDto<>(-1, "자신을 팔로우할 수 없습니다.", null), HttpStatus.BAD_REQUEST);
-      	  	throw new CustomApiException("자신을 팔로우할 수 없습니다.");
-        }
-        
-        // 파라미터를 포함하는 FollowVO 객체를 생성
-        FollowVO followVO = new FollowVO();
-        followVO.setFollower_idx(sId);
-        followVO.setFollowee_idx(followee_idx);
-        
-        // 이미 팔로우한 사용자인지 확인
-        int existingFollowCount = followService.countExistingFollow(followVO);
-        if (existingFollowCount > 0) {
+			throw new CustomApiException("자신을 팔로우할 수 없습니다.");
+		}
+
+		// 파라미터를 포함하는 FollowVO 객체를 생성
+		FollowVO followVO = new FollowVO();
+		followVO.setFollower_idx(sId);
+		followVO.setFollowee_idx(mem_idx);
+
+		// 이미 팔로우한 사용자인지 확인
+		int existingFollowCount = followService.countExistingFollow(followVO);
+		if (existingFollowCount > 0) {
 //            return new ResponseEntity<>(new CMRespDto<>(-1, "이미 팔로우한 사용자입니다.", null), HttpStatus.BAD_REQUEST);
-        	  throw new CustomApiException("이미 팔로우한 사용자입니다.");
-        } else {
-            followService.registFollow(followVO);
-            return new ResponseEntity<>(new CMRespDto<>(1, "구독하기 성공", null), HttpStatus.OK);
-        }
+			throw new CustomApiException("이미 팔로우한 사용자입니다.");
+		} else {
+			followService.registFollow(followVO);
+			return new ResponseEntity<>(new CMRespDto<>(1, "구독하기 성공", null), HttpStatus.OK);
+		}
 	}
-	
-	@DeleteMapping("/api/subscribe/{followee_idx}")
+
+	@DeleteMapping("/api/follow/{mem_idx}")
 	public ResponseEntity<?> unfollow(@AuthenticationPrincipal PrincipalDetails principalDetails,
-			@PathVariable int followee_idx) {
-		// 1. 기존 방식
-//		int deleteCount = followService.deleteFollow(principalDetails.getMember().getMem_idx(), followee_idx);
-//		return new ResponseEntity<>(new CMRespDto<>(deleteCount, "구독취소하기 성공", null), HttpStatus.OK);
-		// 2. 다른 방식
-		followService.deleteFollow(principalDetails.getMember().getMem_idx(), followee_idx);
+			@PathVariable int mem_idx) {
+
+		// 현재 로그인한 mem_idx 값 들고 오기
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int sId = mPrincipalDetails.getMember().getMem_idx();
+
+		// 구독 취소 서비스
+		followService.deleteFollow(mPrincipalDetails.getMember().getMem_idx(), mem_idx);
+		System.out.println("구독취소할 때 현재 로그인 한 sId : " + sId);
+		System.out.println("구독취소할 때 현재 프로필 페이지 mem_idx : " + mem_idx);
 		return new ResponseEntity<>(new CMRespDto<>(1, "구독취소하기 성공", null), HttpStatus.OK);
-		
+
 	}
 }
