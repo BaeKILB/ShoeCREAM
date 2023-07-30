@@ -12,5 +12,7 @@ import lombok.NoArgsConstructor;
 public class MemberProfileDto {
 	private boolean pageOwnerState;
 //	private int imageCount;
+	private boolean followState;
+	private int followCount;
 	private MemberVO member;
 }

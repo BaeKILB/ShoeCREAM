@@ -1,5 +1,6 @@
 package com.pj2.shoecream.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.pj2.shoecream.mapper.FollowMapper;
 import com.pj2.shoecream.mapper.MemberMapper;
 import com.pj2.shoecream.vo.MemberProfileDto;
 import com.pj2.shoecream.vo.MemberVO;
@@ -22,6 +24,8 @@ public class MemberService {
 	
     @Autowired
     private MemberMapper memberMapper;
+    @Autowired
+    private FollowMapper followMapper;
     
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     
@@ -112,6 +116,20 @@ public class MemberService {
 		
 		dto.setMember(memberEntity);
 		dto.setPageOwnerState(mem_idx == sId);
+		
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("sId", sId);
+        paramMap.put("mem_idx", mem_idx);
+		System.out.println("현재 프로필 페이지 sId 는 뭐냐 ? " + sId);
+		System.out.println("현재 프로필 페이지 mem_idx 는 뭐냐 ? " + mem_idx);
+        int followState = followMapper.mfollowState(paramMap);
+        int followCount = followMapper.mfollowCount(mem_idx);
+		
+		dto.setFollowState(followState == 1);
+		dto.setFollowCount(followCount);
+		System.out.println("해당 프로필페이지 유저와 팔로우 했니? : " + followState);
+		System.out.println("팔로우 수 : " +dto.getFollowCount());
+		
 		return dto;
 	}
 

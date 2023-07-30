@@ -38,13 +38,20 @@
 <!-- 						<button class="cta" onclick="toggleSubscribe(this)">구독하기</button> -->
 <%-- 					</c:otherwise> --%>
 <%-- 				</c:choose> --%>
+
 				<c:choose>
-					<c:when test="${dto.pageOwnerState}">
-						<button class="cta"
-							onclick="location.href='${pageContext.request.contextPath }/image/upload'">사진등록</button>
+					<c:when test="${dto.pageOwnerState }">
+						<button class="cta" onclick="location.href='${pageContext.request.contextPath }/image/upload'">사진등록</button>
 					</c:when>
 					<c:otherwise>
-						<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
+						<c:choose>
+							<c:when test="${dto.followState }">
+								<button class="cta blue" onclick="toggleSubscribe(this)">구독취소</button>
+							</c:when>
+							<c:otherwise>
+								<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 				<button class="modi" onclick="popup('.modal-info')">
@@ -56,7 +63,7 @@
 				<ul>
 					<li><a href=""> 게시물<span>${posts_image1.size()}</span>
 					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen();"> 구독정보<span>2</span>
+					<li><a href="javascript:subscribeInfoModalOpen();"> 구독정보<span>${dto.followCount}</span>
 					</a></li>
 				</ul>
 			</div>
