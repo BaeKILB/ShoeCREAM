@@ -1,5 +1,7 @@
 package com.pj2.shoecream.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,13 +20,15 @@ import com.pj2.shoecream.handler.CustomApiException;
 import com.pj2.shoecream.service.FollowService;
 import com.pj2.shoecream.vo.CMRespDto;
 import com.pj2.shoecream.vo.FollowVO;
+import com.pj2.shoecream.vo.SubscribeDto;
 
 @RestController
 public class FollowApiController {
 
 	@Autowired
 	private FollowService followService;
-
+	
+	// 팔로우 하기
 	@PostMapping("/api/follow/{mem_idx}")
 	public ResponseEntity<?> follow(FollowVO Follow, @AuthenticationPrincipal PrincipalDetails principalDetails,
 			@PathVariable int mem_idx, BindingResult bindingResult) {
@@ -52,7 +57,8 @@ public class FollowApiController {
 			return new ResponseEntity<>(new CMRespDto<>(1, "구독하기 성공", null), HttpStatus.OK);
 		}
 	}
-
+	
+	// 팔로우 취소
 	@DeleteMapping("/api/follow/{mem_idx}")
 	public ResponseEntity<?> unfollow(@AuthenticationPrincipal PrincipalDetails principalDetails,
 			@PathVariable int mem_idx) {
@@ -69,4 +75,17 @@ public class FollowApiController {
 		return new ResponseEntity<>(new CMRespDto<>(1, "구독취소하기 성공", null), HttpStatus.OK);
 
 	}
+	
+	// 현제 프로필 페이지 회원의 팔로잉 리스트 
+	@GetMapping("api/social/{mem_idx}/follow") // mem_idx 는 해당 페이지 유저
+	public ResponseEntity<?> followList(@PathVariable int mem_idx, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int sId = mPrincipalDetails.getMember().getMem_idx();
+		
+		List<SubscribeDto> followingDto = followService.followList(sId, mem_idx);
+		
+		return new ResponseEntity<>(new CMRespDto<>(1,"구독자 정보 리스트 불러오기 성공", followingDto),HttpStatus.OK);
+	}
+	
 }

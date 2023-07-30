@@ -1,11 +1,14 @@
 package com.pj2.shoecream.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pj2.shoecream.mapper.FollowMapper;
 import com.pj2.shoecream.vo.FollowVO;
+import com.pj2.shoecream.vo.SubscribeDto;
 
 @Service
 public class FollowService {
@@ -30,6 +33,12 @@ public class FollowService {
 	@Transactional
 	public int countExistingFollow(FollowVO followVO) {
 		return followMapper.countExistingFollow(followVO);
+	}
+	
+	//
+	public List<SubscribeDto> followList(int sId, int mem_idx) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
