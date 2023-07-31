@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="find_btns">
 <!--                                         <a href="memberFind" onclick="">비밀번호 찾기</a> -->
-                                        <a href="memberFind" onclick="">아이디/비밀번호 찾기</a>
+                                        <a href="find/memid" onclick="">아이디/비밀번호 찾기</a>
                                     </div>
                                 </div>
 
