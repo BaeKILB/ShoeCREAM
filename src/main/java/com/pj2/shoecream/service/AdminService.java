@@ -1,11 +1,14 @@
 package com.pj2.shoecream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pj2.shoecream.mapper.AdminMapper;
+import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.Criteria;
+import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.JungProductVO;
 import com.pj2.shoecream.vo.MemberVO;
@@ -51,10 +54,11 @@ public class AdminService {
 			return mapper.getTotal();
 		}
 		
-//		//경매상품 목록 띄우기
-//		public List<AuctionVO> getAuction(Criteria cri, String searchType, String searchKeyword) {
-//			return mapper.selectAuctionadmin(cri, searchType, searchKeyword);
-//		}
+		//경매상품 목록 띄우기
+		public List<Map<String, Object>> selectauctionmap() {
+			
+			return mapper.selectauctionmap();
+		}
 		
 
 	}

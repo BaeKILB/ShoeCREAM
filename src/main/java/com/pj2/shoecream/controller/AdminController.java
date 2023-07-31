@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pj2.shoecream.service.AdminService;
 import com.pj2.shoecream.service.BoardService;
 import com.pj2.shoecream.service.ReportService;
+import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.Criteria;
+import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.JungProductVO;
 import com.pj2.shoecream.vo.MemberVO;
@@ -349,19 +352,23 @@ public class AdminController {
 			return "admin/admin_joonggo";
 		}
 		
-//		// 경매 상품 목록 띄우기
-//		@GetMapping("adminAuction")
-//		public String adminAuction(Model model, Criteria cri,
-//				@RequestParam(defaultValue = "") String searchType,
-//				@RequestParam(defaultValue = "") String searchKeyword) {
-	//	
-//			// 경매 목록 조회
-//			List<AuctionVO> auctionpaging = service.getAuction(cri, searchType, searchKeyword);
-//			model.addAttribute("auctionpaging",auctionpaging);
-//			
-	//	
-//			return "admin/admin_auction";
-//		}
+		// 경매 상품 목록 띄우기
+		@GetMapping("auctionProduct")
+		public String adminAuction(Model model, Criteria cri,
+				@RequestParam(defaultValue = "") String searchType,
+				@RequestParam(defaultValue = "") String searchKeyword) {
+		
+			// 경매 목록 조회
+
+			List<Map<String, Object>> auctionmap = service.selectauctionmap();
+			model.addAttribute("auctionmap",auctionmap);
+			System.out.println("나나나나난"+auctionmap );
+			
+			
+			
+		
+			return "admin/admin_auction";
+		}
 		
 	}	
 
