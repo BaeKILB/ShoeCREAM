@@ -20,7 +20,7 @@ import com.pj2.shoecream.handler.CustomApiException;
 import com.pj2.shoecream.service.FollowService;
 import com.pj2.shoecream.vo.CMRespDto;
 import com.pj2.shoecream.vo.FollowVO;
-import com.pj2.shoecream.vo.SubscribeDto;
+import com.pj2.shoecream.vo.FollowingDto;
 
 @RestController
 public class FollowApiController {
@@ -83,7 +83,8 @@ public class FollowApiController {
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int sId = mPrincipalDetails.getMember().getMem_idx();
 		
-		List<SubscribeDto> followingDto = followService.followList(sId, mem_idx);
+		// sId = 현재 로그인 한 mem_idx // mem_dix = 해당 페이지 mem_idx
+		List<FollowingDto> followingDto = followService.followList(sId, mem_idx);
 		
 		return new ResponseEntity<>(new CMRespDto<>(1,"구독자 정보 리스트 불러오기 성공", followingDto),HttpStatus.OK);
 	}

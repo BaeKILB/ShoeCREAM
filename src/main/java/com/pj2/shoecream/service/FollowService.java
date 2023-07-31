@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pj2.shoecream.mapper.FollowMapper;
 import com.pj2.shoecream.vo.FollowVO;
-import com.pj2.shoecream.vo.SubscribeDto;
+import com.pj2.shoecream.vo.FollowingDto;
 
 @Service
 public class FollowService {
@@ -35,10 +35,9 @@ public class FollowService {
 		return followMapper.countExistingFollow(followVO);
 	}
 	
-	//
-	public List<SubscribeDto> followList(int sId, int mem_idx) {
-		// TODO Auto-generated method stub
-		return null;
+	// 팔로우 리스트 구현
+	public List<FollowingDto> followList(int sId, int mem_idx) {
+		return followMapper.selectFollowList(sId, mem_idx);
 	}
 	
 	

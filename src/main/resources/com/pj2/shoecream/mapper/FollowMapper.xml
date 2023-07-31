@@ -52,5 +52,15 @@
 		WHERE follower_idx = #{mem_idx}
 	</select>
 
+	<!-- 팔로우 리스트 구현 -->
+	<select id="selectFollowList" resultType="com.pj2.shoecream.vo.FollowingDto">
+		SELECT m.mem_idx, m.mem_id, m.mem_profileImageUrl,
+		if((SELECT 1 FROM social_follows WHERE follower_idx = #{sId} AND followee_idx = m.mem_idx), 1, 0) followState
+		, if((#{sId}=m.mem_idx), 1, 0) equalMemberState
+		FROM mem_info m inner join social_follows s
+		ON m.mem_idx = s.followee_idx
+		WHERE s.follower_idx = #{mem_idx};
+	</select>
+
 
 </mapper>
