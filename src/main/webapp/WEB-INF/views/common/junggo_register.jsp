@@ -69,12 +69,12 @@ $(document).ready(function() {
     
     lc_codeObject = new Object();
     lc_codeObject.lc_code_id = "1";
-    lc_codeObject.lc_code_name = "스포츠";
+    lc_codeObject.lc_code_name = "남성";
     lc_codeArray.push(lc_codeObject);
     
     lc_codeObject = new Object();
     lc_codeObject.lc_code_id = "2";
-    lc_codeObject.lc_code_name = "공연";
+    lc_codeObject.lc_code_name = "여성";
     lc_codeArray.push(lc_codeObject);
     
     //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
@@ -85,26 +85,26 @@ $(document).ready(function() {
     mc_codeObject = new Object();
     mc_codeObject.lc_code_id = "1";
     mc_codeObject.mc_code_id = "1"
-    mc_codeObject.mc_code_name = "야구"    
+    mc_codeObject.mc_code_name = "운동화"    
     mc_codeArray.push(mc_codeObject);
     
     mc_codeObject = new Object();
     mc_codeObject.lc_code_id = "1";
     mc_codeObject.mc_code_id = "2"
-    mc_codeObject.mc_code_name = "농구"    
+    mc_codeObject.mc_code_name = "구두"    
     mc_codeArray.push(mc_codeObject);
    
     //공연에 해당하는 sub category 리스트
     mc_codeObject = new Object();
     mc_codeObject.lc_code_id = "2";
     mc_codeObject.mc_code_id = "1"
-    mc_codeObject.mc_code_name = "연극"    
+    mc_codeObject.mc_code_name = "운동화"    
     mc_codeArray.push(mc_codeObject);
     
     mc_codeObject = new Object();
     mc_codeObject.lc_code_id = "2";
     mc_codeObject.mc_code_id = "2"
-    mc_codeObject.mc_code_name = "뮤지컬"    
+    mc_codeObject.mc_code_name = "구두"    
     mc_codeArray.push(mc_codeObject);
     
     
@@ -147,10 +147,10 @@ function changeHtml()
 {
 	var lc_code = document.getElementById("lc_code").value;
 	var mc_code = document.getElementById("mc_code").value;
-	if(lc_code == 1 && mc_code == 1){document.getElementById('selected_category').innerHTML="스포츠 > 야구"}
-	if(lc_code == 1 && mc_code == 2){document.getElementById('selected_category').innerHTML="스포츠 > 농구"}
-	if(lc_code == 2 && mc_code == 1){document.getElementById('selected_category').innerHTML="공연 > 연극"}
-	if(lc_code == 2 && mc_code == 2){document.getElementById('selected_category').innerHTML="공연 > 뮤지컬"}
+	if(lc_code == 1 && mc_code == 1){document.getElementById('selected_category').innerHTML="남성 > 운동화"}
+	if(lc_code == 1 && mc_code == 2){document.getElementById('selected_category').innerHTML="남성 > 구두"}
+	if(lc_code == 2 && mc_code == 1){document.getElementById('selected_category').innerHTML="여성 > 운동화"}
+	if(lc_code == 2 && mc_code == 2){document.getElementById('selected_category').innerHTML="여성 > 구두"}
 }
 </script>
 
