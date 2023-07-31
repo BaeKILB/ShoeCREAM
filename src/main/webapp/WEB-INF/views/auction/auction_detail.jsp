@@ -205,17 +205,16 @@ to {
 				</c:choose>
 			</span>
 			<div>
-	            <div id="bidHistoryBtn">경매기록</div> <!-- const auctionHistory() -->
-	            <div id="bidHistory">
-	           		<table id="bidHistoryTable" class="hidden">
-						<tr>
-							<th>입찰자</th>
-							<th>입찰가격</th>
-							<th>거래시간</th>
-							<th>상태</th>
-						</tr>
-					</table>
-	            </div>
+				<c:choose>
+					<c:when test="${bid eq null }">
+						<div>경매기록 없음</div>
+					</c:when>
+					<c:otherwise>
+			            <div id="bidHistoryBtn">경매기록</div>
+			            <div id="bidHistory">
+			            </div>
+					</c:otherwise>
+				</c:choose>
             </div>
         </div>
         <div id="acdBox"></div> <!-- const closeTimeCheck() -->
@@ -232,7 +231,6 @@ to {
 					<input type="button" value="즉시구매-팝업" onclick="buyingPopup();">
 				</c:otherwise>
 			</c:choose>
-			
         </div>
         <div> <!-- 연관상품, 상품정보 & 판매자정보 -->
             <hr>
@@ -255,7 +253,7 @@ to {
 	            <div>
 	               <div> <!-- 판매자정보 -->
 <%-- 	                   <span id="sellerInfo">${sellerInfo.mem_nickname }</span> --%>
-	                   <span id="sellerInfo"> 판매자 닉네임 : ${auction.mem_idx }</span>
+	                   <span id="sellerInfo"> 판매자 닉네임 : ${auction.mem_nickname }</span>
 	               </div>
 	               <div> <!-- 판매자 후기  -->
 	                   <div>후기1</div>
