@@ -3,7 +3,8 @@
 // ajax 데이터 보내기 및 데이터 받기
 
 
-function onClickAjax(obj) {
+
+function loadItemAjax(obj) {
 	
 	let checkError = false;
 	
@@ -26,13 +27,25 @@ function onClickAjax(obj) {
     return data.responseJSON;
 
 }
- 
+
+
 // ajax 로 받아온 데이터 페이지에 적용
 function addItems(dataObj){	// 만약 마지막 리스트까지 검색했으면 더보기 버튼을 지우기
-	if(dataObj.nowPage >= dataObj.maxPage){	
+
+	let resLoadBtn = document.querySelector("#btnLoadItem");
+	
+	if(dataObj.startPage >= dataObj.maxPage){	
 		resLoadBtn.setAttribute("style","display:none")	
 	}
+	
+	let itemListWrap = document.querySelector("#itemList");
+	
+	dataObj.jungListHtml.forEach((e) => {
+		itemListWrap.insertAdjacentHTML("beforeend", e);
+	});
 }
 
+// 첫 로드시 한번 ajax로 불러오기
+dataObj = loadItemAjax(dataObj);
 
 

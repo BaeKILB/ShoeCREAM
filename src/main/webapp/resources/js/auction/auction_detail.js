@@ -69,7 +69,7 @@ $(function() {
     // 입찰내역 클릭
     $("#bidHistoryBtn").on("click",function() {
 		if ($(this).attr('class') == null || $(this).attr('class') == '') {
-			$("#bidHistoryTable").removeClass('hidden');
+			$("#bidHistory").removeClass('hidden');
 			$(this).addClass('on');
 			$.ajax({
 				type: 'get'
@@ -80,11 +80,7 @@ $(function() {
 				}
 			})
 			.done(function(data) {
-				if (data.length == 0) {
-					bidNoResult();
-				} else {
-					bidResult(data);
-				}
+				bidResult(data);
 			})
 			.fail(() => {
 				console.log("fail");
@@ -92,12 +88,23 @@ $(function() {
 		} else {
 			$(this).removeClass('on');
 			$(".bidHistoryData").remove();
-			$("#bidHistoryTable").addClass('hidden');
+			$("#bidHistory").addClass('hidden');
 		}
 	});
 });
 
 const bidResult = (data) => {
+	let result =
+		"<table id='bidHistoryTable'>"
+			+ "<tr>"
+				+ "<th>입찰자</th>"
+				+ "<th>입찰가격</th>"
+				+ "<th>거래시간</th>"
+				+ "<th>상태</th>"
+			+ "</tr>"
+		+ "</table>";
+	$("#bidHistory").append(result);
+		
 	for (let item of data) {
         let result =
 			"<tr class='bidHistoryData'>"
@@ -109,16 +116,6 @@ const bidResult = (data) => {
         $("#bidHistoryTable").append(result);
 	};	
 };
-
-const bidNoResult = () => {
-    let result =
-				"<tr class='bidHistoryData'>"
-					+ "<td colspan='4'>입찰 내역 없음</td>"
-				+ "</tr>";
-    $("#bidHistoryTable").append(result);
-};
-
-
 
 // 찜하기 이벤트
 const dibsCheck = () => {

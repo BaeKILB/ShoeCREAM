@@ -66,6 +66,10 @@ public class ChatService {
 		return mapper.selectChatRoom(room_id);
 	}
 	
+	public ChatRoomVO getChatRoom(String product_idx){
+		return mapper.selectChatRoom(product_idx);
+	}
+	
 	// 현재 자신이 채팅방 인원인지확인
 	public boolean isChatMember(int idx , int chat_room_idx) {
 		MemberVO mem = memMapper.findMemberByMemIdx(idx);

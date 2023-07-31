@@ -25,6 +25,7 @@ public interface ChatMapper {
 	List<ChatMsgVO> selectChatList(int chat_room_idx);
 	
 	ChatRoomVO selectChatRoom(int chat_room_idx);
+	ChatRoomVO selectChatRoom(String product_idx);
 	
 	Integer selectChatCheckAuth(@Param("mem_idx") int mem_idx,
 			@Param("chat_room_idx") int chat_room_idx);

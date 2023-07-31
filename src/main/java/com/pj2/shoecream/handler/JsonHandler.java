@@ -30,6 +30,15 @@ public class JsonHandler {
 		return true;
 	}
 
+	public boolean JsonObj2PageInfo(JSONObject jsonObj, PageInfoVO pageInfo) {
+		pageInfo.setEndPage(Integer.parseInt((String)jsonObj.get("endPage")));
+		pageInfo.setListCount(Integer.parseInt((String)jsonObj.get("listCount")));
+		pageInfo.setPageListLimit(Integer.parseInt((String)jsonObj.get("pageListLimit")));
+		pageInfo.setStartPage(Integer.parseInt((String)jsonObj.get("startPage"))); 
+		pageInfo.setMaxPage(Integer.parseInt((String)jsonObj.get("maxPage")));
+		
+		return true;
+	}
 	public boolean jsonMap2PageInfo(Map<String,Object> jsonMap, PageInfoVO pageInfo) {
 		pageInfo.setEndPage(Integer.parseInt((String)jsonMap.get("endPage")));
 		pageInfo.setListCount(Integer.parseInt((String)jsonMap.get("listCount")));
@@ -39,4 +48,6 @@ public class JsonHandler {
 		
 		return true;
 	}
+	
+	
 }
