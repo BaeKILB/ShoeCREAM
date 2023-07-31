@@ -21,6 +21,7 @@
         where
             auction_idx = #{auction_idx }
             and bid_state = '입찰'
+        
     </select>
     <select id="selectBidCount">
         select

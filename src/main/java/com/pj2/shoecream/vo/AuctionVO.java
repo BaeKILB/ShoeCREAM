@@ -33,6 +33,6 @@ public class AuctionVO {
     // 신규 추가하신것
     private int currentPrice; //현재가격 (bid_price 의 최대값 없으면 시작가)
     private int bidCcount; //입찰수
-    private int de; //보증금
+    private int deposit; //보증금
     private String mem_nickname; //판매자 닉넴
 }

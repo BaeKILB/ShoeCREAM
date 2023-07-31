@@ -278,6 +278,11 @@ public class AuctionController {
     		, Model model
     		, HttpSession session) {
     	
+    	
+    	//본인이 입찰 못하게 막기
+    	
+    	//auc_bid_unit 단위로만 입찰 가능하게 
+    	
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int sId = mPrincipalDetails.getMember().getMem_idx();
