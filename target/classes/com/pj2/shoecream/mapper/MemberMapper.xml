@@ -25,8 +25,7 @@
 		, 0 -- 회원 회원 포인트
 		, 0 -- 회원 충전포인트
 		, 0 -- 회원 잔액
-		, 0 --
-		회원 프로필 사진
+		, 0 -- 회원 프로필 사진
 		, now() -- 회원 가입일
 		)
 	</insert>
@@ -127,10 +126,9 @@
 		FROM
 		mem_info
 		WHERE
-		mem_name = #{mem_name}
-		and mem_mtel = #{mem_mtel}
-		and
-		mem_email = #{mem_email}
+		mem_id = #{mem_id}
+		and mem_name = #{mem_name}
+		and mem_email = #{mem_email}
 	</select>
 
 	<!-- <select id="selectSendEmail" resultType="string"> -->

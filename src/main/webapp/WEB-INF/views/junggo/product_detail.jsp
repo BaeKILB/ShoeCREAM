@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
+<c:set var="principal" value="${null}" />
+
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <!DOCTYPE html>
 <html>
 <head>
@@ -163,7 +171,12 @@
 						사이즈 : ${jungGoNoh.product_size}	mm<br>
 						브랜드 : ${jungGoNoh.product_brand}<br>
 						거래지역 : ${jungGoNoh.product_location}<br>
-						거래 방법 : ${jungGoNoh.product_payment}<br>					
+						거래 방법 : ${jungGoNoh.product_payment}<br>
+						접속한사람: ${principal.member.mem_id}
+						파는사람:	${jungGoNoh.mem_id}		
+						접속한 사람 idx: ${principal.member.mem_idx}
+						파는사람idx : ${jungGoNoh.mem_idx} 
+								
 					</div>
 <!-- 						<div class="product_tag"> -->
 <!-- 						#바지 #바지 #바지 #바지 #바지 -->
@@ -175,31 +188,26 @@
 							<input type="hidden" name="favorite_check" id="favorite_check" value="${dibs.favorite_check}"/>
 							<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNoh.mem_idx}"/>
 							<c:choose>
-								<c:when test="${dibs.favorite_check =='Y' }">
-									<input type="submit"  class="UnFavorite_btn" value="💔 찜 해제">
+								<c:when test="${principal.member.mem_idx == jungGoNoh.mem_idx }">
+									<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>
 								</c:when>
 								<c:otherwise>
-									<input type="submit" class="favorite_btn" value="♥ 찜 등록"/>		
+								<c:choose>
+									<c:when test="${dibs.favorite_check =='Y' }">
+										<input type="submit"  class="UnFavorite_btn" value="💔 찜 해제">
+									</c:when>
+									<c:otherwise>
+										<input type="submit" class="favorite_btn" value="♥ 찜 등록"/>		
+									</c:otherwise>
+								</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</form>						
-						
-						
-	                    <c:choose>
-							<c:when test="'N' eq 'N' "><%--${session.sId eq jungGoNoh.member_id }--%>
-								<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>
-							</c:when>
-							<c:otherwise>
-								<a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
-	                             &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="chat_btn">
-	                    	1:1 대화톡 
-	                    		</a>
-							</c:otherwise>
-						</c:choose>
-	                    
+						<a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
+	                            &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="chat_btn">1:1 대화톡 
+	                    </a>
                     </div>
 				</div>
-
 			</div>
 		</div>
 		

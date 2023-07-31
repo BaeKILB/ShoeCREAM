@@ -89,10 +89,10 @@ div #test_area ul { /* 카테고리 css */
 									</c:when>
 									<c:otherwise>
 										<div class="col-2">
-											<a href="myPage.me">${principal.member.mem_id }님</a>
+											<a href="${pageContext.request.contextPath }/mypage/update">${principal.member.mem_id }님</a>
 										</div>
 										<div class="col-2">
-											<a href="logout" onclick="return confirmLogout()">로그아웃</a>
+											<a href="${pageContext.request.contextPath }/logout" onclick="return confirmLogout()">로그아웃</a>
 										</div>
 										<div class="col-2" style="text-align: left;">
 											<a href="noticeMain.ad">고객센터</a>
@@ -145,7 +145,7 @@ div #test_area ul { /* 카테고리 css */
 					<!--                             </a> -->
 					<!--                         </div> -->
 					<div class="col-1 b_h_left_menu store">
-						<a href="${pageContext.request.contextPath }/mypage"> <img
+						<a href="${pageContext.request.contextPath }/mypage/update"> <img
 							src="${pageContext.request.contextPath }/resources/img/main_ex/market/my_store.png"
 							alt="마이페이지"> 마이페이지
 						</a>

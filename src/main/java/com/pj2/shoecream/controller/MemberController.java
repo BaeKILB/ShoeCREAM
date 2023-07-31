@@ -2,6 +2,7 @@ package com.pj2.shoecream.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.util.FindUtil;
 import com.pj2.shoecream.util.SendUtil;
+import com.pj2.shoecream.vo.MemberProfileDto;
 import com.pj2.shoecream.vo.MemberVO;
 
 import lombok.RequiredArgsConstructor;
@@ -124,9 +126,9 @@ public class MemberController {
 		
 		
 		// 아이디 중복 유효성 검사
-//	    if (memberService.isMemberIdDuplicated(member.getMem_id())) {
-//	    	throw new CustomValidationException("이미 사용 중인 아이디입니다.", null);
-//	    }
+	    if (memberService.isMemberIdDuplicated(member.getMem_id())) {
+	    	throw new CustomValidationException("이미 사용 중인 아이디입니다.", null);
+	    }
 
 		// 생년월일 유효성 검사
 		Date mem_birthday = member.getMem_birthday();
@@ -202,7 +204,7 @@ public class MemberController {
 	public String findPwPro(MemberVO member, Model model) {
 		//아이디 이름 번호 받아와서 일치하면(DB작업1)
 		String mem_id = memberService.isExistUser(member);
-		
+		System.out.println("비번 찾을 mem_id : " + mem_id);
 		if(mem_id == null) {
 			model.addAttribute("msg", "입력하신 정보와 일치하는 아이디가 없습니다.");
 			return "member/auth/fail_back";
@@ -365,6 +367,21 @@ public class MemberController {
     }
     
 ////    =========================store============================
-    
+    // 소셜 개인 프로필 페이지
+   	@GetMapping("/store/{mem_idx}")
+   	public String profile(@PathVariable int mem_idx, Model model) {
+//   		User userEntity = userService.회원프로필(id);
+//   		model.addAttribute("user", userEntity);
+//           Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//           PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//   		int sId = mPrincipalDetails.getMember().getMem_idx();
+//           
+//   		MemberProfileDto dto = memberService.memberProfile(mem_idx, mPrincipalDetails.getMember().getMem_idx());
+//   		model.addAttribute("dto", dto);
+//   		List<String> posts_image1 = SocialImageService.findPostImagesByMemIdx(mem_idx);
+//   		model.addAttribute("posts_image1", posts_image1);
+   		
+   		return "member/store/store";
+   	}
     
 }
