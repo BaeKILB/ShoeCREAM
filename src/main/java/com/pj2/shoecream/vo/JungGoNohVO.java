@@ -29,6 +29,7 @@ public class JungGoNohVO {
 		private String mem_id; // 회원 id, 판매자
 		private String mem_nickname;
 		private String mem_rank;
+		private String mem_profileImageUrl;
 		private String buyier; // 회원 id, 사는 사람
 		private String product_title; // 상품 명
 		private String product_info; // 상품 정보

@@ -134,14 +134,14 @@
 					<p class="product_catrgory">HOME > 
 						<c:choose>
 							<c:when test="${jungGoNoh.lc_code == '1'}">
-								성별 >
+								남성 >
 								<c:choose>
-									<c:when test="${jungGoNoh.mc_code == 1}">남성</c:when>
-									<c:when test="${jungGoNoh.mc_code == 2}">여성</c:when>						
+									<c:when test="${jungGoNoh.mc_code == 1}">운동화</c:when>
+									<c:when test="${jungGoNoh.mc_code == 2}">구두</c:when>						
 								</c:choose>
 							</c:when>
 							<c:when test="${jungGoNoh.lc_code == '2'}">
-								종류 > 
+								여성 > 
 								<c:choose>
 									<c:when test="${jungGoNoh.mc_code == 1}">운동화</c:when>
 									<c:when test="${jungGoNoh.mc_code == 2}">구두</c:when>						
@@ -156,7 +156,7 @@
 					</div>
 					<div class="product_viewStatus">
 						🕐&nbsp;${jungGoNoh.product_date} &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  ${jungGoNoh.dibs_count }
-						&nbsp;&nbsp;&nbsp;&nbsp; ‼&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  class="report_btn" value="신고하기"></button>
+						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  class="report_btn" value="신고하기"></button>
 					</div>
 					<div class="product_productStatus">
 						상품 상태 : ${jungGoNoh.product_status}<br>
@@ -213,7 +213,8 @@
 						<br>
 						판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<br>
 						유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<br>
-						<span><a href="${pageContext.request.contextPath }/reviewList">중고나라 고객센터로 신고해주시기 바랍니다.</a></span>
+						<br>
+						<a href="${pageContext.request.contextPath }/reviewList" class="warning_message">중고나라 고객센터로 신고해주시기 바랍니다.</a>
 					</div>
 				</div>
 				<div class="product_content">
@@ -224,7 +225,7 @@
 			<div class="seller_wrap more_wrap_box col-sm-12 col-lg-6">
 	
 				<div class="seller_profile_wrap">
-					<img class="seller_profile" src="${pageContext.request.contextPath}/resources/img/junggo/profile_m.png">
+					<img class="seller_profile" src="${pageContext.request.contextPath}/${jungGoNoh.mem_profileImageUrl}">
 					<p class="seller_name">${jungGoNoh.mem_nickname}</p>
 					<p class="seller_Lv">${jungGoNoh.mem_rank}</p>
 				</div>

@@ -151,9 +151,9 @@ div #test_area ul { /* 카테고리 css */
 						</a>
 					</div>
 					<div class="col-1 b_h_left_menu">
-						<a href="myChatting"> <img
+						<a href="${pageContext.request.contextPath }/store/${principal.member.mem_idx}"> <img
 							src="${pageContext.request.contextPath }/resources/img/main_ex/market/talk.png"
-							alt="1:1문의"> 채팅
+							alt="1:1문의"> 상점
 						</a>
 					</div>
 					<div class="col-1 b_h_left_menu">

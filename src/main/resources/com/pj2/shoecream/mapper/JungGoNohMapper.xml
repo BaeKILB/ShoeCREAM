@@ -47,7 +47,7 @@
 		SELECT jpd.product_idx, jpd.product_price, jpd.product_status, jpd.product_sell_status, jpd.product_location
 		, jpd.product_title, jpd.product_info, jpd.product_payment, jpd.lc_code, jpd.mc_code
 		, jpd.product_date, jpd.product_readcount, jpd.product_brand, jpd.product_size, jpd.product_selector
-		, mi.mem_idx, mi.mem_id, mi.mem_nickname, mi.mem_rank
+		, mi.mem_idx, mi.mem_id, mi.mem_nickname, mi.mem_rank, mi.mem_profileImageUrl
 		, pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path 
 		, (select count(*) from dibs di where jpd.product_idx = di.product_idx) dibs_count
 		FROM jung_product jpd
@@ -112,6 +112,13 @@ LEFT OUTER JOIN product_image pi
 		   AND mem_idx = #{mem_idx}
 	</delete>
 	
+	
+	<!-- 찜 등록시 조회수 감소 -->
+	<update id="decreaseReadcount">
+		UPDATE jung_product
+		   SET product_readcount = product_readcount - 1
+		 WHERE product_idx = #{product_idx}
+	</update>
 	
 	<!-- 더 많은 상품 목록 리스트 3개 -->
 	<select id="getMoreProductListSmall" resultType="map" parameterType="com.pj2.shoecream.vo.JungGoNohVO">

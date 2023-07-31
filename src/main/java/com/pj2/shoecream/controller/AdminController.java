@@ -21,6 +21,7 @@ import com.pj2.shoecream.service.BoardService;
 import com.pj2.shoecream.service.ReportService;
 import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.InquiryBoardVO;
+import com.pj2.shoecream.vo.JungProductVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.NoticeVO;
 import com.pj2.shoecream.vo.PageDTO;
@@ -323,7 +324,45 @@ public class AdminController {
 
 	}
 
-}
+	// 중고 상품 목록 띄우기
+		@GetMapping("adminProduct")
+		public String adminproduct(Model model, Criteria cri,
+				@RequestParam(defaultValue = "") String searchType,
+				@RequestParam(defaultValue = "") String searchKeyword) {
+			
+//			String sId = (String)session.getAttribute("sId");
+//			if(sId == null || !sId.equals("admin@admin.com")) {
+//				model.addAttribute("msg", "잘못된 접근입니다");
+//				return "inc/fail_back";
+//			}
+			
+			//  중고 목록 조회  
+			List<JungProductVO> propaging = service.getProduct(cri, searchType, searchKeyword);
+			model.addAttribute("propaging", propaging);
+			System.out.println("ddddd" + propaging);
+			
+			int total = service.getTotal();
+			PageDTO pageMaker = new PageDTO(cri, total);
+			model.addAttribute("pageMaker", pageMaker);
+			
+			
+			return "admin/admin_joonggo";
+		}
 		
+//		// 경매 상품 목록 띄우기
+//		@GetMapping("adminAuction")
+//		public String adminAuction(Model model, Criteria cri,
+//				@RequestParam(defaultValue = "") String searchType,
+//				@RequestParam(defaultValue = "") String searchKeyword) {
+	//	
+//			// 경매 목록 조회
+//			List<AuctionVO> auctionpaging = service.getAuction(cri, searchType, searchKeyword);
+//			model.addAttribute("auctionpaging",auctionpaging);
+//			
+	//	
+//			return "admin/admin_auction";
+//		}
+		
+	}	
 
 

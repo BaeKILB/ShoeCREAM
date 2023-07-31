@@ -10,15 +10,15 @@
 	<%-- css --%>
 	<link href="${pageContext.request.contextPath }/resources/css/member/common.css" rel="styleSheet">
 	<link href="${pageContext.request.contextPath }/resources/css/member/login/signup.css" rel="styleSheet">
-<%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
-<%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet"> --%>
+	<link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
+	<link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
 	
 	<%-- js --%>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 </head>
+	<jsp:include page="../../inc_ex/header.jsp" />	
 
 <body>
 	<div id="contents">

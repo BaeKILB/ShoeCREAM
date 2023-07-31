@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>     
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +14,13 @@
 	
 <h3>입찰 상품</h3>	
 <hr>
-<h4>상품명 : -el</h4>
-<h4>즉시 구매가 : -el 원</h4>
-<h4>구매 수량 : -el 개</h4>
-<h4>합계 : -el 원</h4>
+<form action="buyingPro"></form>
+		<input type="hidden" value="${auction.auction_idx }"  name="auction_idx">
+<h4>상품명 : ${auction.auction_title }l</h4>
+<h4>즉시 구매가 :${auction.auc_buy_instantly } 원</h4>
+<h4>구매 수량 : 1 개</h4>
+<h4>합계 : ${auction.auc_buy_instantly } 원</h4>
 
-<input type="button" value="결제하기">
+<input type="submit" value="결제하기">
 </body>
 </html>

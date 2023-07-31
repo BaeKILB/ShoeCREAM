@@ -468,22 +468,26 @@ public class JunggoController {
 	public String dibsPro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
 				
 		String product_idx = jungGoNoh.getProduct_idx();
-		
+		int countReadCount =0;
 		int countDibs = 0;
 		if(jungGoNoh.getFavorite_check() =="Y" || jungGoNoh.getFavorite_check().equals("Y"))
 		{
 			countDibs = jungGoNohService.removeDibs(jungGoNoh);
+			countReadCount =jungGoNohService.removeReadCount(jungGoNoh);
 		}
 		else
 		{	
 			countDibs = jungGoNohService.registDibs(jungGoNoh);
+			countReadCount =jungGoNohService.removeReadCount(jungGoNoh);
 		}
 		
 		// 게시물 등록 작업 요청 결과 판별
 		// => 성공 시 업로드 파일을 실제 디렉토리에 이동시킨 후 BoardList 서블릿 리다이렉트
 		// => 실패 시 "글 쓰기 실패!" 메세지 출력 후 이전페이지 돌아가기 처리
-		if(countDibs > 0) 
+		if(countDibs > 0 && countReadCount >0) 
 		{ // 성공
+			
+			
 			try {
 				
 				

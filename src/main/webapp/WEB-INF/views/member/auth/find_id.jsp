@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="${pageContext.request.contextPath }/resources/css/common.css"  rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/member/common.css"  rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/member/login/find_id_pw.css"  rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
@@ -13,6 +13,8 @@
 <script src="${pageContext.request.contextPath }/resources/js/inc/jquery-3.7.0.js"></script>
 </head>
 <body>
+<jsp:include page="../../inc_ex/header.jsp" />	
+
 		<div  id="sec_con" class="w3-container-main inr">
 			<div class="mem_wrap">			
 				<h1 class="con_title">아이디 비밀번호 찾기</h1>

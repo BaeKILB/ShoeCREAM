@@ -66,7 +66,7 @@
 							</a>
 							<ul class="cont_li_wrap joongList">
 								<li class="cont_item_b">
-									<a class="cont_item_list joongPro" href="joonggoProduct">중고 상품 관리</a>
+									<a class="cont_item_list joongPro" href="adminProduct">중고 상품 관리</a>
 								</li>
 							</ul>
 						</li>

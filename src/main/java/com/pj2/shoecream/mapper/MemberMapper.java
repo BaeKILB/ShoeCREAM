@@ -39,10 +39,28 @@ public interface MemberMapper {
 
 	//폰번호 중복확인
 	int phoneCheck(String phone);
+//---------------------- 회원가입 / 회원정보수정--------------------
+	//아이디찾기
+	String getId(MemberVO member);
+	
+	//비번찾기
+	String isExistUser(MemberVO member);
+	
+	String selectSendEmail(MemberVO member);
 	
 	
+	//임시비밀번호 설정
+	int changePw(MemberVO member);
+	
+//---------------------- 아이디/비밀번호 찾기 - find.jsp--------------------
+
 	// 소셜 프로필 가져올 memIdx
 	MemberVO findMemberByMemIdx(int mem_idx);
+
+
+
+
+
 
 	
 

@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pj2.shoecream.mapper.AdminMapper;
+import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.InquiryBoardVO;
+import com.pj2.shoecream.vo.JungProductVO;
 import com.pj2.shoecream.vo.MemberVO;
 
 @Service
@@ -38,4 +40,21 @@ public class AdminService {
 		return mapper.getQstListCount(searchType);
 	}
 
-}
+	// --------------- 민진 ---------------------------
+		//중고상품 목록 띄우기
+		public List<JungProductVO> getProduct(Criteria cri, String searchType, String searchKeyword) {
+			return mapper.selectProduct(cri, searchType, searchKeyword);
+		}
+		
+		//중고상품 페이징
+		public int getTotal() {
+			return mapper.getTotal();
+		}
+		
+//		//경매상품 목록 띄우기
+//		public List<AuctionVO> getAuction(Criteria cri, String searchType, String searchKeyword) {
+//			return mapper.selectAuctionadmin(cri, searchType, searchKeyword);
+//		}
+		
+
+	}
