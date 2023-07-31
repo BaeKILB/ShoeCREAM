@@ -21,6 +21,7 @@
         where
             auction_idx = #{auction_idx }
             and bid_state = '입찰'
+        
     </select>
     <select id="selectBidCount">
         select
@@ -38,4 +39,14 @@
         where
             auction_idx = #{auction_idx }
     </update>
+    <select id="selectBidList" resultType="map">
+    	select
+    		*
+    	from
+    		bid_list
+    	where
+    		auction_idx = #{auction_idx }
+    	order by
+    		bid_date desc
+    </select>
 </mapper>

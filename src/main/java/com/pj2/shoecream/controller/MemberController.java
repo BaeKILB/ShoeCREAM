@@ -2,6 +2,7 @@ package com.pj2.shoecream.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.util.FindUtil;
 import com.pj2.shoecream.util.SendUtil;
+import com.pj2.shoecream.vo.MemberProfileDto;
 import com.pj2.shoecream.vo.MemberVO;
 
 import lombok.RequiredArgsConstructor;
@@ -124,9 +126,9 @@ public class MemberController {
 		
 		
 		// 아이디 중복 유효성 검사
-//	    if (memberService.isMemberIdDuplicated(member.getMem_id())) {
-//	    	throw new CustomValidationException("이미 사용 중인 아이디입니다.", null);
-//	    }
+	    if (memberService.isMemberIdDuplicated(member.getMem_id())) {
+	    	throw new CustomValidationException("이미 사용 중인 아이디입니다.", null);
+	    }
 
 		// 생년월일 유효성 검사
 		Date mem_birthday = member.getMem_birthday();
@@ -169,6 +171,75 @@ public class MemberController {
 	public int idCheck(@RequestParam Map<String,String> map) {
 		return memberService.memIdCheck(map);
 	}
+    
+	//아이디 비밀번호 찾기페이지
+	@GetMapping("find/memid")
+	public String memberFind() {
+		return "member/auth/find";
+	}
+	
+	@PostMapping("find/findIdPro")
+	public String findIdPro(MemberVO member, Model model) {
+//		System.out.println("여기까지 오니?");
+		//count==0일때 history.back
+		//else 모델에 저장하고 뷰페이지에 아이디 보여주기
+		//핸드폰 번호 입력부분 어떻게 할지?
+		//DB에는 010-1234-5678 형태로 저장 되어있음
+		//^js로 해결완료~__~
+
+		//로그인 방식으로 다시 시도 해봅니다..
+		String idResult = memberService.getId(member);
+//		System.out.println(idResult);
+		model.addAttribute("idResult",idResult);
+		
+		//성공 실패 나누기
+		if(idResult == null) {
+			model.addAttribute("msg", "입력하신 정보와 일치하는 아이디가 없습니다.");
+			return "member/auth/fail_back";
+		}
+		return "member/auth/find_id";
+	}
+	
+	@PostMapping("find/findPwPro")
+	public String findPwPro(MemberVO member, Model model) {
+		//아이디 이름 번호 받아와서 일치하면(DB작업1)
+		String mem_id = memberService.isExistUser(member);
+		System.out.println("비번 찾을 mem_id : " + mem_id);
+		if(mem_id == null) {
+			model.addAttribute("msg", "입력하신 정보와 일치하는 아이디가 없습니다.");
+			return "member/auth/fail_back";
+		}
+//		String mem_email = memberService.selectEmail(member);
+		//조회된 정보가 있으면
+		//임시 비밀번호 만들기
+		String newPwd = FindUtil.getRamdomPassword();
+		
+		//임시 비밀번호 암호화
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String securePasswd = passwordEncoder.encode(newPwd);
+		member.setMem_passwd(securePasswd);
+		
+		//파라미터가 고민이 된다 암호화 한 비밀번호를 넣어야함
+		//어쨋든 암호화한 비밀번호 DB에 수정하는 작업.
+		int updateCount = memberService.changePw(member);
+		
+		System.out.println(updateCount);
+		
+		if(updateCount>0) {
+			//메일 발송 하자구
+			String subject = "[Gabolcar] 임시 비밀번호 입니다.";
+			String msg = "회원님의 임시 비밀번호는 "+newPwd+" 입니다.\n 로그인 후 비밀번호를 변경 하세요";
+			SendUtil.sendMail(mem_id, subject, msg);
+			System.out.println("발송완료");
+		}
+		//메일로 임시 비밀번호를 발송 했습니다. 실패시 정보를 확인해주세요 등의  msg
+		//비밀번호 어떻게 발송 합니까?
+		//비밀번호 발송 하고 임시 비밀번호를 DB에 등록 해야한다(DB작업2)
+		model.addAttribute("mem_id",mem_id);
+		
+		return "member/auth/find_pw";
+	}
+	
 	
 //    ===========================MyPage===========================
     // 마이페이지 폼
@@ -295,27 +366,22 @@ public class MemberController {
     	return "member/mypage/delete";
     }
     
-////    =========================social============================
-//	// 소셜 스토리 페이지
-//    @GetMapping("/social")
-//	public String story() {
-//		return "member/social/story";
-//	}
-//    
-//    // 소셜 개인 프로필 페이지
-//	@GetMapping("/social/{mem_idx}")
-//	public String profile(@PathVariable int mem_idx, Model model) {
-////		User userEntity = userService.회원프로필(id);
-////		model.addAttribute("user", userEntity);
-//		return "member/social/profile";
-//	}
-//    
-////	=======================social-image========================
-//	
-//	// 소셜 포스트 페이지
-//	@GetMapping("/image/upload")
-//	public String upload() {
-//		return "member/image/upload";
-//	}
+////    =========================store============================
+    // 소셜 개인 프로필 페이지
+   	@GetMapping("/store/{mem_idx}")
+   	public String profile(@PathVariable int mem_idx, Model model) {
+//   		User userEntity = userService.회원프로필(id);
+//   		model.addAttribute("user", userEntity);
+//           Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//           PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//   		int sId = mPrincipalDetails.getMember().getMem_idx();
+//           
+//   		MemberProfileDto dto = memberService.memberProfile(mem_idx, mPrincipalDetails.getMember().getMem_idx());
+//   		model.addAttribute("dto", dto);
+//   		List<String> posts_image1 = SocialImageService.findPostImagesByMemIdx(mem_idx);
+//   		model.addAttribute("posts_image1", posts_image1);
+   		
+   		return "member/store/store";
+   	}
     
 }

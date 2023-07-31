@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Gabolcar - 아이디 , 비밀번호 찾기</title>
-<link href="${pageContext.request.contextPath }/resources/css/common.css"  rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/member/common.css"  rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/login/find.css" >
 <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="stylesheet">
@@ -16,67 +16,70 @@
 
 <script type="text/javascript">
 	<!-- 핸드폰 번호 입력 자동 하이픈 추가 기능 -->
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("id_s_phone").addEventListener("keyup", function(event) {
-            inputPhoneNumber(event.target);
-        });
-    });
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("pw_s_phone").addEventListener("keyup", function(event) {
-            inputPhoneNumber(event.target);
-        });
-    });
+//     document.addEventListener("DOMContentLoaded", function() {
+//         document.getElementById("id_s_phone").addEventListener("keyup", function(event) {
+//             inputPhoneNumber(event.target);
+//         });
+//     });
+//     document.addEventListener("DOMContentLoaded", function() {
+//         document.getElementById("pw_s_phone").addEventListener("keyup", function(event) {
+//             inputPhoneNumber(event.target);
+//         });
+//     });
     
-    function inputPhoneNumber( phone ) {
-        if( event.keyCode != 8 ) {
-            const regExp = new RegExp( /^[0-9]{2,3}-^[0-9]{3,4}-^[0-9]{4}/g );
-            if( phone.value.replace( regExp, "").length != 0 ) {                
-                if( checkPhoneNumber( phone.value ) == true ) {
-                    let number = phone.value.replace( /[^0-9]/g, "" );
-                    let tel = "";
-                    let seoul = 0;
-                    if( number.substring( 0, 2 ).indexOf( "02" ) == 0 ) {
-                        seoul = 1;
-                        phone.setAttribute("maxlength", "12");
-                        console.log( phone );
-                    } else {
-                        phone.setAttribute("maxlength", "13");
-                    }
-                    if( number.length < ( 4 - seoul) ) {
-                        return number;
-                    } else if( number.length < ( 7 - seoul ) ) {
-                        tel += number.substr( 0, (3 - seoul ) );
-                        tel += "-";
-                        tel += number.substr( 3 - seoul );
-                    } else if(number.length < ( 11 - seoul ) ) {
-                        tel += number.substr( 0, ( 3 - seoul ) );
-                        tel += "-";
-                        tel += number.substr( ( 3 - seoul ), 3 );
-                        tel += "-";
-                        tel += number.substr( 6 - seoul );
-                    } else {
-                        tel += number.substr( 0, ( 3 - seoul ) );
-                        tel += "-";
-                        tel += number.substr( ( 3 - seoul), 4 );
-                        tel += "-";
-                        tel += number.substr( 7 - seoul );
-                    }
-                    phone.value = tel;
-                } else {
-                    const regExp = new RegExp( /[^0-9|^-]*$/ );
-                    phone.value = phone.value.replace(regExp, "");
-                }
-            }
-        }
-    }
+//     function inputPhoneNumber( phone ) {
+//         if( event.keyCode != 8 ) {
+//             const regExp = new RegExp( /^[0-9]{2,3}-^[0-9]{3,4}-^[0-9]{4}/g );
+//             if( phone.value.replace( regExp, "").length != 0 ) {                
+//                 if( checkPhoneNumber( phone.value ) == true ) {
+//                     let number = phone.value.replace( /[^0-9]/g, "" );
+//                     let tel = "";
+//                     let seoul = 0;
+//                     if( number.substring( 0, 2 ).indexOf( "02" ) == 0 ) {
+//                         seoul = 1;
+//                         phone.setAttribute("maxlength", "12");
+//                         console.log( phone );
+//                     } else {
+//                         phone.setAttribute("maxlength", "13");
+//                     }
+//                     if( number.length < ( 4 - seoul) ) {
+//                         return number;
+//                     } else if( number.length < ( 7 - seoul ) ) {
+//                         tel += number.substr( 0, (3 - seoul ) );
+//                         tel += "-";
+//                         tel += number.substr( 3 - seoul );
+//                     } else if(number.length < ( 11 - seoul ) ) {
+//                         tel += number.substr( 0, ( 3 - seoul ) );
+//                         tel += "-";
+//                         tel += number.substr( ( 3 - seoul ), 3 );
+//                         tel += "-";
+//                         tel += number.substr( 6 - seoul );
+//                     } else {
+//                         tel += number.substr( 0, ( 3 - seoul ) );
+//                         tel += "-";
+//                         tel += number.substr( ( 3 - seoul), 4 );
+//                         tel += "-";
+//                         tel += number.substr( 7 - seoul );
+//                     }
+//                     phone.value = tel;
+//                 } else {
+//                     const regExp = new RegExp( /[^0-9|^-]*$/ );
+//                     phone.value = phone.value.replace(regExp, "");
+//                 }
+//             }
+//         }
+//     }
 
-    function checkPhoneNumber( number ) {
-        const regExp = new RegExp( /^[0-9|-]*$/ );
-        if( regExp.test( number ) == true ) { return true; }
-        else { return false; }
-    }
+//     function checkPhoneNumber( number ) {
+//         const regExp = new RegExp( /^[0-9|-]*$/ );
+//         if( regExp.test( number ) == true ) { return true; }
+//         else { return false; }
+//     }
 </script>
 <body>
+
+<jsp:include page="../../inc_ex/header.jsp" />	
+
 	<div id="sec_con" class="w3-container-main inr">
 
 		<h1 class="con_title">아이디 비밀번호 찾기</h1>
@@ -143,7 +146,8 @@
 								<input type="text" name="mem_name" id="pw_s_name" maxLength="25" size="50" placeholder="이름을 입력하세요">
 							</li>
 							<li>
-								<input type="text" name="mem_mtel" id="pw_s_phone" maxLength="25" size="50" value="" placeholder="휴대폰번호를 입력하세요">
+<!-- 								<input type="text" name="mem_mtel" id="pw_s_phone" maxLength="25" size="50" value="" placeholder="휴대폰번호를 입력하세요"> -->
+								<input type="text" name="mem_email" id="pw_s_phone" maxLength="25" size="50" value="" placeholder="이메일을 입력하세요.">
 							</li>
 						</ul>
 					</div>

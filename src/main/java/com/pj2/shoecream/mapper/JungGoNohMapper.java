@@ -41,6 +41,9 @@ public interface JungGoNohMapper {
 	// 판매자 관련 더 많은 판매 리스트  
 	List<JungGoNohVO> getMoreProductListSmall(int mem_idx);
 	
+	// 찜 변동시 조회수 -1
+	int decreaseReadcount(JungGoNohVO jungGoNoh);
+	
 	
 	
 

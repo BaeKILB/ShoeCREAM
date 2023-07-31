@@ -61,20 +61,27 @@ public class JungGoNohService {
 	//===========================삭제 프로============================================
 			
 		public int removeProduct(String product_idx) {
+			
 			return jungGoNohMapper.deleteProduct(product_idx);
 		}
 
 	//===========================찜 입력============================================	
 		public int registDibs(JungGoNohVO jungGoNoh) {
+			
 			return jungGoNohMapper.insertDibs(jungGoNoh);
+			
 		}
 	//===========================찜 삭제============================================	
 		public int removeDibs(JungGoNohVO jungGoNoh) {
 			return jungGoNohMapper.deleteDibs(jungGoNoh);
 		}
-
+	// ==========판매자 관련 판매 목록=======================
 		public List<JungGoNohVO> moreProductListSmall(int mem_idx) {
 			return jungGoNohMapper.getMoreProductListSmall(mem_idx);
+		}
+
+		public int removeReadCount(JungGoNohVO jungGoNoh) {
+			return jungGoNohMapper.decreaseReadcount(jungGoNoh);
 		}
 
 }

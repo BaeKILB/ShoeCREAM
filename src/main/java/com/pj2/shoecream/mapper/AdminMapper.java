@@ -1,11 +1,16 @@
 package com.pj2.shoecream.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.pj2.shoecream.vo.AuctionVO;
+import com.pj2.shoecream.vo.Criteria;
+import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
+import com.pj2.shoecream.vo.JungProductVO;
 import com.pj2.shoecream.vo.MemberVO;
 
 @Mapper
@@ -22,4 +27,14 @@ public interface AdminMapper {
 	// 일대일 문의 조회
 	List<InquiryBoardVO> selectQstBoard(@Param("searchType") String searchType, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
 	int getQstListCount(String searchType);
-}
+	// --------------- 민진 ---------------------------
+	
+		// 중고 상품 띄우기
+		List<JungProductVO> selectProduct(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+		// 중고상품 페이징
+		int getTotal();
+//		// 경매 상품 띄우기
+
+		List<Map<String, Object>> selectauctionmap();
+	}
+

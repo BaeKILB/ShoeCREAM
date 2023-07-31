@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
+<c:set var="principal" value="${null}" />
+
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <!DOCTYPE html>
 <html>
 <head>
@@ -134,14 +142,14 @@
 					<p class="product_catrgory">HOME > 
 						<c:choose>
 							<c:when test="${jungGoNoh.lc_code == '1'}">
-								성별 >
+								남성 >
 								<c:choose>
-									<c:when test="${jungGoNoh.mc_code == 1}">남성</c:when>
-									<c:when test="${jungGoNoh.mc_code == 2}">여성</c:when>						
+									<c:when test="${jungGoNoh.mc_code == 1}">운동화</c:when>
+									<c:when test="${jungGoNoh.mc_code == 2}">구두</c:when>						
 								</c:choose>
 							</c:when>
 							<c:when test="${jungGoNoh.lc_code == '2'}">
-								종류 > 
+								여성 > 
 								<c:choose>
 									<c:when test="${jungGoNoh.mc_code == 1}">운동화</c:when>
 									<c:when test="${jungGoNoh.mc_code == 2}">구두</c:when>						
@@ -156,14 +164,19 @@
 					</div>
 					<div class="product_viewStatus">
 						🕐&nbsp;${jungGoNoh.product_date} &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  ${jungGoNoh.dibs_count }
-						&nbsp;&nbsp;&nbsp;&nbsp; ‼&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  class="report_btn" value="신고하기"></button>
+						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  class="report_btn" value="신고하기"></button>
 					</div>
 					<div class="product_productStatus">
 						상품 상태 : ${jungGoNoh.product_status}<br>
 						사이즈 : ${jungGoNoh.product_size}	mm<br>
 						브랜드 : ${jungGoNoh.product_brand}<br>
 						거래지역 : ${jungGoNoh.product_location}<br>
-						거래 방법 : ${jungGoNoh.product_payment}<br>					
+						거래 방법 : ${jungGoNoh.product_payment}<br>
+						접속한사람: ${principal.member.mem_id}
+						파는사람:	${jungGoNoh.mem_id}		
+						접속한 사람 idx: ${principal.member.mem_idx}
+						파는사람idx : ${jungGoNoh.mem_idx} 
+								
 					</div>
 <!-- 						<div class="product_tag"> -->
 <!-- 						#바지 #바지 #바지 #바지 #바지 -->
@@ -175,31 +188,26 @@
 							<input type="hidden" name="favorite_check" id="favorite_check" value="${dibs.favorite_check}"/>
 							<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNoh.mem_idx}"/>
 							<c:choose>
-								<c:when test="${dibs.favorite_check =='Y' }">
-									<input type="submit"  class="UnFavorite_btn" value="💔 찜 해제">
+								<c:when test="${principal.member.mem_idx == jungGoNoh.mem_idx }">
+									<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>
 								</c:when>
 								<c:otherwise>
-									<input type="submit" class="favorite_btn" value="♥ 찜 등록"/>		
+								<c:choose>
+									<c:when test="${dibs.favorite_check =='Y' }">
+										<input type="submit"  class="UnFavorite_btn" value="💔 찜 해제">
+									</c:when>
+									<c:otherwise>
+										<input type="submit" class="favorite_btn" value="♥ 찜 등록"/>		
+									</c:otherwise>
+								</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</form>						
-						
-						
-	                    <c:choose>
-							<c:when test="'N' eq 'N' "><%--${session.sId eq jungGoNoh.member_id }--%>
-								<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>
-							</c:when>
-							<c:otherwise>
-								<a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
-	                             &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="chat_btn">
-	                    	1:1 대화톡 
-	                    		</a>
-							</c:otherwise>
-						</c:choose>
-	                    
+						<a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
+	                            &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="chat_btn">1:1 대화톡 
+	                    </a>
                     </div>
 				</div>
-
 			</div>
 		</div>
 		
@@ -213,7 +221,8 @@
 						<br>
 						판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<br>
 						유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<br>
-						<span><a href="${pageContext.request.contextPath }/reviewList">중고나라 고객센터로 신고해주시기 바랍니다.</a></span>
+						<br>
+						<a href="${pageContext.request.contextPath }/reviewList" class="warning_message">중고나라 고객센터로 신고해주시기 바랍니다.</a>
 					</div>
 				</div>
 				<div class="product_content">
@@ -224,7 +233,7 @@
 			<div class="seller_wrap more_wrap_box col-sm-12 col-lg-6">
 	
 				<div class="seller_profile_wrap">
-					<img class="seller_profile" src="${pageContext.request.contextPath}/resources/img/junggo/profile_m.png">
+					<img class="seller_profile" src="${pageContext.request.contextPath}/${jungGoNoh.mem_profileImageUrl}">
 					<p class="seller_name">${jungGoNoh.mem_nickname}</p>
 					<p class="seller_Lv">${jungGoNoh.mem_rank}</p>
 				</div>
