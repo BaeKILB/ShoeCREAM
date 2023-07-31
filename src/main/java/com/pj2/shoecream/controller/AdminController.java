@@ -360,11 +360,13 @@ public class AdminController {
 		
 			// 경매 목록 조회
 
-			List<Map<String, Object>> auctionmap = service.selectauctionmap();
+			List<Map<String, Object>> auctionmap = service.selectauctionmap(cri, searchType, searchKeyword);
 			model.addAttribute("auctionmap",auctionmap);
 			System.out.println("나나나나난"+auctionmap );
 			
-			
+			int total = service.getTotal();
+			PageDTO pageMaker = new PageDTO(cri, total);
+			model.addAttribute("pageMaker", pageMaker);
 			
 		
 			return "admin/admin_auction";

@@ -44,21 +44,21 @@ public class AdminService {
 	}
 
 	// --------------- 민진 ---------------------------
-		//중고상품 목록 띄우기
-		public List<JungProductVO> getProduct(Criteria cri, String searchType, String searchKeyword) {
-			return mapper.selectProduct(cri, searchType, searchKeyword);
-		}
-		
-		//중고상품 페이징
-		public int getTotal() {
-			return mapper.getTotal();
-		}
-		
-		//경매상품 목록 띄우기
-		public List<Map<String, Object>> selectauctionmap() {
-			
-			return mapper.selectauctionmap();
-		}
+	//중고상품 목록 띄우기
+	public List<JungProductVO> getProduct(Criteria cri, String searchType, String searchKeyword) {
+		return mapper.selectProduct(cri, searchType, searchKeyword);
+	}
+	
+	//중고상품 페이징
+	public int getTotal() {
+		return mapper.getTotal();
+	}
+	
+	//경매상품 목록 띄우기
+	public List<Map<String, Object>> selectauctionmap(Criteria cri, String searchType, String searchKeyword) {
+		return mapper.selectauctionmap(cri, searchType, searchKeyword);
+	}
+	
 		
 
 	}

@@ -26,10 +26,10 @@
 					<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }"> 
 					<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 					<div class="search_wrap">
-					<form action="adminAuction" method="get" class="searchForm">
+					<form action="auctionProduct" method="get" class="searchForm">
 						<select name="searchType" id="searchType">
 							<option value="brand" <c:if test="${param.searchType eq 'auction_brand' }">selected</c:if>>브랜드</option>			
-							<option value="auction_title" <c:if test="${param.searchType eq 'auction_title' }">selected</c:if>>상품제목</option>			
+							<option value="auction_title" <c:if test="${param.searchType eq 'auction_info' }">selected</c:if>>상품제목</option>			
 							<option value="code" <c:if test="${param.searchType eq 'auction_idx' }">selected</c:if>>상품코드</option>		
 						</select>
 						<input type="text" name="searchKeyword" value="${param.searchKeyword }" id="searchKeyword">
@@ -77,7 +77,7 @@
 						<nav class="pg_wrap">
 							<span class="pg"> 
 							<c:if test="${pageMaker.cri.pageNum > 1 }">
-									<a href="adminProduct?pageNum=${pageMaker.cri.pageNum - 1 }" class="pg_page pg_prev">이전</a>
+									<a href="auctionProduct?pageNum=${pageMaker.cri.pageNum - 1 }" class="pg_page pg_prev">이전</a>
 							</c:if> 
 								<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
 									<c:choose>
@@ -85,12 +85,12 @@
 											<strong class="pg_current">${num}</strong>
 										</c:when>
 										<c:otherwise>
-											<a href="adminProduct?pageNum=${num }" class="pg_page">${num }</a>
+											<a href="auctionProduct?pageNum=${num }" class="pg_page">${num }</a>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach> 
 								<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
-									<a href="adminProduct?pageNum=${pageMaker.cri.pageNum + 1 }" class="pg_page pg_next">다음</a>
+									<a href="auctionProduct?pageNum=${pageMaker.cri.pageNum + 1 }" class="pg_page pg_next">다음</a>
 								</c:if>
 							</span>
 						</nav>

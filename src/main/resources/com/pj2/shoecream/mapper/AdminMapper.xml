@@ -136,23 +136,23 @@ SELECT COUNT(*)
     a.auc_regist_date
   FROM auction_item AS a
   LEFT JOIN product_image AS i ON a.auction_idx = i.product_idx
-  LEFT JOIN bid_list AS b ON b.auction_idx = i.product_idx
+  LEFT JOIN bid_list AS b ON a.auction_idx = i.product_idx
   WHERE a.auction_selector = 1 
-<!--   <if test="searchType != null and searchKeyword != null"> -->
-<!--     <choose> -->
-<!--       <when test="searchType.equals('brand')"> -->
-<!--         AND p.product_brand LIKE CONCAT('%', #{searchKeyword},'%') -->
-<!--       </when> -->
-<!--       <when test="searchType.equals('product_info')"> -->
-<!--         AND p.product_info LIKE CONCAT('%', #{searchKeyword},'%') -->
-<!--       </when> -->
-<!--       <when test="searchType.equals('code')"> -->
-<!--         AND p.product_idx LIKE CONCAT('%', #{searchKeyword},'%') -->
-<!--       </when> -->
-<!--     </choose> -->
-<!--   </if> -->
-<!--   ORDER BY p.product_idx ASC -->
-<!--   LIMIT #{cri.skip}, #{cri.amount} -->
+  <if test="searchType != null and searchKeyword != null">
+    <choose>
+      <when test="searchType.equals('brand')">
+        AND a.auction_brand LIKE CONCAT('%', #{searchKeyword},'%')
+      </when>
+      <when test="searchType.equals('auction_title')">
+        AND a.auction_info LIKE CONCAT('%', #{searchKeyword},'%')
+      </when>
+      <when test="searchType.equals('code')">
+        AND a.auction_idx LIKE CONCAT('%', #{searchKeyword},'%')
+      </when>
+    </choose>
+  </if>
+  ORDER BY a.auction_idx ASC
+  LIMIT #{cri.skip}, #{cri.amount}
 </select>
 
    

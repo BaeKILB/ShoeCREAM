@@ -35,6 +35,6 @@ public interface AdminMapper {
 		int getTotal();
 //		// 경매 상품 띄우기
 
-		List<Map<String, Object>> selectauctionmap();
+		List<Map<String, Object>> selectauctionmap(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	}
 
