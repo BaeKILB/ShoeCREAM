@@ -62,17 +62,14 @@
 			FROM board_notice
 	</select>
 	<insert id="insertNotice">
-	INSERT
+		INSERT
 			INTO board_notice
 			VALUES (
 				#{bo_idx},
 				#{bo_title},
 				#{bo_content},
 				now(),
-				0,
-				#{bo_file1},
-				#{bo_file2},
-				#{bo_file3}
+				0
 			)
 	</insert>
 	

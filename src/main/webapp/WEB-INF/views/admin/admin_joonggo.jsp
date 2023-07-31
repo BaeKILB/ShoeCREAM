@@ -26,12 +26,11 @@
 					<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }"> 
 					<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 					<div class="search_wrap">
-					<form action="adminjoonggo" method="get" class="searchForm">
+					<form action="adminProduct" method="get" class="searchForm">
 						<select name="searchType" id="searchType">
-							<option value="mem_id" <c:if test="${param.searchType eq 'mem_id' }">selected</c:if>>아이디</option>			
-							<option value="mem_name" <c:if test="${param.searchType eq 'mem_name' }">selected</c:if>>이름</option>			
-							<option value="mem_nickname" <c:if test="${param.searchType eq 'mem_nickname' }">selected</c:if>>닉네임</option>			
-							<option value="mem_rank" <c:if test="${param.searchType eq 'mem_rank' }">selected</c:if>>등급</option>			
+							<option value="brand" <c:if test="${param.searchType eq 'product_brand' }">selected</c:if>>브랜드</option>			
+							<option value="product_info" <c:if test="${param.searchType eq 'product_info' }">selected</c:if>>상품제목</option>			
+							<option value="code" <c:if test="${param.searchType eq 'product_idx' }">selected</c:if>>상품코드</option>		
 						</select>
 						<input type="text" name="searchKeyword" value="${param.searchKeyword }" id="searchKeyword">
 						<input type="submit" value="검색" class="searchSubmit" style="cursor: pointer;">
@@ -41,29 +40,30 @@
 					<table class="board_list_table table">
 						<thead>
 							<tr>
-								<th class="txt_prev">
-									<h4>상품명</h4>
-								</th>
 								<th class="code"><span class="product_code">상품 코드</span></th>
+								<th class="brand"><span class="product_brand">브랜드</span></th>
 								<th class="price">상품가격</th>
-								<th class="product_info">상품정보</th>
+								<th class="product_info">상품제목</th>
 								<th class="image">상품이미지</th>
 								<th class="date">등록일</th>
 								<th class="delete">삭제하기</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="AdminJoonggo" items="${productjoong}">
+							<c:forEach var="adminProduct" items="${propaging}">
 								<tr>
-									<td class="txt_prev"><a href="#">
-										<h4 class="title_co">${AdminJoonggo.product_title}</h4>
-										</a>
-										<td class="code"><span class="product_code"> <span class="sv_member">${AdminJoonggo.product_idx}</span></span></td>
-										<td class="price">${AdminJoonggo.product_price}
-										<td class="product_info">${AdminJoonggo.product_info}
-										<td><img src="${pageContext.request.contextPath}/resources/img/admin/${AdminJoonggo.image_path}/${AdminJoonggo.image1}" /></td>
-										<td class="date"><fmt:formatDate value="${AdminJoonggo.product_date}" pattern="YYYY-MM-dd" /></td>
-										<th class="reportdel"><button style='cursor: pointer;'class="moreBtn" onclick="deleteReport(${reportProcess.product_idx})">삭제하기</button> 
+<!-- 									<td class="txt_prev"><a href="#"> -->
+<%-- 										<h4 class="title_co">${adminProduct.product_title}</h4> --%>
+<!-- 										</a> -->
+										<td class="code"><span class="product_code"> <span class="sv_member">${adminProduct.product_idx}</span></span></td>
+										<td class="brand"> ${adminProduct.product_brand}</td>
+										<td class="price">${adminProduct.product_price}</td>
+										<td class="product_info">${adminProduct.product_info}</td>
+										<td class="td-container">
+										<img src="${pageContext.request.contextPath}/resources/upload/${adminProduct.image1}" class="imagesize"/>
+										</td>
+										<td class="date"><fmt:formatDate value="${adminProduct.product_date}" pattern="YYYY-MM-dd" /></td>
+										<td class="productdel" ><button style='cursor: pointer;'class="moreBtn" >삭제하기</button></td>
 								</tr>
 							
 							
@@ -75,7 +75,7 @@
 						<nav class="pg_wrap">
 							<span class="pg"> 
 							<c:if test="${pageMaker.cri.pageNum > 1 }">
-									<a href="NoticeList?pageNum=${pageMaker.cri.pageNum - 1 }" class="pg_page pg_prev">이전</a>
+									<a href="adminProduct?pageNum=${pageMaker.cri.pageNum - 1 }" class="pg_page pg_prev">이전</a>
 							</c:if> 
 								<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
 									<c:choose>
@@ -83,12 +83,12 @@
 											<strong class="pg_current">${num}</strong>
 										</c:when>
 										<c:otherwise>
-											<a href="NoticeList?pageNum=${num }" class="pg_page">${num }</a>
+											<a href="adminProduct?pageNum=${num }" class="pg_page">${num }</a>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach> 
 								<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
-									<a href="NoticeList?pageNum=${pageMaker.cri.pageNum + 1 }" class="pg_page pg_next">다음</a>
+									<a href="adminProduct?pageNum=${pageMaker.cri.pageNum + 1 }" class="pg_page pg_next">다음</a>
 								</c:if>
 							</span>
 						</nav>
