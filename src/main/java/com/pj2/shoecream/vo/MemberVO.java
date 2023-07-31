@@ -81,6 +81,6 @@ public class MemberVO {
 	private int mem_point;
 	private int charge_point;
 	private int mem_balance;
-	
+	private String mem_profileImageUrl;
 	private Date mem_sign_date; //now()
 }

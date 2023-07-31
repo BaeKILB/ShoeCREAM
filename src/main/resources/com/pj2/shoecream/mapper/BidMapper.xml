@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.BidMapper">
-    <insert id="insertBidList">
+    <insert id="insertBid">
         insert into
             bid_list
         values(
             #{auction_idx}
-            , #{sId}
+            , #{mem_idx}
             , #{bid_price}
             , now()
             , #{deposit}
@@ -22,4 +22,20 @@
             auction_idx = #{auction_idx }
             and bid_state = '입찰'
     </select>
+    <select id="selectBidCount">
+        select
+            count(*)
+        from
+            bid_list
+        where
+            auction_idx = #{auction_idx }
+    </select>
+    <update id="updateBid">
+        update
+            bid_list
+        set
+            bid_state = '유찰'
+        where
+            auction_idx = #{auction_idx }
+    </update>
 </mapper>

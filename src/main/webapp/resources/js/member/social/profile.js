@@ -11,13 +11,31 @@
  */
 
 // (1) 유저 프로파일 페이지 구독하기, 구독취소
-function toggleSubscribe(obj) {
+function toggleSubscribe(mem_idx, obj) {
 	if ($(obj).text() === "구독취소") {
-		$(obj).text("구독하기");
-		$(obj).toggleClass("blue");
+		$.ajax({
+			type: "DELETE",
+			url: "/shoecream/api/follow/" + mem_idx, // 왜 shoecream 을 붙여야하나 하아
+			dataType: "json"
+		}).done(res => {
+			$(obj).text("구독하기");
+			$(obj).toggleClass("blue");
+		}).fail(error => {
+			console.log("구독취소실패",error);
+			console.log(mem_idx)
+		});
 	} else {
-		$(obj).text("구독취소");
-		$(obj).toggleClass("blue");
+		$.ajax({
+			type: "POST",
+			url: "/shoecream/api/follow/" + mem_idx,
+			dataType: "json"
+		}).done(res => {
+			$(obj).text("구독취소");
+			$(obj).toggleClass("blue");
+		}).fail(error => {
+			console.log("구독하기실패",error);
+			console.log(mem_idx)
+		});
 	}
 }
 

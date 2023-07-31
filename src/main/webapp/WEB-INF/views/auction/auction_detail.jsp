@@ -100,11 +100,17 @@ to {
     width: 20px;
     height: 20px;
 }
+
+#sellerInfo {
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
    <h1>경매</h1>
    <input type="hidden" value="${auction.auction_idx }" id="auction_idx">
+   <input type="hidden" value="${auction.auc_close_date }" id="auc_close_date">
+   <input type="hidden" value="${auction.mem_idx }" id="mem_idx">
    <!-- 가지고 올 정보 
    from 공통테이블
    1. 카테고리 대 중 소 
@@ -120,37 +126,40 @@ to {
 -->
    <!--    좌측 상품 사진 옆으로 넘기는 형태 -->
    <!-- Slideshow container -->
-            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }" style="width: 100%">
-            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }" style="width: 100%">
-            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }" style="width: 100%">
-            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" style="width: 100%">
+   
 
-   <section>
-      <div class="slideshow-container">
-         <!-- Full-width images with number and caption text -->
-         <div class="mySlides fade">
-            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }" style="width: 100%">
-         </div>
-         <div class="mySlides fade">
-            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }" style="width: 100%">
-         </div>
-         <div class="mySlides fade">
-            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }" style="width: 100%">
-         </div>
-         <div class="mySlides fade">
-            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" style="width: 100%">
-         </div>
-         <!-- Next and previous buttons -->
-         <a class="prev" onclick="plusSlides(-1)">&#10094;</a> 
-         <a class="next" onclick="plusSlides(1)">&#10095;</a>
-      </div>
-      <!-- The dots/circles -->
-      <div style="text-align: center">
-         <span class="dot" onclick="currentSlide(1)"></span> 
-         <span class="dot" onclick="currentSlide(2)"></span> 
-         <span class="dot" onclick="currentSlide(3)"></span> 
-         <span class="dot" onclick="currentSlide(4)"></span>
-      </div>
+    <section>
+        <div>
+			<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }">
+			<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }" hidden>
+			<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }" hidden>
+			<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" hidden>
+        </div>
+        <div class="slideshow-container">
+		<!-- Full-width images with number and caption text -->
+			<div class="mySlides fade">
+	            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }" style="width: 100%">
+			</div>
+			<div class="mySlides fade">
+	            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }" style="width: 100%">
+			</div>
+			<div class="mySlides fade">
+	            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }" style="width: 100%">
+			</div>
+			<div class="mySlides fade">
+	            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" style="width: 100%">
+			</div>
+            <!-- Next and previous buttons -->
+			<a class="prev" onclick="plusSlides(-1)">&#10094;</a> 
+			<a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <!-- The dots/circles -->
+        <div style="text-align: center">
+	        <span class="dot" onclick="currentSlide(1)"></span> 
+	        <span class="dot" onclick="currentSlide(2)"></span> 
+	        <span class="dot" onclick="currentSlide(3)"></span> 
+	        <span class="dot" onclick="currentSlide(4)"></span>
+        </div>
         <div>
 	        <span id="">${auction.lc_name }</span>
 	        <span> > </span>
@@ -196,34 +205,67 @@ to {
 	    </div>
         <hr>
         <div>
-            <span>입찰수 n회 (총 판매수량 : n개) el</span> <!-- 입찰내역 count -->
+            <span>입찰수 : </span> <!-- 입찰내역 count -->
+            <span> 
+				<c:choose>
+				    <c:when test="${bidCount eq null }">
+				        0 회
+				    </c:when>
+				    <c:otherwise>
+				        ${bidCount } 회
+				    </c:otherwise>
+				</c:choose>
+			</span>
             <span id="">경매기록</span> <!-- const auctionHistory() -->
         </div>
-        <div>${auction.auc_close_date } </div> <!-- const closeTimeCheck() -->
+        <div id="acdBox"></div> <!-- const closeTimeCheck() -->
         <div>
-<%--           <c:choose> --%>
-<%--             <c:when test="${auction.mem_id eq sessionScope.sId }"> --%>
-<!--                <input type="button" value="수정" -->
-<%--                   onclick="location.href='BoardModifyForm?board_num=${board.board_num}&pageNum=${param.pageNum}'"> --%>
-<!--                삭제 버튼 클릭 시 "삭제하시겠습니까?" 메세지 출력 후 확인 버튼 누르면 삭제 서블릿 요청 -->
-<!--                <input type="button" value="삭제" onclick="confirmDelete()"> -->
-<%--             </c:when> --%>
-<%--             <c:otherwise> --%>
-<!--                <input type="button" value="입찰-팝업" onclick="tenderPopup();"> -->
-<!--                <input type="button" value="즉시구매-팝업" onclick="buyingPopup();"> -->
-<%--             </c:otherwise> --%>
-<%--           </c:choose> --%>
-         <input type="button" value="입찰-팝업" onclick="tenderPopup();">
-         <input type="button" value="즉시구매-팝업" onclick="buyingPopup();">
-      </div>
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${auction.mem_id eq sessionScope.sId }"> --%>
+<%-- 					<input type="button" value="수정" onclick="location.href='BoardModifyForm?board_num=${board.board_num}&pageNum=${param.pageNum}'"> --%>
+<!-- <!--                     삭제 버튼 클릭 시 "삭제하시겠습니까?" 메세지 출력 후 확인 버튼 누르면 삭제 서블릿 요청 -->
+<!--                     <input type="button" value="삭제" onclick="confirmDelete()"> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+<!-- 					<input type="button" value="입찰-팝업" onclick="tenderPopup();"> -->
+<!-- 					<input type="button" value="즉시구매-팝업" onclick="buyingPopup();"> -->
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
+			<input type="button" value="입찰-팝업" onclick="tenderPopup();">
+            <input type="button" value="즉시구매-팝업" onclick="buyingPopup();">
+        </div>
+        <div> <!-- 연관상품, 상품정보 & 판매자정보 -->
+            <hr>
+            <div>
+                <div>연관상품</div>
+                <div> <!-- 연관상품 -->
+                    <div>연관상품1</div>
+                    <div>연관상품2</div>
+                    <div>연관상품3</div>
+                    <div>연관상품4</div>
+                    <div>연관상품5</div>
+                </div>
+            </div>
+            <hr>
+            <div> <!-- 상품정보 & 판매자정보 -->
+	            <div>
+	               <div>상품정보</div>
+	               <div>${auction.auction_info }</div>
+	            </div>
+	            <div>
+	               <div> <!-- 판매자정보 -->
+<%-- 	                   <span id="sellerInfo">${sellerInfo.mem_nickname }</span> --%>
+	                   <span id="sellerInfo"> 판매자 닉네임 : ${auction.mem_idx }</span>
+	               </div>
+	               <div> <!-- 판매자 후기  -->
+	                   <div>후기1</div>
+	                   <div>후기2</div>
+	                   <div>후기3</div>
+	                   <div>후기1</div>
+	               </div>
+	            </div>
+            </div>
+        </div>
    </section>
-   <hr>
-   <h1>연관상품</h1>
-   <hr>
-   <h3>상품정보</h3>
-   <p>${auction.auction_info}</p>
-
-   <h3>판매자정보</h3>
-   <h3>판매자 후기</h3>
 </body>
 </html>

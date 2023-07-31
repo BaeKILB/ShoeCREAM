@@ -26,4 +26,6 @@ public interface AuctionMapper {
 
 	int selectDibsCount(Map<String, Object> map);
 
+	Map<String, Object> selectSellerInfo(int mem_idx);
+
 }

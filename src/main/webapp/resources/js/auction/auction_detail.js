@@ -56,12 +56,18 @@ function showSlides(n) {
 }
 
 $(function() {
-        
+    // 찜하기 클릭
     $("#dibsBox").on("click",function() {
         dibsCheck();
-    }); 
+    });
+    
+    // 판매자정보 클릭
+    $("#sellerInfo").on("click",function() {
+        location.href="판매자상점?mem_idx="+$("#mem_idx").val(); 
+    });
 });
 
+// 찜하기 이벤트
 const dibsCheck = () => {
     $.ajax({
         type: "post"
@@ -79,6 +85,7 @@ const dibsCheck = () => {
     })
 }
 
+// 찜하기 이벤트 결과값
 const dibsResult = (data) => {
     let path = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
     if (data.result) {
@@ -91,5 +98,39 @@ const dibsResult = (data) => {
         $("#dibsBox").append(result);
     }
 }
+
+// 시간
+const updateTimer = () => {
+    const future = Date.parse($("#auc_close_date").val());
+    const now = new Date();
+    const diff = future - now;
+    
+    if (diff < 0) {
+        $("#acdBox").html("경매 마감");
+    } else {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const mins = Math.floor(diff / (1000 * 60));
+        const secs = Math.floor(diff / 1000);
+        
+        const d = days;
+        const h = hours - days * 24;
+        const m = mins - hours * 60;
+        const s = secs - mins * 60;
+        
+        let result =  
+        '<span>' + d + '<span>일</span>' +
+        '<span>' + h + '<span>시</span>' +
+        '<span>' + m + '<span>분</span>' +
+        '<span>' + s + '<span>초</span>';
+        
+        $("#acdBox").html(result);
+    }
+}
+
+// 시간 반복
+setInterval(() => {
+    updateTimer()   
+}, 1000);
 
 

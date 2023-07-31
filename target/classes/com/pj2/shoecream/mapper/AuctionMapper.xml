@@ -130,4 +130,12 @@
         WHERE 
             product_idx=${auction_idx }
 	</select>
+	<select id="selectSellerInfo">
+	    select
+	       * -- 나중에 필요한 정보만 받아오기로 바꿔야함
+	    from
+	       mem_info
+	    where
+	       mem_idx = #{mem_idx }
+	</select>
 </mapper>

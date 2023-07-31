@@ -15,7 +15,7 @@
 </head>
 <body>
 	<header> <!-- header -->
-		<jsp:include page="../inc/header.jsp" />
+        <jsp:include page="../inc_ex/header.jsp" />
 	</header>
 	<nav> <!-- nav -->
 		<jsp:include page="../inc/nav.jsp" />

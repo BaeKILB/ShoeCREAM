@@ -47,4 +47,9 @@ public class AuctionService {
 		return mapper.selectDibsCount(map);
 	}
 
+	// member service 로 옮겨야함
+	public Map<String, Object> getSellerInfo(int mem_idx) {
+		return mapper.selectSellerInfo(mem_idx);
+	}
+
 }
