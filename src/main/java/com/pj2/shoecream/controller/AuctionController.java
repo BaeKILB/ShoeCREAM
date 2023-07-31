@@ -220,7 +220,7 @@ public class AuctionController {
 		Map<String, Object> auction = service.getAuction(auction_idx);
 		model.addAttribute("auction", auction);
 	
-		return "common/auction_modify_form";
+		return "auction/auction_modify_form";
 	}
 	
 	@PostMapping("AuctionModifyPro")

@@ -68,9 +68,7 @@ $(function() {
     
     // 입찰내역 클릭
     $("#bidHistoryBtn").on("click",function() {
-		console.log($(this).attr('class'));
 		if ($(this).attr('class') == null || $(this).attr('class') == '') {
-			console.log("ajax");
 			$("#bidHistoryTable").removeClass('hidden');
 			$(this).addClass('on');
 			$.ajax({
@@ -82,11 +80,14 @@ $(function() {
 				}
 			})
 			.done(function(data) {
-				console.log(JSON.stringify(data))
-				bidResult(data);
+				if (data.length == 0) {
+					bidNoResult();
+				} else {
+					bidResult(data);
+				}
 			})
 			.fail(() => {
-				bidFail();
+				console.log("fail");
 			});
 		} else {
 			$(this).removeClass('on');
@@ -109,7 +110,7 @@ const bidResult = (data) => {
 	};	
 };
 
-const bidFail = () => {
+const bidNoResult = () => {
     let result =
 				"<tr class='bidHistoryData'>"
 					+ "<td colspan='4'>입찰 내역 없음</td>"
