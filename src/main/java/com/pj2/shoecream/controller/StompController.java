@@ -141,7 +141,7 @@ public class StompController {
 	// 흔히 post 후 redirect 시 사용됨
 	@PostMapping("room")
 	public String createRoom(@RequestParam ChatRoomVO chatRoom, RedirectAttributes rttr) {
-		JungProductVO jProduct = jungProductService.getJungProduct(chatRoom.getProduct_idx());
+		JungProductVO jProduct = jungProductService.getJungProductChat(chatRoom.getProduct_idx());
 		
 		if(jProduct != null || jProduct.getProduct_title().equals("")) {
 			chatRoom.setChat_room_area(1);

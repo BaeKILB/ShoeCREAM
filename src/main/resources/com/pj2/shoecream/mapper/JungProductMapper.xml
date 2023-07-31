@@ -13,5 +13,56 @@
 			AND product_selector = 1
 			;
 	</select>
+	
+	<select id="selectJungProductList" resultType="JungProductVO">
+		SELECT *
+		FROM 
+			jung_product
+		
+			<if test='jproduct.lc_code != null'>
+				<if test='jproduct.lc_code != 0'>
+				WHERE
+					lc_code = #{jproduct.lc_code}
+					<if test='jproduct.mc_code != null'>
+						<if test='jproduct.mc_code != 0'>
+							AND
+							mc_code = #{jproduct.mc_code}
+						</if>
+					</if>
+				</if>
+			</if>
+
+		LIMIT #{listCount}, #{setPageListLimit}
+			
+			;
+	</select>
+
+	<select id="selectJungProduct" parameterType="JungProductVO" resultType="JungProductVO">
+		SELECT *
+		FROM 
+			jung_product
+		WHERE
+			product_idx = #{product_idx}
+			;
+	</select>
+	<select id="selectJungProductCount" parameterType="JungProductVO">
+		SELECT count(product_idx)
+		FROM 
+			jung_product
+		
+			<if test='lc_code != null'>
+				<if test='lc_code != 0'>
+				WHERE
+					lc_code = #{lc_code}
+					<if test='mc_code != null'>
+						<if test='mc_code != 0'>
+							AND
+							mc_code = #{mc_code}
+						</if>
+					</if>
+				</if>
+			</if>
+			;
+	</select>
 
 </mapper>

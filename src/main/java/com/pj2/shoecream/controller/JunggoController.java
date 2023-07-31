@@ -13,6 +13,7 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
@@ -20,13 +21,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pj2.shoecream.config.*;
+import com.pj2.shoecream.handler.JsonHandler;
 import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.service.JungGoNohService;
+import com.pj2.shoecream.service.JungProductService;
 import com.pj2.shoecream.vo.JungGoNohVO;
+import com.pj2.shoecream.vo.JungProductVO;
+import com.pj2.shoecream.vo.PageInfoVO;
 
 
 @Controller
@@ -34,12 +41,118 @@ public class JunggoController {
 	
 	@Autowired
 	private JungGoNohService jungGoNohService;
+	
+	@Autowired
 	private ChatService chatService;
+
+	@Autowired
+	private JungProductService jProductService;
+	
+	@Autowired
+	private JsonHandler jHandler;
+
+	// 중고 항목 페이징 처리때 사용될 상수
+	// 중고 리스트 불러올때 최대 리미트
+	public static final int JUNG_PRODUCT_LIMIT = 8;
 	
 	@GetMapping("JunggoSearch")
-	public String junggoSearch(@RequestParam Map<String,Object> map, Model model) {
+	public String junggoSearch(
+			@RequestParam Map<String,Object> map, 
+			Model model) {
+		JungProductVO jproduct = new JungProductVO();
+		if(map.get("lc_code") != null) {
+			jproduct.setLc_code(Integer.parseInt(((String)map.get("lc_code")).trim()));			
+		}
+		if(map.get("mc_code") != null) {
+			jproduct.setMc_code(Integer.parseInt(((String)map.get("mc_code")).trim()));			
+		}
+		
+		// 페이징 처리를 위한 pageInfo
+		
+		PageInfoVO pageInfo = new PageInfoVO();
+		//페이지 정보 현황 초기화
+		pageInfo.setEndPage(1);
+		pageInfo.setListCount(0); // sql limit 문의 시작 번호는 배열처럼 0 이 시작
+		pageInfo.setPageListLimit(JUNG_PRODUCT_LIMIT);
+		// 페이지 로드 된 뒤에 ajax로 값을 받아올때 해당 값에 +1을 시켜줌으로 -1로 초기값 지정
+		pageInfo.setStartPage(-1);  
+		pageInfo.setMaxPage(8);
+		
+		// 중고 물품 총 갯수 구해서 페이지 최대 갯수 설정
+		pageInfo.setListCount(jProductService.getMaxJungProduct(jproduct));
+		pageInfo.setMaxPage((pageInfo.getListCount() / pageInfo.getPageListLimit()) + 1);
+		
+		model.addAttribute("pageInfo",pageInfo);
+		
+		//일단 중고 물품 물러오는지 테스트 ...
+		
+		model.addAttribute("jungList", jProductService.getJungProductList(jproduct, pageInfo));
+		
 		return "/junggo/junggo_product_search";
 	}
+	
+	
+	@ResponseBody
+	@PostMapping("jungProductList.ajax")
+	public String getJproduct(
+			@RequestParam Map<String,Object> map) {
+		
+		//JSON 데이터 형태로 담는 객체
+		JSONObject jsonObj = new JSONObject();	
+		
+		JungProductVO jproduct = new JungProductVO();
+
+		if(map.get("lc_code") != null) {
+			jproduct.setLc_code(Integer.parseInt(((String)map.get("lc_code")).trim()));			
+		}
+		if(map.get("mc_code") != null) {
+			jproduct.setMc_code(Integer.parseInt(((String)map.get("mc_code")).trim()));			
+		}
+		
+		// 페이징 처리를 위한 pageInfo		
+		PageInfoVO pageInfo = new PageInfoVO();
+				
+		//페이지 정보 현황 초기화
+		pageInfo.setEndPage(1);
+		pageInfo.setListCount(0); // sql limit 문의 시작 번호는 배열처럼 0 이 시작
+		pageInfo.setPageListLimit(JUNG_PRODUCT_LIMIT);
+		pageInfo.setStartPage(0); 
+		pageInfo.setMaxPage(8);
+
+		// 페이지 정보 현황 업데이트
+		jHandler.jsonMap2PageInfo(map, pageInfo);
+		
+		// 중고 물품 총 갯수 구해서 페이지 최대 갯수 설정
+		pageInfo.setListCount(jProductService.getMaxJungProduct(jproduct));
+		pageInfo.setMaxPage((pageInfo.getListCount() / pageInfo.getPageListLimit()) + 1);
+				
+		
+		if(pageInfo.getStartPage() < pageInfo.getMaxPage()) {
+			pageInfo.setStartPage(pageInfo.getStartPage() + 1);
+		}
+		else {
+			pageInfo.setStartPage(pageInfo.getMaxPage());		
+		}
+		pageInfo.setListCount(pageInfo.getStartPage() * JUNG_PRODUCT_LIMIT);
+		//일단 중고 물품 물러오는지 테스트 ...
+		
+		map.put("jungList", jProductService.getJungProductList(jproduct, pageInfo));
+		
+		
+		// for 문 활용하여 jsonObj에 값 넣어주기
+			
+		for(Map.Entry<String,Object> et : map.entrySet()) {
+			String key = et.getKey();
+			Object value = et.getValue();
+			jsonObj.put(key, value);
+		}		
+		
+		jHandler.pageInfo2JsonObj(jsonObj,pageInfo);
+		
+		return jsonObj.toString();
+		
+	}
+	
 	@GetMapping("JungChat")
 	public String jungChat(@RequestParam Map<String,Object> map, Model model) {
 		return "";

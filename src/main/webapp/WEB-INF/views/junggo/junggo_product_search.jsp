@@ -45,7 +45,9 @@
 		</article>
 	</main>
 	
-
-
+	${jungList }
+	<script type="text/javascript">
+		let
+	</script>
 </body>
 </html>
