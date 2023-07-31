@@ -64,7 +64,7 @@
 				<ul>
 					<li><a href=""> 게시물<span>${posts_image1.size()}</span>
 					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen();"> 구독정보<span>${dto.followCount}</span>
+					<li><a href="javascript:subscribeInfoModalOpen(${dto.member.mem_idx });"> 구독정보<span>${dto.followCount}</span>
 					</a></li>
 				</ul>
 			</div>
@@ -141,32 +141,8 @@
 
 		<div class="subscribe-list" id="subscribeModalList">
 
-			<div class="subscribe__item" id="subscribeModalItem-1">
-				<div class="subscribe__img">
-					<img src="#"
-						onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person.jpeg'" />
-				</div>
-				<div class="subscribe__text">
-					<h2>love</h2>
-				</div>
-				<div class="subscribe__btn">
-					<button class="cta blue" onclick="toggleSubscribeModal(this)">구독취소</button>
-				</div>
-			</div>
 
 
-			<div class="subscribe__item" id="subscribeModalItem-2">
-				<div class="subscribe__img">
-					<img src="#"
-						onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person.jpeg'" />
-				</div>
-				<div class="subscribe__text">
-					<h2>ssar</h2>
-				</div>
-				<div class="subscribe__btn">
-					<button class="cta blue" onclick="toggleSubscribeModal(this)">구독취소</button>
-				</div>
-			</div>
 		</div>
 	</div>
 
