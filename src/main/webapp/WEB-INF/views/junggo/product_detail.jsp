@@ -134,17 +134,17 @@
 					<p class="product_catrgory">HOME > 
 						<c:choose>
 							<c:when test="${jungGoNoh.lc_code == '1'}">
-								스포츠 >
+								성별 >
 								<c:choose>
-									<c:when test="${jungGoNoh.mc_code == 1}">야구</c:when>
-									<c:when test="${jungGoNoh.mc_code == 2}">농구</c:when>						
+									<c:when test="${jungGoNoh.mc_code == 1}">남성</c:when>
+									<c:when test="${jungGoNoh.mc_code == 2}">여성</c:when>						
 								</c:choose>
 							</c:when>
 							<c:when test="${jungGoNoh.lc_code == '2'}">
-								공연 > 
+								종류 > 
 								<c:choose>
-									<c:when test="${jungGoNoh.mc_code == 1}">연극</c:when>
-									<c:when test="${jungGoNoh.mc_code == 2}">뮤지컬</c:when>						
+									<c:when test="${jungGoNoh.mc_code == 1}">운동화</c:when>
+									<c:when test="${jungGoNoh.mc_code == 2}">구두</c:when>						
 								</c:choose>
 							</c:when>
 						</c:choose>
