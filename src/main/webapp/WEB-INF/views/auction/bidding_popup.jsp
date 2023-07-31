@@ -19,7 +19,20 @@ function calculateGuaranteeAmount() {
     document.getElementById("guarantee_amount").value = guaranteeAmount.toFixed(0);
 }
 
+function bidUnit() {
+    const bidPriceInput = document.getElementById("bid_price");
+    const bidPrice = parseFloat(bidPriceInput.value);
+    const bidUnit = "${auction.auc_bid_unit}";
+    const minimumBid = "${bid.bid_price + auction.auc_bid_unit}";
+    const guaranteeAmountInput = document.getElementById("guarantee_amount");
 
+    if (bidPrice % parseFloat(bidUnit) !== 0 || bidPrice<minimumBid) {
+        alert(bidUnit + "원 단위로, \n"+minimumBid+"원 이상의 값을 입력해주세요.");
+        bidPriceInput.value = ''; // 입력값 초기화
+        guaranteeAmountInput.value = ''; // 보증금 값 초기화
+        bidPriceInput.focus(); 
+    }
+}
 
 	// 시간
 	// 시간
@@ -97,9 +110,7 @@ ${bid }
 			<!-- 올리는 단위 정하기ㅏ 보증금 정하기 -->
 			<c:set var="minimumBid" value="${bid.bid_price + auction.auc_bid_unit}" />
             <div>입찰 금액 (입찰단위 ${auction.auc_bid_unit} 원)</div>
-            <input type="number" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" required>원
-			
-			
+            <input type="number" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" onchange=bidUnit() required>원
 			
 			<!-- 보증금 입찰 금액의 10퍼 -->
             <div>보증금</div>
