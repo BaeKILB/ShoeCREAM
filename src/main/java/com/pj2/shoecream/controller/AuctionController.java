@@ -260,12 +260,13 @@ public class AuctionController {
     
     //즉시구매
     @GetMapping("buyingPopup")
-    public String buyingPopup(HttpSession session
-         , Model model
-         , @RequestParam String auction_idx) {
+    public String buyingPopup(@RequestParam String auction_idx
+			, Model model
+			, HttpSession session) {
        
-      Map<String, Object> auction = service.getAuction(auction_idx);
-      model.addAttribute("auction",auction);
+		// db에서 자료 불러온다
+		Map<String, Object> auction = service.getAuction(auction_idx);
+		model.addAttribute("auction", auction);
       
       
        return "auction/buying_popup";
@@ -296,6 +297,18 @@ public class AuctionController {
 			return "fail_back";
 		}
     }
+    
+    
+    @PostMapping("buyingPro")
+    public String insertBuying(
+    		@RequestParam Map<String, Object> map
+    		, Model model
+    		, HttpSession session) {
+    	
+    	
+    	return "";
+    	}
+    
     
     @ResponseBody
     @RequestMapping(value= "dibsEvent", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
