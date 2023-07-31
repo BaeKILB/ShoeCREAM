@@ -128,17 +128,17 @@ div #test_area ul { /* 카테고리 css */
 <!--                             </a> -->
 <!--                         </div> -->
                         <div class="col-1 b_h_left_menu store">
-                            <a href="${pageContext.request.contextPath }/mypage">
+                            <a href="${pageContext.request.contextPath }/mypage/update">
                                 <img src="${pageContext.request.contextPath }/resources/img/main_ex/market/my_store.png" alt="마이페이지">
                                 마이페이지
                             </a>
                         </div>
-                        <div class="col-1 b_h_left_menu">
-                            <a href="myChatting">
-                                <img src="${pageContext.request.contextPath }/resources/img/main_ex/market/talk.png" alt="1:1문의">
-                                채팅
-                            </a>
-                        </div>
+						<div class="col-1 b_h_left_menu">
+							<a href="${pageContext.request.contextPath }/store/${principal.member.mem_idx}"> <img
+								src="${pageContext.request.contextPath }/resources/img/main_ex/market/talk.png"
+								alt="1:1문의"> 상점
+							</a>
+						</div>
                         <div class="col-1 b_h_left_menu">
                             <a href="${pageContext.request.contextPath }/social">
                                 <img src="${pageContext.request.contextPath }/resources/img/member/social/logo2.png" alt="Social">

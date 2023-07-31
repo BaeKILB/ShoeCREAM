@@ -9,4 +9,6 @@ public interface ImageMapper {
 
 	int insertProductImage(ProductImageVO image);
 
+	int modifyProductImage(ProductImageVO image);
+
 }

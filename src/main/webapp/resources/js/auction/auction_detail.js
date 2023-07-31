@@ -65,7 +65,60 @@ $(function() {
     $("#sellerInfo").on("click",function() {
         location.href="판매자상점?mem_idx="+$("#mem_idx").val(); 
     });
+    
+    // 입찰내역 클릭
+    $("#bidHistoryBtn").on("click",function() {
+		if ($(this).attr('class') == null || $(this).attr('class') == '') {
+			$("#bidHistoryTable").removeClass('hidden');
+			$(this).addClass('on');
+			$.ajax({
+				type: 'get'
+				, dataType: 'json'
+				, url: 'bidHistory'
+				, data: {
+					auction_idx: $("#auction_idx").val()
+				}
+			})
+			.done(function(data) {
+				if (data.length == 0) {
+					bidNoResult();
+				} else {
+					bidResult(data);
+				}
+			})
+			.fail(() => {
+				console.log("fail");
+			});
+		} else {
+			$(this).removeClass('on');
+			$(".bidHistoryData").remove();
+			$("#bidHistoryTable").addClass('hidden');
+		}
+	});
 });
+
+const bidResult = (data) => {
+	for (let item of data) {
+        let result =
+			"<tr class='bidHistoryData'>"
+				+ "<td>"+item.mem_idx+"</td>"
+				+ "<td>"+item.bid_price+"</td>"
+				+ "<td>"+dateFormat(item.bid_date)+"</td>"
+				+ "<td>"+item.bid_state+"</td>"
+			+ "</tr>";
+        $("#bidHistoryTable").append(result);
+	};	
+};
+
+const bidNoResult = () => {
+    let result =
+				"<tr class='bidHistoryData'>"
+					+ "<td colspan='4'>입찰 내역 없음</td>"
+				+ "</tr>";
+    $("#bidHistoryTable").append(result);
+};
+
+
 
 // 찜하기 이벤트
 const dibsCheck = () => {
@@ -99,7 +152,7 @@ const dibsResult = (data) => {
     }
 }
 
-// 시간
+// 시간카운트
 const updateTimer = () => {
     const future = Date.parse($("#auc_close_date").val());
     const now = new Date();
@@ -133,4 +186,20 @@ setInterval(() => {
     updateTimer()   
 }, 1000);
 
+// 시간
+const dateFormat = (data) => {
+	let date = new Date(data)
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
 
+    month = month >= 10 ? month : '0' + month;
+    day = day >= 10 ? day : '0' + day;
+    hour = hour >= 10 ? hour : '0' + hour;
+    minute = minute >= 10 ? minute : '0' + minute;
+    second = second >= 10 ? second : '0' + second;
+
+    return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+}

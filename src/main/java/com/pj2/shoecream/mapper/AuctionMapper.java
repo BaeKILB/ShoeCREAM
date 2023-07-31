@@ -12,6 +12,8 @@ public interface AuctionMapper {
 
 	int insertAuctionItem(AuctionVO auction);
 
+	int modifyAuctionItem(AuctionVO auction);
+	
 	List<Map<String, Object>> selectAuctionList(Map<String, Object> map);
 
 	Map<String, Object> selectAuction(String auction_idx);
@@ -27,5 +29,6 @@ public interface AuctionMapper {
 	int selectDibsCount(Map<String, Object> map);
 
 	Map<String, Object> selectSellerInfo(int mem_idx);
+
 
 }

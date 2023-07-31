@@ -16,4 +16,8 @@ public class ImageService {
 		return mapper.insertProductImage(image);
 	}
 	
+	public int modifyProductImage(ProductImageVO image) {
+		return mapper.modifyProductImage(image);
+	}
+	
 }

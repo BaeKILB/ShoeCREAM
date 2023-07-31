@@ -38,6 +38,8 @@ import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.ProductImageVO;
 
+import retrofit2.http.POST;
+
 @Controller
 public class AuctionController {
    @Autowired
@@ -91,6 +93,10 @@ public class AuctionController {
 		// 입찰내역
 		Map<String, Object> bid = bidService.getBid(auction_idx);
 		model.addAttribute("bid", bid);
+		
+		// 입찰내역 리스트
+		List<Map<String, Object>> bidList = bidService.getBidList(auction_idx);
+		model.addAttribute("bidList", bidList);
 		
 		// 입찰 횟수
 		int bidCount = bidService.getBidCount(auction_idx);
@@ -198,6 +204,102 @@ public class AuctionController {
 		}
 		return "redirect:/Auction";
     }
+    
+    //글 수정 0731 이온 작업중
+	@GetMapping("AuctionModifyForm")
+	public String modifyForm( 
+			HttpSession session
+	        , Model model
+	        , @RequestParam Map<String, Object> map
+	       ) {
+		
+	
+		//글 호출
+		
+		String auction_idx = (String)map.get("auction_idx");
+		Map<String, Object> auction = service.getAuction(auction_idx);
+		model.addAttribute("auction", auction);
+	
+		return "auction/auction_modify_form";
+	}
+	
+	@PostMapping("AuctionModifyPro")
+	public String AuctionModifyPro( 
+								AuctionVO auction
+					          , ProductImageVO image
+					          , HttpSession session) {
+		
+    	// sId 받아오기
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        int sId = mPrincipalDetails.getMember().getMem_idx();
+    	
+
+		auction.setMem_idx(sId); // 회원번호 추가
+		String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
+		auction.setAuction_idx(productId); // 상품번호 추가
+		image.setProduct_idx(productId);
+
+		String uploadDir = "/resources/upload/auction";
+		String saveDir = session.getServletContext().getRealPath(uploadDir);
+		String subDir = "";
+		try {
+           Date date = new Date();
+           SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+           subDir = sdf.format(date);
+           saveDir += "/" + subDir;
+           Path path = Paths.get(saveDir);
+           Files.createDirectories(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        image.setProduct_idx(productId);
+        image.setImage_path(uploadDir+"/"+subDir);
+        
+        MultipartFile mFile1 = image.getImage1();
+        MultipartFile mFile2 = image.getImage2();
+        MultipartFile mFile3 = image.getImage3();
+        MultipartFile mFile4 = image.getImage4();
+        
+        String uuid = UUID.randomUUID().toString();
+        
+        image.setImage1_name("");
+        image.setImage2_name("");
+        image.setImage3_name("");
+        image.setImage4_name("");
+        
+        String imageName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
+		String imageName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
+		String imageName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+		String imageName4 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+	      
+		if(!mFile1.getOriginalFilename().equals("")) image.setImage1_name(imageName1);
+		if(!mFile2.getOriginalFilename().equals("")) image.setImage2_name(imageName2);
+		if(!mFile3.getOriginalFilename().equals("")) image.setImage3_name(imageName3);
+		if(!mFile4.getOriginalFilename().equals("")) image.setImage4_name(imageName4);
+	        
+		System.out.println(auction.toString());
+	      
+		int insertCount = isService.modifyProductImage(image);
+	       
+		if (insertCount > 0) {
+		    try {
+			if (!mFile1.getOriginalFilename().equals("")) mFile1.transferTo(new File(saveDir, imageName1));
+			if (!mFile2.getOriginalFilename().equals("")) mFile2.transferTo(new File(saveDir, imageName2));
+			if (!mFile3.getOriginalFilename().equals("")) mFile3.transferTo(new File(saveDir, imageName3));
+			if (!mFile3.getOriginalFilename().equals("")) mFile4.transferTo(new File(saveDir, imageName4));
+		    } catch (IllegalStateException e) {
+			e.printStackTrace();
+		    } catch (IOException e) {
+			e.printStackTrace();
+		    }
+		    service.modifyAuctionItem(auction);
+		}
+		return "redirect:/Auction";
+		
+		
+	}
     
     @ResponseBody
     @RequestMapping(value= "getAucList", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
@@ -339,6 +441,17 @@ public class AuctionController {
     	
     	JSONObject jsonObject = new JSONObject(dibs);
 		return jsonObject.toString();
+    }
+    
+    @ResponseBody
+    @RequestMapping(value= "bidHistory", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
+    public String bidHistory(
+    		@RequestParam String auction_idx
+    		, Model model) {
+    	
+    	List<Map<String, Object>> bidList = bidService.getBidList(auction_idx);
+    	JSONArray jsonArray = new JSONArray(bidList);
+    	return jsonArray.toString();
     }
 
     

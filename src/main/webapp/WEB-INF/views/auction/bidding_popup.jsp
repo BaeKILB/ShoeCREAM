@@ -101,14 +101,28 @@ ${bid }
             <hr>
             <div>
                 <span>현재가 : </span>
-                <span>${bid.bid_price }원 </span>
+                <c:choose>
+                	<c:when test="${bid eq null }">
+						<span>${auction.auc_start_price }원</span>                	
+                	</c:when>
+                	<c:otherwise>
+		                <span>${bid.bid_price }원 </span>
+                	</c:otherwise>
+                </c:choose>
                 <span>즉시구매가 : </span>
                 <span>${auction.auc_buy_instantly }원</span>
             </div>
 		</div>
 		<div>
 			<!-- 올리는 단위 정하기ㅏ 보증금 정하기 -->
-			<c:set var="minimumBid" value="${bid.bid_price + auction.auc_bid_unit}" />
+			<c:choose>
+				<c:when test="${bid eq null }">
+					<c:set var="minimumBid" value="${auction.auc_start_price }" />
+				</c:when>
+				<c:otherwise>
+					<c:set var="minimumBid" value="${bid.bid_price + auction.auc_bid_unit}" />
+				</c:otherwise>
+			</c:choose>
             <div>입찰 금액 (입찰단위 ${auction.auc_bid_unit} 원)</div>
             <input type="number" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" onchange=bidUnit() required>원
 			

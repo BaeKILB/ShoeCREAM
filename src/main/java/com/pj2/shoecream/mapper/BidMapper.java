@@ -1,5 +1,6 @@
 package com.pj2.shoecream.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -16,4 +17,6 @@ public interface BidMapper {
 	int selectBidCount(String auction_idx);
 
 	void updateBid(Map<String, Object> map);
+
+	List<Map<String, Object>> selectBidList(String auction_idx);
 }

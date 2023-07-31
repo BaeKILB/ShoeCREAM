@@ -3,6 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
+<c:set var="principal" value="${null}" />
+
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <!DOCTYPE html>
 <html>
 <head>
@@ -104,6 +112,10 @@ to {
 #sellerInfo {
     cursor: pointer;
 }
+
+.hidden {
+	display: none;
+}
 </style>
 </head>
 <body>
@@ -135,31 +147,7 @@ to {
 			<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }" hidden>
 			<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" hidden>
         </div>
-        <div class="slideshow-container">
-		<!-- Full-width images with number and caption text -->
-			<div class="mySlides fade">
-	            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }" style="width: 100%">
-			</div>
-			<div class="mySlides fade">
-	            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }" style="width: 100%">
-			</div>
-			<div class="mySlides fade">
-	            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }" style="width: 100%">
-			</div>
-			<div class="mySlides fade">
-	            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" style="width: 100%">
-			</div>
-            <!-- Next and previous buttons -->
-			<a class="prev" onclick="plusSlides(-1)">&#10094;</a> 
-			<a class="next" onclick="plusSlides(1)">&#10095;</a>
-        </div>
-        <!-- The dots/circles -->
-        <div style="text-align: center">
-	        <span class="dot" onclick="currentSlide(1)"></span> 
-	        <span class="dot" onclick="currentSlide(2)"></span> 
-	        <span class="dot" onclick="currentSlide(3)"></span> 
-	        <span class="dot" onclick="currentSlide(4)"></span>
-        </div>
+
         <div>
 	        <span id="">${auction.lc_name }</span>
 	        <span> > </span>
@@ -216,23 +204,35 @@ to {
 				    </c:otherwise>
 				</c:choose>
 			</span>
-            <span id="">경매기록</span> <!-- const auctionHistory() -->
+			<div>
+	            <div id="bidHistoryBtn">경매기록</div> <!-- const auctionHistory() -->
+	            <div id="bidHistory">
+	           		<table id="bidHistoryTable" class="hidden">
+						<tr>
+							<th>입찰자</th>
+							<th>입찰가격</th>
+							<th>거래시간</th>
+							<th>상태</th>
+						</tr>
+					</table>
+	            </div>
+            </div>
         </div>
         <div id="acdBox"></div> <!-- const closeTimeCheck() -->
         <div>
-<%-- 			<c:choose> --%>
-<%-- 				<c:when test="${auction.mem_id eq sessionScope.sId }"> --%>
-<%-- 					<input type="button" value="수정" onclick="location.href='BoardModifyForm?board_num=${board.board_num}&pageNum=${param.pageNum}'"> --%>
-<!-- <!--                     삭제 버튼 클릭 시 "삭제하시겠습니까?" 메세지 출력 후 확인 버튼 누르면 삭제 서블릿 요청 -->
-<!--                     <input type="button" value="삭제" onclick="confirmDelete()"> -->
-<%-- 				</c:when> --%>
-<%-- 				<c:otherwise> --%>
-<!-- 					<input type="button" value="입찰-팝업" onclick="tenderPopup();"> -->
-<!-- 					<input type="button" value="즉시구매-팝업" onclick="buyingPopup();"> -->
-<%-- 				</c:otherwise> --%>
-<%-- 			</c:choose> --%>
-			<input type="button" value="입찰-팝업" onclick="tenderPopup();">
-            <input type="button" value="즉시구매-팝업" onclick="buyingPopup();">
+			<c:choose>
+				<c:when test="${auction.mem_idx eq principal.member.mem_idx}">
+					<input type="button" value="수정" onclick="location.href='AuctionModifyForm?auction_idx=${auction.auction_idx}'">
+<!--                      삭제 버튼 클릭 시 "삭제하시겠습니까?" 메세지 출력 후 확인 버튼 누르면 삭제 서블릿 요청 -->
+                    <input type="button" value="삭제" onclick="confirmDelete()">
+				</c:when>
+				
+				<c:otherwise>
+					<input type="button" value="입찰-팝업" onclick="tenderPopup();">
+					<input type="button" value="즉시구매-팝업" onclick="buyingPopup();">
+				</c:otherwise>
+			</c:choose>
+			
         </div>
         <div> <!-- 연관상품, 상품정보 & 판매자정보 -->
             <hr>

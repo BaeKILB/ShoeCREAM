@@ -146,7 +146,8 @@
 								<input type="text" name="mem_name" id="pw_s_name" maxLength="25" size="50" placeholder="이름을 입력하세요">
 							</li>
 							<li>
-								<input type="text" name="mem_mtel" id="pw_s_phone" maxLength="25" size="50" value="" placeholder="휴대폰번호를 입력하세요">
+<!-- 								<input type="text" name="mem_mtel" id="pw_s_phone" maxLength="25" size="50" value="" placeholder="휴대폰번호를 입력하세요"> -->
+								<input type="text" name="mem_email" id="pw_s_phone" maxLength="25" size="50" value="" placeholder="이메일을 입력하세요.">
 							</li>
 						</ul>
 					</div>
