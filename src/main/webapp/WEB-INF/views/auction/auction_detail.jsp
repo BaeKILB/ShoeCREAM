@@ -104,6 +104,10 @@ to {
 #sellerInfo {
     cursor: pointer;
 }
+
+.hidden {
+	display: none;
+}
 </style>
 </head>
 <body>
@@ -216,7 +220,19 @@ to {
 				    </c:otherwise>
 				</c:choose>
 			</span>
-            <span id="">경매기록</span> <!-- const auctionHistory() -->
+			<div>
+	            <div id="bidHistoryBtn">경매기록</div> <!-- const auctionHistory() -->
+	            <div id="bidHistory">
+	           		<table id="bidHistoryTable" class="hidden">
+						<tr>
+							<th>입찰자</th>
+							<th>입찰가격</th>
+							<th>거래시간</th>
+							<th>상태</th>
+						</tr>
+					</table>
+	            </div>
+            </div>
         </div>
         <div id="acdBox"></div> <!-- const closeTimeCheck() -->
         <div>

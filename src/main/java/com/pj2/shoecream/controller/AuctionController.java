@@ -92,6 +92,10 @@ public class AuctionController {
 		Map<String, Object> bid = bidService.getBid(auction_idx);
 		model.addAttribute("bid", bid);
 		
+		// 입찰내역 리스트
+		List<Map<String, Object>> bidList = bidService.getBidList(auction_idx);
+		model.addAttribute("bidList", bidList);
+		
 		// 입찰 횟수
 		int bidCount = bidService.getBidCount(auction_idx);
 		model.addAttribute("bidCount", bidCount);
@@ -326,6 +330,17 @@ public class AuctionController {
     	
     	JSONObject jsonObject = new JSONObject(dibs);
 		return jsonObject.toString();
+    }
+    
+    @ResponseBody
+    @RequestMapping(value= "bidHistory", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
+    public String bidHistory(
+    		@RequestParam String auction_idx
+    		, Model model) {
+    	
+    	List<Map<String, Object>> bidList = bidService.getBidList(auction_idx);
+    	JSONArray jsonArray = new JSONArray(bidList);
+    	return jsonArray.toString();
     }
 
     

@@ -39,4 +39,14 @@
         where
             auction_idx = #{auction_idx }
     </update>
+    <select id="selectBidList" resultType="map">
+    	select
+    		*
+    	from
+    		bid_list
+    	where
+    		auction_idx = #{auction_idx }
+    	order by
+    		bid_date desc
+    </select>
 </mapper>

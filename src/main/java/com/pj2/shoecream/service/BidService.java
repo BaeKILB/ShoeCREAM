@@ -1,5 +1,6 @@
 package com.pj2.shoecream.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,10 @@ public class BidService {
 
 	public int getBidCount(String auction_idx) {
 		return mapper.selectBidCount(auction_idx);
+	}
+
+	public List<Map<String, Object>> getBidList(String auction_idx) {
+		return mapper.selectBidList(auction_idx);
 	}
 
 }

@@ -18,7 +18,7 @@
         <jsp:include page="../inc_ex/header.jsp" />
 	</header>
 	<nav> <!-- nav -->
-		<jsp:include page="../inc/nav.jsp" />
+<%-- 		<jsp:include page="../inc/nav.jsp" /> --%>
 	</nav>
 	<main> <!-- main -->
 		<section id="pannelBox">
