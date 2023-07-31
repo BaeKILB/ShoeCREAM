@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<head>
+<link href="${pageContext.request.contextPath }/resources/css/common/auction_register.css" rel="stylesheet">
+</head>
 <form action="AuctionRegister" method="post" enctype="multipart/form-data">
 	<h1>경매 상품등록</h1>
 	<div class="titleContainner">
