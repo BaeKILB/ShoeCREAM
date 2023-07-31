@@ -18,6 +18,10 @@ public class AuctionService {
     public int registAuctionItem(AuctionVO auction) {
 	return mapper.insertAuctionItem(auction);
     }
+    
+    public int modifyAuctionItem(AuctionVO auction) {
+    	return mapper.modifyAuctionItem(auction);
+    }
 
     public List<Map<String, Object>> getAuctionList(Map<String, Object> map) {
 	return mapper.selectAuctionList(map);
