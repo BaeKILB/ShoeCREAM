@@ -445,7 +445,7 @@ public class JunggoController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 
-		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
+		int mem_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
 		
 		
 		jungGoNoh.setMem_idx(mem_idx);
@@ -484,7 +484,7 @@ public class JunggoController {
 		// 게시물 등록 작업 요청 결과 판별
 		// => 성공 시 업로드 파일을 실제 디렉토리에 이동시킨 후 BoardList 서블릿 리다이렉트
 		// => 실패 시 "글 쓰기 실패!" 메세지 출력 후 이전페이지 돌아가기 처리
-		if(countDibs > 0 && countReadCount >0) 
+		if(countDibs > 0 && countReadCount > 0) 
 		{ // 성공
 			
 			

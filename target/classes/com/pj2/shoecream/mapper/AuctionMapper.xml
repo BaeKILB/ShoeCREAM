@@ -25,6 +25,28 @@
 			, '대기'
 		)
 	</insert>
+	
+	
+	<update id="modifyAuctionItem" >
+    update auction_item
+    set
+        mem_idx = #{mem_idx},
+        auction_title = #{auction_title},
+        auction_info = #{auction_info},
+        lc_code = #{lc_code},
+        mc_code = #{mc_code},
+        auction_brand = #{auction_brand},
+        auction_size = #{auction_size},
+        auc_start_price = #{auc_start_price},
+        auc_buy_instantly = #{auc_buy_instantly},
+        auc_bid_unit = #{auc_bid_unit},
+        auc_regist_date = #{auc_regist_date},
+        auc_close_date = #{auc_close_date}
+    where auction_idx = #{auction_idx}
+	</update>
+	
+	
+	
 	<select id="selectAuctionList" resultType="map">
 		select
 		    *
