@@ -33,10 +33,16 @@ public class SocialController {
 	@Autowired
 	private MemberService memberService;
 //  =========================social============================
-	// 소셜 스토리 페이지
-  @GetMapping("/social")
+	// 소셜 팔로잉 디테일 페이지 (홈 버튼 클릭)
+	@GetMapping("/social/story")
 	public String story() {
 		return "member/social/story";
+	}
+	
+	// 소셜 스토리 페이지
+	@GetMapping("/social")
+	public String popular() {
+		return "member/social/popular";
 	}
   
   // 소셜 개인 프로필 페이지

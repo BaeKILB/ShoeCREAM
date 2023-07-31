@@ -40,10 +40,10 @@
 			</a>
 			<nav class="navi">
 				<ul class="navi-list">
-					<li class="navi-item"><a href="${pageContext.request.contextPath }/">
+					<li class="navi-item"><a href="${pageContext.request.contextPath }/social/story">
 							<i class="fas fa-home"></i>
 						</a></li>
-					<li class="navi-item"><a href="/image/popular">
+					<li class="navi-item"><a href="${pageContext.request.contextPath }/social">
 							<i class="far fa-compass"></i>
 						</a></li>
 					<li class="navi-item"><a href="${pageContext.request.contextPath }/social/${principal.member.mem_idx}">
