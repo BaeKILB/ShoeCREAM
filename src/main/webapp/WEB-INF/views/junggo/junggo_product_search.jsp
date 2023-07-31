@@ -13,6 +13,8 @@
 <link href="${pageContext.request.contextPath }/resources/css/inc/side_category.css"	rel="stylesheet">
 <script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <script	src="${pageContext.request.contextPath }/resources/js/inc/side_category.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
+
 </head>
 <body>
 	<h1>junggo search</h1>
@@ -22,32 +24,24 @@
 				<jsp:include page="../inc/side_category_lc.jsp"></jsp:include>
 			</section>
 			<section class="itemListWrap offset-md-3 col-md-9 col-sm-12  container" style="border:1px solid black">
-				<div class="row row-cols-auto">
-						
-						<div class="col mt-2">
-							<jsp:include page="./inc/product_item_box.jsp"></jsp:include>
-						</div>
-						<div class="col mt-2">
-							<jsp:include page="./inc/product_item_box.jsp"></jsp:include>
-						</div>
-						<div class="col mt-2">
-							<jsp:include page="./inc/product_item_box.jsp"></jsp:include>
-						</div>
-						<div class="col mt-2">
-							<jsp:include page="./inc/product_item_box.jsp"></jsp:include>
-						</div>
-						<div class="col mt-2">
-							<jsp:include page="./inc/product_item_box.jsp"></jsp:include>
-						</div>
+				<div id="itemList" class="row row-cols-auto">
 
 				</div>
 			</section>
 		</article>
+		<article class="row">
+			<div class="offset-5 col-2">		
+				<a href="javascript:dataObj = loadItemAjax(dataObj)" id="btnLoadItem">더보기</a>
+			</div>
+		</article>
 	</main>
 	
-	${jungList }
 	<script type="text/javascript">
-		let
+
+		// 페이지 정보 넣기
+		let dataObj = ${jsonObj}
 	</script>
+	<script	src="${pageContext.request.contextPath }/resources/js/junggo/junggo_product_search.js"></script>
+
 </body>
 </html>

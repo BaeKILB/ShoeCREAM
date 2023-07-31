@@ -31,8 +31,8 @@
 					</if>
 				</if>
 			</if>
-
-		LIMIT #{listCount}, #{setPageListLimit}
+ 		ORDER BY product_date desc
+		LIMIT #{startCount}, #{setPageListLimit}
 			
 			;
 	</select>

@@ -76,8 +76,11 @@ public class StompController {
     @GetMapping("chatRooms")
     public ModelAndView chatRooms(@RequestParam Map<String,Object> map, 
     		@AuthenticationPrincipal PrincipalDetails principalDetails, HttpSession session){    	
+    	
+    	//리턴할 객체
     	ModelAndView mv = null;
-
+    	
+    	//spring security
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         int idx = -1;
         PrincipalDetails mPrincipalDetails = null;
@@ -86,7 +89,10 @@ public class StompController {
         	idx = mPrincipalDetails.getMember().getMem_idx(); // 세션에 저장된 mem_idx
         }
         catch(Exception e){
-        
+    		mv = new ModelAndView("inc/fail_forward");
+    		mv.addObject("msg","로그인이 필요 합니다!");
+    		mv.addObject("targetURL","login");
+    		return mv;
         }
 		
 
@@ -156,6 +162,80 @@ public class StompController {
 		return "redirect:rooms";			
 	}
 	
+	// junggo - JungChat 에서 넘어옴
+	// product_idx, idx 받아 채팅방 개설
+	@GetMapping("makeChatRoom")
+	public String makeChatRoom(@RequestParam Map<String,Object> map, Model model
+			, RedirectAttributes rttr) {
+		int idx = -1;
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			idx = mPrincipalDetails.getMember().getMem_idx();
+		}
+		catch(Exception e) {
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","productDetail?product_idx=" + (String)map.get("product_idx"));
+			return "inc/fail_forward";
+		}
+			
+		
+		// 방 만들떄 사용할 chatRoomVO 준비 
+		ChatRoomVO chatRoom = new ChatRoomVO();
+		
+		chatRoom.setProduct_idx((String)map.get("product_idx"));
+		chatRoom.setChat_room_area((int)map.get("chat_room_area"));
+		chatRoom.setMem_buyer_idx(idx);
+		
+		// 중고 가져오기
+		JungProductVO jProduct = jungProductService.getJungProductChat(chatRoom.getProduct_idx());
+		
+		// 판매자 idx 넣기
+		chatRoom.setMem_seller_idx(jProduct.getMem_idx());
+		
+		
+		
+		// 현재 product idx 와 현재 접속 아이디의 idx 로 만들어진 방이 있다면 
+		ChatRoomVO checkRoom = chatService.getChatRoom(chatRoom.getProduct_idx());
+		
+		if(checkRoom != null  
+				&& (chatRoom.getMem_seller_idx() == idx
+				|| chatRoom.getMem_buyer_idx() == idx)) {
+			// 방을 만들지않고 해당 채팅방으로 바로 들어감
+			rttr.addFlashAttribute("chat_area", chatRoom.getChat_room_area());
+			rttr.addFlashAttribute("chat_room_idx", chatRoom.getChat_room_idx());
+
+			return "redirect:rooms";		
+		}
+		// 만약 해당 방이 없지 만 지금 클릭한게 자기가 쓴 판매글이라면 되돌아 감
+		else if(chatRoom.getMem_seller_idx() == idx) {
+				model.addAttribute("msg", "본인의 판매글에 대한 채팅방은 만들 수 없습니다!");
+				model.addAttribute("targetURL", "productDetail?product_idx=" + (String)map.get("product_idx"));
+				return "inc/fail_forward"; 
+		}
+		
+		if(jProduct != null) {
+			chatRoom.setChat_room_area(1);
+			if(chatService.makeChatRoom(chatRoom) > 0) {
+				rttr.addFlashAttribute("createRoomMsg", jProduct.getProduct_title() + "방이 개설되었습니다.");
+			}		
+			else {
+				model.addAttribute("msg", "채팅방 개설에 문제가 발생하였습니다!");
+				model.addAttribute("targetURL", "productDetail?product_idx=" + (String)map.get("product_idx"));
+				return "inc/fail_forward"; 
+			}
+		}
+		else {
+			model.addAttribute("msg", "방 개설에 문제가 발생하였습니다!");
+			model.addAttribute("targetURL", "productDetail?product_idx=" + (String)map.get("product_idx"));
+			return "inc/fail_forward"; 
+		}
+		rttr.addFlashAttribute("chat_area", chatRoom.getChat_room_area());
+		rttr.addFlashAttribute("chat_room_idx", chatRoom.getChat_room_idx());
+		
+		return "redirect:rooms";
+	}
+	
 	@GetMapping("room")
 	public String getRoom(@RequestParam(defaultValue = "-1") String chat_room_idx,
 			 @AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -178,6 +258,9 @@ public class StompController {
 		}
 	}
 	
+	
+	// 채팅방 ajax 방식으로 불러오기 
+	// 추후 작성 ...
 	@GetMapping("getRoomAjax")
 	@ResponseBody
 	public String getRoomAjax(@RequestParam Map<String, Object> map ,

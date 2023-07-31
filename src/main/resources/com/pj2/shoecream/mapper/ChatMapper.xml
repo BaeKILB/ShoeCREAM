@@ -117,7 +117,12 @@ SELECT *
 		SELECT * 
 		FROM chat_rooms
 		WHERE
-			chat_room_idx = #{chat_room_idx}
+			<if test="chat_room_idx != null">
+				chat_room_idx = #{chat_room_idx}
+			</if>
+			<if test="product_idx != null">
+				product_idx = #{product_idx}
+			</if>
 		;
 	</select>
 	
