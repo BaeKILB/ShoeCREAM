@@ -11,7 +11,7 @@ public static String getRamdomPassword() {
 			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
 			'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-			'!', '@', '#', '$', '%', '^', '&' };
+			'!', '@', '#', '$', '%', '^', '&', '*'};
 	
 	StringBuffer key = new StringBuffer();
 	SecureRandom sr = new SecureRandom();
@@ -19,7 +19,7 @@ public static String getRamdomPassword() {
 	
 	int idx = 0;
 	int len = charSet.length;
-	for (int i=0; i<8; i++) {
+	for (int i=0; i<10; i++) {
 		idx = sr.nextInt(len);    // 강력한 난수를 발생시키기 위해 SecureRandom사용.
 		key.append(charSet[idx]);
 	}

@@ -30,8 +30,8 @@ public class MemberVO {
     @Size(min = 2, max = 10, message = "별명은 2자 이상 10자 이내로 입력해주세요")
     private String mem_nickname;
     
-//    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$" ,message = "비밀번호는 영문, 숫자, 특수문자 포함 8~20글자 이상 입력해주세요.")
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$" ,message = "비밀번호는 8~20글자 이상 입력해주세요.")
+//    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$" ,message = "비밀번호는 8~20글자 이상 입력해주세요.")
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$" ,message = "비밀번호는 영문, 숫자, 특수문자 포함 8~20글자 이상 입력해주세요.")
 	@Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이내로 입력해주세요.")
     @NotBlank(message = "비밀번호를 입력해주세요.")
 	private String mem_passwd;
