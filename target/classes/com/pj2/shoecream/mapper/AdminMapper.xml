@@ -89,6 +89,7 @@
 
 
 <!--  민진 민진 민진민진민진민진민진민진민진민진민진민진 -->
+
 <!--  중고 상품 조회 -->
 <select id="selectProduct">
   SELECT
@@ -155,5 +156,41 @@ SELECT COUNT(*)
   LIMIT #{cri.skip}, #{cri.amount}
 </select>
 
+<!-- 중고 상품 신고 -->
+<select id="getReportListPaging" resultType="com.pj2.shoecream.vo.ReportVO">
+SELECT report_idx, report_content, product_idx, report_div, report_detail
+FROM (
+    SELECT report_idx, report_content, product_idx, report_div, report_detail, COUNT(*) OVER (PARTITION BY product_idx) AS product_count
+    FROM joonggo_report
+) AS n1
+WHERE product_count >= 5
+<choose>
+    <when test="!searchKeyword.equals('') and searchType.equals('title')">
+        AND report_div LIKE CONCAT('%', #{searchKeyword}, '%')
+    </when>
+    <when test="!searchKeyword.equals('') and searchType.equals('content')">
+        AND report_detail LIKE CONCAT('%', #{searchKeyword}, '%')
+    </when>
+    <when test="!searchKeyword.equals('') and searchType.equals('title_content')">
+        AND report_content LIKE CONCAT('%', #{searchKeyword}, '%')
+    </when>
+</choose>
+ORDER BY report_idx ASC
+LIMIT #{cri.amount} OFFSET #{cri.skip}
+</select>
+
+<!-- 페이징 -->
+ <select id="getPage" resultType="int">
+SELECT COUNT(*)
+	FROM  joonggo_report
+</select>
+
+<!--  중고 신고 삭제  -->
+<delete id="deleteReport">
+  DELETE r, p
+  FROM joonggo_report r
+  JOIN jung_product p ON r.product_idx = p.product_idx
+  WHERE r.product_idx = #{product_idx}
+</delete>
    
 </mapper>

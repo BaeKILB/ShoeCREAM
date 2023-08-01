@@ -1,5 +1,6 @@
 package com.pj2.shoecream.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.JungProductVO;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.ReportVO;
 
 @Mapper
 public interface AdminMapper {
@@ -29,12 +31,17 @@ public interface AdminMapper {
 	int getQstListCount(String searchType);
 	// --------------- 민진 ---------------------------
 	
-		// 중고 상품 띄우기
-		List<JungProductVO> selectProduct(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
-		// 중고상품 페이징
-		int getTotal();
-//		// 경매 상품 띄우기
+	// 중고 상품 띄우기
+	List<JungProductVO> selectProduct(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+	// 중고상품 페이징
+	int getTotal();
+	// 경매 상품 띄우기
+	List<Map<String, Object>> selectauctionmap(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+	// 중고 신고
+	List<ReportVO> getReportListPaging(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+//	List<ReportVO> getProductReport();
+	int getPage();
 
-		List<Map<String, Object>> selectauctionmap(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
-	}
+	int deleteReport(ReportVO report);
+}
 

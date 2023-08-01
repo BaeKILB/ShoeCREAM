@@ -65,7 +65,6 @@ function deleteReport(product_idx) {
 									<th class="text_prev">
 										<h4>신고 내용</h4>
 									</th>
-									<th class="count"><span class="report_count">신고 횟수</span></th>
 									<th class="product">상품 번호</th>
 									<th class="report_div">신고 유형</th>
 									<th class="detail">상세 사유</th>
@@ -73,12 +72,11 @@ function deleteReport(product_idx) {
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="reportProcess" items="${report}">
+								<c:forEach var="reportProcess" items="${reportProcessing}">
 									<tr>
 										<td class="txt_prev"><a href="#">
 											<h4 class="title_co">${reportProcess.report_content}</h4>
 											</a>
-											<td class="count"><span class="report_count"> <span class="sv_member">${reportProcess.report_count}</span></span></td>
 											<td class= "product">${reportProcess.product_idx}
 											<th class="report_div title_co" >${reportProcess.report_div}
 											<th class="detail title_co">${reportProcess.report_detail}

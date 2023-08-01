@@ -1,5 +1,6 @@
 package com.pj2.shoecream.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.JungProductVO;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.ReportVO;
 
 @Service
 public class AdminService {
@@ -59,6 +61,18 @@ public class AdminService {
 		return mapper.selectauctionmap(cri, searchType, searchKeyword);
 	}
 	
-		
-
+	// 중고상품 신고 
+	public List<ReportVO> getReportListPaging(Criteria cri, String searchType, String searchKeyword) {
+		return mapper.getReportListPaging(cri, searchType, searchKeyword);
 	}
+
+	// 중고 신고 상품 페이징
+	public int getPage() {
+		return mapper.getPage();
+	}
+
+	// 중고 신고 삭제
+	public int deleteReport(ReportVO report) {
+		return mapper.deleteReport(report);
+	}
+}
