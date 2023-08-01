@@ -367,7 +367,7 @@ public class MemberController {
     }
     
 ////    =========================store============================
-    // 소셜 개인 프로필 페이지
+    // 상점 개인 프로필 페이지
    	@GetMapping("/store/{mem_idx}")
    	public String profile(@PathVariable int mem_idx, Model model) {
 //   		User userEntity = userService.회원프로필(id);

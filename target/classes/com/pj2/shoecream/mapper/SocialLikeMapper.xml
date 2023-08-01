@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.SocialLikeMapper">
+	
+	<!-- 좋아요 -->
+	<insert id="insertLike">
+		INSERT 
+		INTO social_likes
+		VALUES (
+		null 
+		, #{mem_idx}
+		, #{sId}
+		, now()
+		)
+	</insert>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="deleteLike">
+	    DELETE FROM social_likes
+	    WHERE posts_idx = #{mem_idx}
+	    AND mem_idx = #{sId}
+	</delete>
+</mapper>

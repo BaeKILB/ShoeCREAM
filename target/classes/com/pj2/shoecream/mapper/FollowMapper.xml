@@ -19,8 +19,7 @@
 	<delete id="deleteFollow">
 		DELETE
 		FROM social_follows
-		WHERE follower_idx =
-		#{follower_idx}
+		WHERE follower_idx = #{follower_idx}
 		AND followee_idx = #{followee_idx}
 	</delete>
 

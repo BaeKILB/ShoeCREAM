@@ -17,6 +17,9 @@ function initScrollEvent() {
     let maxPage = 1; // 최대 페이지 번호
 
     $(window).on("scroll", function () { // 스크롤 이벤트 핸들러
+//    	console.log("윈도우 scrollTop",$(window).scrollTop());
+//		console.log("문서의 높이",$(document).height());
+//		console.log("윈도우 높이",$(window).height());
         let scrollTop = $(window).scrollTop();
         let windowHeight = $(window).height();
         let documentHeight = $(document).height();
