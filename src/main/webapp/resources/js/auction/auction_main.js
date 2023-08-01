@@ -28,6 +28,7 @@ $(function() { // onload
 	$("#orderMethod").on("change",function() {
 		pageNum = 1;
 		maxPage = 1;
+		orderMethod = $("#orderMethod").val();
 		$("#itemList").empty();
 		getList();
 	});
@@ -37,8 +38,10 @@ $(function() { // onload
 		// 변수 초기화
 		lcCode = '';
 		mcCode = '';
+		orderMethod = '';
 		pageNum = 1;
 		maxPage = 1;
+		$("#orderMethod").val('');
 		
 		// 동일 대분류 선택시
         if($(this).siblings().attr('class') == '') {
@@ -64,6 +67,7 @@ $(function() { // onload
     });
     
     $(".ct_mc_item_btn").on("click",function() {
+		$("#orderMethod").val('');
 		mcCode = $(this).children().val();
 		$("#itemList").empty();
         getList();
@@ -75,7 +79,6 @@ $(function() { // onload
 }); // onload
 
 function getList() {
-	orderMethod = $("#orderMethod").val();
     $.ajax({
         type: "get"
         , url: "getAucList"

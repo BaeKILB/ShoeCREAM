@@ -45,15 +45,42 @@
     where auction_idx = #{auction_idx}
 	</update>
 	
-	
-	
 	<select id="selectAuctionList" resultType="map">
-		select
-		    *
-		from
-			auction_item ai join product_image pi
-			on ai.auction_idx = pi.product_idx
-		where
+		SELECT
+		    ai.auction_idx 
+			, image_path
+			, image1
+			, auction_title
+			, auc_start_price
+			, auc_close_date
+		FROM
+			auction_item ai 
+			JOIN product_image pi ON ai.auction_idx = pi.product_idx 
+			JOIN (
+				SELECT
+					ai.auction_idx
+					,sum(CASE
+						WHEN bl.auction_idx IS NULL THEN 0
+						ELSE 1
+					END) AS bid_count
+				FROM
+					auction_item ai LEFT JOIN bid_list bl
+					ON ai.auction_idx = bl.auction_idx
+				GROUP BY
+					ai.auction_idx) aibl ON ai.auction_idx = aibl.auction_idx
+			JOIN (
+				SELECT
+					auction_idx
+					, sum(CASE
+						WHEN di.product_idx IS NULL THEN 0
+						ELSE 1
+					END) AS dibs_count
+				FROM
+					auction_item ai LEFT JOIN dibs di
+					ON ai.auction_idx = di.product_idx
+				GROUP BY
+					ai.auction_idx) aidi ON ai.auction_idx = aidi.auction_idx
+		WHERE
 			auc_state = '진행'
 		<if test="!lc_code.equals('')">
 		    <choose>
@@ -65,22 +92,26 @@
 		        </otherwise>
 		    </choose>
 		</if>
-<!-- 		<if test="!orderMethod.equals('')"> -->
-<!-- 		    <choose> -->
-<!-- 		        <when test="orderMethod.equals('recommended')"> -->
-<!-- 		            추천순 정렬 -->
-<!-- 		        </when> -->
-<!-- 		        <when test="orderMethod.equals('dateorder')"> -->
-<!--                     최신순 정렬		             -->
-<!-- 		        </when> -->
-<!-- 		        <when test="orderMethod.equals('lowPrice')"> -->
-<!--                     낮은가격순 정렬		             -->
-<!-- 		        </when> -->
-<!-- 		        <when test="orderMethod.equals('highPrice')"> -->
-<!--                     높은가격순 정렬		             -->
-<!-- 		        </when> -->
-<!-- 		    </choose> -->
-<!-- 		</if> -->
+		<if test="!orderMethod.equals('')">
+		    <choose>
+		        <when test="orderMethod.equals('newest')">
+			    	order by
+                   		auction_date DESC         
+		        </when>
+		        <when test="orderMethod.equals('deadline')">
+		        	order by
+                    	auc_close_date            
+		        </when>
+		        <when test="orderMethod.equals('steamed')">
+		        	order by
+                    	dibs_count DESC, auction_readcount DESC	            
+		        </when>
+		        <when test="orderMethod.equals('popular')">
+		        	order by
+		            	bid_count DESC, auction_readcount DESC
+		        </when>
+		    </choose>
+		</if>
         <if test="startRow != null and listLimit != null">
 	        limit
 	            #{startRow}
