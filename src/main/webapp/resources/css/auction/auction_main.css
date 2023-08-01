@@ -17,3 +17,7 @@ a {
 #pannelBox>div {
 	display: inline-block;
 }
+
+.hidden {
+    display: none;
+}

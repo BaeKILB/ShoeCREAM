@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.service.AuctionService;
 import com.pj2.shoecream.service.BidService;
+import com.pj2.shoecream.service.CategoryService;
 import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.ProductImageVO;
@@ -48,14 +49,23 @@ public class AuctionController {
    private ImageService isService;
    @Autowired
    private BidService bidService;
+   @Autowired
+   private CategoryService categoryService;
    
    private static final Logger logger = LoggerFactory.getLogger(AuctionController.class);
    
    @GetMapping("Auction")
-   public String auctionMain() {
+   public String auctionMain(
+		   Model model) {
+	  
+	  List<Map<String, Object>> lc_category = categoryService.getLcList();
+	  model.addAttribute("lc_category",lc_category);
+
+	  List<Map<String, Object>> mc_category = categoryService.getMcList(0);
+	  model.addAttribute("mc_category",mc_category);
+	   
       return "auction/auction_main";
    }
-   
    
     @GetMapping("AuctionDetail")
     public String AuctionDetail(

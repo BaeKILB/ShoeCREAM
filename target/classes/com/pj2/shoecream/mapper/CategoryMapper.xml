@@ -14,8 +14,10 @@
             *
         from
             middle_category
+        <if test="code != 0">
         where
             parent_code = #{code }
+        </if>
         order by
             mc_code;
 	</select>
@@ -24,8 +26,10 @@
             *
         from
             small_category
+        <if test="code != 0">    
         where
             parent_code = #{code }
+        </if>
         order by
             sc_code;
 	</select>

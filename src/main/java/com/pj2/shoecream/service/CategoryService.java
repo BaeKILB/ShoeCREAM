@@ -25,6 +25,4 @@ public class CategoryService {
   public List<Map<String, Object>> getScList(int code) {
     return mapper.selectScList(code);
   }
-	
-
 }

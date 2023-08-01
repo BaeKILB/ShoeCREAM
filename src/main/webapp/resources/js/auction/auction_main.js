@@ -7,7 +7,8 @@ let orderMethod = "";
 $(function() { // onload
 
     getList();
-
+    
+    // 스크롤
     $(window).on("scroll",function() {
         let scrollTop = $(window).scrollTop();
         let windowHeight = $(window).height();
@@ -21,6 +22,7 @@ $(function() { // onload
         }
     });
 	
+	// 정렬
 	$("#orderMethod").on("change",function() {
 		orderMethod = $("#orderMethod").val();
 		pageNum = 1;
@@ -28,6 +30,18 @@ $(function() { // onload
 		$("#itemList").empty();
 		getList();
 	});
+	
+	// 대분류 카테고리
+	$(".ct_lc_item_btn").on("click",function() {
+        if($(this).siblings().attr('class') == '') {
+            $(this).siblings().addClass('hidden');
+            return;
+        }
+        $(".ct_lc_item_btn").each(function() {
+            $(this).siblings().addClass('hidden');
+        });
+        $(this).siblings().removeClass('hidden');
+    });
 	
 }); // onload
 
