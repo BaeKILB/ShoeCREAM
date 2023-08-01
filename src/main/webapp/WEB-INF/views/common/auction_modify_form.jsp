@@ -4,9 +4,14 @@
 
 <!DOCTYPE html>
 <head>
+<link href="${pageContext.request.contextPath }/resources/css/common/product_register.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/common/auction_register.css" rel="stylesheet">
-<script	src="${pageContext.request.contextPath }/resources/js/common/product_register.js"></script>
+<link href="${pageContext.request.contextPath }/resources/css/junggo/common.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/etc/jquery.datetimepicker.min.css" rel="stylesheet">
+
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/etc/jquery.datetimepicker.full.min.js"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/auction/auction_modify_form.js"></script>
 </head>
 <form action="AuctionModifyPro" method="post" enctype="multipart/form-data">
 	<h1>경매 상품등록</h1>
@@ -27,7 +32,28 @@
 			</div>
 		</div>
 		<div class="first_content">
-		    <div class="ivBox"></div>
+		    <div class="ivBox">
+		    	<c:if test="${auction.image1 != '' }">
+			    	<button type="button" onclick='imgDelete(this.value)' value="image1">
+			    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }">
+			    	</button>
+		    	</c:if>
+		    	<c:if test="${auction.image2 != '' }">
+			    	<button type="button" onclick='imgDelete(this.value)' value="image2">
+			    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }">
+			    	</button>
+		    	</c:if>
+		    	<c:if test="${auction.image3 != '' }">
+			    	<button type="button" onclick='imgDelete(this.value)' value="image3">
+			    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }">
+			    	</button>
+		    	</c:if>
+		    	<c:if test="${auction.image4 != '' }">
+			    	<button type="button" onclick='imgDelete(this.value)' value="image4">
+			    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }">
+			    	</button>
+		    	</c:if>
+		    </div>
 			<div class="warning_text">
 				* 상품 이미지는 640x640에 최적화 되어 있습니다.<br> - 상품 이미지는 PC에서는 1:1, 모바일에서는
 				1:1.23 비율로 보여집니다.<br> - 이미지는 상품 등록 시 정사각형으로 잘려서 등록됩니다.<br>
@@ -76,7 +102,7 @@
 				<span>선택한 카테고리 :</span>
 				<span id="selectCategory">
 					<span id="selectLcn">${auction.lc_name }</span>
-					<span id="selectMcn">${auction.mc_name }</span>
+					<span id="selectMcn"> > ${auction.mc_name }</span>
 <!-- 					<span id="selectScn"></span> -->
 				</span>
 			</p>
@@ -141,41 +167,41 @@
 			</div>
 		</div>
 	</div>
-	<div class="seventhContainner">
-		<div class="seventh_title">경매시작가</div>
-		<div class="seventh_content">
-			<input type="text" class="total_fee" name="auc_start_price" value="${auction.auc_start_price }" placeholder="금액을 입력해주세요." />&nbsp;원
-		</div>
-		<div class="seventh_title">입찰단위</div>
-		<div class="seventh_content">
-			<input type="text" class="total_fee" name="auc_bid_unit" value="${auction.auc_bid_unit }" placeholder="금액을 입력해주세요." />&nbsp;원
-		</div>
-		<div class="seventh_title">즉시구매가</div>
-		<div class="seventh_content">
-			<input type="text" class="total_fee" name="auc_buy_instantly" value="${auction.auc_buy_instantly }" placeholder="금액을 입력해주세요."/>&nbsp;원
-		</div>
-	</div>
-	<div class="eighthContainner">
-		<div id="st_wrap">
-			<div class="eighth_title">경매시작일</div>	
-			<div class="eighth_content">
-				<input type="text" name="auc_regist_date" class="hidden date-start" readonly="readonly" required="required">
-				<div id="sdtw">
-					<input type="text" id="dateStart" class="date-start" readonly="readonly" required="required">
-					<input type="text" id="timeStart" class="date-start hidden" readonly="readonly" required="required">
-				</div>
-			</div>
-		</div>
-		<div id="et_wrap" class="hidden">
-			<div class="eighth_title">경매마감일</div>	
-			<div class="eighth_content">
-				<input type="text" name="auc_close_date" class="hidden" readonly="readonly" required="required">
-				<div id="edtw">
-					<input type="text" id="dateEnd" class="date-end" readonly="readonly" required="required">
-					<input type="text" id="timeEnd" class="time-end hidden" readonly="readonly" required="required">
-				</div>
-			</div>
-		</div>
+<!-- 	<div class="seventhContainner"> -->
+<!-- 		<div class="seventh_title">경매시작가</div> -->
+<!-- 		<div class="seventh_content"> -->
+<%-- 			<input type="text" class="total_fee" name="auc_start_price" value="${auction.auc_start_price }" placeholder="금액을 입력해주세요." />&nbsp;원 --%>
+<!-- 		</div> -->
+<!-- 		<div class="seventh_title">입찰단위</div> -->
+<!-- 		<div class="seventh_content"> -->
+<%-- 			<input type="text" class="total_fee" name="auc_bid_unit" value="${auction.auc_bid_unit }" placeholder="금액을 입력해주세요." />&nbsp;원 --%>
+<!-- 		</div> -->
+<!-- 		<div class="seventh_title">즉시구매가</div> -->
+<!-- 		<div class="seventh_content"> -->
+<%-- 			<input type="text" class="total_fee" name="auc_buy_instantly" value="${auction.auc_buy_instantly }" placeholder="금액을 입력해주세요."/>&nbsp;원 --%>
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<div class="eighthContainner"> -->
+<!-- 		<div id="st_wrap"> -->
+<!-- 			<div class="eighth_title">경매시작일</div>	 -->
+<!-- 			<div class="eighth_content"> -->
+<!-- 				<input type="text" name="auc_regist_date" class="hidden date-start" readonly="readonly" required="required"> -->
+<!-- 				<div id="sdtw"> -->
+<!-- 					<input type="text" id="dateStart" class="date-start" readonly="readonly" required="required"> -->
+<!-- 					<input type="text" id="timeStart" class="date-start hidden" readonly="readonly" required="required"> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 		<div id="et_wrap" class="hidden"> -->
+<!-- 			<div class="eighth_title">경매마감일</div>	 -->
+<!-- 			<div class="eighth_content"> -->
+<!-- 				<input type="text" name="auc_close_date" class="hidden" readonly="readonly" required="required"> -->
+<!-- 				<div id="edtw"> -->
+<!-- 					<input type="text" id="dateEnd" class="date-end" readonly="readonly" required="required"> -->
+<!-- 					<input type="text" id="timeEnd" class="time-end hidden" readonly="readonly" required="required"> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 	</div>
 	<div class="ninthContainner">
 		<div class="ninth_title">상품설명</div>
