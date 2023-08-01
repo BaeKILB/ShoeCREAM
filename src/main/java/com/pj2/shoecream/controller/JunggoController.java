@@ -35,11 +35,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.pj2.shoecream.config.*;
 import com.pj2.shoecream.handler.JsonHandler;
 import com.pj2.shoecream.handler.JungHandler;
+import com.pj2.shoecream.service.CategoryService;
 import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.service.JungProductService;
 import com.pj2.shoecream.vo.JungGoNohVO;
 import com.pj2.shoecream.vo.JungProductVO;
+import com.pj2.shoecream.vo.LCategory;
 import com.pj2.shoecream.vo.PageInfoVO;
 
 
@@ -63,6 +65,9 @@ public class JunggoController {
 	@Autowired
 	private JungHandler jungHandler;
 	
+	@Autowired
+	private CategoryService cService;
+	
 	// 중고 항목 페이징 처리때 사용될 상수
 	// 중고 리스트 불러올때 최대 리미트
 	public static final int JUNG_PRODUCT_LIMIT = 8;
@@ -79,8 +84,30 @@ public class JunggoController {
 			jproduct.setMc_code(Integer.parseInt(((String)map.get("mc_code")).trim()));			
 		}
 		
-		// 페이징 처리를 위한 pageInfo
+		// 카테고리 리스트 받아오기
+		// 카테고리 리스트 받아올 변수 초기화
+		List<Map<String, Object>> lc = null;
 		
+		// 에러처리
+		try {			
+			lc = cService.getLcList();
+			model.addAttribute("lc_list", lc);
+			
+			// 카테고리 중 리스트 담기
+			List<List<Map<String, Object>>> mc_list = new ArrayList<List<Map<String, Object>>>();
+	
+			
+			for(Map<String,Object> e : lc) {				
+				List<Map<String, Object>> mc = cService.getMcList((Integer)e.get("lc_code"));
+				mc_list.add( mc);
+			}
+			model.addAttribute("mc_list", mc_list);
+		}
+		catch(Exception e) {
+			
+		}
+		
+		// 페이징 처리를 위한 pageInfo
 		PageInfoVO pageInfo = new PageInfoVO();
 		//페이지 정보 현황 초기화
 		pageInfo.setEndPage(1); // 여기선 필요 x
@@ -99,14 +126,58 @@ public class JunggoController {
 		jHandler.pageInfo2JsonObj(jo, pageInfo);
 		jo.put("lc_code", (String)map.get("lc_code"));
 		jo.put("mc_code", (String)map.get("mc_code"));
+		
 		model.addAttribute("jsonObj",jo);
-		System.out.println("jsonObj : " + jo);
-		//일단 중고 물품 물러오는지 테스트 ...
-
+		
 		return "/junggo/junggo_product_search";
 	}
 	
 	
+	@PostMapping("JungChat")
+	public String jungChat(@RequestParam String product_idx, Model model
+			,RedirectAttributes redirectAttributes) {
+		
+		// 로그인 되어있는지 확인하기
+		try {			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		}
+		catch(Exception e) {
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return "inc/fail_forward";
+		}
+		
+		// product_idx 는 무조건 받아와야함
+		if(product_idx == null) {
+			model.addAttribute("msg", "올바르지 않는 값입니다 다시 시도해주세요 !");
+			return "inc/fail_back";
+		}
+		
+		// redirectAttributes : redirect 할때 파라미터값을 넘겨주게 하는 객체
+		// product_idx , chat_room_area 담아서 보내기
+		redirectAttributes.addAttribute("product_idx",product_idx);
+		// chat_room_area 중고 물품은 값 0 이 들어가야함!
+		redirectAttributes.addAttribute("chat_room_area",0);
+		
+		// makeChatRoom 으로 넘어가기
+		return "redirect:makeChatRoom";
+	}
+	@GetMapping("JunggoPay")
+	public String junggoPay(@RequestParam Map<String,Object> map, Model model) {
+		return "";
+	}
+	@GetMapping("JunggoResults")
+	public String junggoResults(@RequestParam Map<String,Object> map, Model model) {
+		return "";
+	}
+	
+	
+	//========================= ajax ========================
+	
+	
+	// 중고 리스트 받기 ajax
 	@ResponseBody
 	@RequestMapping(
 			value = "jungProductList.ajax",
@@ -148,11 +219,19 @@ public class JunggoController {
 		}else {
 			return null;
 		}
-		//일단 중고 물품 물러오는지 테스트 ...
-		System.out.println("pageInfo : " + pageInfo);
 		
-		List<JungProductVO> jungList = jProductService.getJungProductList(jproduct, pageInfo);
-		map.put("jungList", jungList);
+		// 조건에 맞는 중고 리스트 가져오기
+		
+		// 리스트 받아올 객체 초기화
+		List<JungProductVO> jungList = null;
+		//에러처리
+		try {			
+			jungList = jProductService.getJungProductList(jproduct, pageInfo);
+			map.put("jungList", jungList);
+		}
+		catch(Exception e){
+			return null;
+		}
 		
 		// html 형태의 중고상품 리스트 담기
 		JSONArray joJungList = new JSONArray();
@@ -176,37 +255,7 @@ public class JunggoController {
 		return jsonObj.toString();
 		
 	}
-	
-	@GetMapping("JungChat")
-	public String jungChat(@RequestParam Map<String,Object> map, Model model
-			,RedirectAttributes redirectAttributes) {
-		
-		// 로그인 되어있는지 확인하기
-		try {			
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-		}
-		catch(Exception e) {
-			model.addAttribute("msg", "권한이 없습니다 ! 로그인 해주세요");
-			return "inc/fail_back";
-		}
-		
-		// redirectAttributes : redirect 할때 파라미터값을 넘겨주게 하는 객체
-		
-		// product_idx , chat_room_area 담아서 보내기
-		redirectAttributes.addFlashAttribute("product_idx",map.get("product_idx"));
-		redirectAttributes.addFlashAttribute("chat_room_area",1);
-		return "redirect:makeChatRoom";
-	}
-	@GetMapping("JunggoPay")
-	public String junggoPay(@RequestParam Map<String,Object> map, Model model) {
-		return "";
-	}
-	@GetMapping("JunggoResults")
-	public String junggoResults(@RequestParam Map<String,Object> map, Model model) {
-		return "";
-	}
-	
+
 	
 	
 	

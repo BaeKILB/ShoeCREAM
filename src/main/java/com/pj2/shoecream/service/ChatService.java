@@ -66,8 +66,9 @@ public class ChatService {
 		return mapper.selectChatRoom(room_id);
 	}
 	
-	public ChatRoomVO getChatRoom(String product_idx){
-		return mapper.selectChatRoom(product_idx);
+	// product_idx 와 멤버 idx 로 받아오기
+	public ChatRoomVO getChatRoom(String product_idx, int mem_idx){
+		return mapper.selectChatRoomProductIdx(product_idx,mem_idx);
 	}
 	
 	// 현재 자신이 채팅방 인원인지확인

@@ -117,18 +117,25 @@ SELECT *
 		SELECT * 
 		FROM chat_rooms
 		WHERE
-			<if test="chat_room_idx != null">
-				chat_room_idx = #{chat_room_idx}
-			</if>
-			<if test="product_idx != null">
-				product_idx = #{product_idx}
-			</if>
+			chat_room_idx = #{idx}
+		;
+	</select>
+	<select id="selectChatRoomProductIdx" resultType="ChatRoomVO">
+		SELECT * 
+		FROM chat_rooms
+		WHERE
+			product_idx = #{product_idx}
+			AND 
+			(
+				mem_buyer_idx = #{mem_idx}
+				or mem_seller_idx = #{mem_idx}
+			)
 		;
 	</select>
 	
 	<!-- 채팅방에 본인이 들어갈수 있는지 체크 -->
 	<select id="selectChatCheckAuth" resultType="Integer">
-		SELECT * 
+		SELECT *
 		FROM chat_rooms
 		WHERE 
 			(

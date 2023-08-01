@@ -26,7 +26,7 @@ public class JungProductService {
 	}
 	
 	public JungProductVO getJungProductChat(String product_idx) {
-		return mapper.selectJungProductChat(product_idx);
+		return mapper.selectJungProductChat(product_idx); 
 	}
 	
 	// 페이징 처리를 위한 중고 상품 총 갯수 가져오기

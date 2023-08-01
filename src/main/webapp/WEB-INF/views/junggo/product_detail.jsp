@@ -203,9 +203,18 @@
 								</c:otherwise>
 							</c:choose>
 						</form>						
-						<a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date}
-	                            &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="chat_btn">1:1 대화톡 
-	                    </a>
+<%-- 						<a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date} --%>
+<%-- 	                            &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="chat_btn">1:1 대화톡  --%>
+<!-- 	                    </a> -->
+
+						<%-- 0801 - 경인 수정 1:1대화 누를시 채팅 작업 트리거 --%>
+						<form id="jungChatForm" action="JungChat" method="POST">
+							<input type="hidden" name="product_idx" value="${jungGoNoh.product_idx }">
+							<a href="javascript: document.querySelector('#jungChatForm').submit()" class="chat_btn">1:1 대화톡 
+		                    </a>
+						</form>
+						<%-- 채팅 작업 끝 --%>
+						
                     </div>
 				</div>
 			</div>

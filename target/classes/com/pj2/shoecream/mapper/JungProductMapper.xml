@@ -4,13 +4,10 @@
 
 	<select id="selectJungProductChat" resultType="JungProductVO">
 		SELECT mem_idx,product_title,product_payment,product_price,product_sell_status,product_location
-		FROM
-			product p outer 
-			JOIN jung_product jp 
-			ON jp.product_idx =p.product_idx
+		FROM jung_product jp 
 		WHERE
 			product_idx = #{product_idx}
-			AND product_selector = 1
+			AND product_selector = 0
 			;
 	</select>
 	

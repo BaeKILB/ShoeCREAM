@@ -21,7 +21,17 @@
 	<main class="container" >	
 		<article class="row">
 			<section class="sideCategoryWrap" >
-				<jsp:include page="../inc/side_category_lc.jsp"></jsp:include>
+			
+				<div class="categoryTop ct_lc_list categoryList">
+				<ul>
+					<c:forEach var="lc" items="${lc_list }" varStatus="i">	
+<%-- 						<jsp:include page="../inc/side_category_lc.jsp"> --%>
+<%-- 							<jsp:param value="lc" name="lc"/> --%>
+<%-- 							<jsp:param value="mc_list[${ i.index-1}]" name="mc"/> --%>
+<%-- 						</jsp:include> --%>
+					</c:forEach>
+				</ul>
+				</div>
 			</section>
 			<section class="itemListWrap offset-md-3 col-md-9 col-sm-12  container" style="border:1px solid black">
 				<div id="itemList" class="row row-cols-auto">
