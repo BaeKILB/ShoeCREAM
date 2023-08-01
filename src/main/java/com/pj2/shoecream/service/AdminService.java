@@ -81,5 +81,21 @@ public class AdminService {
 	public int deleteAuctionReport(ReportVO report) {
 		return mapper.deleteAuctionReport(report);
 	}
+	// 중고 상품 삭제
+	public int deleteProduct(JungProductVO jung) {
+		return mapper.deleteProduct(jung);
+	}
+	// 경매 상품 삭제
+	public int deleteAuction(AuctionVO auction) {
+		return mapper.deleteAuction(auction);
+	}
+	// 중고 페이징
+	public int getproduct() {
+		return mapper.getproduct();
+	}
+	// 경매 페이징
+	public int getAucpaging() {
+		return mapper.getAucpaging();
+	}
 	
 }

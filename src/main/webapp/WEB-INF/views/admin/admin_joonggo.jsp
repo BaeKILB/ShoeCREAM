@@ -11,7 +11,26 @@
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminMain.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminBoard.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
+<script type="text/javascript">
+function deletePro(product_idx) {
+    swal({
+        title: "상품 삭제",
+        text: "해당 상품을 삭제 하시겠습니까?",
+        icon: "warning",
+        buttons: ["취소", "확인"],
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            location.href = "DeleteProduct?product_idx=" + product_idx;
+        } else {
+            // 취소 버튼을 눌렀을 경우 동작을 추가할 수 있습니다. (예: 아무 동작 없음)
+        }
+    });
+}
+
+</script>
 <script type="text/javascript">
 </script>
 <body>
@@ -63,7 +82,7 @@
 										<img src="${pageContext.request.contextPath}/resources/upload/${adminProduct.image1}" class="imagesize"/>
 										</td>
 										<td class="date"><fmt:formatDate value="${adminProduct.product_date}" pattern="YYYY-MM-dd" /></td>
-										<td class="productdel" ><button style='cursor: pointer;'class="moreBtn" >삭제하기</button></td>
+										<td class="productdel" ><button style='cursor: pointer;'class="moreBtn" onclick="deletePro('${adminProduct.product_idx}')">삭제하기</button></td>
 								</tr>
 							
 							

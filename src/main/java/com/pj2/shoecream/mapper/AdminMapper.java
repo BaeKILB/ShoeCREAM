@@ -48,5 +48,13 @@ public interface AdminMapper {
 	int getPaging();
 	// 경매 신고 처리하기
 	int deleteAuctionReport(ReportVO report);
+	// 중고 상품 삭제
+	int deleteProduct(JungProductVO jung);
+	// 경매 상품 삭제
+	int deleteAuction(AuctionVO auction);
+	// 중고 페이징
+	int getproduct();
+	// 경매 페이징
+	int getAucpaging();
 }
 

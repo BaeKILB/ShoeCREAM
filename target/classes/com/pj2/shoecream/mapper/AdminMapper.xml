@@ -102,7 +102,7 @@
 	  FROM jung_product AS p
 	  LEFT JOIN jung_product AS j ON p.product_idx = j.product_idx
 	  LEFT JOIN product_image AS i ON p.product_idx = i.product_idx
-	  WHERE p.product_selector = 0
+	  WHERE p.product_selector = 1
 	  <if test="searchType != null and searchKeyword != null">
 	    <choose>
 	      <when test="searchType.equals('brand')">
@@ -127,33 +127,37 @@
 	  
 	<!--  경매 상품 조회 -->
 	<select id="selectauctionmap" >
-	  SELECT
-	    a.auction_idx,
-	    a.auction_brand,
-	    b.bid_price,
-	    a.auction_info,
-	    a.auc_start_price,
-	    i.image1,
-	    a.auc_regist_date
-	  FROM auction_item AS a
-	  LEFT JOIN product_image AS i ON a.auction_idx = i.product_idx
-	  LEFT JOIN bid_list AS b ON a.auction_idx = i.product_idx
-	  WHERE a.auction_selector = 1 
-	  <if test="searchType != null and searchKeyword != null">
-	    <choose>
-	      <when test="searchType.equals('brand')">
-	        AND a.auction_brand LIKE CONCAT('%', #{searchKeyword},'%')
-	      </when>
-	      <when test="searchType.equals('auction_title')">
-	        AND a.auction_info LIKE CONCAT('%', #{searchKeyword},'%')
-	      </when>
-	      <when test="searchType.equals('code')">
-	        AND a.auction_idx LIKE CONCAT('%', #{searchKeyword},'%')
-	      </when>
-	    </choose>
-	  </if>
-	  ORDER BY a.auction_idx ASC
-	  LIMIT #{cri.skip}, #{cri.amount}
+	 SELECT
+    a.auction_idx,
+    a.auction_brand,
+    COALESCE(b.bid_price, a.auc_start_price) AS bid_price,
+    a.auction_info,
+    a.auc_start_price,
+    i.image1,
+    a.auc_regist_date
+FROM auction_item AS a
+LEFT JOIN product_image AS i ON a.auction_idx = i.product_idx
+LEFT JOIN (
+    SELECT auction_idx, MAX(bid_price) AS bid_price
+    FROM bid_list
+    GROUP BY auction_idx
+) AS b ON a.auction_idx = b.auction_idx
+WHERE a.auction_selector = 1
+<if test="searchType != null and searchKeyword != null">
+    <choose>
+        <when test="searchType.equals('brand')">
+            AND a.auction_brand LIKE CONCAT('%', #{searchKeyword}, '%')
+        </when>
+        <when test="searchType.equals('auction_title')">
+            AND a.auction_info LIKE CONCAT('%', #{searchKeyword}, '%')
+        </when>
+        <when test="searchType.equals('code')">
+            AND a.auction_idx LIKE CONCAT('%', #{searchKeyword}, '%')
+        </when>
+    </choose>
+</if>
+ORDER BY a.auction_idx ASC
+LIMIT #{cri.skip}, #{cri.amount}
 	</select>
 <!-- 	 <select id="getTotal" resultType="int"> -->
 <!-- 	SELECT COUNT(*) -->
@@ -225,6 +229,7 @@
 		FROM  auction_report
 	</select>
 	
+	<!--  경매 신고 삭제 -->
 	<delete id="deleteAuctionReport">
 	 DELETE a, m
 	  FROM auction_report a
@@ -232,5 +237,28 @@
 	  WHERE a.auction_idx = #{auction_idx}
 	</delete>
 	
+	<!-- 중고 상품 삭제 -->
+	<delete id="deleteProduct">
+	DELETE FROM jung_product
+    WHERE product_idx = #{product_idx}
+	</delete>
+	
+	<!-- 경매 상품 삭제 -->
+	<delete id="deleteAuction">
+	DELETE FROM auction_item
+    WHERE auction_idx = #{auction_idx}
+	</delete>
+	
+	<!--  중고 페이징 -->
+	<select id="getproduct" resultType="int">
+	SELECT COUNT(*)
+		FROM  jung_product
+	</select>
+	
+	<!--  경매 페이징 -->
+		<select id="getAucpaging" resultType="int">
+	SELECT COUNT(*)
+		FROM  auction_item
+	</select>
 	   
 	</mapper>

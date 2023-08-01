@@ -255,14 +255,31 @@ public class AdminController {
 			model.addAttribute("propaging", propaging);
 			System.out.println("ddddd" + propaging);
 			
-//			int total = service.getTotal();
-//			PageDTO pageMaker = new PageDTO(cri, total);
-//			model.addAttribute("pageMaker", pageMaker);
+			int total = service.getproduct();
+			PageDTO pageMaker = new PageDTO(cri, total);
+			model.addAttribute("pageMaker", pageMaker);
 			
 			
 			return "admin/admin_joonggo";
 		}
 		
+		// 중고 상품 삭제
+		@GetMapping("DeleteProduct")
+		public String DeleteProduct(HttpSession session, JungProductVO jung, Model model) {
+		
+			int deleteProductCount = service.deleteProduct(jung);
+			
+			if (deleteProductCount < 0) {
+				model.addAttribute("msg", "삭제 실패");
+				return "inc/fail_back";
+			}
+				
+				
+			return "redirect:/adminProduct";
+		}
+				
+				
+				
 		// 경매 상품 목록 띄우기
 		@GetMapping("auctionProduct")
 		public String adminAuction(Model model, Criteria cri,
@@ -279,13 +296,30 @@ public class AdminController {
 			model.addAttribute("auctionmap",auctionmap);
 			System.out.println("나나나나난"+auctionmap );
 			
-//			int total = service.getTotal();
-//			PageDTO pageMaker = new PageDTO(cri, total);
-//			model.addAttribute("pageMaker", pageMaker);
+			int total = service.getAucpaging();
+			PageDTO pageMaker = new PageDTO(cri, total);
+			model.addAttribute("pageMaker", pageMaker);
+  
 			
-		
 			return "admin/admin_auction";
 		}
+		
+		// 경매 상품 삭제
+		@GetMapping("DeleteProAuction")
+		public String DeleteProAuction(HttpSession session,  AuctionVO auction, Model model) {
+		
+		
+			int deleteAuctionCount = service.deleteAuction(auction);
+			
+			if (deleteAuctionCount < 0) {
+				model.addAttribute("msg", "삭제 실패");
+				return "inc/fail_back";
+			}
+				
+				
+			return "redirect:/auctionProduct";
+		}
+		
 		
 		// 중고 신고 
 		@GetMapping("reportProcess")
@@ -351,6 +385,7 @@ public class AdminController {
 			return  "redirect:/auctionReport";
 		}
 
+		
 }	
 
 
