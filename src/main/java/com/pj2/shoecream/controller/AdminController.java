@@ -249,7 +249,7 @@ public class AdminController {
 //				model.addAttribute("msg", "잘못된 접근입니다");
 //				return "inc/fail_back";
 //			}
-			
+			System.out.println("중고"+searchKeyword);
 			//  중고 목록 조회  
 			List<JungProductVO> propaging = service.getProduct(cri, searchType, searchKeyword);
 			model.addAttribute("propaging", propaging);
@@ -320,7 +320,43 @@ public class AdminController {
 			return "redirect:/auctionProduct";
 		}
 		
+		// 크림 상품 목록
+		@GetMapping("creamProduct")
+		public String creamProduct(Model model, Criteria cri, @RequestParam(defaultValue = "") String searchType,
+				@RequestParam(defaultValue = "") String searchKeyword) {
+
+//			String sId = (String)session.getAttribute("sId");
+//					if(sId == null || !sId.equals("admin@admin.com")) {
+//						model.addAttribute("msg", "잘못된 접근입니다");
+//						return "inc/fail_back";
+//					}
+			System.out.println("메롱"+searchType);
+			// 크림 목록 조회
+			List<Map<String, Object>> creammap = service.selectcreammap(cri, searchType, searchKeyword);
+			model.addAttribute("creammap",creammap);
+			
+			int total = service.getcreampaging();
+			PageDTO pageMaker = new PageDTO(cri, total);
+			model.addAttribute("pageMaker", pageMaker);
+
+			return "admin/admin_cream";
+
+		}
 		
+		// 크림 삭제
+		@GetMapping("deleteCream")
+		public String deleteCream(HttpSession session, @RequestParam int ci_code, Model model) {
+			
+			int deleteCreamCount = service.deletecream(ci_code);
+			
+			if (deleteCreamCount < 0) {
+				model.addAttribute("msg", "삭제 실패");
+				return "inc/fail_back";
+			}
+			
+			return "redirect:/creamProduct";
+		}
+
 		// 중고 신고 
 		@GetMapping("reportProcess")
 		public String reportProcess(Model model, Criteria cri, @RequestParam(defaultValue = "") String searchType,
@@ -384,7 +420,7 @@ public class AdminController {
 
 			return  "redirect:/auctionReport";
 		}
-
+		
 		
 }	
 

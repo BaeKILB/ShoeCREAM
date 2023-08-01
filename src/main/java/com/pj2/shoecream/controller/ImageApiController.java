@@ -1,0 +1,40 @@
+package com.pj2.shoecream.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.service.SocialImageService;
+import com.pj2.shoecream.vo.CMRespDto;
+import com.pj2.shoecream.vo.SocialVO;
+
+@RestController
+public class ImageApiController {
+	
+	@Autowired
+	private SocialImageService socialImageService;
+	
+//	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
+	@GetMapping("/api/image")
+	public ResponseEntity<?> imageStory(@RequestParam(defaultValue = "1") int pageNum ){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int sId = mPrincipalDetails.getMember().getMem_idx();
+		
+		// 페이징 처리를 위해 조회 목록 갯수 조절 시 사용될 변수 선언
+		int listLimit = 3; // 한 페이지에서 표시할 목록 갯수 지정
+		int startRow = (pageNum - 1) * listLimit; // 조회 시작 행(레코드) 번호
+		
+		List<SocialVO> images = socialImageService.ImageStory(sId, startRow, listLimit);
+		return new ResponseEntity<>(new CMRespDto<>(1,"성공",images), HttpStatus.OK);
+	}
+	
+}

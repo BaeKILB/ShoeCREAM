@@ -268,12 +268,17 @@ public class AuctionController {
 		
 		//select로 불러와서 맵에 저장하고 뷰페이지에 뿌려준당
 		//detail에 쓰던코드 가져오면 될것같음
-		Map<String, Object> auction = service.getAuction(auction_idx);
 		
-		//모델에 저장
+		// auction_idx 에 해당하는 데이터 전달
+		Map<String, Object> auction = service.getAuction(auction_idx);
 		model.addAttribute("auction", auction);
 		
-		//내가 등록했던 사진을 보여주는건 어떻게 해야할지 의문.. 
+		// 대분류 카테고리 리스트 전달
+		List<Map<String, Object>> lc_category = categoryService.getLcList();
+		model.addAttribute("lc_category",lc_category);
+		
+		//내가 등록했던 사진을 보여주는건 어떻게 해야할지 의문..
+		// 사진은 auction 에 image_path , imaga1... 로 이미지를 가져 옵니다.
 
 		return "common/auction_modify_form";
 	}

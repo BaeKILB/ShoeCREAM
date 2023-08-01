@@ -56,5 +56,10 @@ public interface AdminMapper {
 	int getproduct();
 	// 경매 페이징
 	int getAucpaging();
+	// 크림 상품 목록
+	List<Map<String, Object>> selectcreammap(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+	// 크림 페이징
+	int getcreampaging();
+	int deletecream(int ci_code);
 }
 

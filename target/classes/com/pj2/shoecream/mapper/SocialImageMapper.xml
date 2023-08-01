@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.SocialImageMapper">
-	<insert id="insertPosts" parameterType="com.pj2.shoecream.vo.SocialVO" >
+	<insert id="insertPosts"
+		parameterType="com.pj2.shoecream.vo.SocialVO">
 		insert into
-			social_posts
+		social_posts
 		values(
-			#{posts_idx}	
-			, #{mem_idx}
-			, #{mem_nickname}
-			, #{posts_content}
-			, #{posts_image1}
-			, now()
+		#{posts_idx}
+		, #{mem_idx}
+		, #{mem_nickname}
+		, #{posts_content}
+		, #{posts_image1}
+		, now()
 		)
 	</insert>
 
 
 	<select id="findPostImageByMemIdx" resultType="String">
-	SELECT sp.posts_image1
-	FROM mem_info mi
-	JOIN social_posts sp ON mi.mem_idx = sp.mem_idx
-	WHERE mi.mem_idx = #{mem_idx}
+		SELECT sp.posts_image1
+		FROM mem_info mi
+		JOIN social_posts sp ON mi.mem_idx = sp.mem_idx
+		WHERE mi.mem_idx = #{mem_idx}
 	</select>
-	
+
+	<!-- 소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기) -->
+	<select id="selectStory"
+		resultType="com.pj2.shoecream.vo.SocialVO">
+		SELECT * FROM
+		social_posts
+		WHERE mem_idx
+		IN (SELECT followee_idx FROM social_follows WHERE follower_idx = #{sId})
+		LIMIT
+		#{startRow}
+		, #{listLimit}
+	</select>
+
 </mapper>

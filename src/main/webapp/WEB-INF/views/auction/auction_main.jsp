@@ -61,10 +61,10 @@
             <div> <!-- 정렬 방식 -->
                 <select id="orderMethod" name="orderMethod">
                     <option value="" selected="selected" >정렬방식</option>
-                    <option value="recommended">추천순</option>
-                    <option value="dateorder">최신순</option>
-                    <option value="lowPrice">낮은가격순</option>
-                    <option value="highPrice">높은가격순</option>
+                    <option value="newest">최신순</option>
+                    <option value="deadline">마감임박순</option>
+                    <option value="steamed">찜순</option>
+                    <option value="popular">인기순</option>
                 </select>
             </div>
         </section>
