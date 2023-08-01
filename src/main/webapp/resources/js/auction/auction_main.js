@@ -3,6 +3,8 @@ let maxPage = 1;
 let listCount = '';
 let pageListLimit = '';
 let orderMethod = "";
+let lcCode = '';
+let mcCode = '';
 
 $(function() { // onload
 
@@ -24,7 +26,6 @@ $(function() { // onload
 	
 	// 정렬
 	$("#orderMethod").on("change",function() {
-		orderMethod = $("#orderMethod").val();
 		pageNum = 1;
 		maxPage = 1;
 		$("#itemList").empty();
@@ -33,19 +34,48 @@ $(function() { // onload
 	
 	// 대분류 카테고리
 	$(".ct_lc_item_btn").on("click",function() {
+		// 변수 초기화
+		lcCode = '';
+		mcCode = '';
+		pageNum = 1;
+		maxPage = 1;
+		
+		// 동일 대분류 선택시
         if($(this).siblings().attr('class') == '') {
             $(this).siblings().addClass('hidden');
+    		$("#itemList").empty();
+            getList();
             return;
         }
+        
+        // 초기 또는 다른 대분류 선택시
         $(".ct_lc_item_btn").each(function() {
             $(this).siblings().addClass('hidden');
         });
+        
+        // 선택 대분류 보여주기
         $(this).siblings().removeClass('hidden');
+        lcCode = $(this).children().val();
+		$("#itemList").empty();
+        getList();
+        
+		console.log("lc : " + lcCode);
+		console.log("mc : " + mcCode);
     });
+    
+    $(".ct_mc_item_btn").on("click",function() {
+		mcCode = $(this).children().val();
+		$("#itemList").empty();
+        getList();
+        
+		console.log("lc : " + lcCode);
+		console.log("mc : " + mcCode);
+	});
 	
 }); // onload
 
 function getList() {
+	orderMethod = $("#orderMethod").val();
     $.ajax({
         type: "get"
         , url: "getAucList"
@@ -53,6 +83,8 @@ function getList() {
         , data: {
             'orderMethod': orderMethod
             , 'pageNum': pageNum
+            , 'lc_code': lcCode
+            , 'mc_code': mcCode
         } 
     })
     .done(function(data) {

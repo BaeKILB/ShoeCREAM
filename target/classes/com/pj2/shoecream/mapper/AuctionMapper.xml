@@ -55,22 +55,32 @@
 			on ai.auction_idx = pi.product_idx
 		where
 			auc_state = '진행'
-		<if test="!orderMethod.equals('')">
+		<if test="!lc_code.equals('')">
 		    <choose>
-		        <when test="orderMethod.equals('recommended')">
-		            <!-- 추천순 정렬 -->
+		        <when test="mc_code.equals('')">
+		        	and lc_code = #{lc_code }
 		        </when>
-		        <when test="orderMethod.equals('dateorder')">
-                    <!-- 최신순 정렬 -->		            
-		        </when>
-		        <when test="orderMethod.equals('lowPrice')">
-                    <!-- 낮은가격순 정렬 -->		            
-		        </when>
-		        <when test="orderMethod.equals('highPrice')">
-                    <!-- 높은가격순 정렬 -->		            
-		        </when>
+		        <otherwise>
+		            and mc_code = #{mc_code }
+		        </otherwise>
 		    </choose>
 		</if>
+<!-- 		<if test="!orderMethod.equals('')"> -->
+<!-- 		    <choose> -->
+<!-- 		        <when test="orderMethod.equals('recommended')"> -->
+<!-- 		            추천순 정렬 -->
+<!-- 		        </when> -->
+<!-- 		        <when test="orderMethod.equals('dateorder')"> -->
+<!--                     최신순 정렬		             -->
+<!-- 		        </when> -->
+<!-- 		        <when test="orderMethod.equals('lowPrice')"> -->
+<!--                     낮은가격순 정렬		             -->
+<!-- 		        </when> -->
+<!-- 		        <when test="orderMethod.equals('highPrice')"> -->
+<!--                     높은가격순 정렬		             -->
+<!-- 		        </when> -->
+<!-- 		    </choose> -->
+<!-- 		</if> -->
         <if test="startRow != null and listLimit != null">
 	        limit
 	            #{startRow}

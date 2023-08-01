@@ -217,6 +217,9 @@ public class AuctionController {
     public String getAucList(
           @RequestParam Map<String, Object> map) {
        
+    	logger.info("!@#$");
+    	logger.info(map.toString());
+    	
 		int pageNum = Integer.parseInt(String.valueOf(map.get("pageNum")));
 		int listLimit = 20;
 		int startRow = (pageNum - 1) * listLimit;

@@ -29,6 +29,7 @@
                 <c:forEach var="lc" items="${lc_category }">
 		            <li class="ct_lc_item" >
 		                <div class="ct_lc_item_btn">
+	                    	<input type="hidden" value="${lc.lc_code }">
 		                    <span>${lc.lc_name }</span>
 		                    <button class="ct_up_down_btn"></button>
 		                </div>
@@ -39,6 +40,7 @@
                                     <c:if test="${lc.lc_code eq mc.parent_code }">
 							            <li class="ct_mc_item">
 							                <div class="ct_mc_item_btn">
+	                    						<input type="hidden" value="${mc.mc_code }">
 							                    <span>${mc.mc_name }</span>
 							                </div>
 							            </li>
