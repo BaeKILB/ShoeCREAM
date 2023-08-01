@@ -16,7 +16,7 @@
 
 </head>
 <script type="text/javascript">
-function deleteReport(product_idx) {
+function deleteReport(auction_idx) {
     swal({
         title: "상품 삭제",
         text: "해당 상품을 삭제 하시겠습니까?",
@@ -25,7 +25,7 @@ function deleteReport(product_idx) {
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
-            location.href = "auctionDelete?product_idx=" + product_idx;
+            location.href = "auctionReportDelete?auction_idx=" + auction_idx;
         } else {
             // 취소 버튼을 눌렀을 경우 동작을 추가할 수 있습니다. (예: 아무 동작 없음)
         }
@@ -45,7 +45,7 @@ function deleteReport(product_idx) {
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }"> 
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 				<div class="search_wrap">
-						<form name="auctionreport" id="auctionreport" action="" method="get">
+						<form name="auctionReport" id="auctionReport" action="" method="get">
 							<select name="searchType" id="searchType">
 								<option value="title"
 									<c:if test="${param.searchType eq 'title'}" >selected</c:if>>신고유형</option>
@@ -65,7 +65,6 @@ function deleteReport(product_idx) {
 									<th class="text_prev">
 										<h4>신고 내용</h4>
 									</th>
-									<th class="count"><span class="report_count">신고 횟수</span></th>
 									<th class="product">상품 번호</th>
 									<th class="report_div">신고 유형</th>
 									<th class="detail">상세 사유</th>
@@ -74,16 +73,15 @@ function deleteReport(product_idx) {
 							</thead>
 							<tbody>
 
-								<c:forEach var="auctionReport" items="${auction}">
+								<c:forEach var="auctionReport" items="${auctionReporting}">
 									<tr>
 										<td class="txt_prev"><a href="#">
 											<h4 class="title_co">${auctionReport.report_content}</h4>
 											</a>
-											<td class="count"><span class="report_count"> <span class="sv_member">${auctionReport.report_count}</span></span></td>
-											<td class= "product">${auctionReport.product_idx}
+											<td class= "product">${auctionReport.auction_idx}
 											<th class="report_div title_co" >${auctionReport.report_div}
 											<th class="detail title_co">${auctionReport.report_detail}
-											<th class="reportdel"> <button style="cursor: pointer;" class="moreBtn" onclick="deleteReport('${auctionReport.product_idx}')">처리하기</button>
+											<th class="reportdel"> <button style="cursor: pointer;" class="moreBtn" onclick="deleteReport('${auctionReport.auction_idx}')">처리하기</button>
 									</tr>
 								</c:forEach>
 						</tbody>	

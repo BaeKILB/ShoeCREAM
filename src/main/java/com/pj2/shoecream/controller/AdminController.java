@@ -255,9 +255,9 @@ public class AdminController {
 			model.addAttribute("propaging", propaging);
 			System.out.println("ddddd" + propaging);
 			
-			int total = service.getTotal();
-			PageDTO pageMaker = new PageDTO(cri, total);
-			model.addAttribute("pageMaker", pageMaker);
+//			int total = service.getTotal();
+//			PageDTO pageMaker = new PageDTO(cri, total);
+//			model.addAttribute("pageMaker", pageMaker);
 			
 			
 			return "admin/admin_joonggo";
@@ -267,17 +267,21 @@ public class AdminController {
 		@GetMapping("auctionProduct")
 		public String adminAuction(Model model, Criteria cri,
 				@RequestParam(defaultValue = "") String searchType,
-				@RequestParam(defaultValue = "") String searchKeyword) {
+				@RequestParam(defaultValue = "") String searchKeyword,HttpSession session) {
+//			String sId = (String)session.getAttribute("sId");
+//			if(sId == null || !sId.equals("admin@admin.com")) {
+//				model.addAttribute("msg", "잘못된 접근입니다");
+//				return "inc/fail_back";
+//			}
 		
 			// 경매 목록 조회
-
 			List<Map<String, Object>> auctionmap = service.selectauctionmap(cri, searchType, searchKeyword);
 			model.addAttribute("auctionmap",auctionmap);
 			System.out.println("나나나나난"+auctionmap );
 			
-			int total = service.getTotal();
-			PageDTO pageMaker = new PageDTO(cri, total);
-			model.addAttribute("pageMaker", pageMaker);
+//			int total = service.getTotal();
+//			PageDTO pageMaker = new PageDTO(cri, total);
+//			model.addAttribute("pageMaker", pageMaker);
 			
 		
 			return "admin/admin_auction";
@@ -305,18 +309,46 @@ public class AdminController {
 		@GetMapping("reportDelete")
 		public String reportDelete(HttpSession session, ReportVO report, Model model) {
 
-			
 			int deleteReportCount = service.deleteReport(report);
 	
-			
 			if (deleteReportCount < 0) {
 				model.addAttribute("msg", "삭제 실패");
 				return "inc/fail_back";
 			}
 
-
 			return "redirect:/reportProcess";
+		}
+		
+		
+		// 경매 신고 목록
+		@GetMapping("auctionReport")
+		public String auctionReport(Model model, Criteria cri,
+				@RequestParam(defaultValue = "") String searchType,
+				@RequestParam(defaultValue = "") String searchKeyword) {
+			
+			List<ReportVO> auctionReporting = service.getAuctionReportListPaging(cri, searchType, searchKeyword);
+			model.addAttribute("auctionReporting",auctionReporting);
+			
+			int total = service.getPaging();
+			PageDTO pageMaker = new PageDTO(cri, total);
+			model.addAttribute("pageMaker", pageMaker);
+			
+			return "admin/admin_report_auction";
 
+		}
+		
+		// 경매 신고 처리하기(해당 상품 삭제)
+		@GetMapping("auctionReportDelete")
+		public String auctionReportDelete(HttpSession session, ReportVO report, Model model) {
+			
+			int deleteAuctionCount = service.deleteAuctionReport(report);
+			
+			if (deleteAuctionCount < 0) {
+				model.addAttribute("msg", "삭제 실패");
+				return "inc/fail_back";
+			}
+
+			return  "redirect:/auctionReport";
 		}
 
 }	

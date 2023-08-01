@@ -33,15 +33,20 @@ public interface AdminMapper {
 	
 	// 중고 상품 띄우기
 	List<JungProductVO> selectProduct(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
-	// 중고상품 페이징
-	int getTotal();
 	// 경매 상품 띄우기
 	List<Map<String, Object>> selectauctionmap(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+//	int getTotal();
 	// 중고 신고
 	List<ReportVO> getReportListPaging(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
-//	List<ReportVO> getProductReport();
+	// 중고 신고 페이징
 	int getPage();
-
+	// 중고 신고 처리하기
 	int deleteReport(ReportVO report);
+	// 경매 신고
+	List<ReportVO> getAuctionReportListPaging(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+	// 경매 페이징
+	int getPaging();
+	// 경매 신고 처리하기
+	int deleteAuctionReport(ReportVO report);
 }
 

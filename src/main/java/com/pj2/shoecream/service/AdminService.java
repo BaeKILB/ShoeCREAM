@@ -50,29 +50,36 @@ public class AdminService {
 	public List<JungProductVO> getProduct(Criteria cri, String searchType, String searchKeyword) {
 		return mapper.selectProduct(cri, searchType, searchKeyword);
 	}
-	
-	//중고상품 페이징
-	public int getTotal() {
-		return mapper.getTotal();
-	}
-	
 	//경매상품 목록 띄우기
 	public List<Map<String, Object>> selectauctionmap(Criteria cri, String searchType, String searchKeyword) {
 		return mapper.selectauctionmap(cri, searchType, searchKeyword);
 	}
-	
+//	public int getTotal() {
+//		return mapper.getTotal();
+//	}
 	// 중고상품 신고 
 	public List<ReportVO> getReportListPaging(Criteria cri, String searchType, String searchKeyword) {
 		return mapper.getReportListPaging(cri, searchType, searchKeyword);
 	}
-
 	// 중고 신고 상품 페이징
 	public int getPage() {
 		return mapper.getPage();
 	}
-
 	// 중고 신고 삭제
 	public int deleteReport(ReportVO report) {
 		return mapper.deleteReport(report);
 	}
+	 //경매상품 신고 
+	public List<ReportVO> getAuctionReportListPaging(Criteria cri, String searchType, String searchKeyword) {
+		return mapper.getAuctionReportListPaging(cri, searchType, searchKeyword);
+	}
+	// 경매 페이징
+	public int getPaging() {
+		return mapper.getPaging();
+	}
+	// 경매 신고 삭제
+	public int deleteAuctionReport(ReportVO report) {
+		return mapper.deleteAuctionReport(report);
+	}
+	
 }
