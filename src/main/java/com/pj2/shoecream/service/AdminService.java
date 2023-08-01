@@ -97,5 +97,17 @@ public class AdminService {
 	public int getAucpaging() {
 		return mapper.getAucpaging();
 	}
+	// 크림 상품 목록
+	public List<Map<String, Object>> selectcreammap(Criteria cri, String searchType, String searchKeyword) {
+		return mapper.selectcreammap(cri, searchType, searchKeyword);
+	}
+	// 크림 페이징
+	public int getcreampaging() {
+		return mapper.getcreampaging();
+	}
+	public int deletecream(int ci_code) {
+		// TODO Auto-generated method stub
+		return mapper.deletecream(ci_code);
+	}
 	
 }

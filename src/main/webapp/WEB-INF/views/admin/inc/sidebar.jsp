@@ -70,6 +70,17 @@
 								</li>
 							</ul>
 						</li>
+						<li class="cont_item_wrap">
+							<a class="cont_item_a sub" href="#">
+								<i class="fa fa-star" aria-hidden="true"></i>
+								크림 관리
+							</a>
+							<ul class="cont_li_wrap joongList">
+								<li class="cont_item_b">
+									<a class="cont_item_list joongPro" href="creamProduct">크림 상품 관리</a>
+								</li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 				<li class="cont_item">
