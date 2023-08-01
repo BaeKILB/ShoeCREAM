@@ -1,12 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <head>
 <link href="${pageContext.request.contextPath }/resources/css/common/auction_register.css" rel="stylesheet">
+<script	src="${pageContext.request.contextPath }/resources/js/common/product_register.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
 </head>
 <form action="AuctionModifyPro" method="post" enctype="multipart/form-data">
 	<h1>경매 상품등록</h1>
+	${auction }
 	<div class="titleContainner">
 		<p class="title_title">기본 정보</p>
 	</div>
@@ -30,12 +34,13 @@
 				- 큰 이미지일 경우 이미지가 깨지는 경우가 발생할 수 있습니다.<br> 최대 지원 사이즈인 640 X 640으로
 				리사이즈 해서 올려주세요.(개당 이미지 최대 10M)<br>
 			</div>
-		</div>
+ 		</div>
 	</div>
 	<div class="secondContainner">
 		<div class="second_title">제목</div>
 		<div class="second_content">
 			<input type="text" class="product_name" name="auction_title" placeholder="품목을 입력해주세요."/>
+			<input type="text" class="product_name" name="auction_title" value="${auction.auction_title }" placeholder="품목을 입력해주세요."/>
 		</div>
 	</div>
 	<div class="thirdContainner">
@@ -71,8 +76,8 @@
 			<p class="selected_category">
 				<span>선택한 카테고리 :</span>
 				<span id="selectCategory">
-					<span id="selectLcn"></span>
-					<span id="selectMcn"></span>
+					<span id="selectLcn">${auction.lc_name }</span>
+					<span id="selectMcn">${auction.mc_name }</span>
 <!-- 					<span id="selectScn"></span> -->
 				</span>
 			</p>
@@ -98,7 +103,7 @@
 			<div class="brand_box">
 				<label> 
 					<span>브랜드</span> 
-					<input type="text" class="brand" name="auction_brand" />
+					<input type="text" class="brand" name="auction_brand" value="${auction.auction_brand }"/>
 					<select name="inputBrand" onchange="sellectBrand(this.value)">
 						<option value="">기타(직접입력)</option>
 						<option value="ADIDAS">ADIDAS</option>
@@ -125,7 +130,7 @@
 			<div class="size_box">
 				<label class="size_label"> 
 					<span>사이즈</span> 
-					<input type="text" class="size" name="auction_size" />
+					<input type="text" class="size" name="auction_size" value="${auction.auction_size }"/>
 					<select name="inputSize" onchange="selectSize(this.value)">
 						<option value="" selected="selected">직접 입력</option>
 						<c:forEach begin="220" step="5" end="310" varStatus="status">
@@ -140,7 +145,7 @@
 	<div class="seventhContainner">
 		<div class="seventh_title">경매시작가</div>
 		<div class="seventh_content">
-			<input type="text" class="total_fee" name="auc_start_price" placeholder="금액을 입력해주세요." />&nbsp;원
+			<input type="text" class="total_fee" name="auc_start_price" value="${auction.auc_start_price }" placeholder="금액을 입력해주세요." />&nbsp;원
 		</div>
 		<div class="seventh_title">입찰단위</div>
 		<div class="seventh_content">
@@ -148,7 +153,7 @@
 		</div>
 		<div class="seventh_title">즉시구매가</div>
 		<div class="seventh_content">
-			<input type="text" class="total_fee" name="auc_buy_instantly" placeholder="금액을 입력해주세요." />&nbsp;원
+			<input type="text" class="total_fee" name="auc_buy_instantly" value="${auction.auc_buy_instantly }" placeholder="금액을 입력해주세요."/>&nbsp;원
 		</div>
 	</div>
 	<div class="eighthContainner">
@@ -176,7 +181,7 @@
 	<div class="ninthContainner">
 		<div class="ninth_title">상품설명</div>
 		<div class="ninth_content">
-			<textarea class="product_detail" name="auction_info" placeholder="상품에 대한 설명을 작성해주세요" ></textarea>
+			<textarea class="product_detail" name="auction_info" placeholder="상품에 대한 설명을 작성해주세요" >${auction.auction_info }</textarea>
 		</div>
 	</div>
 <!-- 	<div class="tenthContainner"> -->

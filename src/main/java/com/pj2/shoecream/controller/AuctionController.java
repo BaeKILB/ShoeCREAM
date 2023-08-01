@@ -72,7 +72,7 @@ public class AuctionController {
         HttpSession session
         , Model model
         , @RequestParam Map<String, Object> map) { //경매 제품상세
-    	//로그인 해야 이용 가능한걸로.. 버튼마다 session 체크 귀찮으니까..;
+    	
 		// 회원번호
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -95,10 +95,6 @@ public class AuctionController {
 		Map<String, Object> auction = service.getAuction(auction_idx);
 		model.addAttribute("auction", auction);
 
-		// 상품idx만 파라미터에 붙이면 되지 않을까?
-		// 카테고리 붙인 이유가 뭐지? 카테고리만 눌렀을때 나오게 할려구여 아마도
-		// <a
-		// href="auction_detail?auction_idx=${product.auction_idx}&param=${product.auction_Scategory}">
 
 		// 입찰내역
 		Map<String, Object> bid = bidService.getBid(auction_idx);
@@ -255,6 +251,122 @@ public class AuctionController {
 		JSONArray jsonArray = new JSONArray(auctionList);
 		return jsonArray.toString();
 	}
+    
+    //글 수정 0801 이온 작업중  사진부분 빼고
+	@GetMapping("AuctionModifyForm")
+	public String modifyForm( HttpSession session
+					        , Model model
+					        , @RequestParam Map<String, Object> map ) {
+
+		//글 수정은 경매 진행중인경우 연장만 가능하도록? 논의가 필요하무니다
+		
+		//글번호(auction_idx) 필요하고 
+		String auction_idx = (String)map.get("auction_idx");
+		
+		//select로 불러와서 맵에 저장하고 뷰페이지에 뿌려준당
+		//detail에 쓰던코드 가져오면 될것같음
+		Map<String, Object> auction = service.getAuction(auction_idx);
+		
+		//모델에 저장
+		model.addAttribute("auction", auction);
+		
+		//내가 등록했던 사진을 보여주는건 어떻게 해야할지 의문.. 
+
+		return "auction/auction_modify_form";
+	}
+
+	
+	
+	@PostMapping("AuctionModifyPro")
+	public String AuctionModifyPro( 
+								AuctionVO auction
+					          , ProductImageVO image
+					          , HttpSession session) {
+
+    	// sId 받아오기
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        int sId = mPrincipalDetails.getMember().getMem_idx();
+ 	   System.out.println("★★★★★★★ㅇㄻㄴ★★★★★★★★여기?");
+
+		auction.setMem_idx(sId); // 회원번호 추가
+		String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
+		auction.setAuction_idx(productId); // 상품번호 추가
+		image.setProduct_idx(productId);
+
+		String uploadDir = "/resources/upload/auction";
+		String saveDir = session.getServletContext().getRealPath(uploadDir);
+		String subDir = "";
+		try {
+           Date date = new Date();
+           SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+           subDir = sdf.format(date);
+           saveDir += "/" + subDir;
+           Path path = Paths.get(saveDir);
+           Files.createDirectories(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        image.setProduct_idx(productId);
+        image.setImage_path(uploadDir+"/"+subDir);
+
+        MultipartFile mFile1 = image.getImage1();
+        MultipartFile mFile2 = image.getImage2();
+        MultipartFile mFile3 = image.getImage3();
+        MultipartFile mFile4 = image.getImage4();
+
+        String uuid = UUID.randomUUID().toString();
+
+        image.setImage1_name("");
+        image.setImage2_name("");
+        image.setImage3_name("");
+        image.setImage4_name("");
+
+        String imageName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
+		String imageName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
+		String imageName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+		String imageName4 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+
+		if(!mFile1.getOriginalFilename().equals("")) image.setImage1_name(imageName1);
+		if(!mFile2.getOriginalFilename().equals("")) image.setImage2_name(imageName2);
+		if(!mFile3.getOriginalFilename().equals("")) image.setImage3_name(imageName3);
+		if(!mFile4.getOriginalFilename().equals("")) image.setImage4_name(imageName4);
+
+		System.out.println(auction.toString());
+
+		int insertCount = isService.modifyProductImage(image);
+
+		if (insertCount > 0) {
+			   System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★여기333?");
+		    try {
+			if (!mFile1.getOriginalFilename().equals("")) mFile1.transferTo(new File(saveDir, imageName1));
+			if (!mFile2.getOriginalFilename().equals("")) mFile2.transferTo(new File(saveDir, imageName2));
+			if (!mFile3.getOriginalFilename().equals("")) mFile3.transferTo(new File(saveDir, imageName3));
+			if (!mFile3.getOriginalFilename().equals("")) mFile4.transferTo(new File(saveDir, imageName4));
+		    } catch (IllegalStateException e) {
+			e.printStackTrace();
+		    } catch (IOException e) {
+			e.printStackTrace();
+		    }
+		   System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★여기?");
+		    service.modifyAuctionItem(auction);
+		}
+		
+		
+		return "redirect:/Auction";
+
+
+	}
+    
+    //글 삭제
+	@PostMapping("AuctionDelete")
+	public String auctionDelete() {
+		
+		
+		return "";
+	}
+	
     
     
     //입찰하기
