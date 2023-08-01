@@ -22,4 +22,12 @@
 	WHERE mi.mem_idx = #{mem_idx}
 	</select>
 	
+	<!-- 소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기) -->
+	<select id="selectStory" resultType="com.pj2.shoecream.vo.SocialVO">
+	SELECT * FROM 
+	social_posts 
+	WHERE mem_idx 
+	IN (SELECT followee_idx FROM social_follows WHERE follower_idx = #{sId});
+	</select>
+	
 </mapper>

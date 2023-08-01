@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,10 +29,17 @@ public class SocialImageService {
 	@Autowired
 	private SocialImageMapper socialImageMapper;
 	
+//	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
+	@Transactional(readOnly = true)
+	public List<SocialVO> ImageStory(int sId){
+		return socialImageMapper.selectStory(sId);
+	}
+	
 //	private String uploadDir = "C:/Users/kikir/Documents/itwill/workspace_spring5/ShoeCREAM/src/main/webapp/resources/upload/";
 	
 	// 포스트 등록
 //	public void ImageUpload(SocialVO socialVO, PrincipalDetails mPrincipalDetails, HttpSession session) {
+		@Transactional
 		public void ImageUpload(SocialVO socialVO, PrincipalDetails mPrincipalDetails, HttpSession session, Model model) {
 		
 //		 1. 간단한 방법 
