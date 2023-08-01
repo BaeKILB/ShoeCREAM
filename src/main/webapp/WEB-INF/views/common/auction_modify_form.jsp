@@ -39,7 +39,6 @@
 	<div class="secondContainner">
 		<div class="second_title">제목</div>
 		<div class="second_content">
-			<input type="text" class="product_name" name="auction_title" placeholder="품목을 입력해주세요."/>
 			<input type="text" class="product_name" name="auction_title" value="${auction.auction_title }" placeholder="품목을 입력해주세요."/>
 		</div>
 	</div>
@@ -149,7 +148,7 @@
 		</div>
 		<div class="seventh_title">입찰단위</div>
 		<div class="seventh_content">
-			<input type="text" class="total_fee" name="auc_bid_unit" placeholder="금액을 입력해주세요." />&nbsp;원
+			<input type="text" class="total_fee" name="auc_bid_unit" value="${auction.auc_bid_unit }" placeholder="금액을 입력해주세요." />&nbsp;원
 		</div>
 		<div class="seventh_title">즉시구매가</div>
 		<div class="seventh_content">

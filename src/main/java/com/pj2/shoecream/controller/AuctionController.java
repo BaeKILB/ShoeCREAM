@@ -275,7 +275,7 @@ public class AuctionController {
 		
 		//내가 등록했던 사진을 보여주는건 어떻게 해야할지 의문.. 
 
-		return "auction/auction_modify_form";
+		return "common/auction_modify_form";
 	}
 
 	
