@@ -40,6 +40,13 @@ public class ImageApiController {
 		int startRow = (pageNum - 1) * listLimit; // 조회 시작 행(레코드) 번호
 
 		List<SocialVO> images = socialImageService.ImageStory(sId, startRow, listLimit);
+		
+		// images에 좋아요 상태 담기
+//		images.forEach((image->{
+//			
+//			image.getLikes_idx().forEach
+//		});
+		
 		return new ResponseEntity<>(new CMRespDto<>(1, "성공", images), HttpStatus.OK);
 	}
 	

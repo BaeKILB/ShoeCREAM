@@ -32,6 +32,9 @@ public class SocialImageService {
 //	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
 	@Transactional(readOnly = true)
 	public List<SocialVO> ImageStory(int sId, int startRow, int listLimit){
+		
+		
+		
 		return socialImageMapper.selectStory(sId, startRow, listLimit);
 	}
 	
