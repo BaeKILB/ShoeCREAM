@@ -15,7 +15,10 @@ public interface SocialImageMapper {
 	List<String> findPostImageByMemIdx(int mem_idx);
 	
 //	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
-	List<SocialVO> selectStory(int sId);
+	List<SocialVO> selectStory(
+			@Param("sId") int sId,
+			@Param("startRow") int startRow, 
+			@Param("listLimit") int listLimit);
 
 
 

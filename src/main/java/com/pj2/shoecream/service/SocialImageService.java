@@ -31,8 +31,8 @@ public class SocialImageService {
 	
 //	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
 	@Transactional(readOnly = true)
-	public List<SocialVO> ImageStory(int sId){
-		return socialImageMapper.selectStory(sId);
+	public List<SocialVO> ImageStory(int sId, int startRow, int listLimit){
+		return socialImageMapper.selectStory(sId, startRow, listLimit);
 	}
 	
 //	private String uploadDir = "C:/Users/kikir/Documents/itwill/workspace_spring5/ShoeCREAM/src/main/webapp/resources/upload/";
