@@ -167,7 +167,7 @@
 					
 					<div class="product_viewStatus">
 						🕐&nbsp;<div id="prd_date"></div> &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  ${jungGoNoh.dibs_count }
-						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  class="report_btn" value="신고하기"></button>
+						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  class="report_btn" value="신고조회"></button>
 					</div>
 					<div class="product_productStatus">
 						상품 상태 : ${jungGoNoh.product_status}<br>
