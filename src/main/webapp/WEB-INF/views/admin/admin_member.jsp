@@ -248,7 +248,8 @@
 							$('.member' + mem_idx).remove();
 						}
 					},
-					error: function() {
+					error: function(data) {
+						alert(data);
 						Swal.fire('회원 삭제 실패', '회원 삭제 처리에 실패했습니다', 'warning');
 					}
 				});

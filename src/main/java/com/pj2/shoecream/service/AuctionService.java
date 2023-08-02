@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pj2.shoecream.mapper.AuctionMapper;
 import com.pj2.shoecream.vo.AuctionVO;
+import com.pj2.shoecream.vo.MemberVO;
 
 @Service
 public class AuctionService {
@@ -16,7 +17,7 @@ public class AuctionService {
     private AuctionMapper mapper;
 
     public int registAuctionItem(AuctionVO auction) {
-	return mapper.insertAuctionItem(auction);
+    	return mapper.insertAuctionItem(auction);
     }
     
     public int modifyAuctionItem(AuctionVO auction) {
@@ -24,15 +25,15 @@ public class AuctionService {
     }
 
     public List<Map<String, Object>> getAuctionList(Map<String, Object> map) {
-	return mapper.selectAuctionList(map);
+    	return mapper.selectAuctionList(map);
     }
 
     public Map<String, Object> getAuction(String auction_idx) {
-	return mapper.selectAuction(auction_idx);
+    	return mapper.selectAuction(auction_idx);
     }
 
     public int updateReadCount(String auction_idx) {
-	return mapper.updateItemReadCount(auction_idx);
+    	return mapper.updateItemReadCount(auction_idx);
     }
 
 	public Map<String, Object> getAuctionDibs(Map<String, Object> map) {
@@ -56,4 +57,21 @@ public class AuctionService {
 		return mapper.selectSellerInfo(mem_idx);
 	}
 
+	public void modifyAuctionState(String auction_idx) {
+		mapper.updateAuctionState(auction_idx);
+		
+	}
+
+	public List<Map<String, Object>> getSellerItemList(int mem_idx) {
+		return mapper.selectSellerItems(mem_idx);
+	}
+
+	// member service 로 옮겨야함
+	public MemberVO getMember(int mem_idx) {
+		return mapper.selectMember(mem_idx);
+	}
+
+	public List<Map<String, Object>> getRelatedAuctionList(Map<String, Object> map) {
+		return mapper.selectRelatedAuctionList(map);
+	}
 }

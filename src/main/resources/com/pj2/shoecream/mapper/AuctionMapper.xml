@@ -92,7 +92,7 @@
 		        </otherwise>
 		    </choose>
 		</if>
-		<if test="!orderMethod.equals('')">
+		<if test="!orderMethod.equals('')"> 
 		    <choose>
 		        <when test="orderMethod.equals('newest')">
 			    	order by
@@ -123,8 +123,7 @@
 	       *
 	   from
 	       auction_item ai join product_image pi 
-	       on ai.auction_idx = pi.product_idx join mem_info mi
-	       on ai.mem_idx = mi.mem_idx join large_category lc
+	       on ai.auction_idx = pi.product_idx join large_category lc
 	       on ai.lc_code = lc.lc_code join middle_category mc
 	       on ai.mc_code = mc.mc_code
 	   where
@@ -190,16 +189,59 @@
         SELECT 
             count(product_idx) 
         FROM 
-            dibs 
+            dibs
         WHERE 
             product_idx=${auction_idx }
 	</select>
-	<select id="selectSellerInfo">
+	<select id="selectSellerInfo" resultType="map">
 	    select
-	       * -- 나중에 필요한 정보만 받아오기로 바꿔야함
+	    	mem_nickname
 	    from
-	       mem_info
+	    	mem_info
 	    where
-	       mem_idx = #{mem_idx }
+	    	mem_idx = #{mem_idx }
+	</select>
+	<update id="updateAuctionState" parameterType="string">
+		update
+			auction_item
+		set
+			auc_state = '마감'
+		where
+			auction_idx = #{auction_idx }
+	</update>
+	<select id="selectSellerItems">
+		select
+			*
+		from
+			auction_item ai join product_image pi
+			on ai.auction_idx = pi.product_idx
+		where
+			mem_idx = #{mem_idx }
+	</select>
+	<select id="selectMember">
+		select
+			*
+		from
+			mem_info
+		where
+			mem_idx = #{mem_idx }
+	</select>
+	<select id="selectRelatedAuctionList" resultType="map">
+		SELECT
+		    ai.auction_idx 
+			, image_path
+			, image1
+			, auction_title
+			, auc_start_price
+			, auc_close_date
+		FROM
+			auction_item ai JOIN product_image pi 
+			ON ai.auction_idx = pi.product_idx 
+		WHERE
+			auc_state = '진행'
+        	and lc_code = #{lc_code }
+            and mc_code = #{mc_code }
+	        limit
+	        	4
 	</select>
 </mapper>
