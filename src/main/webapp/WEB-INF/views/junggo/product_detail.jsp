@@ -196,14 +196,26 @@
 <!-- 						<div class="product_tag"> -->
 <!-- 						#바지 #바지 #바지 #바지 #바지 -->
 					</div>
+					
+					
 					<div class="button_array">
 						
 						<form action="dibsPro" method="post" enctype="multipart/form-data">						
 							<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNoh.product_idx}"/>
 							<input type="hidden" name="favorite_check" id="favorite_check" value="${dibs.favorite_check}"/>
-							<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNoh.mem_idx}"/>
 							<input type="hidden" name="mem_id" id="mem_id" value="${jungGoNoh.mem_id}"/>
-							<input type="hidden" name="buyier_idx" id="buyier_idx" value="${principal.member.mem_idx}"/>
+							<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNoh.mem_idx}"/>
+
+							<!-- buyier_idx 미접속시 0으로 받아오게끔 하기-->
+							<c:choose>
+								<c:when test="${empty principal.member.mem_idx}">
+								    <input type="hidden" name="buyier_idx" id="buyier_idx" value="0"/>
+								</c:when>
+								<c:otherwise>
+								   <input type="hidden" name="buyier_idx" id="buyier_idx" value="${principal.member.mem_idx}"/>
+								</c:otherwise>
+							</c:choose>
+							<!-- buyier_idx 미접속시 0으로 받아오게끔 하기-->
 							<c:choose>
 								<c:when test="${principal.member.mem_idx == jungGoNoh.mem_idx }">
 									<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>
@@ -219,7 +231,9 @@
 									</c:choose>
 								</c:otherwise>
 							</c:choose>
-						</form>						
+						</form>		
+				
+										
 						<%-- 0801 - 경인 수정 1:1대화 누를시 채팅 작업 트리거 --%>
 						<form id="jungChatForm" action="JungChat" method="POST">
 							<input type="hidden" name="product_idx" value="${jungGoNoh.product_idx }">
@@ -243,7 +257,7 @@
 						판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<br>
 						유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<br>
 						<br>
-						<a href="${pageContext.request.contextPath }/reviewList" class="warning_message">중고나라 고객센터로 신고해주시기 바랍니다.</a>
+						<a href="${pageContext.request.contextPath }/reviewList" class="warning_message">여기를 클릭하여 중고나라 고객센터로 신고해주시기 바랍니다.</a>
 					</div>
 				</div>
 				<div class="product_content">
