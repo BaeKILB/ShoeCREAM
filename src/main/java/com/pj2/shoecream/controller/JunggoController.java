@@ -481,7 +481,7 @@ public class JunggoController {
 		int insertProductImage = jungGoNohService.registProductImage(jungGoNoh);
 		int insertCountJung = jungGoNohService.registJungProduct(jungGoNoh);
 		
-		
+		String product_idx = jungGoNoh.getProduct_idx();
 		
 		
 		// 게시물 등록 작업 요청 결과 판별
@@ -518,7 +518,7 @@ public class JunggoController {
 			}
 			
 			// 글쓰기 작업 성공 시 글목록(BoardList)으로 리다이렉트
-			return "junggo/junggo_product_search";
+			return "redirect:/productDetail?product_idx="+product_idx;
 		} else { // 실패
 			model.addAttribute("msg", "글 쓰기 실패!");
 			return "inc/fail_back";
@@ -535,13 +535,20 @@ public class JunggoController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 
-		int mem_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+		int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+		jungGoNoh.setBuyier_idx(buyier_idx);
 		
-		
-		jungGoNoh.setMem_idx(mem_idx);
+		System.out.println("+++++++++++++++++++++++buyier_idx" + buyier_idx);
+	
 	
 		JungGoNohVO product = jungGoNohService.getProduct(product_idx);
+	
+		System.out.println("+++++++++++++++++++++++jungGoNoh" + jungGoNoh);
 		JungGoNohVO dibs = jungGoNohService.getDibs(jungGoNoh);
+		
+		int mem_idx = product.getMem_idx();
+		System.out.println("+++++++++++++++++++++++mem_idx" + mem_idx);
+		
 		List<JungGoNohVO> moreProductListSmall =jungGoNohService.moreProductListSmall(mem_idx);
 		
 	
@@ -600,10 +607,15 @@ public class JunggoController {
 	//------------------ 물건 삭제 프로 -----------------------------
 	
 	@GetMapping("productDelete")
-	public String delete(@RequestParam String product_idx, HttpSession session, Model model) {
+	public String delete(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
 		// 세션 아이디가 존재하지 않으면(미로그인) "잘못된 접근입니다!" 출력 후 이전 페이지 돌아가기 처리
-		String sId = (String)session.getAttribute("sId");
-		if(sId == null) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		String sId = mPrincipalDetails.getMember().getMem_id();
+		String mId = jungGoNoh.getMem_id();
+		//String sId = (String)session.getAttribute("sId");
+		if(sId == null && sId == mId) {
 			model.addAttribute("msg", "잘못된 접근입니다!");
 			return "inc/fail_back";
 		}
@@ -611,14 +623,14 @@ public class JunggoController {
 		// BoardService - isBoardWriter() 메서드 호출하여 작성자 판별 요청
 		// => 파라미터 : 글번호, 세션아이디   리턴타입 : boolean(isBoardWriter)
 		// => 단, 세션아이디가 "admin" 이 아닐 경우에만 수행
-		if(!sId.equals("admin")) {
-			boolean isProductWriter = jungGoNohService.isProductWriter(product_idx, sId);
-			
-			if(!isProductWriter) {
-				model.addAttribute("msg", "권한이 없습니다!");
-				return "inc/fail_back";
-			}
-		}
+//		if(!sId.equals("admin")) {
+//			boolean isProductWriter = jungGoNohService.isProductWriter(product_idx, sId);
+//			
+//			if(!isProductWriter) {
+//				model.addAttribute("msg", "권한이 없습니다!");
+//				return "inc/fail_back";
+//			}
+//		}
 		
 		// BoardService - removeBoard() 메서드 호출하여 글 삭제 요청
 		// => 파라미터 : 글번호   리턴타입 : int(deleteCount)
@@ -631,7 +643,7 @@ public class JunggoController {
 			return "inc/fail_back";
 		} 
 		
-		return "";
+		return "redirect:/JunggoSearch";
 	}
 	
 	

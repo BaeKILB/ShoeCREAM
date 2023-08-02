@@ -60,14 +60,10 @@ LEFT OUTER JOIN product_image pi
 	
 	<!-- 찜 검색 -->
 	<select id="selectDibs" resultType="com.pj2.shoecream.vo.JungGoNohVO">
-		SELECT di.product_idx, di.favorite_check
-		FROM jung_product jpd
-		  JOIN dibs di
-		    ON jpd.product_idx = di.product_idx
-		  JOIN mem_info mi
-		    ON jpd.mem_idx = mi.mem_idx  
-		 WHERE jpd.product_idx = #{product_idx}
-		 AND jpd.mem_idx = ${mem_idx}
+	    SELECT product_idx, favorite_check
+	      FROM dibs
+	     WHERE product_idx = #{product_idx}
+	       AND mem_idx = ${buyier_idx}
 	</select>
 	
 		<!-- 게시물 조회수 증가 - UPDATE -->
@@ -88,7 +84,7 @@ LEFT OUTER JOIN product_image pi
 		
 		<!-- 글 삭제 - DELETE -->
 	<!-- 글번호가 일치하는 레코드 삭제 -->
-	<delete id="deleteProduct">
+	<delete id="deleteProduct" >
 		DELETE 
 		  FROM jung_product
 		 WHERE product_idx = #{product_idx}
@@ -99,7 +95,7 @@ LEFT OUTER JOIN product_image pi
 	INSERT INTO dibs
 		 VALUES 
 		 (#{dibs_idx}
-	     ,#{mem_idx}
+	     ,#{buyier_idx}
 	     ,#{product_idx}
 	     ,'Y')
 	</insert>
@@ -109,7 +105,7 @@ LEFT OUTER JOIN product_image pi
 		DELETE 
 		  FROM dibs
 		 WHERE product_idx = #{product_idx}
-		   AND mem_idx = #{mem_idx}
+		   AND mem_idx = #{buyier_idx}
 	</delete>
 	
 	

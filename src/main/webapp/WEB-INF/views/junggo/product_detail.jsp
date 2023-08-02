@@ -162,8 +162,11 @@
 						<h4>${jungGoNoh.product_title} </h4><span class="product_progress">${jungGoNoh.product_sell_status}</span>
 						<p><fmt:formatNumber value="${jungGoNoh.product_price}" pattern="#,###"/>원(₩)</p>
 					</div>
+					
+					
+					
 					<div class="product_viewStatus">
-						🕐&nbsp;${jungGoNoh.product_date} &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  ${jungGoNoh.dibs_count }
+						🕐&nbsp;<div id="prd_date"></div> &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  ${jungGoNoh.dibs_count }
 						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  class="report_btn" value="신고하기"></button>
 					</div>
 					<div class="product_productStatus">
@@ -178,6 +181,18 @@
 						파는사람idx : ${jungGoNoh.mem_idx} 
 								
 					</div>
+					<script>
+					function removeSecond(){
+						let productIDate = document.querySelector('#prd_date');
+						
+						
+						let productID = "${jungGoNoh.product_date}";
+						
+						productIDate.innerText = productID.slice(0,productID.length-2);
+						
+					}
+					removeSecond();
+					</script>
 <!-- 						<div class="product_tag"> -->
 <!-- 						#바지 #바지 #바지 #바지 #바지 -->
 					</div>
@@ -187,26 +202,24 @@
 							<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNoh.product_idx}"/>
 							<input type="hidden" name="favorite_check" id="favorite_check" value="${dibs.favorite_check}"/>
 							<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNoh.mem_idx}"/>
+							<input type="hidden" name="mem_id" id="mem_id" value="${jungGoNoh.mem_id}"/>
+							<input type="hidden" name="buyier_idx" id="buyier_idx" value="${principal.member.mem_idx}"/>
 							<c:choose>
 								<c:when test="${principal.member.mem_idx == jungGoNoh.mem_idx }">
 									<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>
 								</c:when>
 								<c:otherwise>
-								<c:choose>
-									<c:when test="${dibs.favorite_check =='Y' }">
-										<input type="submit"  class="UnFavorite_btn" value="💔 찜 해제">
-									</c:when>
-									<c:otherwise>
-										<input type="submit" class="favorite_btn" value="♥ 찜 등록"/>		
-									</c:otherwise>
-								</c:choose>
+									<c:choose>
+										<c:when test="${dibs.favorite_check =='Y' }">
+											<input type="submit"  class="UnFavorite_btn" value="💔 찜 해제">
+										</c:when>
+										<c:otherwise>
+											<input type="submit" class="favorite_btn" value="♥ 찜 등록"/>		
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</form>						
-<%-- 						<a href="resPayment?car_idx=${map.car_idx}&res_rental_date=${map.res_rental_date}&res_return_date=${map.res_return_date} --%>
-<%-- 	                            &brc_rent_name=${map.brc_rent_name}&brc_return_name=${map.brc_return_name}" class="chat_btn">1:1 대화톡  --%>
-<!-- 	                    </a> -->
-
 						<%-- 0801 - 경인 수정 1:1대화 누를시 채팅 작업 트리거 --%>
 						<form id="jungChatForm" action="JungChat" method="POST">
 							<input type="hidden" name="product_idx" value="${jungGoNoh.product_idx }">
@@ -214,7 +227,6 @@
 		                    </a>
 						</form>
 						<%-- 채팅 작업 끝 --%>
-						
                     </div>
 				</div>
 			</div>

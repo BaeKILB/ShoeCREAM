@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"  %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 
 
@@ -36,7 +36,7 @@
 		</div>
 	</div>
 	
-	<div class="thirdContainner">
+	<!-- <div class="thirdContainner">
 		<div class="third_title">카테고리</div>
 		<div class="third_content">
 			<div class="category_box">
@@ -47,118 +47,152 @@
 			    제2분류 : <select name="mc_code" id="mc_code" style="width:200px" onchange="changeHtml();">
 			       	<option value="">전체</option>
 			    </select>
-				<!-- <div class="category_content_l">제1분류<div>a</div><div>a</div></div>
-				<div class="category_content_m">제2분류</div>
-				<div class="category_content_s">제3분류</div>  -->
+				
 			</div>
 			<p class="selected_category">선택한 카테고리 :<div id="selected_category" name="selected_category"></div></p>
 		</div>
 	</div>
 	
 
-<script type="text/javascript">
- 
-$(document).ready(function() {
-    
-    //Main 카테고리를 선택 할때 마다 AJAX를 호출할 수 있지만 DB접속을 매번 해야 하기 때문에 main, sub카테고리 전체을 들고온다.
-    
-    //****************이부분은 DB로 셋팅하세요.
-    //Main 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
-    var lc_codeArray = new Array();
-    var lc_codeObject = new Object();
-    
-    lc_codeObject = new Object();
-    lc_codeObject.lc_code_id = "1";
-    lc_codeObject.lc_code_name = "남성";
-    lc_codeArray.push(lc_codeObject);
-    
-    lc_codeObject = new Object();
-    lc_codeObject.lc_code_id = "2";
-    lc_codeObject.lc_code_name = "여성";
-    lc_codeArray.push(lc_codeObject);
-    
-    //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
-    var mc_codeArray = new Array();
-    var mc_codeObject = new Object();
-    
-    //스포츠에 해당하는 sub category 리스트
-    mc_codeObject = new Object();
-    mc_codeObject.lc_code_id = "1";
-    mc_codeObject.mc_code_id = "1"
-    mc_codeObject.mc_code_name = "운동화"    
-    mc_codeArray.push(mc_codeObject);
-    
-    mc_codeObject = new Object();
-    mc_codeObject.lc_code_id = "1";
-    mc_codeObject.mc_code_id = "2"
-    mc_codeObject.mc_code_name = "구두"    
-    mc_codeArray.push(mc_codeObject);
-   
-    //공연에 해당하는 sub category 리스트
-    mc_codeObject = new Object();
-    mc_codeObject.lc_code_id = "2";
-    mc_codeObject.mc_code_id = "1"
-    mc_codeObject.mc_code_name = "운동화"    
-    mc_codeArray.push(mc_codeObject);
-    
-    mc_codeObject = new Object();
-    mc_codeObject.lc_code_id = "2";
-    mc_codeObject.mc_code_id = "2"
-    mc_codeObject.mc_code_name = "구두"    
-    mc_codeArray.push(mc_codeObject);
-    
-    
-    //****************이부분은 DB로 셋팅하세요.
-    
-    
-    //메인 카테고리 셋팅
-    var lc_codeSelectBox = $("select[name='lc_code']");
-    
-    for(var i=0;i<lc_codeArray.length;i++){
-        lc_codeSelectBox.append("<option value='"+lc_codeArray[i].lc_code_id+"'>"+lc_codeArray[i].lc_code_name+"</option>");
-    }
-    
-    //*********** 1depth카테고리 선택 후 2depth 생성 START ***********
-    $(document).on("change","select[name='lc_code']",function(){
-        
-        //두번째 셀렉트 박스를 삭제 시킨다.
-        var mc_codeSelectBox = $("select[name='mc_code']");
-        mc_codeSelectBox.children().remove(); //기존 리스트 삭제
-        
-        //선택한 첫번째 박스의 값을 가져와 일치하는 값을 두번째 셀렉트 박스에 넣는다.
-        $("option:selected", this).each(function(){
-            var selectValue = $(this).val(); //main category 에서 선택한 값
-            mc_codeSelectBox.append("<option value=''>전체</option>");
-            for(var i=0;i<mc_codeArray.length;i++){
-                if(selectValue == mc_codeArray[i].lc_code_id){
-                    
-                    mc_codeSelectBox.append("<option value='"+mc_codeArray[i].mc_code_id+"'>"+mc_codeArray[i].mc_code_name+"</option>");
-                    
-                }
-            }
-        });
-        
-    });
-    //*********** 1depth카테고리 선택 후 2depth 생성 END ***********
-        
-});
-
-function changeHtml()
-{
-	var lc_code = document.getElementById("lc_code").value;
-	var mc_code = document.getElementById("mc_code").value;
-	if(lc_code == 1 && mc_code == 1){document.getElementById('selected_category').innerHTML="남성 > 운동화"}
-	if(lc_code == 1 && mc_code == 2){document.getElementById('selected_category').innerHTML="남성 > 구두"}
-	if(lc_code == 2 && mc_code == 1){document.getElementById('selected_category').innerHTML="여성 > 운동화"}
-	if(lc_code == 2 && mc_code == 2){document.getElementById('selected_category').innerHTML="여성 > 구두"}
-}
-</script>
-
-
-
+	<script type="text/javascript">
+	 
+	$(document).ready(function() {
+	    
+	    //Main 카테고리를 선택 할때 마다 AJAX를 호출할 수 있지만 DB접속을 매번 해야 하기 때문에 main, sub카테고리 전체을 들고온다.
+	    
+	    //****************이부분은 DB로 셋팅하세요.
+	    //Main 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
+	    var lc_codeArray = new Array();
+	    var lc_codeObject = new Object();
+	    
+	    lc_codeObject = new Object();
+	    lc_codeObject.lc_code_id = "1";
+	    lc_codeObject.lc_code_name = "남성";
+	    lc_codeArray.push(lc_codeObject);
+	    
+	    lc_codeObject = new Object();
+	    lc_codeObject.lc_code_id = "2";
+	    lc_codeObject.lc_code_name = "여성";
+	    lc_codeArray.push(lc_codeObject);
+	    
+	    //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
+	    var mc_codeArray = new Array();
+	    var mc_codeObject = new Object();
+	    
+	    //스포츠에 해당하는 sub category 리스트
+	    mc_codeObject = new Object();
+	    mc_codeObject.lc_code_id = "1";
+	    mc_codeObject.mc_code_id = "1"
+	    mc_codeObject.mc_code_name = "운동화"    
+	    mc_codeArray.push(mc_codeObject);
+	    
+	    mc_codeObject = new Object();
+	    mc_codeObject.lc_code_id = "1";
+	    mc_codeObject.mc_code_id = "2"
+	    mc_codeObject.mc_code_name = "구두"    
+	    mc_codeArray.push(mc_codeObject);
+	   
+	    //공연에 해당하는 sub category 리스트
+	    mc_codeObject = new Object();
+	    mc_codeObject.lc_code_id = "2";
+	    mc_codeObject.mc_code_id = "1"
+	    mc_codeObject.mc_code_name = "운동화"    
+	    mc_codeArray.push(mc_codeObject);
+	    
+	    mc_codeObject = new Object();
+	    mc_codeObject.lc_code_id = "2";
+	    mc_codeObject.mc_code_id = "2"
+	    mc_codeObject.mc_code_name = "구두"    
+	    mc_codeArray.push(mc_codeObject);
+	    
+	    
+	    //****************이부분은 DB로 셋팅하세요.
+	    
+	    
+	    //메인 카테고리 셋팅
+	    var lc_codeSelectBox = $("select[name='lc_code']");
+	    
+	    for(var i=0;i<lc_codeArray.length;i++){
+	        lc_codeSelectBox.append("<option value='"+lc_codeArray[i].lc_code_id+"'>"+lc_codeArray[i].lc_code_name+"</option>");
+	    }
+	    
+	    //*********** 1depth카테고리 선택 후 2depth 생성 START ***********
+	    $(document).on("change","select[name='lc_code']",function(){
+	        
+	        //두번째 셀렉트 박스를 삭제 시킨다.
+	        var mc_codeSelectBox = $("select[name='mc_code']");
+	        mc_codeSelectBox.children().remove(); //기존 리스트 삭제
+	        
+	        //선택한 첫번째 박스의 값을 가져와 일치하는 값을 두번째 셀렉트 박스에 넣는다.
+	        $("option:selected", this).each(function(){
+	            var selectValue = $(this).val(); //main category 에서 선택한 값
+	            mc_codeSelectBox.append("<option value=''>전체</option>");
+	            for(var i=0;i<mc_codeArray.length;i++){
+	                if(selectValue == mc_codeArray[i].lc_code_id){
+	                    
+	                    mc_codeSelectBox.append("<option value='"+mc_codeArray[i].mc_code_id+"'>"+mc_codeArray[i].mc_code_name+"</option>");
+	                    
+	                }
+	            }
+	        });
+	        
+	    });
+	    //*********** 1depth카테고리 선택 후 2depth 생성 END ***********
+	        
+	});
 	
-	
-	
+	function changeHtml()
+	{
+		var lc_code = document.getElementById("lc_code").value;
+		var mc_code = document.getElementById("mc_code").value;
+		if(lc_code == 1 && mc_code == 1){document.getElementById('selected_category').innerHTML="남성 > 운동화"}
+		if(lc_code == 1 && mc_code == 2){document.getElementById('selected_category').innerHTML="남성 > 구두"}
+		if(lc_code == 2 && mc_code == 1){document.getElementById('selected_category').innerHTML="여성 > 운동화"}
+		if(lc_code == 2 && mc_code == 2){document.getElementById('selected_category').innerHTML="여성 > 구두"}
+	}
+	</script>
+	-->
+
+	<div class="thirdContainner">
+		<div class="third_title">카테고리</div>
+		<div class="third_content">
+			<div class="category_box">
+				<div class="category_content_l">
+					<input type="hidden" name="lc_code">
+				    <div>제1분류</div>
+				    <div>
+				        <ul id="lcList">
+				            <c:forEach var="lc" items="${lc_category }" >
+				                <li class="lcRecord" value="${lc.lc_code }">${lc.lc_name }</li>
+				            </c:forEach>
+				        </ul>
+				    </div>
+				</div>
+				<div class="category_content_m">
+					<input type="hidden" name="mc_code">
+				    <div>제2분류</div>
+				    <div>
+				        <ul id="mcList"></ul>
+				    </div>
+				</div>
+<!-- 				<div class="category_content_s"> -->
+<!-- 					<input type="hidden" name="sc_code"> -->
+<!-- 				    <div>제3분류</div> -->
+<!-- 				    <div> -->
+<!-- 				        <ul id="scList"></ul> -->
+<!-- 				    </div> -->
+<!-- 				</div> -->
+			</div>
+			<p class="selected_category">
+				<span>선택한 카테고리 :</span>
+				<span id="selectCategory">
+					<span id="selectLcn"></span>
+					<span id="selectMcn"></span>
+<!-- 					<span id="selectScn"></span> -->
+				</span>
+			</p>
+		</div>
+	</div>	
 	
 	<div class="fourthContainner">
 		<div class="fourth_title">거래지역</div>
