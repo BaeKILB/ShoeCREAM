@@ -29,8 +29,14 @@ public interface AdminMapper {
 	// 일대일 문의 조회
 	List<InquiryBoardVO> selectQstBoard(@Param("searchType") String searchType, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
 	int getQstListCount(String searchType);
+	// 일대일 디테일 조회
+	InquiryBoardVO selectQst(int qst_idx);
+	// 답변 조회
+	InquiryBoardVO selectQstAns(int qst_idx);
+	// 답변 등록
+	int insertQstBoard(InquiryBoardVO inquiry);
+		
 	// --------------- 민진 ---------------------------
-	
 	// 중고 상품 띄우기
 	List<JungProductVO> selectProduct(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	// 경매 상품 띄우기
@@ -61,5 +67,8 @@ public interface AdminMapper {
 	// 크림 페이징
 	int getcreampaging();
 	int deletecream(int ci_code);
+	
+
+	
 }
 
