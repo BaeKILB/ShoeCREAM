@@ -5,17 +5,9 @@ img {
 	height: 150px;
 }
 
-.auctionItem {
-	display: inline-block;
-}
-
 a {
 	text-decoration: none;
 	color: #000;
-}
-
-#pannelBox>div {
-	display: inline-block;
 }
 
 .hidden {

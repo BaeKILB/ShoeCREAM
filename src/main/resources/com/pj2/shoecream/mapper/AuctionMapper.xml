@@ -53,16 +53,20 @@
 			, auction_title
 			, auc_start_price
 			, auc_close_date
+			, auction_readcount
+			, bid_price
+			, dibs_count
 		FROM
 			auction_item ai 
 			JOIN product_image pi ON ai.auction_idx = pi.product_idx 
 			JOIN (
 				SELECT
 					ai.auction_idx
-					,sum(CASE
+					, sum(CASE
 						WHEN bl.auction_idx IS NULL THEN 0
 						ELSE 1
 					END) AS bid_count
+                    , max(bl.bid_price) AS bid_price
 				FROM
 					auction_item ai LEFT JOIN bid_list bl
 					ON ai.auction_idx = bl.auction_idx

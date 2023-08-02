@@ -9,8 +9,19 @@ let mcCode = '';
 
 $(function() { // onload
 	let getParams = new URL(location.href).searchParams;
-	if(getParams.get("mc_code") != null) mcCode = getParams.get("mc_code");
-	if(getParams.get("lc_code") != null) mcCode = getParams.get("lc_code");
+	if(getParams.get("lc_code") != null) {
+        lcCode = getParams.get("lc_code");
+        let lcName = $("input[value="+lcCode+"]").siblings().text();
+        console.log(lcName);
+        $("#lcHref").attr('href','Auction?lc_code=' + lcCode);
+        $("#lcHref").text(lcName);
+    };
+	if(getParams.get("mc_code") != null) {
+        mcCode = getParams.get("mc_code");
+        let mcName = $("input[value="+mcCode+"]").siblings().text();
+        $("#mcHref").attr('href','Auction?lc_code=' + lcCode + '&mc_code=' + mcCode);
+        $("#mcHref").text(mcName);
+    }
 	
     getList();
     
@@ -46,10 +57,15 @@ $(function() { // onload
 		pageNum = 1;
 		maxPage = 1;
 		$("#orderMethod").val('');
+        $("#lcHref").attr('href','#');
+        $("#lcHref").text('');
+        $("#mcHref").attr('href','#');
+        $("#mcHref").text('');
+		
 		
 		// 동일 대분류 선택시
         if($(this).siblings().attr('class') == '') {
-            $(this).siblings().addClass('hidden');
+            $(this).siblings().addClass('d-none');
     		$("#itemList").empty();
             getList();
             return;
@@ -57,12 +73,18 @@ $(function() { // onload
         
         // 초기 또는 다른 대분류 선택시
         $(".ct_lc_item_btn").each(function() {
-            $(this).siblings().addClass('hidden');
+            $(this).siblings().addClass('d-none');
         });
         
-        // 선택 대분류 보여주기
-        $(this).siblings().removeClass('hidden');
+        // 중분류 hidden 제거
+        $(this).siblings().removeClass('d-none');
         lcCode = $(this).children().val();
+        
+        // 카테고리 경로 업데이트
+		$("#lcHref").attr('href','Auction?lc_code=' + lcCode);
+		$("#lcHref").text($(this).children().eq(1).text());
+        
+        // 리스트 초기화 및 ajax 호출
 		$("#itemList").empty();
         getList();
     });
@@ -70,6 +92,8 @@ $(function() { // onload
     $(".ct_mc_item_btn").on("click",function() {
 		$("#orderMethod").val('');
 		mcCode = $(this).children().val();
+        $("#mcHref").attr('href','Auction?lc_code=' + lcCode +'&mc_code='+mcCode);
+        $("#mcHref").text($(this).children().eq(1).text());
 		$("#itemList").empty();
         getList();
 	});
@@ -105,28 +129,51 @@ const doneResult = data => {
     
 	let index = 0;
     for (let item of data) {
-        let result =
-            "<a href='AuctionDetail?auction_idx="+ item.auction_idx +"'>"
-                + "<div class='auctionItem'>"
-                    +"<img alt='테스트이미지' src='"+ path + item.image_path + "/" + item.image1 +"'>" 
-                        +"<div>" 
-                            + "상품명"
-                            + item.auction_title
-                        +"</div>"
-                        +"<div>" 
-                            + "상품가격"
-                            + item.auc_start_price
-                        +"</div>"
-                        +"<div>"
-                        	+"<div id='data"+index+"'>"
-                        		+"<input type=hidden name='auction_idx' value='"+item.auction_idx+"'>"
-                        		+"<input type=hidden name='auc_close_date' value='"+item.auc_close_date+"'>"
-                        	+"</div>"
-	                        +"<div id='remainingTime"+item.auction_idx+"'>"
-	                        +"</div>"
-                        +"</div>"
-                    +"</div>"
-                +"</a>";        
+        // 입찰내역이 있을경우 가격을 입찰가로 바꿔야함 가져올때 bid_list 도 같이 가져오자
+        let price = 0;
+        if(item.bid_price == null) {
+            price = item.auc_start_price;
+        } else {
+            price = item.bid_price
+        }
+        let result = 
+                "<div class='card col-lg-3 col-md-4 col-6'>"
+                +"  <a href='AuctionDetail?auction_idx="+ item.auction_idx +"'>"
+                +"      <img src='"+ path + item.image_path + "/" + item.image1 +"' class='card-img-top' alt='productImage'>"
+                +"      <div class='card-body'>"
+                +"        <h5 class='card-title'>"+item.auction_title+"</h5>"
+                +"      </div>"
+                +"      <ul class='list-group list-group-flush'>"
+                +"        <li class='list-group-item'>가격 "+price+"원</li>"
+                +"        <li class='list-group-item'>"
+                +"          <div>"
+                +"              <div id='data"+index+"'>"
+                +"                  <input type=hidden name='auction_idx' value='"+item.auction_idx+"'>"
+                +"                  <input type=hidden name='auc_close_date' value='"+item.auc_close_date+"'>"
+                +"              </div>"
+                +"              <div id='remainingTime"+item.auction_idx+"'></div>"
+                +"          </div>"
+                +"        </li>"
+                +"        <li class='list-group-item'>"
+                +"          <div class='row'>"
+                +"              <div class='col'>"
+                +"                  <svg xmlns = 'http://www.w3.org/2000/svg' width = '16' height = '16' fill = 'currentColor' class='bi bi-eye' viewBox = '0 0 16 16' >"
+                +"                      <path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z'/>"
+                +"                      <path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z'/>"
+                +"                  </svg >" 
+                +                   item.auction_readcount
+                +"              </div>"
+                +"              <div class='col'>"
+                +"                  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16'>"
+                +"                      <path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z'/>"
+                +"                  </svg>" 
+                +                   item.dibs_count
+                +"              </div>"
+                +"          </div>"
+                +"        </li>"
+                +"    </ul>"
+                +"  </a>";
+                +"</div>";
         $("#itemList").append(result);
         index++;
     }
