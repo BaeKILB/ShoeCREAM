@@ -35,6 +35,8 @@ public interface AdminMapper {
 	InquiryBoardVO selectQstAns(int qst_idx);
 	// 답변 등록
 	int insertQstBoard(InquiryBoardVO inquiry);
+	// 답변 등록 시 참조글 상태 업데이트
+	int updateQstStatus(int qst_idx);
 		
 	// --------------- 민진 ---------------------------
 	// 중고 상품 띄우기

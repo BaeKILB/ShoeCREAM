@@ -190,6 +190,25 @@ public class AdminController {
 		return "redirect:/InquiryList?pageNum=" + pageNum; 
 	}
 	
+	// 일대일 문의 답변 등록
+	@PostMapping("QstWritePro")
+	public String qstWritePro(InquiryBoardVO inquiry, @RequestParam int pageNum, Model model) {
+		int insertCount = service.registBoard(inquiry);
+		if(insertCount > 0) {
+			return "redirect:/InquiryList?pageNum=" + pageNum;
+		} else {
+			model.addAttribute("msg", "글쓰기 실패");
+			return "inc/fail_back";
+		}
+	}
+	
+	// 일대일 문의 답변 수정
+	@GetMapping("QstModifyForm")
+	public String inquiryModifyForm(@RequestParam int qst_idx, @RequestParam int pageNum, Model model) {
+		
+		return "";
+	}
+	
 	
 	
 	

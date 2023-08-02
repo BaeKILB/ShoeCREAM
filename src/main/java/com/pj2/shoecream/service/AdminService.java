@@ -54,8 +54,14 @@ public class AdminService {
 	}
 	// 답변 등록
 	public int registBoard(InquiryBoardVO inquiry) {
-		return mapper.insertQstBoard(inquiry);
+		int insertCount = mapper.insertQstBoard(inquiry);
+		if(insertCount > 0) {			
+			return mapper.updateQstStatus(inquiry.getQst_idx());
+		} else {
+			return 0;
+		}
 	}
+	
 	
 	// --------------- 민진 ---------------------------
 	//중고상품 목록 띄우기

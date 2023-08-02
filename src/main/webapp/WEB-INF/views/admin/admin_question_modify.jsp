@@ -23,42 +23,44 @@
 		<div class="question_cont">
 			<div class="mem_list_wrap">
 				<div class="list_wrap">
-					<ul class="list">
-						<li>
-							<div class="subject">
-								${inquiry.qst_subject }
-							</div>
-						</li>
-						<li class="write_info">
-							<div class="write_box">
-								<span class="write_t">작성자명</span>
-								<span class="write_c">
-									${inquiry.mem_name }
-								</span>
-							</div>
-							<div class="write_box">
-								<span class="write_t">등록일</span>
-								<span class="write_c">
-									<fmt:formatDate value="${inquiry.qst_date }" pattern="yy-MM-dd HH:mm"/>
-								</span>
-							</div>
-							<div class="write_box">
-								<span class="write_t">문의유형</span>
-								<span class="write_c">
-									${inquiry.qst_type }
-								</span>
-							</div>
-						</li>
-					</ul>
-					<div class="write_cont">
-						<p style="white-space: pre-line;">
-							${inquiry.qst_content }
-						</p>
+					<div class="list_wrap">
+						<ul class="list">
+							<li>
+								<div class="subject">
+									${inquiry.qst_subject }
+								</div>
+							</li>
+							<li class="write_info">
+								<div class="write_box">
+									<span class="write_t">작성자명</span>
+									<span class="write_c">
+										${inquiry.mem_name }
+									</span>
+								</div>
+								<div class="write_box">
+									<span class="write_t">등록일</span>
+									<span class="write_c">
+										<fmt:formatDate value="${inquiry.qst_date }" pattern="yy-MM-dd HH:mm"/>
+									</span>
+								</div>
+								<div class="write_box">
+									<span class="write_t">문의유형</span>
+									<span class="write_c">
+										${inquiry.qst_type }
+									</span>
+								</div>
+							</li>
+						</ul>
+						<div class="write_cont">
+							<p style="white-space: pre-line;">
+								${inquiry.qst_content }
+							</p>
+						</div>
 					</div>
 				</div>
 				<c:choose>
-					<c:when test="${empty inquiryAnswer}">
-						<form action="QstWritePro" method="post">
+					<c:when test="${not empty inquiryAnswer}">
+						<form action="QstModifyPro" method="post">
 							<input type="hidden" name="qst_idx" value="${inquiry.qst_idx }">
 							<input type="hidden" name="mem_idx" value="${inquiry.mem_idx }">
 							<input type="hidden" name="mem_name" value="${inquiry.mem_name }">

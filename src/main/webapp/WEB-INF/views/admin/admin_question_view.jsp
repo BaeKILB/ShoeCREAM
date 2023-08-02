@@ -95,10 +95,11 @@
 						</div>
 					</c:when>
 				</c:choose>
+				
 				<div class="mod_box">
 					<a class="list_btn" href="InquiryList?pageNum=${param.pageNum }">목록</a>
 					<c:if test="${not empty inquiryAnswer}">					
-						<a class="list_btn" href="InquiryList?pageNum=1">수정</a>
+						<a class="list_btn" href="QstModifyForm??qst_idx=${inquiry.qst_idx }&pageNum=${param.pageNum }">수정</a>
 					</c:if>
 					
 				</div>

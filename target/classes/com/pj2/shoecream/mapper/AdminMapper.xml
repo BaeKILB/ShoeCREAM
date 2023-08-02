@@ -119,6 +119,12 @@
 				, 'Y'
 		)
 	</insert>
+	<!-- 답변 등록 시 참조글 상태 업데이트 -->
+	<update id="updateQstStatus">
+		UPDATE qst_board
+			SET ans_status = 'Y'
+				WHERE qst_idx = #{qst_idx}
+	</update>
 
 <!--  민진 민진 민진민진민진민진민진민진민진민진민진민진 -->
 <!--  중고 상품 조회 -->
