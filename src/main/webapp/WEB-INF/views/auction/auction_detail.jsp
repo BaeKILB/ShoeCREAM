@@ -256,7 +256,7 @@ to {
 						</c:if>
                 	</c:forEach>
 					<div>
-						<input type="button" onclick="location.href='#?lc_code=${auction.lc_code}&mc_code=${auction.mc_code }'" value="연관상품 더보기"> <!-- 기능구현 필요 -->
+						<input type="button" onclick="location.href='Auction?lc_code=${auction.lc_code}&mc_code=${auction.mc_code }'" value="연관상품 더보기"> <!-- 기능구현 필요 -->
 					</div>
                 </div>
             </div>

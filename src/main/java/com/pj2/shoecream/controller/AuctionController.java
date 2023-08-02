@@ -56,15 +56,16 @@ public class AuctionController {
    
    @GetMapping("Auction")
    public String auctionMain(
-		   Model model) {
-	  
-	  List<Map<String, Object>> lc_category = categoryService.getLcList();
-	  model.addAttribute("lc_category",lc_category);
-
-	  List<Map<String, Object>> mc_category = categoryService.getMcList(0);
-	  model.addAttribute("mc_category",mc_category);
+		   @RequestParam(required = false) Map<String, Object> map
+		   , Model model) {
+	   List<Map<String, Object>> lc_category = categoryService.getLcList();
+	   model.addAttribute("lc_category",lc_category);
 	   
-      return "auction/auction_main";
+	   List<Map<String, Object>> mc_category = categoryService.getMcList(0);
+	   model.addAttribute("mc_category",mc_category);
+	   if (map != null) model.addAttribute("code", map);
+		   
+	   return "auction/auction_main";
    }
    
     @GetMapping("AuctionDetail")

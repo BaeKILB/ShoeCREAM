@@ -7,7 +7,10 @@ let lcCode = '';
 let mcCode = '';
 
 $(function() { // onload
-
+	let getParams = new URL(location.href).searchParams;
+	if(getParams.get("mc_code") != null) mcCode = getParams.get("mc_code");
+	if(getParams.get("lc_code") != null) mcCode = getParams.get("lc_code");
+	
     getList();
     
     // 스크롤
