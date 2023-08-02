@@ -70,7 +70,7 @@ public class JunggoController {
 	
 	// 중고 항목 페이징 처리때 사용될 상수
 	// 중고 리스트 불러올때 최대 리미트
-	public static final int JUNG_PRODUCT_LIMIT = 8;
+	public static final int JUNG_PRODUCT_LIMIT = 20;
 	
 	@GetMapping("JunggoSearch")
 	public String junggoSearch(

@@ -110,8 +110,7 @@ ${bid }
                 	</c:otherwise>
                 </c:choose>
                 <span>즉시구매가 : </span>
-                <span>${auction.auc_buy_instantly }원</span>
-            </div>
+ 				<span>${bid.bid_price }+${auction.auc_bid_unit}원 </span>            </div>
 		</div>
 		<div>
 			<!-- 올리는 단위 정하기ㅏ 보증금 정하기 -->

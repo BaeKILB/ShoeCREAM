@@ -3,18 +3,30 @@
 // ajax 데이터 보내기 및 데이터 받기
 let dataObj;
 
+// url 파라미터 가져오기
+let getParams = new URL(location.href).searchParams;
+console.log(getParams);
+
+let obj = {}
+if(getParams.get("lc_code") != null){	
+	obj["lc_code"] = getParams.get("lc_code");
+}
+if(getParams.get("mc_code") != null){	
+	obj["mc_code"] = getParams.get("mc_code");
+}
+console.log(obj);
+
+
 // ajax 로 초기정보 구성하기
 function initAjax() {
 	
 	// 파라미터 가져오기
-	let getParams = new URL(location.href).searchParams;
-	console.log(getParams);
 	let checkError = false;
-	
+
 	let data =  $.ajax({
         url: "junggoSearchInit.ajax",
         type: "post",
-        data: JSON.stringify(getParams),
+        data: obj,
         dataType: "json",
         async: false,
         error: function(errorThrown) {
@@ -23,6 +35,10 @@ function initAjax() {
             checkError = true;
         }
     });
+    
+    // url에서 들고온 변수 사용했으니 비우기
+    obj = {};
+    
     if(!checkError){    
 		// 초기값 저장
 		
