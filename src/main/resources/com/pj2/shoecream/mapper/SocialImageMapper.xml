@@ -11,6 +11,7 @@
 		, #{mem_nickname}
 		, #{posts_content}
 		, #{posts_image1}
+		, 0
 		, now()
 		)
 	</insert>
@@ -30,9 +31,9 @@
 		social_posts
 		WHERE mem_idx
 		IN (SELECT followee_idx FROM social_follows WHERE follower_idx = #{sId})
+		ORDER BY posts_date DESC
 		LIMIT
-		#{startRow}
-		, #{listLimit}
+		#{startRow}, #{listLimit}
 	</select>
 
 </mapper>

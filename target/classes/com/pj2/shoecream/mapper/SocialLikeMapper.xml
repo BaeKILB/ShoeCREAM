@@ -8,7 +8,7 @@
 		INTO social_likes
 		VALUES (
 		null 
-		, #{mem_idx}
+		, #{posts_idx}
 		, #{sId}
 		, now()
 		)
@@ -20,4 +20,20 @@
 	    WHERE posts_idx = #{mem_idx}
 	    AND mem_idx = #{sId}
 	</delete>
+	
+	<!-- 좋아요 상태 -->
+	<select id="selectCountLikes">
+		SELECT COUNT(*) FROM social_likes 
+		WHERE mem_idx=#{userId} AND posts_idx=#{postId}
+	</select>
+	
+	<!-- 좋아요 수 증가 -->
+<update id="incrementLikeCount">
+    UPDATE social_posts SET likeCount = likeCount + 1 WHERE posts_idx = #{postId}
+</update>
+
+<!-- 좋아요 수 감소 -->
+<update id="decrementLikeCount">
+    UPDATE social_posts SET likeCount = likeCount - 1 WHERE posts_idx = #{postId}
+</update>
 </mapper>

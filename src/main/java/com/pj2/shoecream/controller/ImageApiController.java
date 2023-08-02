@@ -41,6 +41,13 @@ public class ImageApiController {
 
 		List<SocialVO> images = socialImageService.ImageStory(sId, startRow, listLimit);
 		
+	   // 좋아요 상태를 images에 추가합니다.
+	    for (SocialVO image : images) {
+//	        image.setLikeCount(socialLikeService.likeCount(sId, image.getPosts_idx()));
+	    	image.setLikeState(socialLikeService.isPostLikedByUser(sId, image.getPosts_idx()));
+	    }
+		
+		System.out.println("images : " + images);
 		// images에 좋아요 상태 담기
 //		images.forEach((image->{
 //			
@@ -51,13 +58,13 @@ public class ImageApiController {
 	}
 	
 	// 좋아요
-	@PostMapping("/api/image/{mem_idx}/likes")
-	public ResponseEntity<?> likes(@PathVariable int mem_idx) {
+	@PostMapping("/api/image/{posts_idx}/likes")
+	public ResponseEntity<?> likes(@PathVariable int posts_idx) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int sId = mPrincipalDetails.getMember().getMem_idx();
 		
-		socialLikeService.insertLike(mem_idx, sId);
+		socialLikeService.insertLike(posts_idx, sId);
 		return new ResponseEntity<>(new CMRespDto<>(1,"좋아요성공",null),HttpStatus.CREATED);
 	}
 	

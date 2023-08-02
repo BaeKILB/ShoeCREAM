@@ -14,13 +14,35 @@ public class SocialLikeService {
 	
 	// 좋아요
 	@Transactional
-	public void insertLike(int mem_idx, int sId) {
-		socialLikeMapper.insertLike(mem_idx, sId);
+	public void insertLike(int posts_idx, int sId) {
+		socialLikeMapper.insertLike(posts_idx, sId);
+	    incrementLikeCount(posts_idx);
 	}
+	@Transactional
+	public void incrementLikeCount(int postId) {
+	    socialLikeMapper.incrementLikeCount(postId);
+	}
+	
 	// 좋아요 취소
 	@Transactional
 	public void deleteLike(int mem_idx, int sId) {
 		socialLikeMapper.deleteLike(mem_idx, sId);
+	    decrementLikeCount(mem_idx);
+	}
+	@Transactional
+	public void decrementLikeCount(int postId) {
+	    socialLikeMapper.decrementLikeCount(postId);
+	}
+	
+	
+	// 좋아요 상태
+	public boolean isPostLikedByUser(int userId, int postId) {
+		int countLikeResult = socialLikeMapper.selectCountLikes(userId, postId);
+		return countLikeResult > 0;
+	}
+	// 좋아요 갯수
+	public int likeCount(int userId, int postId) {
+		return socialLikeMapper.selectCountLikes(userId, postId);
 	}
 
 }

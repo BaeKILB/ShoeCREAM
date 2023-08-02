@@ -181,14 +181,14 @@ public class AdminController {
 	}
 	
 	// 일대일 문의 답변 등록
-	@PostMapping("QstWritePro")
-	public String qstWritePro(InquiryBoardVO inquiry, @RequestParam int pageNum) {
-		System.out.println(inquiry.getQst_type());
-		int insertCount = service.registBoard(inquiry);
-		if(insertCount > 0) {
-		}
-		return "redirect:/InquiryList?pageNum=" + pageNum; 
-	}
+//	@PostMapping("QstWritePro")
+//	public String qstWritePro(InquiryBoardVO inquiry, @RequestParam int pageNum) {
+//		System.out.println(inquiry.getQst_type());
+//		int insertCount = service.registBoard(inquiry);
+//		if(insertCount > 0) {
+//		}
+//		return "redirect:/InquiryList?pageNum=" + pageNum; 
+//	}
 	
 	// 일대일 문의 답변 등록
 	@PostMapping("QstWritePro")

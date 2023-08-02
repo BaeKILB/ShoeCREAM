@@ -26,6 +26,8 @@ public class SocialVO {
 	private MultipartFile file4;
 	
 	private int likes_idx; // 소셜이 좋아요 불러올때 사용하자.
+	private boolean likeState; // DB 저장 x 
+	private int likeCount; 
 	
 //    public MemberVO toMemberVO() {
 //        MemberVO member = new MemberVO();

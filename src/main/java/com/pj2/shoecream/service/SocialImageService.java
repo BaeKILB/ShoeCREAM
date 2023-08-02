@@ -33,8 +33,6 @@ public class SocialImageService {
 	@Transactional(readOnly = true)
 	public List<SocialVO> ImageStory(int sId, int startRow, int listLimit){
 		
-		
-		
 		return socialImageMapper.selectStory(sId, startRow, listLimit);
 	}
 	

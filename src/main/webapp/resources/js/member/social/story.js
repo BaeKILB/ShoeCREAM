@@ -78,12 +78,20 @@ function getStoryItem(image) {
 	<div class="sl__item__contents">
 		<div class="sl__item__contents__icon">
 
-			<button>
-				<i class="fas fa-heart active" id="storyLikeIcon-1" onclick="toggleLike()"></i>
+			<button>`;
+			
+			if(image.likeState) {
+				item += `<i class="fas fa-heart active" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
+			} else {
+				item += `<i class="far fa-heart" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
+			}
+				
+			
+		item += `
 			</button>
 		</div>
 
-		<span class="like"><b id="storyLikeCount-1">3 </b>likes</span>
+		<span class="like"><b id="storyLikeCount-${image.posts_idx}">${image.likeCount} </b>likes</span>
 
 		<div class="sl__item__contents__content">
 			<p>${image.posts_content}</p>
@@ -123,16 +131,50 @@ function getStoryItem(image) {
 
 
 // (3) 좋아요, 안좋아요
-function toggleLike() {
-	let likeIcon = $("#storyLikeIcon-1");
+function toggleLike(posts_idx) {
+	let likeIcon = $(`#storyLikeIcon-${posts_idx}`);
+	
 	if (likeIcon.hasClass("far")) {
-		likeIcon.addClass("fas");
-		likeIcon.addClass("active");
-		likeIcon.removeClass("far");
+		
+		$.ajax({
+			type:"post",
+			url:`/shoecream/api/image/${posts_idx}/likes`,
+			ataType:"json"
+		}).done(res=>{
+			
+			let likeCountStr = $(`#storyLikeCount-${posts_idx}`).text();
+			let likeCount = Number(likeCountStr) + 1;
+			console.log("좋아요 카운트 증가", likeCount);
+			$(`#storyLikeCount-${posts_idx}`).text(likeCount);
+					
+			likeIcon.addClass("fas");
+			likeIcon.addClass("active");
+			likeIcon.removeClass("far");
+		}).fail(error=>{
+				
+			console.log("오류", error);
+		});
+
 	} else {
-		likeIcon.removeClass("fas");
-		likeIcon.removeClass("active");
-		likeIcon.addClass("far");
+		
+		$.ajax({
+			type:"delete",
+			url:`/shoecream/api/image/${posts_idx}/likes`,
+			ataType:"json"
+		}).done(res=>{
+			
+			let likeCountStr = $(`#storyLikeCount-${posts_idx}`).text();
+			let likeCount = Number(likeCountStr) - 1;
+			console.log("좋아요 카운트 감소", likeCount);
+			$(`#storyLikeCount-${posts_idx}`).text(likeCount);
+					
+			likeIcon.removeClass("fas");
+			likeIcon.removeClass("active");
+			likeIcon.addClass("far");
+		}).fail(error=>{
+			console.log("오류", error);
+		});
+	
 	}
 }
 
