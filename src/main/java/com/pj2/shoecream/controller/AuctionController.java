@@ -56,15 +56,16 @@ public class AuctionController {
    
    @GetMapping("Auction")
    public String auctionMain(
-		   Model model) {
-	  
-	  List<Map<String, Object>> lc_category = categoryService.getLcList();
-	  model.addAttribute("lc_category",lc_category);
-
-	  List<Map<String, Object>> mc_category = categoryService.getMcList(0);
-	  model.addAttribute("mc_category",mc_category);
+		   @RequestParam(required = false) Map<String, Object> map
+		   , Model model) {
+	   List<Map<String, Object>> lc_category = categoryService.getLcList();
+	   model.addAttribute("lc_category",lc_category);
 	   
-      return "auction/auction_main";
+	   List<Map<String, Object>> mc_category = categoryService.getMcList(0);
+	   model.addAttribute("mc_category",mc_category);
+	   if (map != null) model.addAttribute("code", map);
+		   
+	   return "auction/auction_main";
    }
    
     @GetMapping("AuctionDetail")
@@ -446,19 +447,27 @@ public class AuctionController {
     	
     	// auction
     	Map<String,Object> auction = service.getAuction(auction_idx);
-    	logger.info("!@#$1");
+    	logger.info("!@#$auction");
     	logger.info(auction.toString());
     	// 구매자 정보
-    	MemberVO member = service.getMember(mem_idx);
-    	logger.info("!@#$2");
-    	logger.info(member.toString());
-    	// 결제
-    	int insertCount = 0;
-//    	insertCount = service.결제();
-    	insertCount = 1;
+    	MemberVO buyer = service.getMember(mem_idx);
+    	logger.info("!@#$buyer");
+    	logger.info(buyer.toString());
     	
-    	if (insertCount > 0) {
+    	// 판매자 정보
+    	MemberVO seller = service.getMember(Integer.parseInt(String.valueOf(auction.get("mem_idx"))));
+    	logger.info("!@#$seller");
+    	logger.info(seller.toString());
+    	
+    	// 결제
+    	boolean paymentResult = true;
+//    	paymentResult = service.결제();
+    	//
+    	
+    	if (paymentResult) {
     		service.modifyAuctionState(auction_idx);
+    		model.addAttribute("msg","결제 완료");
+    		return "inc/close";
     	}
     	
     	// 결제 완료후에 어느페이지로 가지?

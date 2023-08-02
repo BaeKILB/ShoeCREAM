@@ -16,4 +16,6 @@ public class InquiryBoardVO {
 	private int qst_board_re_seq;
 	private Date qst_date;
 	private String qst_type;
+	private String ans_status;
+	private int qst_max_num;
 }

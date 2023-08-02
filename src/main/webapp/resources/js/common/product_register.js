@@ -283,3 +283,20 @@ $(function() {
 		},
 	});
 });
+
+//즉시구맥마 > 경매 시작가
+window.addEventListener('DOMContentLoaded', function () {
+    const aucBuyInstantlyInput = document.querySelector('input[name="auc_buy_instantly"]');
+    const aucStartPriceInput = document.querySelector('input[name="auc_start_price"]');
+
+    aucBuyInstantlyInput.addEventListener('blur', function () {
+        const buyInstantlyValue = parseFloat(aucBuyInstantlyInput.value);
+        const startPriceValue = parseFloat(aucStartPriceInput.value);
+
+        if (buyInstantlyValue <= startPriceValue) {
+            alert('즉시 구매가는 경매 시작가 보다 높은 값이어야 합니다.');
+            aucBuyInstantlyInput.value = '';
+            aucBuyInstantlyInput.focus();
+        }
+    });
+});

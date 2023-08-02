@@ -44,7 +44,19 @@ public class AdminService {
 	public int getQstListCount(String searchType) {
 		return mapper.getQstListCount(searchType);
 	}
-
+	// 일대일 문의 디테일 조회
+	public InquiryBoardVO selectQst(int qst_idx) {
+		return mapper.selectQst(qst_idx);
+	}
+	// 답변 조회
+	public InquiryBoardVO selectQstAns(int qst_idx) {
+		return mapper.selectQstAns(qst_idx);
+	}
+	// 답변 등록
+	public int registBoard(InquiryBoardVO inquiry) {
+		return mapper.insertQstBoard(inquiry);
+	}
+	
 	// --------------- 민진 ---------------------------
 	//중고상품 목록 띄우기
 	public List<JungProductVO> getProduct(Criteria cri, String searchType, String searchKeyword) {
@@ -109,5 +121,8 @@ public class AdminService {
 		// TODO Auto-generated method stub
 		return mapper.deletecream(ci_code);
 	}
+	
+	
+	
 	
 }

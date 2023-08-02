@@ -107,7 +107,6 @@ public class AdminController {
 		return isDelete;
 	}
 
-	
 	// 일대일 문의 목록 조회
 	@GetMapping("InquiryList")
 	public String inquiry(HttpSession session, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "") String searchType, Model model) {
@@ -134,6 +133,45 @@ public class AdminController {
 		
 		return "admin/admin_question";
 	}
+	
+	// 일대일 문의 뷰디테일
+	@GetMapping("QstBoardDetail")
+	public String qstBoardDetail(@RequestParam int qst_idx, @RequestParam int pageNum, @RequestParam int qst_board_re_ref, Model model) {
+		
+		InquiryBoardVO inquiry = service.selectQst(qst_idx);
+		model.addAttribute("inquiry", inquiry);
+		
+		// 답장조회
+		InquiryBoardVO inquiryAnswer = service.selectQstAns(qst_idx);
+		model.addAttribute("inquiryAnswer", inquiryAnswer);
+		
+		return "admin/admin_question_view";
+	}
+	
+	// 일대일 문의 답변작성
+	@GetMapping("QstWriteForm")
+	public String qstWriteForm(@RequestParam int qst_idx, Model model, @RequestParam int pageNum) {
+		
+		InquiryBoardVO inquiry = service.selectQst(qst_idx);
+		model.addAttribute("inquiry", inquiry);
+		
+		InquiryBoardVO inquiryAnswer = service.selectQstAns(qst_idx);
+		model.addAttribute("inquiryAnswer", inquiryAnswer);
+		
+		return "admin/admin_question_write";
+	}
+	
+	// 일대일 문의 답변 등록
+	@PostMapping("QstWritePro")
+	public String qstWritePro(InquiryBoardVO inquiry, @RequestParam int pageNum) {
+		System.out.println(inquiry.getQst_type());
+		int insertCount = service.registBoard(inquiry);
+		if(insertCount > 0) {
+		}
+		return "redirect:/InquiryList?pageNum=" + pageNum; 
+	}
+	
+	
 	
 	
 	

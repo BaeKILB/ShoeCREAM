@@ -26,62 +26,64 @@
 		<h1 class="admin_tit">1:1 문의 조회</h1>
 		<hr class="tit_line">
 		<div class="question_cont">
-			<div class="search_wrap">
-				<form action="InquiryList" method="get" class="searchForm">
-					<select name="searchType" id="searchType">
-						<option value="" <c:if test="${param.searchType eq '' }">selected</c:if>>전체검색</option>			
-						<option value="deal_report" <c:if test="${param.searchType eq 'deal_report' }">selected</c:if>>거래신고</option>			
-						<option value="cream_inquiry" <c:if test="${param.searchType eq 'cream_inquiry' }">selected</c:if>>크림문의</option>			
-						<option value="member_account" <c:if test="${param.searchType eq 'member_account' }">selected</c:if>>회원/계정</option>			
-						<option value="account_point" <c:if test="${param.searchType eq 'account_manage' }">selected</c:if>>계좌/포인트</option>			
-						<option value="sell_advers" <c:if test="${param.searchType eq 'sell_advers' }">selected</c:if>>판매광고</option>			
-						<option value="error_report" <c:if test="${param.searchType eq 'error_report' }">selected</c:if>>오류/신고/제안</option>			
-					</select>
-					<input type="submit" value="검색" class="searchSubmit" style="cursor: pointer;">
-				</form>
-			</div>
-			<div class="table_container">
-				<table class="inq_list_table table">
-					<thead>
-						<tr>
-							<th scope="col">글 번호</th>
-							<th scope="col">이름</th>
-							<th scope="col">제목</th>
-							<th scope="col">작성일</th>
-							<th scope="col">답변상태</th>
-						</tr>
-					</thead>
-					<tbody class="tbody">
-						<c:forEach var="qstItem" items="${qstList }">
+			<div class="mem_list_wrap">
+				<div class="search_wrap">
+					<form action="InquiryList" method="get" class="searchForm">
+						<select name="searchType" id="searchType">
+							<option value="" <c:if test="${param.searchType eq '' }">selected</c:if>>전체검색</option>			
+							<option value="deal_report" <c:if test="${param.searchType eq 'deal_report' }">selected</c:if>>거래신고</option>			
+							<option value="cream_inquiry" <c:if test="${param.searchType eq 'cream_inquiry' }">selected</c:if>>크림문의</option>			
+							<option value="member_account" <c:if test="${param.searchType eq 'member_account' }">selected</c:if>>회원/계정</option>			
+							<option value="account_point" <c:if test="${param.searchType eq 'account_manage' }">selected</c:if>>계좌/포인트</option>			
+							<option value="sell_advers" <c:if test="${param.searchType eq 'sell_advers' }">selected</c:if>>판매광고</option>			
+							<option value="error_report" <c:if test="${param.searchType eq 'error_report' }">selected</c:if>>오류/신고/제안</option>			
+						</select>
+						<input type="submit" value="검색" class="searchSubmit" style="cursor: pointer;">
+					</form>
+				</div>
+				<div class="table_container">
+					<table class="inq_list_table table">
+						<thead>
 							<tr>
-								<td>${qstItem.qst_idx }</td>
-								<td>${qstItem.mem_name }</td>
-								<td>
-									<c:if test="${qstItem.qst_board_re_lev > 0 }">
-										<c:forEach var="qstList" begin="0" end="${qstItem.qst_board_re_lev }">
-											&nbsp;
-										</c:forEach>
-										 Re: 
-									</c:if>
-									<a href="QstBoardDetail?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }">
-										<span>${qstItem.qst_subject }</span>
-									</a>
-								</td>
-								<td><fmt:formatDate value="${qstItem.qst_date }" pattern="yy-MM-dd"/> </td>
-								<td>
-									<c:if test="${qstItem.qst_board_re_seq eq 0 }">
-										<button>
-											답변하기
-										</button> 
-									</c:if>
-									<c:if test="${qstItem.qst_board_re_lev > 1 }">
-										답변 완료
-									</c:if>
-								</td>
+								<th scope="col">글 번호</th>
+								<th scope="col">이름</th>
+								<th scope="col">제목</th>
+								<th scope="col">작성일</th>
+								<th scope="col">답변상태</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+						</thead>
+						<tbody class="tbody">
+							<c:forEach var="qstItem" items="${qstList }">
+								<c:choose>
+									<c:when test="${qstItem.qst_board_re_seq eq 0}">
+										<tr>
+											<td>${qstItem.qst_idx }</td>
+											<td>${qstItem.mem_name }</td>
+											<td>
+												<a href="QstBoardDetail?qst_idx=${qstItem.qst_idx }&qst_board_re_ref=${qstItem.qst_board_re_ref }&pageNum=${pageNum }">
+													<span>${qstItem.qst_subject }</span>
+												</a>
+											</td>
+											<td><fmt:formatDate value="${qstItem.qst_date }" pattern="yy-MM-dd"/></td>
+											<td>
+												<c:if test="${qstItem.ans_status eq 'N'}">
+													<a href="QstWriteForm?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }">
+														답변하기
+													</a> 
+												</c:if>
+												<c:if test="${qstItem.ans_status eq 'Y'}">
+													<a href="">
+														답변수정
+													</a> 
+												</c:if>
+											</td>
+										</tr>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<ul id="pageList">
 				<c:if test="${pageNum > 1 }">
@@ -96,29 +98,29 @@
 				</c:if>
 				<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
 				<%-- 각 페이지마다 하이퍼링크 설정(단, 현재 페이지는 하이퍼링크 제거) --%>
-				<c:choose>
-					<c:when test="${pageNum eq i }">
-						<li>
-							<a href="" class='pageNum current'>${i }</a>
+					<c:choose>
+						<c:when test="${pageNum eq i }">
+							<li>
+								<a href="" class='pageNum current'>${i }</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li>
+								<a href="" class='pageNum'>${i }</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+					<c:if test="${pageNum < pageInfo.maxPage }">
+						<li class='pgi'>
+							<a href="" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
 						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a href="" class='pageNum'>${i }</a>
+					</c:if>
+					<c:if test="${pageNum < pageInfo.maxPage }">
+						<li class='pgi'>
+							<a href="" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
 						</li>
-					</c:otherwise>
-				</c:choose>
-				<c:if test="${pageNum < pageInfo.maxPage }">
-					<li class='pgi'>
-						<a href="" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
-					</li>
-				</c:if>
-				<c:if test="${pageNum < pageInfo.maxPage }">
-					<li class='pgi'>
-						<a href="" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
-					</li>
-				</c:if>
-		</c:forEach>
+					</c:if>
+				</c:forEach>
 			</ul>
 		</div>
 	</section>

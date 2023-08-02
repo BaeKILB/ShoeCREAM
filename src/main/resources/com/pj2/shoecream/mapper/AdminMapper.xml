@@ -86,7 +86,39 @@
 					WHERE qst_type = #{searchType}
 				</if>
 	</select>
-
+	<!-- 일대일 문의 디테일 조회 -->
+	<select id="selectQst" resultType="com.pj2.shoecream.vo.InquiryBoardVO">
+		SELECT *
+			FROM qst_board
+				WHERE qst_idx = #{qst_idx}
+	</select>
+	<select id="selectQstAns" resultType="com.pj2.shoecream.vo.InquiryBoardVO">
+		SELECT *
+			FROM qst_board
+				WHERE qst_board_re_ref = #{qst_idx}
+				AND qst_board_re_lev > 0
+	</select>
+	<!-- 일대일 답변 등록 -->
+	<insert id="insertQstBoard">
+		<selectKey keyProperty="qst_max_num" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(qst_idx), 0) FROM qst_board
+		</selectKey>
+		INSERT INTO qst_board
+			VALUES (
+				#{qst_max_num} + 1
+				, #{mem_idx}
+				, '슈크림'
+				, #{qst_pass}
+				, #{qst_subject}
+				, #{qst_content}
+				, #{qst_board_re_ref}
+				, #{qst_board_re_lev} + 1
+				, #{qst_board_re_seq} + 1 
+				, now()
+				, #{qst_type}
+				, 'Y'
+		)
+	</insert>
 
 <!--  민진 민진 민진민진민진민진민진민진민진민진민진민진 -->
 

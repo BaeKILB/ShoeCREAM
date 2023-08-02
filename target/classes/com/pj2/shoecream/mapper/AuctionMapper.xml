@@ -239,6 +239,7 @@
 			ON ai.auction_idx = pi.product_idx 
 		WHERE
 			auc_state = '진행'
+			and auction_idx != #{auction_idx }
         	and lc_code = #{lc_code }
             and mc_code = #{mc_code }
 	        limit

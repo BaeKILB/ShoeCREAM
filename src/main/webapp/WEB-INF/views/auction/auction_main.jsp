@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/auction/auction_main.js"></script>
 <%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/inc/header.js"></script> --%>
-<script src="${pageContext.request.contextPath }/resources/js/inc/side_category.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/auction/auction_main.css"	rel="stylesheet">
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/nav.css" rel="stylesheet" > --%>
 <link href="${pageContext.request.contextPath }/resources/css/inc/side_category.css"    rel="stylesheet">

@@ -168,69 +168,76 @@ to {
 				</c:choose> 
 			</span>
         </div>
-	    <div>
-	        <span>
-	              <span>현재가격 : </span>
-	              <span>
-	                   <c:choose>
-	                       <c:when test="${bid eq null }">
-	                           ${auction.auc_start_price } 원
-	                       </c:when>
-	                       <c:otherwise>
-	                           ${bid.bid_price } 원
-	                       </c:otherwise>
-	                   </c:choose>
-	              </span>
-	        </span>
-	        <span>
-	              <span>시작가격 : </span>
-	              <span>${auction.auc_start_price }</span>
-	        </span>
-	        <div>
-	              <span>즉시구매가 : </span>
-	              <span>${auction.auc_buy_instantly }</span>
-	        </div>
-	    </div>
-        <hr>
-        <div>
-            <span>입찰수 : </span> <!-- 입찰내역 count -->
-            <span> 
-				<c:choose>
-				    <c:when test="${bidCount eq null }">
-				        0 회
-				    </c:when>
-				    <c:otherwise>
-				        ${bidCount } 회
-				    </c:otherwise>
-				</c:choose>
-			</span>
-			<div>
-				<c:choose>
-					<c:when test="${bid eq null }">
-						<div>경매기록 없음</div>
-					</c:when>
-					<c:otherwise>
-			            <div id="bidHistoryBtn">경매기록</div>
-			            <div id="bidHistory">
-			            </div>
-					</c:otherwise>
-				</c:choose>
-            </div>
-        </div>
-        <div id="acdBox"></div> <!-- const closeTimeCheck() -->
-        <div>
-			<c:choose>
-				<c:when test="${auction.mem_idx eq principal.member.mem_idx}">
-					<input type="button" value="수정" onclick="location.href='AuctionModifyForm?auction_idx=${auction.auction_idx}'">
-<!--                      삭제 버튼 클릭 시 "삭제하시겠습니까?" 메세지 출력 후 확인 버튼 누르면 삭제 서블릿 요청 -->
-                    <input type="button" value="삭제" onclick="confirmDelete()">
-				</c:when>
-				<c:otherwise>
-					<input type="button" value="입찰-팝업" onclick="tenderPopup();">
-					<input type="button" value="즉시구매-팝업" onclick="buyingPopup();">
-				</c:otherwise>
-			</c:choose>
-        </div>
+    	<c:choose>
+    		<c:when test="${auction.auc_state eq '마감' }">
+    			<div>거래 종료</div>
+    		</c:when>
+    		<c:otherwise>
+			    <div>
+			        <span>
+			              <span>현재가격 : </span>
+			              <span>
+			                   <c:choose>
+			                       <c:when test="${bid eq null }">
+			                           ${auction.auc_start_price } 원
+			                       </c:when>
+			                       <c:otherwise>
+			                           ${bid.bid_price } 원
+			                       </c:otherwise>
+			                   </c:choose>
+			              </span>
+			        </span>
+			        <span>
+			              <span>시작가격 : </span>
+			              <span>${auction.auc_start_price }</span>
+			        </span>
+			        <div>
+			              <span>즉시구매가 : </span>
+			              <span>${auction.auc_buy_instantly }</span>
+			        </div>
+			    </div>
+		        <hr>
+		        <div>
+		            <span>입찰수 : </span> <!-- 입찰내역 count -->
+		            <span> 
+						<c:choose>
+						    <c:when test="${bidCount eq null }">
+						        0 회
+						    </c:when>
+						    <c:otherwise>
+						        ${bidCount } 회
+						    </c:otherwise>
+						</c:choose>
+					</span>
+					<div>
+						<c:choose>
+							<c:when test="${bid eq null }">
+								<div>경매기록 없음</div>
+							</c:when>
+							<c:otherwise>
+					            <div id="bidHistoryBtn">경매기록</div>
+					            <div id="bidHistory">
+					            </div>
+							</c:otherwise>
+						</c:choose>
+		            </div>
+		        </div>
+		        <div id="acdBox"></div> <!-- const closeTimeCheck() -->
+		        <div>
+					<c:choose>
+						<c:when test="${auction.mem_idx eq principal.member.mem_idx}">
+							<input type="button" value="수정" onclick="location.href='AuctionModifyForm?auction_idx=${auction.auction_idx}'">
+		<!--                      삭제 버튼 클릭 시 "삭제하시겠습니까?" 메세지 출력 후 확인 버튼 누르면 삭제 서블릿 요청 -->
+		                    <input type="button" value="삭제" onclick="confirmDelete()">
+						</c:when>
+						<c:otherwise>
+							<input type="button" value="입찰-팝업" onclick="tenderPopup();">
+							<input type="button" value="즉시구매-팝업" onclick="buyingPopup();">
+						</c:otherwise>
+					</c:choose>
+		        </div>
+    		</c:otherwise>
+    	</c:choose>
         <hr>
 		<c:if test="${fn:length(relatedProducts) > 0 }">
 			<div> <!-- 연관상품 -->
@@ -249,7 +256,7 @@ to {
 						</c:if>
                 	</c:forEach>
 					<div>
-						<input type="button" onclick="location.href='#?lc_code=${auction.lc_code}&mc_code=${auction.mc_code }'" value="연관상품 더보기"> <!-- 기능구현 필요 -->
+						<input type="button" onclick="location.href='Auction?lc_code=${auction.lc_code}&mc_code=${auction.mc_code }'" value="연관상품 더보기"> <!-- 기능구현 필요 -->
 					</div>
                 </div>
             </div>
