@@ -37,9 +37,9 @@ import com.pj2.shoecream.service.BidService;
 import com.pj2.shoecream.service.CategoryService;
 import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.vo.AuctionVO;
+import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.ProductImageVO;
 
-import retrofit2.http.POST;
 
 @Controller
 public class AuctionController {
@@ -125,10 +125,7 @@ public class AuctionController {
 		model.addAttribute("sellerItemList",sellerItemList);
 		
 		// 연관 상품
-		auction.put("related", "1");
-		List<Map<String, Object>> relatedProducts = service.getAuctionList(auction);
-		logger.info("!@#$");
-		logger.info(relatedProducts.toString());
+		List<Map<String, Object>> relatedProducts = service.getRelatedAuctionList(auction);
 		model.addAttribute("relatedProducts",relatedProducts);
 		
         return "auction/auction_detail";
@@ -439,17 +436,29 @@ public class AuctionController {
     
     @PostMapping("buyingPro")
     public String insertBuying(
-    		@RequestParam Map<String, Object> map
+    		@RequestParam(value = "auction_idx") String auction_idx
     		, Model model
     		, HttpSession session) {
     	
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+    	int mem_idx = mPrincipalDetails.getMember().getMem_idx();
+    	
+    	// auction
+    	Map<String,Object> auction = service.getAuction(auction_idx);
+    	logger.info("!@#$1");
+    	logger.info(auction.toString());
+    	// 구매자 정보
+    	MemberVO member = service.getMember(mem_idx);
+    	logger.info("!@#$2");
+    	logger.info(member.toString());
     	// 결제
     	int insertCount = 0;
 //    	insertCount = service.결제();
     	insertCount = 1;
     	
     	if (insertCount > 0) {
-    		service.modifyAuctionState(String.valueOf(map.get("auction_idx")));
+    		service.modifyAuctionState(auction_idx);
     	}
     	
     	// 결제 완료후에 어느페이지로 가지?

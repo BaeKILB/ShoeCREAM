@@ -14,7 +14,7 @@
 
 	<h3>입찰 상품</h3>
 	<hr>
-	<form action="buyingPro">
+	<form action="buyingPro" method="post" >
 		<input type="hidden" value="${auction.auction_idx }" name="auction_idx">
 		<h4>상품명 : ${auction.auction_title }</h4>
 		<h4>즉시 구매가 :${auction.auc_buy_instantly } 원</h4>

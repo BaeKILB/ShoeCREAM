@@ -92,42 +92,31 @@
 		        </otherwise>
 		    </choose>
 		</if>
-		<choose>
-			<when test="related == null"> -- 일반 상품
-				<if test="!orderMethod.equals('')"> 
-				    <choose>
-				        <when test="orderMethod.equals('newest')">
-					    	order by
-		                   		auction_date DESC         
-				        </when>
-				        <when test="orderMethod.equals('deadline')">
-				        	order by
-		                    	auc_close_date            
-				        </when>
-				        <when test="orderMethod.equals('steamed')">
-				        	order by
-		                    	dibs_count DESC, auction_readcount DESC	            
-				        </when>
-				        <when test="orderMethod.equals('popular')">
-				        	order by
-				            	bid_count DESC, auction_readcount DESC
-				        </when>
-				    </choose>
-				</if>
-		        <if test="startRow != null and listLimit != null">
-			        limit
-			            #{startRow}
-			            , #{listLimit}
-		        </if>
-	        </when>
-			<when test="related != null"> -- 연관 상품
-	            and ai.auction_idx != #{auction_idx }
-	            order by
-	            	auction_date DESC
-				limit 
-					5
-			</when>
-		</choose>
+		<if test="!orderMethod.equals('')"> 
+		    <choose>
+		        <when test="orderMethod.equals('newest')">
+			    	order by
+                   		auction_date DESC         
+		        </when>
+		        <when test="orderMethod.equals('deadline')">
+		        	order by
+                    	auc_close_date            
+		        </when>
+		        <when test="orderMethod.equals('steamed')">
+		        	order by
+                    	dibs_count DESC, auction_readcount DESC	            
+		        </when>
+		        <when test="orderMethod.equals('popular')">
+		        	order by
+		            	bid_count DESC, auction_readcount DESC
+		        </when>
+		    </choose>
+		</if>
+        <if test="startRow != null and listLimit != null">
+	        limit
+	            #{startRow}
+	            , #{listLimit}
+        </if>
 	</select>
 	<select id="selectAuction">
 	   select
@@ -228,5 +217,31 @@
 			on ai.auction_idx = pi.product_idx
 		where
 			mem_idx = #{mem_idx }
+	</select>
+	<select id="selectMember">
+		select
+			*
+		from
+			mem_info
+		where
+			mem_idx = #{mem_idx }
+	</select>
+	<select id="selectRelatedAuctionList" resultType="map">
+		SELECT
+		    ai.auction_idx 
+			, image_path
+			, image1
+			, auction_title
+			, auc_start_price
+			, auc_close_date
+		FROM
+			auction_item ai JOIN product_image pi 
+			ON ai.auction_idx = pi.product_idx 
+		WHERE
+			auc_state = '진행'
+        	and lc_code = #{lc_code }
+            and mc_code = #{mc_code }
+	        limit
+	        	4
 	</select>
 </mapper>

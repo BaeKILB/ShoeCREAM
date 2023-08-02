@@ -225,7 +225,6 @@ to {
 <!--                      삭제 버튼 클릭 시 "삭제하시겠습니까?" 메세지 출력 후 확인 버튼 누르면 삭제 서블릿 요청 -->
                     <input type="button" value="삭제" onclick="confirmDelete()">
 				</c:when>
-				
 				<c:otherwise>
 					<input type="button" value="입찰-팝업" onclick="tenderPopup();">
 					<input type="button" value="즉시구매-팝업" onclick="buyingPopup();">
@@ -233,6 +232,7 @@ to {
 			</c:choose>
         </div>
         <hr>
+		<c:if test="${fn:length(relatedProducts) > 0 }">
 			<div> <!-- 연관상품 -->
                 <div>연관상품</div>
                 <div> 
@@ -253,12 +253,13 @@ to {
 					</div>
                 </div>
             </div>
-            <hr>
-            <div> <!-- 상품정보 & 판매자정보 -->
-				<div> <!-- 상품정보 -->
-	                <div>상품정보</div>
-					<div>
-						<p>${auction.auction_info }</p>
+		</c:if>
+		<hr>
+		<div> <!-- 상품정보 & 판매자정보 -->
+			<div> <!-- 상품정보 -->
+				<div>상품정보</div>
+				<div>
+					<p>${auction.auction_info }</p>
 	            </div>
 	            <div> <!-- 판매자 정보 & 판매 물품 -->
 	                <div> <!-- 판매자 정보 -->
@@ -269,21 +270,23 @@ to {
 						</span>
 					</div>
 					<div> <!-- 판매 물품 -->
-						<c:forEach var="sil" items="${sellerItemList }" varStatus="status">
-							<c:if test="${status.index < 3}">
-								<div>
+						<c:if test="${fn:length(sellerItemList) > 0 }">
+							<c:forEach var="sil" items="${sellerItemList }" varStatus="status">
+								<c:if test="${status.index < 3}">
 									<div>
-										<a href="AuctionDetail?auction_idx${sil.auction_idx }" >
-											<span>${sil.auction_title }</span>
-											<img src="${pageContext.request.contextPath }${sil.image_path }/${sil.image1 }"> <!-- 사진사이즈 줄여야됨 -->
-										</a>
+										<div>
+											<a href="AuctionDetail?auction_idx${sil.auction_idx }" >
+												<span>${sil.auction_title }</span>
+												<img src="${pageContext.request.contextPath }${sil.image_path }/${sil.image1 }"> <!-- 사진사이즈 줄여야됨 -->
+											</a>
+										</div>
 									</div>
-								</div>
-							</c:if>
-						</c:forEach>
-						<div>
-							<input type="button" value="판매물품 더보기"> <!-- 기능구현 필요 -->
-						</div>
+								</c:if>
+							</c:forEach>
+							<div>
+								<input type="button" value="판매물품 더보기"> <!-- 기능구현 필요 -->
+							</div>
+						</c:if>
 					</div>
 	            </div>
             </div>
