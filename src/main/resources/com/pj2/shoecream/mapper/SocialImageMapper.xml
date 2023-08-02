@@ -25,8 +25,7 @@
 	</select>
 
 	<!-- 소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기) -->
-	<select id="selectStory"
-		resultType="com.pj2.shoecream.vo.SocialVO">
+	<select id="selectStory" resultType="com.pj2.shoecream.vo.SocialVO">
 		SELECT * FROM
 		social_posts
 		WHERE mem_idx
@@ -34,6 +33,12 @@
 		ORDER BY posts_date DESC
 		LIMIT
 		#{startRow}, #{listLimit}
+	</select>
+
+	<select id="selectPopular" resultType="com.pj2.shoecream.vo.SocialVO">
+		SELECT * FROM social_posts 
+		WHERE likeCount 
+		ORDER BY likeCount DESC
 	</select>
 
 </mapper>

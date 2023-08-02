@@ -140,7 +140,7 @@ div #test_area ul { /* 카테고리 css */
 							</a>
 						</div>
                         <div class="col-1 b_h_left_menu">
-                            <a href="${pageContext.request.contextPath }/social">
+                            <a href="${pageContext.request.contextPath }/social/popular">
                                 <img src="${pageContext.request.contextPath }/resources/img/member/social/logo2.png" alt="Social">
                                 소셜
                             </a>

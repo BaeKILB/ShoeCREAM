@@ -19,4 +19,7 @@ public interface SocialImageMapper {
 			@Param("sId") int sId,
 			@Param("startRow") int startRow, 
 			@Param("listLimit") int listLimit);
+
+	List<SocialVO> selectPopular();
+
 }

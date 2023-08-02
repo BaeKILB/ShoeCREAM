@@ -43,7 +43,7 @@
 					<li class="navi-item"><a href="${pageContext.request.contextPath }/social/story">
 							<i class="fas fa-home"></i>
 						</a></li>
-					<li class="navi-item"><a href="${pageContext.request.contextPath }/social">
+					<li class="navi-item"><a href="${pageContext.request.contextPath }/social/popular">
 							<i class="far fa-compass"></i>
 						</a></li>
 					<li class="navi-item"><a href="${pageContext.request.contextPath }/social/${principal.member.mem_idx}">

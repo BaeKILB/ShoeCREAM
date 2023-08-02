@@ -18,6 +18,7 @@ public class SocialLikeService {
 		socialLikeMapper.insertLike(posts_idx, sId);
 	    incrementLikeCount(posts_idx);
 	}
+	// 좋아요 수 증가
 	@Transactional
 	public void incrementLikeCount(int postId) {
 	    socialLikeMapper.incrementLikeCount(postId);
@@ -29,11 +30,11 @@ public class SocialLikeService {
 		socialLikeMapper.deleteLike(mem_idx, sId);
 	    decrementLikeCount(mem_idx);
 	}
+	// 좋아요 수 감소
 	@Transactional
 	public void decrementLikeCount(int postId) {
 	    socialLikeMapper.decrementLikeCount(postId);
 	}
-	
 	
 	// 좋아요 상태
 	public boolean isPostLikedByUser(int userId, int postId) {

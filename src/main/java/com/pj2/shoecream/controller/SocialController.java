@@ -39,9 +39,13 @@ public class SocialController {
 		return "member/social/story";
 	}
 	
-	// 소셜 스토리 페이지
-	@GetMapping("/social")
-	public String popular() {
+	// 소셜 인기 페이지
+	@GetMapping("/social/popular")
+	public String popular(Model model) {
+		
+		List<SocialVO> images = SocialImageService.popularImage();
+		model.addAttribute("images", images);
+		
 		return "member/social/popular";
 	}
   

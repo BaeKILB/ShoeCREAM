@@ -29,6 +29,12 @@ public class SocialImageService {
 	@Autowired
 	private SocialImageMapper socialImageMapper;
 	
+	@Transactional(readOnly = true)
+	public List<SocialVO> popularImage() {
+		return socialImageMapper.selectPopular();
+	}
+
+	
 //	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
 	@Transactional(readOnly = true)
 	public List<SocialVO> ImageStory(int sId, int startRow, int listLimit){
@@ -152,6 +158,7 @@ public class SocialImageService {
 		public List<String> findPostImagesByMemIdx(int mem_idx) {
 		    return socialImageMapper.findPostImageByMemIdx(mem_idx);
 		}
-	
+
+
 }
 
