@@ -16,9 +16,11 @@
 		FROM 
 			jung_product
 		
+			WHERE
+			product_sell_status != "거래완료"
 			<if test='jproduct.lc_code != null'>
 				<if test='jproduct.lc_code != 0'>
-				WHERE
+					AND
 					lc_code = #{jproduct.lc_code}
 					<if test='jproduct.mc_code != null'>
 						<if test='jproduct.mc_code != 0'>
@@ -28,7 +30,18 @@
 					</if>
 				</if>
 			</if>
- 		ORDER BY product_date desc
+		
+ 		ORDER BY 
+ 		<choose>
+<!--  			<when test="steamed"> -->
+<!--  			</when> -->
+ 			<when test="view">
+ 				product_readcount
+ 			</when>
+ 			<otherwise>
+		 		product_date desc
+ 			</otherwise>
+ 		</choose>
 		LIMIT #{startCount}, #{setPageListLimit}
 			
 			;

@@ -23,13 +23,45 @@
 			<section class="sideCategoryWrap" >
 			
 				<div class="categoryTop ct_lc_list categoryList">
+				<aside class="sideCategoryWrap"> 카테고리
+					<ul>
+<!-- 		                대분류 -->
+		                <c:forEach var="lc" items="${lc_list }">
+				            <li class="ct_lc_item" >
+				                <div class="ct_lc_item_btn">
+			                    	<input type="hidden" value="${lc.lc_code }">
+				                    <span>${lc.lc_name }</span>
+				                    <button class="ct_up_down_btn"></button>
+				                </div>
+<!-- 				                중분류 -->
+							    <div id="${lc.lc_code }_mc_list" class="hidden">
+							        <ul>
+		                                 <c:forEach var="mc" items="${mc_list }">
+		                                    <c:if test="${lc.lc_code eq mc.parent_code }">
+									            <li class="ct_mc_item">
+									                <div class="ct_mc_item_btn">
+			                    						<input type="hidden" value="${mc.mc_code }">
+									                    <span>${mc.mc_name }</span>
+									                </div>
+									            </li>
+		                                    </c:if>
+							           </c:forEach>
+							        </ul>
+							    </div>
+<!-- 		                        중분류 -->
+				            </li>
+		                </c:forEach>
+<!-- 			            대분류 -->
+		            </ul>
+				</aside>
+				
 				<ul>
-					<c:forEach var="lc" items="${lc_list }" varStatus="i">	
+<%-- 					<c:forEach var="lc" items="${lc_list }" varStatus="i">	 --%>
 <%-- 						<jsp:include page="../inc/side_category_lc.jsp"> --%>
 <%-- 							<jsp:param value="lc" name="lc"/> --%>
 <%-- 							<jsp:param value="mc_list[${ i.index-1}]" name="mc"/> --%>
 <%-- 						</jsp:include> --%>
-					</c:forEach>
+<%-- 					</c:forEach> --%>
 				</ul>
 				</div>
 			</section>
@@ -39,6 +71,17 @@
 				</div>
 			</section>
 		</article>
+		<!-- 정렬 방식 -->
+		<article class="row">
+			<div class="">
+		        <select id="orderMethod" name="orderMethod">
+		            <option value="" selected="selected" >정렬방식</option>
+		            <option value="newest">최신순</option>
+		            <option value="steamed">찜순</option>
+		            <option value="view">조회순</option>
+		        </select>
+			</div>
+		</article>
 		<article class="row">
 			<div class="offset-5 col-2">		
 				<a href="javascript:dataObj = loadItemAjax(dataObj)" id="btnLoadItem">더보기</a>
@@ -46,11 +89,7 @@
 		</article>
 	</main>
 	
-	<script type="text/javascript">
 
-		// 페이지 정보 넣기
-		let dataObj = ${jsonObj}
-	</script>
 	<script	src="${pageContext.request.contextPath }/resources/js/junggo/junggo_product_search.js"></script>
 
 </body>

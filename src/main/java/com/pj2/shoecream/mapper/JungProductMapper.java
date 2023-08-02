@@ -17,7 +17,8 @@ public interface JungProductMapper {
 	//중고 물품 리스트로 가져오기
 	List<JungProductVO> selectJungProductList(@Param("jproduct") JungProductVO jproduct,
 			@Param("startCount") int startCount,
-			@Param("setPageListLimit") int setPageListLimit
+			@Param("setPageListLimit") int setPageListLimit,
+			@Param("orderMethod") String orderMethod
 			);
 	
 	//중고 물품 정보 idx에 맞춰 하나만 가져오기

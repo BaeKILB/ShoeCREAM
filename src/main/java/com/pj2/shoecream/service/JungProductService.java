@@ -15,9 +15,9 @@ public class JungProductService {
 	private JungProductMapper mapper;
 	
 	// 중고 상품 정보 리스트 받아오기(추후 리미트로 불러올 상품수 제한)
-	public List<JungProductVO> getJungProductList(JungProductVO jproduct, PageInfoVO pageInfo) {
+	public List<JungProductVO> getJungProductList(JungProductVO jproduct, PageInfoVO pageInfo, String orderMethod) {
 		int startCount = pageInfo.getStartPage() * pageInfo.getPageListLimit();
-		return mapper.selectJungProductList(jproduct,startCount,pageInfo.getPageListLimit() );
+		return mapper.selectJungProductList(jproduct,startCount,pageInfo.getPageListLimit(),orderMethod );
 	}
 	
 	// 중고 상품 정보 idx로 하나 불러오기

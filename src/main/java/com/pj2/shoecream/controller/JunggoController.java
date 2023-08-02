@@ -176,7 +176,53 @@ public class JunggoController {
 	
 	//========================= ajax ========================
 	
+	// 중고 페이지 열었을때 처음 셋팅값들을 ajax로 보내주는 코드
+	@ResponseBody
+	@RequestMapping(
+			value = "junggoSearchInit.ajax",
+			method = RequestMethod.POST,
+			produces = "application/text; charset=UTF-8"
+	)	
+	public String junggoSearchInit(
+			@RequestParam Map<String,Object> map) {
+		
+		JungProductVO jproduct = new JungProductVO();
+		
+		if(map.get("lc_code") != null) {
+			jproduct.setLc_code(Integer.parseInt(((String)map.get("lc_code")).trim()));			
+		}
+		if(map.get("mc_code") != null) {
+			jproduct.setMc_code(Integer.parseInt(((String)map.get("mc_code")).trim()));			
+		}
 	
+		// 페이징 처리를 위한 pageInfo
+		PageInfoVO pageInfo = new PageInfoVO();
+		//페이지 정보 현황 초기화
+		pageInfo.setEndPage(1); // 여기선 필요 x
+		pageInfo.setListCount(0); // 항목의 총 갯수
+		pageInfo.setPageListLimit(JUNG_PRODUCT_LIMIT); // 항목수 제한
+		
+		// 페이지 로드 된 뒤에 ajax로 값을 받아올때 해당 값에 +1을 시켜줌으로 -1로 초기값 지정
+		pageInfo.setStartPage(-1);   // 현재 페이지 값 sql limit 문의 시작 번호는 배열처럼 0 이 시작
+		pageInfo.setMaxPage(8); // 마지막 페이지
+		
+		// 중고 물품 총 갯수 구해서 페이지 최대 갯수 설정
+		pageInfo.setListCount(jProductService.getMaxJungProduct(jproduct));
+		pageInfo.setMaxPage((pageInfo.getListCount() / pageInfo.getPageListLimit()) + 1);
+		
+		JSONObject jo = new JSONObject();
+		jHandler.pageInfo2JsonObj(jo, pageInfo);
+		jo.put("lc_code", (String)map.get("lc_code"));
+		jo.put("mc_code", (String)map.get("mc_code"));
+		
+		// 정렬 메소드 가져오기
+		jo.put("orderMethod", (String)map.get("orderMethod"));
+		
+		// PageInfoVO 를 json 형태로 넣어주기
+		jHandler.pageInfo2JsonObj(jo, pageInfo);
+		
+		return jo.toString();
+	}
 	// 중고 리스트 받기 ajax
 	@ResponseBody
 	@RequestMapping(
@@ -190,13 +236,22 @@ public class JunggoController {
 		//JSON 데이터 형태로 담는 객체
 		JSONObject jsonObj = new JSONObject();	
 		JungProductVO jproduct = new JungProductVO();
-		
+		String orderMethod = (String)map.get("orderMethod");
 		System.out.println("getJproduct : map :" + map);
+		
+		// 카테고리 들고오기
 		if(map.get("lc_code") != null) {
 			jproduct.setLc_code(Integer.parseInt(((String)map.get("lc_code")).trim()));			
 		}
 		if(map.get("mc_code") != null) {
 			jproduct.setMc_code(Integer.parseInt(((String)map.get("mc_code")).trim()));			
+		}
+		
+		//정렬 기준 들고오기
+		// null 이거나 비어있으면 기본 설정(최신순) 으로
+		
+		if(orderMethod == null || orderMethod.equals("")) {
+			orderMethod = "newest";
 		}
 		
 		// 페이징 처리를 위한 pageInfo		
@@ -226,7 +281,7 @@ public class JunggoController {
 		List<JungProductVO> jungList = null;
 		//에러처리
 		try {			
-			jungList = jProductService.getJungProductList(jproduct, pageInfo);
+			jungList = jProductService.getJungProductList(jproduct, pageInfo, orderMethod);
 			map.put("jungList", jungList);
 		}
 		catch(Exception e){
