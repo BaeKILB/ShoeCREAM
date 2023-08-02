@@ -155,18 +155,20 @@ to {
         </div>
         <div>
             <span>${auction.auction_title }</span>
-            <span id="dibsBox"> 
-                <c:choose>
-					<c:when test="${dibs eq null }">
-						<img class="dibsImage" alt="하트 아이콘하트)" src="${pageContext.request.contextPath }/resources/img/auction/favorite-heart-false.svg">
-						<span>${dibsCount }</span>
-                    </c:when>
-					<c:otherwise>
-						<img class="dibsImage" alt="하트 아이콘(빈하트)" src="${pageContext.request.contextPath }/resources/img/auction/favorite-heart-true.svg">
-						<span>${dibsCount }</span>
-                    </c:otherwise>
-				</c:choose> 
-			</span>
+            <c:if test="${auction.isLogin != 0 }">
+	            <span id="dibsBox"> 
+	                <c:choose>
+						<c:when test="${dibs eq null }">
+							<img class="dibsImage" alt="하트 아이콘하트)" src="${pageContext.request.contextPath }/resources/img/auction/favorite-heart-false.svg">
+							<span>${dibsCount }</span>
+	                    </c:when>
+						<c:otherwise>
+							<img class="dibsImage" alt="하트 아이콘(빈하트)" src="${pageContext.request.contextPath }/resources/img/auction/favorite-heart-true.svg">
+							<span>${dibsCount }</span>
+	                    </c:otherwise>
+					</c:choose> 
+				</span>
+            </c:if>
         </div>
     	<c:choose>
     		<c:when test="${auction.auc_state eq '마감' }">

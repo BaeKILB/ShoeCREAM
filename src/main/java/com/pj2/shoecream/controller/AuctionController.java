@@ -75,13 +75,17 @@ public class AuctionController {
         , @RequestParam Map<String, Object> map) { //경매 제품상세
     	
 		// 회원번호
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-        int sId = mPrincipalDetails.getMember().getMem_idx();
+    	int sId = 0;
     	
-//    	int sId = 2;
+    	try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			sId = mPrincipalDetails.getMember().getMem_idx();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     	map.put("mem_idx", sId);
-	
+    	
     	String auction_idx = (String)map.get("auction_idx");
     	
     	// 조회수 카운트
@@ -93,6 +97,7 @@ public class AuctionController {
 		}
 	
 		Map<String, Object> auction = service.getAuction(auction_idx);
+		auction.put("isLogin", sId);
 		model.addAttribute("auction", auction);
 
 
