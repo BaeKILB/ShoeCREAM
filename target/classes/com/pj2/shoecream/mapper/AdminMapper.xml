@@ -121,83 +121,84 @@
 	</insert>
 
 <!--  민진 민진 민진민진민진민진민진민진민진민진민진민진 -->
-
-	<!--  중고 상품 조회 -->
+<!--  중고 상품 조회 -->
 	<select id="selectProduct">
-	  SELECT
-	    p.product_idx,
-	    p.product_brand,
-	    p.product_price,
-	    p.product_info,
-	    p.product_date,
-	    i.image1
-		  FROM 
-		  	jung_product AS p
-		  LEFT JOIN jung_product AS j ON p.product_idx = j.product_idx
-		  LEFT JOIN product_image AS i ON p.product_idx = i.product_idx
-		  WHERE p.product_selector = 1
-	  <if test="searchType != null and searchKeyword != null">
-	    <choose>
-	      <when test="searchType.equals('brand')">
-	        AND p.product_brand LIKE CONCAT('%', #{searchKeyword},'%')
-	      </when>
-	      <when test="searchType.equals('product_info')">
-	        AND p.product_info LIKE CONCAT('%', #{searchKeyword},'%')
-	      </when>
-	      <when test="searchType.equals('code')">
-	        AND p.product_idx LIKE CONCAT('%', #{searchKeyword},'%')
-	      </when>
-	    </choose>
-	  </if>
-	  ORDER BY p.product_idx ASC
-	  LIMIT #{cri.skip}, #{cri.amount}
+	    SELECT
+	        p.product_idx,
+	        p.product_brand,
+	        p.product_price,
+	        p.product_info,
+	        p.product_date,
+	        i.image1,
+	        i.image_path
+	    FROM 
+	        jung_product AS p
+	    LEFT JOIN product_image AS i ON p.product_idx = i.product_idx
+	    <where>
+	        <if test="searchType != null and searchKeyword != null">
+	            <choose>
+	                <when test="searchType.equals('brand')">
+	                    AND p.product_brand LIKE CONCAT('%', #{searchKeyword}, '%')
+	                </when>
+	                <when test="searchType.equals('product_info')">
+	                    AND p.product_info LIKE CONCAT('%', #{searchKeyword}, '%')
+	                </when>
+	                <when test="searchType.equals('code')">
+	                    AND p.product_idx LIKE CONCAT('%', #{searchKeyword}, '%')
+	                </when>
+	                <otherwise>
+	                    <!-- If searchType exists but searchKeyword is null, handle the case here -->
+	                </otherwise>
+	            </choose>
+	        </if>
+	    </where>
+	    ORDER BY p.product_idx ASC
+	    LIMIT #{cri.skip}, #{cri.amount}
 	</select>
-	
-	 <select id="getTotal" resultType="int">
-	SELECT COUNT(*)
-		FROM board_notice
-	</select>
-	  
-	<!--  경매 상품 조회 -->
+		
+		 <select id="getTotal" resultType="int">
+		SELECT COUNT(*)
+			FROM board_notice
+		</select>
+		  
+		<!--  경매 상품 조회 -->
 	<select id="selectauctionmap" >
-	 SELECT
-	    a.auction_idx,
-	    a.auction_brand,
-	    COALESCE(b.bid_price, a.auc_start_price) AS bid_price,
-	    a.auction_info,
-	    a.auc_start_price,
-	    i.image1,
-	    a.auc_regist_date
-			FROM 
-				auction_item AS a
-			LEFT JOIN product_image AS i ON a.auction_idx = i.product_idx
-			LEFT JOIN (
-			    SELECT auction_idx, MAX(bid_price) AS bid_price
-			    FROM bid_list
-			    GROUP BY auction_idx
-			) AS b ON a.auction_idx = b.auction_idx
-			WHERE a.auction_selector = 2
-<if test="searchType != null and searchKeyword != null">
-    <choose>
-        <when test="searchType.equals('brand')">
-            AND a.auction_brand LIKE CONCAT('%', #{searchKeyword}, '%')
-        </when>
-        <when test="searchType.equals('auction_title')">
-            AND a.auction_info LIKE CONCAT('%', #{searchKeyword}, '%')
-        </when>
-        <when test="searchType.equals('code')">
-            AND a.auction_idx LIKE CONCAT('%', #{searchKeyword}, '%')
-        </when>
-    </choose>
-</if>
-ORDER BY a.auction_idx ASC
-LIMIT #{cri.skip}, #{cri.amount}
+	    SELECT
+	        a.auction_idx,
+	        a.auction_brand,
+	        COALESCE(b.bid_price, a.auc_start_price) AS bid_price,
+	        a.auction_info,
+	        a.auc_start_price,
+	        i.image1,
+	        a.auc_regist_date,
+	        i.image_path
+	    FROM 
+	        auction_item AS a
+	    LEFT JOIN product_image AS i ON a.auction_idx = i.product_idx
+	    LEFT JOIN (
+	        SELECT auction_idx, MAX(bid_price) AS bid_price
+	        FROM bid_list
+	        GROUP BY auction_idx
+	    ) AS b ON a.auction_idx = b.auction_idx
+	    <if test="searchType != null and searchKeyword != null">
+	        <choose>
+	            <when test="searchType.equals('brand')">
+	                WHERE a.auction_brand LIKE CONCAT('%', #{searchKeyword}, '%')
+	            </when>
+	            <when test="searchType.equals('auction_title')">
+	                WHERE a.auction_info LIKE CONCAT('%', #{searchKeyword}, '%')
+	            </when>
+	            <when test="searchType.equals('code')">
+	                WHERE a.auction_idx LIKE CONCAT('%', #{searchKeyword}, '%')
+	            </when>
+	        </choose>
+	    </if>
+	    ORDER BY a.auction_idx ASC
+	    <if test="cri != null">
+	        LIMIT #{cri.skip}, #{cri.amount}
+	    </if>
 	</select>
-<!-- 	 <select id="getTotal" resultType="int"> -->
-<!-- 	SELECT COUNT(*) -->
-<!-- 		FROM auction_item -->
-<!-- 	</select> -->
-	
+
 <!-- 중고 상품 신고 -->
 	<select id="getReportListPaging" resultType="com.pj2.shoecream.vo.ReportVO">
 		SELECT report_idx, report_content, product_idx, report_div, report_detail
@@ -297,36 +298,37 @@ LIMIT #{cri.skip}, #{cri.amount}
 		
 	<!--  크림 상품 목록 -->
 	<select id="selectcreammap" >
-			SELECT
-		    c.ci_code,
-		    c.ci_name,
-		    c.ci_brand,
-		    c.ci_model_num,
-		    i.image1,
-		    c.ci_state,
-		    c.ci_rel_date,
-		    c.ci_origin_price,
-		    c.ci_color
-		FROM 
-		    cream_item AS c
-		LEFT JOIN product_image AS i ON c.ci_code = i.product_idx
-		WHERE
-	<if test="searchType != null and searchKeyword != null">
-	    <choose>
-	        <when test="searchType.equals('brand')">
-	            c.ci_brand LIKE CONCAT('%', #{searchKeyword}, '%')
-	        </when>
-	        <when test="searchType.equals('title')">
-	            c.ci_name LIKE CONCAT('%', #{searchKeyword}, '%')
-	        </when>
-	        <when test="searchType.equals('code')">
-	            c.ci_code LIKE CONCAT('%', #{searchKeyword}, '%')
-	        </when>
-	    </choose>
-	</if>
-	ORDER BY c.ci_code ASC
-	LIMIT #{cri.skip}, #{cri.amount}
-	</select> 
+	    SELECT
+	    c.ci_code,
+	    c.ci_name,
+	    c.ci_brand,
+	    c.ci_model_num,
+	    i.image1,
+	    c.ci_state,
+	    c.ci_rel_date,
+	    c.ci_origin_price,
+	    c.ci_color
+	    FROM 
+	    cream_item AS c
+	    LEFT JOIN product_image AS i ON c.ci_code = i.product_idx
+	    <where>
+	        <if test="searchType != null and searchKeyword != null">
+	            <choose>
+	                <when test="searchType.equals('brand')">
+	                   AND c.ci_brand LIKE CONCAT('%', #{searchKeyword}, '%')
+	                </when>
+	                <when test="searchType.equals('title')">
+	                    AND c.ci_name LIKE CONCAT('%', #{searchKeyword}, '%')
+	                </when>
+	                <when test="searchType.equals('code')">
+	                   AND c.ci_code LIKE CONCAT('%', #{searchKeyword}, '%')
+	                </when>
+	            </choose>
+	        </if>
+	    </where>
+	    ORDER BY c.ci_code ASC
+	    LIMIT #{cri.skip}, #{cri.amount}
+	</select>
 	<select id="getcreampaging">
 		SELECT COUNT(*)
 				FROM  cream_item
@@ -337,5 +339,20 @@ LIMIT #{cri.skip}, #{cri.amount}
 		    WHERE ci_code = #{ci_code}
 	</delete>
 	
-		
+	<!--  구글 차트 -->
+	<select id="selectProductList">
+	   SELECT mc.mc_name AS category, COUNT(*) AS count
+			FROM auction_item ai
+			JOIN middle_category mc ON ai.mc_code = mc.mc_code
+			GROUP BY ai.mc_code;
+	</select>
+	
+	<select id="selectAuctionList">
+		SELECT mc.mc_name AS category, COUNT(*) AS count
+			FROM jung_product jp
+			JOIN middle_category mc ON jp.mc_code = mc.mc_code
+			GROUP BY jp.mc_code;
+	</select>
+	
+
 </mapper>

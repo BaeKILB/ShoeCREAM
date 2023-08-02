@@ -11,6 +11,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminMain.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminBoard.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <script type="text/javascript">
@@ -80,7 +81,7 @@ function deleteProAuction(auction_idx) {
 										<td class="price">${auctionmap.auc_start_price}</td>
 										<td class="price_dibs">${auctionmap.bid_price}</td>
 										<td class="product_info">${auctionmap.auction_info}</td>
-										<td><img src="${pageContext.request.contextPath}/resources/upload/${auctionmap.image1}" class="imagesize"/></td>
+										<td><img src="${pageContext.request.contextPath}${auctionmap.image_path }/${auctionmap.image1}" class="imagesize"/></td>
 <%-- 										<td class="date"><fmt:formatDate value="${auctionmap.auc_regist_date}" pattern="YYYY-MM-dd" /></td> --%>
 										<td class="date">${auctionmap.auc_regist_date}</td>
 										<td class="productdel" ><button style='cursor: pointer;'class="moreBtn" onclick="deleteProAuction('${auctionmap.auction_idx}')">삭제하기</button></td>

@@ -1,0 +1,18 @@
+.chart-area {
+  display: flex; 
+}
+.chart-area > div {
+  width: 50%;
+}
+.chart-info {
+  padding:0 0 0 45px;
+}
+
+@media screen and (max-width: 1024.98px) {
+  .chart-area {
+    display: block;
+  }
+  .chart-area > div {
+    width: auto;
+  }
+}

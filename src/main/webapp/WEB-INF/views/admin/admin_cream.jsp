@@ -78,7 +78,7 @@ function deleteProcream(ci_code) {
 										<td class="ci_name"> ${creammap.ci_name}</td>
 										<td class="brand">${creammap.ci_brand}</td>
 										<td class="model">${creammap.ci_model_num}</td>
-										<td><img src="${pageContext.request.contextPath}/resources/upload/${creammap.image1}" class="imagesize"/></td>
+										<td><img src="${pageContext.request.contextPath}${creammap.image_path }/${creammap.image1}" class="imagesize"/></td>
 										<td class="color">${creammap.ci_color}</td>
 										<td class="startdate"><fmt:formatDate value="${creammap.ci_rel_date}" pattern="YYYY-MM-dd" /></td>
 										<td class="startprice">${creammap.ci_origin_price}</td>

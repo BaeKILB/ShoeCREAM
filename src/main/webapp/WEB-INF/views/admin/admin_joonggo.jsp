@@ -71,21 +71,14 @@ function deletePro(product_idx) {
 						<tbody>
 							<c:forEach var="adminProduct" items="${propaging}">
 								<tr>
-<!-- 									<td class="txt_prev"><a href="#"> -->
-<%-- 										<h4 class="title_co">${adminProduct.product_title}</h4> --%>
-<!-- 										</a> -->
 										<td class="code"><span class="product_code"> <span class="sv_member">${adminProduct.product_idx}</span></span></td>
 										<td class="brand"> ${adminProduct.product_brand}</td>
 										<td class="price">${adminProduct.product_price}</td>
 										<td class="product_info">${adminProduct.product_info}</td>
-										<td class="td-container">
-										<img src="${pageContext.request.contextPath}/resources/upload/${adminProduct.image1}" class="imagesize"/>
-										</td>
+										<td><img src="${pageContext.request.contextPath}${adminProduct.image_path }/${adminProduct.image1}" class="imagesize"/></td>
 										<td class="date"><fmt:formatDate value="${adminProduct.product_date}" pattern="YYYY-MM-dd" /></td>
 										<td class="productdel" ><button style='cursor: pointer;'class="moreBtn" onclick="deletePro('${adminProduct.product_idx}')">삭제하기</button></td>
 								</tr>
-							
-							
 							</c:forEach>
 						</tbody>
 					</table>

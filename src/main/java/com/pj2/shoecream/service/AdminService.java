@@ -121,8 +121,14 @@ public class AdminService {
 		// TODO Auto-generated method stub
 		return mapper.deletecream(ci_code);
 	}
-	
-	
-	
+	// 경매 차트 계산하기
+	public List<Map<String, Object>> getProductList() {
+		return mapper.selectProductList();
+	}
+	// 중고 차트 계산하기
+	public List<Map<String, Object>> getAuctionList() {
+		return mapper.selectAuctionList();
+	}
 	
 }
+

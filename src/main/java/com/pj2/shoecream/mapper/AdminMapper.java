@@ -66,9 +66,11 @@ public interface AdminMapper {
 	List<Map<String, Object>> selectcreammap(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	// 크림 페이징
 	int getcreampaging();
+	// 크림 삭제
 	int deletecream(int ci_code);
-	
-
-	
-}
+	// 경매 차트 계산
+	List<Map<String, Object>> selectProductList();
+	// 중고 차트 계산
+	List<Map<String, Object>> selectAuctionList();
+	}
 
