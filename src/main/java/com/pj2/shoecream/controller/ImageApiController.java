@@ -48,11 +48,6 @@ public class ImageApiController {
 	    }
 		
 		System.out.println("images : " + images);
-		// images에 좋아요 상태 담기
-//		images.forEach((image->{
-//			
-//			image.getLikes_idx().forEach
-//		});
 		
 		return new ResponseEntity<>(new CMRespDto<>(1, "성공", images), HttpStatus.OK);
 	}

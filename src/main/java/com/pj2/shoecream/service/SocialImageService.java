@@ -29,6 +29,12 @@ public class SocialImageService {
 	@Autowired
 	private SocialImageMapper socialImageMapper;
 	
+	// 소셜 프로필 (소셜 게시물 정보 가져가기)
+	public List<SocialVO> findSocialProfile(int mem_idx) {
+		return socialImageMapper.SelectSocialProfile(mem_idx);
+	}
+	
+	// 소셜 인기페이지 (좋아요 많은 순서)
 	@Transactional(readOnly = true)
 	public List<SocialVO> popularImage() {
 		return socialImageMapper.selectPopular();
@@ -41,8 +47,6 @@ public class SocialImageService {
 		
 		return socialImageMapper.selectStory(sId, startRow, listLimit);
 	}
-	
-//	private String uploadDir = "C:/Users/kikir/Documents/itwill/workspace_spring5/ShoeCREAM/src/main/webapp/resources/upload/";
 	
 	// 포스트 등록
 //	public void ImageUpload(SocialVO socialVO, PrincipalDetails mPrincipalDetails, HttpSession session) {
@@ -151,14 +155,6 @@ public class SocialImageService {
 		
 		System.out.println("socialVO 에 뭐가 들었니 ? " + socialVO);
 	}
-
-
-		
-		// 
-		public List<String> findPostImagesByMemIdx(int mem_idx) {
-		    return socialImageMapper.findPostImageByMemIdx(mem_idx);
-		}
-
 
 }
 

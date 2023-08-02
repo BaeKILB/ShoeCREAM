@@ -45,11 +45,12 @@ public class SocialController {
 		
 		List<SocialVO> images = SocialImageService.popularImage();
 		model.addAttribute("images", images);
+		System.out.println("인기 페이지로 뭐 뭐 들고 가니 ? " + images);
 		
 		return "member/social/popular";
 	}
   
-  // 소셜 개인 프로필 페이지
+	// 소셜 개인 프로필 페이지
 	@GetMapping("/social/{mem_idx}")
 	public String profile(@PathVariable int mem_idx, Model model) {
 //		User userEntity = userService.회원프로필(id);
@@ -60,8 +61,9 @@ public class SocialController {
         
 		MemberProfileDto dto = memberService.memberProfile(mem_idx, mPrincipalDetails.getMember().getMem_idx());
 		model.addAttribute("dto", dto);
-		List<String> posts_image1 = SocialImageService.findPostImagesByMemIdx(mem_idx);
-		model.addAttribute("posts_image1", posts_image1);
+		List<SocialVO> social = SocialImageService.findSocialProfile(mem_idx);
+		model.addAttribute("social", social);
+		System.out.println("프로필 페이지에서 social :" + social);
 		
 		return "member/social/profile";
 	}
@@ -90,9 +92,5 @@ public class SocialController {
 		return "redirect:/social/"+mPrincipalDetails.getMember().getMem_idx();
 		
 	}
-	
-//	=======================social-api========================
-	
-	
 	
 }

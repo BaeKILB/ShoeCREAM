@@ -101,7 +101,7 @@ div #test_area ul { /* 카테고리 css */
                     <div class="row justify-content-start">
                         <div class="col-3 header_logo">
                             <h1 class="hidden">로고</h1>
-                            <a href="./">
+                            <a href="${pageContext.request.contextPath }/">
                                 <img src="${pageContext.request.contextPath }/resources/img/main_ex/shoecream-logo.png" alt="슈크림 로고" width="130px;" height="40px;">
                             </a>
                         </div>
