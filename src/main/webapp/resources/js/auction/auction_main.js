@@ -45,7 +45,6 @@ $(function() { // onload
 		
 		// 동일 대분류 선택시
         if($(this).siblings().attr('class') == '') {
-			console.log("동일 진입 : "+$(this).siblings().attr('class'));
             $(this).siblings().addClass('hidden');
     		$("#itemList").empty();
             getList();
@@ -55,7 +54,6 @@ $(function() { // onload
         // 초기 또는 다른 대분류 선택시
         $(".ct_lc_item_btn").each(function() {
             $(this).siblings().addClass('hidden');
-			console.log("초기 진입 : "+$(this).siblings().attr('class'));
         });
         
         // 선택 대분류 보여주기
@@ -63,9 +61,6 @@ $(function() { // onload
         lcCode = $(this).children().val();
 		$("#itemList").empty();
         getList();
-        
-		console.log("lc : " + lcCode);
-		console.log("mc : " + mcCode);
     });
     
     $(".ct_mc_item_btn").on("click",function() {
@@ -73,15 +68,11 @@ $(function() { // onload
 		mcCode = $(this).children().val();
 		$("#itemList").empty();
         getList();
-        
-		console.log("lc : " + lcCode);
-		console.log("mc : " + mcCode);
 	});
 	
 }); // onload
 
 function getList() {
-	console.log("ajax 호출됨");
     $.ajax({
         type: "get"
         , url: "getAucList"
