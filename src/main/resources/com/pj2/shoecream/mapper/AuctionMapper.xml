@@ -92,39 +92,49 @@
 		        </otherwise>
 		    </choose>
 		</if>
-		<if test="!orderMethod.equals('')">
-		    <choose>
-		        <when test="orderMethod.equals('newest')">
-			    	order by
-                   		auction_date DESC         
-		        </when>
-		        <when test="orderMethod.equals('deadline')">
-		        	order by
-                    	auc_close_date            
-		        </when>
-		        <when test="orderMethod.equals('steamed')">
-		        	order by
-                    	dibs_count DESC, auction_readcount DESC	            
-		        </when>
-		        <when test="orderMethod.equals('popular')">
-		        	order by
-		            	bid_count DESC, auction_readcount DESC
-		        </when>
-		    </choose>
-		</if>
-        <if test="startRow != null and listLimit != null">
-	        limit
-	            #{startRow}
-	            , #{listLimit}
-        </if>
+		<choose>
+			<when test="related == null"> -- 일반 상품
+				<if test="!orderMethod.equals('')"> 
+				    <choose>
+				        <when test="orderMethod.equals('newest')">
+					    	order by
+		                   		auction_date DESC         
+				        </when>
+				        <when test="orderMethod.equals('deadline')">
+				        	order by
+		                    	auc_close_date            
+				        </when>
+				        <when test="orderMethod.equals('steamed')">
+				        	order by
+		                    	dibs_count DESC, auction_readcount DESC	            
+				        </when>
+				        <when test="orderMethod.equals('popular')">
+				        	order by
+				            	bid_count DESC, auction_readcount DESC
+				        </when>
+				    </choose>
+				</if>
+		        <if test="startRow != null and listLimit != null">
+			        limit
+			            #{startRow}
+			            , #{listLimit}
+		        </if>
+	        </when>
+			<when test="related != null"> -- 연관 상품
+	            and ai.auction_idx != #{auction_idx }
+	            order by
+	            	auction_date DESC
+				limit 
+					5
+			</when>
+		</choose>
 	</select>
 	<select id="selectAuction">
 	   select
 	       *
 	   from
 	       auction_item ai join product_image pi 
-	       on ai.auction_idx = pi.product_idx join mem_info mi
-	       on ai.mem_idx = mi.mem_idx join large_category lc
+	       on ai.auction_idx = pi.product_idx join large_category lc
 	       on ai.lc_code = lc.lc_code join middle_category mc
 	       on ai.mc_code = mc.mc_code
 	   where
@@ -190,16 +200,33 @@
         SELECT 
             count(product_idx) 
         FROM 
-            dibs 
+            dibs
         WHERE 
             product_idx=${auction_idx }
 	</select>
-	<select id="selectSellerInfo">
+	<select id="selectSellerInfo" resultType="map">
 	    select
-	       * -- 나중에 필요한 정보만 받아오기로 바꿔야함
+	    	mem_nickname
 	    from
-	       mem_info
+	    	mem_info
 	    where
-	       mem_idx = #{mem_idx }
+	    	mem_idx = #{mem_idx }
+	</select>
+	<update id="updateAuctionState" parameterType="string">
+		update
+			auction_item
+		set
+			auc_state = '마감'
+		where
+			auction_idx = #{auction_idx }
+	</update>
+	<select id="selectSellerItems">
+		select
+			*
+		from
+			auction_item ai join product_image pi
+			on ai.auction_idx = pi.product_idx
+		where
+			mem_idx = #{mem_idx }
 	</select>
 </mapper>

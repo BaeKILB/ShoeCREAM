@@ -56,4 +56,13 @@ public class AuctionService {
 		return mapper.selectSellerInfo(mem_idx);
 	}
 
+	public void modifyAuctionState(String auction_idx) {
+		mapper.updateAuctionState(auction_idx);
+		
+	}
+
+	public List<Map<String, Object>> getSellerItemList(int mem_idx) {
+		return mapper.selectSellerItems(mem_idx);
+	}
+
 }

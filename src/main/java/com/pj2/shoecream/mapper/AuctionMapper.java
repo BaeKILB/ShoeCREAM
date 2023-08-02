@@ -30,5 +30,11 @@ public interface AuctionMapper {
 
 	Map<String, Object> selectSellerInfo(int mem_idx);
 
+	void updateAuctionState(String auction_idx);
+
+	List<Map<String, Object>> selectSellerItems(int mem_idx);
+
+	List<Map<String, Object>> selectRelatedAuctionList(Map<String, Object> map);
+
 
 }

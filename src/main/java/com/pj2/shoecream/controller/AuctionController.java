@@ -79,7 +79,6 @@ public class AuctionController {
         int sId = mPrincipalDetails.getMember().getMem_idx();
     	
 //    	int sId = 2;
-        
     	map.put("mem_idx", sId);
 	
     	String auction_idx = (String)map.get("auction_idx");
@@ -117,14 +116,20 @@ public class AuctionController {
 		model.addAttribute("dibsCount", dibsCount);
 		
 		// 판매자정보
-//		int mem_idx = Integer.parseInt((String)map.get("mem_idx")); 
+		int mem_idx = Integer.parseInt(String.valueOf(auction.get("mem_idx"))); 
+		Map<String, Object> sellerInfo = service.getSellerInfo(mem_idx);
+		model.addAttribute("sellerInfo",sellerInfo);
 		
-		// 판매자 정보가 안가져와진다.. 20230730 21:49
-		/* java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.String (java.lang.Integer and java.lang.String are in module java.base of loader 'bootstrap')
-			at com.pj2.shoecream.controller.AuctionController.AuctionDetail(AuctionController.java:108) */
+		// 판매자 판매물품
+		List<Map<String, Object>> sellerItemList = service.getSellerItemList(mem_idx);
+		model.addAttribute("sellerItemList",sellerItemList);
 		
-//		Map<String, Object> sellerInfo = service.getSellerInfo(mem_idx);
-//		model.addAttribute("sellerInfo",sellerInfo);
+		// 연관 상품
+		auction.put("related", "1");
+		List<Map<String, Object>> relatedProducts = service.getAuctionList(auction);
+		logger.info("!@#$");
+		logger.info(relatedProducts.toString());
+		model.addAttribute("relatedProducts",relatedProducts);
 		
         return "auction/auction_detail";
     }
@@ -217,9 +222,6 @@ public class AuctionController {
     public String getAucList(
           @RequestParam Map<String, Object> map) {
        
-    	logger.info("!@#$");
-    	logger.info(map.toString());
-    	
 		int pageNum = Integer.parseInt(String.valueOf(map.get("pageNum")));
 		int listLimit = 20;
 		int startRow = (pageNum - 1) * listLimit;
@@ -404,9 +406,8 @@ public class AuctionController {
 		// db에서 자료 불러온다
 		Map<String, Object> auction = service.getAuction(auction_idx);
 		model.addAttribute("auction", auction);
-      
-      
-       return "auction/buying_popup";
+
+		return "auction/buying_popup";
     }
     
     
@@ -442,8 +443,17 @@ public class AuctionController {
     		, Model model
     		, HttpSession session) {
     	
+    	// 결제
+    	int insertCount = 0;
+//    	insertCount = service.결제();
+    	insertCount = 1;
     	
-    	return "";
+    	if (insertCount > 0) {
+    		service.modifyAuctionState(String.valueOf(map.get("auction_idx")));
+    	}
+    	
+    	// 결제 완료후에 어느페이지로 가지?
+    	return "redirect:/Auction";
     	}
     
     
