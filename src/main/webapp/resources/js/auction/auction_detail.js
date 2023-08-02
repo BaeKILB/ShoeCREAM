@@ -61,11 +61,6 @@ $(function() {
         dibsCheck();
     });
     
-    // 판매자정보 클릭
-    $("#sellerInfo").on("click",function() {
-        location.href="판매자상점?mem_idx="+$("#mem_idx").val(); 
-    });
-    
     // 입찰내역 클릭
     $("#bidHistoryBtn").on("click",function() {
 		if ($(this).attr('class') == null || $(this).attr('class') == '') {

@@ -322,15 +322,23 @@ public class JunggoController {
 
 
 		//String sId = "admin";
+		
+		// 로그인 되어있는지 확인하기
+		try {			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		}
+		catch(Exception e) {
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return "inc/fail_forward";
+		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
 		jungGoNoh.setMem_idx(mem_idx);
-	//	String sId = (String)session.getAttribute("sId");
-//		if(sId == null) {
-//			model.addAttribute("msg", "잘못된 접근입니다!");
-//			return "fail_back";
-//		}
+		
 		
 	//System.out.println(jungGoNoh);
 		
@@ -517,16 +525,14 @@ public class JunggoController {
 		// BoardService - registBoard() 메서드를 호출하여 게시물 등록 작업 요청
 		// => 파라미터 : JungGoNohVO 객체    리턴타입 : int(insertCount)
 	
-		int session_idx = 1;
-		//int session_idx = chatService.getSIdIdx(sId);
-		jungGoNoh.setMem_idx(session_idx);
+		jungGoNoh.setMem_idx(mem_idx);
 		LocalDateTime localDateTime = LocalDateTime.now(); // 시스템의 현재 날짜 및 시각 정보 리턴
 		
 		// java.time.DateTimeFormatter 클래스를 활용하여 포맷 변경
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		
 		
-		jungGoNoh.setProduct_idx(Integer.toString(session_idx) + localDateTime.format(dateTimeFormatter));
+		jungGoNoh.setProduct_idx(Integer.toString(mem_idx) + localDateTime.format(dateTimeFormatter));
 		
 		
 		int insertProductImage = jungGoNohService.registProductImage(jungGoNoh);
@@ -581,17 +587,24 @@ public class JunggoController {
 	
 	//------------------ 물건 상세 안내 폼 이동---------------------
 	@GetMapping("productDetail")
-	public String productDetail(
-		@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+	public String productDetail(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
 
-		int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
-		jungGoNoh.setBuyier_idx(buyier_idx);
+		try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+
+		//int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+		//jungGoNoh.setBuyier_idx(buyier_idx);
 		
-		System.out.println("+++++++++++++++++++++++buyier_idx" + buyier_idx);
-	
-	
+			
 		JungGoNohVO product = jungGoNohService.getProduct(product_idx);
 	
 		System.out.println("+++++++++++++++++++++++jungGoNoh" + jungGoNoh);
@@ -614,7 +627,20 @@ public class JunggoController {
 	
 	@PostMapping("dibsPro")
 	public String dibsPro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
-				
+
+		try {			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			int mem_idx = mPrincipalDetails.getMember().getMem_idx();
+			jungGoNoh.setMem_idx(mem_idx);
+		}
+		catch(Exception e) {
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return "inc/fail_forward";
+		}
+		
 		String product_idx = jungGoNoh.getProduct_idx();
 		int countReadCount =0;
 		int countDibs = 0;
@@ -634,11 +660,8 @@ public class JunggoController {
 		// => 실패 시 "글 쓰기 실패!" 메세지 출력 후 이전페이지 돌아가기 처리
 		if(countDibs > 0 && countReadCount > 0) 
 		{ // 성공
-			
-			
 			try {
-				
-				
+					
 			} 
 			catch (IllegalStateException e) {
 				e.printStackTrace();
@@ -658,31 +681,9 @@ public class JunggoController {
 	//------------------ 물건 삭제 프로 -----------------------------
 	
 	@GetMapping("productDelete")
-	public String delete(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
-		// 세션 아이디가 존재하지 않으면(미로그인) "잘못된 접근입니다!" 출력 후 이전 페이지 돌아가기 처리
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-		String sId = mPrincipalDetails.getMember().getMem_id();
-		String mId = jungGoNoh.getMem_id();
-		//String sId = (String)session.getAttribute("sId");
-		if(sId == null && sId == mId) {
-			model.addAttribute("msg", "잘못된 접근입니다!");
-			return "inc/fail_back";
-		}
-		
-		// BoardService - isBoardWriter() 메서드 호출하여 작성자 판별 요청
-		// => 파라미터 : 글번호, 세션아이디   리턴타입 : boolean(isBoardWriter)
-		// => 단, 세션아이디가 "admin" 이 아닐 경우에만 수행
-//		if(!sId.equals("admin")) {
-//			boolean isProductWriter = jungGoNohService.isProductWriter(product_idx, sId);
-//			
-//			if(!isProductWriter) {
-//				model.addAttribute("msg", "권한이 없습니다!");
-//				return "inc/fail_back";
-//			}
-//		}
-		
+	public String delete(@RequestParam String product_idx, @RequestParam int buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+	
+			
 		// BoardService - removeBoard() 메서드 호출하여 글 삭제 요청
 		// => 파라미터 : 글번호   리턴타입 : int(deleteCount)
 		int deleteCount = jungGoNohService.removeProduct(product_idx);
@@ -696,6 +697,73 @@ public class JunggoController {
 		
 		return "redirect:/JunggoSearch";
 	}
+	
+	
+	//================================================================
+	@GetMapping("registReportPorm")
+	public String registReportPorm() {
+		return "junggo/junggo_report_register";
+		
+	}
+	
+	
+	
+	
+	
+	//------------------ 신고 등록 프로 ---------------------------
+		@PostMapping("registReportPro")
+		public String reportWritePro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
+			
+			//=================== 아래 쓰게 되면 buyier_idx = null값 0으로 변환 필요 =======================
+//			try {			
+//				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//				int mem_idx = mPrincipalDetails.getMember().getMem_idx();
+//				jungGoNoh.setMem_idx(mem_idx);
+//			}
+//			catch(Exception e) {
+//				// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+//				model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+//				model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+//				return "inc/fail_forward";
+//			}
+			//======================================================================
+			
+			
+			// BoardService - registBoard() 메서드를 호출하여 게시물 등록 작업 요청
+			// => 파라미터 : JungGoNohVO 객체    리턴타입 : int(insertCount)
+		
+		
+	
+
+			int insertProductImage = jungGoNohService.registProductImage(jungGoNoh);
+			int insertCountJung = jungGoNohService.registJungProduct(jungGoNoh);
+			
+			String product_idx = jungGoNoh.getProduct_idx();
+			
+			
+			// 게시물 등록 작업 요청 결과 판별
+			// => 성공 시 업로드 파일을 실제 디렉토리에 이동시킨 후 BoardList 서블릿 리다이렉트
+			// => 실패 시 "글 쓰기 실패!" 메세지 출력 후 이전페이지 돌아가기 처리
+			if(insertCountJung > 0) { // 성공
+				try {
+		
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} 
+				
+				// 글쓰기 작업 성공 시 글목록(BoardList)으로 리다이렉트
+				return "redirect:/productDetail?product_idx="+product_idx;
+			} else { // 실패
+				model.addAttribute("msg", "글 쓰기 실패!");
+				return "inc/fail_back";
+			}
+			
+		}
+		
+				
+		
+	
 	
 	
 	//------------------------- 예약취소 폼 이동---------------------

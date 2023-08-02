@@ -225,42 +225,69 @@ to {
 <!--                      삭제 버튼 클릭 시 "삭제하시겠습니까?" 메세지 출력 후 확인 버튼 누르면 삭제 서블릿 요청 -->
                     <input type="button" value="삭제" onclick="confirmDelete()">
 				</c:when>
-				
 				<c:otherwise>
 					<input type="button" value="입찰-팝업" onclick="tenderPopup();">
 					<input type="button" value="즉시구매-팝업" onclick="buyingPopup();">
 				</c:otherwise>
 			</c:choose>
         </div>
-        <div> <!-- 연관상품, 상품정보 & 판매자정보 -->
-            <hr>
-            <div>
+        <hr>
+		<c:if test="${fn:length(relatedProducts) > 0 }">
+			<div> <!-- 연관상품 -->
                 <div>연관상품</div>
-                <div> <!-- 연관상품 -->
-                    <div>연관상품1</div>
-                    <div>연관상품2</div>
-                    <div>연관상품3</div>
-                    <div>연관상품4</div>
-                    <div>연관상품5</div>
+                <div> 
+					<c:forEach var="rp" items="${relatedProducts }" varStatus="status">
+						<c:if test="${status.index < 4}">
+							<div>
+								<div>
+									<a href="AuctionDetail?auction_idx${rp.auction_idx }" >
+										<span>${rp.auction_title }</span>
+										<img src="${pageContext.request.contextPath }${rp.image_path }/${rp.image1 }"> <!-- 사진사이즈 줄여야됨 -->
+									</a>
+								</div>
+							</div>
+						</c:if>
+                	</c:forEach>
+					<div>
+						<input type="button" onclick="location.href='#?lc_code=${auction.lc_code}&mc_code=${auction.mc_code }'" value="연관상품 더보기"> <!-- 기능구현 필요 -->
+					</div>
                 </div>
             </div>
-            <hr>
-            <div> <!-- 상품정보 & 판매자정보 -->
-	            <div>
-	               <div>상품정보</div>
-	               <div>${auction.auction_info }</div>
+		</c:if>
+		<hr>
+		<div> <!-- 상품정보 & 판매자정보 -->
+			<div> <!-- 상품정보 -->
+				<div>상품정보</div>
+				<div>
+					<p>${auction.auction_info }</p>
 	            </div>
-	            <div>
-	               <div> <!-- 판매자정보 -->
-<%-- 	                   <span id="sellerInfo">${sellerInfo.mem_nickname }</span> --%>
-	                   <span id="sellerInfo"> 판매자 닉네임 : ${auction.mem_nickname }</span>
-	               </div>
-	               <div> <!-- 판매자 후기  -->
-	                   <div>후기1</div>
-	                   <div>후기2</div>
-	                   <div>후기3</div>
-	                   <div>후기1</div>
-	               </div>
+	            <div> <!-- 판매자 정보 & 판매 물품 -->
+	                <div> <!-- 판매자 정보 -->
+						<span id="sellerInfo">
+							<a href="#?mem_idx=${sellerInfo.mem_idx }"> <!-- 판매자 상점 URL 입력필요 -->
+								<span>판매자 닉네임 : ${sellerInfo.mem_nickname }</span>
+							</a>
+						</span>
+					</div>
+					<div> <!-- 판매 물품 -->
+						<c:if test="${fn:length(sellerItemList) > 0 }">
+							<c:forEach var="sil" items="${sellerItemList }" varStatus="status">
+								<c:if test="${status.index < 3}">
+									<div>
+										<div>
+											<a href="AuctionDetail?auction_idx${sil.auction_idx }" >
+												<span>${sil.auction_title }</span>
+												<img src="${pageContext.request.contextPath }${sil.image_path }/${sil.image1 }"> <!-- 사진사이즈 줄여야됨 -->
+											</a>
+										</div>
+									</div>
+								</c:if>
+							</c:forEach>
+							<div>
+								<input type="button" value="판매물품 더보기"> <!-- 기능구현 필요 -->
+							</div>
+						</c:if>
+					</div>
 	            </div>
             </div>
         </div>
