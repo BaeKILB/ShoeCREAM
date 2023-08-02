@@ -16,6 +16,12 @@
 	<aside>
 		<jsp:include page="inc/sidebar.jsp" ></jsp:include>
 	</aside>
+	
+	<c:set var="pageNum" value="1" />
+	<c:if test="${not empty param.pageNum }">
+		<c:set var="pageNum" value="${param.pageNum }" />	
+	</c:if>
+	
 	<section id="admin_cont">
 		<h1 class="admin_tit">1:1 문의 조회</h1>
 		<hr class="tit_line">
@@ -55,17 +61,15 @@
 										<c:forEach var="qstList" begin="0" end="${qstItem.qst_board_re_lev }">
 											&nbsp;
 										</c:forEach>
+										 Re: 
 									</c:if>
-									<a href="QstBoardDetail?qst_idx=${qstItem.qst_idx }">
+									<a href="QstBoardDetail?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }">
 										<span>${qstItem.qst_subject }</span>
-										<c:if test="${qstItem.qst_board_re_lev > 0 }">
-											 에 대한 답변 
-										</c:if>
 									</a>
 								</td>
 								<td><fmt:formatDate value="${qstItem.qst_date }" pattern="yy-MM-dd"/> </td>
 								<td>
-									<c:if test="${qstItem.qst_board_re_lev == 0 }">
+									<c:if test="${qstItem.qst_board_re_seq eq 0 }">
 										<button>
 											답변하기
 										</button> 
@@ -80,7 +84,41 @@
 				</table>
 			</div>
 			<ul id="pageList">
-				
+				<c:if test="${pageNum > 1 }">
+					<li class='pgi'>
+						<a href="" class='allprev'><i class='fa fa-angle-double-left pgi' aria-hidden='true'></i></a>
+					</li>
+				</c:if>
+				<c:if test="${pageNum > 1 }">
+					<li class='pgi'>
+					<a href="" class='prev'><i class='fa fa-angle-left pgi' aria-hidden='true'></i></a>
+					</li>
+				</c:if>
+				<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
+				<%-- 각 페이지마다 하이퍼링크 설정(단, 현재 페이지는 하이퍼링크 제거) --%>
+				<c:choose>
+					<c:when test="${pageNum eq i }">
+						<li>
+							<a href="" class='pageNum current'>${i }</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a href="" class='pageNum'>${i }</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+				<c:if test="${pageNum < pageInfo.maxPage }">
+					<li class='pgi'>
+						<a href="" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
+					</li>
+				</c:if>
+				<c:if test="${pageNum < pageInfo.maxPage }">
+					<li class='pgi'>
+						<a href="" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
+					</li>
+				</c:if>
+		</c:forEach>
 			</ul>
 		</div>
 	</section>

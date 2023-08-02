@@ -94,6 +94,20 @@ public class AdminController {
 		return member;
 	}
 	
+	@GetMapping("MemberDelete")
+	@ResponseBody
+	public String memberDelete(@RequestParam int mem_idx) {
+		String isDelete;
+		boolean isDeleteSuccess = service.deleteMember(mem_idx);
+		if(isDeleteSuccess = true) {
+			isDelete = "true";
+		} else {
+			isDelete = "false";
+		}
+		return isDelete;
+	}
+
+	
 	// 일대일 문의 목록 조회
 	@GetMapping("InquiryList")
 	public String inquiry(HttpSession session, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "") String searchType, Model model) {
@@ -120,6 +134,8 @@ public class AdminController {
 		
 		return "admin/admin_question";
 	}
+	
+	
 	
 	// ============================================ 민진 ============================================
 	
