@@ -58,19 +58,19 @@ public class StompController {
 //	
 
 	
-	@GetMapping("chatHome")
-	public String chatHome() {
-		return "/inc/chat/chat_home";
-	}
-	
-	@GetMapping("setSid")
-	public String setSid(@RequestParam String sId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(0);
-		session.setAttribute("sId", sId);
-		session.setMaxInactiveInterval(36000);
-		return "redirect:/chatHome";
-	}
+//	@GetMapping("chatHome")
+//	public String chatHome() {
+//		return "/inc/chat/chat_home";
+//	}
+//	
+//	@GetMapping("setSid")
+//	public String setSid(@RequestParam String sId, HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		session.setMaxInactiveInterval(0);
+//		session.setAttribute("sId", sId);
+//		session.setMaxInactiveInterval(36000);
+//		return "redirect:/chatHome";
+//	}
 	
     //채팅방 목록 조회후 채팅 페이지로 이동
     @GetMapping("chatRooms")

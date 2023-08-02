@@ -33,10 +33,17 @@
 		
  		ORDER BY 
  		<choose>
-<!--  			<when test="steamed"> -->
-<!--  			</when> -->
- 			<when test="view">
- 				product_readcount
+ 			<when test="orderMethod != null">
+		 		<choose>
+		<!--  			<when test="steamed"> -->
+		<!--  			</when> -->
+		 			<when test="orderMethod.equals('view')">
+		 				product_readcount desc
+		 			</when>
+		 			<otherwise>
+				 		product_date desc
+		 			</otherwise>
+		 		</choose>
  			</when>
  			<otherwise>
 		 		product_date desc

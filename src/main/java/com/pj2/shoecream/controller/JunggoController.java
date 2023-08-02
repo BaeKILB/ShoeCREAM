@@ -94,14 +94,8 @@ public class JunggoController {
 			model.addAttribute("lc_list", lc);
 			
 			// 카테고리 중 리스트 담기
-			List<List<Map<String, Object>>> mc_list = new ArrayList<List<Map<String, Object>>>();
-	
-			
-			for(Map<String,Object> e : lc) {				
-				List<Map<String, Object>> mc = cService.getMcList((Integer)e.get("lc_code"));
-				mc_list.add( mc);
-			}
-			model.addAttribute("mc_list", mc_list);
+			List<Map<String, Object>> mc_list = cService.getMcList(0);
+			model.addAttribute("mc_list",mc_list);
 		}
 		catch(Exception e) {
 			
@@ -264,6 +258,7 @@ public class JunggoController {
 		}
 		
 		// 중고 물품 총 갯수 구해서 페이지 최대 갯수 설정
+		System.out.println("중고 물품 총 갯수 구해서 페이지 최대 갯수 설정");
 		pageInfo.setPageListLimit(JUNG_PRODUCT_LIMIT);
 		pageInfo.setListCount(jProductService.getMaxJungProduct(jproduct));
 		pageInfo.setMaxPage((pageInfo.getListCount() / pageInfo.getPageListLimit()) + 1);
@@ -276,7 +271,7 @@ public class JunggoController {
 		}
 		
 		// 조건에 맞는 중고 리스트 가져오기
-		
+		System.out.println("조건에 맞는 중고 리스트 가져오기");
 		// 리스트 받아올 객체 초기화
 		List<JungProductVO> jungList = null;
 		//에러처리
@@ -285,9 +280,10 @@ public class JunggoController {
 			map.put("jungList", jungList);
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			return null;
 		}
-		
+		System.out.println(" html 형태의 중고상품 리스트 담기");
 		// html 형태의 중고상품 리스트 담기
 		JSONArray joJungList = new JSONArray();
 		
@@ -301,12 +297,12 @@ public class JunggoController {
 			Object value = et.getValue();
 			jsonObj.put(key, value);
 		}		
-		
+		System.out.println("PageInfoVO 를 json 형태로 넣어주기");
 		// PageInfoVO 를 json 형태로 넣어주기
 		jHandler.pageInfo2JsonObj(jsonObj, pageInfo);
 		// html 형태의 중고상품 리스트 json 객체에 넣기
 		jsonObj.put("jungListHtml",joJungList);
-		
+		System.out.println(jsonObj);
 		return jsonObj.toString();
 		
 	}

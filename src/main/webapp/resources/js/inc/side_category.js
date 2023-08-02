@@ -5,18 +5,17 @@ $(function() { // onload
 	// 대분류 카테고리
 	$(".ct_lc_item_btn").on("click",function() {
 		// 변수 초기화
-		lcCode = '';
-		mcCode = '';
-		orderMethod = '';
-		pageNum = 1;
-		maxPage = 1;
+		dataObj = initAjax();
+		console.log(".ct_lc_item_btn.on - dataObj init" + JSON.stringify(dataObj))
 		$("#orderMethod").val('');
-		
 		// 동일 대분류 선택시
         if($(this).siblings().attr('class') == '') {
             $(this).siblings().addClass('hidden');
+        	dataObj.lc_code = $(this).children().val();
     		$("#itemList").empty();
-            getList();
+			if(!loadItems()){
+				console.log("onload $('.ct_lc_item_btn').on - loadItems() error !");
+			}
             return;
         }
         
@@ -27,22 +26,31 @@ $(function() { // onload
         
         // 선택 대분류 보여주기
         $(this).siblings().removeClass('hidden');
-        lcCode = $(this).children().val();
+        dataObj.lc_code = $(this).children().val();
 		$("#itemList").empty();
-        getList();
+		if(!loadItems()){
+			console.log("onload $('.ct_lc_item_btn').on - loadItems() error !");
+		}
         
-		console.log("lc : " + lcCode);
-		console.log("mc : " + mcCode);
+		console.log("lc : " + dataObj.lc_code);
+		console.log("mc : " + dataObj.mc_code);
     });
     
     $(".ct_mc_item_btn").on("click",function() {
+		// 변수 초기화
+		let lc_temp = dataObj.lc_code;
+		dataObj = initAjax();
+		dataObj.lc_code = lc_temp;
+		console.log(".ct_lc_item_btn.on - dataObj init" + JSON.stringify(dataObj))
+		
 		$("#orderMethod").val('');
-		mcCode = $(this).children().val();
+		dataObj.mc_code = $(this).children().val();
 		$("#itemList").empty();
-        getList();
-        
-		console.log("lc : " + lcCode);
-		console.log("mc : " + mcCode);
+		if(!loadItems()){
+			console.log("onload $('.ct_mc_item_btn').on - loadItems() error !");
+		}
+		console.log("lc : " + dataObj.lc_code);
+		console.log("mc : " + dataObj.mc_code);
 	});
 	
 }); // onload

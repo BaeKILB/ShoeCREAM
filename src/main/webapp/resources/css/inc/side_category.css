@@ -49,10 +49,6 @@
   background-image: url("../../../resources/img/junggo/inc/side_category/up.svg");
 }
 
-/* hover */
-/* .ct_lc_item:hover > div {  */
-/* 	display:inline-block; */
-/* } */
-/* .ct_mc_item:hover > div {  */
-/* 	display:inline-block; */
-/* } */
+.hidden {
+    display: none;
+}
