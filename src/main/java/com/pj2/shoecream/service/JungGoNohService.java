@@ -79,9 +79,18 @@ public class JungGoNohService {
 		public List<JungGoNohVO> moreProductListSmall(int mem_idx) {
 			return jungGoNohMapper.getMoreProductListSmall(mem_idx);
 		}
-
+	//=====================찜 등록시 올라가는 조회수 내리기============
 		public int removeReadCount(JungGoNohVO jungGoNoh) {
 			return jungGoNohMapper.decreaseReadcount(jungGoNoh);
+		}
+	//============================신고 등록======================================
+		public int registReport(JungGoNohVO jungGoNoh) {
+			return jungGoNohMapper.insertReport(jungGoNoh);
+		}
+		//========================신고 조회(품목)=========================
+		public String getReport(JungGoNohVO jungGoNoh) {
+			String ifReport = jungGoNohMapper.selectReports(jungGoNoh);
+			return ifReport;
 		}
 
 }

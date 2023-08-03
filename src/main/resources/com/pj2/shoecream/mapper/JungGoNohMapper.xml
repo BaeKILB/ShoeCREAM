@@ -50,6 +50,7 @@
 		, mi.mem_idx, mi.mem_id, mi.mem_nickname, mi.mem_rank, mi.mem_profileImageUrl
 		, pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path 
 		, (select count(*) from dibs di where jpd.product_idx = di.product_idx) dibs_count
+		, (select count(*) from joonggo_report jgr where jpd.product_idx = jgr.product_idx) report_count
 		FROM jung_product jpd
 		  JOIN mem_info mi
 		    ON jpd.mem_idx = mi.mem_idx
@@ -131,6 +132,41 @@ LEFT OUTER JOIN product_image pi
 	   WHERE mi.mem_idx = ${mem_idx}	
     ORDER BY jpd.product_idx desc 
 	   LIMIT 3;
+	</select>
+	
+	
+	<!-- 신고 등록 시 이전 내용 조회 -->
+	<select id="getReport" resultType="com.pj2.shoecream.vo.JungGoNohVO">
+	  SELECT product_idx, seller_idx, reporter_idx 
+	      FROM joonggo_report
+	     WHERE product_idx = #{product_idx}
+	       AND seller_idx = #{mem_idx}
+	       AND reporter_idx = #{buyier_idx}
+	</select>
+	
+	<!-- 신고 등록 -->
+	<insert id="insertReport">
+	
+		INSERT
+			INTO joonggo_report
+			VALUES (
+				 null -- 신고글 번호
+				, #{product_title} -- 판매글 제목
+				, #{product_idx} -- 판매물건 번호 
+				, #{mem_idx} -- 판매자 번호
+				, #{buyier_idx} -- 신고 신청자 번호
+				, #{report_div} -- 신고유형
+				, #{report_detail} -- 상세내용
+				
+			)
+	</insert>
+		<!-- 신고 등록 시 이전 내용 조회 -->
+	<select id="selectReports" parameterType="com.pj2.shoecream.vo.JungGoNohVO">
+	  SELECT product_idx
+	      FROM joonggo_report
+	     WHERE product_idx = #{product_idx}
+	       AND seller_idx = #{mem_idx}
+	       AND reporter_idx = #{buyier_idx}
 	</select>
 	
 	

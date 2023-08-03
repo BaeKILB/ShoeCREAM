@@ -31,6 +31,7 @@ public class JungGoNohVO {
 		private String mem_profileImageUrl;
 		private String buyier; // 회원 id, 사는 사람, 접속한 사람
 		private int buyier_idx;	// 회원 번호; 사는 사람, 접속한 사람 식별 번호
+		private String buyier_nickname; // 회원 닉네임; 사는 사람, 접속한 사람 식별 번호
 		private String product_title; // 상품 명
 		private String product_info; // 상품 정보
 		private String product_payment; //결제수단
@@ -79,8 +80,13 @@ public class JungGoNohVO {
 		//===============================신고===================================
 			
 			private int report_idx; //신고코드
-			private String report_content; //신고 내용
-			//신고대상자(파는 사람 위에 VO에서 재활용
+			private String report_div;//신고유형
+			private String report_detail;//상세내용
+			//상품 번호 재사용
+			//신고 내용 상품 타이틀 재사용
+			//신고 하는자(사는사람 재사용)
+			//신고 대상자(파는 사람 위에 VO에서 재활용
+			private int report_count;//신고횟수
 			
 		//==============================필터링==================================
 		private String trashArr[] = {"미친", "욕", "나쁜말"};

@@ -45,19 +45,19 @@
 	<div class="secondContainner">
 		<div class="second_title">신고 대상 글</div> <!-- 수정폼 이용해서 타이틀 가져오기(수정불가로) -->
 		<div class="second_content">
-			<input type="text" class="inputBox" name="report_content" value="${reviewDetail.rev_subject}" readonly/>
+			<input type="text" class="inputBox" name="product_title" value="${jungGoNohReport.product_title}" readonly/>
 		</div>
 	</div>
 		<div class="secondContainner">
 		<div class="second_title">신고 대상</div> <!-- 수정폼 이용해서 해당 멤버 닉네임 가져오기(수정불가로, 검색은 idx로 하되 노출은 닉네임) -->
 		<div class="second_content">
-			<input type="text" class="inputBox" name="seller_idx" value="${reviewDetail.rev_subject}" readonly/>
+			<input type="text" class="inputBox" name="mem_nickname" value="${jungGoNohReport.mem_nickname}" readonly/>
 		</div>
 	</div>
 		<div class="secondContainner">
 		<div class="second_title">신고 요청자</div> <!-- 수정폼 이용해서 해당 멤버 닉네임 가져오기(수정불가로, 검색은 idx로 하되 노출은 닉네임) -->
 		<div class="second_content">
-			<input type="text" class="inputBox" name="reporter_idx" value="${reviewDetail.rev_subject}" readonly/>
+			<input type="text" class="inputBox" name="buyier_nickname" value="${jungGoNohReport.buyier_nickname}" readonly/>
 		</div>
 	</div>
 	
@@ -67,7 +67,7 @@
 			<div class="brand_box">
 				<label> 
 					<span>행위 유형</span> 
-					<input type="text" class="brand" name="product_brand" /> 
+					<input type="text" class="brand" name="report_div" /> 
 					<select name="inputBrand" onchange="sellectBrand(this.value)">
 						<option value="">기타(직접입력)</option>
 						<option value="광고">광고성 콘텐츠 판매 입니다.</option>
@@ -88,9 +88,12 @@
 		<div class="eighth_content">
 			<textarea class="product_detail" name="report_detail" rows="" cols=""
 				onfocus="this.select()">신고 당시 상황에 대한 자세한 설명을 적어주세요</textarea>
+				<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNohReport.product_idx}"/>
+				<input type="hidden" name="favorite_check" id="buyier_idx" value="${jungGoNohReport.buyier_idx}"/>
+				<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNohReport.mem_idx}"/>
 		</div>
 	</div>
-	
+		
 
 	<div class="lastContainner">
 		<input type="submit" class="register_btn" value="등록">

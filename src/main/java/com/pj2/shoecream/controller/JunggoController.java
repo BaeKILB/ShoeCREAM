@@ -53,8 +53,6 @@ public class JunggoController {
 	@Autowired
 	private JungGoNohService jungGoNohService;
 	
-	@Autowired
-	private ChatService chatService;
 
 	@Autowired
 	private JungProductService jProductService;
@@ -310,6 +308,7 @@ public class JunggoController {
 	
 	
 	
+
 	//========================================================================================
 		//==================================노용석================================================
 		
@@ -609,6 +608,7 @@ public class JunggoController {
 		
 			System.out.println("+++++++++++++++++++++++jungGoNoh" + jungGoNoh);
 			JungGoNohVO dibs = jungGoNohService.getDibs(jungGoNoh);
+			//JungGoNohVO reports = jungGoNohService.getReports(jungGoNoh);
 			
 			int mem_idx = product.getMem_idx();
 			System.out.println("+++++++++++++++++++++++mem_idx" + mem_idx);
@@ -687,12 +687,12 @@ public class JunggoController {
 			{
 				if(buyier_idx == null)
 				{
-					model.addAttribute("msg", "mem_idx, buyier_idx 모두 null");
+					model.addAttribute("msg", "로그인 해주세요!");
 					return "inc/fail_back";
 				}
 				else
 				{
-					model.addAttribute("msg", "null");
+					model.addAttribute("msg", "작성자와 삭제 신청자가 다릅니다!");
 					return "inc/fail_back";
 				}
 			}
@@ -723,75 +723,87 @@ public class JunggoController {
 		}
 		
 		
-		//================================================================
+		
+		
+	//------------------ 신고 등록이동 폼 ---------------------------
 		@GetMapping("registReportPorm")
-		public String registReportPorm() {
+		public String registReportPorm(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
 			
-			// SELECT 
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			}
+			catch(Exception e) {
+				// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+				model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+				model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+				return "inc/fail_forward";
+			}
 			
+			// product_idx 는 무조건 받아와야함
+			if(product_idx == null) {
+				model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
+				return "inc/fail_back";
+			}
+			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
+			jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
+			jungGoNoh.setProduct_idx(product_idx);			
+			
+			JungGoNohVO jungGoNohReport = jungGoNohService.getProduct(product_idx);
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			String buyier_nickname = mPrincipalDetails.getMember().getMem_nickname();
+			jungGoNohReport.setBuyier_nickname(buyier_nickname);
+			model.addAttribute("jungGoNohReport", jungGoNohReport);
 			
 			return "junggo/junggo_report_register";
 			
 		}
-		
-		
-		
-		
-		
-		//------------------ 신고 등록 프로 ---------------------------
-			@PostMapping("registReportPro")
-			public String reportWritePro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
-				
-				//=================== 아래 쓰게 되면 buyier_idx = null값 0으로 변환 필요 =======================
-//				try {			
-//					Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//					PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//					int mem_idx = mPrincipalDetails.getMember().getMem_idx();
-//					jungGoNoh.setMem_idx(mem_idx);
-//				}
-//				catch(Exception e) {
-//					// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
-//					model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
-//					model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
-//					return "inc/fail_forward";
-//				}
-				//======================================================================
-				
-				
-				// BoardService - registBoard() 메서드를 호출하여 게시물 등록 작업 요청
-				// => 파라미터 : JungGoNohVO 객체    리턴타입 : int(insertCount)
-			
-			
-		
-
-				int insertProductImage = jungGoNohService.registProductImage(jungGoNoh);
-				int insertCountJung = jungGoNohService.registJungProduct(jungGoNoh);
-				
-				String product_idx = jungGoNoh.getProduct_idx();
-				
-				
-				// 게시물 등록 작업 요청 결과 판별
-				// => 성공 시 업로드 파일을 실제 디렉토리에 이동시킨 후 BoardList 서블릿 리다이렉트
-				// => 실패 시 "글 쓰기 실패!" 메세지 출력 후 이전페이지 돌아가기 처리
-				if(insertCountJung > 0) { // 성공
-					try {
-			
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} 
-					
-					// 글쓰기 작업 성공 시 글목록(BoardList)으로 리다이렉트
-					return "redirect:/productDetail?product_idx="+product_idx;
-				} else { // 실패
-					model.addAttribute("msg", "글 쓰기 실패!");
-					return "inc/fail_back";
-				}
-				
+		//------------------------- 신고 등록프로---------------------
+		@PostMapping("registReportPro")
+		public String registReportPro(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
+				JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 			}
+			catch(Exception e) {
+				// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+				model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+				model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+				return "inc/fail_forward";
+			}
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			int reporter_idx = mPrincipalDetails.getMember().getMem_idx();
+
+			jungGoNoh.setBuyier_idx(reporter_idx);
+			jungGoNoh.setProduct_idx(product_idx);
+			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
+			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
 			
-					
+			//입력 전 중복 조회
+			String ifReport = jungGoNohService.getReport(jungGoNoh);
+			model.addAttribute("ifReport",ifReport);
+			System.out.println("&&&&&&&&&&jungGoNoh?"+jungGoNoh);
+			System.out.println("&&&&&&&&&&ifReport?"+ifReport+"끝");
+			if(ifReport == null) { //조회 내역이 없을 때
 			
-		
+					//입력 작업 시작	
+					int insertReport = jungGoNohService.registReport(jungGoNoh);
+				
+					if(insertReport < 0) {
+							model.addAttribute("msg", "신청 실패");
+							return "html/car_item/review/fail_back";
+							} 	
+						} 
+					else { //조회 내역이 있을때
+							model.addAttribute("msg", "이미 해당 건에 대해 신고 신청하신 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+					}
+			
+			
+			return "redirect:/productDetail?product_idx="+product_idx;
+		}
 		
 		
 		//------------------------- 예약취소 폼 이동---------------------
