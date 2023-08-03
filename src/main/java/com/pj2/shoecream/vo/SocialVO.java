@@ -1,6 +1,7 @@
 package com.pj2.shoecream.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,19 +31,6 @@ public class SocialVO {
 	private boolean likeState; // DB 저장 x 
 	private int likeCount; 
 	
-//    public MemberVO toMemberVO() {
-//        MemberVO member = new MemberVO();
-//        member.setMem_id(mem_id);
-//        member.setMem_passwd(mem_passwd);
-//        member.setMem_email(mem_email);
-//        member.setMem_name(mem_name);
-//        return member;
-//    }
-	
-//	@JoinColumn(name="userId")
-//	@ManyToOne
-//	private MemberVO member;
-	
-	
 	// 댓글
+	private List<SocialCommentVO> comment_contents;
 }

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.mapper.SocialImageMapper;
+import com.pj2.shoecream.vo.SocialCommentVO;
 import com.pj2.shoecream.vo.SocialVO;
 
 @Service
@@ -155,6 +156,21 @@ public class SocialImageService {
 		
 		System.out.println("socialVO 에 뭐가 들었니 ? " + socialVO);
 	}
+
+		
+//		 소셜 포스트 댓글
+		public SocialCommentVO writeComment(SocialCommentVO socialCommentVO) {
+		    socialImageMapper.insertComment(socialCommentVO);
+		    socialImageMapper.updateComment_ref(socialCommentVO);
+		    // 업데이트 결과를 따로 사용하지 않음
+		    return socialCommentVO;
+		}
+
+		@Transactional(readOnly = true)
+		public List<SocialCommentVO> getImageComments(int posts_idx) {
+		  return socialImageMapper.selectCommentsByPostId(posts_idx);
+		}
+
 
 }
 

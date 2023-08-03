@@ -37,11 +37,48 @@
 		#{startRow}, #{listLimit}
 	</select>
 	
+	<select id="selectCommentsByPostId" resultType="com.pj2.shoecream.vo.SocialCommentVO">
+	  SELECT * FROM
+	  social_comment
+	  WHERE posts_idx = #{posts_idx}
+	  ORDER BY comment_date DESC
+	</select>
+	
 	<!-- 소셜 인기페이지 (좋아요 많은 순서) -->
 	<select id="selectPopular" resultType="com.pj2.shoecream.vo.SocialVO">
 		SELECT * FROM social_posts 
 		WHERE likeCount 
 		ORDER BY likeCount DESC
 	</select>
+	
+	<select id="selectSocial" resultType="com.pj2.shoecream.vo.SocialVO">
+		SELECT * FROM social_posts
+		WHERE posts_idx = #{posts_idx}
+	</select>
+	
+	
+	<insert id="insertComment" parameterType="com.pj2.shoecream.vo.SocialCommentVO">
+        INSERT
+        INTO social_comment
+        VALUES (
+            null                -- comment_idx(댓글 번호)
+            , #{posts_idx}      -- posts_idx(댓글의 원본 게시물 글 번호)
+            , #{mem_idx}        -- mem_idx(로그인한 회원)
+            , #{mem_nickname}   -- mem_nickname
+            , #{comment_content}  -- comment_content
+            , 0                 -- comment_re_ref(원본 댓글 번호)
+            , 0                 -- comment_re_lev(댓글 들여쓰기 레벨)
+            , 0                 -- comment_re_seq(댓글 순서번호)
+            , now()
+        )
+	</insert>
 
+	<update id="updateComment_ref" parameterType="com.pj2.shoecream.vo.SocialCommentVO">
+	    UPDATE social_comment
+	        SET
+	            comment_re_ref = #{comment_idx}
+	        WHERE
+	            comment_idx = #{comment_idx}
+	</update>
+	
 </mapper>

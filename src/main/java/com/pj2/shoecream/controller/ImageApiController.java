@@ -1,5 +1,6 @@
 package com.pj2.shoecream.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.service.SocialCommentService;
 import com.pj2.shoecream.service.SocialImageService;
 import com.pj2.shoecream.service.SocialLikeService;
 import com.pj2.shoecream.vo.CMRespDto;
+import com.pj2.shoecream.vo.SocialCommentVO;
 import com.pj2.shoecream.vo.SocialVO;
 
 @RestController
@@ -27,7 +31,9 @@ public class ImageApiController {
 	private SocialImageService socialImageService;
 	@Autowired
 	private SocialLikeService socialLikeService;
-
+	@Autowired
+	private SocialCommentService socialCommentService;
+	
 //	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
 	@GetMapping("/api/image")
 	public ResponseEntity<?> imageStory(@RequestParam(defaultValue = "1") int pageNum) {
@@ -45,6 +51,9 @@ public class ImageApiController {
 	    for (SocialVO image : images) {
 //	        image.setLikeCount(socialLikeService.likeCount(sId, image.getPosts_idx()));
 	    	image.setLikeState(socialLikeService.isPostLikedByUser(sId, image.getPosts_idx()));
+	    	
+	    	   List<SocialCommentVO> comments = socialImageService.getImageComments(image.getPosts_idx());
+	    	    image.setComment_contents(comments);
 	    }
 		
 		System.out.println("images : " + images);
@@ -74,4 +83,25 @@ public class ImageApiController {
 		return new ResponseEntity<>(new CMRespDto<>(1,"좋아요취소성공",null),HttpStatus.OK);
 	}
 
+	// --------------- api/comment 댓글  ----------------
+//	, @RequestParam("comment_content") String comment_content, @RequestParam("posts_idx") int posts_idx
+//	@ResponseBody
+	@PostMapping("/api/comment")
+	public ResponseEntity<?> commentInsert(@RequestBody SocialCommentVO socialCommentVO) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int sId = mPrincipalDetails.getMember().getMem_idx();
+		String mem_nickname = mPrincipalDetails.getMember().getMem_nickname();
+		
+		socialCommentVO.setMem_idx(sId);
+		socialCommentVO.setMem_nickname(mem_nickname);
+		SocialCommentVO comment = socialImageService.writeComment(socialCommentVO);
+		return new ResponseEntity<>(new CMRespDto<>(1,"댓글쓰기성공",comment),HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/api/comment?{id}")
+	public ResponseEntity<?> commentInsert(@PathVariable int mem_idx) {
+		return null;
+	}
+	
 }

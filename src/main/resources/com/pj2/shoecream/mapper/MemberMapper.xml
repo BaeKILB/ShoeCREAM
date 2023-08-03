@@ -151,7 +151,15 @@
 		and mem_name = #{mem_name}
 	</update>
 
-
+	
+	<!-- 마이페이지 - 프로필 관리 셀렉 -->
+	<select id="selectProfileMember" resultType="map">
+		SELECT * FROM mem_info
+		WHERE
+		mem_idx = #{sId}
+	</select>
+	
+	
 	<!-- 해당 회원 프로필 mem_idx 셀렉 -->
 	<select id="findMemberByMemIdx"
 		resultType="com.pj2.shoecream.vo.MemberVO">

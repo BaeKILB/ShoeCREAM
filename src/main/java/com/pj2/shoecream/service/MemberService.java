@@ -126,6 +126,11 @@ public class MemberService {
 		return memberMapper.changePw(member);
 	}
 	
+	// ------ 마이페이지 프로필 관리 ------
+	public Map<String, Object> getProfileMember(int sId) {
+		return memberMapper.selectProfileMember(sId);
+	}
+	
 // ------------------------소셜 프로필--------------------------------
 //	// 프로필 사진 나오기 (로그인 한 사람이 아니라 각 회원 mem_idx 에 해당하는 프로필이 떠야함)
 //	public void MemberProfile(int MemIdx) { // MemId = "/social/{mem_idx}" 여기의 {mem_idx} 요녀석 받아서 처리 할 거임
@@ -155,6 +160,7 @@ public class MemberService {
 		
 		return dto;
 	}
+
 	
 
 

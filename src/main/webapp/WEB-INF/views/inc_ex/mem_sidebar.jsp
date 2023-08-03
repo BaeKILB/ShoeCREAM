@@ -17,21 +17,22 @@
 		</div>
 
 		<ul class="side_menu">
-			<li>
-				<div class="menu_tit mt_car">
-					<span>MY 예약</span>
-				</div>
-				<ul class="side_sub">
-					<li><a href="MemberRes">예약 정보 조회</a></li>
-				</ul>
-			</li>
+<!-- 			<li> -->
+<!-- 				<div class="menu_tit mt_car"> -->
+<!-- 					<span>MY 예약</span> -->
+<!-- 				</div> -->
+<!-- 				<ul class="side_sub"> -->
+<!-- 					<li><a href="MemberRes">예약 정보 조회</a></li> -->
+<!-- 				</ul> -->
+<!-- 			</li> -->
 			<li>
 				<div class="menu_tit mt_user">
 					<span>내 정보 관리</span>
 				</div>
 				<ul class="side_sub">
-					<li><a href="MemberUpdatePro">내 정보 관리</a></li>
-					<li><a href="MemberDeleteForm">회원탈퇴</a></li>
+					<li><a href="${pageContext.request.contextPath }/mypage/update">내 정보 관리</a></li>
+					<li><a href="${pageContext.request.contextPath }/mypage/profile">내 프로필 관리</a></li>
+					<li><a href="${pageContext.request.contextPath }/MemberDeleteForm">회원탈퇴</a></li>
 				</ul>
 			</li>
 			<li>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.pj2.shoecream.vo.SocialCommentVO;
 import com.pj2.shoecream.vo.SocialVO;
 
 @Mapper
@@ -24,6 +25,13 @@ public interface SocialImageMapper {
 	
 	// 소셜 인기페이지 (좋아요 많은 순서)
 	List<SocialVO> selectPopular();
+	
+	void insertComment(SocialCommentVO socialCommentVO);
+
+	int updateComment_ref(SocialCommentVO socialCommentVO);
+
+	List<SocialCommentVO> selectCommentsByPostId(int posts_idx);
+
 	
 
 }

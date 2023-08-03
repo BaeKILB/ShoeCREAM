@@ -97,24 +97,26 @@ function getStoryItem(image) {
 			<p>${image.posts_content}</p>
 		</div>
 
-		<div id="storyCommentList-1">
-
-			<div class="sl__item__contents__comment" id="storyCommentItem-1"">
+		<div id="storyCommentList-${image.posts_idx}">`;
+		
+			image.comment_contents.forEach((comment)=>{
+				item+=`<div class="sl__item__contents__comment" id="storyCommentItem-${comment.posts_idx}">
 				<p>
-					<b>HaHa :</b> 부럽습니다.
+					<b>${comment.mem_nickname} :</b> ${comment.comment_content}
 				</p>
 
 				<button>
 					<i class="fas fa-times"></i>
 				</button>
 
-			</div>
-
+			</div>`;
+			});
+		item+=`
 		</div>
 
 		<div class="sl__item__input">
-			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-1" />
-			<button type="button" onClick="addComment()">게시</button>
+			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.posts_idx}" />
+			<button type="button" onClick="addComment(${image.posts_idx})">게시</button>
 		</div>
 
 	</div>
@@ -179,30 +181,50 @@ function toggleLike(posts_idx) {
 }
 
 // (4) 댓글쓰기
-function addComment() {
+function addComment(posts_idx) {
 
-	let commentInput = $("#storyCommentInput-1");
-	let commentList = $("#storyCommentList-1");
+	let commentInput = $(`#storyCommentInput-${posts_idx}`);
+	let commentList = $(`#storyCommentList-${posts_idx}`);
 
 	let data = {
-		content: commentInput.val()
+    	posts_idx:posts_idx,
+		comment_content:commentInput.val()
 	}
 
-	if (data.content === "") {
+//	alert(data.comment_content);
+//	alert(data.posts_idx);
+//	
+	if (data.comment_content === "") {
 		alert("댓글을 작성해주세요!");
 		return;
 	}
+	
+	$.ajax({
+		type:"POST",
+		url:"/shoecream/api/comment",
+		data:JSON.stringify(data),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json"
+	}).done(res=>{
+		console.log("성공", res);
+			
+		let comment = res.data;
+		
+		let content = `
+				  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.posts_idx}"> 
+				    <p>
+				      <b>${comment.mem_nickname} :</b>
+				      ${comment.comment_content}
+				    </p>
+				    <button><i class="fas fa-times"></i></button>
+				  </div>
+		`;
+		commentList.prepend(content);
+		
+	}).fail(error=>{
+		console.log("실패", error);
+	});
 
-	let content = `
-			  <div class="sl__item__contents__comment" id="storyCommentItem-2""> 
-			    <p>
-			      <b>GilDong :</b>
-			      댓글 샘플입니다.
-			    </p>
-			    <button><i class="fas fa-times"></i></button>
-			  </div>
-	`;
-	commentList.prepend(content);
 	commentInput.val("");
 }
 

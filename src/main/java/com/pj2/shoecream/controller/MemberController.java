@@ -254,7 +254,7 @@ public class MemberController {
     	return "member/mypage/mypage2";
     }
     
-    // 회원수정 폼
+    // 회원수정 폼 (마이페이지 메인)
 //    @GetMapping("mypage/{mem_idx}/update")
     @GetMapping("mypage/update")
     public String updateForm(Model model) {//@AuthenticationPrincipal 이녀석을 통해 시큐리티가 저장한 세션을 접근할 수 있다.
@@ -289,18 +289,7 @@ public class MemberController {
 		
     	return "member/mypage/update";
     }	
-    	
-//    회원 수정 - ajax
-//    @PostMapping("MemberUpdatePro")
-//    public CMRespDto<?> updatePro(
-//    	    @PathVariable int mem_idx, MemberVO member) {
-//    	System.out.println("여기까지 오니?");
-//    	MemberVO memberEntity = memberService.updateMemberInfo(mem_idx, member);
-//    	System.out.println("업데이트 잘받니? " + memberEntity);
-//
-//        return new CMRespDto<>(1,"회원수정완료",memberEntity);
-//    }
-    
+   
  // 회원수정
     @PostMapping("MemberUpdatePro")
     public String updatePro(@Valid MemberVO member, BindingResult bindingResult,
@@ -360,6 +349,19 @@ public class MemberController {
 
             return "member/success_forward";
         }
+    }
+    
+    // 마이페이지 프로필
+    @GetMapping("mypage/profile")
+    public String profileForm(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        int sId = mPrincipalDetails.getMember().getMem_idx();
+        
+        // 프로필 관리에 들고갈 모델값
+        Map<String, Object> member = memberService.getProfileMember(sId);
+        model.addAttribute("member", member);
+    	return "member/mypage/profile";
     }
     
     // 회원탈퇴 폼
