@@ -56,6 +56,7 @@
 			, auction_readcount
 			, bid_price
 			, dibs_count
+			, auc_state
 		FROM
 			auction_item ai 
 			JOIN product_image pi ON ai.auction_idx = pi.product_idx 
@@ -85,7 +86,7 @@
 				GROUP BY
 					ai.auction_idx) aidi ON ai.auction_idx = aidi.auction_idx
 		WHERE
-			auc_state = '진행'
+			auc_state = '진행' OR '마감'
 		<if test="!lc_code.equals('')">
 		    <choose>
 		        <when test="mc_code.equals('')">

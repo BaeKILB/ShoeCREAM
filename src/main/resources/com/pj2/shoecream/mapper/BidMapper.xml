@@ -21,7 +21,6 @@
         where
             auction_idx = #{auction_idx }
             and bid_state = '입찰'
-        
     </select>
     <select id="selectBidCount">
         select
@@ -53,4 +52,16 @@
     	order by
     		bid_date desc
     </select>
+    <insert id="updateBidBuyNow">
+        insert into
+            bid_list
+        values(
+            #{auction_idx}
+            , #{mem_idx}
+            , #{auc_buy_instantly}
+            , now()
+            , #{auc_buy_instantly}
+            , '마감'
+        )
+    </insert>
 </mapper>

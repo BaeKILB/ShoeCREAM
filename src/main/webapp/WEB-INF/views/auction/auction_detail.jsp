@@ -128,10 +128,12 @@
 </style>
 </head>
 <body>
-   <h1>경매</h1>
-   <input type="hidden" value="${auction.auction_idx }" id="auction_idx">
-   <input type="hidden" value="${auction.auc_close_date }" id="auc_close_date">
-   <input type="hidden" value="${auction.mem_idx }" id="mem_idx">
+	<hr>
+	${auction }
+	<hr>
+	<input type="hidden" value="${auction.auction_idx }" id="auction_idx">
+	<input type="hidden" value="${auction.auc_close_date }" id="auc_close_date">
+	<input type="hidden" value="${auction.mem_idx }" id="mem_idx">
    <!-- 가지고 올 정보 
    from 공통테이블
    1. 카테고리 대 중 소 
@@ -214,20 +216,21 @@
 							<div class="fs-2 fw-bold">${auction.auction_title }</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-3">현재가</div>
-						<div class="col-4 fw-bold">
-			    			<c:choose>
-						         <c:when test="${bid eq null }">
-						             ${auction.auc_start_price }
-						         </c:when>
-						         <c:otherwise>
-						             ${bid.bid_price }
-						         </c:otherwise>
-					     	</c:choose>
-					     	원
+					<c:if test="${auction.auc_state eq '진행' }">
+						<div class="row">
+							<div class="col-3">현재가</div>
+							<div class="col-4 fw-bold">
+				    			<c:choose>
+									<c:when test="${bid eq null }">
+									    ${auction.auc_start_price }원
+									</c:when>
+									<c:otherwise>
+									    ${bid.bid_price }원
+									</c:otherwise>
+						     	</c:choose>
+							</div>
 						</div>
-					</div>
+					</c:if>
 					<div class="row">
 						<div class="col-3">즉시구매가</div>
 						<div class="col-4 fw-bold">
@@ -251,11 +254,11 @@
 						<div class="col">
 							<div>
 								<c:choose>
-									<c:when test="${bid eq null }">
+									<c:when test="${bidCount eq null }">
 										<div>경매기록 없음</div>
 									</c:when>
 									<c:otherwise>
-							            <button id="bidHistoryBtn">경매기록</button>
+							            <button class="btn" id="bidHistoryBtn">경매기록</button>
 									</c:otherwise>
 								</c:choose>
 				            </div>
@@ -266,9 +269,11 @@
 				            <div id="bidHistory" class="container"></div>
 						</div>
 					</div>
-					<div class="row justify-content-end mb-2">
-						<div class="col fs-5 fw-bold text-danger text-end" id="acdBox">&nbsp;</div>
-					</div>
+					<c:if test="${auction.auc_state eq '진행' }">
+						<div class="row justify-content-end mb-2">
+							<div class="col fs-5 fw-bold text-danger text-end" id="acdBox">&nbsp;</div>
+						</div>
+					</c:if>
 					<div class="row mb-2">
 				    	<c:choose>
 				    		<c:when test="${auction.auc_state eq '마감' }">
@@ -276,6 +281,13 @@
 				    		</c:when>
 				    		<c:otherwise>
 				    			<c:choose>
+				    				<c:when test="${auction.isLogin == 0 }">
+									    <div class="col-12">
+									    	<button class="btn btn-secondary text-light w-100" onclick="location.href='login'">
+									    		<div class="fs-5 fw-bold">로그인</div> <!-- 뭘로하지..? -->
+									    	</button>
+										</div>
+				    				</c:when>
 									<c:when test="${auction.mem_idx eq principal.member.mem_idx}">
 									    <div class="col-6">
 									    	<button class="btn btn-secondary text-light w-100" onclick="location.href='AuctionModifyForm?auction_idx=${auction.auction_idx}'">
