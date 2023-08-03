@@ -25,6 +25,7 @@ public class SocialVO {
 	private MultipartFile file3;
 	private MultipartFile file4;
 	
+	// 이미지 좋아요
 	private int likes_idx; // 소셜이 좋아요 불러올때 사용하자.
 	private boolean likeState; // DB 저장 x 
 	private int likeCount; 
@@ -42,7 +43,6 @@ public class SocialVO {
 //	@ManyToOne
 //	private MemberVO member;
 	
-	// 이미지 좋아요
 	
 	// 댓글
 }

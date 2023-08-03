@@ -16,7 +16,11 @@ public interface BidMapper {
     // 입찰횟수 가져오기
 	int selectBidCount(String auction_idx);
 
-	void updateBid(Map<String, Object> map);
+	// 입찰정보 변경
+	int updateBid(Map<String, Object> map);
 
+	// 입찰내역 리스트 가져오기
 	List<Map<String, Object>> selectBidList(String auction_idx);
+
+	int updateBidBuyNow(Map<String, Object> map);
 }

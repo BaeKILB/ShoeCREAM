@@ -44,6 +44,17 @@ public interface JungGoNohMapper {
 	// 찜 변동시 조회수 -1
 	int decreaseReadcount(JungGoNohVO jungGoNoh);
 	
+	//신고 등록
+	int insertReport(JungGoNohVO jungGoNoh);
+	
+	//신고 조회(중복 확인)
+	String selectReports(JungGoNohVO jungGoNoh);
+	
+	//신고 조회(리스트)
+	List<JungGoNohVO> moreReportListSmall(JungGoNohVO jungGoNoh);
+	
+
+	
 	
 	
 

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.SocialImageMapper">
+	
+	<!-- 소셜 프로필 (소셜 게시물 등록) -->
 	<insert id="insertPosts"
 		parameterType="com.pj2.shoecream.vo.SocialVO">
 		insert into
@@ -16,17 +18,16 @@
 		)
 	</insert>
 
-
-	<select id="findPostImageByMemIdx" resultType="String">
-		SELECT sp.posts_image1
+	<!-- 소셜 프로필 (소셜 게시물 정보 가져가기) -->
+	<select id="SelectSocialProfile" resultType="com.pj2.shoecream.vo.SocialVO">
+		SELECT *
 		FROM mem_info mi
 		JOIN social_posts sp ON mi.mem_idx = sp.mem_idx
 		WHERE mi.mem_idx = #{mem_idx}
 	</select>
 
 	<!-- 소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기) -->
-	<select id="selectStory"
-		resultType="com.pj2.shoecream.vo.SocialVO">
+	<select id="selectStory" resultType="com.pj2.shoecream.vo.SocialVO">
 		SELECT * FROM
 		social_posts
 		WHERE mem_idx
@@ -34,6 +35,13 @@
 		ORDER BY posts_date DESC
 		LIMIT
 		#{startRow}, #{listLimit}
+	</select>
+	
+	<!-- 소셜 인기페이지 (좋아요 많은 순서) -->
+	<select id="selectPopular" resultType="com.pj2.shoecream.vo.SocialVO">
+		SELECT * FROM social_posts 
+		WHERE likeCount 
+		ORDER BY likeCount DESC
 	</select>
 
 </mapper>

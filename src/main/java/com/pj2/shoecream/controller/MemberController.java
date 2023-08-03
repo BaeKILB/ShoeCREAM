@@ -178,6 +178,7 @@ public class MemberController {
 		return "member/auth/find";
 	}
 	
+	// 아이디 찾기
 	@PostMapping("find/findIdPro")
 	public String findIdPro(MemberVO member, Model model) {
 //		System.out.println("여기까지 오니?");
@@ -200,6 +201,7 @@ public class MemberController {
 		return "member/auth/find_id";
 	}
 	
+	// 비밀번호 찾기
 	@PostMapping("find/findPwPro")
 	public String findPwPro(MemberVO member, Model model) {
 		//아이디 이름 번호 받아와서 일치하면(DB작업1)
@@ -367,7 +369,7 @@ public class MemberController {
     }
     
 ////    =========================store============================
-    // 상점 개인 프로필 페이지
+    // 상점 개인 페이지
    	@GetMapping("/store/{mem_idx}")
    	public String profile(@PathVariable int mem_idx, Model model) {
 //   		User userEntity = userService.회원프로필(id);

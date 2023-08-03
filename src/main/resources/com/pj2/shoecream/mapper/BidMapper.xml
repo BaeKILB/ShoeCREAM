@@ -21,7 +21,6 @@
         where
             auction_idx = #{auction_idx }
             and bid_state = '입찰'
-        
     </select>
     <select id="selectBidCount">
         select
@@ -41,12 +40,28 @@
     </update>
     <select id="selectBidList" resultType="map">
     	select
-    		*
+    		mem_nickname
+    		, bid_price
+    		, bid_date
+    		, bid_state
     	from
-    		bid_list
+    		bid_list bl join mem_info mi
+    		on bl.mem_idx = mi.mem_idx
     	where
     		auction_idx = #{auction_idx }
     	order by
     		bid_date desc
     </select>
+    <insert id="updateBidBuyNow">
+        insert into
+            bid_list
+        values(
+            #{auction_idx}
+            , #{mem_idx}
+            , #{auc_buy_instantly}
+            , now()
+            , #{auc_buy_instantly}
+            , '마감'
+        )
+    </insert>
 </mapper>

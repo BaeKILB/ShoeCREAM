@@ -70,7 +70,6 @@
 			</div>
 			<div class="state">
 				<h4>${dto.member.mem_bio }</h4>
-				<!-- 				<h4>죽겠습니다.</h4> -->
 			</div>
 		</div>
 		<!--유저정보 및 사진등록 구독하기-->
@@ -87,17 +86,17 @@
 			<!--게시물컨 그리드배열-->
 			<div class="tab-1-content-inner">
 				<!--아이템들-->
-				<c:forEach var="imageName" items="${posts_image1}">
+				<c:forEach var="social" items="${social}">
 					<div class="img-box">
 						<%-- 				        <a href=""> <img src="${pageContext.request.contextPath }/upload/social/${imageName}" /> --%>
 <!-- 						<a href=""> <img -->
 <%-- 							src="${pageContext.request.contextPath }/resources/upload/social/${imageName}" /> --%>
 <!-- 						</a> -->
 						<a href=""> <img
-							src="/shoecream/resources/upload/social/${imageName}" />
+							src="/shoecream/resources/upload/social/${social.posts_image1}" />
 						</a>
 						<div class="comment">
-							<a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
+							<a href="#" class=""> <i class="fas fa-heart"></i><span>${social.likeCount }</span>
 							</a>
 						</div>
 					</div>

@@ -179,6 +179,15 @@
 	line-height: 200%;
 	border-radius: 5px;
 }
+.report_btn{
+	margin: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #BA55D3;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
 
 .product_tag {
 	width: 100%;

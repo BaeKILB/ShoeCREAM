@@ -42,9 +42,9 @@ public class MemberService {
         member.setMem_status("1"); // 멤버 상태 디폴트
         member.setMem_bio("반갑습니다."); // 멤버 상태 디폴트
         member.setMem_profileImageUrl("0"); // 멤버 상태 디폴트
-        System.out.println(member.getMem_mtel());
-        System.out.println(member.getMem_address());
-        System.out.println(member.getMem_birthday());
+//        System.out.println(member.getMem_mtel());
+//        System.out.println(member.getMem_address());
+//        System.out.println(member.getMem_birthday());
         System.out.println("member 값들(service) : "+ member);
 
         memberMapper.insertMember(member);
@@ -87,7 +87,8 @@ public class MemberService {
         
 		return memberEntity;
 	}
-
+	
+	// 회원 정보 수정
 	public int ModifyMember(MemberVO member, String newPasswd, @RequestParam String newPasswd1) {
 		return memberMapper.updateMember(member,newPasswd, newPasswd1);
 		
@@ -110,15 +111,17 @@ public class MemberService {
 		return memberMapper.getId(member);
 	}
 	
-	//일치하는 회원 레코드 있는지 확인(비밀번호 찾기 과정 1) - find.jsp
+	// 일치하는 회원 레코드 있는지 확인(비밀번호 찾기 과정 1) - find.jsp
 	public String isExistUser(MemberVO member) {
 		return memberMapper.isExistUser(member);
 	}
 	
+	// 비밀번호 찾기 
 	public String selectEmail(MemberVO member) {
 		return memberMapper.selectSendEmail(member);
 	}
 	
+	// 비밀번호 찾기
 	public int changePw(MemberVO member) {
 		return memberMapper.changePw(member);
 	}

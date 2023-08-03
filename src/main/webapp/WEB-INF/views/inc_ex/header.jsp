@@ -112,7 +112,7 @@ div #test_area ul { /* 카테고리 css */
 				<div class="row justify-content-start">
 					<div class="col-3 header_logo">
 						<h1 class="hidden">로고</h1>
-						<a href="./"> <img
+						<a href="${pageContext.request.contextPath }/"> <img
 							src="${pageContext.request.contextPath }/resources/img/main_ex/shoecream-logo.png"
 							alt="슈크림 로고" width="130px;" height="40px;">
 						</a>
@@ -157,7 +157,7 @@ div #test_area ul { /* 카테고리 css */
 						</a>
 					</div>
 					<div class="col-1 b_h_left_menu">
-						<a href="${pageContext.request.contextPath }/social"> <img
+						<a href="${pageContext.request.contextPath }/social/popular"> <img
 							src="${pageContext.request.contextPath }/resources/img/member/social/logo2.png"
 							alt="Social"> 소셜
 						</a>

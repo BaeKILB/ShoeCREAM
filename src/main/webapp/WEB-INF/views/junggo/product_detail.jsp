@@ -31,10 +31,10 @@
 
 <script type="text/javascript">
 	function deleteConfirm() {
-		if(!confirm("게시글을 삭제 하시겠습니까?")) {
+		if(!confirm("게시글을 삭제 하시겠습니까? 삭제하시면 네를 눌려주세요")) {
 			return false;
 		} else {
-			location.href="${pageContext.request.contextPath}/productDelete?product_idx=${jungGoNoh.product_idx}";
+			location.href="${pageContext.request.contextPath}/productDelete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}";
 		}
 	}
 	
@@ -45,8 +45,6 @@
 
 
 	</header>
-	<%--입력하지 않은 자료 보낼 때--%>
-<%-- 		<input type="hidden" name="car_model" value="${map.car_info.car_model}"/> --%>
 		
 		<section id="sec_con" class="inr product_view">
 		<div class="container">
@@ -167,7 +165,8 @@
 					
 					<div class="product_viewStatus">
 						🕐&nbsp;<div id="prd_date"></div> &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  ${jungGoNoh.dibs_count }
-						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  class="report_btn" value="신고조회"></button>
+						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; ${jungGoNoh.report_count }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="${pageContext.request.contextPath}/reportCountTable?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}" class="report_btn" >신고조회</a>
 					</div>
 					<div class="product_productStatus">
 						상품 상태 : ${jungGoNoh.product_status}<br>
@@ -196,7 +195,7 @@
 <!-- 						<div class="product_tag"> -->
 <!-- 						#바지 #바지 #바지 #바지 #바지 -->
 					</div>
-					
+				
 					
 					<div class="button_array">
 						
@@ -215,7 +214,9 @@
 								   <input type="hidden" name="buyier_idx" id="buyier_idx" value="${principal.member.mem_idx}"/>
 								</c:otherwise>
 							</c:choose>
+							
 							<!-- buyier_idx 미접속시 0으로 받아오게끔 하기-->
+							
 							<c:choose>
 								<c:when test="${principal.member.mem_idx == jungGoNoh.mem_idx }">
 									<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>
@@ -256,8 +257,8 @@
 						<br>
 						판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<br>
 						유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<br>
-						<br>
-						<a href="${pageContext.request.contextPath }/reviewList" class="warning_message">여기를 클릭하여 중고나라 고객센터로 신고해주시기 바랍니다.</a>
+						<br><!-- a href="${pageContext.request.contextPath }/reviewList -->
+						<a href="${pageContext.request.contextPath}/registReportPorm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message">여기를 클릭하여 중고나라 고객센터로 신고해주시기 바랍니다.</a>
 					</div>
 				</div>
 				<div class="product_content">
@@ -283,6 +284,7 @@
 								<img class="more_product_img" src="${pageContext.request.contextPath}/resources/upload/${moreProductListSmall.image1}">
 								<p class="more_product_name">${moreProductListSmall.product_title}</p>
 								<span><fmt:formatNumber value="${moreProductListSmall.product_price}" pattern="#,###"/>원</span>
+								<p class="more_product_status">${moreProductListSmall.product_sell_status}</p>
 							</div>
 							
 						</c:forEach>	
