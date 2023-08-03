@@ -11,16 +11,18 @@ $(function() { // onload
 	let getParams = new URL(location.href).searchParams;
 	if(getParams.get("lc_code") != null) {
         lcCode = getParams.get("lc_code");
-        let lcName = $("input[value="+lcCode+"]").siblings().text();
-        console.log(lcName);
+        let lcName = $(".lc_code[value="+lcCode+"]").siblings().text();
         $("#lcHref").attr('href','Auction?lc_code=' + lcCode);
         $("#lcHref").text(lcName);
+        $("#lcHref").parent().removeClass('d-none');
+        
     };
 	if(getParams.get("mc_code") != null) {
         mcCode = getParams.get("mc_code");
-        let mcName = $("input[value="+mcCode+"]").siblings().text();
+        let mcName = $(".mc_code[value="+mcCode+"]").siblings().text();
         $("#mcHref").attr('href','Auction?lc_code=' + lcCode + '&mc_code=' + mcCode);
         $("#mcHref").text(mcName);
+        $("#mcHref").parent().removeClass('d-none');
     }
 	
     getList();
@@ -56,11 +58,14 @@ $(function() { // onload
 		orderMethod = '';
 		pageNum = 1;
 		maxPage = 1;
+		
 		$("#orderMethod").val('');
         $("#lcHref").attr('href','#');
         $("#lcHref").text('');
+		$("#lcHref").parent().addClass('d-none');
         $("#mcHref").attr('href','#');
         $("#mcHref").text('');
+        $("#mcHref").parent().addClass('d-none');
 		
 		
 		// 동일 대분류 선택시
@@ -82,7 +87,8 @@ $(function() { // onload
         
         // 카테고리 경로 업데이트
 		$("#lcHref").attr('href','Auction?lc_code=' + lcCode);
-		$("#lcHref").text($(this).children().eq(1).text());
+		$("#lcHref").text($(".lc_code[value="+lcCode+"]").siblings().text());
+        $("#lcHref").parent().removeClass('d-none');
         
         // 리스트 초기화 및 ajax 호출
 		$("#itemList").empty();
@@ -93,7 +99,8 @@ $(function() { // onload
 		$("#orderMethod").val('');
 		mcCode = $(this).children().val();
         $("#mcHref").attr('href','Auction?lc_code=' + lcCode +'&mc_code='+mcCode);
-        $("#mcHref").text($(this).children().eq(1).text());
+        $("#mcHref").text($(".mc_code[value="+mcCode+"]").siblings().text());
+        $("#mcHref").parent().removeClass('d-none');
 		$("#itemList").empty();
         getList();
 	});

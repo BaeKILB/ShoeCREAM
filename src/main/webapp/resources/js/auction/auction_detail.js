@@ -56,15 +56,10 @@ function showSlides(n) {
 }
 
 $(function() {
-    // 찜하기 클릭
-    $("#dibsBox").on("click",function() {
-        dibsCheck();
-    });
-    
     // 입찰내역 클릭
     $("#bidHistoryBtn").on("click",function() {
 		if ($(this).attr('class') == null || $(this).attr('class') == '') {
-			$("#bidHistory").removeClass('hidden');
+			$("#bidHistory").removeClass('d-none');
 			$(this).addClass('on');
 			$.ajax({
 				type: 'get'
@@ -82,33 +77,31 @@ $(function() {
 			});
 		} else {
 			$(this).removeClass('on');
-			$(".bidHistoryData").remove();
-			$("#bidHistory").addClass('hidden');
+			$("#bidHistory").empty();
+			$("#bidHistory").addClass('d-none');
 		}
 	});
 });
 
 const bidResult = (data) => {
 	let result =
-		"<table id='bidHistoryTable'>"
-			+ "<tr>"
-				+ "<th>입찰자</th>"
-				+ "<th>입찰가격</th>"
-				+ "<th>거래시간</th>"
-				+ "<th>상태</th>"
-			+ "</tr>"
-		+ "</table>";
+		"<div class='row'>"
+				+ "<div class='col-2 text-center'>입찰자</div>"
+				+ "<div class='col-3 text-center'>입찰가격</div>"
+				+ "<div class='col-5 text-center'>거래시간</div>"
+				+ "<div class='col-2 text-center'>상태</div>"
+		+ "</div>";
 	$("#bidHistory").append(result);
-		
+	
 	for (let item of data) {
         let result =
-			"<tr class='bidHistoryData'>"
-				+ "<td>"+item.mem_idx+"</td>"
-				+ "<td>"+item.bid_price+"</td>"
-				+ "<td>"+dateFormat(item.bid_date)+"</td>"
-				+ "<td>"+item.bid_state+"</td>"
-			+ "</tr>";
-        $("#bidHistoryTable").append(result);
+			"<div class='row'>"
+				+ "<div class='col-2 text-center'>"+item.mem_nickname+"</div>"
+				+ "<div class='col-3 text-center'>"+item.bid_price+"</div>"
+				+ "<div class='col-5 text-center'>"+dateFormat(item.bid_date)+"</div>"
+				+ "<div class='col-2 text-center'>"+item.bid_state+"</div>"
+			+ "</div>";
+        $("#bidHistory").append(result);
 	};	
 };
 
@@ -135,12 +128,12 @@ const dibsResult = (data) => {
     let path = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
     if (data.result) {
         let result = "<img class='dibsImage' src='"+path+"/resources/img/auction/favorite-heart-true.svg'><span>"+data.dibsCount+"</span>"
-        $("#dibsBox").empty();
-        $("#dibsBox").append(result);
+        $("#dibsBox").children().empty();
+        $("#dibsBox").children().append(result);
     } else {
         let result = "<img  class='dibsImage' src='"+path+"/resources/img/auction/favorite-heart-false.svg'><span>"+data.dibsCount+"</span>"
-        $("#dibsBox").empty();
-        $("#dibsBox").append(result);
+        $("#dibsBox").children().empty();
+        $("#dibsBox").children().append(result);
     }
 }
 

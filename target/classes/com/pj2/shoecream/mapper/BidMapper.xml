@@ -41,9 +41,13 @@
     </update>
     <select id="selectBidList" resultType="map">
     	select
-    		*
+    		mem_nickname
+    		, bid_price
+    		, bid_date
+    		, bid_state
     	from
-    		bid_list
+    		bid_list bl join mem_info mi
+    		on bl.mem_idx = mi.mem_idx
     	where
     		auction_idx = #{auction_idx }
     	order by

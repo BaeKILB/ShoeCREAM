@@ -33,7 +33,7 @@
 		                <c:forEach var="lc" items="${lc_category }">
 				            <li class="ct_lc_item" >
 				                <div class="ct_lc_item_btn">
-			                    	<input type="hidden" value="${lc.lc_code }">
+			                    	<input type="hidden" class="lc_code" value="${lc.lc_code }">
 				                    <span>${lc.lc_name }</span>
 				                    <button class="ct_up_down_btn"></button>
 				                </div>
@@ -44,7 +44,7 @@
 		                                    <c:if test="${lc.lc_code eq mc.parent_code }">
 									            <li class="ct_mc_item">
 									                <div class="ct_mc_item_btn">
-			                    						<input type="hidden" value="${mc.mc_code }">
+			                    						<input type="hidden" class="mc_code" value="${mc.mc_code }">
 									                    <span>${mc.mc_name }</span>
 									                </div>
 									            </li>
@@ -66,14 +66,13 @@
                             <div class="row no-gutters">
 								<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
 									<ol class="breadcrumb" id="categoryPath">
-										<li class="breadcrumb-item"><a href="./">Home</a></li>
-										<li class="breadcrumb-item"><a href="#">Library</a></li>
-										<li class="breadcrumb-item"><a href="#">Library</a></li>
+										<li class="breadcrumb-item"><a href="Auction">Home</a></li>
+										<li class="breadcrumb-item d-none"><a href="#" id="lcHref"></a></li>
+										<li class="breadcrumb-item d-none"><a href="#" id="mcHref"></a></li>
 									</ol>
 								</nav>
                             </div>
 			            </div>
-<!-- 			            col-lg-3 col-md-4 col-6 -->
 			            <div class="col-lg-2 col-md-3 col"> <!-- 정렬 방식 -->
 			                <select class="form-select orderMethod" id="orderMethod">
                                 <option value="" selected>정렬방식</option>
