@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,12 +16,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.handler.ChatHandler;
 import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.service.JungProductService;
 import com.pj2.shoecream.vo.ChatRoomVO;
@@ -39,6 +43,8 @@ public class StompController {
 	@Autowired
 	private JungProductService jungProductService;
 
+	@Autowired
+	private ChatHandler chatHandler;
 	// 웹 소켓(stomp) 받을 경로
 	// StompHandler 에서 설정한 setApplicationDestinationPrefixes 경로가 병합 
 //	@MessageMapping("/hello")
@@ -122,10 +128,11 @@ public class StompController {
         
         if(map.get("chat_room_idx") != null) {
         	String chat_room_idx = (String)map.get("chat_room_idx");
+        	Integer chat_room_area = Integer.parseInt((String)map.get("chat_area"));
     		if(!chat_room_idx.equals("-1") && 
     				chatService.isChatMember(idx, 
     				Integer.parseInt(chat_room_idx))) {
-    			model.addAttribute("room", chatService.getChatRoom(Integer.parseInt(chat_room_idx)));
+    			model.addAttribute("room", chatService.getChatRoom(Integer.parseInt(chat_room_idx),chat_room_area));
     			model.addAttribute("chatList", chatService.getChatList(Integer.parseInt(chat_room_idx)));
     			model.addAttribute("sId", chatService.getSid(idx));
     			
@@ -217,7 +224,7 @@ public class StompController {
 		chatRoom.setMem_seller_idx(jProduct.getMem_idx());
 		
 		// 현재 product idx 와 현재 접속 아이디의 idx 로 만들어진 방이 있을때 체크 
-		ChatRoomVO checkRoom = chatService.getChatRoom(chatRoom.getProduct_idx(),idx);
+		ChatRoomVO checkRoom = chatService.getChatRoomIdx(chatRoom.getProduct_idx(),idx);
 		
 		if(checkRoom != null  
 				&& (checkRoom.getMem_seller_idx() == idx
@@ -245,7 +252,7 @@ public class StompController {
 				
 				// 넣고 난 뒤 채팅방으로 바로 리다이렉트 하기 때문에
 				// chat_room_idx 가 필요함으로 채팅방 다시 받아오기
-				ChatRoomVO resultRoom = chatService.getChatRoom(chatRoom.getProduct_idx(),idx);
+				ChatRoomVO resultRoom = chatService.getChatRoomIdx(chatRoom.getProduct_idx(),idx);
 				
 				// 채팅방 제대로 받아왔는지 체크
 				if(resultRoom != null) {					
@@ -287,6 +294,102 @@ public class StompController {
 //		}
 //	}
 	
+	//=========== ajax ==============
+	
+	@RequestMapping(
+			value = "checkChatRoomStatus.ajax",
+			method = RequestMethod.POST,
+			produces = "application/text; charset=UTF-8"
+	)	
+	@ResponseBody
+	public String checkChatRoomStatus(@RequestParam Map<String, Object> map) { 
+		System.out.println("checkChatRoomStatus : in");
+		// 현재 로그인 된 아이디의 idx 번호 받을 변수
+		int idx = -1;
+		
+		// 채팅 방 정보 받을 객체
+		Map<String,Object> chatMap = null;
+		
+		// 반환 해 줄 변수 
+		JSONObject jsonObj = new JSONObject();	
+		
+		// html 받을 문자열
+		String result = null;
+		
+		// try catch 로 오류 처리
+		try {
+			// spring security 이용 idx 받아오기
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			idx = mPrincipalDetails.getMember().getMem_idx();
+		}
+		catch(Exception e) {
+			return null;
+		}
+		System.out.println("checkChatRoomStatus :  get idx");
+		// 가져온 chat_room_idx 와 chat_room_area 로 채팅방 정보 검색
+       if(map.get("chat_room_idx") != null) {
+        	String chat_room_idx = (String)map.get("chat_room_idx");
+        	Integer chat_room_area = Integer.parseInt((String)map.get("chat_room_area"));
+    		if(!chat_room_idx.equals("-1") && 
+    				chatService.isChatMember(idx, 
+    				Integer.parseInt(chat_room_idx))) {
+    			chatMap = chatService.getChatRoom(Integer.parseInt(chat_room_idx),chat_room_area);
+    			
+    		}
+    		else {
+    			return null;
+    		}
+        }
+       System.out.println("checkChatRoomStatus : getchatroom");
+       // 현재 상품 판매 상태 따라서 채팅창 정보바 레이아웃 설정
+		switch ((String)chatMap.get("product_sell_status")) {
+		case "대기중":
+			if(idx == (Integer)chatMap.get("mem_buyer_idx")) {
+				result = chatHandler.buyerWaitingHtml(chatMap);
+			}
+			else {
+				result = chatHandler.sellerWaitingHtml(chatMap);				
+			}
+			break;
+		case "예약중":
+			if(idx == (Integer)chatMap.get("mem_buyer_idx")) {
+				result = chatHandler.buyerResHtml(chatMap);
+			}
+			else {
+				result = chatHandler.sellerResHtml(chatMap);				
+			}
+			
+			break;
+		case "거래대기중":
+			if(idx == (Integer)chatMap.get("mem_buyer_idx")) {
+				result = chatHandler.buyerWaitTakeHtml(chatMap);
+			}
+			else {
+				result = chatHandler.sellerWaitTakeHtml(chatMap);				
+			}
+			
+			break;
+		case "거래완료":
+			if(idx == (Integer)chatMap.get("mem_buyer_idx")) {
+				result = chatHandler.buyerCompleteHtml(chatMap);
+			}
+			else {
+				result = chatHandler.sellerCompleteHtml(chatMap);				
+			}
+			
+			break;
+
+		default:
+			result = "문제가 발생했습니다 !";
+			
+			break;
+		}
+		
+		System.out.println("checkChatRoomStatus : result" + result);
+		jsonObj.put("html", result);
+		return jsonObj.toString();
+	}
 	
 	// 채팅방 ajax 방식으로 불러오기 
 	// 추후 작성 ...

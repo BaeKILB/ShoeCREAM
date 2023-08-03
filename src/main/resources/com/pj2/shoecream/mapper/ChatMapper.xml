@@ -27,9 +27,17 @@
 	</insert>
 
 	<!-- 채팅 방 채팅 불러오기 -->
-	<select id="selectChatList" resultType="ChatMsgVO">
-		SELECT * 
+	<select id="selectChatList" resultType="map">
+		SELECT 
+			chat_msg_idx 
+			,chat_room_idx 
+			,chat_msg_writer  
+			,mem_nickname
+			,chat_msg_content 
+			,chat_msg_date 
 		FROM chat_msgs
+		JOIN mem_info mi 
+		ON chat_msg_writer = mem_idx 
 		WHERE 
 			chat_room_idx = #{chat_room_idx}
 		ORDER BY 
@@ -40,12 +48,20 @@
 	<!-- 채팅방 리스트 검색 -->
 	<!-- 채팅방 멤버 닉네임과 상품 정보도 같이 불러오기 -->
 	<!-- 불러오는 컬럼
-	chat_room_idx|product_idx|
-	mem_seller_idx|mem_seller_nickname|
-	mem_buyer_idx|mem_buyer_nickname|
+	chat_room_idx|
+	product_idx|
+	mem_seller_idx|
+	mem_seller_nickname|
+	mem_buyer_idx|
+	mem_buyer_nickname|
 	chat_room_area|
-	product_idx|mem_idx|product_title|product_payment
-	|product_price|product_sell_status|product_location| -->
+	product_idx|
+	mem_idx|
+	product_title|
+	product_payment|
+	product_price|
+	product_sell_status|
+	product_location| -->
 	<select id="selectChatRoomList" resultType="Map">
 
 SELECT * 
@@ -113,12 +129,55 @@ SELECT *
 	</select>
 	
 	<!-- 채팅방 정보 가져오기 -->
-	<select id="selectChatRoom" resultType="ChatRoomVO">
-		SELECT * 
-		FROM chat_rooms
-		WHERE
-			chat_room_idx = #{idx}
-		;
+	<select id="selectChatRoom" resultType="map">
+SELECT * 
+		FROM 
+		(
+			SELECT  mem_seller.chat_room_idx , product_idx,
+			mem_seller_idx, mem_seller_nickname, mem_seller_rank, mem_seller_img,
+			mem_buyer_idx ,mem_buyer_nickname , mem_buyer_rank ,mem_buyer_img ,
+			chat_room_area
+			FROM
+				(
+					SELECT chat_room_idx , product_idx ,mem_seller_idx, 
+					mem_profileImageUrl AS mem_seller_img, mem_rank AS mem_seller_rank,
+					mem_nickname AS mem_seller_nickname 
+					FROM chat_rooms cr JOIN mem_info mi ON cr.mem_seller_idx = mi.mem_idx 
+				) as mem_seller
+				JOIN 
+				(
+					SELECT chat_room_idx ,mem_buyer_idx,
+					mem_profileImageUrl AS mem_buyer_img, mem_rank AS mem_buyer_rank,
+					 mem_nickname AS mem_buyer_nickname ,chat_room_area
+					FROM chat_rooms cr JOIN mem_info mi ON cr.mem_buyer_idx = mi.mem_idx 
+				) AS mem_buyer
+				ON mem_seller.chat_room_idx = mem_buyer.chat_room_idx
+			WHERE
+				mem_seller.chat_room_idx = #{chat_room_idx}
+				AND chat_room_area = #{chat_room_area}
+				
+		) AS cr
+		JOIN (
+			SELECT p1.product_idx,mem_idx,product_title,
+			product_info,product_payment,product_price, product_status,
+			product_sell_status,product_location,image1,image_path
+			FROM product_image pi2
+			JOIN 
+			(
+				SELECT product_idx , mem_idx, product_title,product_info,
+				product_payment, product_price, product_status,
+				product_sell_status, product_location
+				FROM
+					jung_product 
+				WHERE
+					product_selector = #{chat_room_area}
+			) AS p1
+			ON p1.product_idx = pi2.product_idx
+		) AS p
+		ON cr.product_idx = p.product_idx
+	ORDER BY chat_room_idx DESC
+	;
+	
 	</select>
 	<select id="selectChatRoomProductIdx" resultType="ChatRoomVO">
 		SELECT * 

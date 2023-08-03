@@ -13,6 +13,8 @@
 <link href="${pageContext.request.contextPath }/resources/css/inc/chat/chat_sidebars.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath }/resources/js/inc/chat/chat_sidebars.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/inc/chat/rooms.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath }/resources/js/inc/chat/sockjs.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/inc/chat/stomp.min.js"></script>
 <script>
             $(document).ready(function(){
 				
@@ -107,10 +109,9 @@
 		    <!-- 채팅 메시지 항목 -->
 		    <div class="col-6 chat_msg_warp">
 		    	<c:if test="${!empty room}">
-			    	<div class="product_info_wrap">
-			    	</div>
-			    	<div class="chat_member">
-			    	</div>
+		    		<article class="chat_msg_info_wrap container">
+
+		    		</article>
 		    	</c:if>
 		    	<c:choose>
 		    		<c:when test="${!empty room}">
@@ -121,15 +122,15 @@
 										<c:choose>
 											<c:when test="${chat.chat_msg_writer eq idx}">
 												<div class='col-6'>
-													<div class='alert alert-secondary'>
-														<b>${chat.chat_msg_writer} : ${chat.chat_msg_content}</b>
+													<div class='alert alert-primary'>
+														<b>${chat.mem_nickname} : ${chat.chat_msg_content}</b>
 													</div>
 												</div>
 											</c:when>
 											<c:otherwise>
 												<div class='col-6'>
 													<div class='alert alert-warning'>
-														<b>${chat.chat_msg_writer} : ${chat.chat_msg_content}</b>
+														<b>${chat.mem_nickname} : ${chat.chat_msg_content}</b>
 													</div>
 												</div>
 											</c:otherwise>
@@ -138,7 +139,7 @@
 								</c:if>
 							</div>
 							<div class="input-group mb-3">
-								<input type="text" id="msg" class="form-control">
+								<input type="text" id="msg_input" class="form-control">
 								<div class="input-group-append">
 									<button class="btn btn-outline-secondary" type="button"
 										id="button-send">전송</button>
@@ -152,11 +153,9 @@
 		    	</c:choose>
 
 			</div>
-	 
+	 	${room }
 		</section>
    	</main>
-	<script src="${pageContext.request.contextPath }/resources/js/inc/chat/sockjs.min.js"></script>
-	<script src="${pageContext.request.contextPath }/resources/js/inc/chat/stomp.min.js"></script>
 	<c:if test="${!empty room}">
 		<script>
 
@@ -179,7 +178,7 @@
         	
             let roomName = "${room.chat_room_idx}";
             let chat_room_idx = "${room.chat_room_idx}";
-			let username = "${sId}"
+			let userId = "${sId}"
 			let idx = "${idx}";
             console.log(roomName + ", " + chat_room_idx + ", " );
 
@@ -195,21 +194,24 @@
             	   
 				console.log("STOMP Connection On")
 				   let content = JSON.parse(chat.body);
-				
+					
 				   let chat_writer = content.sId;
+				   let chat_nicname = content.nickname;
 				   let str = '';
-				
-				   if(chat_writer === username){
+				   
+				   
+				   
+				   if(chat_writer === userId){
 				       str = "<div class='col-6'>";
 				       str += "<div class='alert alert-secondary'>";
-				       str += "<b>" + chat_writer + " : " + content.chat_msg_content + "</b>";
+				       str += "<b>" + chat_nicname + " : " + content.chat_msg_content + "</b>";
 				       str += "</div></div>";
 				       $("#msgArea").append(str);
 				   }
 				   else{
 				       str = "<div class='col-6'>";
 				       str += "<div class='alert alert-warning'>";
-				       str += "<b>" + chat_writer + " : " + content.chat_msg_content + "</b>";
+				       str += "<b>" + chat_nicname + " : " + content.chat_msg_content + "</b>";
 				       str += "</div></div>";
 				       $("#msgArea").append(str);
 				   }
@@ -217,27 +219,45 @@
 					scrolDown();
 					myLoad = false;
 					
+					
+					// 만약 
                },
                function(){console.log("연결 실패!")});
 
                //3. send(path, header, chat_msg_content)로 메세지를 보낼 수 있음
-               stomp.send('/pub/enter', {}, JSON.stringify({chat_room_idx: chat_room_idx, sId: username}))
+               stomp.send('/pub/enter', {}, JSON.stringify({chat_room_idx: chat_room_idx, sId: userId}))
 				
             });
-
-            $("#button-send").on("click", function(e){
+			
+            // 메시지 전송 stomp 함수
+            const sendMsg = () => {
                 let msg = document.getElementById("msg");
 
-                console.log(username + ":" + msg.value);
-                stomp.send('/pub/message', {}, JSON.stringify({chat_room_idx: chat_room_idx, chat_msg_content: msg.value, chat_msg_writer : idx, sId: username}));
+                console.log(userId + ":" + msg.value);
+                stomp.send('/pub/message', {}, JSON.stringify({chat_room_idx: chat_room_idx, chat_msg_content: msg.value, chat_msg_writer : idx, sId: userId}));
                 msg.value = '';
                 myLoad = true;
+            }
+            
+            $("#button-send").on("click", function(e){
+            	sendMsg();
+            });
+            
+            //엔터키 입력
+            $("#msg_input").keydown(function(key){
+            	if(key.keycode == 13){
+            		sendMsg();
+            	}
             });
             
         });
         
         scrolDown();
+        
 		</script>
 	</c:if>
+	
+	<%-- 채팅창 관련 js --%>
+	<script src="${pageContext.request.contextPath }/resources/js/inc/chat/chatMsgArea.js"></script>
 </body>
 </html>

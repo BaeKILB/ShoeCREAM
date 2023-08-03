@@ -30,7 +30,7 @@ public class ChatService {
 		return mapper.insertChatRoom(roomVo);
 	}
 	
-	public List<ChatMsgVO> getChatList(int chat_room_idx){
+	public List<Map<String,Object>> getChatList(int chat_room_idx){
 		return mapper.selectChatList(chat_room_idx);
 	}
 	
@@ -47,6 +47,14 @@ public class ChatService {
 			return "";
 		return mem.getMem_id();
 	}
+
+	public MemberVO getMember(String sId) {
+		return memMapper.findMemberById(sId);
+	}
+
+	public MemberVO getMember(int idx) {
+		return memMapper.findMemberByMemIdx(idx);
+	}
 	
 	// 내가 있는 채팅방 검색
 	public List<Map<String,Object>> getChatRoomList(int mem_idx , int chat_room_area){
@@ -62,12 +70,12 @@ public class ChatService {
 	}
 	
 	//채팅방 가져오기
-	public ChatRoomVO getChatRoom(int room_id){
-		return mapper.selectChatRoom(room_id);
+	public Map<String,Object> getChatRoom(int chat_room_idx, int chat_room_area){
+		return mapper.selectChatRoom(chat_room_idx,chat_room_area);
 	}
 	
 	// product_idx 와 멤버 idx 로 받아오기
-	public ChatRoomVO getChatRoom(String product_idx, int mem_idx){
+	public ChatRoomVO getChatRoomIdx(String product_idx, int mem_idx){
 		return mapper.selectChatRoomProductIdx(product_idx,mem_idx);
 	}
 	

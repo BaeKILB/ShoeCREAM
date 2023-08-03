@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pj2.shoecream.handler.JsonHandler;
 import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.vo.ChatMsgVO;
+import com.pj2.shoecream.vo.MemberVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,18 +48,25 @@ public class StompChatController {
     
 	@MessageMapping("enter")
 	public void enter(@RequestParam Map<String,String> msg) {
-		msg.put("chat_msg_content", msg.get("sId")+ "님이 채팅방에 참여하였습니다.");
+
+		MemberVO member = service.getMember(msg.get("sId"));
+		int idx = member.getMem_idx();
+		String nickname = member.getMem_nickname();
+		
+		msg.put("chat_msg_content", nickname + "님이 채팅방에 참여하였습니다.");
 		
 		System.out.println("test : " + msg);
 		JSONObject jo = jsonHandler.map2Json(msg);
-		
+		jo.put("nickname", nickname);
 		template.convertAndSend("/topic/room" + msg.get("chat_room_idx"),jo.toString());
 	}
 
 	@MessageMapping("message")
 	public void message(@RequestParam Map<String,String> msg) {
 		System.out.println("test : " + msg);
-		int idx = service.getSIdIdx(msg.get("sId"));
+		MemberVO member = service.getMember(msg.get("sId"));
+		int idx = member.getMem_idx();
+		String nickname = member.getMem_nickname();
 		if(!service.isChatMember(idx,Integer.parseInt(msg.get("chat_room_idx")))
 				&& !msg.get("sId").equals("admin")) {
 			msg.put("chat_msg_content","메시지 전송 권한이 없습니다!");
@@ -74,7 +82,42 @@ public class StompChatController {
 		}
 		else {			
 			JSONObject jo = jsonHandler.map2Json(msg);
+			jo.put("nickname", nickname);
 			template.convertAndSend("/topic/room" + msg.get("chat_room_idx"),jo.toString());
 		}
 	}
+	
+	// ==================== 채팅 부가 작업
+	// 채팅 물품 변화에 따른 정보를 수신받아 트리거를 보내서 ajax 동작을 하게끔 하기
+	
+	@MessageMapping("checkItemStatus")
+	public void checkItemStatus(Map<String,String> map) {
+		if(map.get("checkStart") != null && map.get("checkStart").equals("Y")) {
+			
+		}
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
