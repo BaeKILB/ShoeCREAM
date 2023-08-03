@@ -780,13 +780,13 @@ public class JunggoController {
 			jungGoNoh.setBuyier_idx(reporter_idx);
 			jungGoNoh.setProduct_idx(product_idx);
 			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
-			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
+			//System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
 			
 			//입력 전 중복 조회
 			String ifReport = jungGoNohService.getReport(jungGoNoh);
 			model.addAttribute("ifReport",ifReport);
-			System.out.println("&&&&&&&&&&jungGoNoh?"+jungGoNoh);
-			System.out.println("&&&&&&&&&&ifReport?"+ifReport+"끝");
+			//System.out.println("&&&&&&&&&&jungGoNoh?"+jungGoNoh);
+			//System.out.println("&&&&&&&&&&ifReport?"+ifReport+"끝");
 			if(ifReport == null) { //조회 내역이 없을 때
 			
 					//입력 작업 시작	
@@ -804,6 +804,45 @@ public class JunggoController {
 			
 			return "redirect:/productDetail?product_idx="+product_idx;
 		}
+		
+		//--------------------reportCountTable--------------------------
+		
+		@GetMapping("reportCountTable")
+		public String reportCountTable(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			}
+			catch(Exception e) {
+				// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+				model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+				model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+				return "inc/fail_forward";
+			}
+			
+			// product_idx 는 무조건 받아와야함
+			if(product_idx == null) {
+				model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
+				return "inc/fail_back";
+			}
+			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
+		
+			jungGoNoh.setProduct_idx(product_idx);
+			
+			List<JungGoNohVO> moreReportListSmall =jungGoNohService.moreReportListSmall(jungGoNoh);
+			
+//			JungGoNohVO jungGoNohReport = jungGoNohService.getProduct(product_idx);
+//			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//			String buyier_nickname = mPrincipalDetails.getMember().getMem_nickname();
+//			jungGoNohReport.setBuyier_nickname(buyier_nickname);
+//			model.addAttribute("jungGoNohReport", jungGoNohReport);
+			model.addAttribute("moreReportListSmall", moreReportListSmall);
+			return "junggo/junggo_report_table";
+			
+		}
+		
 		
 		
 		//------------------------- 예약취소 폼 이동---------------------

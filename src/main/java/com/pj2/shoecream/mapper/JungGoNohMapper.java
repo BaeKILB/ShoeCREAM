@@ -47,8 +47,11 @@ public interface JungGoNohMapper {
 	//신고 등록
 	int insertReport(JungGoNohVO jungGoNoh);
 	
-	//신고 조회(품목)
+	//신고 조회(중복 확인)
 	String selectReports(JungGoNohVO jungGoNoh);
+	
+	//신고 조회(리스트)
+	List<JungGoNohVO> moreReportListSmall(JungGoNohVO jungGoNoh);
 	
 
 	

@@ -87,10 +87,14 @@ public class JungGoNohService {
 		public int registReport(JungGoNohVO jungGoNoh) {
 			return jungGoNohMapper.insertReport(jungGoNoh);
 		}
-		//========================신고 조회(품목)=========================
+		//========================신고 조회(중복확인)=========================
 		public String getReport(JungGoNohVO jungGoNoh) {
 			String ifReport = jungGoNohMapper.selectReports(jungGoNoh);
 			return ifReport;
+		}
+		//==================신고 조회(리스트 가져오기)
+		public List<JungGoNohVO> moreReportListSmall(JungGoNohVO jungGoNoh) {
+			return jungGoNohMapper.moreReportListSmall(jungGoNoh);
 		}
 
 }

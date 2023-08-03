@@ -70,13 +70,13 @@
 					<input type="text" class="brand" name="report_div" /> 
 					<select name="inputBrand" onchange="sellectBrand(this.value)">
 						<option value="">기타(직접입력)</option>
-						<option value="광고">광고성 콘텐츠 판매 입니다.</option>
-						<option value="상품 정보 부정확">상품 관련 정보가 부정확합니다.</option>
-						<option value="거래금지품목">거래 금지 품목으로 판단됩니다. ex> 신발 이외</option>							
-						<option value="안전거래 거부">안전거래를 거부합니다.</option>
-						<option value="외부 채널 유도">사기가 의심됩니다. (외부 프로그램 유도)</option>
-						<option value="분쟁유도">분쟁유도(채팅 중 비속어 사용 또는 험한 말 사용)</option>
-						<option value="개인정보 유출">개인 정보 유출 위험이 있습니다.</option>
+						<option value="광고성 콘텐츠(판매) 입니다.">광고성 콘텐츠(판매) 입니다.</option>
+						<option value="상품 관련 정보가 부정확합니다.">상품 관련 정보가 부정확합니다.</option>
+						<option value="거래 금지 품목으로 판단됩니다.">거래 금지 품목으로 판단됩니다. ex> 신발 이외</option>							
+						<option value="안전거래를 거부합니다.">안전거래를 거부합니다.</option>
+						<option value="사기가 의심됩니다. (외부 프로그램 유도)">사기가 의심됩니다. (외부 프로그램 유도)</option>
+						<option value="분쟁유도 행위가 의심됩니다.(채팅 중 비속어 사용 또는 험한 말 사용)">분쟁유도(채팅 중 비속어 사용 또는 험한 말 사용)</option>
+						<option value="개인 정보 유출 위험이 있습니다.">개인 정보 유출 위험이 있습니다.</option>
 					</select>
 				</label>
 			</div>

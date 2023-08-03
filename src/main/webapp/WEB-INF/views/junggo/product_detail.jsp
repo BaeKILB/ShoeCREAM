@@ -45,8 +45,6 @@
 
 
 	</header>
-	<%--입력하지 않은 자료 보낼 때--%>
-<%-- 		<input type="hidden" name="car_model" value="${map.car_info.car_model}"/> --%>
 		
 		<section id="sec_con" class="inr product_view">
 		<div class="container">
@@ -167,7 +165,8 @@
 					
 					<div class="product_viewStatus">
 						🕐&nbsp;<div id="prd_date"></div> &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  ${jungGoNoh.dibs_count }
-						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; ${jungGoNoh.report_count }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  class="report_btn" value="신고조회"></button>
+						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; ${jungGoNoh.report_count }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="${pageContext.request.contextPath}/reportCountTable?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}" class="report_btn" >신고조회</a>
 					</div>
 					<div class="product_productStatus">
 						상품 상태 : ${jungGoNoh.product_status}<br>
@@ -215,7 +214,9 @@
 								   <input type="hidden" name="buyier_idx" id="buyier_idx" value="${principal.member.mem_idx}"/>
 								</c:otherwise>
 							</c:choose>
+							
 							<!-- buyier_idx 미접속시 0으로 받아오게끔 하기-->
+							
 							<c:choose>
 								<c:when test="${principal.member.mem_idx == jungGoNoh.mem_idx }">
 									<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>

@@ -170,4 +170,10 @@ LEFT OUTER JOIN product_image pi
 	</select>
 	
 	
+	<select id="moreReportListSmall" resultType="map" parameterType="com.pj2.shoecream.vo.JungGoNohVO">
+	  SELECT report_idx, report_content, product_idx, seller_idx, reporter_idx, report_div, report_detail  
+	      FROM joonggo_report
+	     WHERE seller_idx = #{product_idx}
+	</select>
+	
 </mapper>
