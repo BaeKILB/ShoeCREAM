@@ -113,7 +113,18 @@
 
  .hidden { 
  	display: none; 
- } 
+ }
+ 
+  .card-img-top { 
+  	height: 10rem; 
+  	object-fit: cover; 
+  } 
+ 
+ a {
+ 	text-decoration: none;
+ 	color: #000;
+ }
+ 
 </style>
 </head>
 <body>
@@ -136,11 +147,6 @@
 -->
    <!--    좌측 상품 사진 옆으로 넘기는 형태 -->
    <!-- Slideshow container -->
-   	<hr>
-   		${auction }
-   	<hr>
-   		${bid }
-   	<hr>
 	<main class="container">
 		<section class="row">
 			<div class="col-xl-6 col-xs-12">
@@ -205,7 +211,7 @@
 					</div>
 					<div class="row m-3">
 						<div class="col">
-							<div class="fs-3 fw-bold">${auction.auction_title }</div>
+							<div class="fs-2 fw-bold">${auction.auction_title }</div>
 						</div>
 					</div>
 					<div class="row">
@@ -321,19 +327,64 @@
 				</div>
 			</div>
 		</section>
+		<section class="row">
+			<c:if test="${fn:length(relatedProducts) > 0 }">
+		        <hr>
+				<div class="col"> <!-- 연관상품 -->
+		            <div class="container">
+		            	<div class="row mb-2">
+			                <div class="col fs-5 fw-bold">연관상품</div>
+		            	</div>
+		            	<div class="row">
+							<c:forEach var="rp" items="${relatedProducts }" varStatus="status">
+								<c:if test="${status.index < 4}">
+									<div class="card col-xs-6 col-3">
+										<a href="AuctionDetail?auction_idx${rp.auction_idx }">
+											<img src="${pageContext.request.contextPath }${rp.image_path }/${rp.image1 }" class="card-img-top img-fluid rounded">
+											<div class="card-body d-none d-md-block">
+												<h5 class="card-title">${rp.auction_title }</h5>
+											</div>
+										</a>
+									</div>
+								</c:if>
+			               	</c:forEach>
+		            	</div>
+		            </div>
+	               	<c:if test="${fn:length(relatedProducts) > 5 }">
+		               	<div class="row">
+		               		<div class="col">
+								<input type="button" class="w-100" onclick="location.href='Auction?lc_code=${auction.lc_code}&mc_code=${auction.mc_code }'" value="연관상품 더보기">
+		               		</div>	
+		               	</div>
+	               	</c:if>
+	            </div>
+			</c:if>
+		</section>
 		<hr>
 		<section class="row"> <!-- 상품정보 & 판매자정보 -->
-			<div class="col-xl-6 col-xs-12">
-				<div class="fs-5 fw-bold">상품정보</div>
+			<div class="col-xl-8 col-xs-12">
+				<div class="container">
+					<div class="row"> 
+						<div class="col">
+							<div class="fs-5 fw-bold">상품정보</div>
+							<p class="border rounded">${auction.auction_info }</p>
+						</div>
+					</div>
+					<div class="row"> <!-- 높이조절해야됨 -->
+						<div class="col">
+							<div class="fs-5 fw-bold">거래시 주의사항</div>
+							<p class="border rounded">주의사항 작성</p>
+						</div>
+					</div>
+				</div>
 				<div>
-					<p>${auction.auction_info }</p>
-					<p>거래 주의사항 작성</p>
 	            </div>
 			</div>
-			<div class="col-xl-6 col-xs-12"> <!-- 판매자 정보 & 판매 물품 -->
+			<div class="col-xl-4 col-xs-12"> <!-- 판매자 정보 & 판매 물품 -->
 				<div class="container">
-					<div class="row">
+					<div class="row mb-3">
 		                <div class="col"> <!-- 판매자 정보 -->
+							<div class="fs-5 fw-bold">판매자 정보</div>
 							<span id="sellerInfo">
 								<a href="#?mem_idx=${sellerInfo.mem_idx }"> <!-- 판매자 상점 URL 입력필요 -->
 									<span>${sellerInfo.mem_nickname }</span>
@@ -341,24 +392,26 @@
 							</span>
 						</div>
 					</div>
-					<div class="row"> <!-- 판매 물품 -->
+					<div class="row mb-2 justify-content-center"> <!-- 판매 물품 -->
 						<c:if test="${fn:length(sellerItemList) > 0 }">
 							<c:forEach var="sil" items="${sellerItemList }" varStatus="status">
 								<c:if test="${status.index < 4}">
-									<div class="col-6">
+									<div class="col-3 col-xl-6 mb-2">
 										<a href="AuctionDetail?auction_idx=${sil.auction_idx }" >
-											<img src="${pageContext.request.contextPath }${sil.image_path }/${sil.image1 }"> <!-- 사진사이즈 줄여야됨 -->
+											<img src="${pageContext.request.contextPath }${sil.image_path }/${sil.image1 }" class="img-fluid rounded"> <!-- 사진사이즈 줄여야됨 -->
 										</a>
 									</div>
 								</c:if>
 							</c:forEach>
 						</c:if>
 					</div>
-					<div class="row">
-	               		<div class="col">
-							<input type="button" class="w-100" onclick="#?mem_idx=${sellerInfo.mem_idx }" value="판매물품 더보기"> <!-- 기능구현 필요 -->
-	               		</div>	
-	               	</div>
+					<c:if test="${fn:length(sellerItemList) > 5 }">
+						<div class="row">
+		               		<div class="col">
+								<input type="button" class="btn w-100" onclick="location.href='#?mem_idx=${sellerInfo.mem_idx }'" value="판매물품 더보기"> <!-- 기능구현 필요 -->
+		               		</div>	
+		               	</div>
+	               	</c:if>
 				</div>
 				<div class="container">
 					<c:forEach begin="1" end="5" var="i"> <!-- 후기가져오면 여기 바꾸면됨 -->
@@ -372,31 +425,6 @@
 				</div>
 			</div>
         </section>
-		<section class="row">
-			<c:if test="${fn:length(relatedProducts) > 0 }">
-		        <hr>
-				<div class="col-12"> <!-- 연관상품 -->
-	                <div class="fs-5">연관상품</div>
-	            </div>
-				<c:forEach var="rp" items="${relatedProducts }" varStatus="status">
-					<c:if test="${status.index < 4}">
-						<div class="card col-3">
-							<a href="AuctionDetail?auction_idx${rp.auction_idx }" >
-								<img src="${pageContext.request.contextPath }${rp.image_path }/${rp.image1 }" class="card-img-top">
-								<div class="card-body">
-									<h5 class="card-title">${rp.auction_title }</h5>
-								</div>
-							</a>
-						</div>
-					</c:if>
-               	</c:forEach>
-               	<div class="row">
-               		<div class="col">
-						<input type="button" class="w-100" onclick="location.href='Auction?lc_code=${auction.lc_code}&mc_code=${auction.mc_code }'" value="연관상품 더보기"> <!-- 기능구현 필요 -->
-               		</div>	
-               	</div>
-			</c:if>
-		</section>
 	</main>
 </body>
 </html>
