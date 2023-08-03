@@ -129,8 +129,6 @@
 </head>
 <body>
 	<hr>
-	${auction }
-	<hr>
 	<input type="hidden" value="${auction.auction_idx }" id="auction_idx">
 	<input type="hidden" value="${auction.auc_close_date }" id="auc_close_date">
 	<input type="hidden" value="${auction.mem_idx }" id="mem_idx">
@@ -302,19 +300,30 @@
 									    </div>
 				    				</c:when>
 				    				<c:otherwise>
-									    <div class="col-6">
-									    	<button class="btn btn-secondary text-light w-100" onclick="tenderPopup()">
-									    		<div class="fs-5 fw-bold">입찰</div>
-									    		<div>
-
-									    		</div>
-									    	</button>
-										</div>
-										<div class="col-6">
-											<button class="btn btn-secondary text-light w-100" onclick="buyingPopup()">
-												<div class="fs-5 fw-bold">즉시 구매</div>
-											</button>
-									    </div>
+				    				    <c:choose>
+				    				        <c:when test="${bid.mem_idx eq principal.member.mem_idx}">
+												<div class="col-12">
+													<button class="btn btn-secondary text-light w-100" onclick="buyingPopup()">
+														<div class="fs-5 fw-bold">즉시 구매</div>
+													</button>
+											    </div>
+											</c:when>
+											<c:otherwise>
+	                                             <div class="col-6">
+                                                    <button class="btn btn-secondary text-light w-100" onclick="tenderPopup()">
+                                                        <div class="fs-5 fw-bold">입찰</div>
+                                                        <div>
+        
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button class="btn btn-secondary text-light w-100" onclick="buyingPopup()">
+                                                        <div class="fs-5 fw-bold">즉시 구매</div>
+                                                    </button>
+                                                </div>
+											</c:otherwise>
+				    				    </c:choose>
 				    				</c:otherwise>
 				    			</c:choose>
 			    	            <div class="col text-center ">
