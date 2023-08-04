@@ -45,6 +45,7 @@ public class StompController {
 
 	@Autowired
 	private ChatHandler chatHandler;
+	
 	// 웹 소켓(stomp) 받을 경로
 	// StompHandler 에서 설정한 setApplicationDestinationPrefixes 경로가 병합 
 //	@MessageMapping("/hello")
@@ -168,8 +169,8 @@ public class StompController {
 	
 	// junggo - JungChat 에서 넘어옴
 	// product_idx, idx 받아 채팅방 개설
-	@GetMapping("makeChatRoom")
-	public String makeChatRoom(@RequestParam Map<String,Object> map, Model model
+	@GetMapping("makeJungChatRoom")
+	public String makeJungChatRoom(@RequestParam Map<String,Object> map, Model model
 			, RedirectAttributes rttr) {
 		
 		// 현재 로그인 된 아이디의 idx 번호 받을 변수
@@ -243,7 +244,16 @@ public class StompController {
 				return "inc/fail_forward"; 
 		}
 		
-		System.out.println("makeChatRoom - jProduct : " + jProduct);
+		// 만약 이미 자신이 아닌 다른사람과 예약중이라면 ? 
+		// 이것도 되돌려 보내기
+		if(jProduct.getProduct_buyer_idx() != -1) {
+			rttr.addAttribute("msg", "이미 다른사람과 예약중에 있습니다. 찜 기능을 이용하시면 현황을 쉽게 확인 할 수 있습니다.");
+			rttr.addAttribute("targetURL", "productDetail?product_idx=" + (String)map.get("product_idx"));
+			return "inc/fail_forward"; 
+		}
+		
+		
+		System.out.println("makeJungChatRoom - jProduct : " + jProduct);
 		
 		// 방 만들기 시작
 		if(jProduct != null) {
@@ -258,7 +268,7 @@ public class StompController {
 				if(resultRoom != null) {					
 					rttr.addAttribute("chat_area", resultRoom.getChat_room_area());
 					rttr.addAttribute("chat_room_idx", resultRoom.getChat_room_idx());
-					System.out.println("chatService.makeChatRoom(chatRoom) > 0  - chatRoom : " + chatRoom);
+					System.out.println("chatService.makeJungChatRoom(chatRoom) > 0  - chatRoom : " + chatRoom);
 					return "redirect:chatRooms";
 				}
 			}		
