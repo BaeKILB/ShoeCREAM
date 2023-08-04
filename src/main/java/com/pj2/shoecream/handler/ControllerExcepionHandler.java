@@ -28,6 +28,12 @@ public class ControllerExcepionHandler {
 //		return "member/fail_back";
 	}
 	
+	@ExceptionHandler(CustomValidationApiException.class)
+	public ResponseEntity<?> validationApiException(CustomValidationApiException e) {
+		return new ResponseEntity<>(new CMRespDto<>(-1, e.getMessage(), e.getErrorMap()), HttpStatus.BAD_REQUEST);
+	}
+	
+	
 	@ExceptionHandler(CustomApiException.class) // RuntimeException 발동하는 모든 Exception을 이 함수가 다 가로챔
 	public ResponseEntity<?> apiException(CustomApiException e) { // <?> 로 e.getErrorMap 자리에 뭘 들어가도 다 맞게 맞춰진다.
 		return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(), null), HttpStatus.BAD_REQUEST);
