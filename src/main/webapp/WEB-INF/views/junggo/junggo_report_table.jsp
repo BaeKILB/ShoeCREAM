@@ -41,8 +41,9 @@
 
 	<c:forEach var="moreReportList" items="${moreReportListSmall}">
 		<tr>
-			<td>🔔 신고 사유 : &nbsp;</td>
-			<td>${moreReportList.report_div}</td>
+			
+			<td>🔔${moreReportList.report_content}</td>
+			<td>사유 : ${moreReportList.report_div}</td>
 		</tr>
 	</c:forEach>
 	

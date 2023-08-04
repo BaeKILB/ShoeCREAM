@@ -32,7 +32,7 @@
 		<div class="second_title">제목</div>
 		<div class="second_content">
 			<input type="text" class="product_name" name="product_title"
-				value="품목을 입력해주세요." onfocus="this.select()" />
+				placeholder="품목을 입력해주세요." required="required" onfocus="this.select()" />
 		</div>
 	</div>
 	
@@ -202,7 +202,7 @@
 				onclick="sample4_execDaumPostcode();">주소검색</button>
 			<!-- 					<input type="hidden" id="sample4_roadAddress" placeholder="지번주소"> -->
 			<input type="text" id="sample4_jibunAddress" name="product_location"
-				placeholder="주소검색을 통해 주소를 입력해주세요."  readonly/><!-- disabled="disabled" -->
+				placeholder="주소검색을 통해 주소를 입력해주세요."  required="required" readonly/><!-- disabled="disabled" -->
 			<!-- 					<span id="guide" style="color:#999;display:none"</span> -->
 			<!-- 					<input type="hidden" id="sample4_detailAddress" placeholder="상세주소"> -->
 			<!-- 					<input type="hidden" id="sample4_extraAddress" placeholder="참고항목"> -->
@@ -227,18 +227,17 @@
 		<div class="sixth_title">사이즈, 브랜드</div>
 		<div class="sixth_content">
 			<div class="size_box">
-				<label class="size_label"> <span>사이즈</span> <input
-					type="text" class="size" name="product_size"
-					onfocus="this.select()" />
+				<label class="size_label"> <span>사이즈</span> 
+				<input type="text" class="size" name="product_size" placeholder="사이즈표를 참고해주세요" required="required" onfocus="this.select()" />
 				</label>
 				<button type="button" class="sizeTableBtn"
 					onclick="window.open('${pageContext.request.contextPath}/resources/img/junggo/sizeTable.png','사이즈 표','width=502,height=500,location=no,status=no,scrollbars=yes');">사이즈표</button>
 			</div>
 			<div class="brand_box">
-				<label> <span>브랜드</span> <input type="text" class="brand"
-					name="product_brand" /> <select name="inputBrand"
-					onchange="sellectBrand(this.value)">
-						<option value="">기타(직접입력)</option>
+				<label> <span>브랜드</span> 
+				<input type="text" class="brand" name="product_brand" /> 
+				<select name="inputBrand" onchange="sellectBrand(this.value)" required="required">
+						<option value="" selected="selected">기타(직접입력)</option>
 						<option value="ADIDAS">ADIDAS</option>
 						<option value="ASICS">ASICS</option>
 						<option value="BALENCIAGA">BALENCIAGA</option>
@@ -264,8 +263,7 @@
 			<!-- 					<label>  -->
 			<!-- 					 	<input type="checkbox" class="delivery_fee" checked="checked">&nbsp; 배송비 포함 -->
 			<!-- 					</label>  -->
-			<input type="text" class="total_fee" name="product_price"
-				placeholder="금액을 입력해주세요." onfocus="this.select()" />&nbsp;원(₩)
+			<input type="text" class="total_fee" name="product_price" placeholder="금액을 입력해주세요." required="required" onfocus="this.select()" />&nbsp;원(₩)
 
 		</div>
 	</div>
@@ -273,8 +271,7 @@
 	<div class="eighthContainner">
 		<div class="eighth_title">상품설명</div>
 		<div class="eighth_content">
-			<textarea class="product_detail" name="product_info" rows="" cols=""
-				onfocus="this.select()">상품에 대한 설명을 작성해주세요</textarea>
+			<textarea class="product_detail" name="product_info" rows="" cols="" placeholder="상품에 대한 설명을 작성해주세요" required="required" onfocus="this.select()"></textarea>
 		</div>
 	</div>
 

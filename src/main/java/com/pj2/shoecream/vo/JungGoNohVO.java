@@ -37,6 +37,8 @@ public class JungGoNohVO {
 		private String product_payment; //결제수단
 		private int lc_code; // 대분류
 		private int mc_code; // 중분류
+		private String lc_name; // 대분류 이름
+		private String mc_name; // 중분류 이름
 		//private int sc_code; // 소분류 사라짐. 
 		private Timestamp product_date; //작성시간
 		private int product_readcount; //조회수
