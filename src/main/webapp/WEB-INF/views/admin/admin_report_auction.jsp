@@ -114,7 +114,11 @@ function deleteReport(auction_idx) {
 	</section>
 
 
-	<script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.cont_li_wrap.reportList').show();
+			$('.cont_item_list.arepList').addClass('active');
+		});
 	    $(document).on('click', '.toggle_wrap', function() {
 	    	if($('#admin_cont').css('margin-left') === '0px') {
 	    		$('#admin_cont').show().animate({
@@ -126,6 +130,6 @@ function deleteReport(auction_idx) {
 				}, 200);
 	    	}
 	    });
-  </script>
+	</script>
 </body>
 </html>

@@ -151,7 +151,7 @@
 							<input type="hidden" name="qst_pass" value="${inquiry.qst_pass }">
 							<input type="hidden" name="qst_board_re_ref" value="${inquiry.qst_board_re_ref }">
 							<input type="hidden" name="pageNum" value="${param.pageNum }">
-							<div class="list_wrap">
+							<div class="list_wrap modify">
 								<ul class="list">
 									<li>
 										<div class="subject">
@@ -165,21 +165,21 @@
 									</p>
 								</div>
 								<div class="mod_box">
-									<input type="submit" class="submit_btn" value="등록">
+									<input type="submit" class="list_btn" value="답변하기">
+									<a class="list_btn" href="InquiryList?pageNum=${param.pageNum }">목록</a>
 								</div>
 							</div>
 						</form>
 					</c:when>
 				</c:choose>
 				
-				<div class="mod_box">
-					<a class="list_btn" href="InquiryList?pageNum=${param.pageNum }">목록</a>
-					<c:if test="${not empty inquiryAnswer}">					
+				<c:if test="${not empty inquiryAnswer}">	
+					<div class="mod_box">
+						<a class="list_btn" href="InquiryList?pageNum=${param.pageNum }">목록</a>
 						<a class="list_btn" href="QstModifyForm?qst_idx=${inquiry.qst_idx }&pageNum=${param.pageNum }">수정</a>
 						<a class="list_btn" href="#" onclick="DeleteConfirm(${inquiry.qst_idx }, ${param.pageNum });">삭제</a>
-					</c:if>
-					
-				</div>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</section>

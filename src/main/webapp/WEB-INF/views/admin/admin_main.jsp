@@ -6,16 +6,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<link
-	href="${pageContext.request.contextPath}/resources/css/admin/common.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="${pageContext.request.contextPath}/resources/css/admin/adminMain.css"
-	rel="stylesheet" type="text/css">
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/admin/adm_dash.css">
+<link href="${pageContext.request.contextPath}/resources/css/admin/common.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/admin/adminMain.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/adm_dash.css">
 </head>
 <body>
 	<aside>
@@ -117,18 +111,21 @@
 			</div>
 		</div>
 	</section>
-	<script>
-        $(document).on('click', '.toggle_wrap', function() {
-            if ($('#admin_cont').css('margin-left') === '0px') {
-                $('#admin_cont').show().animate({
-                    marginLeft: '15.625rem'
-                }, 200);
-            } else {
-                $('#admin_cont').show().animate({
-                    marginLeft: '0px'
-                }, 200);
-            }
-        });
-    </script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.cont_item_a.adminMain').addClass('active');
+		});
+	    $(document).on('click', '.toggle_wrap', function() {
+	    	if($('#admin_cont').css('margin-left') === '0px') {
+	    		$('#admin_cont').show().animate({
+					marginLeft : '15.625rem'
+				}, 200);
+	    	} else {
+	    		$('#admin_cont').show().animate({
+					marginLeft : '0px'
+				}, 200);
+	    	}
+	    });
+	</script>
 </body>
 </html>

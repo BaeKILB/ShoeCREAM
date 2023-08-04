@@ -117,18 +117,22 @@ function deleteProAuction(auction_idx) {
 				</div>
 			</div>
 		</section>
-		<script>
-		    $(document).on('click', '.toggle_wrap', function() {
-		    	if($('#admin_cont').css('margin-left') === '0px') {
-		    		$('#admin_cont').show().animate({
-						marginLeft : '15.625rem'
-					}, 200);
-		    	} else {
-		    		$('#admin_cont').show().animate({
-						marginLeft : '0px'
-					}, 200);
-		    	}
-		    });
-	  </script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$('.cont_li_wrap.inqList').show();
+			$('.cont_item_list.inqList').addClass('active');
+		});
+	    $(document).on('click', '.toggle_wrap', function() {
+	    	if($('#admin_cont').css('margin-left') === '0px') {
+	    		$('#admin_cont').show().animate({
+					marginLeft : '15.625rem'
+				}, 200);
+	    	} else {
+	    		$('#admin_cont').show().animate({
+					marginLeft : '0px'
+				}, 200);
+	    	}
+	    });
+	</script>
 </body>
 </html>

@@ -63,7 +63,7 @@
 						<form action="QstModifyPro" method="post">
 							<input type="hidden" name="qst_idx" value="${inquiry.qst_idx }">
 							<input type="hidden" name="pageNum" value="${param.pageNum }">
-							<div class="list_wrap">
+							<div class="list_wrap modify answer">
 								<ul class="list">
 									<li>
 										<div class="subject">
@@ -77,7 +77,8 @@
 									</p>
 								</div>
 								<div class="mod_box">
-									<input type="submit" class="submit_btn" value="등록">
+									<input type="submit" class="list_btn" value="답변하기">
+									<a class="list_btn" href="InquiryList?pageNum=${param.pageNum }">목록</a>
 								</div>
 							</div>
 						</form>

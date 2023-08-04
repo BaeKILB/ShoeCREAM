@@ -115,7 +115,11 @@ function deleteProcream(ci_code) {
 				</div>
 			</div>
 		</section>
-		<script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.cont_li_wrap.creamList').show();
+				$('.cont_item_list.creamPro').addClass('active');
+			});
 		    $(document).on('click', '.toggle_wrap', function() {
 		    	if($('#admin_cont').css('margin-left') === '0px') {
 		    		$('#admin_cont').show().animate({
@@ -127,6 +131,6 @@ function deleteProcream(ci_code) {
 					}, 200);
 		    	}
 		    });
-	  </script>
+		</script>
 </body>
 </html>

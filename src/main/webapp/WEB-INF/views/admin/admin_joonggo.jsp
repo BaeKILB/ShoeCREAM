@@ -108,7 +108,11 @@ function deletePro(product_idx) {
 				</div>
 			</div>
 		</section>
-		<script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.cont_li_wrap.joongList').show();
+				$('.cont_item_list.joongPro').addClass('active');
+			});
 		    $(document).on('click', '.toggle_wrap', function() {
 		    	if($('#admin_cont').css('margin-left') === '0px') {
 		    		$('#admin_cont').show().animate({
@@ -120,6 +124,6 @@ function deletePro(product_idx) {
 					}, 200);
 		    	}
 		    });
-	  </script>
+		</script>
 </body>
 </html>

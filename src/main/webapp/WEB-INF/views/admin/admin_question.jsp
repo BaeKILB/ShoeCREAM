@@ -69,12 +69,12 @@
 											<td>${qstItem.qst_type }</td>
 											<td>
 												<c:if test="${qstItem.ans_status eq 'N'}">
-													<a href="QstBoardDetail?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }" class="ins_ans moreBtn">
+													<a href="QstWriteForm?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }" class="ins_ans moreBtn">
 														답변하기
 													</a> 
 												</c:if>
 												<c:if test="${qstItem.ans_status eq 'Y'}">
-													<a href="QstBoardDetail?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }" class="mod_ans moreBtn">
+													<a href="QstModifyForm?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }" class="mod_ans moreBtn">
 														답변수정
 													</a> 
 												</c:if>
