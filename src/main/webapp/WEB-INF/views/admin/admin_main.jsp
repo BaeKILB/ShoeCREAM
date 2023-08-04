@@ -18,24 +18,56 @@
 	<section id="admin_cont">
 		<div class="main_cont">
 			<div class="main_cont_card member_count">
-				<i class="fa fa-user-circle" aria-hidden="true"></i>
-				<div class="stat-text">전체 회원 수</div>
-				<div class="stat-digit">${memberCount }</div>
+				<div class="card_cont">
+					<div class="stat-text">
+						<h4>전체 회원 수</h4>
+					</div>
+					<div class="stat-icon">
+						<i class="fa fa-user-circle" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="card_cont">
+					<h4 class="fw-bold">${memberCount }</h4>
+				</div>
 			</div>
 			<div class="main_cont_card joong_count">
-				<i class="fa fa-cubes" aria-hidden="true"></i>
-				<div class="stat-text">중고 상품 수</div>
-				<div class="stat-digit">${productCount }</div>
+				<div class="card_cont">
+					<div class="stat-text">
+						<h4>중고 상품 수</h4>
+					</div>
+					<div class="stat-icon">
+						<i class="fa fa-cubes" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="card_cont">
+					<h4 class="fw-bold">${productCount }</h4>
+				</div>
 			</div>
 			<div class="main_cont_card auction_count">
-				<i class="fa fa-gavel" aria-hidden="true"></i>
-				<div class="stat-text">경매 상품 수</div>
-				<div class="stat-digit">${auctionCount }</div>
+				<div class="card_cont">
+					<div class="stat-text">
+						<h4>경매 상품 수</h4>
+					</div>
+					<div class="stat-icon">
+						<i class="fa fa-gavel" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="card_cont">
+					<h4 class="fw-bold">${auctionCount }</h4>
+				</div>
 			</div>
 			<div class="main_cont_card cream_count">
-				<i class="fa fa-star" aria-hidden="true"></i>
-				<div class="stat-text">크림 상품 수</div>
-				<div class="stat-digit">${creamCount }</div>
+				<div class="card_cont">
+					<div class="stat-text">
+						<h4>크림 상품 수</h4>
+					</div>
+					<div class="stat-icon">
+						<i class="fa fa-star" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="card_cont">
+					<h4 class="fw-bold">${creamCount }</h4>
+				</div>
 			</div>
 		</div>
 		<div class="charts-container">
@@ -63,7 +95,7 @@
 		                        ]);
 		
 		                        var options = {
-		                            title: '경매 상품 카테고리별 등록 수',
+// 		                            title: '경매 상품 카테고리별 등록 수',
 		                            is3D: true
 		                        };
 		
@@ -98,7 +130,7 @@
 		                        ]);
 		
 		                        var options = {
-		                            title: '중고 상품 카테고리별 등록 수',
+// 		                            title: '중고 상품 카테고리별 등록 수',
 		                            is3D: true
 		                        };
 		
