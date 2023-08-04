@@ -80,9 +80,18 @@ public interface AdminMapper {
 	List<Map<String, Object>> selectProductList();
 	// 중고 차트 계산
 	List<Map<String, Object>> selectAuctionList();
+	// 메인페이지 회원 수 세기
+	int selectMemberCount();
+	// 중고 상품 수 세기
+	int selectPro();
+	// 경매 상품 수 세기
+	int selectAuctionCount();
+	// 크림 상품 수 세기
+	int selectCreamCount();
+	}
+
 	
 	
 	
 	
-}
 

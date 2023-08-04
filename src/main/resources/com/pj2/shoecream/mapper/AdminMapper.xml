@@ -381,6 +381,31 @@
 			JOIN middle_category mc ON jp.mc_code = mc.mc_code
 			GROUP BY jp.mc_code;
 	</select>
+	<!-- 메인페이지 회원 수 세기 -->
+	<select id="selectMemberCount" resultType="int">
+		SELECT COUNT(*)
+				FROM mem_info
+				WHERE mem_id != 'admin'
+	</select>
+	
+	<!-- 중고 상품 수 세기 -->
+	<select id="selectPro" resultType="int">
+		SELECT COUNT(*)
+				FROM jung_product
+	</select>
+	
+	<!--  경매 상품 수 세기 -->
+	<select id="selectAuctionCount" resultType="int">
+		SELECT COUNT(*)
+				FROM auction_item
+	</select>
+	
+	<!--  크림 상품 수 세기 -->
+	<select id="selectCreamCount" resultType="int">
+		SELECT COUNT(*)
+				FROM cream_item
+	</select>
+
 	
 
 </mapper>

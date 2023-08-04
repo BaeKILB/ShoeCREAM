@@ -63,6 +63,22 @@ public class AdminController {
 		List<Map<String, Object>> auctionList = service.getAuctionList();
 		model.addAttribute("auctionList",auctionList);
 		
+		// 메인페이지 회원 수 세기
+		int memberCount = service.getMemberCount();
+		model.addAttribute("memberCount",memberCount);
+		
+		// 중고상품 수 세기
+		int productCount = service.getProductCount();
+		model.addAttribute("productCount", productCount);
+		
+		// 경매상품 수 세기
+		int auctionCount = service.getAuctionCount();
+		model.addAttribute("auctionCount", auctionCount);
+		
+		// 크림 상품 수 세기
+		int creamCount = service.getCreamCount();
+		model.addAttribute("creamCount",creamCount);
+		
 		
 		
 		return "admin/admin_main";

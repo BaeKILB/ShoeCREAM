@@ -138,18 +138,36 @@ public class AdminService {
 		// TODO Auto-generated method stub
 		return mapper.deletecream(ci_code);
 	}
+
 	// 경매 차트 계산하기
 	public List<Map<String, Object>> getProductList() {
 		return mapper.selectProductList();
 	}
+
 	// 중고 차트 계산하기
 	public List<Map<String, Object>> getAuctionList() {
 		return mapper.selectAuctionList();
 	}
-	
-	
-	
-	
-	
+
+	// 메인 페이지 회원 수 세기
+	public int getMemberCount() {
+		return mapper.selectMemberCount();
+	}
+
+	// 중고 상품 수 세기
+	public int getProductCount() {
+		return mapper.selectPro();
+	}
+
+	// 경매 상품 수 세기
+	public int getAuctionCount() {
+		return mapper.selectAuctionCount();
+	}
+
+	// 크림 상품 수 세기
+	public int getCreamCount() {
+		return mapper.selectCreamCount();
+	}
+
 }
 
