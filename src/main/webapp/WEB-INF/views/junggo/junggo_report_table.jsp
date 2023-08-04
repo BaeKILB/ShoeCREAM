@@ -10,7 +10,7 @@
 	<meta charset="UTF-8">
 	<title>해당 품목 상세보기</title>
 	<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/junggo/junggo_report_register.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/junggo/junggo_report_table.css" rel="stylesheet">
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
 	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
@@ -35,14 +35,14 @@
 		<section id="sec_con" class="register_view inr">
 	
 	<div class="titleContainner">
-		<p class="title_title">누구누구님의 신고내역</p>
+		<p class="title_title">${jungGoNoh.mem_nickname}님의 신고내역</p>
 	</div>
 	<table border="1">
 
-	<c:forEach var="moreReportList" items=""><!--  items="${moreReportList}-->
+	<c:forEach var="moreReportList" items="${moreReportListSmall}">
 		<tr>
 			<td>🔔 신고 사유 : &nbsp;</td>
-			<td>${moreReportListSmall.report_div }</td>
+			<td>${moreReportList.report_div}</td>
 		</tr>
 	</c:forEach>
 	
