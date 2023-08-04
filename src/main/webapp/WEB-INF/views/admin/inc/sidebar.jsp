@@ -16,14 +16,14 @@
 		<div class="sidebar_cont">
 			<div class="logo_box">
 				<a href="" class="logo_img">
-					<img alt="logo" src="resources/img/admin/admin-logo.png" class="logo">
+					<img alt="logo" src="resources/img/admin/admin-logo.png" class="logo" >
 				</a>
 			</div>
 			<ul class="cont_list">
 				<li class="cont_item_wrap">
-					<a class="cont_item_a nSub" href="AdminDashBoard">
+					<a class="cont_item_a nSub" href="AdminMain">
 						<i class="fa fa-home" aria-hidden="true"></i>
-						DashBoard
+						메인페이지
 					</a>
 				</li>
 				<li class="cont_item">
