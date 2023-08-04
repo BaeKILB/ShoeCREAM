@@ -52,7 +52,7 @@ public class ChatHandler {
 		}
 		
 		String htmlStr = 
-				"<div class='product_info_wrap row'>"
+				"<div class='product_info_wrap'>"
 						+ "	<section>"
 						+ "		<img src='" 
 						+ 		map.get("image_path")  
@@ -70,7 +70,7 @@ public class ChatHandler {
 						+ 		product_btn				    		
 						+ "	</section>"
 						+ "</div>"
-						+ "<div class='chat_member_wrap row'>"
+						+ "<div class='chat_member_wrap'>"
 						+ 	userStr
 						+ "</div>";
 		
@@ -112,7 +112,8 @@ public class ChatHandler {
 		String product_btn = "";
 		if(map.get("product_payment").equals("안전페이")
 				|| map.get("product_payment").equals("안전페이,직거래")) {
-			product_btn = "<input type='button' class='btn btn-primary' value='결제하기'/>";	
+			product_btn = "<input type='button' class='btn btn-primary' value='결제하기'"
+					+ "onclick='location.href=\"JunggoPay?product_idx=" + map.get("product_idx") + "\"' />";	
 		}
 		else {
 			product_btn = 

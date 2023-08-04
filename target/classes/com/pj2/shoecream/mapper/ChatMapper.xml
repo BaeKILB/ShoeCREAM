@@ -205,4 +205,10 @@ SELECT *
 		;
 	</select>
 	
+	<delete id="deleteChatRoom">
+		DELETE chat_rooms
+		WHERE chat_room_idx = #{chat_room_idx}
+		;
+	</delete>
+	
 </mapper>

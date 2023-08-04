@@ -16,6 +16,7 @@ public interface ChatMapper {
 	int insertChat(Map<String,String> chat);
 	int insertChatRoom(ChatRoomVO chatRoom);
 	
+	// 채팅방 가져오기
 	List<Map<String,Object>> selectChatRoomList(@Param("mem_idx") int mem_idx,
 			@Param("chat_room_area") int chat_room_area);
 	List<Map<String,Object>> selectChatRoomListSeller(@Param("mem_idx") int mem_idx,
@@ -29,4 +30,6 @@ public interface ChatMapper {
 	
 	Integer selectChatCheckAuth(@Param("mem_idx") int mem_idx,
 			@Param("chat_room_idx") int chat_room_idx);
+	
+	int deleteChatRoom(String chat_room_idx);
 }

@@ -15,12 +15,19 @@
 	height: 100%;
 }
 
-.product_info_wrap {
+.chat_msg_info_wrap {
+	margin-bottom: 5px;
+}
+
+.product_info_wrap, .chat_member_wrap {
+	height: 100px;
+	border: 1px solid gray;
 	display:flex;
 	justify-content: space-between;
 	align-items: center;
 	
 }
+
 
 #msgArea {
 	width: 500px;
@@ -28,7 +35,3 @@
 	overflow: auto;
 }
 
-.product_info_wrap, .chat_member{
-	height: 100px;
-	border: 1px solid gray;
-}

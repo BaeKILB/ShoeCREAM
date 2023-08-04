@@ -62,6 +62,30 @@
 			product_idx = #{product_idx}
 			;
 	</select>
+	
+	<select id="selectJungProductExtend" resultType="map">
+		SELECT *
+		FROM 
+			(
+				SELECT jp.product_idx, mem_idx, product_title, product_info, product_payment, 
+				lc_code, mc_code, product_date, product_readcount, product_brand, 
+				product_size, product_selector, product_price, product_status, product_sell_status, 
+				product_location, product_buyer_idx, image1, image2, image3, image4, image_path
+				FROM
+					jung_product jp
+					LEFT JOIN
+					product_image img 
+					ON jp.product_idx = img.product_idx 
+				WHERE
+					jp.product_idx = #{product_idx}
+			) jp1
+			LEFT JOIN
+			mem_info mi
+			ON
+			jp1.mem_idx = mi.mem_idx
+		;			
+	</select>
+	
 	<select id="selectJungProductCount" parameterType="JungProductVO">
 		SELECT count(product_idx)
 		FROM 
@@ -81,5 +105,12 @@
 			</if>
 			;
 	</select>
+
+	<update id="updateJungBuyerIdx">
+		UPDATE FROM jung_product
+		SET product_buyer_idx = #{product_buyer_idx}
+		WHERE product_idx = #{product_idx}
+		; 
+	</update>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.pj2.shoecream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,11 @@ public class JungProductService {
 	// 중고 상품 정보 idx로 하나 불러오기
 	public JungProductVO getJungProduct(JungProductVO jproduct) {
 		return mapper.selectJungProduct(jproduct);
+	}
+	
+	// 중고 상품 정보로 이미지 , 판매자 정보 등 가져오기
+	public Map<String,Object> getJungProductExtend(String product_idx) {
+		return mapper.selectJungProductExtend(product_idx);
 	}
 	
 	public JungProductVO getJungProductChat(String product_idx) {

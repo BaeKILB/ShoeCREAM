@@ -11,15 +11,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>결제하기</title>
-<link href="${pageContext.request.contextPath }/resources/css/common.css" rel="stylesheet">
+<!-- 부트스트랩 -->
+<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
+<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
+<link href="${pageContext.request.contextPath }/resources/css/etc/common.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/pay/pay_form.css" rel="stylesheet">
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet"> --%>
 <!-- jQuery -->
-<%-- <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script> --%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <!-- 아임포트 -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+
+
+
 
 </head>
 <body>
@@ -28,7 +33,7 @@
 	</header>
 	<section id="sec_con" class="inr res_page">
 <!-- 		<form action="resInfoPro" method="post"> -->
-		<form action="resInfoPro" method="post">
+		<form action="payPro" method="post">
 			<input type="hidden" name="product_selector" value="${map.product_selector }">
 			<input type="hidden" name="product_idx" value="${map.product_idx }">
 			<input type="hidden" name="pay_total" class="pay_total" value="${map.product_price }">
@@ -62,11 +67,11 @@
 				<div class="txt_sec_p">
 					<p>
 						<span>닉네임</span>
-						<span class="sellerNickname">${map.mem_seller_nickname}</span>
+						<span class="sellerNickname">${map.mem_nickname}</span>
 					</p>
 					<p>
 						<span>유저 점수</span>
-						<span><b id="sellerRank"></b>${map.mem_seller_rank}</span>
+						<span><b id="sellerRank"></b>${map.mem_rank}</span>
 					</p>
 					<p >
 						<span>판매 횟수</span>
@@ -74,7 +79,6 @@
 					</p>
 				</div>
 			</fieldset>
-			
 			<ul class="res_page_wrap">
 				<li>
 					<div class="menu_tit ">
@@ -83,7 +87,7 @@
 					<ul class="side_sub">
 						<li class="payment_wrap">
 							<div class="payment_p active" id="box0" style="cursor : pointer;">
-								<input type="radio" name="pay_method" id="pointPay" value="1">슈페이
+								<input type="radio" name="pay_method" id="pointPay" value="1" checked>슈페이
 							</div>
 							<div class="payment_p" id="box1" style="cursor : pointer;">
 								<input type="radio" name="pay_method" id="card" value="0">신용/체크카드
@@ -100,6 +104,8 @@
 							$('.payment_p').click(function() {
 								$(this).addClass('active');
 								$(this).siblings('.payment_p').removeClass('active'); 
+								$(this).find("input[name='pay_method']").prop("checked",true);
+								
 							});
 					</script>
 				</li>
@@ -206,37 +212,9 @@
 // 				}
 				
 				document.addEventListener('DOMContentLoaded', function() {
-					  totalAmount = ${rentPrice};
-					  var formattedTotalAmount = addCommas(totalAmount);
-					  document.querySelector('.resAmount b').innerText = formattedTotalAmount;
+					  totalAmount = ${map.product_price};
 				});
-				
-				 function getIns(event) {
-					    var selectedValue = event.target.value;
-					    var notSelect = 0;
-					    var insuSelect = 10000;
-					    
-					    var plusTotalAmount;
-					    if(selectedValue == '선택안함') {
-						     plusTotalAmount = totalAmount + 0;
-					    	 document.querySelector('#ins_result').innerText = addCommas(notSelect);
-					    } else {
-					    	 insuSelect = 10000 * (days + 1);
-					    	 plusTotalAmount = totalAmount + 10000 * (days + 1);
-					    	 document.querySelector('#ins_result').innerText = addCommas(insuSelect);
-					    }
-					    
-// 					    console.log(totalAmount + document.querySelector('#ins_result').innerText);
-					    
-					    var formattedTotalAmount = addCommas(plusTotalAmount);
-					    
-						document.querySelector('.resTotalAmount').innerText = formattedTotalAmount;
-						
-						// 최종 결제 금액 value 히든으로 넘기기
-						document.querySelector('.pay_total').value = plusTotalAmount;
-				 }
-				 
-				
+
 			</script>
 			
 			<script>
@@ -259,6 +237,7 @@
 				const IMP = window.IMP;
 				IMP.init('imp31006863'); // 가맹점 식별코드
 			
+			// 결제하기 버튼 누를떄 동작
 				function requestPay() {
 					
 					// 결제 API 실행 전 유효성 검사
@@ -266,12 +245,20 @@
 						return false;
 					}
 					
+					//결제 체크박스 들고오기
+					let checkShoePay = document.getElementsByName("pay_method");
+					if(checkShoePay[0].checked){
+						window.open("shoePay?product_idx=" + ${map.product_idx } +"&product_selector=" + ${map.product_selector }
+						,"shoePay",'width=700, height=700')
+						return false;		
+					}
+					
 					// IMP.request_pay(param, callback) 결제창 호출
 					IMP.request_pay({ // param
 						pg : "html5_inicis", // 
 						pay_method : "card", // 결제방법
-						merchant_uid : "${member.mem_idx}" + new Date().getTime(), // 가맹점에서 구별할 수 있는 고유 id
-						name : "${carInfo.car_model}(${carInfo.car_company})", // 주문명
+						merchant_uid : "${map.mem_idx}" + new Date().getTime(), // 가맹점에서 구별할 수 있는 고유 id
+						name : "${map.product_title}(${map.mem_seller_nickname})", // 주문명
 // 						amount : document.querySelector('.pay_total').value, // 가격
 						amount : 100, // 가격
 						buyer_email : "${member.mem_id}", // 구매자 이메일
