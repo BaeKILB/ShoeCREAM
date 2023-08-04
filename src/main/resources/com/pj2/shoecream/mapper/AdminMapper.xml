@@ -405,7 +405,6 @@
 		SELECT COUNT(*)
 				FROM cream_item
 	</select>
-
 	
 
 </mapper>

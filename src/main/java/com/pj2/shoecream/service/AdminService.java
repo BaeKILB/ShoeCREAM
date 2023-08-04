@@ -164,6 +164,7 @@ public class AdminService {
 		return mapper.selectAuctionCount();
 	}
 
+	
 	// 크림 상품 수 세기
 	public int getCreamCount() {
 		return mapper.selectCreamCount();

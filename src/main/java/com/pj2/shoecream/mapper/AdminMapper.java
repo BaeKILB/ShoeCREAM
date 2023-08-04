@@ -88,6 +88,8 @@ public interface AdminMapper {
 	int selectAuctionCount();
 	// 크림 상품 수 세기
 	int selectCreamCount();
+	
+	
 	}
 
 	
