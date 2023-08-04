@@ -10,6 +10,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminMain.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminBoard.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/resources/css/admin/adminCream.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
@@ -90,32 +91,50 @@ function deleteProcream(ci_code) {
 						</tbody>
 					</table>
 				</div>
-				<div class="list_pager_wrap">
-						<nav class="pg_wrap">
-							<span class="pg"> 
-							<c:if test="${pageMaker.cri.pageNum > 1 }">
-									<a href="creamProduct?pageNum=${pageMaker.cri.pageNum - 1 }" class="pg_page pg_prev">이전</a>
-							</c:if> 
-								<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-									<c:choose>
-										<c:when test="${pageMaker.cri.pageNum == num }">
-											<strong class="pg_current">${num}</strong>
-										</c:when>
-										<c:otherwise>
-											<a href="creamProduct?pageNum=${num }" class="pg_page">${num }</a>
-										</c:otherwise>
-									</c:choose>
-								</c:forEach> 
-								<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
-									<a href="creamProduct?pageNum=${pageMaker.cri.pageNum + 1 }" class="pg_page pg_next">다음</a>
-								</c:if>
-							</span>
-						</nav>
-					</div>
+				<ul id="pageList">
+						<c:if test="${pageMaker.cri.pageNum > 1 }">
+							<li class='pgi'>
+								<a href="creamProduct?pageNum=${pageMaker.cri.pageNum - 1 }" class='allprev'><i class='fa fa-angle-double-left pgi' aria-hidden='true'></i></a>
+							</li>
+						</c:if>
+						<c:if test="${pageMaker.cri.pageNum > 1 }">
+							<li class='pgi'>
+							<a href="creamProduct?pageNum=${pageMaker.cri.pageNum - 1 }" class='prev'><i class='fa fa-angle-left pgi' aria-hidden='true'></i></a>
+							</li>
+						</c:if>
+						<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+							<c:choose>
+								<c:when test="${pageMaker.cri.pageNum == num }">
+									<li>
+										<a href="creamProduct?pageNum=${num }" class='pageNum current'>${num }</a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li>
+										<a href="creamProduct?pageNum=${num }" class='pageNum'>${num }</a>
+									</li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
+							<li class='pgi'>
+								<a href="creamProduct?pageNum=${pageMaker.cri.pageNum + 1 }" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
+							</li>
+						</c:if>
+						<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
+							<li class='pgi'>
+								<a href="creamProduct?pageNum=${pageMaker.cri.pageNum + 1 }" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
+							</li>
+						</c:if>
+					</ul>
 				</div>
 			</div>
 		</section>
-		<script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.cont_li_wrap.creamList').show();
+				$('.cont_item_list.creamPro').addClass('active');
+			});
 		    $(document).on('click', '.toggle_wrap', function() {
 		    	if($('#admin_cont').css('margin-left') === '0px') {
 		    		$('#admin_cont').show().animate({
@@ -127,6 +146,6 @@ function deleteProcream(ci_code) {
 					}, 200);
 		    	}
 		    });
-	  </script>
+		</script>
 </body>
 </html>

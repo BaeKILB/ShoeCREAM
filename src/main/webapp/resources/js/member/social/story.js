@@ -233,6 +233,7 @@ function addComment(posts_idx) {
 		
 	}).fail(error=>{
 		console.log("실패", error);
+		alert("오류 : " + error.responseJSON.data.comment_content)
 	});
 
 	commentInput.val("");

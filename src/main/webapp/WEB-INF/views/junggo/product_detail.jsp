@@ -137,23 +137,23 @@
 			<div class="view_info col-sm-12 col-lg-6">
 
 				<div class="view_cont">
-					<p class="product_catrgory">HOME > 
-						<c:choose>
-							<c:when test="${jungGoNoh.lc_code == '1'}">
-								남성 >
-								<c:choose>
-									<c:when test="${jungGoNoh.mc_code == 1}">운동화</c:when>
-									<c:when test="${jungGoNoh.mc_code == 2}">구두</c:when>						
-								</c:choose>
-							</c:when>
-							<c:when test="${jungGoNoh.lc_code == '2'}">
-								여성 > 
-								<c:choose>
-									<c:when test="${jungGoNoh.mc_code == 1}">운동화</c:when>
-									<c:when test="${jungGoNoh.mc_code == 2}">구두</c:when>						
-								</c:choose>
-							</c:when>
-						</c:choose>
+					<p class="product_catrgory">HOME > ${jungGoNoh.lc_name} > ${jungGoNoh.mc_name}
+<%-- 						<c:choose> --%>
+<%-- 							<c:when test="${jungGoNoh.lc_code == '1'}"> --%>
+<!-- 								남성 > -->
+<%-- 								<c:choose> --%>
+<%-- 									<c:when test="${jungGoNoh.mc_code == 1}">운동화</c:when> --%>
+<%-- 									<c:when test="${jungGoNoh.mc_code == 2}">구두</c:when>						 --%>
+<%-- 								</c:choose> --%>
+<%-- 							</c:when> --%>
+<%-- 							<c:when test="${jungGoNoh.lc_code == '2'}"> --%>
+<!-- 								여성 >  -->
+<%-- 								<c:choose> --%>
+<%-- 									<c:when test="${jungGoNoh.mc_code == 1}">운동화</c:when> --%>
+<%-- 									<c:when test="${jungGoNoh.mc_code == 2}">구두</c:when>						 --%>
+<%-- 								</c:choose> --%>
+<%-- 							</c:when> --%>
+<%-- 						</c:choose> --%>
 					 
 					</p>
 					<div class="product_name">
@@ -301,6 +301,9 @@
 						<%-- <c:forEach var="reviewListS" items="${map.reviewListS }">--%>
 						<img class="buyer_profile" src="${pageContext.request.contextPath}/resources/img/junggo/profile_m.png">
 							<span class="rev_name">바지산사람DD</span>
+							<a class="modify_btn" href="${pageContext.request.contextPath}/registJReviewPorm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시작성</a>
+							<a class="modify_btn" href="${pageContext.request.contextPath}/modifyJReviewPorm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시수정</a>
+							<a class="modify_btn" href="${pageContext.request.contextPath}/reviewModify?pageNum=&searchType=&searchKeyword=&rev_idx=">임시삭제</a>
 							<span class="rev_date">23-07-19</span>
 							<ul class=""> 
 								<li class="">

@@ -67,9 +67,9 @@
 			<div class="brand_box">
 				<label> 
 					<span>행위 유형</span> 
-					<input type="text" class="brand" name="report_div" /> 
+					<input type="text" class="brand" name="report_div" required="required"/> 
 					<select name="inputBrand" onchange="sellectBrand(this.value)">
-						<option value="">기타(직접입력)</option>
+						<option value="" selected="selected">기타(직접입력)</option>
 						<option value="광고성 콘텐츠(판매) 입니다.">광고성 콘텐츠(판매) 입니다.</option>
 						<option value="상품 관련 정보가 부정확합니다.">상품 관련 정보가 부정확합니다.</option>
 						<option value="거래 금지 품목으로 판단됩니다.">거래 금지 품목으로 판단됩니다. ex> 신발 이외</option>							
@@ -86,10 +86,10 @@
 	<div class="eighthContainner">
 		<div class="eighth_title">신고 상세 이유</div>
 		<div class="eighth_content">
-			<textarea class="product_detail" name="report_detail" rows="" cols=""
-				onfocus="this.select()">신고 당시 상황에 대한 자세한 설명을 적어주세요</textarea>
+			<textarea class="product_detail" name="report_detail" rows="" cols="" placeholder="신고 당시 상황에 대한 자세한 설명을 적어주세요" required="required"
+				onfocus="this.select()"></textarea>
 				<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNohReport.product_idx}"/>
-				<input type="hidden" name="favorite_check" id="buyier_idx" value="${jungGoNohReport.buyier_idx}"/>
+				<input type="hidden" name="buyier_idx" id="buyier_idx" value="${jungGoNohReport.buyier_idx}"/>
 				<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNohReport.mem_idx}"/>
 		</div>
 	</div>

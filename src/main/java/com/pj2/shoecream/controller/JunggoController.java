@@ -858,7 +858,7 @@ public class JunggoController {
 				
 					if(insertReport < 0) {
 							model.addAttribute("msg", "신청 실패");
-							return "html/car_item/review/fail_back";
+							return "inc/fail_back";
 							} 	
 						} 
 					else { //조회 내역이 있을때
@@ -869,7 +869,7 @@ public class JunggoController {
 			return "redirect:/productDetail?product_idx="+product_idx;
 		}
 		
-		//--------------------reportCountTable--------------------------
+		//--------------------신고 조회--------------------------
 		
 		@GetMapping("reportCountTable")
 		public String reportCountTable(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
@@ -912,9 +912,180 @@ public class JunggoController {
 			return "junggo/junggo_report_table";
 			
 		}
+		//-----------------------리뷰 작성 폼 이동-------------------------
+		@GetMapping("registJReviewPorm")
+		public String registReviewPorm(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh){
+			
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			}
+			catch(Exception e) {
+				// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+				model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+				model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+				return "inc/fail_forward";
+			}
+			
+			// product_idx 는 무조건 받아와야함
+			if(product_idx == null) {
+				model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
+				return "inc/fail_back";
+			}
+			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
+			jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
+			jungGoNoh.setProduct_idx(product_idx);			
+			
+			JungGoNohVO jungGoNohReview = jungGoNohService.getProduct(product_idx);
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			String buyier_nickname = mPrincipalDetails.getMember().getMem_nickname();
+			jungGoNohReview.setBuyier_nickname(buyier_nickname);
+			model.addAttribute("jungGoNohReview", jungGoNohReview);
+			
+
+			return "junggo/review_write_form";
+		}
+		
+		//-----------------------리뷰 작성----------------------------------
+			@PostMapping("registJReviewPro")
+			public String registJReviewPro(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
+					JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
+				try {			
+					Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+					PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				}
+				catch(Exception e) {
+					// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+					model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+					model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+					return "inc/fail_forward";
+				}
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int writer_idx = mPrincipalDetails.getMember().getMem_idx();
+
+				jungGoNoh.setBuyier_idx(writer_idx);
+				jungGoNoh.setProduct_idx(product_idx);
+				jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
+				System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
+				
+				int review_star = jungGoNoh.getReview_star();
+				
+				if(review_star == 0) {
+					model.addAttribute("msg", "별점을 입력해주세요");
+					return "inc/fail_back";
+				} 			
+				
+				//입력 전 중복 조회
+				String ifReview = jungGoNohService.getReview(jungGoNoh);
+				model.addAttribute("ifReview",ifReview);
+				//System.out.println("&&&&&&&&&&jungGoNoh?"+jungGoNoh);
+				//System.out.println("&&&&&&&&&&ifReport?"+ifReport+"끝");
+				if(ifReview == null) { //조회 내역이 없을 때
+				
+						//입력 작업 시작	
+					int insertReview = jungGoNohService.registReview(jungGoNoh);
+					
+						if(insertReview < 0) {
+								model.addAttribute("msg", "신청 실패");
+								return "inc/fail_back";
+								} 	
+							} 
+						else { //조회 내역이 있을때
+								model.addAttribute("msg", "이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+								System.out.println("^^^^^^^^^이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+						}
+
+				
+				return "home";
+			}
 		
 		
+		//-------------------------- 리뷰 수정 폼 이동-------------------
 		
+			@GetMapping("modifyJReviewPorm")
+			public String modifyReviewPorm(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh){
+				
+				try {			
+					Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+					PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				}
+				catch(Exception e) {
+					// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+					model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+					model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+					return "inc/fail_forward";
+				}
+				
+				// product_idx 는 무조건 받아와야함
+				if(product_idx == null) {
+					model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
+					return "inc/fail_back";
+				}
+				jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
+				jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
+				jungGoNoh.setProduct_idx(product_idx);			
+				
+				JungGoNohVO jungGoNohReview = jungGoNohService.getReview2(jungGoNoh);
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				String buyier_nickname = mPrincipalDetails.getMember().getMem_nickname();
+				jungGoNohReview.setBuyier_nickname(buyier_nickname);
+				model.addAttribute("jungGoNohReview", jungGoNohReview);
+				
+				return "junggo/review_modify_form";
+			}
+			
+			
+			
+			
+		//-------------------------리뷰 수정-----------------------------
+			
+			@PostMapping("modifyReviewPro")
+			public String modifyReviewPro(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
+					JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
+				try {			
+					Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+					PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				}
+				catch(Exception e) {
+					// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+					model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+					model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+					return "inc/fail_forward";
+				}
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int writer_idx = mPrincipalDetails.getMember().getMem_idx();
+
+				jungGoNoh.setBuyier_idx(writer_idx);
+				jungGoNoh.setProduct_idx(product_idx);
+				jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
+				System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
+				
+				
+				int review_star = jungGoNoh.getReview_star();
+				
+				if(review_star == 0) {
+					model.addAttribute("msg", "별점을 입력해주세요");
+					return "inc/fail_back";
+				} 			
+				
+				
+				int ModifySuccess = jungGoNohService.modifyReview(jungGoNoh);
+			
+				if(ModifySuccess < 0) {
+						model.addAttribute("msg", "신청 실패");
+						return "inc/fail_back";
+				} 	
+						
+				
+				return "home";
+			}
+		//-------------------------리뷰 삭제-----------------------------
+			
+			
 		//------------------------- 예약취소 폼 이동---------------------
 		@GetMapping("resCancel")
 		public String resCancel() {

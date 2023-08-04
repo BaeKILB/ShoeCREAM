@@ -92,9 +92,28 @@ public class JungGoNohService {
 			String ifReport = jungGoNohMapper.selectReports(jungGoNoh);
 			return ifReport;
 		}
-		//==================신고 조회(리스트 가져오기)
+		//==================신고 조회(리스트 가져오기)========================
 		public List<JungGoNohVO> moreReportListSmall(JungGoNohVO jungGoNoh) {
 			return jungGoNohMapper.moreReportListSmall(jungGoNoh);
+		}
+		//====================리뷰 조회(중복확인)=========================
+		public String getReview(JungGoNohVO jungGoNoh) {
+			String ifReview = jungGoNohMapper.selectReview(jungGoNoh);
+			return ifReview;
+		}
+		//==================리뷰 작성=====================================
+		public int registReview(JungGoNohVO jungGoNoh) {
+			return jungGoNohMapper.insertReview(jungGoNoh);
+		}
+		// ============================= 리뷰 조회=======================
+		public JungGoNohVO getReview2(JungGoNohVO jungGoNoh) {
+			JungGoNohVO jungGoNohReport = jungGoNohMapper.selectReview2(jungGoNoh);
+			return jungGoNohReport;
+		}
+		//리뷰수정
+		public int modifyReview(JungGoNohVO jungGoNoh) {
+			// TODO Auto-generated method stub
+			return jungGoNohMapper.modifyReview(jungGoNoh);
 		}
 
 }

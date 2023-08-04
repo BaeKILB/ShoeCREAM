@@ -37,6 +37,8 @@ public class JungGoNohVO {
 		private String product_payment; //결제수단
 		private int lc_code; // 대분류
 		private int mc_code; // 중분류
+		private String lc_name; // 대분류 이름
+		private String mc_name; // 중분류 이름
 		//private int sc_code; // 소분류 사라짐. 
 		private Timestamp product_date; //작성시간
 		private int product_readcount; //조회수
@@ -70,13 +72,13 @@ public class JungGoNohVO {
 			private String favorite_check; //찜 체크(찜한 여부)
 			private int dibs_count; // 물건 당 찜 갯수
 		//===============================리뷰=====================================
-			private int review_idx; //리뷰코드
-			private String review_id; //리뷰어 아이디
-			private String seller_id; //리뷰 대상 아이디
+			private int jung_rev_idx; //리뷰코드
+			//상품코드 재사용
+			//리뷰어 아이디 buyier_idx 재사용
+			//리뷰 대상 아이디 mem_idx 재사용
 			private String review_content; //리뷰 내용
 			private Timestamp review_date; //리뷰 날짜
-			private int review_score; // 리뷰 점수
-			private String review_type; // 리뷰 타입(중고,경매,크림)
+			private int review_star; // 리뷰 점수
 		//===============================신고===================================
 			
 			private int report_idx; //신고코드

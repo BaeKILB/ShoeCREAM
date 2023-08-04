@@ -68,7 +68,7 @@ public class AdminController {
 		model.addAttribute("memberCount",memberCount);
 		
 		// 중고상품 수 세기
-		int productCount = service.getProductCount();
+		int productCount = service.getProductCount();  
 		model.addAttribute("productCount", productCount);
 		
 		// 경매상품 수 세기
@@ -78,9 +78,7 @@ public class AdminController {
 		// 크림 상품 수 세기
 		int creamCount = service.getCreamCount();
 		model.addAttribute("creamCount",creamCount);
-		
-		
-		
+
 		return "admin/admin_main";
 	}
 	

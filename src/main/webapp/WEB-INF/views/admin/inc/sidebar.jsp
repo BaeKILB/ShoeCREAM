@@ -20,8 +20,8 @@
 				</a>
 			</div>
 			<ul class="cont_list">
-				<li class="cont_item_wrap">
-					<a class="cont_item_a nSub" href="AdminMain">
+				<li class="cont_item_wrap adminMain">
+					<a class="cont_item_a nSub adminMain" href="AdminMain">
 						<i class="fa fa-home" aria-hidden="true"></i>
 						메인페이지
 					</a>
@@ -75,9 +75,9 @@
 								<i class="fa fa-star" aria-hidden="true"></i>
 								크림 관리
 							</a>
-							<ul class="cont_li_wrap joongList">
+							<ul class="cont_li_wrap creamList">
 								<li class="cont_item_b">
-									<a class="cont_item_list joongPro" href="creamProduct">크림 상품 관리</a>
+									<a class="cont_item_list creamPro" href="creamProduct">크림 상품 관리</a>
 								</li>
 							</ul>
 						</li>
@@ -123,10 +123,10 @@
 							</a>
 							<ul class="cont_li_wrap reportList">
 								<li class="cont_item_b">
-									<a class="cont_item_list repList" href=reportProcess>중고 신고 목록 조회</a>
+									<a class="cont_item_list jrepList" href=reportProcess>중고 신고 목록 조회</a>
 								</li>
 								<li class="cont_item_b">
-									<a class="cont_item_list repList" href="auctionReport">경매 신고 목록 조회</a>
+									<a class="cont_item_list arepList" href="auctionReport">경매 신고 목록 조회</a>
 								</li>
 							</ul>
 						</li>

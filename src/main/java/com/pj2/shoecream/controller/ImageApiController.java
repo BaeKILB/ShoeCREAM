@@ -1,13 +1,19 @@
 package com.pj2.shoecream.controller;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.handler.CustomValidationApiException;
+import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.SocialCommentService;
 import com.pj2.shoecream.service.SocialImageService;
 import com.pj2.shoecream.service.SocialLikeService;
@@ -87,12 +95,23 @@ public class ImageApiController {
 //	, @RequestParam("comment_content") String comment_content, @RequestParam("posts_idx") int posts_idx
 //	@ResponseBody
 	@PostMapping("/api/comment")
-	public ResponseEntity<?> commentInsert(@RequestBody SocialCommentVO socialCommentVO) {
+	public ResponseEntity<?> commentInsert(@Valid @RequestBody SocialCommentVO socialCommentVO, BindingResult bindingResult) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int sId = mPrincipalDetails.getMember().getMem_idx();
 		String mem_nickname = mPrincipalDetails.getMember().getMem_nickname();
 		
+		if (bindingResult.hasErrors()) {
+			System.out.println("여기까지오긴 오니 ..?");
+		     Map<String, String> errorMap = new HashMap<>();
+		     for (FieldError error : bindingResult.getFieldErrors()) {
+		         errorMap.put(error.getField(), error.getDefaultMessage());
+		         System.out.println("================");
+		         System.out.println(error.getDefaultMessage());
+		         System.out.println("================");
+		     }
+		     throw new CustomValidationApiException("유효성 검사 실패", errorMap);
+		}
 		socialCommentVO.setMem_idx(sId);
 		socialCommentVO.setMem_nickname(mem_nickname);
 		SocialCommentVO comment = socialImageService.writeComment(socialCommentVO);

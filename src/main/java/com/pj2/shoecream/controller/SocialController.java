@@ -67,7 +67,12 @@ public class SocialController {
 		
 		return "member/social/profile";
 	}
-  
+	
+	@GetMapping("/social/{posts_idx}/detail")
+	public String profileDetail() {
+		return "member/social/story2";
+	}
+	
 //	=======================social-image========================
 	
 	// 소셜 포스트 페이지
@@ -91,6 +96,16 @@ public class SocialController {
         SocialImageService.ImageUpload(socialVO, mPrincipalDetails, session, model);
 		return "redirect:/social/"+mPrincipalDetails.getMember().getMem_idx();
 		
+	}
+//	===================social_ex====================
+	@GetMapping("/social/mainex")
+	public String socialMainEx() {
+		return "member/socialex/instamain";
+	}
+	
+	@GetMapping("/social/profileex")
+	public String socialProfileEx() {
+		return "member/socialex/instaprofile";
 	}
 	
 }

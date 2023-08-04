@@ -182,3 +182,103 @@ i.fa.pgi {
 }
 
 /* 뷰페이지 */
+.list {
+    border-top: 2px solid #222;
+}
+.subject {
+	padding: 0.7rem 0.5rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+    text-align: center;
+}
+.write_info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+.write_box {
+    width: 33.33%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.write_t {
+	display: inline-block;
+    width: 40%;
+    font-size: 1rem;
+    background: #f5f5f5;
+    padding: 0.5rem;
+    text-align: center;
+}
+.write_c {
+    display: inline-block;
+    width: 60%;
+    font-size: 1rem;
+    padding: 0.5rem;
+    text-align: center;
+}
+.write_cont {
+	font-size: 1rem;
+    padding: 1.2rem;
+    border-bottom: 1px solid #ddd;
+}
+.list_wrap.answer {
+	margin-top: 3rem;
+}
+.mod_box {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.5rem;
+}
+.list_btn {
+	display: inline-block;
+    padding: 0.2rem 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #624bff;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border: 1px solid;
+    border-radius: 0.375rem;
+    background-color: transparent;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.list_btn:hover {
+	background-color: #624bff;
+	color: white;
+}
+.list_btn:nth-child(n+2) {
+	margin-left: 5px;
+}
+.inputBox {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    resize: none;
+}
+.write_cont .inputBox {
+    height: 400px;
+    font-size: 1rem;
+}
+.modify .write_cont {
+	padding: 0.7rem 0.5rem;
+}
+.mem_list_wrap {
+  	width: 100%;
+  	overflow: auto;
+	white-space: nowrap;
+}
+.list_wrap {
+	width: 100%;
+	min-width: 845px;
+}
