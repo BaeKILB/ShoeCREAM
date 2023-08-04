@@ -21,7 +21,7 @@
 	</header>
 	<div id="notice_cont">
 		<section id="sec_con" class="inr">
-			<form action="${pageContext.request.contextPath}/reviewWritePro" method="post" enctype="multipart/form-data">
+			<form action="${pageContext.request.contextPath}/modifytReviewPro" method="post" enctype="multipart/form-data">
 				<section id="board_wrap">
 					<section id="board_list" class="notice">
 						<div class="wrapper">
@@ -29,22 +29,23 @@
 								<ul class="list">
 									<li>
 										<div class="subject">
-											평가점수와 리뷰를 작성해주세요
+											평가점수와 리뷰를 작성해주세요<br>
+											거래완료 후 3일동안만 수정가능합니다.
 										</div>
 									</li>
 
 									<li class="write_scope">
 										<div id="myform">
 											<fieldset>
-													<input type="radio" name="rev_star" value="5" id="rate1" selected="selected">
+													<input type="radio" name="review_star" value="5" id="rate1" selected="selected">
 													<label for="rate1">⭐</label>
-													<input type="radio" name="rev_star" value="4" id="rate2">
+													<input type="radio" name="review_star" value="4" id="rate2">
 													<label for="rate2">⭐</label>
-													<input type="radio" name="rev_star" value="3" id="rate3">
+													<input type="radio" name="review_star" value="3" id="rate3">
 													<label for="rate3">⭐</label>
-													<input type="radio" name="rev_star" value="2" id="rate4">
+													<input type="radio" name="review_star" value="2" id="rate4">
 													<label for="rate4">⭐</label>
-													<input type="radio" name="rev_star" value="1" id="rate5">
+													<input type="radio" name="review_star" value="1" id="rate5">
 													<label for="rate5">⭐</label>
 											</fieldset>
 										</div>
@@ -52,9 +53,9 @@
 								</ul>
 
 								<div class="write_cont">
-
+										${jungGoNohReview}
 									<p>
-										<textarea rows="" cols="" class="inputBox" name="rev_content" placeholder="내용을 100자 이내로 입력해주세요. 남을 비방하는 말, 비속어, 음란성 글, 광고성이 포함된 글은 관리자 임의로 삭제될 수 있습니다." required="required" style="word-break:break-all;"></textarea>
+										<input type="text" class="inputBox" name="review_content" value="${jungGoNohReview.review_content}" style="word-break:break-all;"> 
 									</p>
 								</div>
 								<div class="mod_box">

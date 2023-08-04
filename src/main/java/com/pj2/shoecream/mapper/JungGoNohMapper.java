@@ -53,6 +53,18 @@ public interface JungGoNohMapper {
 	//신고 조회(리스트)
 	List<JungGoNohVO> moreReportListSmall(JungGoNohVO jungGoNoh);
 	
+	//리뷰 조회(중복 확인)
+	String selectReview(JungGoNohVO jungGoNoh);
+	
+	//리뷰 작성
+	int insertReview(JungGoNohVO jungGoNoh);
+	
+	//리뷰 조회
+	JungGoNohVO selectReview2(JungGoNohVO jungGoNoh);
+	
+	//수정 등록
+	int modifyReview(JungGoNohVO jungGoNoh);
+	
 
 	
 	

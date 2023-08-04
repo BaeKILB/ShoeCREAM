@@ -301,7 +301,9 @@
 						<%-- <c:forEach var="reviewListS" items="${map.reviewListS }">--%>
 						<img class="buyer_profile" src="${pageContext.request.contextPath}/resources/img/junggo/profile_m.png">
 							<span class="rev_name">바지산사람DD</span>
-							<a class="modify_btn" href="${pageContext.request.contextPath}/reviewModify?pageNum=&searchType=&searchKeyword=&rev_idx=">임시수정</a>
+							<a class="modify_btn" href="${pageContext.request.contextPath}/registJReviewPorm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시작성</a>
+							<a class="modify_btn" href="${pageContext.request.contextPath}/modifyJReviewPorm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시수정</a>
+							<a class="modify_btn" href="${pageContext.request.contextPath}/reviewModify?pageNum=&searchType=&searchKeyword=&rev_idx=">임시삭제</a>
 							<span class="rev_date">23-07-19</span>
 							<ul class=""> 
 								<li class="">
