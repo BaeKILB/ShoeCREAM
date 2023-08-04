@@ -10,6 +10,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/resources/css/admin/admin_question.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -89,38 +90,38 @@
 				<ul id="pageList">
 					<c:if test="${pageNum > 1 }">
 						<li class='pgi'>
-							<a href="" class='allprev'><i class='fa fa-angle-double-left pgi' aria-hidden='true'></i></a>
+							<a href="InquiryList?pageNum=1" class='allprev'><i class='fa fa-angle-double-left pgi' aria-hidden='true'></i></a>
 						</li>
 					</c:if>
 					<c:if test="${pageNum > 1 }">
 						<li class='pgi'>
-						<a href="" class='prev'><i class='fa fa-angle-left pgi' aria-hidden='true'></i></a>
+						<a href="InquiryList?pageNum=${pageNum - 1 }" class='prev'><i class='fa fa-angle-left pgi' aria-hidden='true'></i></a>
 						</li>
 					</c:if>
 					<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
 						<c:choose>
 							<c:when test="${pageNum eq i }">
 								<li>
-									<a href="" class='pageNum current'>${i }</a>
+									<a href="#" class='pageNum current'>${i }</a>
 								</li>
 							</c:when>
 							<c:otherwise>
 								<li>
-									<a href="" class='pageNum'>${i }</a>
+									<a href="InquiryList?pageNum=${i }" class='pageNum'>${i }</a>
 								</li>
 							</c:otherwise>
 						</c:choose>
-						<c:if test="${pageNum < pageInfo.maxPage }">
-							<li class='pgi'>
-								<a href="" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
-							</li>
-						</c:if>
-						<c:if test="${pageNum < pageInfo.maxPage }">
-							<li class='pgi'>
-								<a href="" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
-							</li>
-						</c:if>
 					</c:forEach>
+					<c:if test="${pageNum < pageInfo.maxPage }">
+						<li class='pgi'>
+							<a href="InquiryList?pageNum=${pageNum + 1 }" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
+						</li>
+					</c:if>
+					<c:if test="${pageNum < pageInfo.maxPage }">
+						<li class='pgi'>
+							<a href="InquiryList?pageNum=${pageInfo.maxPage }" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
+						</li>
+					</c:if>
 				</ul>
 			</div>
 		</div>
