@@ -166,7 +166,7 @@
 					<div class="product_viewStatus">
 						🕐&nbsp;<div id="prd_date"></div> &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  ${jungGoNoh.dibs_count }
 						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; ${jungGoNoh.report_count }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="${pageContext.request.contextPath}/reportCountTable?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}" class="report_btn" >신고조회</a>
+						<a href="${pageContext.request.contextPath}/reportCountTable?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}" class="report_btn" onclick="window.open(this.href, '_blank', 'width=500, height=400'); return false;">신고조회</a>
 					</div>
 					<div class="product_productStatus">
 						상품 상태 : ${jungGoNoh.product_status}<br>
@@ -258,7 +258,7 @@
 						판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<br>
 						유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<br>
 						<br><!-- a href="${pageContext.request.contextPath }/reviewList -->
-						<a href="${pageContext.request.contextPath}/registReportPorm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message">여기를 클릭하여 중고나라 고객센터로 신고해주시기 바랍니다.</a>
+						<a href="${pageContext.request.contextPath}/registReportPorm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message" onclick="window.open(this.href, '_blank', 'width=800, height=400'); return false;">여기를 클릭하여 중고나라 고객센터로 신고해주시기 바랍니다.</a>
 					</div>
 				</div>
 				<div class="product_content">

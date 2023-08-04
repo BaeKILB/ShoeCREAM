@@ -1,1 +1,10 @@
 @charset "UTF-8";
+
+.charts-container {
+	display: flex;
+}
+
+.chart-card {
+	flex: 1;
+	margin-right: 20px; /* 여백을 줄 수 있음 */
+}

@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+body {
+	width:500px;
+}
+
+
+.titleContainner {
+	width:100%;
+
+}
+
+.title_title {
+	width:100%;
+	font-size: 35px;
+	font-weight: 600;
+	color: #333;
+	border-bottom: 3px solid #ddd;
+	margin-bottom: 10px;
+}
+tr {
+	padding:5px;
+	margin:10px;
+}
+td {
+	padding:5px;
+	margin:10px;
+}

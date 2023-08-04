@@ -99,9 +99,11 @@ public class ImageApiController {
 		return new ResponseEntity<>(new CMRespDto<>(1,"댓글쓰기성공",comment),HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/api/comment?{id}")
-	public ResponseEntity<?> commentInsert(@PathVariable int mem_idx) {
-		return null;
+	@DeleteMapping("/api/comment/{comment_idx}")
+	public ResponseEntity<?> commentInsert(@PathVariable int comment_idx) {
+		socialImageService.deleteComment(comment_idx);
+		System.out.println("삭제 comment_idx 뭐냐? " + comment_idx);
+		return new ResponseEntity<>(new CMRespDto<>(1, "댓글 삭제 성공",null), HttpStatus.OK);
 	}
 	
 }

@@ -134,15 +134,7 @@ LEFT OUTER JOIN product_image pi
 	   LIMIT 3;
 	</select>
 	
-	
-	<!-- 신고 등록 시 이전 내용 조회 -->
-	<select id="getReport" resultType="com.pj2.shoecream.vo.JungGoNohVO">
-	  SELECT product_idx, seller_idx, reporter_idx 
-	      FROM joonggo_report
-	     WHERE product_idx = #{product_idx}
-	       AND seller_idx = #{mem_idx}
-	       AND reporter_idx = #{buyier_idx}
-	</select>
+
 	
 	<!-- 신고 등록 -->
 	<insert id="insertReport">
@@ -160,6 +152,7 @@ LEFT OUTER JOIN product_image pi
 				
 			)
 	</insert>
+	
 		<!-- 신고 등록 시 이전 내용 조회 -->
 	<select id="selectReports" parameterType="com.pj2.shoecream.vo.JungGoNohVO">
 	  SELECT product_idx
@@ -171,9 +164,12 @@ LEFT OUTER JOIN product_image pi
 	
 	
 	<select id="moreReportListSmall" resultType="map" parameterType="com.pj2.shoecream.vo.JungGoNohVO">
-	  SELECT report_idx, report_content, product_idx, seller_idx, reporter_idx, report_div, report_detail  
-	      FROM joonggo_report
-	     WHERE seller_idx = #{product_idx}
+	  SELECT jr.report_idx, jr.report_content, jr.product_idx, jr.seller_idx, jr.reporter_idx, jr.report_div, jr.report_detail
+	  		, mi.mem_idx, mi.mem_nickname
+	      FROM joonggo_report jr
+	      JOIN mem_info mi
+	       ON jr.seller_idx = mi.mem_idx
+	     WHERE jr.seller_idx = #{mem_idx}
 	</select>
 	
 </mapper>

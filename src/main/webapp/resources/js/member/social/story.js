@@ -6,6 +6,11 @@
 	(4) 댓글쓰기
 	(5) 댓글삭제
  */
+ // 현재 로그인 한 유저의 mem_idx
+ let principalId = $("#principalId").val();
+ console.log("로그인한 유저 :", principalId)
+ 
+ 
 $(document).ready(function () {
     // 스크롤 이벤트 초기화
     initScrollEvent();
@@ -100,18 +105,22 @@ function getStoryItem(image) {
 		<div id="storyCommentList-${image.posts_idx}">`;
 		
 			image.comment_contents.forEach((comment)=>{
-				item+=`<div class="sl__item__contents__comment" id="storyCommentItem-${comment.posts_idx}">
+				item+=`<div class="sl__item__contents__comment" id="storyCommentItem-${comment.comment_idx}">
 				<p>
 					<b>${comment.mem_nickname} :</b> ${comment.comment_content}
-				</p>
-
-				<button>
+				</p>`;
+				
+			if (principalId == comment.mem_idx) {
+				item +=
+				`<button onclick="deleteComment(${comment.comment_idx})">
 					<i class="fas fa-times"></i>
-				</button>
-
+				</button>`;
+			}
+		item+=`
 			</div>`;
 			});
-		item+=`
+		
+		item += `
 		</div>
 
 		<div class="sl__item__input">
@@ -211,12 +220,13 @@ function addComment(posts_idx) {
 		let comment = res.data;
 		
 		let content = `
-				  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.posts_idx}"> 
+				  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.comment_idx}"> 
 				    <p>
 				      <b>${comment.mem_nickname} :</b>
 				      ${comment.comment_content}
 				    </p>
-				    <button><i class="fas fa-times"></i></button>
+				  <button onclick="deleteComment(${comment.comment_idx})">
+				    <i class="fas fa-times"></i></button>
 				  </div>
 		`;
 		commentList.prepend(content);
@@ -229,8 +239,18 @@ function addComment(posts_idx) {
 }
 
 // (5) 댓글 삭제
-function deleteComment() {
-
+function deleteComment(comment_idx) {
+	alert(comment_idx);
+	$.ajax({
+		type:"DELETE",
+		url:`/shoecream/api/comment/${comment_idx}`,
+		dataType:"json"
+	}).done(res=>{
+		console.log("댓글 삭제 성공", res);
+        $(`#storyCommentItem-${comment_idx}`).remove();
+	}).fail(error=>{
+		console.log("댓글 삭제 실패", error);
+	});
 }
 
 

@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.handler.CustomApiException;
 import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.mapper.SocialImageMapper;
 import com.pj2.shoecream.vo.SocialCommentVO;
@@ -169,6 +170,15 @@ public class SocialImageService {
 		@Transactional(readOnly = true)
 		public List<SocialCommentVO> getImageComments(int posts_idx) {
 		  return socialImageMapper.selectCommentsByPostId(posts_idx);
+		}
+		
+		@Transactional
+		public void deleteComment(int comment_idx) {
+			try {
+				socialImageMapper.deleteCommentById(comment_idx);
+			} catch (Exception e) {
+				throw new CustomApiException(e.getMessage());
+			}
 		}
 
 

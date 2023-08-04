@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.cassandra.CassandraProperties.Request;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
 import org.springframework.stereotype.Controller;
@@ -827,11 +828,16 @@ public class JunggoController {
 				model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
 				return "inc/fail_back";
 			}
+			
 			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
 		
 			jungGoNoh.setProduct_idx(product_idx);
-			
+			int idx1 = jungGoNoh.getMem_idx();
+			String idx2 =jungGoNoh.getProduct_idx();
+			System.out.println("#####################################################"+ idx1 + "@" + idx2);
 			List<JungGoNohVO> moreReportListSmall =jungGoNohService.moreReportListSmall(jungGoNoh);
+			JungGoNohVO product = jungGoNohService.getProduct(product_idx);
+			
 			
 //			JungGoNohVO jungGoNohReport = jungGoNohService.getProduct(product_idx);
 //			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -840,6 +846,7 @@ public class JunggoController {
 //			jungGoNohReport.setBuyier_nickname(buyier_nickname);
 //			model.addAttribute("jungGoNohReport", jungGoNohReport);
 			model.addAttribute("moreReportListSmall", moreReportListSmall);
+			model.addAttribute("jungGoNoh", product);
 			return "junggo/junggo_report_table";
 			
 		}

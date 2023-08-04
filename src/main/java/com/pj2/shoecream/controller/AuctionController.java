@@ -192,7 +192,7 @@ public class AuctionController {
         String imageName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
 		String imageName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
 		String imageName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
-		String imageName4 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+		String imageName4 = uuid.substring(0, 8) + "_" + mFile4.getOriginalFilename();
 	      
 		if(!mFile1.getOriginalFilename().equals("")) image.setImage1_name(imageName1);
 		if(!mFile2.getOriginalFilename().equals("")) image.setImage2_name(imageName2);
@@ -208,7 +208,7 @@ public class AuctionController {
 			if (!mFile1.getOriginalFilename().equals("")) mFile1.transferTo(new File(saveDir, imageName1));
 			if (!mFile2.getOriginalFilename().equals("")) mFile2.transferTo(new File(saveDir, imageName2));
 			if (!mFile3.getOriginalFilename().equals("")) mFile3.transferTo(new File(saveDir, imageName3));
-			if (!mFile3.getOriginalFilename().equals("")) mFile4.transferTo(new File(saveDir, imageName4));
+			if (!mFile4.getOriginalFilename().equals("")) mFile4.transferTo(new File(saveDir, imageName4));
 		    } catch (IllegalStateException e) {
 			e.printStackTrace();
 		    } catch (IOException e) {

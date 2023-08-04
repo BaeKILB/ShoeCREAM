@@ -32,7 +32,9 @@
 </head>
 
 <body>
-	
+	<!-- 로그인 한 mem_idx 값 받기 -->
+	<input type="hidden" id="principalId" value="${principal.member.mem_idx }">
+	<!--  -->
 	<header class="header">
 		<div class="container">
 			<a href="/" class="logo">
