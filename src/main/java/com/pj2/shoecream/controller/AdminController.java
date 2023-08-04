@@ -79,10 +79,6 @@ public class AdminController {
 		int creamCount = service.getCreamCount();
 		model.addAttribute("creamCount",creamCount);
 
-		
-		
-		
-		
 		return "admin/admin_main";
 	}
 	
