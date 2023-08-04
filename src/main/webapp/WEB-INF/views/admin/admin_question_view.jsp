@@ -11,6 +11,51 @@
 <link href="${pageContext.request.contextPath }/resources/css/admin/admin_question.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+	function DeleteConfirm(qst_idx, pageNum) {
+		Swal.fire({
+			title: "답변을 삭제하시겠습니까?",
+			text: "해당 답변은 DB에서 삭제처리됩니다.",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "삭제",
+			cancelButtonText: "취소",
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: "GET",
+					url: "InquiryDelete",
+					dataType: "text",
+					data: {qst_idx: qst_idx, pageNum: pageNum},
+					success: function(data) {
+						if(data === "true") {
+							Swal.fire({
+							  title: '답변 삭제 완료',
+							  text: "답변 삭제 처리가 완료되었습니다",
+							  icon: 'success',
+							  showCancelButton: false,
+							  confirmButtonColor: '#3085d6',
+							  cancelButtonColor: '#d33',
+							  confirmButtonText: '확인'
+							}).then((result) => {
+							  if (result.isConfirmed) {
+								  location.href = "QstBoardDetail?qst_idx=" + qst_idx + "&pageNum=" + pageNum;
+								  location.reload();
+							  }
+							})
+						}
+					},
+					error: function(data) {
+						Swal.fire('회원 삭제 실패', '회원 삭제 처리에 실패했습니다', 'warning');
+					}
+				});
+			} else if(result.dismiss === Swal.DismissReason.cancel) {
+				return false;
+			}
+		})
+	}
+</script>
 </head>
 <body>
 	<aside>
@@ -96,10 +141,42 @@
 					</c:when>
 				</c:choose>
 				
+				<c:choose>
+					<c:when test="${empty inquiryAnswer}">
+						<form action="QstWritePro" method="post">
+							<input type="hidden" name="qst_idx" value="${inquiry.qst_idx }">
+							<input type="hidden" name="mem_idx" value="${inquiry.mem_idx }">
+							<input type="hidden" name="mem_name" value="${inquiry.mem_name }">
+							<input type="hidden" name="qst_type" value="${inquiry.qst_type }">
+							<input type="hidden" name="qst_pass" value="${inquiry.qst_pass }">
+							<input type="hidden" name="qst_board_re_ref" value="${inquiry.qst_board_re_ref }">
+							<input type="hidden" name="pageNum" value="${param.pageNum }">
+							<div class="list_wrap">
+								<ul class="list">
+									<li>
+										<div class="subject">
+											<input type="text" value="${inquiry.mem_name } 님 답변 드립니다." class="inputBox" name="qst_subject">
+										</div>
+									</li>
+								</ul>
+								<div class="write_cont">
+									<p>
+										<textarea style="white-space: pre-line;" class="inputBox" placeholder="내용을 입력해주세요" name="qst_content" required="required"></textarea>
+									</p>
+								</div>
+								<div class="mod_box">
+									<input type="submit" class="submit_btn" value="등록">
+								</div>
+							</div>
+						</form>
+					</c:when>
+				</c:choose>
+				
 				<div class="mod_box">
 					<a class="list_btn" href="InquiryList?pageNum=${param.pageNum }">목록</a>
 					<c:if test="${not empty inquiryAnswer}">					
-						<a class="list_btn" href="QstModifyForm??qst_idx=${inquiry.qst_idx }&pageNum=${param.pageNum }">수정</a>
+						<a class="list_btn" href="QstModifyForm?qst_idx=${inquiry.qst_idx }&pageNum=${param.pageNum }">수정</a>
+						<a class="list_btn" href="#" onclick="DeleteConfirm(${inquiry.qst_idx }, ${param.pageNum });">삭제</a>
 					</c:if>
 					
 				</div>

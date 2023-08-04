@@ -61,7 +61,18 @@ public class AdminService {
 			return 0;
 		}
 	}
-	
+	// 답변 수정 업데이트
+	public int updateQstAns(int qst_idx, InquiryBoardVO inquiry) {
+		return mapper.updateQstAns(qst_idx, inquiry);
+	}
+	// 답변 삭제
+	public boolean inquiryDelete(int qst_idx) {
+		return mapper.inquiryDelete(qst_idx);
+	}
+	// 답변 삭제 후 상태 업데이트
+	public int deleteUpdateQstAns(int qst_idx) {
+		return mapper.deleteUpdateQstAns(qst_idx);
+	}
 	
 	// --------------- 민진 ---------------------------
 	//중고상품 목록 띄우기
@@ -135,6 +146,10 @@ public class AdminService {
 	public List<Map<String, Object>> getAuctionList() {
 		return mapper.selectAuctionList();
 	}
+	
+	
+	
+	
 	
 }
 

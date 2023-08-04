@@ -134,7 +134,6 @@ public class AdminController {
 		int startRow = (pageNum - 1) * listLimit;
 		
 		List<InquiryBoardVO> qstList = service.getQstBoard(searchType, startRow, listLimit);
-		System.out.println("★★★★★★★★★★★★★★★★★★★" + qstList);
 		int listCount = service.getQstListCount(searchType);
 		
 		int pageListLimit = 5;
@@ -155,7 +154,7 @@ public class AdminController {
 	
 	// 일대일 문의 뷰디테일
 	@GetMapping("QstBoardDetail")
-	public String qstBoardDetail(@RequestParam int qst_idx, @RequestParam int pageNum, @RequestParam int qst_board_re_ref, Model model) {
+	public String qstBoardDetail(@RequestParam int qst_idx, @RequestParam int pageNum, Model model) {
 		
 		InquiryBoardVO inquiry = service.selectQst(qst_idx);
 		model.addAttribute("inquiry", inquiry);
@@ -181,16 +180,6 @@ public class AdminController {
 	}
 	
 	// 일대일 문의 답변 등록
-//	@PostMapping("QstWritePro")
-//	public String qstWritePro(InquiryBoardVO inquiry, @RequestParam int pageNum) {
-//		System.out.println(inquiry.getQst_type());
-//		int insertCount = service.registBoard(inquiry);
-//		if(insertCount > 0) {
-//		}
-//		return "redirect:/InquiryList?pageNum=" + pageNum; 
-//	}
-	
-	// 일대일 문의 답변 등록
 	@PostMapping("QstWritePro")
 	public String qstWritePro(InquiryBoardVO inquiry, @RequestParam int pageNum, Model model) {
 		int insertCount = service.registBoard(inquiry);
@@ -202,13 +191,55 @@ public class AdminController {
 		}
 	}
 	
-	// 일대일 문의 답변 수정
+	// 일대일 문의 답변 수정폼
 	@GetMapping("QstModifyForm")
 	public String inquiryModifyForm(@RequestParam int qst_idx, @RequestParam int pageNum, Model model) {
 		
-		return "";
+		InquiryBoardVO inquiry = service.selectQst(qst_idx);
+		model.addAttribute("inquiry", inquiry);
+		
+		InquiryBoardVO inquiryAnswer = service.selectQstAns(qst_idx);
+		model.addAttribute("inquiryAnswer", inquiryAnswer);
+		
+		return "admin/admin_question_modify";
 	}
 	
+	// 일대일 문의 답변 수정 처리
+	@PostMapping("QstModifyPro")
+	public String qstModifyPro(InquiryBoardVO inquiry, @RequestParam int qst_idx, @RequestParam int pageNum, Model model) {
+		
+		System.out.println(inquiry);
+		
+		InquiryBoardVO inquiryBoard = service.selectQst(qst_idx);
+		model.addAttribute("inquiry", inquiryBoard);
+		
+		int updateCount  = service.updateQstAns(qst_idx, inquiry);
+		if(updateCount > 0) {
+			InquiryBoardVO inquiryAnswer = service.selectQstAns(qst_idx);
+			model.addAttribute("inquiryAnswer", inquiryAnswer);
+		} else {
+			model.addAttribute("msg", "수정 실패");
+			return "inc/fail_back";
+		}
+			
+		return "redirect:/QstBoardDetail?qst_idx=" + qst_idx + "&pageNum=" + pageNum; 
+	}
+	
+	// 일대일 문의 답변 삭제
+	@GetMapping("InquiryDelete")
+	@ResponseBody
+	public String inquiryDeletePro(@RequestParam int qst_idx, @RequestParam int pageNum) {
+		String isDeleteString;
+		boolean isDeleteSuccess = service.inquiryDelete(qst_idx);
+		if(isDeleteSuccess == true) {
+			int isUpdateStatusSuccess = service.deleteUpdateQstAns(qst_idx);
+			isDeleteString = "true";
+		} else {
+			isDeleteString = "false";
+		}
+		 
+		return isDeleteString;
+	}
 	
 	
 	

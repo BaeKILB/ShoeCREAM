@@ -62,23 +62,18 @@
 					<c:when test="${not empty inquiryAnswer}">
 						<form action="QstModifyPro" method="post">
 							<input type="hidden" name="qst_idx" value="${inquiry.qst_idx }">
-							<input type="hidden" name="mem_idx" value="${inquiry.mem_idx }">
-							<input type="hidden" name="mem_name" value="${inquiry.mem_name }">
-							<input type="hidden" name="qst_type" value="${inquiry.qst_type }">
-							<input type="hidden" name="qst_pass" value="${inquiry.qst_pass }">
-							<input type="hidden" name="qst_board_re_ref" value="${inquiry.qst_board_re_ref }">
 							<input type="hidden" name="pageNum" value="${param.pageNum }">
 							<div class="list_wrap">
 								<ul class="list">
 									<li>
 										<div class="subject">
-											<input type="text" value="${inquiry.mem_name } 님 답변 드립니다." class="inputBox" name="qst_subject">
+											<input type="text" value="${inquiryAnswer.qst_subject }" class="inputBox" name="qst_subject">
 										</div>
 									</li>
 								</ul>
 								<div class="write_cont">
 									<p>
-										<textarea style="white-space: pre-line;" class="inputBox" placeholder="내용을 입력해주세요" name="qst_content" required="required"></textarea>
+										<textarea style="white-space: pre-line;" class="inputBox" placeholder="내용을 입력해주세요" name="qst_content" required="required">${inquiryAnswer.qst_content }</textarea>
 									</p>
 								</div>
 								<div class="mod_box">
