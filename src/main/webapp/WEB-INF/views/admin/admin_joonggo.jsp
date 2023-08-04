@@ -88,12 +88,12 @@ function deletePro(product_idx) {
 					<ul id="pageList">
 						<c:if test="${pageMaker.cri.pageNum > 1 }">
 							<li class='pgi'>
-								<a href="anoticeDelete?pageNum=1" class='allprev'><i class='fa fa-angle-double-left pgi' aria-hidden='true'></i></a>
+								<a href="adminProduct?pageNum=${pageMaker.cri.pageNum - 1 }" class='allprev'><i class='fa fa-angle-double-left pgi' aria-hidden='true'></i></a>
 							</li>
 						</c:if>
 						<c:if test="${pageMaker.cri.pageNum > 1 }">
 							<li class='pgi'>
-							<a href="anoticeDelete?pageNum=${pageNum - 1 }" class='prev'><i class='fa fa-angle-left pgi' aria-hidden='true'></i></a>
+							<a href="adminProduct?pageNum=${pageMaker.cri.pageNum - 1 }" class='prev'><i class='fa fa-angle-left pgi' aria-hidden='true'></i></a>
 							</li>
 						</c:if>
 						<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
@@ -112,12 +112,12 @@ function deletePro(product_idx) {
 						</c:forEach>
 						<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
 							<li class='pgi'>
-								<a href="" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
+								<a href="adminProduct?pageNum=${pageMaker.cri.pageNum + 1 }" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
 							</li>
 						</c:if>
 						<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
 							<li class='pgi'>
-								<a href="?pageNum=${pageMaker.cri.pageNum + 1 }" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
+								<a href="adminProduct?pageNum=${pageMaker.cri.pageNum + 1 }" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
 							</li>
 						</c:if>
 					</ul>

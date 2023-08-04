@@ -115,12 +115,12 @@ function deleteReport(auction_idx) {
 						</c:forEach>
 						<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
 							<li class='pgi'>
-								<a href="" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
+								<a href="auctionReport?pageNum=${pageMaker.cri.pageNum + 1 }" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
 							</li>
 						</c:if>
 						<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
 							<li class='pgi'>
-								<a href="?pageNum=${pageMaker.cri.pageNum + 1 }" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
+								<a href="auctionReport?pageNum=${pageMaker.cri.pageNum + 1 }" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
 							</li>
 						</c:if>
 					</ul>
