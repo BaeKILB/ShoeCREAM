@@ -32,6 +32,8 @@ public interface SocialImageMapper {
 
 	List<SocialCommentVO> selectCommentsByPostId(int posts_idx);
 
+	void deleteCommentById(int comment_idx);
+
 	
 
 }

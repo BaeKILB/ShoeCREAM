@@ -81,4 +81,10 @@
 	            comment_idx = #{comment_idx}
 	</update>
 	
+	<delete id="deleteCommentById">
+		DELETE
+		FROM social_comment
+		WHERE comment_idx = #{comment_idx}
+	</delete>
+	
 </mapper>
