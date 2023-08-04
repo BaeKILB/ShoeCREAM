@@ -61,7 +61,18 @@ public class AdminService {
 			return 0;
 		}
 	}
-	
+	// 답변 수정 업데이트
+	public int updateQstAns(int qst_idx, InquiryBoardVO inquiry) {
+		return mapper.updateQstAns(qst_idx, inquiry);
+	}
+	// 답변 삭제
+	public boolean inquiryDelete(int qst_idx) {
+		return mapper.inquiryDelete(qst_idx);
+	}
+	// 답변 삭제 후 상태 업데이트
+	public int deleteUpdateQstAns(int qst_idx) {
+		return mapper.deleteUpdateQstAns(qst_idx);
+	}
 	
 	// --------------- 민진 ---------------------------
 	//중고상품 목록 띄우기
@@ -127,14 +138,36 @@ public class AdminService {
 		// TODO Auto-generated method stub
 		return mapper.deletecream(ci_code);
 	}
+
 	// 경매 차트 계산하기
 	public List<Map<String, Object>> getProductList() {
 		return mapper.selectProductList();
 	}
+
 	// 중고 차트 계산하기
 	public List<Map<String, Object>> getAuctionList() {
 		return mapper.selectAuctionList();
 	}
-	
+
+	// 메인 페이지 회원 수 세기
+	public int getMemberCount() {
+		return mapper.selectMemberCount();
+	}
+
+	// 중고 상품 수 세기
+	public int getProductCount() {
+		return mapper.selectPro();
+	}
+
+	// 경매 상품 수 세기
+	public int getAuctionCount() {
+		return mapper.selectAuctionCount();
+	}
+
+	// 크림 상품 수 세기
+	public int getCreamCount() {
+		return mapper.selectCreamCount();
+	}
+
 }
 

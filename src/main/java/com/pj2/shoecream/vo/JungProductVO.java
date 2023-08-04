@@ -33,7 +33,7 @@ public class JungProductVO {
 	private String product_brand; //브랜드
 	private int product_size; //사이즈
 	private int product_selector; //상품 분류코드
-
+	private int product_buyer_idx;	// 회원 번호; 판매자
 
 	//============================파일=====================================
 	// 파일명을 저장할 변수 선언

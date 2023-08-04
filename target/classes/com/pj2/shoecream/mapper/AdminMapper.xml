@@ -65,7 +65,7 @@
 			WHERE mem_idx = #{mem_idx}
 	</delete>
 	
-	<!-- 회원 문의 게시판 조회 -->
+	<!-- 일대일 문의 게시판 조회 -->
 	<select id="selectQstBoard" resultType="com.pj2.shoecream.vo.InquiryBoardVO">
 		SELECT *
 			FROM qst_board
@@ -125,6 +125,28 @@
 			SET ans_status = 'Y'
 				WHERE qst_idx = #{qst_idx}
 	</update>
+	<!-- 답변 수정 -->
+	<update id="updateQstAns">
+		UPDATE qst_board
+			SET
+				qst_subject = #{inquiry.qst_subject}
+				, qst_content = #{inquiry.qst_content}
+					WHERE qst_board_re_ref = #{qst_idx}
+					AND qst_board_re_lev > 0
+	</update>
+	<!-- 답변 삭제 -->
+	<delete id="inquiryDelete">
+		DELETE FROM qst_board
+			WHERE qst_board_re_ref = #{qst_idx}
+			AND qst_board_re_lev > 0
+	</delete>
+	<!-- 답변 삭제 시 상태 업데이트 -->
+	<update id="deleteUpdateQstAns">
+		UPDATE qst_board
+			SET ans_status = 'N'
+				WHERE qst_idx = #{qst_idx}
+	</update>
+	
 
 <!--  민진 민진 민진민진민진민진민진민진민진민진민진민진 -->
 <!--  중고 상품 조회 -->
@@ -359,6 +381,31 @@
 			JOIN middle_category mc ON jp.mc_code = mc.mc_code
 			GROUP BY jp.mc_code;
 	</select>
+	<!-- 메인페이지 회원 수 세기 -->
+	<select id="selectMemberCount" resultType="int">
+		SELECT COUNT(*)
+				FROM mem_info
+				WHERE mem_id != 'admin'
+	</select>
+	
+	<!-- 중고 상품 수 세기 -->
+	<select id="selectPro" resultType="int">
+		SELECT COUNT(*)
+				FROM jung_product
+	</select>
+	
+	<!--  경매 상품 수 세기 -->
+	<select id="selectAuctionCount" resultType="int">
+		SELECT COUNT(*)
+				FROM auction_item
+	</select>
+	
+	<!--  크림 상품 수 세기 -->
+	<select id="selectCreamCount" resultType="int">
+		SELECT COUNT(*)
+				FROM cream_item
+	</select>
+
 	
 
 </mapper>

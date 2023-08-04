@@ -1,28 +1,63 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<link href="${pageContext.request.contextPath}/resources/css/admin/common.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/resources/css/admin/adminMain.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/adm_dash.css">
-
+<link
+	href="${pageContext.request.contextPath}/resources/css/admin/common.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.request.contextPath}/resources/css/admin/adminMain.css"
+	rel="stylesheet" type="text/css">
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/admin/adm_dash.css">
 </head>
 <body>
-    <aside>
-        <jsp:include page="inc/sidebar.jsp"></jsp:include>
-    </aside>
-    <section id="admin_cont">
-        <div class="card">
-            <div class="card-body">
-                <div id="auction_chart" style="width: 700px; height: 500px;"></div>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
+	<aside>
+		<jsp:include page="inc/sidebar.jsp"></jsp:include>
+	</aside>
+	<section id="admin_cont">
+		<div class="main_count">
+			<div class="member_count">
+				<i class="fa fa-user-circle" aria-hidden="true"></i>
+				<div class="stat-text">전체 회원 수</div>
+				<div class="stat-digit">${memberCount }</div>
+			</div>
+			<div class="joong_count">
+				<i class="fa fa-cubes" aria-hidden="true"></i>
+				<div class="stat-text">중고 상품 수</div>
+				<div class="stat-digit">${productCount }</div>
+			</div>
+			<div class="auction_count">
+				<i class="fa fa-gavel" aria-hidden="true"></i>
+				<div class="stat-text">경매 상품 수</div>
+				<div class="stat-digit">${auctionCount }</div>
+			</div>
+			<div class="cream_count">
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<div class="stat-text">크림 상품 수</div>
+				<div class="stat-digit">${creamCount }</div>
+			</div>
+		</div>
+		<div class="charts-container">
+			<div class="chart-card">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">경매 상품 카테고리별 분석</h4>
+					</div>
+					<div class="card-body">
+						<div id="auction_chart" style="width: 700px; height: 500px;"></div>
+						<script type="text/javascript"
+							src="https://www.gstatic.com/charts/loader.js"></script>
+						<script type="text/javascript">
                     google.charts.load("current", { packages: ["corechart"] });
                     google.charts.setOnLoadCallback(drawChart);
+
                     function drawChart() {
                         var data = new google.visualization.DataTable();
                         data.addColumn('string', '상품카테고리');
@@ -42,15 +77,22 @@
                         chart.draw(data, options);
                     }
                 </script>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div id="product_chart" style="width: 700px; height: 500px;"></div>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
+					</div>
+				</div>
+			</div>
+			<div class="chart-card">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">중고 상품 카테고리별 분석</h4>
+					</div>
+					<div class="card-body">
+						<div id="product_chart" style="width: 700px; height: 500px;"></div>
+						<script type="text/javascript"
+							src="https://www.gstatic.com/charts/loader.js"></script>
+						<script type="text/javascript">
                     google.charts.load("current", { packages: ["corechart"] });
                     google.charts.setOnLoadCallback(drawChart);
+
                     function drawChart() {
                         var data = new google.visualization.DataTable();
                         data.addColumn('string', '상품카테고리');
@@ -70,10 +112,12 @@
                         chart.draw(data, options);
                     }
                 </script>
-            </div>
-        </div>
-    </section>
-    <script>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
         $(document).on('click', '.toggle_wrap', function() {
             if ($('#admin_cont').css('margin-left') === '0px') {
                 $('#admin_cont').show().animate({

@@ -164,25 +164,25 @@
 							<button type="button" data-bs-target="#auctionCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
 						</c:if>	
 					</div>
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }" class="d-block w-100" alt="상품이미지1">
-						</div>
-						<c:if test="${auction.image2.length() != 0}">
-							<div class="carousel-item active">
-								<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }" class="d-block w-100" alt="상품이미지2">
-							</div>
-						</c:if>
-						<c:if test="${auction.image3.length() != 0}">
-							<div class="carousel-item active">
-								<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }" class="d-block w-100" alt="상품이미지3">
-							</div>
-						</c:if>
-						<c:if test="${auction.image4.length() != 0}">
-							<div class="carousel-item active">
-								<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" class="d-block w-100" alt="상품이미지4">
-							</div>
-						</c:if>
+					<div class="carousel-inner"> <!-- 이미지 순차적으로 나오게 수정 0804이온 -->
+					    <div class="carousel-item active">
+					        <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }" class="d-block w-100" alt="상품이미지1">
+					    </div>
+						    <c:if test="${auction.image2.length() != 0}">
+						        <div class="carousel-item">
+						            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }" class="d-block w-100" alt="상품이미지2">
+						        </div>
+						    </c:if>
+						    <c:if test="${auction.image3.length() != 0}">
+						        <div class="carousel-item">
+						            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }" class="d-block w-100" alt="상품이미지3">
+						        </div>
+						    </c:if>
+						    <c:if test="${auction.image4.length() != 0}">
+						        <div class="carousel-item">
+						            <img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }" class="d-block w-100" alt="상품이미지4">
+						        </div>
+						    </c:if>
 					</div>
 					<button class="carousel-control-prev" type="button"
 						data-bs-target="#auctionCarousel" data-bs-slide="prev">

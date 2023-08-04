@@ -160,3 +160,25 @@ i.fa.pgi {
 	font-weight: 500;
 	font-size: 18px;
 }
+/* 답변하기 */
+.ins_ans.moreBtn, .mod_ans.moreBtn {
+	padding: 0.2rem 0.5rem;
+}
+.ins_ans {
+	background: #0ea5e9;
+	border: none;
+	color: white !important;
+}
+.ins_ans:hover {
+	background: #32b3ec;
+}
+.mod_ans {
+	background: #637381;
+	border: none;
+	color: white !important;
+}
+.mod_ans:hover {
+	background: #54626e;
+}
+
+/* 뷰페이지 */

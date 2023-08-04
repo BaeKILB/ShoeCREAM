@@ -37,7 +37,13 @@ public interface AdminMapper {
 	int insertQstBoard(InquiryBoardVO inquiry);
 	// 답변 등록 시 참조글 상태 업데이트
 	int updateQstStatus(int qst_idx);
-		
+	// 답변 등록 수정
+	int updateQstAns(@Param("qst_idx") int qst_idx, @Param("inquiry") InquiryBoardVO inquiry);
+	// 답변 삭제
+	boolean inquiryDelete(int qst_idx);
+	// 답변 삭제 후 상태 업데이트
+	int deleteUpdateQstAns(int qst_idx);
+	
 	// --------------- 민진 ---------------------------
 	// 중고 상품 띄우기
 	List<JungProductVO> selectProduct(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
@@ -74,5 +80,18 @@ public interface AdminMapper {
 	List<Map<String, Object>> selectProductList();
 	// 중고 차트 계산
 	List<Map<String, Object>> selectAuctionList();
+	// 메인페이지 회원 수 세기
+	int selectMemberCount();
+	// 중고 상품 수 세기
+	int selectPro();
+	// 경매 상품 수 세기
+	int selectAuctionCount();
+	// 크림 상품 수 세기
+	int selectCreamCount();
 	}
+
+	
+	
+	
+	
 

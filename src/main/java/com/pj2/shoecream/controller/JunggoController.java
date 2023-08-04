@@ -155,10 +155,11 @@ public class JunggoController {
 		redirectAttributes.addAttribute("chat_room_area",0);
 		
 		// makeChatRoom 으로 넘어가기
-		return "redirect:makeChatRoom";
+		return "redirect:makeJungChatRoom";
 	}
 	@GetMapping("JunggoPay")
 	public String junggoPay(@RequestParam Map<String,Object> map, Model model) {
+		
 		return "";
 	}
 	@GetMapping("JunggoResults")
