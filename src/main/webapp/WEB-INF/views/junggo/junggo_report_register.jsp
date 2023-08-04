@@ -89,7 +89,7 @@
 			<textarea class="product_detail" name="report_detail" rows="" cols="" placeholder="신고 당시 상황에 대한 자세한 설명을 적어주세요" required="required"
 				onfocus="this.select()"></textarea>
 				<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNohReport.product_idx}"/>
-				<input type="hidden" name="favorite_check" id="buyier_idx" value="${jungGoNohReport.buyier_idx}"/>
+				<input type="hidden" name="buyier_idx" id="buyier_idx" value="${jungGoNohReport.buyier_idx}"/>
 				<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNohReport.mem_idx}"/>
 		</div>
 	</div>

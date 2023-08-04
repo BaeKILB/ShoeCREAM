@@ -21,7 +21,7 @@
 	</header>
 	<div id="notice_cont">
 		<section id="sec_con" class="inr">
-			<form action="${pageContext.request.contextPath}/modifytReviewPro" method="post" enctype="multipart/form-data">
+			<form action="${pageContext.request.contextPath}/modifyReviewPro" method="post" enctype="multipart/form-data">
 				<section id="board_wrap">
 					<section id="board_list" class="notice">
 						<div class="wrapper">
@@ -37,7 +37,7 @@
 									<li class="write_scope">
 										<div id="myform">
 											<fieldset>
-													<input type="radio" name="review_star" value="5" id="rate1" selected="selected">
+													<input type="radio" name="review_star" value="5" id="rate1">
 													<label for="rate1">⭐</label>
 													<input type="radio" name="review_star" value="4" id="rate2">
 													<label for="rate2">⭐</label>
@@ -53,10 +53,12 @@
 								</ul>
 
 								<div class="write_cont">
-										${jungGoNohReview}
 									<p>
 										<input type="text" class="inputBox" name="review_content" value="${jungGoNohReview.review_content}" style="word-break:break-all;"> 
 									</p>
+									<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNohReview.product_idx}"/>
+									<input type="hidden" name="buyier_idx" id="buyier_idx" value="${jungGoNohReview.buyier_idx}"/>
+									<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNohReview.mem_idx}"/>
 								</div>
 								<div class="mod_box">
 										<input type="submit" class="delete_btn" value="등록">

@@ -980,8 +980,8 @@ public class JunggoController {
 			
 		//-------------------------리뷰 수정-----------------------------
 			
-			@PostMapping("modifytReviewPro")
-			public String modifytReviewPro(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
+			@PostMapping("modifyReviewPro")
+			public String modifyReviewPro(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
 					JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
 				try {			
 					Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -1000,7 +1000,7 @@ public class JunggoController {
 				jungGoNoh.setBuyier_idx(writer_idx);
 				jungGoNoh.setProduct_idx(product_idx);
 				jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
-				//System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
+				System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
 				
 				
 				int review_star = jungGoNoh.getReview_star();
@@ -1016,7 +1016,7 @@ public class JunggoController {
 				if(ModifySuccess < 0) {
 						model.addAttribute("msg", "신청 실패");
 						return "inc/fail_back";
-						} 	
+				} 	
 						
 				
 				return "home";
