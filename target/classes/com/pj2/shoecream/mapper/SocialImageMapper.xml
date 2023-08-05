@@ -72,6 +72,14 @@
             , now()
         )
 	</insert>
+	
+    <!-- 댓글 쓸때 가져갈 프로필 경로 -->
+    <select id="findProfileImageUrlByMemberId" parameterType="int" resultType="string">
+        SELECT mem_profileImageUrl
+        FROM mem_info
+        WHERE mem_idx = #{mem_idx}
+    </select>
+	
 
 	<update id="updateComment_ref" parameterType="com.pj2.shoecream.vo.SocialCommentVO">
 	    UPDATE social_comment

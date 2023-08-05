@@ -161,9 +161,12 @@ public class SocialImageService {
 		
 //		 소셜 포스트 댓글
 		public SocialCommentVO writeComment(SocialCommentVO socialCommentVO) {
+		    String profileImageUrl = socialImageMapper.findProfileImageUrlByMemberId(socialCommentVO.getMem_idx());
+		    // 프로필 이미지 URL 조회 후 SocialCommentVO에 set
+		    socialCommentVO.setMem_profileImageUrl(profileImageUrl);
+
 		    socialImageMapper.insertComment(socialCommentVO);
 		    socialImageMapper.updateComment_ref(socialCommentVO);
-		    // 업데이트 결과를 따로 사용하지 않음
 		    return socialCommentVO;
 		}
 

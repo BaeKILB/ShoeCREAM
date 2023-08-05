@@ -46,7 +46,7 @@ public class ImageApiController {
 	
 //	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
 	@GetMapping("/api/image")
-	public ResponseEntity<?> imageStory(@RequestParam(defaultValue = "1") int pageNum) {
+	public ResponseEntity<?> imageStory(@RequestParam(defaultValue = "1") int pageNum, SocialCommentVO socialCommentVO) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int sId = mPrincipalDetails.getMember().getMem_idx();
@@ -58,19 +58,23 @@ public class ImageApiController {
 		List<SocialVO> images = socialImageService.ImageStory(sId, startRow, listLimit);
 		
 	   // 좋아요 상태를 images에 추가합니다.
-	    for (SocialVO image : images) {
-//	        image.setLikeCount(socialLikeService.likeCount(sId, image.getPosts_idx()));
-	    	image.setLikeState(socialLikeService.isPostLikedByUser(sId, image.getPosts_idx()));
-	    	
-			List<SocialCommentVO> comments = socialImageService.getImageComments(image.getPosts_idx());
-			image.setComment_contents(comments);
-		       // 프로필 이미지 URL을 SocialVO에 설정
-	        MemberVO member = memberService.getMemberByIdx(image.getMem_idx());
-	        image.setMem_profileImageUrl(member.getMem_profileImageUrl());
+		for (SocialVO image : images) {
+		    image.setLikeState(socialLikeService.isPostLikedByUser(sId, image.getPosts_idx()));
 
-	        // 프로파일 이미지 URL을 SocialVO에 설정
-//	        image.setMem_profileImageUrl(mPrincipalDetails.getMember().getMem_profileImageUrl());
-	    }
+		    List<SocialCommentVO> comments = socialImageService.getImageComments(image.getPosts_idx());
+
+		    // 댓글 작성자의 mem_profileImageUrl을 추가합니다.
+		    for (SocialCommentVO comment : comments) {
+		        MemberVO member = memberService.getMemberByIdx(comment.getMem_idx());
+		        comment.setMem_profileImageUrl(member.getMem_profileImageUrl());
+		    }
+
+		    // 댓글 목록을 이미지에 추가합니다.
+		    image.setComment_contents(comments);
+
+		    MemberVO postMember = memberService.getMemberByIdx(image.getMem_idx());
+		    image.setMem_profileImageUrl(postMember.getMem_profileImageUrl());
+		}
 		
 		System.out.println("images : " + images);
 		

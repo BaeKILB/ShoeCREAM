@@ -67,14 +67,16 @@ function getStoryItem(image) {
 //    let contextPath = "C:/Users/kikir/Documents/itwill/workspace_spring5/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ShoeCREAM/resources/upload/social/";
 //    let contextPath = "/resources/upload/social/";
 
-	let item = `<div class="story-list__item">
+	let item = `<div class="story-list__item" style="width: 100%;">
 	<div class="sl__item__header">
-		<div>
-            <img class="profile-image" src="/shoecream/resources/upload/profile/${image.mem_profileImageUrl}"
-				onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" />
-		</div>
-		<div>${image.mem_nickname}</div>
-	</div>
+        <div>
+            <a href="/shoecream/social/${image.mem_idx}"> <!-- 링크를 추가 -->
+                <img class="profile-image" src="/shoecream/resources/upload/profile/${image.mem_profileImageUrl}"
+                    onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" />
+            </a>
+        </div>
+        <div><strong>&nbsp${image.mem_nickname}</strong></div>
+    </div>
 
 	<div class="sl__item__img">
 		<img src="/shoecream/resources/upload/social/${image.posts_image1}"/>
@@ -105,10 +107,26 @@ function getStoryItem(image) {
 		<div id="storyCommentList-${image.posts_idx}">`;
 		
 			image.comment_contents.forEach((comment)=>{
-				item+=`<div class="sl__item__contents__comment" id="storyCommentItem-${comment.comment_idx}">
-				<p>
-					<b>${comment.mem_nickname} :</b> ${comment.comment_content}
-				</p>`;
+				item+=`<div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 0px;">
+											<div class="sl__item__header" style="height: 25px;">
+											<div>
+												<div>
+												 <a href="/shoecream/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
+													<img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src=''"
+														style="width: 28.63636px; height: 28.63636px;" />
+												 </a>
+												</div>
+											</div>
+											<div class="d-flex align-items-center">
+												<span><strong>${comment.mem_nickname}</strong></span> <span class="ms-2">${comment.comment_content}</span>
+											</div>
+										</div>`;
+				
+//				
+//				
+//				<p>
+//					<b>${comment.mem_nickname} :</b> ${comment.comment_content}
+//				</p>`;
 				
 			if (principalId == comment.mem_idx) {
 				item +=
@@ -144,12 +162,12 @@ function getStoryItem(image) {
 // (3) 좋아요, 안좋아요
 function toggleLike(posts_idx) {
 	let likeIcon = $(`#storyLikeIcon-${posts_idx}`);
-	
+
 	if (likeIcon.hasClass("far")) {
-		
+
 		$.ajax({
-			type:"post",
-			url:`/shoecream/api/image/${posts_idx}/likes`,
+			type: "post",
+			url: `/shoecream/api/image/${posts_idx}/likes`,
 			ataType:"json"
 		}).done(res=>{
 			
@@ -214,29 +232,37 @@ function addComment(posts_idx) {
 		data:JSON.stringify(data),
 		contentType:"application/json;charset=utf-8",
 		dataType:"json"
-	}).done(res=>{
-		console.log("성공", res);
-			
-		let comment = res.data;
-		
-		let content = `
-				  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.comment_idx}"> 
-				    <p>
-				      <b>${comment.mem_nickname} :</b>
-				      ${comment.comment_content}
-				    </p>
-				  <button onclick="deleteComment(${comment.comment_idx})">
-				    <i class="fas fa-times"></i></button>
-				  </div>
-		`;
-		commentList.prepend(content);
-		
-	}).fail(error=>{
-		console.log("실패", error);
-		alert("오류 : " + error.responseJSON.data.comment_content)
-	});
+    }).done(res=>{
+        console.log("성공", res);
 
-	commentInput.val("");
+        let comment = res.data;
+        let profileImageUrl = comment.mem_profileImageUrl;
+        
+        let content = `
+                  <div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 0px;">
+                                        <div class="sl__item__header" style="height: 25px;">
+                                        <div>
+                                            <div>
+                                                <img class="profile-image" src="/shoecream/resources/upload/profile/${profileImageUrl}" onerror="this.src=''"
+                                                    style="width: 28.63636px; height: 28.63636px;" />
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span><strong>${comment.mem_nickname}</strong></span> <span class="ms-2">${comment.comment_content}</span>
+                                        </div>
+                                    </div>
+                  <button onclick="deleteComment(${comment.comment_idx})">
+                    <i class="fas fa-times"></i></button>
+                  </div>
+        `;
+        commentList.prepend(content);
+
+    }).fail(error=>{
+        console.log("실패", error);
+        alert("오류 : " + error.responseJSON.data.comment_content)
+    });
+
+    commentInput.val("");
 }
 
 // (5) 댓글 삭제
