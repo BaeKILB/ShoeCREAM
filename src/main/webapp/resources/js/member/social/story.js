@@ -70,7 +70,7 @@ function getStoryItem(image) {
 	let item = `<div class="story-list__item">
 	<div class="sl__item__header">
 		<div>
-            <img class="profile-image" src="/shoecream/resources/upload/social/${image.profileImageUrl}"
+            <img class="profile-image" src="/shoecream/resources/upload/profile/${image.mem_profileImageUrl}"
 				onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" />
 		</div>
 		<div>${image.mem_nickname}</div>

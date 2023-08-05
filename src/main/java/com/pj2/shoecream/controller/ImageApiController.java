@@ -1,6 +1,5 @@
 package com.pj2.shoecream.controller;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.CustomValidationApiException;
-import com.pj2.shoecream.handler.CustomValidationException;
+import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.service.SocialCommentService;
 import com.pj2.shoecream.service.SocialImageService;
 import com.pj2.shoecream.service.SocialLikeService;
 import com.pj2.shoecream.vo.CMRespDto;
+import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.SocialCommentVO;
 import com.pj2.shoecream.vo.SocialVO;
 
@@ -41,6 +41,8 @@ public class ImageApiController {
 	private SocialLikeService socialLikeService;
 	@Autowired
 	private SocialCommentService socialCommentService;
+	@Autowired
+	private MemberService memberService;
 	
 //	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
 	@GetMapping("/api/image")
@@ -60,8 +62,14 @@ public class ImageApiController {
 //	        image.setLikeCount(socialLikeService.likeCount(sId, image.getPosts_idx()));
 	    	image.setLikeState(socialLikeService.isPostLikedByUser(sId, image.getPosts_idx()));
 	    	
-	    	   List<SocialCommentVO> comments = socialImageService.getImageComments(image.getPosts_idx());
-	    	    image.setComment_contents(comments);
+			List<SocialCommentVO> comments = socialImageService.getImageComments(image.getPosts_idx());
+			image.setComment_contents(comments);
+		       // 프로필 이미지 URL을 SocialVO에 설정
+	        MemberVO member = memberService.getMemberByIdx(image.getMem_idx());
+	        image.setMem_profileImageUrl(member.getMem_profileImageUrl());
+
+	        // 프로파일 이미지 URL을 SocialVO에 설정
+//	        image.setMem_profileImageUrl(mPrincipalDetails.getMember().getMem_profileImageUrl());
 	    }
 		
 		System.out.println("images : " + images);

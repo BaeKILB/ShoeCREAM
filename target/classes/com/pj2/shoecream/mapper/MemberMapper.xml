@@ -25,7 +25,7 @@
 		, 0 -- 회원 회원 포인트
 		, 0 -- 회원 충전포인트
 		, 0 -- 회원 잔액
-		, 0 -- 회원 프로필 사진
+		, #{mem_profileImageUrl} -- 회원 프로필 사진
 		, now() -- 회원 가입일
 		)
 	</insert>
@@ -159,11 +159,28 @@
 		mem_idx = #{sId}
 	</select>
 	
+	<update id="updateProfile" parameterType="com.pj2.shoecream.vo.MemberVO">
+	    UPDATE mem_info
+	    SET 
+	        <if test="mem_profileImageUrl != null and !mem_profileImageUrl.isEmpty()">
+	            mem_profileImageUrl = #{mem_profileImageUrl},
+	        </if>
+	        mem_nickname = #{mem_nickname},
+	        mem_bio = #{mem_bio}
+	    WHERE mem_idx = #{mem_idx}
+	</update>
 	
 	<!-- 해당 회원 프로필 mem_idx 셀렉 -->
 	<select id="findMemberByMemIdx"
 		resultType="com.pj2.shoecream.vo.MemberVO">
 		SELECT * FROM mem_info WHERE mem_idx = #{mem_idx}
 	</select>
-
+	
+	<select id="findMemberByIdx"
+		resultType="com.pj2.shoecream.vo.MemberVO">
+		SELECT * FROM mem_info WHERE mem_idx = #{mem_idx}
+	</select>
+	
+	
+	
 </mapper>

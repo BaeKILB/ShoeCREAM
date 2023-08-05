@@ -1,9 +1,14 @@
 package com.pj2.shoecream.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,13 +30,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.util.FindUtil;
 import com.pj2.shoecream.util.SendUtil;
-import com.pj2.shoecream.vo.MemberProfileDto;
 import com.pj2.shoecream.vo.MemberVO;
 
 import lombok.RequiredArgsConstructor;
@@ -352,8 +356,8 @@ public class MemberController {
     }
     
     // 마이페이지 프로필
-    @GetMapping("mypage/profile")
-    public String profileForm(Model model) {
+    @GetMapping("/mypage/profile")
+    public String profileImageForm(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
         int sId = mPrincipalDetails.getMember().getMem_idx();
@@ -362,6 +366,16 @@ public class MemberController {
         Map<String, Object> member = memberService.getProfileMember(sId);
         model.addAttribute("member", member);
     	return "member/mypage/profile";
+    }
+    
+    @PostMapping("ProfileUpdatePro")
+    public String profileImagePro(MemberVO member, HttpSession session, Model model, BindingResult bindingResult) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+    	
+		memberService.ProfileUpload(member, mPrincipalDetails, session);
+        return "redirect:/mypage/profile";
+
     }
     
     // 회원탈퇴 폼

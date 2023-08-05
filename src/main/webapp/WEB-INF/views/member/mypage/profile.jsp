@@ -21,7 +21,7 @@
 
 <!--    <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
 
-<script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script>
+<%-- <script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script> --%>
 
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 
@@ -42,26 +42,26 @@
   height: 100px;
 }
 </style>
-   <script>
-        function handleImageChange(e) {
-            const imageFile = e.target.files[0];
-            if (imageFile) {
-              const reader = new FileReader();
-              reader.onload = function(event) {
-                const imgElement = document.querySelector(".thumb_img");
-                imgElement.src = event.target.result;
-              }
-              reader.readAsDataURL(imageFile);
-            }
-        }
-    </script>
+<script>
+     function handleImageChange(e) {
+    	 const imageFile = e.target.files[0];
+         if (imageFile) {
+           const reader = new FileReader();
+           reader.onload = function(event) {
+             const imgElement = document.querySelector(".thumb_img");
+             imgElement.src = event.target.result;
+           }
+           reader.readAsDataURL(imageFile);
+         }
+     }
+ </script>
 </head>
 <body>
 	<!--    <header> -->
 	<jsp:include page="../../inc_ex/header.jsp" />
 	<!--    </header> -->
 
-<%-- 	<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" onsubmit='return signUpCheck();'> --%>
+	<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" >
 		<!--    <form id="memberUpdate" name="fr"> -->
 		<section id="sec_con">
 			<!--       <h1 class="con_title">내 정보 수정</h1> -->
@@ -71,29 +71,34 @@
 				<div class="member-update-cont">
 					<!--프로필 섹션-->
 					<ul>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="d-flex my-3" >
-                    <div class="col-md-2">
-                        <div class="profile_thumb">
-                            <input type="file" id="profileImageFile" name="profileImageFile" accept="image/jpeg,image/png" hidden="hidden" onchange="handleImageChange(event)">
-                            <img src="${pageContext.request.contextPath }/social//upload/${member.mem_profileImageUrl }"  alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
-                        </div>
-                    </div>
-                    <div class="col-md-10 d-flex flex-column">
-                        <div class="profile_detail">
-                            <strong class="name">ract0q</strong>
-                        </div>
-                        <div class="profile_btn_box mt-auto">
-                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('profileImageFile').click()">이미지 변경</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm">삭제</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- <form action="ProfileImgePro" method="post" id="ProfileImage" name="ProfileImage" enctype="multipart/form-data"> -->
+						    <div class="container">
+						        <div class="row">
+						            <div class="col-md-12">
+						                <div class="d-flex my-3" >
+						                    <div class="col-md-2">
+						                        <div class="profile_thumb">
+<!-- 						                        <input type="file" id="profileImageFile" onchange="submitForm()" hidden> -->
+						                
+						                            <input type="file" id="profileImageFile" name="file" accept="image/jpeg,image/png" hidden="hidden" onchange="handleImageChange(event)">
+<%-- 						                            <img src="${pageContext.request.contextPath }/social//upload/profile/${member.mem_profileImageUrl }"  alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;"> --%>
+						                        		<img src="${pageContext.request.contextPath}/resources/upload/profile/${member.mem_profileImageUrl}" alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
+						                        	</div>
+						                    </div>
+						                    <div class="col-md-10 d-flex flex-column">
+						                        <div class="profile_detail">
+						                            <strong class="name">ract0q</strong>
+						                        </div>
+						                        <div class="profile_btn_box mt-auto">
+						                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('profileImageFile').click()">이미지 변경</button>
+						                            <button type="button" class="btn btn-outline-secondary btn-sm">삭제</button>
+						                        </div>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+<!-- 						</form> -->
 					</ul>
 <%-- 				<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" onsubmit='return signUpCheck();'> --%>
 					<ul>
@@ -111,7 +116,7 @@
 					</ul>
 					<div class="btn_info_update cr">
 						<!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
-						<button class="upd_btn">수정하기</button>
+						<button type="submit" class="upd_btn">수정하기</button>
 						<%-- 			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button> --%>
 					</div>
 				</div>
@@ -137,16 +142,20 @@
 	<!-- // 		return true; -->
 	<!-- // 	}   -->
 	<!-- 	</script> -->
-<!--프로필사진 바꾸기 모달-->
-<div class="modal-image" onclick="modalImage()">
-	<div class="modal">
-		<p>프로필 사진 바꾸기</p>
-		<button onclick="profileImageUpload()">사진 업로드</button>
-		<button onclick="closePopup('.modal-image')">취소</button>
-	</div>
-</div>
+<script>
+    function submitForm() {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.enctype = "multipart/form-data";
+        form.action = "${pageContext.request.contextPath}/ProfileImgePro";
 
-<!--프로필사진 바꾸기 모달end-->
+        const profileImageFile = document.getElementById("profileImageFile");
+        form.appendChild(profileImageFile.cloneNode());
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
 <script src="${pageContext.request.contextPath }/resources/js/member/social/profile.js"></script>
 </body>
 

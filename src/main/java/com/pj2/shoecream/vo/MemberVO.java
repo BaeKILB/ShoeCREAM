@@ -7,6 +7,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.pj2.shoecream.valid.ValidNewPasswd;
 import com.pj2.shoecream.valid.ValidNonConflictId;
 
@@ -82,6 +84,9 @@ public class MemberVO {
 	private int mem_point;
 	private int charge_point;
 	private int mem_balance;
-	private String mem_profileImageUrl;
+	private String mem_profileImageUrl; // 프로파일 사진
 	private Date mem_sign_date; //now()
+	
+	private MultipartFile file;
+	private String image_path; 	//파일 경로 저장
 }
