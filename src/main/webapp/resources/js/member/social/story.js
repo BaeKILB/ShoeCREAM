@@ -69,13 +69,13 @@ function getStoryItem(image) {
 
 	let item = `<div class="story-list__item" style="width: 100%;">
 	<div class="sl__item__header">
-        <div>
+        <div style="margin-left: 5px;">
             <a href="/shoecream/social/${image.mem_idx}"> <!-- 링크를 추가 -->
                 <img class="profile-image" src="/shoecream/resources/upload/profile/${image.mem_profileImageUrl}"
-                    onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" />
+                    onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" style="width: 41.818182px;"/>
             </a>
         </div>
-        <div><strong>&nbsp${image.mem_nickname}</strong></div>
+        <div style="margin-left: 5px;"><strong>&nbsp${image.mem_nickname}</strong></div>
     </div>
 
 	<div class="sl__item__img">
@@ -98,29 +98,39 @@ function getStoryItem(image) {
 			</button>
 		</div>
 
-		<span class="like"><b id="storyLikeCount-${image.posts_idx}">${image.likeCount} </b>likes</span>
+		<span class="like">좋아요<b id="storyLikeCount-${image.posts_idx}">&nbsp ${image.likeCount}</b>개</span>
 
-		<div class="sl__item__contents__content">
+		<div class="sl__item__contents__content" style="padding-bottom: 15px;">
 			<p>${image.posts_content}</p>
 		</div>
 
 		<div id="storyCommentList-${image.posts_idx}">`;
 		
 			image.comment_contents.forEach((comment)=>{
-				item+=`<div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 0px;">
-											<div class="sl__item__header" style="height: 25px;">
-											<div>
-												<div>
-												 <a href="/shoecream/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
-													<img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src=''"
-														style="width: 28.63636px; height: 28.63636px;" />
-												 </a>
-												</div>
-											</div>
-											<div class="d-flex align-items-center">
-												<span><strong>${comment.mem_nickname}</strong></span> <span class="ms-2">${comment.comment_content}</span>
-											</div>
-										</div>`;
+				item+=`<div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
+                                        <div class="sl__item__header" style="height: 25px;">
+                                            <div style="margin-top: 10px;">
+                                                <div style="height: 25px;">
+                                                    <a href="/shoecream/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
+                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src=''"
+                                                        style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
+                                                	</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-column w-100" style="height: 40px;">
+                                                <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
+                                                    <span><strong>${comment.mem_nickname}</strong></span>
+                                                    <span class="ms-2" style="white-space: nowrap;">${comment.comment_content}</span>
+                                                </div>
+                                                <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.8rem;">
+                                                    <span class="text-black-50">5일 전</span>
+                                                    <span class="ms-2">
+                                                        <button class="reply-btn btn-sm text-black-50"><strong>답변달기</strong></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>`;
 				
 //				
 //				
@@ -239,21 +249,31 @@ function addComment(posts_idx) {
         let profileImageUrl = comment.mem_profileImageUrl;
         
         let content = `
-                  <div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 0px;">
+                  <div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
                                         <div class="sl__item__header" style="height: 25px;">
-                                        <div>
-                                            <div>
-                                                <img class="profile-image" src="/shoecream/resources/upload/profile/${profileImageUrl}" onerror="this.src=''"
-                                                    style="width: 28.63636px; height: 28.63636px;" />
+                                            <div style="margin-top: 10px;">
+                                                <div style="height: 25px;">
+                                                    <a href="/shoecream/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
+                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src=''"
+                                                        style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
+                                                	</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-column w-100" style="height: 40px;">
+                                                <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
+                                                    <span>${comment.mem_nickname}</span>
+                                                    <span class="ms-2" style="white-space: nowrap;">${comment.comment_content}</span>
+                                                </div>
+                                                <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
+                                                    <span>5일 전</span>
+                                                    <span class="ms-2">
+                                                        <button class="reply-btn btn-sm">답변달기</button>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="d-flex align-items-center">
-                                            <span><strong>${comment.mem_nickname}</strong></span> <span class="ms-2">${comment.comment_content}</span>
-                                        </div>
-                                    </div>
-                  <button onclick="deleteComment(${comment.comment_idx})">
-                    <i class="fas fa-times"></i></button>
-                  </div>
+
         `;
         commentList.prepend(content);
 

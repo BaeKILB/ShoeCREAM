@@ -108,4 +108,9 @@ public class SocialController {
 		return "member/socialex/instaprofile";
 	}
 	
+	@GetMapping("/social/story2")
+	public String socialStory() {
+		return "member/socialex/story2";
+	}
+	
 }
