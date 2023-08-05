@@ -27,7 +27,7 @@
 }
 
 .member-update-cont input, .member-update-cont select {
-	border: 1px solid #ddd;
+	border: 1px solid #ffffff;
 	border-radius: 3px;
 	padding: 8px 10px;
 	font-size: 17px;
@@ -95,11 +95,11 @@
 .btn_info_update .upd_btn {
 	width: 30%;
 	padding: 13px 0;
-	background: #ff6600;
-	color: #fff;
+	background: rgb(255, 255, 255);
+	color: rgb(192, 192, 192);
 	font-size: 18px;
 	font-weight: 600;
-	border: 0;
+	border: 1;
 	border-radius: 5px;
 	cursor: pointer;
 }

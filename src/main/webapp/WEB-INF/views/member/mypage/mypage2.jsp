@@ -187,7 +187,7 @@ function payAuction(idx, price, id, title){
 						경매 찜 
 					</div>
 					<div class="col my_store_menus auctiongoods_menu">
-						굿즈 구매내역 
+						크림 구매내역 
 					</div>
 				</div>
 			</div>
@@ -652,7 +652,7 @@ function payAuction(idx, price, id, title){
 				<div id="auctiongoods_menu_area" class="common_menu">
 					<div>
 						<p>
-							굿즈 구매내역 
+							크림 구매내역 
 						</p>
 					</div>
 					<div>

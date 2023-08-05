@@ -10,8 +10,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>마이페이지</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/update.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/upload.css">
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/update.css"> --%>
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/upload.css"> --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/mem_page/profile.css">
 
 <link href="${pageContext.request.contextPath }/resources/css/member/common.css" rel="stylesheet">
@@ -34,7 +34,27 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap"
 	rel="stylesheet">
-
+<style>
+.profile_thumb img.thumb_img {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+}
+</style>
+   <script>
+        function handleImageChange(e) {
+            const imageFile = e.target.files[0];
+            if (imageFile) {
+              const reader = new FileReader();
+              reader.onload = function(event) {
+                const imgElement = document.querySelector(".thumb_img");
+                imgElement.src = event.target.result;
+              }
+              reader.readAsDataURL(imageFile);
+            }
+        }
+    </script>
 </head>
 <body>
 	<!--    <header> -->
@@ -50,63 +70,40 @@
 
 				<div class="member-update-cont">
 					<!--프로필 섹션-->
-					<section class="profile">
-						<!--유저정보 컨테이너-->
-						<div class="profileContainer">
-
-							<!--유저이미지-->
-							<div class="profile-left">
-								<div class="profile-img-wrap story-border"
-									onclick="popup('.modal-image')">
-									
-<!-- 									<form id="userProfileImageForm"> -->
-<!-- 										<input type="file" name="profileImageFile" -->
-<!-- 											style="display: none;" id="userProfileImageInput" /> -->
-<!-- 									</form> -->
-
-									<img class="profile-image" src="#"
-										onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person3.jpg'"
-										id="userProfileImage" />
-								</div>
-							</div>
-							<!--유저이미지end-->
-
-							<!--유저정보 및 사진등록 구독하기-->
-							<div class="profile-right">
-								<div class="name-group">
-									<%-- 									<h2>${dto.member.mem_nickname}</h2> --%>
-									<h4>${member.mem_nickname }</h4>
-								</div>
-
-								<div class="subscribe">
-									<ul>
-<!-- 									<form id="userProfileImageForm"> -->
-<!-- 										<input type="file" name="profileImageFile" -->
-<!-- 											style="display: none;" id="userProfileImageInput" /> -->
-<!-- 									</form> -->
-<!-- 										<button type="file" name="file" class="cta" onclick="popup('.modal-image')">이미지 변경</button> -->
-										<button type="file" name="profileImageFile" class="cta" id="userProfileImageInput" onclick="popup('.modal-image')">이미지 변경</button>
-										<button class="cta" onclick="location.href='${pageContext.request.contextPath }/image/upload'">삭제</button>
-									</ul>
-								</div>
-
-<!-- 								<div class="state"> -->
-<%-- 									<h4>${member.mem_bio }</h4> --%>
-<!-- 								</div> -->
-							</div>
-							<!--유저정보 및 사진등록 구독하기-->
-
-						</div>
-					</section>
+					<ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="d-flex my-3" >
+                    <div class="col-md-2">
+                        <div class="profile_thumb">
+                            <input type="file" id="profileImageFile" name="profileImageFile" accept="image/jpeg,image/png" hidden="hidden" onchange="handleImageChange(event)">
+                            <img src="${pageContext.request.contextPath }/social//upload/${member.mem_profileImageUrl }"  alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
+                        </div>
+                    </div>
+                    <div class="col-md-10 d-flex flex-column">
+                        <div class="profile_detail">
+                            <strong class="name">ract0q</strong>
+                        </div>
+                        <div class="profile_btn_box mt-auto">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('profileImageFile').click()">이미지 변경</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm">삭제</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+					</ul>
 <%-- 				<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" onsubmit='return signUpCheck();'> --%>
 					<ul>
 						<li><label for="name">프로필 이름</label>
-							<div class="form-input">
+							<div class="form-input border-bottom">
 								<input type="text" name="mem_nickname" class="form-control"
 									value="${member.mem_nickname }">
 							</div></li>
 						<li><label for="name">소개</label>
-							<div class="form-input">
+							<div class="form-input border-bottom">
 								<input type="text" name="mem_bio" id="name"
 									class="form-control" value="${member.mem_bio }"
 									>

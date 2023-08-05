@@ -211,11 +211,11 @@
     color: #87bef5;
 }
 #sales_menu_area > div > ul {
-    float: right;
-    border: 1px solid rgb(238, 238, 238);
-    width: 140px;
-    height: 28px;
-    font-size: 12px;
+/*     float: right; */
+/*     border: 1px solid rgb(238, 238, 238); */
+/*     width: 140px; */
+/*     height: 28px; */
+/*     font-size: 12px; */
 }
 #sales_menu_area > div > ul > li {
     padding: 5px 0 5px 5px;

@@ -388,4 +388,10 @@ public class MemberController {
    		return "member/store/store";
    	}
     
+/// =====================asd================
+   	@GetMapping("authex")
+   	public String authex() {
+   		return "member/authex/user-info";
+   	}
+   	
 }

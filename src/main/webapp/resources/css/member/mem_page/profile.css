@@ -6,7 +6,10 @@
   font-family: is;
   src: url(../fonts/billabong.ttf);
 }
-
+.profile_thumb {
+    width: 100px;
+    height: 100px;
+}
 
 .profileContainer {
   display: flex;

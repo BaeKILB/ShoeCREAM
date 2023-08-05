@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>클레버 - 마이페이지</title>
+<title>shocream - 마이페이지</title>
 <link rel="shortcut icon"href="${pageContext.request.contextPath }/resources/img/member/mem_mypage/shoecream-logo.png">
 
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
@@ -38,11 +38,11 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.cs
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/goods/goods_history.css">
 
 <!-- js -->
-<script	src="${pageContext.request.contextPath }/resources/js/market/jquery-3.6.0.min.js"></script>
-<script	src="${pageContext.request.contextPath }/resources/js/market/menu_hover.js"></script>
-<script	src="${pageContext.request.contextPath }/resources/js/market/market_intro_modify.js"></script>
-<script	src="${pageContext.request.contextPath }/resources/js/goods/goods_history_common.js"></script>
-<script	src="${pageContext.request.contextPath }/resources/js/goods/goods_buy_history.js"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/member/market/jquery-3.6.0.min.js"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/member/market/menu_hover.js"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/member/market/market_intro_modify.js"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/member/goods/goods_history_common.js"></script>
+<script	src="${pageContext.request.contextPath }/resources/js/member/goods/goods_buy_history.js"></script>
 
 </head>
 
@@ -107,61 +107,48 @@ function payAuction(idx, price, id, title){
 	<!-- main_content 영역 -->
 	<div id="main_content">
 		<!-- 프로필 영역 -->
-		<section class="profile">
-		
-		<div id="my_store_area">
-			<div class="my_store_left">
-				<div class="profile-left">
-					<div class="profile-img-wrap story-border"
-						onclick="popup('.modal-image')">
-						<form id="userProfileImageForm">
-							<input type="file" name="profileImageFile" style="display: none;"
-								id="userProfileImageInput" />
-						</form>
-		
-						<img class="profile-image" src="#"
-							onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person3.jpg'" id="userProfileImage"  
-							style=" width: 130px; height: 130px;"/>
-					</div>
-				</div>
-			</div>
-
-			<div class="my_store_right">
-				<div id="my_store_right_top">
-					<div>
-						<h2>${principal.member.mem_nickname}님</h2>
-						<button onclick="location.href='${pageContext.request.contextPath }/mypage/update'">내 정보 수정</button>
-						<button onclick="location.href='${pageContext.request.contextPath }/social/1'">소셜</button>
-						<button onclick="location.href='bank_memberInfo'">계좌관리</button>
-					</div>
-					<div>
-						<c:choose>
-							<c:when test="${principal.member.mem_account_auth eq 'Y' }">
-								<p>
-									<span>OK</span> 계좌 인증 완료
-								</p>
-							</c:when>
-							<c:otherwise>
-								<p>
-									<span>NO</span> 계좌 미인증
-								</p>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-				<div id="my_store_right_mid">
-				<div class='left-box'>
-				
-				
-				</div>
-				<div class='right-box'>
-				
-				
-				</div>
-				</div>
-			</div>
-		</div>
-		</section>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex my-3">
+                <div class="col-md-2">
+                    <div class="profile_thumb">
+                        <input type="file" id="profileImageFile" name="profileImageFile" accept="image/jpeg,image/png" hidden="hidden" onchange="handleImageChange(event)">
+                        <img src="${pageContext.request.contextPath}/social//upload/${member.mem_profileImageUrl}" alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex flex-column">
+                    <div class="profile_detail">
+                        <strong class="name">${principal.member.mem_nickname}</strong>
+                    </div>
+                    <div class="mem_email">
+                   	 	<p class="text-black-50">${principal.member.mem_email}</p>
+                    </div>
+                    <div class="profile_btn_box mt-auto">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/mypage/profile'">프로필 관리</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/social/${mem_idx}'">내 소셜</button>
+                    </div>
+                </div>
+                 <div class="col-md-2">
+                    <div class="member_rank d-flex flex-column align-items-center justify-content-center">
+                        <a class="membership_item disabled" style="text-decoration: none;">
+                            <strong class="info" style="color: black;"> 일반 회원 </strong>
+                            <p class="title" style="color: gray;">회원 등급</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="member_point d-flex flex-column align-items-center justify-content-center">
+                        <a class="membership_item" style="text-decoration: none;">
+                            <strong class="info" style="color: black;"> 0P </strong>
+                            <p class="title" style="color: gray;">포인트</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 		<!-- 프로필 영역 끝 -->
 
 		<!-- 하단 내역 부분 -->
@@ -187,26 +174,31 @@ function payAuction(idx, price, id, title){
 						경매 찜 
 					</div>
 					<div class="col my_store_menus auctiongoods_menu">
-						굿즈 구매내역 
+						크림 구매내역 
 					</div>
 				</div>
 			</div>
 
 			<div id="my_store_menu_content">
 				<div id="sales_menu_area" class="common_menu">
-					<div>
-						<p>
-							판매내역 
-						</p>
-						<ul class="goods_cate">
-							<li>전체</li>
-							<li class="hidden_menu">전체</li>
-							<li class="hidden_menu">거래중</li>
-							<li class="hidden_menu">거래완료</li>
-							<li class="hidden_menu">숨김내역</li>
-						</ul>
-						<i class="bi bi-chevron-down under_direction under"></i>
-					</div>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <p>
+            판매내역
+        </p>
+        <!-- 생략된 주석 -->
+    </div>
+    <div class="">
+        <ul class="goods_cate">
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+        </ul>
+    </div>
+</div>
 					<div>
 						<!-- 판매 내역 시작 -->
 						<div id="main_content">
@@ -648,11 +640,11 @@ function payAuction(idx, price, id, title){
 				</div>
 				<!-- 경매 찜 끝 -->
 				
-				<!-- 굿즈 구매 내역 시작 -->
+				<!-- 크림 구매 내역 시작 -->
 				<div id="auctiongoods_menu_area" class="common_menu">
 					<div>
 						<p>
-							굿즈 구매내역 
+							크림 구매내역 
 						</p>
 					</div>
 					<div>
