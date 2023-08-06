@@ -36,6 +36,7 @@ import com.pj2.shoecream.service.AuctionService;
 import com.pj2.shoecream.service.BidService;
 import com.pj2.shoecream.service.CategoryService;
 import com.pj2.shoecream.service.ImageService;
+import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.ProductImageVO;
@@ -51,6 +52,8 @@ public class AuctionController {
    private BidService bidService;
    @Autowired
    private CategoryService categoryService;
+   @Autowired 
+   private PayService payService;
    
    private static final Logger logger = LoggerFactory.getLogger(AuctionController.class);
    
@@ -214,7 +217,7 @@ public class AuctionController {
 		    } catch (IOException e) {
 			e.printStackTrace();
 		    }
-		    service.registAuctionItem(auction);
+		    service.modifyAuctionItem(auction);
 		}
 		return "redirect:/Auction";
     }
@@ -266,7 +269,6 @@ public class AuctionController {
 					        , Model model
 					        , @RequestParam Map<String, Object> map ) {
 
-		//글 수정은 경매 진행중인경우 연장만 가능하도록? 논의가 필요하무니다
 		
 		//글번호(auction_idx) 필요하고 
 		String auction_idx = (String)map.get("auction_idx");
@@ -300,13 +302,14 @@ public class AuctionController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
         int sId = mPrincipalDetails.getMember().getMem_idx();
- 	   System.out.println("★★★★★★★ㅇㄻㄴ★★★★★★★★여기?");
 
-		auction.setMem_idx(sId); // 회원번호 추가
-		String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
-		auction.setAuction_idx(productId); // 상품번호 추가
-		image.setProduct_idx(productId);
+//		auction.setMem_idx(sId); // 회원번호 추가
+//		String productId = String.valueOf(auction.getMem_idx()) + String.valueOf(new Date().getTime()); // 상품번호
+//		auction.setAuction_idx(productId); // 상품번호 추가
+//		image.setProduct_idx(productId);
 
+        String productId = image.getProduct_idx();
+        
 		String uploadDir = "/resources/upload/auction";
 		String saveDir = session.getServletContext().getRealPath(uploadDir);
 		String subDir = "";
@@ -339,7 +342,7 @@ public class AuctionController {
         String imageName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
 		String imageName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
 		String imageName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
-		String imageName4 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+		String imageName4 = uuid.substring(0, 8) + "_" + mFile4.getOriginalFilename();
 
 		if(!mFile1.getOriginalFilename().equals("")) image.setImage1_name(imageName1);
 		if(!mFile2.getOriginalFilename().equals("")) image.setImage2_name(imageName2);
@@ -351,18 +354,18 @@ public class AuctionController {
 		int insertCount = isService.modifyProductImage(image);
 
 		if (insertCount > 0) {
-			   System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★여기333?");
 		    try {
 			if (!mFile1.getOriginalFilename().equals("")) mFile1.transferTo(new File(saveDir, imageName1));
 			if (!mFile2.getOriginalFilename().equals("")) mFile2.transferTo(new File(saveDir, imageName2));
 			if (!mFile3.getOriginalFilename().equals("")) mFile3.transferTo(new File(saveDir, imageName3));
-			if (!mFile3.getOriginalFilename().equals("")) mFile4.transferTo(new File(saveDir, imageName4));
+			if (!mFile4.getOriginalFilename().equals("")) mFile4.transferTo(new File(saveDir, imageName4));
 		    } catch (IllegalStateException e) {
 			e.printStackTrace();
 		    } catch (IOException e) {
 			e.printStackTrace();
 		    }
-		   System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★여기?");
+		    
+		    //이미지 업로드가 성공하면 
 		    service.modifyAuctionItem(auction);
 		}
 		
@@ -380,7 +383,6 @@ public class AuctionController {
 		return "";
 	}
 	
-    
     
     //입찰 폼이동
     @GetMapping("biddingPopup")
@@ -457,38 +459,38 @@ public class AuctionController {
 		boolean paymentResult = false;
 		if(buyer.getMem_balance() > price) {
 			paymentResult = true; // 결제서비스.입출금메소드();
+			// 결제 성공
 			if(paymentResult) {
-				// 입찰내역이 있을경우 유찰로 변경하고 돈 돌려줌
+				// 입찰내역이 있을경우 
 				if(bidInfo != null) {
 					logger.info("!@#$ : 입찰내역이 있음");
-					int updateCount = bidService.modifyBid(map);
-					// 기존 입찰내역 변경 성공시 환불
-					if(updateCount > 0) {
-//						포인트결제서비스.출금메서드(bid_mem_idx,deposit);
-						logger.info("!@#$ 환불금액");
-						logger.info(String.valueOf(deposit));
-						logger.info("!@#$ 환불대상");
-						logger.info(String.valueOf(bid_mem_idx));
-					} else {
-						model.addAttribute("msg","기존 입찰내역 변경 실패");
-					}
+					
+					// 기존 입찰내역 경매 상태변경(입찰 -> 환불)
+					bidService.modifyBid(map);
+					
+					// 기존 입찰내역 보증금 반환
+					logger.info("!@#$ : 환불 금액 : " + String.valueOf(deposit));
+					logger.info("!@#$ : 환불 대상 : "+String.valueOf(bid_mem_idx));
+					
+					// 포인트결제서비스.출금메서드(bid_mem_idx,deposit);
 				}
 				// 입찰내역 삽입
-				int insertCount = bidService.insertBid(map);
-				if(insertCount > 0) {
-					model.addAttribute("msg","입찰 성공!");
-					return "inc/close";
-				}
-			// 결제가 실패했을 경우
+				bidService.insertBid(map);
+				
+				model.addAttribute("msg","입찰 성공!");
+				return "inc/close";
+				
+			// 결제 실패
 			} else {
 				model.addAttribute("msg","결제 실패");
+				return "fail_back";
 			}
-		// 포인트 잔액이 부족할 경우
+		// 잔액 부족
 		} else {
-			model.addAttribute("msg","잔액이 부족합니다.\n충전후 재시도 바랍니다.");
+			model.addAttribute("msg","잔액이 부족합니다. 충전후 재시도 바랍니다.");
+			return "fail_back";
 		}
 		
-		return "fail_back";
     }
     
     // 즉시 구매 (입출금 로직 필요)
@@ -520,49 +522,96 @@ public class AuctionController {
 
 		// 구매자가 즉시구매가 가능한 포인트를 가지고 있다면 결제 로직 진행
 		boolean paymentResult = false;
-		if(buyer.getMem_balance() > auc_buy_instantly ) {
+		if(buyer.getMem_balance() > auc_buy_instantly) {
 			paymentResult = true; // 결제서비스.입출금메소드();
+			// 결제 성공
 			if(paymentResult) {
 				// 상품 입찰내역 정보
 				logger.info("!@#$ 즉시구매 결제완료후");
 				Map<String, Object> bidInfo = bidService.getBid(auction_idx);
 				
-				// 입찰내역이 있을경우 유찰로 변경하고 돈 돌려줌
+				// 입찰내역이 있을경우 
 				if(bidInfo != null) {
 					logger.info("!@#$ 즉시구매 입찰내역이 있을경우");
-					int updateCount = bidService.modifyBid(map);
-					// 기존 입찰내역 변경 성공시 환불
-					if(updateCount > 0) {
-						int deposit = Integer.parseInt(String.valueOf(bidInfo.get("deposit")));
-						int bid_mem_idx = Integer.parseInt(String.valueOf(bidInfo.get("mem_idx")));
-//						포인트결제서비스.출금메서드(bid_mem_idx,deposit);
-						logger.info("!@#$ 환불금액");
-						logger.info(String.valueOf(deposit));
-						logger.info("!@#$ 환불대상");
-						logger.info(String.valueOf(bid_mem_idx));
-					} else {
-						model.addAttribute("msg","기존 입찰내역 변경 실패");
-					}
+					// 기존 입찰내역 경매 상태변경(입찰 -> 환불)
+					bidService.modifyBid(map);
+					
+					// 기존 입찰내역 보증금 반환
+					int deposit = Integer.parseInt(String.valueOf(bidInfo.get("deposit")));
+					int bid_mem_idx = Integer.parseInt(String.valueOf(bidInfo.get("mem_idx")));
+					logger.info("!@#$ : 환불 금액 : " + String.valueOf(deposit));
+					logger.info("!@#$ : 환불 대상 : "+String.valueOf(bid_mem_idx));
+					// 포인트결제서비스.출금메서드(bid_mem_idx,deposit);
 				} 
-				// 입찰내역 삽입
-				int insertCount = bidService.insertBidBuyNow(map);
-				if(insertCount > 0) {
-					service.modifyAuctionState(auction_idx);
-					model.addAttribute("msg","구매 성공!");
-					return "inc/close";
-				}
-			// 결제가 실패했을 경우
+				// 입찰내역 추가 및 경매상품 상태 변경
+				bidService.insertBidBuyNow(map);
+				service.modifyAuctionState(auction_idx);
+				model.addAttribute("msg","구매 성공!");
+				return "inc/close";
+			// 결제 실패
 			} else {
 				model.addAttribute("msg","결제 실패");
+				return "inc/fail_back";
 			}
-		// 포인트 잔액이 부족할 경우
+		// 잔액 부족
 		} else {
+			model.addAttribute("msg","잔액이 부족합니다. 충전후 재시도 바랍니다.");
+			return "inc/fail_back";
+		}
+    }
+    
+    
+    //0804이온 즉시구매
+    @PostMapping("buyingPro2")
+    public String insertBuying2(
+    		@RequestParam Map<String, Object> map
+    		, Model model
+    		, HttpSession session) {
+    	
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+    	// 구매자 회원번호
+    	int sId = mPrincipalDetails.getMember().getMem_idx();
+    	map.put("mem_idx", sId);
+    	
+    	// 상품번호
+    	String auction_idx = String.valueOf(map.get("auction_idx"));
+    	
+    	// 상품정보
+    	Map<String,Object> auction = service.getAuction(auction_idx);
+    	int auc_buy_instantly = Integer.parseInt(String.valueOf(auction.get("auc_buy_instantly")));
+    	map.put("auc_buy_instantly", auc_buy_instantly); // 즉시구매금액 전달
+    	
+    	// 구매자 정보
+    	MemberVO buyer = service.getMember(sId);
+    	
+    	// 판매자 정보
+    	MemberVO seller = service.getMember(Integer.parseInt(String.valueOf(auction.get("mem_idx"))));
+    	
+    	//0804 이온 즉시구매 로직
+		//아직 상품이 진행중인 경우에만 가능
+		//즉시 구매자의 포인트 잔고가 있는 경우에만 가능 없다면 메세지
+		//즉시구매자에게선 포인트 - 
+		//판매자에게도 포인트 +
+		// admin 계좌에는 그만큼의 포인트 
+		//기존 입찰자들에겐 포인트 환급을 해줘야 한다 + admin에서 -
+		
+		
+		if(buyer.getMem_balance() > auc_buy_instantly ) {
+			//결제 진행 
+			
+		
+			
+			//입찰자가 있는 경우 유찰로 상태 변경 및 환불
+			
+			
+			
+		}else {
 			model.addAttribute("msg","잔액이 부족합니다.\n충전후 재시도 바랍니다.");
 		}
 		
-		return "fail_back";
+     return "";
     }
-    
     
     @ResponseBody
     @RequestMapping(value= "dibsEvent", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")

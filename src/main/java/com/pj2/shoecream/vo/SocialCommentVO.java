@@ -21,4 +21,7 @@ public class SocialCommentVO {
 	private int comment_re_seq;
 	private Date comment_date;
 //	private Timestamp comment_date;
+	
+	private String mem_profileImageUrl;
+
 }

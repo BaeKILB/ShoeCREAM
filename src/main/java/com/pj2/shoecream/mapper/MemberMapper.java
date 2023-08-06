@@ -55,10 +55,18 @@ public interface MemberMapper {
 // ------------------ 마이페이지 / 프로필 관리 -------------------
 	Map<String, Object> selectProfileMember(int sId);
 	
+	// 마이페이지 프로필 변경
+	int updateProfile(MemberVO member);
 //---------------------- 아이디/비밀번호 찾기 - find.jsp--------------------
 
 	// 소셜 프로필 가져올 memIdx
 	MemberVO findMemberByMemIdx(int mem_idx);
+	
+	// 소셜 소토리 용
+	MemberVO findMemberByIdx(int mem_idx);
+
+	
+
 
 	
 

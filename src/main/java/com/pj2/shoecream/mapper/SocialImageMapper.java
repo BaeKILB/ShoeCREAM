@@ -27,7 +27,10 @@ public interface SocialImageMapper {
 	List<SocialVO> selectPopular();
 	
 	void insertComment(SocialCommentVO socialCommentVO);
-
+	
+   // 댓글 쓸때 프로필 이미지 경로
+    String findProfileImageUrlByMemberId(int mem_idx);
+	
 	int updateComment_ref(SocialCommentVO socialCommentVO);
 
 	List<SocialCommentVO> selectCommentsByPostId(int posts_idx);

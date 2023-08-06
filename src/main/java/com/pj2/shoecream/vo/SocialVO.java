@@ -33,4 +33,7 @@ public class SocialVO {
 	
 	// 댓글
 	private List<SocialCommentVO> comment_contents;
+	
+	// 프로필 사진
+	private String mem_profileImageUrl; 
 }
