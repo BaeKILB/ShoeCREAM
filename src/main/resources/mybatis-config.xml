@@ -7,6 +7,7 @@
 		<typeAlias type="com.pj2.shoecream.vo.ProductVO" alias="ProductVO"/>
 		<typeAlias type="com.pj2.shoecream.vo.JungProductVO" alias="JungProductVO"/>
 		<typeAlias type="com.pj2.shoecream.vo.PayInfoVO" alias="PayInfoVO"/>
+		<typeAlias type="com.pj2.shoecream.vo.PointInoutVO" alias="PointInoutVO"/>
 		<typeAlias type="com.pj2.shoecream.vo.LCategory" alias="LCategory"/>
 		<typeAlias type="com.pj2.shoecream.vo.MCategory" alias="MCategory"/>
 		<typeAlias type="com.pj2.shoecream.vo.SCategory" alias="SCategory"/>

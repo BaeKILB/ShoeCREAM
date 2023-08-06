@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.PayMapper">
-
+	
+	<!-- 상품 번호로 가져온 결제정보의 가장 최근항목 들고오기 -->
+	<select id="selectGetPayInfoTop" resultType="PayInfoVO">
+		SELECT *
+		FROM pay_info
+		WHERE 
+			product_idx = #{product_idx}
+		LINIT 0 1
+		ORDER BY trans_date DESC
+		;
+	</select>
+	
+	<update id="updateMemberPoint">
+		UPDATE mem_info
+		SET charge_point = charge_point + #{price}
+		WHERE mem_idx = #{mem_idx}
+		;
+	</update>
+	
+	<insert id="insertPayInfo" parameterType="PayInfoVO">
+		INSERT INTO pay_info
+		VALUES (
+			null
+			,#{product_idx}
+			,#{pay_method}
+			,#{pay_total}
+			,#{pay_status}
+			,#{pay_time}
+			,null
+			,null
+			,null
+			,#{point_idx}
+			,now()
+		)
+		;
+	</insert>
+	
+	<insert id="insertPointInout" parameterType="PointInoutVO">
+		INSERT INTO point_inout
+		VALUES (
+			NULL
+			,#{point_status}
+			,#{charge_point_amount}
+			,#{mem_idx}
+			,#{charge_point}
+			,#{point_usage}
+			,now()
+		)
+		;
+	</insert>
 </mapper>

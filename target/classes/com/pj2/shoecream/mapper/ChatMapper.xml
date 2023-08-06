@@ -205,6 +205,26 @@ SELECT *
 		;
 	</select>
 	
+	<update id="updateChatRoomArea">
+		UPDATE chat_rooms
+		SET chat_room_area = #{chat_room_area}
+		WHERE chat_room_idx = #{chat_room_idx}
+		;
+	</update>
+
+	<update id="updateChatRoomSellerIdx">
+		UPDATE chat_rooms
+		SET mem_seller_idx = #{mem_seller_idx}
+		WHERE chat_room_idx = #{chat_room_idx}
+		;
+	</update>
+	<update id="updateChatRoomBuyerIdx">
+		UPDATE chat_rooms
+		SET mem_buyer_idx = #{mem_buyer_idx}
+		WHERE chat_room_idx = #{chat_room_idx}
+		;
+	</update>
+	
 	<delete id="deleteChatRoom">
 		DELETE chat_rooms
 		WHERE chat_room_idx = #{chat_room_idx}

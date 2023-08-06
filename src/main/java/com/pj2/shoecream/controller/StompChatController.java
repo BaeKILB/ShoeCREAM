@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pj2.shoecream.handler.JsonHandler;
@@ -88,6 +89,8 @@ public class StompChatController {
 	}
 	
 	// ==================== 채팅 부가 작업
+	
+	//=========== ajax =============
 	// 채팅 물품 변화에 따른 정보를 수신받아 트리거를 보내서 ajax 동작을 하게끔 하기
 	
 	@MessageMapping("checkItemStatus")

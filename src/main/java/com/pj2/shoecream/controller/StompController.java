@@ -282,27 +282,99 @@ public class StompController {
 		
 	}
 	
-//	@GetMapping("room")
-//	public String getRoom(@RequestParam(defaultValue = "-1") String chat_room_idx,
-//			 @AuthenticationPrincipal PrincipalDetails principalDetails,
-//			HttpSession session , Model model ){
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//		int idx = mPrincipalDetails.getMember().getMem_idx();
-//		
-//		if(!chat_room_idx.equals("-1") && 
-//				chatService.isChatMember(idx, 
-//				Integer.parseInt(chat_room_idx) )) {
-//			model.addAttribute("room", chatService.getChatRoom(Integer.parseInt(chat_room_idx)));
-//			model.addAttribute("chatList", chatService.getChatList(Integer.parseInt(chat_room_idx)));
-//			model.addAttribute("idx", chatService.getSIdIdx((String)session.getAttribute("sId")));
-//			return "/inc/chat/room";
-//		}
-//		else {
-//			model.addAttribute("msg","채팅방 입장에 실패하였습니다!");
-//			return "/etc/fail_back";
-//		}
-//	}
+	
+	// 채팅방 나가기 기능
+	public String chatRoomOut(@RequestParam Map<String,Object> map, Model model
+			, RedirectAttributes rttr) {
+		
+		// 현재 로그인 된 아이디의 idx 번호 받을 변수
+		int idx = -1;
+		String id = "";
+		// try catch 로 오류 처리
+		try {
+			// spring security 이용 idx 받아오기
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			idx = mPrincipalDetails.getMember().getMem_idx();
+			id = mPrincipalDetails.getMember().getMem_id();
+		}
+		catch(Exception e) {
+			// 만약 idx 못받아오면 다시 로그인
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return "inc/fail_forward";
+		}
+		
+		// 파라미터 받기
+		String chatRoomIdxStr = (String)map.get("chat_room_idx");
+		String chatAreaStr = (String)map.get("chat_area");
+		
+		// 파라미터 들어왔는지 체크
+		if(chatRoomIdxStr == null || chatAreaStr == null) {
+			model.addAttribute("msg","잘못된 주소값 입니다!");
+			return "inc/fail_back";
+		}
+		
+		
+		
+		int chatRoomIdx = Integer.parseInt(chatRoomIdxStr);
+		int chatArea = Integer.parseInt(chatAreaStr);
+		
+		// 지금 접속한 유저가 실제 채팅방 유저인지 또는 관리자인지 체크
+		if(!chatService.isChatMember(idx,chatRoomIdx) && !id.equals("admin")) {
+			model.addAttribute("msg","권한이 없습니다!");
+			return "inc/fail_back";
+		}
+		
+		//채팅방 정보 들고오기
+		Map<String,Object> chatRoom = null;
+		chatRoom = chatService.getChatRoom(chatRoomIdx, chatArea);
+		if(chatRoom == null) {			
+			model.addAttribute("msg","채팅방이 존재하지 않습니다!");
+			return "inc/fail_back";
+		}
+		
+		// 현재 채팅방의 상품정보가 거래대기중이면 나가기가 안되게 막기
+		if(chatRoom.get("product_sell_status").equals("거래대기중") && !id.equals("admin")) {
+			model.addAttribute("msg","페이결제를 진행한상태 입니다! 결제 취소후 또는 요청후 진행해주세요");
+			return "inc/fail_back";
+		}
+		
+		// 채팅방 나가기
+		// 본인이 판매자인지 구매자인지 확인해서 채팅방의 유저 idx 를 다른 번호로 바꾸기
+		
+		boolean checkResult = false;
+		// 관리자인 경우부터 체크
+		if(id.equals("admin")) {
+			// chatRoomIdx 를 9 로 변경하기
+			if(chatService.changeChatRoomArea(chatRoomIdx, 9)) {
+				checkResult = true;
+			}
+		}
+		else if((Integer)chatRoom.get("mem_seller_idx") == idx) {
+			if(chatService.changeChatRoomSeller(chatRoomIdx,-1)) {
+				checkResult = true;
+			}
+		}
+		else if((Integer)chatRoom.get("mem_buyer_idx") == idx) {
+			if(chatService.changeChatRoomBuyer(chatRoomIdx,-1)) {
+				checkResult = true;
+			}
+		}
+		else {
+			model.addAttribute("msg","권한이 없습니다!");
+			return "inc/fail_back";
+		}
+		
+		if(checkResult) {			
+			return "redirect:chatRooms?chat_area=" + chatArea;	
+		}
+		else {
+			model.addAttribute("msg","채팅방 나가기 중 문제가 발생했습니다!");
+			return "inc/fail_back";
+		}
+	}
+	
 	
 	//=========== ajax ==============
 	

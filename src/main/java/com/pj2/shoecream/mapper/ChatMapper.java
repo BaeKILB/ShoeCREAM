@@ -31,5 +31,10 @@ public interface ChatMapper {
 	Integer selectChatCheckAuth(@Param("mem_idx") int mem_idx,
 			@Param("chat_room_idx") int chat_room_idx);
 	
+	// 채팅방 설정값 업데이트
+	int updateChatRoomArea(@Param("chat_room_idx") int chat_room_idx , @Param("chat_room_area") int chat_room_area);
+	int updateChatRoomSellerIdx(@Param("chat_room_idx") int chat_room_idx, @Param("mem_seller_idx") int mem_seller_idx);
+	int updateChatRoomBuyerIdx(@Param("chat_room_idx") int chat_room_idx, @Param("mem_buyer_idx") int mem_buyer_idx);
+	
 	int deleteChatRoom(String chat_room_idx);
 }

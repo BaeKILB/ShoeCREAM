@@ -93,5 +93,33 @@ public class ChatService {
 		return result > 0;
 	}
 	
+	// 채팅방 상태 업데이트
+	
+	// 채팅방 위치 변경
+	public boolean changeChatRoomArea(int chat_room_idx , int chat_room_area) {
+		if(mapper.updateChatRoomArea(chat_room_idx, chat_room_area) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	public boolean changeChatRoomSeller(int chat_room_idx , int mem_seller_idx) {
+		if(mapper.updateChatRoomSellerIdx(chat_room_idx, mem_seller_idx) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	public boolean changeChatRoomBuyer(int chat_room_idx , int mem_buyer_idx) {
+		if(mapper.updateChatRoomBuyerIdx(chat_room_idx,mem_buyer_idx) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	
 }

@@ -86,7 +86,7 @@ public class ChatHandler {
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
-				+ "		<input type='button' class='btn btn-primary' value='나가기'/>		"	    		
+				+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(0)'/>		"	    		
 				;
 	
 		return chatMsgBarBody(map,true,product_btn,user_btn);
@@ -97,7 +97,7 @@ public class ChatHandler {
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
-				+ "		<input type='button' class='btn btn-primary' value='나가기'/>		"	    		
+				+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(0)'/>		"	    		
 				;
 	
 		return chatMsgBarBody(map,false,product_btn,user_btn);
@@ -121,7 +121,7 @@ public class ChatHandler {
 		}
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
-						+ "		<input type='button' class='btn btn-primary' value='예약취소'/>		"	    		
+						+ "		<input type='button' class='btn btn-primary' value='예약취소'  onclick='chatRoomOut(1)'/>		"	    		
 						;
 		
 		return chatMsgBarBody(map,true,product_btn,user_btn);
@@ -133,7 +133,7 @@ public class ChatHandler {
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
-						+ "		<input type='button' class='btn btn-primary' value='예약취소'/>		"	    		
+						+ "		<input type='button' class='btn btn-primary' value='예약취소' onclick='chatRoomOut(1)' />		"	    		
 						;
 		
 		return chatMsgBarBody(map,true,product_btn,user_btn);
@@ -158,7 +158,7 @@ public class ChatHandler {
 		}
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
-						+ "		<input type='button' class='btn btn-primary' value='나가기'/>		"	    		
+						+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(2)' />		"	    		
 						;
 		
 		return chatMsgBarBody(map,true,product_btn,user_btn);
@@ -168,8 +168,8 @@ public class ChatHandler {
 		if(map.get("product_payment").equals("안전페이")
 				|| map.get("product_payment").equals("안전페이,직거래")) {
 			product_btn = 
-					"<input type='button' class='btn btn-primary' value='결제취소 허용'/>"
-							+"<input type='button' class='btn btn-primary' value='인수 분쟁 신고'/>"
+//					"<input type='button' class='btn btn-primary' value='결제취소 허용'/> +"
+							"<input type='button' class='btn btn-primary' value='인수 분쟁 신고'/>"
 							;
 		}
 		else {
@@ -179,7 +179,7 @@ public class ChatHandler {
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
-						+ "		<input type='button' class='btn btn-primary' value='나가기'/>		"	    		
+						+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(2)'/>		"	    		
 						;
 		
 		return chatMsgBarBody(map,true,product_btn,user_btn);
@@ -196,7 +196,7 @@ public class ChatHandler {
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
-						+ "		<input type='button' class='btn btn-primary' value='나가기'/>		"	    		
+						+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(0)'/>		"	    		
 						;
 		
 		return chatMsgBarBody(map,true,product_btn,user_btn);
@@ -207,7 +207,7 @@ public class ChatHandler {
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
-						+ "		<input type='button' class='btn btn-primary' value='나가기'/>		"	    		
+						+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(0)'/>		"	    		
 						;
 		
 		return chatMsgBarBody(map,true,product_btn,user_btn);
