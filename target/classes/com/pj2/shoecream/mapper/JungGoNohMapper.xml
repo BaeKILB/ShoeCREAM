@@ -207,7 +207,7 @@ LEFT OUTER JOIN product_image pi
 	
 			<!-- 리뷰 조회 -->
 	<select id="selectReview2" parameterType="com.pj2.shoecream.vo.JungGoNohVO">
-	  SELECT jung_rev_idx, product_idx, seller_idx, writer_idx, review_content, review_star, review_date
+	  SELECT jung_rev_idx, product_idx, seller_idx as mem_idx, writer_idx as buyier_idx, review_content, review_star, DATE_FORMAT(review_date,'%Y-%m-%d') as review_date
 	      FROM jung_reviews
 	     WHERE product_idx = #{product_idx}
 	       AND seller_idx = #{mem_idx}
@@ -222,6 +222,27 @@ LEFT OUTER JOIN product_image pi
 	        AND seller_idx = #{mem_idx}
 	        AND writer_idx = #{buyier_idx}
 	</update>
+	
+	<delete id="deleteReview">
+		DELETE 
+		  FROM jung_reviews
+		 WHERE product_idx = #{product_idx}
+	        AND seller_idx = #{mem_idx}
+	        AND writer_idx = #{buyier_idx}
+	</delete>
+	
+	
+	<!-- 더 많은 리뷰 목록 리스트 3개 -->
+	<select id="getMoreReviewListSmall" resultType="map" parameterType="com.pj2.shoecream.vo.JungGoNohVO">
+	SELECT jr.jung_rev_idx, jr.product_idx, jr.seller_idx, jr.writer_idx, jr.review_content, jr.review_star, jr.review_date
+         , mi.mem_nickname  
+	  FROM jung_reviews jr
+	  JOIN mem_info mi
+		ON jr.writer_idx = mi.mem_idx 
+	  WHERE seller_idx = #{mem_idx}
+    ORDER BY product_idx desc 
+	   LIMIT 3;   
+	</select>
 	
 	
 </mapper>

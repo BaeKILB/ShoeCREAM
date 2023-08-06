@@ -115,6 +115,17 @@ public class JungGoNohService {
 			// TODO Auto-generated method stub
 			return jungGoNohMapper.modifyReview(jungGoNoh);
 		}
+		
+		//리뷰삭제
+		public int deleteReview(JungGoNohVO jungGoNoh) {
+			// TODO Auto-generated method stub
+			return jungGoNohMapper.deleteReview(jungGoNoh);
+		}
+		
+		//==========리뷰 관련 판매 목록=======================
+		public List<JungGoNohVO> moreReviewListSmall(int mem_idx) {
+			return jungGoNohMapper.getMoreReviewListSmall(mem_idx);
+		}
 
 }
 

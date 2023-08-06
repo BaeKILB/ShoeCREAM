@@ -35,11 +35,14 @@ public interface JungGoNohMapper {
 	//찜 입력
 	int insertDibs(JungGoNohVO jungGoNoh);
 
-	// 글 삭제 프로
+	// 찜 삭제
 	int deleteDibs(JungGoNohVO jungGoNoh);
 	
 	// 판매자 관련 더 많은 판매 리스트  
 	List<JungGoNohVO> getMoreProductListSmall(int mem_idx);
+	
+	// 판매자 관련 더 많은 리뷰 리스트  
+	List<JungGoNohVO> getMoreReviewListSmall(int mem_idx);
 	
 	// 찜 변동시 조회수 -1
 	int decreaseReadcount(JungGoNohVO jungGoNoh);
@@ -65,7 +68,8 @@ public interface JungGoNohMapper {
 	//수정 등록
 	int modifyReview(JungGoNohVO jungGoNoh);
 	
-
+	//삭제 프로
+	int deleteReview(JungGoNohVO jungGoNoh);
 	
 	
 	
