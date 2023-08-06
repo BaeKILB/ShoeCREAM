@@ -142,6 +142,10 @@ public class ImageApiController {
 		return new ResponseEntity<>(new CMRespDto<>(1, "성공", images), HttpStatus.OK);
 	}
 	
+	
+	
+	
+	
 	// --------------- api/comment 댓글  ----------------
 //	, @RequestParam("comment_content") String comment_content, @RequestParam("posts_idx") int posts_idx
 //	@ResponseBody

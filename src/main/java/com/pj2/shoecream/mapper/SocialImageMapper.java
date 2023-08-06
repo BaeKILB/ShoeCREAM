@@ -1,6 +1,7 @@
 package com.pj2.shoecream.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -31,7 +32,8 @@ public interface SocialImageMapper {
 			@Param("startRow") int startRow, 
 			@Param("listLimit") int listLimit);
 
-	
+	// 소셜 디테일 정보 셀렉
+	List<Map<String, Object>> selectImageDetail(int posts_idx);
 	
 	void insertComment(SocialCommentVO socialCommentVO);
 	
@@ -43,6 +45,10 @@ public interface SocialImageMapper {
 	List<SocialCommentVO> selectCommentsByPostId(int posts_idx);
 
 	void deleteCommentById(int comment_idx);
+
+	int deletePostsImage(Map<String, Object> map);
+	
+
 
 
 	

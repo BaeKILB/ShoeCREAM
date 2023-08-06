@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -175,6 +176,12 @@ public class SocialImageService {
 		    socialImageMapper.updateComment_ref(socialCommentVO);
 		    return socialCommentVO;
 		}
+		
+		// 소셜 디테일 정보 셀렉
+		public List<Map<String, Object>> getImageDetail(int posts_idx) {
+			return socialImageMapper.selectImageDetail(posts_idx);
+		}
+		
 
 		@Transactional(readOnly = true)
 		public List<SocialCommentVO> getImageComments(int posts_idx) {
@@ -189,6 +196,11 @@ public class SocialImageService {
 				throw new CustomApiException(e.getMessage());
 			}
 		}
+
+		public int removePostsImage(Map<String, Object> map) {
+			return socialImageMapper.deletePostsImage(map);
+		}
+
 
 
 }

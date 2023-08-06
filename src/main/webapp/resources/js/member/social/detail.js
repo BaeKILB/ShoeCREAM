@@ -90,7 +90,7 @@ function getStoryItem(image) {
         </div>
 			<div class="nickname-date-wrapper" style="display: flex; flex-direction: column; margin-left: 10px;">
 			    <div style="font-size:14px; height: 20px;">
-			        <strong>${image.mem_nickname}:여긴 디테일</strong>
+			        <strong>${image.mem_nickname}</strong>
 			    </div>
 			
 			    <div style="font-size:12px; color:#adb5bd;">
@@ -100,8 +100,8 @@ function getStoryItem(image) {
 				if (principalId == image.mem_idx) {
 					item += 
         		`<div>
-		            <button type="button" class="btn btn-light edit-btn" style=" margin-left: 330px; font-size: 12px;">수정</button>
-		        </div>
+				    <button type="button" class="btn btn-light edit-btn" style=" margin-left: 380px; font-size: 12px;" onclick="window.location.href='/shoecream/social/${posts_idx}/update'">수정</button>
+				</div>
 		        <div>
 		            <button type="button" class="btn btn-light delete-btn" style=" font-size: 12px;">삭제</button>
 		        </div>`;
