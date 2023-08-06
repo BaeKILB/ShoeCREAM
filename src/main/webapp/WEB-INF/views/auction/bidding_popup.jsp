@@ -10,6 +10,7 @@
 <title>입찰 팝업</title>
 <script type="text/javascript"
    src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
 
 //보증금
@@ -99,77 +100,111 @@ function bidUnit() {
 	    }
 	}
 </script>
+<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<main>
+<main class="container">
 <!-- 입찰하기 버튼 누르는 경우 이동할 페이지, 
 보여줄 메세지 (가격이랑 끝나는날 이후 경쟁자 생기면 알람 주겟다는거?) -->
-<h1>경매 입찰</h1>
-${auction}
-    <hr>
-${bid }
+	<div class="row"> <!-- 경매 제목 행 -->
+		<div class="col">
+			<div class="display-4 fw-bold text-center">경매 입찰</div>
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="fs-5 fw-bold">상품정보</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3">
+		    <div class="text-center">상품명</div>
+		</div>
+		<div class="col-6">
+		    <div>${auction.auction_title }</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<div class="text-center">남은시간</div>
+		</div>
+		<div class="col-6">
+			<div id="acdBox"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<div class="text-center">현재가</div>
+		</div>
+		<div class="col-6">
+               <c:choose>
+               	<c:when test="${bid eq null }">
+					<div>${auction.auc_start_price }원</div>                	
+               	</c:when>
+               	<c:otherwise>
+	                <div>${bid.bid_price }원</div>
+               	</c:otherwise>
+               </c:choose>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<div class="text-center">즉시구매가</div>
+		</div>
+		<div class="col-6">
+			<div>${auction.auc_buy_instantly }원</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<div class="text-center">입찰 단위</div>
+		</div>
+		<div class="col-6">
+			<div>${auction.auc_bid_unit}원</div>		
+		</div>
+	</div>
+	<hr>
     <form method="post" action="biddingPro">
 		<input type="hidden" value="${auction.auction_idx }"  name="auction_idx">
 		<input type="hidden" value="${bid.bid_price }"  id="old_bid_price">
 		<input type="hidden" value="${auction.auc_close_date }" id="auc_close_date">
-		<div>
-		    <div>입찰 상품</div>
-			<hr>
-			<div>
-			    <span>상품명 : </span>
-			    <span>${auction.auction_title }</span>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="fs-5 fw-bold">입찰</div>
+				</div>
 			</div>
-			<div>
-			    <span>경매 마감일자 : </span>
-			    <span id="acdBox"></span>
-			</div>
-		</div>
-		<div>
-            <div>입찰 하기</div>
-            <hr>
-            <div>
-                <span>현재가 : </span>
-                <c:choose>
-                	<c:when test="${bid eq null }">
-						<span>${auction.auc_start_price }원</span>                	
-                	</c:when>
-                	<c:otherwise>
-		                <span>${bid.bid_price }원 </span>
-                	</c:otherwise>
-                </c:choose>
-                <span>즉시구매가 : </span>
- 				<span>${auction.auc_buy_instantly }원 </span>            </div>
-		</div>
-		<div>
-			<!-- 올리는 단위 정하기ㅏ 보증금 정하기 -->
-			<c:choose>
-				<c:when test="${bid eq null }">
-					<c:set var="minimumBid" value="${auction.auc_start_price }" />
-				</c:when>
-				<c:otherwise>
-					<c:set var="minimumBid" value="${bid.bid_price + auction.auc_bid_unit}" />
-				</c:otherwise>
-			</c:choose>
-            <div>입찰 금액 (입찰단위 ${auction.auc_bid_unit} 원)</div>
-<%--             <input type="number" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" onchange=bidUnit() required>원 --%>
-			
+			<div class="row">
+				<label for="bid_price" class="col-form-label col-3">입찰금액</label>
 				<c:choose>
-				    <c:when test="${bidCount eq null }">
-				    	<c:set var="minimumBid" value="${auction.auc_start_price + auction.auc_bid_unit }" />
-           				 <input type="number" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${auction.auc_start_price }원 입니다" oninput="calculateGuaranteeAmount()"  onchange="bidUnit()" required>원
+				    <c:when test="${bid eq null }">
+				    	<c:set var="minimumBid" value="${auction.auc_start_price }" />
+						<input type="number" class="form-control col" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${auction.auc_start_price }원 입니다" oninput="calculateGuaranteeAmount()"  onchange="bidUnit()" required>
 				    </c:when>
 				    <c:otherwise>
 				    	<c:set var="minimumBid" value="${bid.bid_price + auction.auc_bid_unit}" />
-           				 <input type="number" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" onchange="bidUnit()" required>원
+						<input type="number" class="form-control col" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" onchange="bidUnit()" required>
 				    </c:otherwise>
 				</c:choose>
-			
-			<!-- 보증금 입찰 금액의 10퍼 -->
-            <div>보증금</div>
-			<input type="text" id="guarantee_amount" name="deposit" readonly>원
-			<input type="button" value="보증금 결제하기" onclick="">
+			</div>
+			<div class="row">
+				<!-- 보증금 입찰 금액의 10퍼 -->
+				<label class="col-form-label col-3">보증금</label>
+				<input type="text" class="form-control-plaintext form-control col" id="guarantee_amount" name="deposit">
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-2">
+					<input type="submit" class="btn btn-secondary" value="입찰하기" onclick="bidConfirmation()" >
+				</div>
+				<div class="col-2">
+					<input type="reset" class="btn btn-secondary" value="초기화" onclick="location.reload()" >
+				</div>
+				<div class="col-2">
+					<input type="button" class="btn btn-secondary" value="닫기" onclick="close()" >
+				</div>
+			</div>
 		</div>
-		<input type="submit" value="입찰하기(테스트용)" onclick="bidConfirmation()" >
 		<!-- <input type="button" value="입찰하기" onclick="placeBid()" id="bidButton" disabled> -->
 		<!-- 보증금 결제 로직 완료되면 사용하기 -->
     </form>
