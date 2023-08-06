@@ -34,7 +34,7 @@ function bidUnit() {
     }
 }
 
-	// 시간
+
 	// 시간
 	const updateTimer = () => {
 	    const future = Date.parse($("#auc_close_date").val());
@@ -70,6 +70,34 @@ function bidUnit() {
 	}, 1000);
 
 
+	//입찰하기 버튼 클릭
+	function bidConfirmation(event) {
+	    // 사용자에게 확인을 받기 위한 컨펌창 표시
+	    var confirmBid = confirm("입찰을 진행하시겠습니까? 입찰 후에는 취소가 불가능합니다.");
+
+	    if (confirmBid) {
+	        // 폼을 서버로 제출합니다.
+	        document.getElementById("biddingForm").submit();
+	        
+	        // 현재 창 닫기
+	        closeCurrentWindow();
+
+	        // 부모 창 새로고침
+	        refreshParentWindow();
+	    }
+	}
+	
+	function closeCurrentWindow() {
+	    // 현재 창 닫기
+	    window.close();
+	}
+	
+	function refreshParentWindow() {
+	    // 부모 창 새로고침
+	    if (window.opener && !window.opener.closed) {
+	        window.opener.location.reload();
+	    }
+	}
 </script>
 </head>
 <body>
@@ -110,7 +138,7 @@ ${bid }
                 	</c:otherwise>
                 </c:choose>
                 <span>즉시구매가 : </span>
- 				<span>${bid.bid_price }+${auction.auc_bid_unit}원 </span>            </div>
+ 				<span>${auction.auc_buy_instantly }원 </span>            </div>
 		</div>
 		<div>
 			<!-- 올리는 단위 정하기ㅏ 보증금 정하기 -->
@@ -123,14 +151,25 @@ ${bid }
 				</c:otherwise>
 			</c:choose>
             <div>입찰 금액 (입찰단위 ${auction.auc_bid_unit} 원)</div>
-            <input type="number" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" onchange=bidUnit() required>원
+<%--             <input type="number" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" onchange=bidUnit() required>원 --%>
+			
+				<c:choose>
+				    <c:when test="${bidCount eq null }">
+				    	<c:set var="minimumBid" value="${auction.auc_start_price + auction.auc_bid_unit }" />
+           				 <input type="number" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${auction.auc_start_price }원 입니다" oninput="calculateGuaranteeAmount()"  onchange="bidUnit()" required>원
+				    </c:when>
+				    <c:otherwise>
+				    	<c:set var="minimumBid" value="${bid.bid_price + auction.auc_bid_unit}" />
+           				 <input type="number" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" onchange="bidUnit()" required>원
+				    </c:otherwise>
+				</c:choose>
 			
 			<!-- 보증금 입찰 금액의 10퍼 -->
             <div>보증금</div>
 			<input type="text" id="guarantee_amount" name="deposit" readonly>원
 			<input type="button" value="보증금 결제하기" onclick="">
 		</div>
-		<input type="submit" value="입찰하기(테스트용)" onclick="location.href='close'" >
+		<input type="submit" value="입찰하기(테스트용)" onclick="bidConfirmation()" >
 		<!-- <input type="button" value="입찰하기" onclick="placeBid()" id="bidButton" disabled> -->
 		<!-- 보증금 결제 로직 완료되면 사용하기 -->
     </form>
