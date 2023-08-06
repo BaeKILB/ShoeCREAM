@@ -30,7 +30,7 @@
 								</c:when>
 								<c:otherwise>
 									<div class="upload-form-detail" id="imageBtnArea">
-										<input type="button" class="btn btn-light btn-sm" value="삭제" onclick="deleteFile('${image[0].posts_image1}')">
+<input type="button" class="btn btn-light btn-sm" value="삭제" onclick="deleteFile('${image[0].posts_image1}', ${posts_idx})">
 									
 	<%-- 									<c:set var="length" value="${fn:length(car.car_file1) }" /> --%>
 	<%-- 									<c:set var="index" value="${fn:indexOf(car.car_file1, '_') }" /> --%>
