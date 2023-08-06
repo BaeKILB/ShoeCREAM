@@ -123,6 +123,7 @@
   .sl__item__contents
   .sl__item__contents__content {
   padding: 5px 5px;
+  font-size: 14px;
 }
 
 /*게시물 like 갯수스타일*/
@@ -133,8 +134,8 @@
   .sl__item__contents .like{
 	background-color: transparent;
 	border: 0;
-	color: #400040;
-	font-size: 14px;
+	color: rgb(44, 44, 44);
+	font-size: 12px;
 	margin-bottom: 5px;
 	text-indent: 5px;
 }
@@ -144,7 +145,7 @@
   .story-list
   .story-list__item
 .sl__item__contents .like b{
-	margin-right: 5px;
+	margin-right: 0px;
 }
 
 /*태그영역*/

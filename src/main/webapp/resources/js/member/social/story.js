@@ -62,6 +62,26 @@ storyLoad(1); // 첫 번째 페이지 내용 로드
 
 function getStoryItem(image) {
 
+// 댓글 및 게시물 시간 계산 표시
+function displayedAt(createdAt) {
+  const milliSeconds = new Date() - new Date(createdAt)
+  const seconds = milliSeconds / 1000
+  if (seconds < 60) return `방금 전`
+  const minutes = seconds / 60
+  if (minutes < 60) return `${Math.floor(minutes)}분 전`
+  const hours = minutes / 60
+  if (hours < 24) return `${Math.floor(hours)}시간 전`
+  const days = hours / 24
+  if (days < 7) return `${Math.floor(days)}일 전`
+  const weeks = days / 7
+  if (weeks < 5) return `${Math.floor(weeks)}주 전`
+  const months = days / 30
+  if (months < 12) return `${Math.floor(months)}개월 전`
+  const years = days / 365
+  return `${Math.floor(years)}년 전`
+}
+
+
 //var contextPath = "${pageContext.request.contextPath}";
 //var imagePath = "${image.posts_image1}";
 //    let contextPath = "C:/Users/kikir/Documents/itwill/workspace_spring5/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ShoeCREAM/resources/upload/social/";
@@ -75,7 +95,14 @@ function getStoryItem(image) {
                     onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" style="width: 41.818182px;"/>
             </a>
         </div>
-        <div style="margin-left: 5px;"><strong>&nbsp${image.mem_nickname}</strong></div>
+<div class="nickname-date-wrapper" style="display: flex; flex-direction: column; margin-left: 10px;">
+    <div style="font-size:14px; height: 20px;">
+        <strong>${image.mem_nickname}</strong>
+    </div>
+    <div style="font-size:12px; color:#adb5bd;">
+        ${displayedAt(image.posts_date)}
+    </div>
+</div>
     </div>
 
 	<div class="sl__item__img">
@@ -98,7 +125,7 @@ function getStoryItem(image) {
 			</button>
 		</div>
 
-		<span class="like">좋아요<b id="storyLikeCount-${image.posts_idx}">&nbsp ${image.likeCount}</b>개</span>
+		<span class="like">좋아요<b id="storyLikeCount-${image.posts_idx}">${image.likeCount}</b>개</span>
 
 		<div class="sl__item__contents__content" style="padding-bottom: 15px;">
 			<p>${image.posts_content}</p>
@@ -121,10 +148,10 @@ function getStoryItem(image) {
                                             <div class="d-flex flex-column w-100" style="height: 40px;">
                                                 <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
                                                     <span><strong>${comment.mem_nickname}</strong></span>
-                                                    <span class="ms-2" style="white-space: nowrap;">${comment.comment_content}</span>
+                                                    <span class="ms-2" style="white-space: nowrap; color :#495057;">${comment.comment_content}</span>
                                                 </div>
-                                                <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.8rem;">
-                                                    <span class="text-black-50">5일 전</span>
+                                                <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.7rem;">
+                                                    <span class="" style="color:#adb5bd;">${displayedAt(comment.comment_date)}</span>
                                                     <span class="ms-2">
                                                         <button class="reply-btn btn-sm text-black-50"><strong>답변달기</strong></button>
                                                     </span>
@@ -262,13 +289,13 @@ function addComment(posts_idx) {
 
                                             <div class="d-flex flex-column w-100" style="height: 40px;">
                                                 <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
-                                                    <span>${comment.mem_nickname}</span>
-                                                    <span class="ms-2" style="white-space: nowrap;">${comment.comment_content}</span>
+                                                    <span><strong>${comment.mem_nickname}</strong></span>
+                                                    <span class="ms-2" style="white-space: nowrap; color :#495057;">${comment.comment_content}</span>
                                                 </div>
-                                                <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
-                                                    <span>5일 전</span>
+                                                <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.7rem;">
+                                                    <span class="" style="color:#adb5bd;">${displayedAt(comment.comment_date)}</span>
                                                     <span class="ms-2">
-                                                        <button class="reply-btn btn-sm">답변달기</button>
+                                                        <button class="reply-btn btn-sm text-black-50"><strong>답변달기</strong></button>
                                                     </span>
                                                 </div>
                                             </div>
