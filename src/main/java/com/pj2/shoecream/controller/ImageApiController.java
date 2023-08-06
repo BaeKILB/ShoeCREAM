@@ -102,7 +102,46 @@ public class ImageApiController {
 		socialLikeService.deleteLike(mem_idx, sId);
 		return new ResponseEntity<>(new CMRespDto<>(1,"좋아요취소성공",null),HttpStatus.OK);
 	}
+	// 소셜 디테일
+	@GetMapping("/api/image/{posts_idx}/detail")
+	public ResponseEntity<?> imageDetailStory(@RequestParam(defaultValue = "1") int pageNum, SocialCommentVO socialCommentVO,@PathVariable int posts_idx) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int sId = mPrincipalDetails.getMember().getMem_idx();
+		SocialVO socialVO = new SocialVO();
+		socialVO.setPosts_idx(posts_idx);
+		System.out.println("posts_idx 뭐야?" + socialVO.getPosts_idx());
+		// 페이징 처리를 위해 조회 목록 갯수 조절 시 사용될 변수 선언
+		int listLimit = 3; // 한 페이지에서 표시할 목록 갯수 지정
+		int startRow = (pageNum - 1) * listLimit; // 조회 시작 행(레코드) 번호
 
+//		List<SocialVO> images = socialImageService.ImageStory(sId, startRow, listLimit);
+		List<SocialVO> images = socialImageService.ImageDetail(posts_idx, startRow, listLimit);
+		System.out.println("디테일 images 뭐 들고오냐" + images);
+	   // 좋아요 상태를 images에 추가합니다.
+		for (SocialVO image : images) {
+		    image.setLikeState(socialLikeService.isPostLikedByUser(sId, image.getPosts_idx()));
+
+		    List<SocialCommentVO> comments = socialImageService.getImageComments(image.getPosts_idx());
+
+		    // 댓글 작성자의 mem_profileImageUrl을 추가합니다.
+		    for (SocialCommentVO comment : comments) {
+		        MemberVO member = memberService.getMemberByIdx(comment.getMem_idx());
+		        comment.setMem_profileImageUrl(member.getMem_profileImageUrl());
+		    }
+
+		    // 댓글 목록을 이미지에 추가합니다.
+		    image.setComment_contents(comments);
+
+		    MemberVO postMember = memberService.getMemberByIdx(image.getMem_idx());
+		    image.setMem_profileImageUrl(postMember.getMem_profileImageUrl());
+		}
+		
+		System.out.println("images : " + images);
+		
+		return new ResponseEntity<>(new CMRespDto<>(1, "성공", images), HttpStatus.OK);
+	}
+	
 	// --------------- api/comment 댓글  ----------------
 //	, @RequestParam("comment_content") String comment_content, @RequestParam("posts_idx") int posts_idx
 //	@ResponseBody

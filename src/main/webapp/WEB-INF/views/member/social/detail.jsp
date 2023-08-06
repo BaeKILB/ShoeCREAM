@@ -1,13 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%-- 	<jsp:include page="../../inc_ex/header_social.jsp" /> --%>
+    pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
-<style>
-
-</style>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css"> --%>
-
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  let posts_idx = ${posts_idx};
+</script>
+<!--JS -->
+<script src="${pageContext.request.contextPath }/resources/js/member/social/detail.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/detail.css">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
 <main class="main">
+	<input type="hidden" id="posts_idx" value="${posts_idx}" />
 	<section class="container">
 		<!--전체 리스트 시작-->
 			    <!-- 부트스트랩 레이아웃을 적용한 부분 -->
@@ -24,7 +34,7 @@
 	    </div>
 	</section>
 </main>
-<script src="${pageContext.request.contextPath }/resources/js/member/social/story.js"></script>
+
 	<!-- 푸터 시작 -->
 	<jsp:include page="../../inc_ex/footer.jsp" />
 </body>

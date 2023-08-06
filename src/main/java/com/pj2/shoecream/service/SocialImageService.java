@@ -50,6 +50,12 @@ public class SocialImageService {
 		return socialImageMapper.selectStory(sId, startRow, listLimit);
 	}
 	
+	// 소셜 디테일 (해당 게시물 posts_idx)
+	public List<SocialVO> ImageDetail(int posts_idx, int startRow, int listLimit) {
+		return socialImageMapper.selectDetail(posts_idx, startRow, listLimit);
+	}
+
+	
 	// 포스트 등록
 //	public void ImageUpload(SocialVO socialVO, PrincipalDetails mPrincipalDetails, HttpSession session) {
 		@Transactional

@@ -26,6 +26,13 @@ public interface SocialImageMapper {
 	// 소셜 인기페이지 (좋아요 많은 순서)
 	List<SocialVO> selectPopular();
 	
+	// 소셜 디테일 (내가 클릭한 멤버의 게시물)
+	List<SocialVO> selectDetail(@Param("posts_idx") int posts_idx,
+			@Param("startRow") int startRow, 
+			@Param("listLimit") int listLimit);
+
+	
+	
 	void insertComment(SocialCommentVO socialCommentVO);
 	
    // 댓글 쓸때 프로필 이미지 경로
@@ -36,6 +43,7 @@ public interface SocialImageMapper {
 	List<SocialCommentVO> selectCommentsByPostId(int posts_idx);
 
 	void deleteCommentById(int comment_idx);
+
 
 	
 

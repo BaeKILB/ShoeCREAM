@@ -1,0 +1,275 @@
+/* 메인 */
+.main {
+	padding-top: 54px;
+}
+
+.no-vertical-margins {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.edit-btn {
+	margin-right: auto;
+	margin-left: 5px;
+}
+
+.delete-btn {
+	margin-left: 5px;
+}
+
+/* 컨테이너 */
+.main .container {
+	padding-top: 30px;
+	width: 935px;
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto;
+}
+/* 게시물리스트 */
+.main .container .story-list {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+/* 게시물 리스트 아이템 */
+.main .container .story-list .story-list__item {
+	margin-bottom: 30px;
+	border: 1px solid #dbdbdb;
+	border-radius: 4px;
+}
+/* 리스트 아이템 헤더부분 */
+.main .container .story-list .story-list__item .sl__item__header {
+	width: 100%;
+	height: 60px;
+	display: flex;
+	align-items: center;
+}
+/* 리스트 아이템 헤더 div */
+.main .container .story-list .story-list__item .sl__item__header div {
+	/*   margin-left: 10px; */
+	font-size: 16px;
+	/* 이 속성을 추가했습니다. */
+}
+/* 리스트 아이템 헤더 이미지영역 박스 */
+.main
+    .container
+    .story-list
+    .story-list__item
+    .sl__item__header
+    div:nth-child(1) {
+	width: 40 px;
+	height: 40px;
+	padding: 3 px;
+	border-radius: 50%;
+	position: relative;
+}
+
+/*리스트 아이템 헤더 실제이미지*/
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__header
+  div:nth-child(1)
+  img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+/* 게시물 이미지 박스*/
+.main .container .story-list .story-list__item .sl__item__img {
+	height: 600px;
+	min-height: 300px;
+}
+
+/* 게시물 이미지*/
+.main .container .story-list .story-list__item .sl__item__img img {
+	width: 100%;
+	height: 100%;
+}
+
+/* 게시물 이미지 밑에 영역들 */
+.main .container .story-list .story-list__item .sl__item__contents {
+	display: flex;
+	flex-direction: column;
+}
+
+/*좋아요 버튼영역*/
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__contents
+  .sl__item__contents__icon {
+	height: 40px;
+	padding: 5px 0;
+}
+
+/*좋아요 실제 버튼*/
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__contents
+  .sl__item__contents__icon
+  button {
+	background-color: transparent;
+	width: 40px;
+	font-size: 25px;
+	border: 0;
+	cursor: pointer;
+}
+
+/*게시물 내용*/
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__contents
+  .sl__item__contents__content {
+	padding: 5px 5px;
+	font-size: 13px;
+	color:#495057;
+}
+
+/*게시물 like 갯수스타일*/
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__contents .like {
+	background-color: transparent;
+	border: 0;
+	color: rgb(44, 44, 44);
+	font-size: 12px;
+	margin-bottom: 5px;
+	text-indent: 5px;
+}
+/*게시물 좋아요 count값 */
+.main
+  .container
+  .story-list
+  .story-list__item
+.sl__item__contents .like b {
+	margin-right: 0px;
+}
+
+/*태그영역*/
+.sl__item__contents__tags {
+	height: 40px;
+	padding: 5px 10px;
+	color: #0080ff;
+}
+
+/*코멘트 = 댓글 */
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__contents
+  .sl__item__contents__comment {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	background-color: transparent;
+	color: #000;
+	font-size: 16px;
+	padding: 0 15px;
+	margin-bottom: 5px;
+}
+
+/*댓글 삭제버튼*/
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__contents
+.sl__item__contents__comment button {
+	border: none;
+	outline: none;
+	background: #fff;
+	cursor: pointer;
+}
+
+/* 댓글 입력창*/
+.main .container .story-list .story-list__item .sl__item__input {
+	display: flex;
+	border-top: 1px solid #dbdbdb;
+}
+
+/*입력 인풋*/
+.main .container .story-list .story-list__item .sl__item__input input {
+	flex: 9;
+	height: 56px;
+	border: 0;
+	padding-left: 15px;
+}
+/* 입력하기 버튼 */
+.main .container .story-list .story-list__item .sl__item__input button {
+	flex: 1;
+	height: 56px;
+	border: 0;
+	background-color: transparent;
+	font-weight: 500;
+	color: #0095f6;
+	font-size: 14px;
+}
+
+/* Event */
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__contents
+  .sl__item__contents__icon
+  button:first-child
+  .active {
+	color: red;
+}
+
+.profile-image {
+	border: 2px solid #8a3ab8;
+}
+
+#reply {
+	width: 76px;
+}
+
+/* 리스트 아이템 댓글 헤더 */
+.main .container .story-list .story-list__item .sl__item__contents__comment .sl__item__header
+	{
+	font-size: 14px; /* 글씨 크기를 줄입니다. 원하는 크기로 조절하세요. */
+}
+
+/* 리스트 아이템 댓글 이미지 */
+.main .container .story-list .story-list__item .sl__item__contents__comment .sl__item__header .profile-image
+	{
+	width: 30px; /* 이미지 크기를 줄입니다. 원하는 크기로 조절하세요. */
+	height: 30px;
+}
+
+/* 새롭게 추가된 CSS 스타일 */
+.sl__item__contents__comment {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	background-color: transparent;
+	color: #000;
+	font-size: 16px;
+	padding: 0 15px;
+	margin-bottom: 5px;
+}
+
+.sl__item__contents__comment.small-header {
+	padding-left: 0;
+}
+
+.small-header .sl__item__header {
+	height: 30px;
+}
+
+.small-header .profile-image {
+	width: 28.63636px;
+	height: 28.63636px;
+}

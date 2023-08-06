@@ -69,8 +69,9 @@ public class SocialController {
 	}
 	
 	@GetMapping("/social/{posts_idx}/detail")
-	public String profileDetail() {
-		return "member/social/story2";
+	public String profileDetail(@PathVariable int posts_idx, Model model) {
+	    model.addAttribute("posts_idx", posts_idx);
+	    return "member/social/detail";
 	}
 	
 //	=======================social-image========================
