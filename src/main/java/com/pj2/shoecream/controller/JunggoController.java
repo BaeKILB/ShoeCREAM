@@ -303,6 +303,170 @@ public class JunggoController {
 		return "inc/fail_back";
 	}
 	
+	// transForm 사용시 필요한 파라미터
+	/* 
+	 * 중고 , 경매 또는 크림 중 하나 product_selector
+	 * 
+	 * 상품 번호 product_idx
+	 * 상품 이름 product_title
+	 * 상품 가격 product_price
+	 * 상품 설명 product_info
+	 * 
+	 * 판매자 닉네임 mem_seller_nickname
+	 * 판매자 유저 점수 mem_seller_rank
+	 * 판매자 판매 횟수 mem_seller_sellCount
+	 */
+	@GetMapping("transComplete")
+	public String transComplete(@RequestParam Map<String,Object> map, Model model
+			,RedirectAttributes redirectAttributes) {
+		
+		int idx = -1;
+		MemberVO member = null;
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			
+
+			// 구매자 회원번호
+			idx = mPrincipalDetails.getMember().getMem_idx();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("error : JunggoPay");
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return "inc/fail_forward";
+		}
+		// 현재 접속중 멤버 가져오기
+		member = memService.getMemberByIdx(idx);
+		
+		// 현재 채팅방 정보 가져오기
+		Map<String,Object> chatRoom = chatService.getChatRoom(
+				Integer.parseInt((String)map.get("chat_room_idx")),
+				Integer.parseInt((String)map.get("chat_area"))
+				);
+		
+		if(chatRoom == null) {
+			model.addAttribute("msg","채팅방 불러오기가 실패하였습니다!");
+			return "inc/fail_back";
+		}
+		
+		
+		Map<String,Object> productEx = jProductService.getJungProductExtend((String)chatRoom.get("product_idx"));
+		String product_sell_status = (String)productEx.get("product_sell_status");
+		String product_payment = (String)productEx.get("product_payment");
+		// 현재 물품의 거래 상황과 예약중인 유저 체크
+		if(productEx != null 
+				&& (Integer)productEx.get("product_buyer_idx") == idx 
+				&& (
+						(product_sell_status.equals("예약중") && product_payment.equals("직거래"))
+						|| (product_sell_status.equals("거래대기중") && 
+								(product_payment.equals("안전페이") || product_payment.equals("안전페이,직거래"))
+							)
+					)	
+			)
+		{
+			
+			model.addAttribute("map",productEx);
+			model.addAttribute("member",member);
+			return "inc/pay/trans_form";
+		} 
+		// 만약 다른 거래 상황이면 ...
+		else if(product_sell_status.equals("대기중")){
+			model.addAttribute("msg","예약 진행중이 아닙니다 예약 진행 먼저 해주세요");
+		}
+		// 이미 자신이 아닌 다른 사람이 예약, 거래 중 이라면
+		else if(product_sell_status.equals("예약중")
+				|| product_sell_status.equals("거래대기중")){
+			model.addAttribute("msg","다른 유저가 예약중에 있습니다!");
+		}
+		else if(product_sell_status.equals("거래완료")){
+			model.addAttribute("msg","이미 거래가 완료된 상품입니다");
+		}
+		else {
+			model.addAttribute("msg","잘못된 접근입니다");
+		}
+		return "inc/fail_back";
+	}
+	
+	// 거래 완료 진행
+	@GetMapping("transComPro")
+	public String transComPro(@RequestParam Map<String,Object> map, Model model
+			,RedirectAttributes rttr) {
+		int idx = -1;
+		MemberVO member = null;
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			
+
+			// 구매자 회원번호
+			idx = mPrincipalDetails.getMember().getMem_idx();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("error : JunggoPay");
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return "inc/fail_forward";
+		}
+		// 현재 접속중 멤버 가져오기
+		member = memService.getMemberByIdx(idx);
+		
+		// 현재 채팅방 정보 가져오기
+		Map<String,Object> chatRoom = chatService.getChatRoom(
+				Integer.parseInt((String)map.get("chat_room_idx")),
+				Integer.parseInt((String)map.get("chat_area"))
+				);
+		
+		if(chatRoom == null) {
+			model.addAttribute("msg","채팅방 불러오기가 실패하였습니다!");
+			return "inc/fail_back";
+		}
+		
+		
+		Map<String,Object> productEx = jProductService.getJungProductExtend((String)chatRoom.get("product_idx"));
+		String product_sell_status = (String)productEx.get("product_sell_status");
+		String product_payment = (String)productEx.get("product_payment");
+		// 현재 물품의 거래 상황과 예약중인 유저 체크
+		if(productEx != null 
+				&& (Integer)productEx.get("product_buyer_idx") == idx 
+				&& (
+						(product_sell_status.equals("예약중") && product_payment.equals("직거래"))
+						|| (product_sell_status.equals("거래대기중") && 
+								(product_payment.equals("안전페이") || product_payment.equals("안전페이,직거래"))
+							)
+					)	
+			)
+		{
+			// 상품 상태 업데이트
+			if(jProductService.updateSellStatus((String)chatRoom.get("product_idx"), "거래완료") <= 0) {
+				model.addAttribute("msg","상품 상태 업데이트에 실패하였습니다!");
+				return "inc/fail_back";
+			}
+			
+			rttr.addAttribute("chat_room_idx",(String)map.get("chat_room_idx"));
+			rttr.addAttribute("chat_area",(String)map.get("chat_area"));
+			return "redirect:chatRooms";
+		} 
+		// 만약 다른 거래 상황이면 ...
+		else if(product_sell_status.equals("대기중")){
+			model.addAttribute("msg","예약 진행중이 아닙니다 예약 진행 먼저 해주세요");
+		}
+		// 이미 자신이 아닌 다른 사람이 예약, 거래 중 이라면
+		else if(product_sell_status.equals("예약중")
+				|| product_sell_status.equals("거래대기중")){
+			model.addAttribute("msg","다른 유저가 예약중에 있습니다!");
+		}
+		else if(product_sell_status.equals("거래완료")){
+			model.addAttribute("msg","이미 거래가 완료된 상품입니다");
+		}
+		else {
+			model.addAttribute("msg","잘못된 접근입니다");
+		}
+		return "inc/fail_back";
+	}
+	
 	@GetMapping("JunggoResults")
 	public String junggoResults(@RequestParam Map<String,Object> map, Model model) {
 		return "";
