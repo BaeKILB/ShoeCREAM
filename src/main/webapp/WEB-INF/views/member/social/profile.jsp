@@ -88,15 +88,12 @@
 				<!--아이템들-->
 				<c:forEach var="social" items="${social}">
 					<div class="img-box">
-						<%-- 				        <a href=""> <img src="${pageContext.request.contextPath }/upload/social/${imageName}" /> --%>
-<!-- 						<a href=""> <img -->
-<%-- 							src="${pageContext.request.contextPath }/resources/upload/social/${imageName}" /> --%>
-<!-- 						</a> -->
-						<a href=""> <img
-							src="/shoecream/resources/upload/social/${social.posts_image1}" />
-						</a>
+						    <a href="${pageContext.request.contextPath }/social/${social.mem_idx}/detail" class="image-link">
+						        <img src="${pageContext.request.contextPath}/resources/upload/social/${social.posts_image1}" />
+						    </a>
 						<div class="comment">
-							<a href="#" class=""> <i class="fas fa-heart"></i><span>${social.likeCount }</span>
+							<a href="${pageContext.request.contextPath }/social/${social.posts_idx}/detail" class=""> 
+							<i class="fas fa-heart"></i><span>${social.likeCount }</span>
 							</a>
 						</div>
 					</div>
@@ -154,4 +151,4 @@
 <script
 	src="${pageContext.request.contextPath }/resources/js/member/social/profile.js"></script>
 
-<%@ include file="../../inc_ex/footer.jsp"%>
+<%-- <%@ include file="../../inc_ex/footer.jsp"%> --%>

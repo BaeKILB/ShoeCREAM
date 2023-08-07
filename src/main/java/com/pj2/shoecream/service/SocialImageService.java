@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -49,6 +50,12 @@ public class SocialImageService {
 		
 		return socialImageMapper.selectStory(sId, startRow, listLimit);
 	}
+	
+	// 소셜 디테일 (해당 게시물 posts_idx)
+	public List<SocialVO> ImageDetail(int posts_idx, int startRow, int listLimit) {
+		return socialImageMapper.selectDetail(posts_idx, startRow, listLimit);
+	}
+
 	
 	// 포스트 등록
 //	public void ImageUpload(SocialVO socialVO, PrincipalDetails mPrincipalDetails, HttpSession session) {
@@ -169,6 +176,12 @@ public class SocialImageService {
 		    socialImageMapper.updateComment_ref(socialCommentVO);
 		    return socialCommentVO;
 		}
+		
+		// 소셜 디테일 정보 셀렉
+		public List<Map<String, Object>> getImageDetail(int posts_idx) {
+			return socialImageMapper.selectImageDetail(posts_idx);
+		}
+		
 
 		@Transactional(readOnly = true)
 		public List<SocialCommentVO> getImageComments(int posts_idx) {
@@ -183,6 +196,11 @@ public class SocialImageService {
 				throw new CustomApiException(e.getMessage());
 			}
 		}
+
+		public int removePostsImage(Map<String, Object> map) {
+			return socialImageMapper.deletePostsImage(map);
+		}
+
 
 
 }

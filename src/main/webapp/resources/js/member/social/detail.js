@@ -1,15 +1,28 @@
-/**
-	2. 스토리 페이지
-	(1) 스토리 로드하기
-	(2) 스토리 스크롤 페이징하기
-	(3) 좋아요, 안좋아요
-	(4) 댓글쓰기
-	(5) 댓글삭제
- */
+ 
+ // 댓글 및 게시물 시간 계산 표시
+function displayedAt(createdAt) {
+  const milliSeconds = new Date() - new Date(createdAt)
+  const seconds = milliSeconds / 1000
+  if (seconds < 60) return `방금 전`
+  const minutes = seconds / 60
+  if (minutes < 60) return `${Math.floor(minutes)}분 전`
+  const hours = minutes / 60
+  if (hours < 24) return `${Math.floor(hours)}시간 전`
+  const days = hours / 24
+  if (days < 7) return `${Math.floor(days)}일 전`
+  const weeks = days / 7
+  if (weeks < 5) return `${Math.floor(weeks)}주 전`
+  const months = days / 30
+  if (months < 12) return `${Math.floor(months)}개월 전`
+  const years = days / 365
+  return `${Math.floor(years)}년 전`
+}
+ 
  // 현재 로그인 한 유저의 mem_idx
  let principalId = $("#principalId").val();
  console.log("로그인한 유저 :", principalId)
- 
+// let posts_idx = $("#posts_idx").val();
+ console.log("해당 게시물 idx :", posts_idx);
  
 $(document).ready(function () {
     // 스크롤 이벤트 초기화
@@ -39,7 +52,7 @@ function initScrollEvent() {
 // 스토리 로드하기
 function storyLoad(pageNum) {
     let url;
-    url = "/shoecream/api/image?pageNum=" + pageNum;
+	url = `/shoecream/api/image/${posts_idx}/detail?pageNum=${pageNum}`;
     $.ajax({
         url: `${url}`,
         dataType: "json"
@@ -61,33 +74,13 @@ function storyLoad(pageNum) {
 storyLoad(1); // 첫 번째 페이지 내용 로드
 
 function getStoryItem(image) {
-
-// 댓글 및 게시물 시간 계산 표시
-function displayedAt(createdAt) {
-  const milliSeconds = new Date() - new Date(createdAt)
-  const seconds = milliSeconds / 1000
-  if (seconds < 60) return `방금 전`
-  const minutes = seconds / 60
-  if (minutes < 60) return `${Math.floor(minutes)}분 전`
-  const hours = minutes / 60
-  if (hours < 24) return `${Math.floor(hours)}시간 전`
-  const days = hours / 24
-  if (days < 7) return `${Math.floor(days)}일 전`
-  const weeks = days / 7
-  if (weeks < 5) return `${Math.floor(weeks)}주 전`
-  const months = days / 30
-  if (months < 12) return `${Math.floor(months)}개월 전`
-  const years = days / 365
-  return `${Math.floor(years)}년 전`
-}
-
-
 //var contextPath = "${pageContext.request.contextPath}";
 //var imagePath = "${image.posts_image1}";
 //    let contextPath = "C:/Users/kikir/Documents/itwill/workspace_spring5/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ShoeCREAM/resources/upload/social/";
 //    let contextPath = "/resources/upload/social/";
 
-	let item = `<div class="story-list__item" style="width: 100%;">
+	let item = 
+	`<div class="story-list__item" style="width: 100%;">
 	<div class="sl__item__header">
         <div style="margin-left: 5px;">
             <a href="/shoecream/social/${image.mem_idx}"> <!-- 링크를 추가 -->
@@ -95,45 +88,55 @@ function displayedAt(createdAt) {
                     onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" style="width: 41.818182px;"/>
             </a>
         </div>
-<div class="nickname-date-wrapper" style="display: flex; flex-direction: column; margin-left: 10px;">
-    <div style="font-size:14px; height: 20px;">
-        <strong>${image.mem_nickname}</strong>
-    </div>
-    <div style="font-size:12px; color:#adb5bd;">
-        ${displayedAt(image.posts_date)}
-    </div>
-</div>
-    </div>
-
-	<div class="sl__item__img">
-		<img src="/shoecream/resources/upload/social/${image.posts_image1}"/>
-	</div>
-
-	<div class="sl__item__contents">
-		<div class="sl__item__contents__icon">
-
-			<button>`;
+			<div class="nickname-date-wrapper" style="display: flex; flex-direction: column; margin-left: 10px;">
+			    <div style="font-size:14px; height: 20px;">
+			        <strong>${image.mem_nickname}</strong>
+			    </div>
 			
-			if(image.likeState) {
-				item += `<i class="fas fa-heart active" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
-			} else {
-				item += `<i class="far fa-heart" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
-			}
-				
+			    <div style="font-size:12px; color:#adb5bd;">
+			        ${displayedAt(image.posts_date)}
+			    </div>
+			</div>`;
+				if (principalId == image.mem_idx) {
+					item += 
+        		`<div>
+				    <button type="button" class="btn btn-light edit-btn" style=" margin-left: 380px; font-size: 12px;" onclick="window.location.href='/shoecream/social/${posts_idx}/update'">수정</button>
+				</div>
+		        <div>
+		            <button type="button" class="btn btn-light delete-btn" style=" font-size: 12px;">삭제</button>
+		        </div>`;
+		        }
+		item+=`
+		    </div>
+				<div class="sl__item__img">
+					<img src="/shoecream/resources/upload/social/${image.posts_image1}"/>
+				</div>
 			
-		item += `
-			</button>
-		</div>
-
-		<span class="like">좋아요<b id="storyLikeCount-${image.posts_idx}">${image.likeCount}</b>개</span>
-
-		<div class="sl__item__contents__content">
-			<p>${image.posts_content}</p>
-		</div>
-
-		<div id="storyCommentList-${image.posts_idx}">`;
+				<div class="sl__item__contents">
+					<div class="sl__item__contents__icon">
+			
+						<button>`;
+						
+						if(image.likeState) {
+							item += `<i class="fas fa-heart active" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
+						} else {
+							item += `<i class="far fa-heart" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
+						}
+							
+						
+					item += `
+						</button>
+					</div>
+			
+					<span class="like">좋아요<b id="storyLikeCount-${image.posts_idx}">${image.likeCount}</b>개</span>
+			
+					<div class="sl__item__contents__content">
+						<p>${image.posts_content}</p>
+					</div>
+			
+					<div id="storyCommentList-${image.posts_idx}">`;
 		
-			image.comment_contents.forEach((comment)=>{
+				image.comment_contents.forEach((comment)=>{
 				item+=`<div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
                                         <div class="sl__item__header" style="height: 25px;">
                                             <div style="margin-top: 10px;">
@@ -158,12 +161,6 @@ function displayedAt(createdAt) {
                                                 </div>
                                             </div>
                                         </div>`;
-				
-//				
-//				
-//				<p>
-//					<b>${comment.mem_nickname} :</b> ${comment.comment_content}
-//				</p>`;
 				
 			if (principalId == comment.mem_idx) {
 				item +=

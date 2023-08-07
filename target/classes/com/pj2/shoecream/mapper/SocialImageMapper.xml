@@ -25,7 +25,15 @@
 		JOIN social_posts sp ON mi.mem_idx = sp.mem_idx
 		WHERE mi.mem_idx = #{mem_idx}
 	</select>
-
+	
+	<select id="selectDetail" resultType="com.pj2.shoecream.vo.SocialVO">
+		SELECT *
+		FROM social_posts
+		WHERE posts_idx = #{posts_idx}
+		ORDER BY posts_idx DESC
+		LIMIT #{startRow}, #{listLimit}
+	</select>
+	
 	<!-- 소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기) -->
 	<select id="selectStory" resultType="com.pj2.shoecream.vo.SocialVO">
 		SELECT * FROM
@@ -56,6 +64,17 @@
 		WHERE posts_idx = #{posts_idx}
 	</select>
 	
+	<select id="selectImageDetail">
+		SELECT * FROM social_posts
+		WHERE posts_idx = #{posts_idx}
+	</select>
+	
+	<!-- 소셜 디테일 파일 삭제 버튼 -->
+	<delete id="deletePostsImage">
+	    UPDATE social_posts
+	    SET posts_image1 = null
+	    WHERE posts_idx = #{posts_idx}
+	</delete>
 	
 	<insert id="insertComment" parameterType="com.pj2.shoecream.vo.SocialCommentVO">
         INSERT
