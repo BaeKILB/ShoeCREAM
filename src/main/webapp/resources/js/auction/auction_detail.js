@@ -58,7 +58,7 @@ function showSlides(n) {
 $(function() {
     // 입찰내역 클릭
     $("#bidHistoryBtn").on("click",function() {
-		if ($(this).attr('class') == null || $(this).attr('class') == '') {
+		if ($(this).attr('class') == 'btn') {
 			$("#bidHistory").removeClass('d-none');
 			$(this).addClass('on');
 			$.ajax({
