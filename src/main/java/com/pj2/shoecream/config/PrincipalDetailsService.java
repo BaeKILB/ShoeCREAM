@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.mapper.MemberMapper;
 import com.pj2.shoecream.vo.MemberVO;
 
@@ -22,16 +23,13 @@ public class PrincipalDetailsService implements UserDetailsService {
         MemberVO member = memberMapper.findMemberById(mem_id);
         System.out.println("로그인 아이디 오니 ? " + mem_id);
         if (member == null) {
-//            throw new UsernameNotFoundException("회원 정보를 찾을 수 없습니다.");
-        	return null;
-        } else {
-        	return new PrincipalDetails(member);
+            throw new CustomValidationException("회원 정보를 찾을 수 없습니다.", null);
         }
 
-        // 권한 설정
-//        List<GrantedAuthority> authorities = new ArrayList<>();
-//        authorities.add(new SimpleGrantedAuthority(member.getRole()));
-//
-//        return new User(member.getMem_id(), member.getMem_passwd(), authorities);
+        if (member.getRole().equals("ROLE_REST")) {
+            throw new CustomValidationException("이 계정은 현재 비활성화 상태입니다.", null);
+        }
+        
+        return new PrincipalDetails(member);
     }
 }
