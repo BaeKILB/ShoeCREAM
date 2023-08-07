@@ -32,7 +32,7 @@
 				<ul class="side_sub">
 					<li><a href="${pageContext.request.contextPath }/mypage/update">내 정보 관리</a></li>
 					<li><a href="${pageContext.request.contextPath }/mypage/profile">내 프로필 관리</a></li>
-					<li><a href="${pageContext.request.contextPath }/MemberDeleteForm">회원탈퇴</a></li>
+					<li><a href="${pageContext.request.contextPath }/mypage/delete">회원탈퇴</a></li>
 				</ul>
 			</li>
 			<li>

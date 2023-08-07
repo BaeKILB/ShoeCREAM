@@ -64,6 +64,9 @@ public interface MemberMapper {
 	
 	// 소셜 소토리 용
 	MemberVO findMemberByIdx(int mem_idx);
+	
+	// 회원탈퇴 : (상태 ROLE_REST) 로 업데이트
+	int deleteMember(@Param("sId") int sId);
 
 	
 

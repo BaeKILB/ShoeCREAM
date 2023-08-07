@@ -245,7 +245,29 @@ public class MemberController {
 		
 		return "member/auth/find_pw";
 	}
+		
+	// 회원탈퇴 (role = USER_REST 로 바꾸기)
+	@GetMapping("mypage/delete")
+	public String deleteForm() {
+		return "member/mypage/delete";
+	}
 	
+	@PostMapping("MemberDeletePro")
+	public String deletePro(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int sId = mPrincipalDetails.getMember().getMem_idx();
+		
+		int deleteCount = memberService.deleteMember(sId);
+		if(deleteCount == 0) {
+			model.addAttribute("msg", "회원 탈퇴 실패!");
+			return "member/fail_back";
+		} else {
+			model.addAttribute("msg", "회원 탈퇴가 완료되었습니다!");
+			model.addAttribute("targetURL", "login");
+			return "member/success_forward";
+		}
+	}
 	
 //    ===========================MyPage===========================
     // 마이페이지 폼
@@ -378,11 +400,6 @@ public class MemberController {
 
     }
     
-    // 회원탈퇴 폼
-    @GetMapping("mypage/delete")
-    public String deletForm() {
-    	return "member/mypage/delete";
-    }
     
 ////    =========================store============================
     // 상점 개인 페이지

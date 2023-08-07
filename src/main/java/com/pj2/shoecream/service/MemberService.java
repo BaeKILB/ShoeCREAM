@@ -231,6 +231,11 @@ public class MemberService {
 	public MemberVO getMemberByIdx(int mem_idx) {
         return memberMapper.findMemberByIdx(mem_idx);
 	}
+	
+	// 회원탈퇴 : (상태 ROLE_REST) 로 업데이트
+	public int deleteMember(int sId) {
+		return memberMapper.deleteMember(sId);
+	}
 
 
 	

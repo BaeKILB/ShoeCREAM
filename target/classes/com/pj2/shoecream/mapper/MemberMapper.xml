@@ -181,6 +181,13 @@
 		SELECT * FROM mem_info WHERE mem_idx = #{mem_idx}
 	</select>
 	
+	<!-- 회원 탈퇴 : 상태만 ROLE_REST 로 변경 -->
+	<update id="deleteMember">
+		UPDATE mem_info
+		SET role = "ROLE_REST"
+		WHERE mem_idx = #{sId}
+	</update>
+	
 	
 	
 </mapper>

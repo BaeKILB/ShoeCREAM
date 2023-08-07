@@ -149,6 +149,7 @@ public class ImageApiController {
 	// --------------- api/comment 댓글  ----------------
 //	, @RequestParam("comment_content") String comment_content, @RequestParam("posts_idx") int posts_idx
 //	@ResponseBody
+	// 댓글 등록
 	@PostMapping("/api/comment")
 	public ResponseEntity<?> commentInsert(@Valid @RequestBody SocialCommentVO socialCommentVO, BindingResult bindingResult) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -173,6 +174,7 @@ public class ImageApiController {
 		return new ResponseEntity<>(new CMRespDto<>(1,"댓글쓰기성공",comment),HttpStatus.CREATED);
 	}
 	
+	// 댓글 삭제
 	@DeleteMapping("/api/comment/{comment_idx}")
 	public ResponseEntity<?> commentInsert(@PathVariable int comment_idx) {
 		socialImageService.deleteComment(comment_idx);

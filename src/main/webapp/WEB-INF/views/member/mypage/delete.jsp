@@ -11,7 +11,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
 
-<script src="${pageContext.request.contextPath }/resources/js/inc/jquery-3.7.0.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 	<script type="text/javascript">
 		function removeMember() {
 			var checkBox = document.getElementsByName("submit")[0];
@@ -29,10 +29,10 @@
 <body>
 
 <!-- 	<header> -->
-<%-- 		<jsp:include page="../../../inc/top1.jsp"></jsp:include> --%>
+		<jsp:include page="../../inc_ex/header.jsp" />
 <!-- 	</header> -->
 	<section id="sec_con" class="inr out_con">
-	<form action="MemberDeletePro" name="deleteForm" method="post">
+	<form action="${pageContext.request.contextPath }/MemberDeletePro" name="deleteForm" method="post">
 		<h1 class="con_title">탈퇴 안내</h1>
 		<div id="out_wrapper">
 			<div id="content">
