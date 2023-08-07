@@ -146,6 +146,16 @@
 			SET ans_status = 'N'
 				WHERE qst_idx = #{qst_idx}
 	</update>
+	<!-- 일대일 내역 조회 -->
+	<select id="getMainQstBoard" resultType="com.pj2.shoecream.vo.InquiryBoardVO">
+		SELECT *
+			FROM qst_board
+				ORDER BY
+					qst_board_re_ref DESC
+					, qst_board_re_seq ASC
+			LIMIT
+				#{listLimit}
+	</select>
 	
 
 <!--  민진 민진 민진민진민진민진민진민진민진민진민진민진 -->

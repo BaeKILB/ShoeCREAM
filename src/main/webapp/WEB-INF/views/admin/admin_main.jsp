@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +17,10 @@
 	<aside>
 		<jsp:include page="inc/sidebar.jsp"></jsp:include>
 	</aside>
+	<c:set var="pageNum" value="1" />
+	<c:if test="${not empty param.pageNum }">
+		<c:set var="pageNum" value="${param.pageNum }" />	
+	</c:if>
 	<section id="admin_cont">
 		<div class="main_cont">
 			<div class="main_cont_card member_count">
@@ -139,6 +145,58 @@
 		                    }
               		 	 </script>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div class="qst_list charts-container">
+			<div class="card-header">
+				<h4 class="card-title">1:1 문의 조회</h4>
+			</div>
+			<div class="card-body">
+				<div class="table_container">
+					<table class="inq_list_table table">
+						<thead>
+							<tr>
+								<th scope="col">글 번호</th>
+								<th scope="col">이름</th>
+								<th scope="col">제목</th>
+								<th scope="col">작성일</th>
+								<th scope="col">문의유형</th>
+								<th scope="col">답변상태</th>
+							</tr>
+						</thead>
+						<tbody class="tbody">
+							<c:forEach var="qstItem" items="${qstList }">
+								<c:choose>
+									<c:when test="${qstItem.qst_board_re_seq eq 0}">
+										<tr>
+											<td>${qstItem.qst_idx }</td>
+											<td>${qstItem.mem_name }</td>
+											<td>
+												<a href="QstBoardDetail?qst_idx=${qstItem.qst_idx }&qst_board_re_ref=${qstItem.qst_board_re_ref }&pageNum=${pageNum }">
+													<span>${qstItem.qst_subject }</span>
+												</a>
+											</td>
+											<td><fmt:formatDate value="${qstItem.qst_date }" pattern="yy-MM-dd"/></td>
+											<td>${qstItem.qst_type }</td>
+											<td>
+												<c:if test="${qstItem.ans_status eq 'N'}">
+													<a href="QstWriteForm?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }" class="ins_ans moreBtn">
+														답변하기
+													</a> 
+												</c:if>
+												<c:if test="${qstItem.ans_status eq 'Y'}">
+													<a href="QstModifyForm?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }" class="mod_ans moreBtn">
+														답변수정
+													</a> 
+												</c:if>
+											</td>
+										</tr>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

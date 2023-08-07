@@ -43,6 +43,9 @@ public interface AdminMapper {
 	boolean inquiryDelete(int qst_idx);
 	// 답변 삭제 후 상태 업데이트
 	int deleteUpdateQstAns(int qst_idx);
+	// 일대일 내역 조회
+	List<InquiryBoardVO> getMainQstBoard(int listLimit);
+
 	
 	// --------------- 민진 ---------------------------
 	// 중고 상품 띄우기
