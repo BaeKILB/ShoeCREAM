@@ -6,6 +6,26 @@
 	(4) 댓글쓰기
 	(5) 댓글삭제
  */
+ 
+ // 댓글 및 게시물 시간 계산 표시
+function displayedAt(createdAt) {
+  const milliSeconds = new Date() - new Date(createdAt)
+  const seconds = milliSeconds / 1000
+  if (seconds < 60) return `방금 전`
+  const minutes = seconds / 60
+  if (minutes < 60) return `${Math.floor(minutes)}분 전`
+  const hours = minutes / 60
+  if (hours < 24) return `${Math.floor(hours)}시간 전`
+  const days = hours / 24
+  if (days < 7) return `${Math.floor(days)}일 전`
+  const weeks = days / 7
+  if (weeks < 5) return `${Math.floor(weeks)}주 전`
+  const months = days / 30
+  if (months < 12) return `${Math.floor(months)}개월 전`
+  const years = days / 365
+  return `${Math.floor(years)}년 전`
+}
+ 
  // 현재 로그인 한 유저의 mem_idx
  let principalId = $("#principalId").val();
  console.log("로그인한 유저 :", principalId)
@@ -61,26 +81,6 @@ function storyLoad(pageNum) {
 storyLoad(1); // 첫 번째 페이지 내용 로드
 
 function getStoryItem(image) {
-
-// 댓글 및 게시물 시간 계산 표시
-function displayedAt(createdAt) {
-  const milliSeconds = new Date() - new Date(createdAt)
-  const seconds = milliSeconds / 1000
-  if (seconds < 60) return `방금 전`
-  const minutes = seconds / 60
-  if (minutes < 60) return `${Math.floor(minutes)}분 전`
-  const hours = minutes / 60
-  if (hours < 24) return `${Math.floor(hours)}시간 전`
-  const days = hours / 24
-  if (days < 7) return `${Math.floor(days)}일 전`
-  const weeks = days / 7
-  if (weeks < 5) return `${Math.floor(weeks)}주 전`
-  const months = days / 30
-  if (months < 12) return `${Math.floor(months)}개월 전`
-  const years = days / 365
-  return `${Math.floor(years)}년 전`
-}
-
 
 //var contextPath = "${pageContext.request.contextPath}";
 //var imagePath = "${image.posts_image1}";
@@ -139,7 +139,7 @@ function displayedAt(createdAt) {
                                             <div style="margin-top: 10px;">
                                                 <div style="height: 25px;">
                                                     <a href="/shoecream/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
-                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src=''"
+                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
                                                         style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
                                                 	</a>
                                                 </div>
@@ -275,13 +275,12 @@ function addComment(posts_idx) {
         let comment = res.data;
         let profileImageUrl = comment.mem_profileImageUrl;
         
-        let content = `
-                  <div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
+       let content = `<div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
                                         <div class="sl__item__header" style="height: 25px;">
                                             <div style="margin-top: 10px;">
                                                 <div style="height: 25px;">
                                                     <a href="/shoecream/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
-                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src=''"
+                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
                                                         style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
                                                 	</a>
                                                 </div>
@@ -290,7 +289,7 @@ function addComment(posts_idx) {
                                             <div class="d-flex flex-column w-100" style="height: 40px;">
                                                 <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
                                                     <span><strong>${comment.mem_nickname}</strong></span>
-                                                    <span class="ms-2" style="white-space: nowrap; color :#495057;">${comment.comment_content}</span>
+                                                    <span class="ms-2" style="white-space: nowrap; color :#495057;">${res.data.comment_content}</span>
                                                 </div>
                                                 <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.7rem;">
                                                     <span class="" style="color:#adb5bd;">${displayedAt(comment.comment_date)}</span>
@@ -299,9 +298,7 @@ function addComment(posts_idx) {
                                                     </span>
                                                 </div>
                                             </div>
-                                        </div>
-
-        `;
+                                        </div>`;
         commentList.prepend(content);
 
     }).fail(error=>{

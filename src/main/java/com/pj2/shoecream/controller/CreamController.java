@@ -7,12 +7,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,9 +22,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.service.AuctionService;
 import com.pj2.shoecream.service.CreamService;
 import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.vo.AuctionVO;
@@ -37,11 +44,61 @@ public class CreamController {//크림 컨트롤러 입니다.
 	  
 	  @Autowired
 	  private CreamService service;
+	  
+	  @Autowired
+	  private AuctionService aucService;
 	
 	@GetMapping("Cream")
-	public String creamMain() {
+	public String creamMain(
+			   @RequestParam(required = false) Map<String, Object> map
+			   , Model model) {
+		if (map != null) model.addAttribute("code", map);
+		
 		return "cream/cream_main";
 	}
+	
+	
+	
+    @ResponseBody
+    @RequestMapping(value= "getCreamList", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
+    public String getCreamList(
+          @RequestParam Map<String, Object> map) {
+       
+		int pageNum = Integer.parseInt(String.valueOf(map.get("pageNum")));
+		int listLimit = 20;
+		int startRow = (pageNum - 1) * listLimit;
+       
+		map.put("startRow", startRow);
+		map.put("listLimit", listLimit);
+      
+		List<Map<String, Object>> creamList = service.getCreamList(map);
+
+		map.remove("startRow");
+		map.remove("listLimit");
+
+		int listCount = service.getCreamList(map).size();
+		int pageListLimit = 20;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		if (endPage > maxPage) {
+			endPage = maxPage;
+		}
+
+		Map<String, Object> pageInfo = new HashMap<String, Object>();
+		pageInfo.put("listCount", listCount);
+		pageInfo.put("pageListLimit", pageListLimit);
+		pageInfo.put("maxPage", maxPage);
+		pageInfo.put("startPage", startPage);
+		pageInfo.put("endPage", endPage);
+		pageInfo.put("pageNum", pageNum);
+
+		creamList.add(pageInfo);
+
+		JSONArray jsonArray = new JSONArray(creamList);
+		return jsonArray.toString();
+	}
+	
 	
 //	@GetMapping("CreamRegisterForm")
 //	public String creamRegisterForm(
@@ -115,5 +172,53 @@ public class CreamController {//크림 컨트롤러 입니다.
 		}
 		return "redirect:/";
     }	
+   
+   @GetMapping("CreamDetail")
+   public String CreamDetail(
+       HttpSession session
+       , Model model
+       , @RequestParam Map<String, Object> map) { //경매 제품상세
+   	
+		// 회원번호
+   	int sId = 0;
+   	
+   	try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			sId = mPrincipalDetails.getMember().getMem_idx();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+   	map.put("mem_idx", sId);
+   	
+   	String cream_idx = (String)map.get("cream_idx");
+   	
+   	// 조회수 카운트
+		String readAuction = (String) session.getAttribute("readAuction");
+		if (readAuction == null || !readAuction.equals(cream_idx)) {
+			int updateCount = service.updateReadCount(cream_idx);
+			if (updateCount > 0)
+				session.setAttribute("readCream", cream_idx);
+		}
+	
+		Map<String, Object> cream = service.getCream(cream_idx);
+		cream.put("isLogin", sId);
+		model.addAttribute("cream", cream);
+
+
+		// 찜
+//		Map<String, Object> dibs = service.getCreamDibs(map);
+//		
+//		
+//		model.addAttribute("dibs", dibs);
+//		
+//		// 찜카운트
+//		int dibsCount = service.getDibsCount(map);
+//		model.addAttribute("dibsCount", dibsCount);
+//		
+
+		
+       return "cream/cream_detail";
+   }
 	
 }

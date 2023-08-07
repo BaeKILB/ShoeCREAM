@@ -137,7 +137,6 @@ function getStoryItem(image) {
 							item += `<i class="far fa-heart" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
 						}
 							
-						
 					item += `
 						</button>
 					</div>
@@ -156,7 +155,7 @@ function getStoryItem(image) {
                                             <div style="margin-top: 10px;">
                                                 <div style="height: 25px;">
                                                     <a href="/shoecream/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
-                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src=''"
+                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
                                                         style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
                                                 	</a>
                                                 </div>
@@ -292,7 +291,7 @@ function addComment(posts_idx) {
                                             <div style="margin-top: 10px;">
                                                 <div style="height: 25px;">
                                                     <a href="/shoecream/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
-                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src=''"
+                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
                                                         style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
                                                 	</a>
                                                 </div>

@@ -38,11 +38,11 @@ public interface SocialImageMapper {
 	// 댓글 등록
 	void insertComment(SocialCommentVO socialCommentVO);
 	
-   // 댓글 쓸때 프로필 이미지 경로
-    String findProfileImageUrlByMemberId(int mem_idx);
-	
     // 댓글 달 때 ref 초기화
 	int updateComment_ref(SocialCommentVO socialCommentVO);
+	
+   // 댓글 쓸때 프로필 이미지 경로
+    String findProfileImageUrlByMemberId(int mem_idx);
 	
 	// 댓글 등록 시 해당 프로필 이미지 셀렉
 	List<SocialCommentVO> selectCommentsByPostId(int posts_idx);

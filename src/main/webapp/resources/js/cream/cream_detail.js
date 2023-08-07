@@ -1,42 +1,67 @@
-/**
- * cream_detail html 파일의 자바 스크립트 파일
- * 
- * 구현 할것
- * 체결내역 더 보기
- * 참고 사이트 
- * https://m.blog.naver.com/dasol825/220672901113
- */
-
-function dealsListPopup() { 
-	window.open("deals_list.jsp", "시세", "width=400, height=800, left=100, top=50"); }
-	
-	
-//시세 조회 탭들 
-	
-$(document).ready(function() {
-    // 첫 번째 탭 그룹 초기화
-    $(".find_wrap").eq(0).find(".find_tab").eq(0).addClass("off");
-    $(".find_wrap").eq(0).find(".find_cont").eq(0).addClass("active");
-    $(".find_wrap").eq(0).find(".find_tab").click(function() {
-        var index = $(this).index();
-        $(".find_wrap").eq(0).find(".find_tab").removeClass("off");
-        $(this).addClass("off");
-        $(".find_wrap").eq(0).find(".find_cont").removeClass("active");
-        $(".find_wrap").eq(0).find(".find_cont").eq(index).addClass("active");
-    });
-
-    // 두 번째 탭 그룹 초기화
-    $(".find_wrap").eq(1).find(".find_tab").eq(0).addClass("off");
-    $(".find_wrap").eq(1).find(".find_cont").eq(0).addClass("active");
-    $(".find_wrap").eq(1).find(".find_tab").click(function() {
-        var index = $(this).index();
-        $(".find_wrap").eq(1).find(".find_tab").removeClass("off");
-        $(this).addClass("off");
-        $(".find_wrap").eq(1).find(".find_cont").removeClass("active");
-        $(".find_wrap").eq(1).find(".find_cont").eq(index).addClass("active");
-    });
-});
-    
-    
 
 
+//이미지 슬라이드
+let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+//  slides[slideIndex-1].style.display = "block";
+//  dots[slideIndex-1].className += " active";
+}
+
+
+
+
+
+// 찜하기 이벤트
+const dibsCheck = () => {
+    $.ajax({
+        type: "post"
+        , url: "dibsEvent"
+        , data: {
+            cream_idx: $("#cream_idx").val()
+        }
+        , dataType: "json"
+        , success: function(data) {
+            dibsResult(data)
+        }
+        ,error: function() {
+            console.log("error");  
+        }
+    })
+}
+
+// 찜하기 이벤트 결과값
+const dibsResult = (data) => {
+    let path = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+    if (data.result) {
+        let result = "<img class='dibsImage' src='"+path+"/resources/img/auction/favorite-heart-true.svg'><span>"+data.dibsCount+"</span>"
+        $("#dibsBox").children().empty();
+        $("#dibsBox").children().append(result);
+    } else {
+        let result = "<img  class='dibsImage' src='"+path+"/resources/img/auction/favorite-heart-false.svg'><span>"+data.dibsCount+"</span>"
+        $("#dibsBox").children().empty();
+        $("#dibsBox").children().append(result);
+    }
+}

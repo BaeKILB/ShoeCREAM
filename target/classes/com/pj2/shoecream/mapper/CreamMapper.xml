@@ -27,16 +27,78 @@
 			, #{size300}
 			, #{size305}
 			, #{size310}
+			,'0'
 		)
 	</insert>
 	
-	<select id="getCreamList" resultType="map">
-		SELECT *
-		FROM cream_item
-		JOIN product_image ON cream_item.ci_code = product_image.product_idx;
+<!-- 	<select id="getCreamList" resultType="map"> -->
+<!-- 		SELECT  -->
+<!-- 			cream_idx -->
+<!-- 			, image_path -->
+<!-- 			, image1 -->
+<!-- 			, cream_title -->
+<!-- 			, size220 -->
+<!-- 			, cream_readcount -->
+<!-- 			, dibs_count -->
+<!-- 		FROM cream_item -->
+<!-- 		JOIN product_image ON cream_item.ci_code = product_image.product_idx; -->
+<!-- 	</select> -->
+	<select id="selectCreamList" resultType="map">
+		SELECT 
+		    ci.cream_idx,
+		    pi.image_path,
+		    pi.image1,
+		    ci.cream_title,
+		    ci.size220,
+		    ci.cream_readcount,
+		    COUNT(d.dibs_idx) AS dibs_count
+		FROM
+		    cream_item ci
+		LEFT JOIN
+		    product_image pi ON ci.cream_idx = pi.product_idx
+		LEFT JOIN
+		    dibs d ON ci.cream_idx = d.product_idx
+		GROUP BY
+		    ci.cream_idx, pi.image_path, pi.image1, ci.cream_title, ci.size220, ci.cream_readcount;
 	</select>
 	
 	
+	<update id="updateItemReadCount">
+	   update
+	       cream_item
+	   set
+	       cream_readcount = cream_readcount + 1
+	   where
+	       cream_idx = #{cream_idx }
+	</update>
+
+	
+	<select id="selectCream" resultType="Map">
+	    SELECT *
+	    FROM cream_item
+	    JOIN product_image ON cream_item.cream_idx = product_image.product_idx
+	    WHERE cream_idx = #{cream_idx}
+	</select>
+	
+<!-- 	<select id="selectCreamDibs"> -->
+<!-- 	   select -->
+<!-- 	       * -->
+<!-- 	   from -->
+<!-- 	       dibs -->
+<!-- 	   where -->
+<!-- 	       product_idx = #{cream_idx } -->
+<!-- 	       and mem_idx = #{mem_idx } -->
+<!-- 	</select> -->
+	
+	
+<!-- 	<select id="selectDibsCount"> -->
+<!--         SELECT  -->
+<!--             count(product_idx)  -->
+<!--         FROM  -->
+<!--             dibs -->
+<!--         WHERE  -->
+<!--             product_idx=${cream_idx } -->
+<!-- 	</select> -->
 
 
 </mapper>
