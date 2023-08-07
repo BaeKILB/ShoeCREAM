@@ -8,8 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>입찰 팝업</title>
-<script type="text/javascript"
-   src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script type="text/javascript">
@@ -263,7 +262,7 @@ function refreshParentWindow() {
                     <input type="reset" class="btn btn-secondary" value="초기화" onclick="location.reload()" >
                 </div>
                 <div class="col-2">
-                    <input type="button" class="btn btn-secondary" value="닫기" onclick="close()" >
+                    <input type="button" class="btn btn-secondary" value="닫기" onclick="window.close()" >
                 </div>
             </div>
         </div>
