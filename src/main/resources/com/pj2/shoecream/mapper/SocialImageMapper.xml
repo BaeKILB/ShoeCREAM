@@ -5,9 +5,9 @@
 	<!-- 소셜 프로필 (소셜 게시물 등록) -->
 	<insert id="insertPosts"
 		parameterType="com.pj2.shoecream.vo.SocialVO">
-		insert into
+		INSERT INTO
 		social_posts
-		values(
+		VALUES(
 		#{posts_idx}
 		, #{mem_idx}
 		, #{mem_nickname}
@@ -17,7 +17,9 @@
 		, now()
 		)
 	</insert>
+	
 
+	
 	<!-- 소셜 프로필 (소셜 게시물 정보 가져가기) -->
 	<select id="SelectSocialProfile" resultType="com.pj2.shoecream.vo.SocialVO">
 		SELECT *
@@ -76,6 +78,34 @@
 	    WHERE posts_idx = #{posts_idx}
 	</delete>
 	
+	<!-- 소셜 디테일 수정 -->
+	<update id="updatePosts" parameterType="com.pj2.shoecream.vo.SocialVO">
+	    UPDATE social_posts
+	    SET
+	    mem_idx = #{mem_idx},
+	    mem_nickname = #{mem_nickname},
+	    posts_content = #{posts_content},
+	    posts_image1 = #{posts_image1},
+	    likeCount = #{likeCount}
+	    WHERE posts_idx = #{posts_idx}
+	</update>
+	
+	<!-- 소셜 이미지 변경 없을 시 수정 -->
+	 <update id="updatePostsNoImage" parameterType="com.pj2.shoecream.vo.SocialVO">
+        UPDATE social_posts
+        SET mem_idx = #{mem_idx},
+            mem_nickname = #{mem_nickname},
+            posts_content = #{posts_content}
+        WHERE posts_idx = #{posts_idx}
+    </update>
+	
+	<!-- 소셜 포스트 삭제 -->
+	<delete id="deletePost">
+		DELETE FROM social_posts
+		WHERE posts_idx = #{posts_idx}
+	</delete>
+	
+	<!-- 댓글 등록 -->
 	<insert id="insertComment" parameterType="com.pj2.shoecream.vo.SocialCommentVO">
         INSERT
         INTO social_comment
@@ -99,7 +129,7 @@
         WHERE mem_idx = #{mem_idx}
     </select>
 	
-
+	<!-- 댓글 쓰면 바로 초기화 -->
 	<update id="updateComment_ref" parameterType="com.pj2.shoecream.vo.SocialCommentVO">
 	    UPDATE social_comment
 	        SET
@@ -108,10 +138,17 @@
 	            comment_idx = #{comment_idx}
 	</update>
 	
+	<!-- 댓글 삭제 -->
 	<delete id="deleteCommentById">
 		DELETE
 		FROM social_comment
 		WHERE comment_idx = #{comment_idx}
 	</delete>
 	
+	<!-- 소셜 포스트 삭제할 이미지 셀렉 -->
+	<select id="selectPostsImage">
+		SELECT posts_image1
+		FROM social_posts
+		WHERE posts_idx = #{posts_idx}
+	</select>
 </mapper>

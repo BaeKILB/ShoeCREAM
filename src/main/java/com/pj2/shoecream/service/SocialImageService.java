@@ -164,7 +164,77 @@ public class SocialImageService {
 		
 		System.out.println("socialVO 에 뭐가 들었니 ? " + socialVO);
 	}
+		
+		// 소셜 디테일 수정 파일 삭제
+		public int removePostsImage(Map<String, Object> map) {
+			return socialImageMapper.deletePostsImage(map);
+		}
+		
+		// 소셜 디테일 수정 
+		@Transactional
+		public void ImageUpdate(SocialVO socialVO, PrincipalDetails mPrincipalDetails, HttpSession session,
+		        Model model) {
+		    
+		    int postsId = socialVO.getPosts_idx();
+		    
+		    String uploadDir = "/resources/upload/social"; 
+		    String saveDir = session.getServletContext().getRealPath(uploadDir);
+		    String subDir = ""; // 서브디렉토리(날짜 구분)
+		    
+		    try {
+		        Date date = new Date();
+		        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		        subDir = sdf.format(date);
+		        saveDir += "/" + subDir;
+		        Path path = Paths.get(saveDir);
+		        Files.createDirectories(path);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		    
+		    MultipartFile mFile1 = socialVO.getFile1();
 
+		    // 이미지 파일이 비어있지 않을 때만 처리
+		    if (mFile1 != null && !mFile1.isEmpty()) {
+
+		        String uuid = UUID.randomUUID().toString();
+		        String fileName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
+		        if (!mFile1.getOriginalFilename().equals("")) {
+		            socialVO.setPosts_image1(subDir + "/" + fileName1);
+
+		            socialVO.setPosts_idx(postsId);
+		            socialVO.setMem_idx(mPrincipalDetails.getMember().getMem_idx()); // 로그인한 mem_idx 저장
+		            socialVO.setMem_nickname(mPrincipalDetails.getMember().getMem_nickname()); // 로그인한 mem_nickname 저장
+		            int updateCount = socialImageMapper.updatePosts(socialVO);
+		            
+		            if (updateCount > 0) { // 성공
+		                try {
+		                    mFile1.transferTo(new File(saveDir, fileName1));
+		                } catch (IllegalStateException e) {
+		                    e.printStackTrace();
+		                } catch (IOException e) {
+		                    e.printStackTrace();
+		                }
+		            } else { // 실패
+		                throw new CustomValidationException("오류가 발생했습니다.", null);
+		            }
+		        }
+		    } else {
+		        // 이미지가 없으면 기존 정보 업데이트로 제한
+		        socialVO.setPosts_idx(postsId);
+		        socialVO.setMem_idx(mPrincipalDetails.getMember().getMem_idx());
+		        socialVO.setMem_nickname(mPrincipalDetails.getMember().getMem_nickname());
+		        int updateCount = socialImageMapper.updatePostsNoImage(socialVO);
+
+		        if (updateCount <= 0) {
+		            throw new CustomValidationException("오류가 발생했습니다.", null);
+		        }
+		    }
+		}
+		
+		// 소셜 디테일 삭제
+		
+		
 		
 //		 소셜 포스트 댓글
 		public SocialCommentVO writeComment(SocialCommentVO socialCommentVO) {
@@ -182,12 +252,13 @@ public class SocialImageService {
 			return socialImageMapper.selectImageDetail(posts_idx);
 		}
 		
-
+		// 소셜 댓글 달때 프로필 이미지 셀렉
 		@Transactional(readOnly = true)
 		public List<SocialCommentVO> getImageComments(int posts_idx) {
 		  return socialImageMapper.selectCommentsByPostId(posts_idx);
 		}
 		
+		// 소셜 댓글 삭제
 		@Transactional
 		public void deleteComment(int comment_idx) {
 			try {
@@ -196,10 +267,17 @@ public class SocialImageService {
 				throw new CustomApiException(e.getMessage());
 			}
 		}
-
-		public int removePostsImage(Map<String, Object> map) {
-			return socialImageMapper.deletePostsImage(map);
+		
+		// 소셜 포스트 삭제
+		public int postDelete(int posts_idx) {
+			return socialImageMapper.deletePost(posts_idx);
 		}
+
+		public String getPostImage(int posts_idx) {
+			return socialImageMapper.selectPostsImage(posts_idx);
+		}
+
+
 
 
 
