@@ -79,6 +79,9 @@
 								<li class="cont_item_b">
 									<a class="cont_item_list creamPro" href="creamProduct">크림 상품 관리</a>
 								</li>
+								<li class="cont_item_b">
+									<a class="cont_item_list creamApp" href="creamApply">크림 상품 신청 내역</a>
+								</li>
 							</ul>
 						</li>
 					</ul>

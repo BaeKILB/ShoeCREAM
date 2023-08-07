@@ -1,21 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>크림상품관리</title>
+<title>Insert title here</title>
 <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminBoard.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminCream.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-</head>
-<script type="text/javascript">
+<script>
+
 
 </script>
+</head>
 <body>
 	<aside>
 		<jsp:include page="inc/sidebar.jsp" ></jsp:include>
@@ -54,19 +55,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="creammap" items="${creammap}">
-								<tr>
-									<td class="code"><span class="product_code"> <span class="sv_member">${creammap.ci_code}</span></span></td>
-									<td class="ci_name"> ${creammap.ci_name}</td>
-									<td class="brand">${creammap.ci_brand}</td>
-									<td class="model">${creammap.ci_model_num}</td>
-									<td><img src="${pageContext.request.contextPath}${creammap.image_path }/${creammap.image1}" class="imagesize"/></td>
-									<td class="color">${creammap.ci_color}</td>
-									<td class="startdate"><fmt:formatDate value="${creammap.ci_rel_date}" pattern="YYYY-MM-dd" /></td>
-									<td class="startprice">${creammap.ci_origin_price}</td>
-									<td class="productdel" ><button style='cursor: pointer;'class="moreBtn" onclick="deleteProcream('${creammap.ci_code}')">삭제하기</button></td>
-								</tr>
-							</c:forEach>
+							<tr>
+								<td>
+										<input type="hidden" name="t_key"  id="t_key">
+										<input type="hidden" name="t_code" id="t_code">
+										<input type="hidden" name="t_invoice" id="t_invoice">
+										<input id="tracker" type="button" value="배송조회">
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -76,7 +72,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.cont_li_wrap.creamList').show();
-			$('.cont_item_list.creamPro').addClass('active');
+			$('.cont_item_list.creamApp').addClass('active');
 		});
 	    $(document).on('click', '.toggle_wrap', function() {
 	    	if($('#admin_cont').css('margin-left') === '0px') {
@@ -89,6 +85,30 @@
 				}, 200);
 	    	}
 	    });
+	    
+	    $('#tracker').click(function() {
+			let apikey = "vmXicQZCzQaQetF3y0M0xg";
+			$("#t_key").val(apikey);
+			$("#t_code").val(04);
+			$("#t_invoice").val(831000843336);
+			
+			let t_key = $("#t_key").val();
+			let t_code = $("#t_code").val();
+			let t_invoice = $("#t_invoice").val();
+
+			window.open("http://info.sweettracker.co.kr/tracking/4?t_key="+t_key+"&t_code="+t_code+"&t_invoice="+t_invoice ,"popForm", "toolbar=no, width=540, height=467, directories=no, status=no, resizable=no");
+			
+			$.ajax({
+				type:"GET",
+				url: "http://info.sweettracker.co.kr/api/v1/companylist?t_key=" + apikey,
+				dataType: "JSON",
+				success: function(data) {
+
+				}, error: function() {
+					
+				}
+			});
+		})
 	</script>
 </body>
 </html>

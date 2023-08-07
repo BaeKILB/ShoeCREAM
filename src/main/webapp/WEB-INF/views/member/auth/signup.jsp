@@ -24,7 +24,7 @@
 	<div id="contents">
 		<form action="MemberJoinPro" method="post" name="fr" id="fr" onsubmit="return combinePhoneNumbers();">
 			<section id="sec_con" class="inr signup_wrap">
-			 	<h1 class="con_title">ShoeCream 회원가입</h1>
+<!-- 			 	<h1 class="con_title">ShoeCream 회원가입</h1> -->
 			 	<div class="signup_cont">
 				    <div class="sign_wrapper">  
 

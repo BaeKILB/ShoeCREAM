@@ -29,11 +29,11 @@
             <article class="sign_in">
 
                 <!-- pageTitle -->
-                <div class="pageTitle">
-                    <div class="layout1">
-                        <h2 class="tit">ShoeCream 로그인</h2>
-                    </div>
-                </div>
+<!--                 <div class="pageTitle"> -->
+<!--                     <div class="layout1"> -->
+<!--                         <h2 class="tit">ShoeCream 로그인</h2> -->
+<!--                     </div> -->
+<!--                 </div> -->
                 <!--// pageTitle -->
 
                 <!-- 로그인 -->

@@ -82,7 +82,7 @@
 
 	<div id="sec_con" class="w3-container-main inr">
 
-		<h1 class="con_title">아이디 비밀번호 찾기</h1>
+<!-- 		<h1 class="con_title">아이디 비밀번호 찾기</h1> -->
 		<div class="find_wrap">
 			<div class="cont_box">
 				<div class="find_tit">

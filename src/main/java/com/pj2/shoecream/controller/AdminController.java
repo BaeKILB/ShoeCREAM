@@ -78,6 +78,11 @@ public class AdminController {
 		// 크림 상품 수 세기
 		int creamCount = service.getCreamCount();
 		model.addAttribute("creamCount",creamCount);
+		
+		// 일대일 내역 조회
+		int listLimit = 5;
+		List<InquiryBoardVO> qstList = service.getMainQstBoard(listLimit);
+		model.addAttribute("qstList", qstList);
 
 		return "admin/admin_main";
 	}
@@ -254,6 +259,14 @@ public class AdminController {
 		 
 		return isDeleteString;
 	}
+	
+	// 크림 신청
+	@GetMapping("creamApply")
+	public String creamApply() {
+		
+		return "admin/admin_cream_apply";
+	}
+	
 	
 	
 	

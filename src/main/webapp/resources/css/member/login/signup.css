@@ -133,14 +133,14 @@
     font-size: 20px;
     color: #fff;
     text-align: center;
-    background: rgb(246, 95, 19);
+    background: rgb(0, 0, 0);
     border-radius: 5px;
     margin-top: 45px;
     transition: all 0.3s
 }
 
 .signUp button:hover {
-	background-color: #ff6600;
+	background-color: rgb(192, 192, 192);
 }
 
 .error{
