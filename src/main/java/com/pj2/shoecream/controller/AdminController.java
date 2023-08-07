@@ -218,8 +218,6 @@ public class AdminController {
 		model.addAttribute("inquiry", inquiry);
 		
 		InquiryBoardVO inquiryAnswer = service.selectQstAns(qst_idx);
-		System.out.println("■■■■■■■■■■■■■■■■■" + qst_idx);
-		System.out.println("■■■■■■■■■■■■■■■■■" + inquiryAnswer);
 		model.addAttribute("inquiryAnswer", inquiryAnswer);
 		
 		return "admin/admin_question_modify";
@@ -260,6 +258,13 @@ public class AdminController {
 		}
 		 
 		return isDeleteString;
+	}
+	
+	// 크림 신청
+	@GetMapping("creamApply")
+	public String creamApply() {
+		
+		return "admin/admin_cream_apply";
 	}
 	
 	
