@@ -181,30 +181,29 @@ function payAuction(idx, price, id, title){
 
 			<div id="my_store_menu_content">
 				<div id="sales_menu_area" class="common_menu">
-<div style="display: flex; justify-content: space-between; align-items: center;">
-    <div>
-        <p>
-            판매내역
-        </p>
-        <!-- 생략된 주석 -->
-    </div>
-    <div class="">
-        <ul class="goods_cate">
-            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-        </ul>
-    </div>
-</div>
+					<div style="display: flex; justify-content: space-between; align-items: center;">
+					    <div>
+					        <p>
+					            판매내역
+					        </p>
+					        <!-- 생략된 주석 -->
+					    </div>
+					    <div class="">
+					        <ul class="goods_cate">
+					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+					              <option selected>전체</option>
+					              <option value="1">판매중</option>
+					              <option value="2">판매완료</option>
+					            </select>
+					        </ul>
+					    </div>
+					</div>
 					<div>
 						<!-- 판매 내역 시작 -->
 						<div id="main_content">
 							<nav class="filter_nav">
 								<div class="status_filter">
-									<button type="button" class="all_buy_status active">전체	상태</button>
+									<button type="button" class="all_buy_status active">전체상태</button>
 <!-- 									<button type="button" class="buying_status">진행중</button> -->
 <!-- 									<button type="button" class="bought_status">거래완료</button> -->
 								</div>
@@ -273,18 +272,22 @@ function payAuction(idx, price, id, title){
 				
 				<!-- 구매 내역 시작  -->
 				<div id="purchases_menu_area" class="common_menu">
-					<div>
-						<p>
-							구매내역 
-						</p>
-						<ul class="goods_cate">
-							<li>전체</li>
-							<li class="hidden_menu">전체</li>
-<!-- 							<li class="hidden_menu">거래중</li> -->
-<!-- 							<li class="hidden_menu">거래완료</li> -->
-<!-- 							<li class="hidden_menu">숨김내역</li> -->
-						</ul>
-						<i class="bi bi-chevron-down under_direction under"></i>
+					<div style="display: flex; justify-content: space-between; align-items: center;">
+					    <div>
+					        <p>
+					            구매내역
+					        </p>
+					        <!-- 생략된 주석 -->
+					    </div>
+					    <div class="">
+					        <ul class="goods_cate">
+					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+					              <option selected>전체</option>
+					              <option value="2">거래중</option>
+					              <option value="3">거래완료</option>
+					            </select>
+					        </ul>
+					    </div>
 					</div>
 					<div>
 						<!-- 구매 내역 메인 컨텐츠 -->

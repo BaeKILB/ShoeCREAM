@@ -99,29 +99,29 @@ $(document).ready(function () {
 
 
 
-//let check = false; //submit 단계에서 확인할 변수
-//
-//
-////이메일 시도
-//var emailC = false;
-//function checkEmail() {
-//  var memEmail = document.getElementById("mem_id").value;
-//  var emailError = document.getElementById("emailError");
-//
-//  if (validateEmail(memEmail)) {
-//    emailError.textContent = '';
-//    emailC = true;
-//  } else {
-//    emailError.textContent = '메일 주소를 정확히 입력하세요.';
-//    emailC = false;
-//  }
-//}
-//
-//function validateEmail(email) {
-//  const re = /([!#-'+/-9=?A-Z^-~-]+(.[!#-'+/-9=?A-Z^-~-]+)|"([]!#-[^-~ \t]|([\t -~]))+")@([!#-'+/-9=?A-Z^-~-]+(.[!#-'+/-9=?A-Z^-~-]+)|[[\t -Z^-~]*])+$/;
-//  const hasKorean = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
-//  return re.test(String(email).toLowerCase()) && !hasKorean.test(email);
-//}
+let check = false; //submit 단계에서 확인할 변수
+
+
+//이메일 시도
+var emailC = false;
+function checkEmail() {
+  var memEmail = document.getElementById("mem_id").value;
+  var emailError = document.getElementById("emailError");
+
+  if (validateEmail(memEmail)) {
+    emailError.textContent = '';
+    emailC = true;
+  } else {
+    emailError.textContent = '메일 주소를 정확히 입력하세요.';
+    emailC = false;
+  }
+}
+
+function validateEmail(email) {
+  const re = /([!#-'+/-9=?A-Z^-~-]+(.[!#-'+/-9=?A-Z^-~-]+)|"([]!#-[^-~ \t]|([\t -~]))+")@([!#-'+/-9=?A-Z^-~-]+(.[!#-'+/-9=?A-Z^-~-]+)|[[\t -Z^-~]*])+$/;
+  const hasKorean = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
+  return re.test(String(email).toLowerCase()) && !hasKorean.test(email);
+}
 //
 //
 ////이메일 중복확인 - alert으로 중복창 띄움
@@ -149,58 +149,58 @@ $(document).ready(function () {
 //
 //
 //
-////비밀번호 유효성 검사
-//var passC = false;
-//function validatePw() {
-//  var memPw = document.getElementById("mem_passwd").value;
-//  var pwError = document.getElementById("passwordError");
-//
-//  if (validatePassword(memPw)) {
-//    pwError.textContent = '';
-//    passC = true;
-//  } else {
-//    pwError.textContent = '영문, 숫자, 특수문자 포함 8~20글자 이상 입력해주세요.';
-//    passC = false;
-//  }
-//}
-//
-//function validatePassword(password) {
-//  const re = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
-//  return re.test(password);
-//}
-//
-////비밀번호 중복 확인검사 
-//
-//var passD = false;
-//function passwordConfirm() {
-//  var passwd = document.getElementById("mem_passwd").value;
-//  var repeatPasswd = document.getElementById("passwordCheck").value;
-//  var span = document.querySelector("#passwordCheckError");
-//  if (passwd != repeatPasswd) {
-//	span.innerHTML= '패스워드가 일치하지 않습니다.'; 
-//    passD = false;
-//  }else{
-//	span.innerHTML= '';
-//    passD = true;
-//}
-//
-//}
-//
-////이름 확인 한글만,2글자 이상 10글자 미만, 자음,모음만 입력 안됨
-//var nameC = false;
-//function validateName(){
-//	const name = document.getElementById("mem_name").value.trim();
-//	const span = document.querySelector("#nameError");
-//  		if (!/^[\uAC00-\uD7A3]{2,10}$/.test(name) || /[\u314F-\u3163]/.test(name)) {
-//		    span.innerHTML= '유효한 이름을 입력 해 주세요'
-//		    name.value = "";//얘네 왜 안될까 
-//		    document.getElementById("mem_name").focus();//얘네 왜 안될까 
-//		    nameC = false;}
-//		    else{
-//		 	span.innerHTML= '';
-//		 	nameC = true;
-//			}
-//}
+//비밀번호 유효성 검사
+var passC = false;
+function validatePw() {
+  var memPw = document.getElementById("mem_passwd").value;
+  var pwError = document.getElementById("passwordError");
+
+  if (validatePassword(memPw)) {
+    pwError.textContent = '';
+    passC = true;
+  } else {
+    pwError.textContent = '영문, 숫자, 특수문자 포함 8~20글자 이상 입력해주세요.';
+    passC = false;
+  }
+}
+
+function validatePassword(password) {
+  const re = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+  return re.test(password);
+}
+
+//비밀번호 중복 확인검사 
+
+var passD = false;
+function passwordConfirm() {
+  var passwd = document.getElementById("mem_passwd").value;
+  var repeatPasswd = document.getElementById("passwordCheck").value;
+  var span = document.querySelector("#passwordCheckError");
+  if (passwd != repeatPasswd) {
+	span.innerHTML= '패스워드가 일치하지 않습니다.'; 
+    passD = false;
+  }else{
+	span.innerHTML= '';
+    passD = true;
+}
+
+}
+
+//이름 확인 한글만,2글자 이상 10글자 미만, 자음,모음만 입력 안됨
+var nameC = false;
+function validateName(){
+	const name = document.getElementById("mem_name").value.trim();
+	const span = document.querySelector("#nameError");
+  		if (!/^[\uAC00-\uD7A3]{2,10}$/.test(name) || /[\u314F-\u3163]/.test(name)) {
+		    span.innerHTML= '유효한 이름을 입력 해 주세요'
+		    name.value = "";//얘네 왜 안될까 
+		    document.getElementById("mem_name").focus();//얘네 왜 안될까 
+		    nameC = false;}
+		    else{
+		 	span.innerHTML= '';
+		 	nameC = true;
+			}
+}
 //
 //생년월일 선택 max 오늘이후 선택 불가
 let maxDate;
@@ -440,93 +440,93 @@ function startTimer() {
 //// 회원가입 버튼
 //
 function signUpCheck(){
-//  let email = document.getElementById("mem_id").value
-//  let password = document.getElementById("mem_passwd").value
-//  let passwordCheck = document.getElementById("passwordCheck").value
-//  let name = document.getElementById("mem_name").value
+  let email = document.getElementById("mem_id").value
+  let password = document.getElementById("mem_passwd").value
+  let passwordCheck = document.getElementById("passwordCheck").value
+  let name = document.getElementById("mem_name").value
   let phone1 = document.getElementById("phone1").value
   let phone2 = document.getElementById("phone2").value
   let phone3 = document.getElementById("phone3").value
-//  let addr1 = document.getElementById("sample6_postcode").value
-//  let addr2 = document.getElementById("sample6_address").value
-//  let birthDate = document.getElementById("mem_birthday").value
+  let addr1 = document.getElementById("sample6_postcode").value
+  let addr2 = document.getElementById("sample6_address").value
+  let birthDate = document.getElementById("mem_birthday").value
   let check = true;
 //
-//  // 이메일 확인
-//  if (email === "") {
-//    alert("이메일을 입력해 주세요");
-//    document.getElementById("mem_id").focus();
-//    return;
-//  } else if(emailC==false){
-//	document.getElementById("mem_id").focus();
-//	birthDate == "";
-//	return;
-//}
+  // 이메일 확인
+  if (email === "") {
+    alert("이메일을 입력해 주세요");
+    document.getElementById("mem_id").focus();
+    return;
+  } else if(emailC==false){
+	document.getElementById("mem_id").focus();
+	birthDate == "";
+	return;
+}
+
+
+  // 비밀번호 확인
+ 
+  if (password === "") {
+    document.getElementById("mem_passwd").focus();
+    alert("비밀번호를 입력해 주세요.");
+    return;
+  } else if(passC==false){
+    document.getElementById("mem_passwd").focus();
+    return;
+  }
+
+  if (passwordCheck === "") {
+    alert("비밀번호 확인을 입력해 주세요.");
+    document.getElementById("passwordCheck").focus();
+    return;
+  }else if(passD==false){
+    document.getElementById("passwordCheck").focus();
+    return;
+  }
+  
+   if (password !== passwordCheck) {
+    alert("동일한 비밀번호를 입력해 주세요");
+    document.getElementById("passwordCheck").focus();
+    return;
+  } else if(passD==false){
+    document.getElementById("passwordCheck").focus();
+    return;
+  }
+//
+  // 이름 확인
+  if (name === "") {
+    alert("이름을 입력해 주세요");
+    document.getElementById("mem_name").focus();
+    return;
+
+
+ementById("mem_name").focus();
+    return;
+}
+//
+  //생년월일 확인 
+    if (birthDate === "") {
+    alert("생년월일을 입력해 주세요");
+    document.getElementById("birthDate").focus();
+    return;
+  } else if(birC == false){
+    document.getElementById("mem_name").focus();
+    return;
+}
+  // 주소 확인
+  if (addr1 === "" && addr2 === "") {
+    alert("주소를 입력해 주세요.");
+    document.getElementById("sample6_postcode").focus();
+    return;
+  } 
 //
 //
-//  // 비밀번호 확인
-// 
-//  if (password === "") {
-//    document.getElementById("mem_passwd").focus();
-//    alert("비밀번호를 입력해 주세요.");
-//    return;
-//  } else if(passC==false){
-//    document.getElementById("mem_passwd").focus();
-//    return;
-//  }
-//
-//  if (passwordCheck === "") {
-//    alert("비밀번호 확인을 입력해 주세요.");
-//    document.getElementById("passwordCheck").focus();
-//    return;
-//  }else if(passD==false){
-//    document.getElementById("passwordCheck").focus();
-//    return;
-//  }
-//  
-//   if (password !== passwordCheck) {
-//    alert("동일한 비밀번호를 입력해 주세요");
-//    document.getElementById("passwordCheck").focus();
-//    return;
-//  } else if(passD==false){
-//    document.getElementById("passwordCheck").focus();
-//    return;
-//  }
-//
-//  // 이름 확인
-//  if (name === "") {
-//    alert("이름을 입력해 주세요");
-//    document.getElementById("mem_name").focus();
-//    return;
-//
-//
-//ementById("mem_name").focus();
-//    return;
-//}
-//
-//  //생년월일 확인 
-//    if (birthDate === "") {
-//    alert("생년월일을 입력해 주세요");
-//    document.getElementById("birthDate").focus();
-//    return;
-//  } else if(birC == false){
-//    document.getElementById("mem_name").focus();
-//    return;
-//}
-//  // 주소 확인
-//  if (addr1 === "" && addr2 === "") {
-//    alert("주소를 입력해 주세요.");
-//    document.getElementById("sample6_postcode").focus();
-//    return;
-//  } 
-//
-//
-//  // 핸드폰 번호 확인
-//  if (phone1 === "" || phone2 === "" || phone3 === "") {
-//    document.getElementById("phone1").focus();
-//    alert("핸드폰 번호를 입력해 주세요.");
-//    return;
-//  }
+  // 핸드폰 번호 확인
+  if (phone1 === "" || phone2 === "" || phone3 === "") {
+    document.getElementById("phone1").focus();
+    alert("핸드폰 번호를 입력해 주세요.");
+    return;
+  }
 //
   // 인증 확인
   if (phone1 !== "" && phone2 !== "" && phone3 !== "" && vCheck === false) {

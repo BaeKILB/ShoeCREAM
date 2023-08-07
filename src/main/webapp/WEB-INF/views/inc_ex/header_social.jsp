@@ -69,7 +69,7 @@ div #test_area ul { /* 카테고리 css */
                                     		<c:when test="${empty sessionScope.sId }">
 		                                        <div class="col-2"><a href="login">로그인</a></div>
 		                                        <div class="col-2"><a href="signup">회원가입</a></div>
-		                                        <div class="col-2" style="text-align: left;"><a href="CustomerCenter.ad">고객센터</a></div>
+		                                        <div class="col-2" style="text-align: left;"><a href="UserNotice">공지사항</a></div>
                                     		</c:when>
                                     		<c:otherwise>
                                     			<div class="col-2"><a href="myPage.me">${member.mem_id }님</a></div>

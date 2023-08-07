@@ -26,7 +26,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		http.csrf().disable(); // 이제 csrf 토큰 검사 안함
 		http.authorizeRequests()
-			.antMatchers("/mypage/**","/social/**","/api/**").authenticated() // 인증(로그인)한 유저만 갈 수 있는 페이지
+			.antMatchers("/mypage/**","/social/**","/api/**" ,"/store/").authenticated() // 인증(로그인)한 유저만 갈 수 있는 페이지
 	        .anyRequest().permitAll()
 	    .and()
 	    .formLogin()
