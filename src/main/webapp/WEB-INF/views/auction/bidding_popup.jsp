@@ -8,12 +8,16 @@
 <head>
 <meta charset="UTF-8">
 <title>입찰 팝업</title>
-<script type="text/javascript"
-   src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script type="text/javascript">
+// 웹소켓
+let socket = null;
+let ws = new SockJS("<c:url value="/alram"/>");
+socket = ws;
 
-//보증금
+// 보증금
 function calculateGuaranteeAmount() {
     const bidPrice = parseFloat(document.getElementById("bid_price").value);
     const guaranteeAmount = bidPrice * 0.1; // 입찰 금액의 10%
@@ -36,109 +40,126 @@ function bidUnit() {
 }
 
 
-	// 시간
-	const updateTimer = () => {
-	    const future = Date.parse($("#auc_close_date").val());
-	    const now = new Date();
-	    const diff = future - now;
-	    
-	    if (diff < 0) {
-	        $("#acdBox").html("경매 마감");
-	    } else {
-	        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-	        const hours = Math.floor(diff / (1000 * 60 * 60));
-	        const mins = Math.floor(diff / (1000 * 60));
-	        const secs = Math.floor(diff / 1000);
-	        
-	        const d = days;
-	        const h = hours - days * 24;
-	        const m = mins - hours * 60;
-	        const s = secs - mins * 60;
-	        
-	        let result =  
-	        '<span>' + d + '<span>일</span>' +
-	        '<span>' + h + '<span>시</span>' +
-	        '<span>' + m + '<span>분</span>' +
-	        '<span>' + s + '<span>초</span>';
-	        
-	        $("#acdBox").html(result);
-	    }
-	}
-	
-	// 시간 반복
-	setInterval(() => {
-	    updateTimer()   
-	}, 1000);
+// 시간
+const updateTimer = () => {
+    const future = Date.parse($("#auc_close_date").val());
+    const now = new Date();
+    const diff = future - now;
+    
+    if (diff < 0) {
+        $("#acdBox").html("경매 마감");
+    } else {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const mins = Math.floor(diff / (1000 * 60));
+        const secs = Math.floor(diff / 1000);
+        
+        const d = days;
+        const h = hours - days * 24;
+        const m = mins - hours * 60;
+        const s = secs - mins * 60;
+        
+        let result =  
+        '<span>' + d + '<span>일</span>' +
+        '<span>' + h + '<span>시</span>' +
+        '<span>' + m + '<span>분</span>' +
+        '<span>' + s + '<span>초</span>';
+        
+        $("#acdBox").html(result);
+    }
+}
+    
+// 시간 반복
+setInterval(() => {
+    updateTimer()   
+}, 1000);
 
 
-	//입찰하기 버튼 클릭
-	function bidConfirmation(event) {
-	    // 사용자에게 확인을 받기 위한 컨펌창 표시
-	    var confirmBid = confirm("입찰을 진행하시겠습니까? 입찰 후에는 취소가 불가능합니다.");
-		//value
-		const bidPrice = parseFloat(document.getElementById("bid_price").value);
-		const auc_buy_instantly = ${auction.auc_buy_instantly };
-	    
-	    
-	    if (confirmBid) {
-	    	if(bidPrice == auc_buy_instantly){
-	    			alert("입력하신 입찰 금액과 즉시 구매가가 동일 하므로\n즉시 구매창으로 이동 합니다!")
-	    			window.open("buyingPopup?auction_idx="+${auction.auction_idx }, "즉시구매하기", "width=500, height=800, left=100, top=50");
-		    	}else{
-		        //보증금 결제 먼저 진행 하고 보증금 결제가 진행이 되면  폼 제출
-		        
-		        makeDepositPayment();
-		    		
-		    	}
-	        
-	    	}else{
-	    		
-	    	}
-	        
-	        // 현재 창 닫기
-	        closeCurrentWindow();
+//입찰하기 버튼 클릭
+function bidConfirmation(event) {
+    // 사용자에게 확인을 받기 위한 컨펌창 표시
+    var confirmBid = confirm("입찰을 진행하시겠습니까? 입찰 후에는 취소가 불가능합니다.");
+    //value
+    const bidPrice = parseFloat(document.getElementById("bid_price").value);
+    const auc_buy_instantly = ${auction.auc_buy_instantly };
+    
+    
+    if (confirmBid) {
+        if(bidPrice == auc_buy_instantly){
+                alert("입력하신 입찰 금액과 즉시 구매가가 동일 하므로\n즉시 구매창으로 이동 합니다!")
+                location.href = "buyingPopup?auction_idx="+${auction.auction_idx };
+        } else {
+            $.ajax({ // 입찰 ajax
+                type: "post"
+                , url: "biddingPro"
+                , dataType: "json"
+                , data: {
+                    'auction_idx': $("input[name=auction_idx]").val()
+                    , 'bid_price': $("input[name=bid_price]").val()
+                    , 'deposit': $("input[name=deposit]").val()
+                }
+            })
+            .done(function(data) { // 입찰 done 시작
+                if (data.result) {
+                    // 성공
+                    alert(data.msg);
+                    console.log(${bid.length});
+                    if (${not empty bid }) {
+	                    $.ajax({ // 알람 ajax
+	                        type: "POST"
+	                        , url: "registerAlram"
+	                        , dataType: "text"
+	                        , data: {
+	                            'cmd':'1'
+	                            , 'sender':'0'
+	                            , 'receiver':'${bid.mem_idx}'
+	                            , 'product_idx':'${auction.auction_idx}'
+	                            , 'product_title':'${auction.auction_title}'
+	                        }
+	                    })
+	                    .done(function(result){ // 알람 done 시작
+	                        if(result == 1) { // 성공
+	                            let msg = "auction, 0,${bid.mem_idx},${auction.auction_idx},${auction.auction_title}";
+	                            alert(msg);
+	                            socket.send(msg);
+	                            refreshParentWindow(); // 부모 창 새로고침
+	                            closeCurrentWindow(); // 현재 창 닫기
+	                        } else  { // 실패
+	                            refreshParentWindow(); // 부모 창 새로고침
+	                            closeCurrentWindow(); // 현재 창 닫기
+	                        }
+	                    }) // 알람 done 끝
+	                    .fail(function(errorThrown) {
+	                    	console.log(errorThrown)
+	                    })
+                    } else {
+                        refreshParentWindow(); // 부모 창 새로고침
+                        closeCurrentWindow(); // 현재 창 닫기
+                    } 
+                } else {
+                    alert(data.msg);
+                    history.back();
+                }
+            }) // 입찰 done 끝
+            .fail(function(errorThrown) {
+                console.log(errorThrown)
+            })
+        }
+        
+    } 
+}
+    
+function closeCurrentWindow() {
+    // 현재 창 닫기
+    window.close();
+}
 
-	        // 부모 창 새로고침
-	        refreshParentWindow();
-	}
-	
-	function closeCurrentWindow() {
-	    // 현재 창 닫기
-	    window.close();
-	}
-	
-	function refreshParentWindow() {
-	    // 부모 창 새로고침
-	    if (window.opener && !window.opener.closed) {
-	        window.opener.location.reload();
-	    }
-	}
-	
-	
-	//보증금 결제로직
-	function makeDepositPayment() {
-	    // 보증금 결제를 처리하기 위해 Ajax를 이용하여 서버와 통신합니다.
-	    // 여기서는 Ajax를 사용하는 방법만 보여주기 때문에 실제로는 서버와의 통신 로직을 추가해야 합니다.
-	    // 아래는 Ajax 예시 코드입니다. 실제 URL 및 데이터에 맞게 수정해야 합니다.
-
-	    $.ajax({
-	        url: "", // 보증금 결제를 처리하는 서버 URL
-	        type: "POST",
-	        data: {
-	            // 필요한 데이터를 추가하세요. 예를 들어, 입찰 정보, 결제 수단, 금액 등
-	        },
-	        success: function (response) {
-	            // 보증금 결제가 성공적으로 완료되었을 때 처리할 작업을 추가하세요.
-	            // 폼을 서버로 제출합니다.
-	            document.getElementById("biddingForm").submit();
-	        },
-	        error: function (error) {
-	            // 보증금 결제 실패 시 처리할 작업을 추가하세요.
-	            alert("보증금 결제가 실패하였습니다. 다시 시도해주세요.");
-	        }
-	    });
-
-	}	
+function refreshParentWindow() {
+    // 부모 창 새로고침
+    if (window.opener && !window.opener.closed) {
+        window.opener.location.reload();
+    }
+}
 </script>
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -146,107 +167,107 @@ function bidUnit() {
 <main class="container">
 <!-- 입찰하기 버튼 누르는 경우 이동할 페이지, 
 보여줄 메세지 (가격이랑 끝나는날 이후 경쟁자 생기면 알람 주겟다는거?) -->
-	<div class="row"> <!-- 경매 제목 행 -->
-		<div class="col">
-			<div class="display-4 fw-bold text-center">경매 입찰</div>
-			<hr>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<div class="fs-5 fw-bold">상품정보</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-3">
-		    <div class="text-center">상품명</div>
-		</div>
-		<div class="col-6">
-		    <div>${auction.auction_title }</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-3">
-			<div class="text-center">남은시간</div>
-		</div>
-		<div class="col-6">
-			<div id="acdBox"></div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-3">
-			<div class="text-center">현재가</div>
-		</div>
-		<div class="col-6">
+    <div class="row"> <!-- 경매 제목 행 -->
+        <div class="col">
+            <div class="display-4 fw-bold text-center">경매 입찰</div>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="fs-5 fw-bold">상품정보</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="text-center">상품명</div>
+        </div>
+        <div class="col-6">
+            <div>${auction.auction_title }</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="text-center">남은시간</div>
+        </div>
+        <div class="col-6">
+            <div id="acdBox"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="text-center">현재가</div>
+        </div>
+        <div class="col-6">
                <c:choose>
-               	<c:when test="${bid eq null }">
-					<div>${auction.auc_start_price }원</div>                	
-               	</c:when>
-               	<c:otherwise>
-	                <div>${bid.bid_price }원</div>
-               	</c:otherwise>
+                <c:when test="${bid eq null }">
+                    <div>${auction.auc_start_price }원</div>                 
+                </c:when>
+                <c:otherwise>
+                    <div>${bid.bid_price }원</div>
+                </c:otherwise>
                </c:choose>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-3">
-			<div class="text-center">즉시구매가</div>
-		</div>
-		<div class="col-6">
-			<div>${auction.auc_buy_instantly }원</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-3">
-			<div class="text-center">입찰 단위</div>
-		</div>
-		<div class="col-6">
-			<div>${auction.auc_bid_unit}원</div>		
-		</div>
-	</div>
-	<hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="text-center">즉시구매가</div>
+        </div>
+        <div class="col-6">
+            <div>${auction.auc_buy_instantly }원</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="text-center">입찰 단위</div>
+        </div>
+        <div class="col-6">
+            <div>${auction.auc_bid_unit}원</div>     
+        </div>
+    </div>
+    <hr>
     <form method="post" action="biddingPro">
-		<input type="hidden" value="${auction.auction_idx }"  name="auction_idx">
-		<input type="hidden" value="${bid.bid_price }"  id="old_bid_price">
-		<input type="hidden" value="${auction.auc_close_date }" id="auc_close_date">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="fs-5 fw-bold">입찰</div>
-				</div>
-			</div>
-			<div class="row">
-				<label for="bid_price" class="col-form-label col-3">입찰금액</label>
-				<c:choose>
-				    <c:when test="${bid eq null }">
-				    	<c:set var="minimumBid" value="${auction.auc_start_price }" />
-						<input type="number" class="form-control col" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${auction.auc_start_price }원 입니다" oninput="calculateGuaranteeAmount()"  onchange="bidUnit()" required>
-				    </c:when>
-				    <c:otherwise>
-				    	<c:set var="minimumBid" value="${bid.bid_price + auction.auc_bid_unit}" />
-						<input type="number" class="form-control col" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" onchange="bidUnit()" required>
-				    </c:otherwise>
-				</c:choose>
-			</div>
-			<div class="row">
-				<!-- 보증금 입찰 금액의 10퍼 -->
-				<label class="col-form-label col-3">보증금</label>
-				<input type="text" class="form-control-plaintext form-control col" id="guarantee_amount" name="deposit">
-			</div>
-			<div class="row justify-content-center">
-				<div class="col-2">
-					<input type="submit" class="btn btn-secondary" value="입찰하기" onclick="bidConfirmation()" >
-				</div>
-				<div class="col-2">
-					<input type="reset" class="btn btn-secondary" value="초기화" onclick="location.reload()" >
-				</div>
-				<div class="col-2">
-					<input type="button" class="btn btn-secondary" value="닫기" onclick="close()" >
-				</div>
-			</div>
-		</div>
-		<!-- <input type="button" value="입찰하기" onclick="placeBid()" id="bidButton" disabled> -->
-		<!-- 보증금 결제 로직 완료되면 사용하기 -->
+        <input type="hidden" value="${auction.auction_idx }"  name="auction_idx">
+        <input type="hidden" value="${bid.bid_price }"  id="old_bid_price">
+        <input type="hidden" value="${auction.auc_close_date }" id="auc_close_date">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="fs-5 fw-bold">입찰</div>
+                </div>
+            </div>
+            <div class="row">
+                <label for="bid_price" class="col-form-label col-3">입찰금액</label>
+                <c:choose>
+                    <c:when test="${bid eq null }">
+                        <c:set var="minimumBid" value="${auction.auc_start_price }" />
+                        <input type="number" class="form-control col" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${auction.auc_start_price }원 입니다" oninput="calculateGuaranteeAmount()"  onchange="bidUnit()" required>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="minimumBid" value="${bid.bid_price + auction.auc_bid_unit}" />
+                        <input type="number" class="form-control col" id="bid_price" name="bid_price" step="${auction.auc_bid_unit}" min="${minimumBid}" max="${auction.auc_buy_instantly }" placeholder="현재 가격은 ${bid.bid_price }원 입니다" oninput="calculateGuaranteeAmount()" onchange="bidUnit()" required>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="row">
+                <!-- 보증금 입찰 금액의 10퍼 -->
+                <label class="col-form-label col-3">보증금</label>
+                <input type="text" class="form-control-plaintext form-control col" id="guarantee_amount" name="deposit">
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <input type="button" class="btn btn-secondary" value="입찰하기" onclick="bidConfirmation()" >
+                </div>
+                <div class="col-2">
+                    <input type="reset" class="btn btn-secondary" value="초기화" onclick="location.reload()" >
+                </div>
+                <div class="col-2">
+                    <input type="button" class="btn btn-secondary" value="닫기" onclick="window.close()" >
+                </div>
+            </div>
+        </div>
+        <!-- <input type="button" value="입찰하기" onclick="placeBid()" id="bidButton" disabled> -->
+        <!-- 보증금 결제 로직 완료되면 사용하기 -->
     </form>
 </main>
 </body>

@@ -69,6 +69,18 @@ public class AuctionController {
    public String auctionMain(
 		   @RequestParam(required = false) Map<String, Object> map
 		   , Model model) {
+	   
+	   	int sId = 0;
+		
+	   	try {
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				sId = mPrincipalDetails.getMember().getMem_idx();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	   	model.addAttribute("sId", sId);
+	   
 	   List<Map<String, Object>> lc_category = categoryService.getLcList();
 	   model.addAttribute("lc_category",lc_category);
 	   
@@ -424,7 +436,8 @@ public class AuctionController {
     }
     
     // 입찰
-    @PostMapping("biddingPro")
+    @ResponseBody
+    @RequestMapping(value= "biddingPro", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
     public String insertBid(
     		@RequestParam Map<String, Object> map
     		, Model model
@@ -432,6 +445,8 @@ public class AuctionController {
     	
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		
+		Map<String, Object> resultData = new HashMap<String,Object>();
 		
 		// 구매자 회원번호
 		int sId = mPrincipalDetails.getMember().getMem_idx();
@@ -485,20 +500,25 @@ public class AuctionController {
 				// 입찰내역 삽입
 				bidService.insertBid(map);
 				
-				model.addAttribute("msg","입찰 성공!");
-				return "inc/close";
+				resultData.put("msg", "입찰 성공");
+				resultData.put("result", true);
+				JSONObject jsonObject = new JSONObject(resultData);
+				return jsonObject.toString();
 				
 			// 결제 실패
 			} else {
-				model.addAttribute("msg","결제 실패");
-				return "fail_back";
+				resultData.put("msg", "결제 실패");
+				resultData.put("result", false);
+				JSONObject jsonObject = new JSONObject(resultData);
+				return jsonObject.toString();
 			}
 		// 잔액 부족
 		} else {
-			model.addAttribute("msg","잔액이 부족합니다. 충전후 재시도 바랍니다.");
-			return "fail_back";
+			resultData.put("msg", "잔액이 부족합니다. 충전후 재시도 바랍니다.");
+			resultData.put("result", false);
+			JSONObject jsonObject = new JSONObject(resultData);
+			return jsonObject.toString();
 		}
-		
     }
     
     // 즉시 구매 (입출금 로직 필요)
