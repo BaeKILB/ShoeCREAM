@@ -515,3 +515,20 @@ font-size: 20px;
 .write_s span.fill {
 	text-shadow: 0 0 0 #FFA500;
 }
+
+.rev_txt_hobertext{
+	width:30%;
+	padding:15px 20px;
+    background-color:#444;
+    border-radius:5px;
+    color:#ffffff;
+    position:absolute;
+    display:none;
+    margin:auto;
+    word-break:break-all;
+    opacity:0.8;
+}
+
+.rev_txt:hover + .rev_txt_hobertext {
+  display: block;
+}

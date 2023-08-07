@@ -75,17 +75,31 @@ function bidUnit() {
 	function bidConfirmation(event) {
 	    // 사용자에게 확인을 받기 위한 컨펌창 표시
 	    var confirmBid = confirm("입찰을 진행하시겠습니까? 입찰 후에는 취소가 불가능합니다.");
-
+		//value
+		const bidPrice = parseFloat(document.getElementById("bid_price").value);
+		const auc_buy_instantly = ${auction.auc_buy_instantly };
+	    
+	    
 	    if (confirmBid) {
-	        // 폼을 서버로 제출합니다.
-	        document.getElementById("biddingForm").submit();
+	    	if(bidPrice == auc_buy_instantly){
+	    			alert("입력하신 입찰 금액과 즉시 구매가가 동일 하므로\n즉시 구매창으로 이동 합니다!")
+	    			window.open("buyingPopup?auction_idx="+${auction.auction_idx }, "즉시구매하기", "width=500, height=800, left=100, top=50");
+		    	}else{
+		        //보증금 결제 먼저 진행 하고 보증금 결제가 진행이 되면  폼 제출
+		        
+		        makeDepositPayment();
+		    		
+		    	}
+	        
+	    	}else{
+	    		
+	    	}
 	        
 	        // 현재 창 닫기
 	        closeCurrentWindow();
 
 	        // 부모 창 새로고침
 	        refreshParentWindow();
-	    }
 	}
 	
 	function closeCurrentWindow() {
@@ -99,6 +113,32 @@ function bidUnit() {
 	        window.opener.location.reload();
 	    }
 	}
+	
+	
+	//보증금 결제로직
+	function makeDepositPayment() {
+	    // 보증금 결제를 처리하기 위해 Ajax를 이용하여 서버와 통신합니다.
+	    // 여기서는 Ajax를 사용하는 방법만 보여주기 때문에 실제로는 서버와의 통신 로직을 추가해야 합니다.
+	    // 아래는 Ajax 예시 코드입니다. 실제 URL 및 데이터에 맞게 수정해야 합니다.
+
+	    $.ajax({
+	        url: "", // 보증금 결제를 처리하는 서버 URL
+	        type: "POST",
+	        data: {
+	            // 필요한 데이터를 추가하세요. 예를 들어, 입찰 정보, 결제 수단, 금액 등
+	        },
+	        success: function (response) {
+	            // 보증금 결제가 성공적으로 완료되었을 때 처리할 작업을 추가하세요.
+	            // 폼을 서버로 제출합니다.
+	            document.getElementById("biddingForm").submit();
+	        },
+	        error: function (error) {
+	            // 보증금 결제 실패 시 처리할 작업을 추가하세요.
+	            alert("보증금 결제가 실패하였습니다. 다시 시도해주세요.");
+	        }
+	    });
+
+	}	
 </script>
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 </head>
