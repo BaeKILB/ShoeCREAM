@@ -11,5 +11,9 @@
 		<typeAlias type="com.pj2.shoecream.vo.LCategory" alias="LCategory"/>
 		<typeAlias type="com.pj2.shoecream.vo.MCategory" alias="MCategory"/>
 		<typeAlias type="com.pj2.shoecream.vo.SCategory" alias="SCategory"/>
+		
+		<!-- bank 관련 -->
+		<typeAlias type="com.pj2.shoecream.vo.AuthInfoVO" alias="AuthInfo"/>
+		<typeAlias type="com.pj2.shoecream.vo.ResponseTokenVO" alias="Token"/>
 	</typeAliases>
 </configuration>

@@ -194,6 +194,12 @@
                      </div>
                   </div>
                </li>
+               <li>
+               	<label>사용자 계좌</label>
+               		<div class="form-input">
+               			   <input type="button" value="계좌인증" id="btnAccountAuth" class="form-control btn btn-dark" ">
+               		</div>
+               </li>
             </ul>
             <div class="btn_info_update cr">
 <!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
@@ -223,6 +229,46 @@
 <!-- // 		return true; -->
 <!-- // 	}   -->
 <!-- 	</script> -->
+
+<!-- =============================== -->
+<%-- 0807 경인 추가 --%>
+<%-- 계좌 인증 기능 추가 --%>
+<script type="text/javascript">
+	$(function() {
+		$("#btnAccountAuth").on("click", function() {
+			// 새 창에서 사용자 인증 페이지 요청
+			// => 입금이체 API 사용을 위해 scope 항목에 oob 추가
+// 			let requestUri = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?"
+// 					+ "response_type=code"
+// 					+ "&client_id=4066d795-aa6e-4720-9383-931d1f60d1a9"
+// 					+ "&redirect_uri=http://localhost:8089/fintech/callback"
+// 					+ "&scope=login inquiry transfer oob"
+// 					+ "&state=12345678901234567890123456789012"
+// 					+ "&auth_type=0";
+			let requestUri = "";
+// 			if("${access_token}" == null) {
+// 				requestUri = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?"
+// 						+ "response_type=code"
+// 						+ "&client_id=4066d795-aa6e-4720-9383-931d1f60d1a9"
+// 						+ "&redirect_uri=http://localhost:8088/shoecream/callback"
+// 						+ "&scope=login inquiry transfer oob"
+// 						+ "&state=12345678901234567890123456789012"
+// 						+ "&auth_type=0";
+// 			} else {
+				requestUri = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?"
+						+ "response_type=code"
+						+ "&client_id=4066d795-aa6e-4720-9383-931d1f60d1a9"
+						+ "&redirect_uri=http://localhost:8088/shoecream/callback"
+						+ "&scope=login inquiry transfer oob"
+						+ "&state=12345678901234567890123456789012"
+						+ "&auth_type=0";
+// 			}
+// 			let requestUri = "authorize"
+			window.open(requestUri, "authWindow", "width=600, height=800");
+		});
+	});
+</script>
+
 </body>
 
 </html>

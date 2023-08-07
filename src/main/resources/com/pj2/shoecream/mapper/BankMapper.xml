@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.BankMapper">
+	<!-- 토큰 정보 저장(id, access_token, refresh_token, scope, user_seq_no) -->
+	<insert id="insertToken">
+		INSERT
+			INTO mem_account
+			VALUES (
+				#{token.user_seq_no}
+				, #{idx}
+				, #{token.access_token}
+				, #{token.refresh_token}
+				, #{token.scope}
+				, 
+			);
+	</insert>
+	
+	<!-- 토큰 정보 조회 -->
+	<!-- mem_account 테이블에서 아이디가 일치하는 레코드 조회 -->
+	<select id="selectToken" resultType="Token">
+		SELECT *
+			FROM mem_account
+			WHERE
+				id = #{id}
+	</select>
+	
+	<!-- 토큰 정보 조회 - JOIN 구문 활용 -->
+	<!-- mem_account 테이블에서 아이디가 일치하는 레코드 조회 -->
+	<!-- 단, member 테이블에서 아이디가 일치하는 레코드의 계좌인증 상태가 'Y' 인 레코드만 조회 -->
+	<select id="selectTokenForBankAuth" resultType="Token">
+		SELECT 
+			t.id, t.access_token, t.user_seq_no
+		FROM mem_account AS t
+		LEFT JOIN member AS m
+		ON t.id = m.id
+		WHERE
+			m.id = #{id}
+			AND m.bank_auth_status = 'Y'
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
