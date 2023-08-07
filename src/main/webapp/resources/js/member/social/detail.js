@@ -18,6 +18,16 @@ function displayedAt(createdAt) {
   return `${Math.floor(years)}년 전`
 }
  
+ //(6) 글 삭제
+function deleteConfirm(){
+	
+	if(!confirm("삭제 하시겠습니까?")){
+		return false;
+	}else{
+		location.href="ImageDeletePro";
+	}
+}
+ 
  // 현재 로그인 한 유저의 mem_idx
  let principalId = $("#principalId").val();
  console.log("로그인한 유저 :", principalId)
@@ -103,7 +113,7 @@ function getStoryItem(image) {
 				    <button type="button" class="btn btn-light edit-btn" style=" margin-left: 380px; font-size: 12px;" onclick="window.location.href='/shoecream/social/${posts_idx}/update'">수정</button>
 				</div>
 		        <div>
-		            <button type="button" class="btn btn-light delete-btn" style=" font-size: 12px;">삭제</button>
+		            <button type="button" class="btn btn-light delete-btn" style=" font-size: 12px;" onclick="deleteConfirm();">삭제</button>
 		        </div>`;
 		        }
 		item+=`

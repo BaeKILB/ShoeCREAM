@@ -235,7 +235,7 @@ LEFT OUTER JOIN product_image pi
 	<!-- 더 많은 리뷰 목록 리스트 3개 -->
 	<select id="getMoreReviewListSmall" resultType="map" parameterType="com.pj2.shoecream.vo.JungGoNohVO">
 	SELECT jr.jung_rev_idx, jr.product_idx, jr.seller_idx, jr.writer_idx, jr.review_content, jr.review_star, jr.review_date
-         , mi.mem_nickname  
+         , mi.mem_nickname, mi.mem_profileImageUrl  
 	  FROM jung_reviews jr
 	  JOIN mem_info mi
 		ON jr.writer_idx = mi.mem_idx 

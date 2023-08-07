@@ -2,6 +2,7 @@ package com.pj2.shoecream.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -389,8 +390,6 @@ public class JunggoController {
 	public String writePro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
 
 
-		//String sId = "admin";
-		
 		// 로그인 되어있는지 확인하기
 		try {			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -402,13 +401,14 @@ public class JunggoController {
 			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
 			return "inc/fail_forward";
 		}
+		//접속중인 아이디 VO저장
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
 		jungGoNoh.setMem_idx(mem_idx);
 		
 		
-	//System.out.println(jungGoNoh);
+		// 파일관련=============================================================================================================================
 		
 		// 이클립스 프로젝트 상에 업로드 폴더(upload) 생성 필요 
 		// => 주의! 외부에서 접근하도록 하려면 resources 폴더 내에 upload 폴더 생성
@@ -467,6 +467,7 @@ public class JunggoController {
 		String fileext3 = filename3.substring(filename3.lastIndexOf(".") + 1);
 		String fileext4 = filename4.substring(filename3.lastIndexOf(".") + 1);
 		
+		//파일 확장명 제한
 		if((fileext1 == null || fileext1.length() == 0))
 		{	
 		}
@@ -590,8 +591,7 @@ public class JunggoController {
 		jungGoNoh.setProduct_info(product_info);
 		System.out.println("==========================================product_info" + product_info);
 		
-		// BoardService - registBoard() 메서드를 호출하여 게시물 등록 작업 요청
-		// => 파라미터 : JungGoNohVO 객체    리턴타입 : int(insertCount)
+		//---------------------------------product_idx 생성---------------------------------------
 	
 		jungGoNoh.setMem_idx(mem_idx);
 		LocalDateTime localDateTime = LocalDateTime.now(); // 시스템의 현재 날짜 및 시각 정보 리턴
@@ -602,6 +602,8 @@ public class JunggoController {
 		
 		jungGoNoh.setProduct_idx(Integer.toString(mem_idx) + localDateTime.format(dateTimeFormatter));
 		
+		//---------------------------------product_idx 생성---------------------------------------
+		//--------------------------------파일 및 물품 등록 작업 시작-----------------------------------------
 		
 		int insertProductImage = jungGoNohService.registProductImage(jungGoNoh);
 		int insertCountJung = jungGoNohService.registJungProduct(jungGoNoh);
@@ -657,10 +659,10 @@ public class JunggoController {
 	@GetMapping("productDetail")
 	public String productDetail(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
 
-		try {			
+		try {	
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는 사람(접속아이디 idx 세팅)
 				jungGoNoh.setBuyier_idx(buyier_idx);
 			}
 			catch(Exception e) {
@@ -672,17 +674,17 @@ public class JunggoController {
 		//int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
 		//jungGoNoh.setBuyier_idx(buyier_idx);
 		
-			
-		JungGoNohVO product = jungGoNohService.getProduct(product_idx);
+		//상품 정보, 찜정보, 판매자 정보===========================================	
+		JungGoNohVO product = jungGoNohService.getProduct(product_idx); //상품정보
 	
 		System.out.println("+++++++++++++++++++++++jungGoNoh" + jungGoNoh);
-		JungGoNohVO dibs = jungGoNohService.getDibs(jungGoNoh);
+		JungGoNohVO dibs = jungGoNohService.getDibs(jungGoNoh); //찜정보
 		//JungGoNohVO reports = jungGoNohService.getReports(jungGoNoh);
 		
 		int mem_idx = product.getMem_idx();
-		System.out.println("+++++++++++++++++++++++mem_idx" + mem_idx);
+		System.out.println("+++++++++++++++++++++++mem_idx" + mem_idx); //더 많은 정보 가져올 판매자 idx 세팅
 		
-		
+		//판매자 관련 리뷰, 상품 정보 더 가져오기=====================================================
 		List<JungGoNohVO> moreProductListSmall =jungGoNohService.moreProductListSmall(mem_idx);
 		
 		List<JungGoNohVO> moreReviewListSmall =jungGoNohService.moreReviewListSmall(mem_idx);
@@ -698,7 +700,7 @@ public class JunggoController {
 	    return "junggo/product_detail";
 	}
 
-	//------------------ 찜 입력---------------------
+	//------------------ 찜 입력--------------------------------------------------------------------------
 	
 	@PostMapping("dibsPro")
 	public String dibsPro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
@@ -716,23 +718,22 @@ public class JunggoController {
 			return "inc/fail_forward";
 		}
 		
+		//==================================찜 해제, 등록 구현=====================================================
 		String product_idx = jungGoNoh.getProduct_idx();
 		int countReadCount =0;
 		int countDibs = 0;
 		if(jungGoNoh.getFavorite_check() =="Y" || jungGoNoh.getFavorite_check().equals("Y"))
-		{
+		{	//해제
 			countDibs = jungGoNohService.removeDibs(jungGoNoh);
 			countReadCount =jungGoNohService.removeReadCount(jungGoNoh);
 		}
 		else
-		{	
+		{	//등록
 			countDibs = jungGoNohService.registDibs(jungGoNoh);
 			countReadCount =jungGoNohService.removeReadCount(jungGoNoh);
 		}
 		
-		// 게시물 등록 작업 요청 결과 판별
-		// => 성공 시 업로드 파일을 실제 디렉토리에 이동시킨 후 BoardList 서블릿 리다이렉트
-		// => 실패 시 "글 쓰기 실패!" 메세지 출력 후 이전페이지 돌아가기 처리
+		//작업 요청 결과 판별
 		if(countDibs > 0 && countReadCount > 0) 
 		{ // 성공
 			try {
@@ -742,7 +743,7 @@ public class JunggoController {
 				e.printStackTrace();
 			}
 			
-			// 글쓰기 작업 성공 시 글목록(BoardList)으로 리다이렉트
+			// 글쓰기 작업 성공 시 리다이렉트
 			return "redirect:/productDetail?product_idx="+product_idx; 
 		} else { // 실패
 			model.addAttribute("msg", "글 쓰기 실패!");
@@ -758,9 +759,9 @@ public class JunggoController {
 	@GetMapping("productDelete")
 	public String delete(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
 	
-		if(mem_idx == null)
+		if(mem_idx == null) //작성자 정보 유무 확인
 		{
-			if(buyier_idx == null)
+			if(buyier_idx == null) //로그인 한 아이디 정보 유무 확인
 			{
 				model.addAttribute("msg", "로그인 해주세요!");
 				return "inc/fail_back";
@@ -773,7 +774,7 @@ public class JunggoController {
 		}
 		else
 		{
-			if(mem_idx.equals(buyier_idx))
+			if(mem_idx.equals(buyier_idx))// 작성자와 삭제 신청자 동일 시 삭제 시작
 			{
 				int deleteCount = jungGoNohService.removeProduct(product_idx);
 				
@@ -820,10 +821,12 @@ public class JunggoController {
 			model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
 			return "inc/fail_back";
 		}
+		// 필요한 값 세팅
 		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
 		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
 		jungGoNoh.setProduct_idx(product_idx);			
 		
+		// 신고 시 현재 게시글에 관한 정보 수집
 		JungGoNohVO jungGoNohReport = jungGoNohService.getProduct(product_idx);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -848,16 +851,18 @@ public class JunggoController {
 			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
 			return "inc/fail_forward";
 		}
+		// 신고 신청자 idx 가져옴
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int reporter_idx = mPrincipalDetails.getMember().getMem_idx();
 
+		//필요한 기초정보 불러올 idx 세팅
 		jungGoNoh.setBuyier_idx(reporter_idx);
 		jungGoNoh.setProduct_idx(product_idx);
 		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
 		//System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
 		
-		//입력 전 중복 조회
+		//입력 전 중복신청 사항이 있는지 조회
 		String ifReport = jungGoNohService.getReport(jungGoNoh);
 		model.addAttribute("ifReport",ifReport);
 		//System.out.println("&&&&&&&&&&jungGoNoh?"+jungGoNoh);
@@ -874,6 +879,7 @@ public class JunggoController {
 					} 
 				else { //조회 내역이 있을때
 						model.addAttribute("msg", "이미 해당 건에 대해 신고 신청하신 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+						return "inc/fail_back";
 				}
 		
 		
@@ -902,12 +908,15 @@ public class JunggoController {
 			return "inc/fail_back";
 		}
 		
+		//관련 idx 세팅
 		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
 	
 		jungGoNoh.setProduct_idx(product_idx);
 		int idx1 = jungGoNoh.getMem_idx();
 		String idx2 =jungGoNoh.getProduct_idx();
 		System.out.println("#####################################################"+ idx1 + "@" + idx2);
+		
+		// 관련 신고사항 정보리스트 불러옴
 		List<JungGoNohVO> moreReportListSmall =jungGoNohService.moreReportListSmall(jungGoNoh);
 		JungGoNohVO product = jungGoNohService.getProduct(product_idx);
 		
@@ -925,7 +934,10 @@ public class JunggoController {
 	}
 	//-----------------------리뷰 작성 폼 이동-------------------------
 	@GetMapping("registJReviewForm")
-	public String registReviewForm(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh){
+	public String registReviewForm(@RequestParam String product_idx, 
+			@RequestParam(value="mem_idx", required=false) String mem_idx, 
+			@RequestParam(value="buyier_idx", required=false) String buyier_idx, 
+			HttpSession session, Model model, JungGoNohVO jungGoNoh){
 		
 		try {			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -943,10 +955,13 @@ public class JunggoController {
 			model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
 			return "inc/fail_back";
 		}
+		
+		//관련 idx 세팅
 		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
 		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
 		jungGoNoh.setProduct_idx(product_idx);			
 		
+		//리뷰 작성할 상품 정보 세팅
 		JungGoNohVO jungGoNohReview = jungGoNohService.getProduct(product_idx);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -972,15 +987,19 @@ public class JunggoController {
 				model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
 				return "inc/fail_forward";
 			}
+			
+			//리뷰 작성자 idx 세팅
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 			int writer_idx = mPrincipalDetails.getMember().getMem_idx();
-
+			
+			//필요 idx 세팅
 			jungGoNoh.setBuyier_idx(writer_idx);
 			jungGoNoh.setProduct_idx(product_idx);
 			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
 			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
 			
+			// 별점 미입력시 재입력하도록
 			int review_star = jungGoNoh.getReview_star();
 			
 			if(review_star == 0) {
@@ -988,24 +1007,26 @@ public class JunggoController {
 				return "inc/fail_back";
 			} 			
 			
-			//입력 전 중복 조회
+			//입력 전 동일 건에 대한 리뷰 중복 조회
 			String ifReview = jungGoNohService.getReview(jungGoNoh);
 			model.addAttribute("ifReview",ifReview);
-			//System.out.println("&&&&&&&&&&jungGoNoh?"+jungGoNoh);
-			//System.out.println("&&&&&&&&&&ifReport?"+ifReport+"끝");
+			System.out.println("&&&&&&&&&&jungGoNoh?"+jungGoNoh);
+			System.out.println("&&&&&&&&&&ifReview?"+ifReview+"끝");
 			if(ifReview == null) { //조회 내역이 없을 때
 			
 					//입력 작업 시작	
-				int insertReview = jungGoNohService.registReview(jungGoNoh);
+					int insertReview = jungGoNohService.registReview(jungGoNoh);
 				
 					if(insertReview < 0) {
 							model.addAttribute("msg", "신청 실패");
 							return "inc/fail_back";
-							} 	
-						} 
-					else { //조회 내역이 있을때
+						} 	
+				
+				}  else 
+					{ //조회 내역이 있을때
+					
 							model.addAttribute("msg", "이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
-							System.out.println("^^^^^^^^^이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+							return "inc/fail_back";
 					}
 
 			
@@ -1035,10 +1056,15 @@ public class JunggoController {
 				model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
 				return "inc/fail_back";
 			}
+			
+			//관련 idx 세팅
 			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
 			jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
 			jungGoNoh.setProduct_idx(product_idx);			
 			
+			
+			
+			//수정할 리뷰 데이터 수집
 			JungGoNohVO jungGoNohReview = jungGoNohService.getReview2(jungGoNoh);
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -1079,14 +1105,14 @@ public class JunggoController {
 			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
 			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
 			
-			
+			//별점 미입력시 재입력
 			int review_star = jungGoNoh.getReview_star();
 			
 			if(review_star == 0) {
 				model.addAttribute("msg", "별점을 입력해주세요");
 				return "inc/fail_back";
 			} 			
-			
+			// 기간 설정을 위한 현재 시간 저장
 	        LocalDate now = LocalDate.now();
 	        // 포맷 정의
 	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -1099,6 +1125,7 @@ public class JunggoController {
 			System.out.println("reviewDateFormat!!!!!!!!!!!!!!!!!!"+reviewDateFormat);
 	        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 	        
+	        //날짜 차이 구하기
 	        try {
 				Date a_parseDate = format.parse(formatedNow);
 				Date b_parseDate = format.parse(reviewDateFormat);
@@ -1118,9 +1145,10 @@ public class JunggoController {
 				System.out.println("일 : "+resultTime/(24*60*60*1000));
 				
 				long resultTimeDay = resultTime/(24*60*60*1000);
-				
+			
+				// 날짜 차이 계산 후 리뷰 수정	
 				if(resultTimeDay < 3 )
-				{
+				{ // 리뷰 수정
 					int ModifySuccess = jungGoNohService.modifyReview(jungGoNoh);
 					
 					if(ModifySuccess < 0) {
@@ -1130,7 +1158,7 @@ public class JunggoController {
 				}
 				else
 				{
-					model.addAttribute("msg", "3일 이상 리뷰 X");
+					model.addAttribute("msg", "리뷰 수정 기간(3일)이 경과하였습니다.");
 					return "inc/fail_back";
 				}
 				
@@ -1152,7 +1180,7 @@ public class JunggoController {
 		@GetMapping("reviewDelete")
 		public String reviewDelete(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
 		
-			
+		
 			int countReview = 0;
 			countReview = jungGoNohService.deleteReview(jungGoNoh);
 			

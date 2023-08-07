@@ -35,18 +35,35 @@ public interface SocialImageMapper {
 	// 소셜 디테일 정보 셀렉
 	List<Map<String, Object>> selectImageDetail(int posts_idx);
 	
+	// 댓글 등록
 	void insertComment(SocialCommentVO socialCommentVO);
 	
    // 댓글 쓸때 프로필 이미지 경로
     String findProfileImageUrlByMemberId(int mem_idx);
 	
+    // 댓글 달 때 ref 초기화
 	int updateComment_ref(SocialCommentVO socialCommentVO);
-
+	
+	// 댓글 등록 시 해당 프로필 이미지 셀렉
 	List<SocialCommentVO> selectCommentsByPostId(int posts_idx);
-
+	
+	// 댓글 삭제
 	void deleteCommentById(int comment_idx);
-
+	
+	// 소셜 디테일 수정 이미지 삭제
 	int deletePostsImage(Map<String, Object> map);
+	
+	// 소셜 디테일 수정
+	int updatePosts(SocialVO socialVO);
+	
+	// 소셜 디테일 수정 이미지 없을때 수정
+	int updatePostsNoImage(SocialVO socialVO);
+	
+	// 소셜 포스트 삭제
+	int deletePost(int posts_idx);
+	
+	// 소셜 포스트 삭제할 이미지 셀렉
+	String selectPostsImage(int posts_idx);
 	
 
 

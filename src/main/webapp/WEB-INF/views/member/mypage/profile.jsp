@@ -87,7 +87,7 @@
 						                    </div>
 						                    <div class="col-md-10 d-flex flex-column">
 						                        <div class="profile_detail">
-						                            <strong class="name">ract0q</strong>
+						                            <strong class="name">${member.mem_nickname }</strong>
 						                        </div>
 						                        <div class="profile_btn_box mt-auto">
 						                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('profileImageFile').click()">이미지 변경</button>

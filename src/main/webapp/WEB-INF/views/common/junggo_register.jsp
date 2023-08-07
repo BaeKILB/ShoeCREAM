@@ -236,8 +236,8 @@
 			<div class="brand_box">
 				<label> <span>브랜드</span> 
 				<input type="text" class="brand" name="product_brand" /> 
-				<select name="inputBrand" onchange="sellectBrand(this.value)" required="required">
-						<option value="" selected="selected">기타(직접입력)</option>
+				<select name="inputBrand" onchange="sellectBrand(this.value)">
+						<option value="">기타(직접입력)</option>
 						<option value="ADIDAS">ADIDAS</option>
 						<option value="ASICS">ASICS</option>
 						<option value="BALENCIAGA">BALENCIAGA</option>
@@ -251,6 +251,7 @@
 						<option value="PUMA">PUMA</option>
 						<option value="REEBOK">REEBOK</option>
 						<option value="VANS">VANS</option>
+						
 				</select>
 				</label>
 			</div>

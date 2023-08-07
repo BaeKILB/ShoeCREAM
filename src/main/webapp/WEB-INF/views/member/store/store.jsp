@@ -114,7 +114,7 @@ function payAuction(idx, price, id, title){
                 <div class="col-md-2">
                     <div class="profile_thumb">
                         <input type="file" id="profileImageFile" name="profileImageFile" accept="image/jpeg,image/png" hidden="hidden" onchange="handleImageChange(event)">
-                        <img src="${pageContext.request.contextPath}/social//upload/${member.mem_profileImageUrl}" alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
+                        <img src="${pageContext.request.contextPath}/resources/upload/profile/${principal.member.mem_profileImageUrl}" alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex flex-column">
@@ -168,7 +168,7 @@ function payAuction(idx, price, id, title){
 						내 경매 
 					</div>
 					<div class="col my_store_menus auctionbid_menu">
-						경매 낙찰내역 
+						경매 참가 내역 
 					</div>
 					<div class="col my_store_menus auctionLike_menu">
 						경매 찜 
@@ -529,11 +529,11 @@ function payAuction(idx, price, id, title){
 				</div>
 				<!-- 내 경매 끝 -->
 
-				<!-- 경매낙찰내역 시작 -->
+				<!-- 경매참가내역 시작 -->
 					<div id="auctionbid_menu_area" class="common_menu">
 					<div>
 						<p>
-							경매 낙찰 내역 
+							경매 낙찰/즉시구매 내역 
 						</p>
 					</div>
 					<div>

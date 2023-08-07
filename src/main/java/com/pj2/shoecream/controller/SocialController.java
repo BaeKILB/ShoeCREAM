@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -145,17 +148,45 @@ public class SocialController {
 	}
 	
 	
-	// 소셜 디테일 사진 삭제
+	// 소셜 디테일 수정
 	@PostMapping("ImageUpdatePro")
-	public String ImageUpdatePro(SocialVO socialVO, Model model) {
-		
-		
-//        System.out.println("회원정보성공해서 member에 뭐가 들었음 ? " + mPrincipalDetails.getMember());
-//        model.addAttribute("msg", "회원 정보 수정 성공!");
-//        model.addAttribute("targetURL", "mypage/update");
-
-        return "member/success_forward";
+	public String ImageUpdatePro(@ModelAttribute SocialVO socialVO, HttpSession session, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        socialVO.setMem_idx(mPrincipalDetails.getMember().getMem_idx()); // 로그인한 mem_idx를 SocialVO에 설정
+        
+        socialImageService.ImageUpdate(socialVO, mPrincipalDetails, session, model);
+		return "redirect:/social/"+mPrincipalDetails.getMember().getMem_idx();
 	}
+	
+	// 소셜 디테일 삭제
+	@GetMapping("social/{posts_idx}/ImageDeletePro")
+	public String ImageDeletePro(@PathVariable int posts_idx, String posts_image1, HttpSession session, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+        // 해당 포스트 이미지 셀렉
+        String postsImage = socialImageService.getPostImage(posts_idx);
+        // 포스트 삭제
+        int deleteCount = socialImageService.postDelete(posts_idx);
+       
+        if(deleteCount > 0) {
+		    String uploadDir = "/resources/upload/social"; 
+		    String saveDir = session.getServletContext().getRealPath(uploadDir);
+		    
+		    try {
+		        Path path = Paths.get(saveDir + "/" + postsImage);
+		        System.out.println("삭제할 파일 경로" + path);
+		        Files.deleteIfExists(path);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+    	} else {
+    		model.addAttribute("msg","포스트 삭제 실패");
+    		return "member/fail_back";
+    	}
+		return "redirect:/social/"+mPrincipalDetails.getMember().getMem_idx();
+    }
+        
 //	=======================social-image========================
 	
 	// 소셜 포스트 페이지
@@ -167,7 +198,6 @@ public class SocialController {
 	// 소셜 게시물 업로드
 	@PostMapping("ImageUploadPro")
 	public String imageUpload(SocialVO socialVO, @AuthenticationPrincipal PrincipalDetails principalDetails, HttpSession session, Model model) {
-		// 서비스 호출
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
         mPrincipalDetails.getMember().getMem_idx();
