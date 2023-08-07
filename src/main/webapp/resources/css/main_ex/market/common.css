@@ -301,7 +301,7 @@ header, #bot_header_border {
 	width: 445px;
 	height: 36px;
 	padding: 18px 15px;
-	border: 2px solid #0d41fd;
+	border: 2px solid rgb(0, 0, 0);
 }
 
 #top_searh>img {

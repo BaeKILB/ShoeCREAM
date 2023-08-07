@@ -11,7 +11,7 @@
     <result column="product_title" property="productTitle"/>
   </resultMap>
 
-
+	<!-- 내 중고 판매 -->
 	<select id="selectProductSellList" resultMap="productDetailsResultMap">
 	  SELECT 
 	    mi.*,
