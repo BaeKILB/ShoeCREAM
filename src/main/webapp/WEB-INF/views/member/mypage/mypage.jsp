@@ -210,7 +210,7 @@ function payAuction(idx, price, id, title){
 						내 경매 
 					</div>
 					<div class="col my_store_menus auctionbid_menu">
-						경매 낙찰내역 
+						경매 낙찰/즉시구매 내역 
 					</div>
 					<div class="col my_store_menus auctionLike_menu">
 						경매 찜 

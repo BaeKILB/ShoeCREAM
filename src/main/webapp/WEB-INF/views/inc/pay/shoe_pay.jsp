@@ -17,9 +17,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <!-- 아임포트 -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
-<script type="text/javascript">
-	
-</script>
+
 </head>
 <body>
 	
@@ -52,10 +50,15 @@
 				<input class="res_p"  type="button" value="취소" >
 				<input class="res_p"  type="button" value="충전" >
 				<c:if test="${member.charge_point >= map.product_price }">				
-					<input class="res_p"  type="button" value="결제"  onclick="startPay()" >
+					<input class="res_p"  type="button" value="결제"  onclick="payWithPoint()" >
 				</c:if>
 			</div>
 		</div>
 	</fieldset>
+	
+	<script src="${pageContext.request.contextPath }/resources/js/inc/pay/shoe_pay.js">
+	</script>
+	
+	
 </body>
 </html>

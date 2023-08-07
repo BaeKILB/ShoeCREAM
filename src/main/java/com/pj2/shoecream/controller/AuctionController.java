@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
@@ -36,8 +40,10 @@ import com.pj2.shoecream.service.AuctionService;
 import com.pj2.shoecream.service.BidService;
 import com.pj2.shoecream.service.CategoryService;
 import com.pj2.shoecream.service.ImageService;
+import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.AuctionVO;
+import com.pj2.shoecream.vo.JungGoNohVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.ProductImageVO;
 
@@ -54,6 +60,8 @@ public class AuctionController {
    private CategoryService categoryService;
    @Autowired 
    private PayService payService;
+   @Autowired
+   private JungGoNohService jungGoNohService;
    
    private static final Logger logger = LoggerFactory.getLogger(AuctionController.class);
    
@@ -560,59 +568,7 @@ public class AuctionController {
 		}
     }
     
-    
-    //0804이온 즉시구매
-    @PostMapping("buyingPro2")
-    public String insertBuying2(
-    		@RequestParam Map<String, Object> map
-    		, Model model
-    		, HttpSession session) {
-    	
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    	PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-    	// 구매자 회원번호
-    	int sId = mPrincipalDetails.getMember().getMem_idx();
-    	map.put("mem_idx", sId);
-    	
-    	// 상품번호
-    	String auction_idx = String.valueOf(map.get("auction_idx"));
-    	
-    	// 상품정보
-    	Map<String,Object> auction = service.getAuction(auction_idx);
-    	int auc_buy_instantly = Integer.parseInt(String.valueOf(auction.get("auc_buy_instantly")));
-    	map.put("auc_buy_instantly", auc_buy_instantly); // 즉시구매금액 전달
-    	
-    	// 구매자 정보
-    	MemberVO buyer = service.getMember(sId);
-    	
-    	// 판매자 정보
-    	MemberVO seller = service.getMember(Integer.parseInt(String.valueOf(auction.get("mem_idx"))));
-    	
-    	//0804 이온 즉시구매 로직
-		//아직 상품이 진행중인 경우에만 가능
-		//즉시 구매자의 포인트 잔고가 있는 경우에만 가능 없다면 메세지
-		//즉시구매자에게선 포인트 - 
-		//판매자에게도 포인트 +
-		// admin 계좌에는 그만큼의 포인트 
-		//기존 입찰자들에겐 포인트 환급을 해줘야 한다 + admin에서 -
-		
-		
-		if(buyer.getMem_balance() > auc_buy_instantly ) {
-			//결제 진행 
-			
-		
-			
-			//입찰자가 있는 경우 유찰로 상태 변경 및 환불
-			
-			
-			
-		}else {
-			model.addAttribute("msg","잔액이 부족합니다.\n충전후 재시도 바랍니다.");
-		}
-		
-     return "";
-    }
-    
+
     @ResponseBody
     @RequestMapping(value= "dibsEvent", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
     public String dibsEvent(
@@ -655,6 +611,261 @@ public class AuctionController {
     	return jsonArray.toString();
     }
 
+    
+	//-----------------------리뷰 작성 폼 이동-------------------------
+	@GetMapping("AucRegistReviewForm")
+	public String registReviewForm(@RequestParam String auction_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh){
+		
+		try {			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		}
+		catch(Exception e) {
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return "inc/fail_forward";
+		}
+		
+		String product_idx = auction_idx;
+		
+		// product_idx 는 무조건 받아와야함
+		if(product_idx == null) {
+			model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
+			return "inc/fail_back";
+		}
+		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
+		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
+		jungGoNoh.setProduct_idx(product_idx);			
+		
+		JungGoNohVO jungGoNohReview = jungGoNohService.getProduct(product_idx);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		String buyier_nickname = mPrincipalDetails.getMember().getMem_nickname();
+		jungGoNohReview.setBuyier_nickname(buyier_nickname);
+		model.addAttribute("jungGoNohReview", jungGoNohReview);
+		
+
+		return "junggo/review_write_form";
+	}
+	
+	//-----------------------리뷰 작성----------------------------------
+	@PostMapping("AucRegistReviewPro")
+	public String registJReviewPro(@RequestParam String auction_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
+			JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
+		try {			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		}
+		catch(Exception e) {
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return "inc/fail_forward";
+		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int writer_idx = mPrincipalDetails.getMember().getMem_idx();
+		
+		String product_idx = auction_idx;
+		
+		jungGoNoh.setBuyier_idx(writer_idx);
+		jungGoNoh.setProduct_idx(product_idx);
+		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
+		
+		int review_star = jungGoNoh.getReview_star();
+		
+		if(review_star == 0) {
+			model.addAttribute("msg", "별점을 입력해주세요");
+			return "inc/fail_back";
+		} 			
+		
+		//입력 전 중복 조회
+		String ifReview = jungGoNohService.getReview(jungGoNoh);
+		model.addAttribute("ifReview",ifReview);
+		//System.out.println("&&&&&&&&&&jungGoNoh?"+jungGoNoh);
+		//System.out.println("&&&&&&&&&&ifReport?"+ifReport+"끝");
+		if(ifReview == null) { //조회 내역이 없을 때
+		
+				//입력 작업 시작	
+			int insertReview = jungGoNohService.registReview(jungGoNoh);
+			
+				if(insertReview < 0) {
+						model.addAttribute("msg", "신청 실패");
+						return "inc/fail_back";
+						} 	
+					} 
+				else { //조회 내역이 있을때
+						model.addAttribute("msg", "이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+						System.out.println("^^^^^^^^^이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+				}
+
+		
+		return "home";
+	}
+
+
+//-------------------------- 리뷰 수정 폼 이동-------------------
+
+	@GetMapping("AucModifyReviewForm")
+	//public String modifyReviewForm(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh){
+	public String modifyReviewForm(@RequestParam String auction_idx, @RequestParam String mem_idx, @RequestParam String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh){
+		
+		try {			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		}
+		catch(Exception e) {
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return "inc/fail_forward";
+		}
+		
+		String product_idx = auction_idx;
+		
+		// product_idx 는 무조건 받아와야함
+		if(product_idx == null) {
+			model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
+			return "inc/fail_back";
+		}
+		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
+		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
+		jungGoNoh.setProduct_idx(product_idx);			
+		
+		JungGoNohVO jungGoNohReview = jungGoNohService.getReview2(jungGoNoh);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		String buyier_nickname = mPrincipalDetails.getMember().getMem_nickname();
+		jungGoNohReview.setBuyier_nickname(buyier_nickname);
+		
+		System.out.println("XXXXXXXXXXXXXXXX"+jungGoNohReview);
+		
+		model.addAttribute("jungGoNohReview", jungGoNohReview);
+		
+		return "auction/review_modify_form";
+	}
+	
+	
+	
+	
+//-------------------------리뷰 수정-----------------------------
+	
+	@PostMapping("AucModifyReviewPro")
+	public String modifyReviewPro(@RequestParam String auction_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
+			JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
+		try {			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		}
+		catch(Exception e) {
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return "inc/fail_forward";
+		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int writer_idx = mPrincipalDetails.getMember().getMem_idx();
+
+		String product_idx = auction_idx;
+		
+		jungGoNoh.setBuyier_idx(writer_idx);
+		jungGoNoh.setProduct_idx(product_idx);
+		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
+		
+		
+		int review_star = jungGoNoh.getReview_star();
+		
+		if(review_star == 0) {
+			model.addAttribute("msg", "별점을 입력해주세요");
+			return "inc/fail_back";
+		} 			
+		
+        LocalDate now = LocalDate.now();
+        // 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        
+        // 포맷 적용
+        String formatedNow = now.format(formatter);
+        System.out.println("formatedNow!!!!!!!!!!!!!!!!!!"+formatedNow);
+		java.sql.Timestamp review_date = jungGoNoh.getReview_date();
+		String reviewDateFormat = new SimpleDateFormat("yyyy/MM/dd").format(review_date);
+		System.out.println("reviewDateFormat!!!!!!!!!!!!!!!!!!"+reviewDateFormat);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        
+        try {
+			Date a_parseDate = format.parse(formatedNow);
+			Date b_parseDate = format.parse(reviewDateFormat);
+			
+			System.out.println("a_parseDate!!!!!!!!!!!!!!!!!!" + a_parseDate);
+			System.out.println("b_parseDate!!!!!!!!!!!!!!!!!!" + b_parseDate);
+			System.out.println("a_parseDate.getTime()!!!!!!!!!!!!!!!!!!" + a_parseDate.getTime());
+			System.out.println("b_parseDate.getTime()!!!!!!!!!!!!!!!!!!" + b_parseDate.getTime());
+			
+			long resultTime = b_parseDate.getTime() - a_parseDate.getTime();
+			
+			System.out.println("resultTime !!!!!!!!!!!!!!!!!!: "+resultTime);
+			
+			System.out.println("초 : "+resultTime/1000);
+			System.out.println("분 : "+resultTime/(60*1000));
+			System.out.println("시 : "+resultTime/(60*60*1000));
+			System.out.println("일 : "+resultTime/(24*60*60*1000));
+			
+			long resultTimeDay = resultTime/(24*60*60*1000);
+			
+			if(resultTimeDay < 3 )
+			{
+				int ModifySuccess = jungGoNohService.modifyReview(jungGoNoh);
+				
+				if(ModifySuccess < 0) {
+						model.addAttribute("msg", "신청 실패");
+						return "inc/fail_back";
+				} 	
+			}
+			else
+			{
+				model.addAttribute("msg", "3일 이상 리뷰 X");
+				return "inc/fail_back";
+			}
+			
+			
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+				
+		
+		return "home";
+	}
+	
+	//-------------------------리뷰 삭제-----------------------------
+	@GetMapping("AucReviewDelete")
+	public String reviewDelete(@RequestParam String auction_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+	
+		
+		int countReview = 0;
+		countReview = jungGoNohService.deleteReview(jungGoNoh);
+		
+		
+		if(countReview > 0) 
+		{ // 성공
+			
+			// 글쓰기 작업 성공 시 글목록(BoardList)으로 리다이렉트
+			return "redirect:/productDetail?auction_idx="+auction_idx; 
+		} else { // 실패
+			model.addAttribute("msg", "글 쓰기 실패!");
+			return "inc/fail_back";
+		}
+	}
+		
+		
     
     
     
