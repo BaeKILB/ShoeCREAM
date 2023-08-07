@@ -41,7 +41,7 @@
 }
 
 .find_tab.off {
-	border-bottom: 4px solid #ff6600;
+	border-bottom: 4px solid rgb(0, 0, 0);
 	font-weight:600;
 }
 
@@ -98,7 +98,7 @@
     font-size: 20px;
     color: #fff;
     text-align: center;
-    background: #ff6600;
+    background: rgb(0, 0, 0);
     border-radius: 5px;
 }
 

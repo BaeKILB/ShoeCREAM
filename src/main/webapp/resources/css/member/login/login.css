@@ -175,7 +175,7 @@ input[type=checkbox] {
 	color: #fff;
 	text-align: center;
 	line-height: 70px;
-	background: rgb(246, 95, 19);
+	background: rgb(0, 0, 0);
 	border-radius: 5px;
 	padding: 0 30px;
 	transition: all 0.4s;

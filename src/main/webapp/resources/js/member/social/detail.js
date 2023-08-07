@@ -18,7 +18,7 @@ function displayedAt(createdAt) {
   return `${Math.floor(years)}년 전`
 }
  
- //(6) 글 삭제
+ // 글 삭제
 function deleteConfirm(){
 	
 	if(!confirm("삭제 하시겠습니까?")){
@@ -109,12 +109,16 @@ function getStoryItem(image) {
 			</div>`;
 				if (principalId == image.mem_idx) {
 					item += 
-        		`<div>
-				    <button type="button" class="btn btn-light edit-btn" style=" margin-left: 380px; font-size: 12px;" onclick="window.location.href='/shoecream/social/${posts_idx}/update'">수정</button>
-				</div>
-		        <div>
-		            <button type="button" class="btn btn-light delete-btn" style=" font-size: 12px;" onclick="deleteConfirm();">삭제</button>
-		        </div>`;
+        		`    <div class="right-part" style="display: flex; flex-grow: 1;">
+    <div class="edit-delete-buttons">
+        <div>
+            <button type="button" class="btn btn-light edit-btn" style="font-size: 12px;" onclick="window.location.href='/shoecream/social/1/update'">수정</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-light delete-btn" style=" font-size: 12px;" onclick="deleteConfirm();">삭제</button>
+        </div>
+    </div>
+    </div>`;
 		        }
 		item+=`
 		    </div>

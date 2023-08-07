@@ -229,7 +229,7 @@
 }
 
 .profile-image {
-	border: 2px solid #8a3ab8;
+/* 	border: 2px solid rgb(192, 192, 192); */
 }
 
 #reply {
@@ -272,4 +272,11 @@
 .small-header .profile-image {
 	width: 28.63636px;
 	height: 28.63636px;
+}
+
+
+/* 수정, 삭제 버튼을 오른쪽으로 정렬 */
+.sl__item__header .edit-delete-buttons {
+    display: flex;
+    margin-left: auto;
 }
