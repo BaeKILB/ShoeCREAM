@@ -362,8 +362,8 @@
 											<!-- 별점 구현 초보 -->
 										</span>
 									</span>
-							
 									<span class="rev_txt">${moreReviewListSmall.review_content}</span>
+									<span class="rev_txt_hobertext">${moreReviewListSmall.review_content}</span>
 								</li>
 							</ul>
 							</div>
