@@ -25,12 +25,10 @@ ul, li {
 		margin-left: 0;
 	}
 }
-
 .admin_tit {
 	font-weight: 700;
 	font-size: 1.875rem;
 }
-
 .tit_line {
 	display: block;
     width: 100%;
@@ -38,9 +36,12 @@ ul, li {
     background: #dfe3e8;
     margin: 1.4rem 0;
 }
-
 textarea{
 	resize: none;
 	outline: 0;
 	
+}
+table, tbody, td, tfoot, th, thead, tr {
+	border-spacing: 0px;
+    border-color: inherit;
 }

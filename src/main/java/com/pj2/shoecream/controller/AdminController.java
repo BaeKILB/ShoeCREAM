@@ -78,6 +78,11 @@ public class AdminController {
 		// 크림 상품 수 세기
 		int creamCount = service.getCreamCount();
 		model.addAttribute("creamCount",creamCount);
+		
+		// 일대일 내역 조회
+		int listLimit = 5;
+		List<InquiryBoardVO> qstList = service.getMainQstBoard(listLimit);
+		model.addAttribute("qstList", qstList);
 
 		return "admin/admin_main";
 	}
@@ -213,6 +218,8 @@ public class AdminController {
 		model.addAttribute("inquiry", inquiry);
 		
 		InquiryBoardVO inquiryAnswer = service.selectQstAns(qst_idx);
+		System.out.println("■■■■■■■■■■■■■■■■■" + qst_idx);
+		System.out.println("■■■■■■■■■■■■■■■■■" + inquiryAnswer);
 		model.addAttribute("inquiryAnswer", inquiryAnswer);
 		
 		return "admin/admin_question_modify";
@@ -254,6 +261,7 @@ public class AdminController {
 		 
 		return isDeleteString;
 	}
+	
 	
 	
 	

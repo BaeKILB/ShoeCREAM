@@ -73,6 +73,10 @@ public class AdminService {
 	public int deleteUpdateQstAns(int qst_idx) {
 		return mapper.deleteUpdateQstAns(qst_idx);
 	}
+	// 일대일 내역 조회
+	public List<InquiryBoardVO> getMainQstBoard(int listLimit) {
+		return mapper.getMainQstBoard(listLimit);
+	}
 	
 	// --------------- 민진 ---------------------------
 	//중고상품 목록 띄우기
@@ -163,12 +167,12 @@ public class AdminService {
 	public int getAuctionCount() {
 		return mapper.selectAuctionCount();
 	}
-
 	
 	// 크림 상품 수 세기
 	public int getCreamCount() {
 		return mapper.selectCreamCount();
 	}
+	
 
 }
 
