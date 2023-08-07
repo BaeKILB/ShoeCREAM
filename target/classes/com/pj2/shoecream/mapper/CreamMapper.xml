@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.CreamMapper">
+	<insert id="insertCreamItem">
+		insert into
+			cream_item
+		values(
+			#{ci_code}
+			, #{ci_name}
+			, #{ci_content}
+			, #{size220}
+			, #{size225}
+			, #{size230}
+			, #{size235}
+			, #{size240}
+			, #{size245}
+			, #{size250}
+			, #{size255}
+			, #{size260}
+			, #{size265}
+			, #{size270}
+			, #{size275}
+			, #{size280}
+			, #{size285}
+			, #{size290}
+			, #{size295}
+			, #{size300}
+			, #{size305}
+			, #{size310}
+		)
+	</insert>
+	
+	<select id="getCreamList" resultType="map">
+		SELECT *
+		FROM cream_item
+		JOIN product_image ON cream_item.ci_code = product_image.product_idx;
+	</select>
+	
+	
+
+
+</mapper>
