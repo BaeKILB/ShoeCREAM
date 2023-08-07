@@ -280,7 +280,7 @@
 					
 						
 						
-							<div>
+							<div style=" cursor: pointer;" onclick="location.href='productDetail?product_idx=${moreProductListSmall.product_idx}';">
 								<img class="more_product_img" src="${pageContext.request.contextPath}/resources/upload/${moreProductListSmall.image1}">
 								<p class="more_product_name">${moreProductListSmall.product_title}</p>
 								<span><fmt:formatNumber value="${moreProductListSmall.product_price}" pattern="#,###"/>원</span>
@@ -292,7 +292,7 @@
 					</div>						
 					<div class="review_wrap more_wrap_box">
 						<div class="view_tit_sec">
-							<p class="view_tit">고객 리뷰</p>
+							<p class="view_tit">${jungGoNoh.mem_nickname}에 대한 고객 리뷰</p>
 							<a href="${pageContext.request.contextPath }/reviewList">더보기</a>
 						</div>
 					</div>
@@ -304,7 +304,7 @@
 						
 						<c:forEach var="moreReviewListSmall" items="${moreReviewListSmall}">
 						<div>
-						<img class="buyer_profile" src="${pageContext.request.contextPath}/resources/img/junggo/profile_m.png">
+						<img class="buyer_profile" src="${pageContext.request.contextPath}/${moreReviewListSmall.mem_profileImageUrl}">
 							<span class="rev_name">${moreReviewListSmall.mem_nickname}</span>
 							<a class="modify_btn" href="${pageContext.request.contextPath}/registJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시작성</a>
 							<a class="modify_btn" href="${pageContext.request.contextPath}/modifyJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시수정</a>
