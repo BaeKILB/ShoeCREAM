@@ -113,7 +113,7 @@ public class ChatHandler {
 		if(map.get("product_payment").equals("안전페이")
 				|| map.get("product_payment").equals("안전페이,직거래")) {
 			product_btn = "<input type='button' class='btn btn-primary' value='결제하기'"
-					+ "onclick='location.href=\"JunggoPay?product_idx=" + map.get("product_idx") + "\"' />";	
+					+ "onclick='location.href=\"JunggoPay?product_idx=" + map.get("product_idx") + "&chat_room_idx=" + map.get("chat_room_idx") + "\"' />";	
 		}
 		else {
 			product_btn = 

@@ -326,6 +326,11 @@
 			}
 		});
 	</script>
+	<script type="text/javascript">
+		const paySuccess = () => {
+			location.href = "shoePay?chat_area=" + ${map.product_selector } + "&chat_room_idx=" + ${map.chat_room_idx };
+		}
+	</script>
 
 	<!-- footer 추가 -->
 	<footer>
