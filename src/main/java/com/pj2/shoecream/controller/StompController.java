@@ -136,6 +136,7 @@ public class StompController {
     			model.addAttribute("room", chatService.getChatRoom(Integer.parseInt(chat_room_idx),chat_room_area));
     			model.addAttribute("chatList", chatService.getChatList(Integer.parseInt(chat_room_idx)));
     			model.addAttribute("sId", chatService.getSid(idx));
+    			model.addAttribute("userNickname", mPrincipalDetails.getMember().getMem_nickname());
     			
     		}
     		else {
@@ -284,6 +285,7 @@ public class StompController {
 	
 	
 	// 채팅방 나가기 기능
+	@GetMapping("chatRoomOut")
 	public String chatRoomOut(@RequestParam Map<String,Object> map, Model model
 			, RedirectAttributes rttr) {
 		

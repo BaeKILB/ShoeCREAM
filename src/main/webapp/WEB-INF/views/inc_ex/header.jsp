@@ -181,10 +181,11 @@ div #test_area ul { /* 카테고리 css */
 					</div>
 					<div class="col-md-4 sell_center">
 						<p style="width: 280px">
-							<a href="product_list" style="color: black;">중고거래 </a> <a
+							<a href="JunggoSearch" style="color: black;">중고거래 </a> <a
 								href="Auction" style="color: black;">경매하기 </a> <a
-								href="Cream" style="color: black;">굿즈 스토어 </a> <a
-								href="community" style="color: black;">커뮤니티 </a>
+								href="Cream" style="color: black;">굿즈 스토어 </a> 
+								<a href="community" style="color: black;">커뮤니티 </a>
+								<a href="${pageContext.request.contextPath }/chatRooms?chat_area=0" style="color: black;">중고채팅 </a>
 						</p>
 					</div>
 					<!-- 메뉴 호버 -->

@@ -41,4 +41,11 @@ public interface JungProductMapper {
 			@Param("product_idx") String product_idx,
 			@Param("product_sell_status") String product_sell_status);
 	
+	int updateSellStatusNBuyerIdx(
+			@Param("product_idx") String product_idx,
+			@Param("product_sell_status") String product_sell_status,
+			@Param("product_buyer_idx") int product_buyer_idx
+			
+			);
+	
 }

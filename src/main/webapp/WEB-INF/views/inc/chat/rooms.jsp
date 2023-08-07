@@ -15,37 +15,11 @@
 <link href="${pageContext.request.contextPath }/resources/css/inc/chat/rooms.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath }/resources/js/inc/chat/sockjs.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/inc/chat/stomp.min.js"></script>
-<script>
-            $(document).ready(function(){
-				
-                var createRoomMsg = "${createRoomMsg}";
 
-                if(createRoomMsg != null && createRoomMsg != "")
-                    alert(createRoomMsg );
-
-//                 $(".btn-create").on("click", function (e){
-//                     e.preventDefault();
-//                     var name = $("input[name='name']").val();
-//                     if(name == "")
-//                         alert("Please write the name.")
-//                     else
-//                         $("form").submit();
-//                 });
-
-				
-            });
-            
-            // 방 선택시 ajax 로 채팅 리스트 불러오기
-            
-            
-</script>
 </head>
 <body>
 	<h1>Chat rooms</h1>
-<!--     <form action="room" method="post"> -->
-<!--         <input type="text" name="name" class="form-control"> -->
-<!--         <button class="btn btn-secondary">개설하기</button> -->
-<!--     </form> -->
+
    	
    	<main class="side_chatroom_wrap container">
 	    <section class="chatroom_list row d-flex flex-column align-items-stretch flex-shrink-0 bg-white" >
@@ -120,7 +94,7 @@
 								<c:if test="${!empty chatList }">
 									<c:forEach var="chat" items="${chatList }">
 										<c:choose>
-											<c:when test="${chat.chat_msg_writer eq idx}">
+											<c:when test="${chat.chat_msg_writer eq myIdx}">
 												<div class='col-6'>
 													<div class='alert alert-primary'>
 														<b>${chat.mem_nickname} : ${chat.chat_msg_content}</b>
@@ -155,7 +129,6 @@
 		    	</c:choose>
 
 			</div>
-	 	${room }
 		</section>
    	</main>
 	<c:if test="${!empty room}">
@@ -205,7 +178,7 @@
 				   
 				   if(chat_writer === userId){
 				       str = "<div class='col-6'>";
-				       str += "<div class='alert alert-secondary'>";
+				       str += "<div class='alert alert-primary'>";
 				       str += "<b>" + chat_nicname + " : " + content.chat_msg_content + "</b>";
 				       str += "</div></div>";
 				       $("#msgArea").append(str);

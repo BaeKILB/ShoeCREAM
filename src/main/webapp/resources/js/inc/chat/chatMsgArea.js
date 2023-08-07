@@ -73,13 +73,47 @@ const chatRoomOut = (check) => {
 	}
 	
 	if(result){
-		if(param.get("chat_area") != null &&
-		param.get("chat_area") != undefined && 
-		param.get("chat_room_idx") != null &&
-		param.get("chat_room_idx") != undefined){		
-			location.href = "chatRoomOut?chat_area=" + param.get("chat_area") 
-			+ "&chat_room_idx=" + param.get("chat_room_idx");
+		if(getParams.get("chat_area") != null &&
+		getParams.get("chat_area") != undefined && 
+		getParams.get("chat_room_idx") != null &&
+		getParams.get("chat_room_idx") != undefined){		
+			location.href = "chatRoomOut?chat_area=" + getParams.get("chat_area") 
+			+ "&chat_room_idx=" + getParams.get("chat_room_idx");
 		}
 	}
 }
 
+
+// 예약 진행 버튼 눌렀을때
+const startRes = () => {
+	let result = false;
+	
+	result = confirm("예약 진행 하시겠습니까?");		
+	
+	if(result){
+		if(getParams.get("chat_area") != null &&
+		getParams.get("chat_area") != undefined && 
+		getParams.get("chat_room_idx") != null &&
+		getParams.get("chat_room_idx") != undefined){		
+			location.href = "startRes?chat_area=" + getParams.get("chat_area") 
+			+ "&chat_room_idx=" + getParams.get("chat_room_idx");
+		}
+	}
+}
+
+// 거래완료를 눌렀을때
+const transComplete = () => {
+		let result = false;
+	
+	result = confirm("거래 완료를 진행 하시겠습니까?");		
+	
+	if(result){
+		if(getParams.get("chat_area") != null &&
+		getParams.get("chat_area") != undefined && 
+		getParams.get("chat_room_idx") != null &&
+		getParams.get("chat_room_idx") != undefined){		
+			location.href = "transForm?chat_area=" + getParams.get("chat_area") 
+			+ "&chat_room_idx=" + getParams.get("chat_room_idx");
+		}
+	}
+}

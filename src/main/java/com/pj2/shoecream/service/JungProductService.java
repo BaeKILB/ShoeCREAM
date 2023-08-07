@@ -43,4 +43,11 @@ public class JungProductService {
 	public int updateSellStatus(String product_idx, String product_sell_status) {
 		return mapper.updateSellStatus(product_idx, product_sell_status);
 	}
+	
+	public int updateSellStatusNBuyerIdx(
+			String product_idx,
+			String product_sell_status,
+			int buyerIdx) {
+		return mapper.updateSellStatusNBuyerIdx(product_idx, product_sell_status, buyerIdx);
+	}
 }

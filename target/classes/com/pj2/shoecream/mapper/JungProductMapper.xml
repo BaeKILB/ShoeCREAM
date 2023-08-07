@@ -120,5 +120,14 @@
 		WHERE product_idx = #{product_idx}
 		; 
 	</update>
+	
+	<!-- 중고 상태 업데이트 -->
+	<update id="updateSellStatusNBuyerIdx">
+		UPDATE jung_product
+		SET product_sell_status = #{product_sell_status}
+		, product_buyer_idx = #{product_buyer_idx}
+		WHERE product_idx = #{product_idx}
+		; 
+	</update>
 
 </mapper>

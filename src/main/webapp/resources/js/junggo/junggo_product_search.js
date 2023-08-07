@@ -106,7 +106,7 @@ $(function() { // onload
 		console.log("onload - loadItems() error !");
 	}
 	
-    // 스크롤
+    // 스크롤 상품 로드
     $(window).on("scroll",function() {
         let scrollTop = $(window).scrollTop();
         let windowHeight = $(window).height();

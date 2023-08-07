@@ -82,7 +82,7 @@ public class ChatHandler {
 	// 1. 대기중 상황 ================================
 	public String buyerWaitingHtml(Map<String,Object> map) {
 		String product_btn = 
-				"<input type='button' class='btn btn-primary' value='예약진행하기'/>";
+				"<input type='button' class='btn btn-primary' value='예약진행하기' onclick='startRes()'/>";
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
@@ -117,7 +117,7 @@ public class ChatHandler {
 		}
 		else {
 			product_btn = 
-					"<input type='button' class='btn btn-primary' value='인수하기'/>";	
+					"<input type='button' class='btn btn-primary' value='거래완료' onclick='transComplete()'/>";	
 		}
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
@@ -150,11 +150,11 @@ public class ChatHandler {
 				|| map.get("product_payment").equals("안전페이,직거래")) {
 			product_btn = 
 					"<input type='button' class='btn btn-dark' value='결제취소 요청'/>"	
-							+ "<input type='button' class='btn btn-primary' value='인수하기'/>";	
+							+ "<input type='button' class='btn btn-primary' value='거래완료' onclick='transComplete()'/>";	
 		}
 		else {
 			product_btn = 
-					"<input type='button' class='btn btn-primary' value='인수하기'/>";	
+					"<input type='button' class='btn btn-primary' value='거래완료' onclick='transComplete()'/>";	
 		}
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
