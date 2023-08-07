@@ -122,13 +122,6 @@
         )
 	</insert>
 	
-    <!-- 댓글 쓸때 가져갈 프로필 경로 -->
-    <select id="findProfileImageUrlByMemberId" parameterType="int" resultType="string">
-        SELECT mem_profileImageUrl
-        FROM mem_info
-        WHERE mem_idx = #{mem_idx}
-    </select>
-	
 	<!-- 댓글 쓰면 바로 초기화 -->
 	<update id="updateComment_ref" parameterType="com.pj2.shoecream.vo.SocialCommentVO">
 	    UPDATE social_comment
@@ -137,6 +130,15 @@
 	        WHERE
 	            comment_idx = #{comment_idx}
 	</update>
+	
+    <!-- 댓글 쓸때 가져갈 프로필 경로 -->
+    <select id="findProfileImageUrlByMemberId" parameterType="int" resultType="string">
+        SELECT mem_profileImageUrl
+        FROM mem_info
+        WHERE mem_idx = #{mem_idx}
+    </select>
+	
+
 	
 	<!-- 댓글 삭제 -->
 	<delete id="deleteCommentById">
