@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.AlramMapper">
+    <insert id="insertAlram">
+    	insert into
+    		alram
+    	values(
+    		null
+    		, #{cmd }
+    		, #{sender }
+    		, #{receiver }
+    		, #{product_idx }
+    		, #{product_title }
+    		, 'N'
+    		, now()
+    	)
+    </insert>
+</mapper>
