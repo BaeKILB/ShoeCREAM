@@ -90,7 +90,7 @@ public class PayService {
 		}
 		
 		// 출금시작
-		int withdrawPoint = pointInout.getCharge_point() - withdrawUser.getCharge_point();
+		int withdrawPoint =  withdrawUser.getCharge_point() - pointInout.getCharge_point();
 		if(mapper.updateMemberPoint(pointInout.getMem_idx(), withdrawPoint) <= 0) {
 			return 2;
 		}
@@ -105,7 +105,7 @@ public class PayService {
 	// 포인트로 결제
 	// PayInfoVO 와 PointInoutVO를 받기
 	
-	// PayInfoVO 에는 product_idx, pay_method, pay_total
+	// PayInfoVO 에는 mem_idx, product_idx, pay_method, pay_total
 	// PointInoutVO 에는 mem_idx와 point_usage 값을 미리 넣고 와야함
 	
 	// PointInoutVO 의 point_usage 값 

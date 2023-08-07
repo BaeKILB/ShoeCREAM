@@ -60,14 +60,15 @@ public class PayController {
 			// 구매자 회원번호
 			idx = mPrincipalDetails.getMember().getMem_idx();
 			
-			// 구매자 정보 받기
-			model.addAttribute("member" , mPrincipalDetails.getMember());
+
 		}
 		catch(Exception e) {
 			// 로그인 안되어있으면 잘못된 접근이라고 띄우기
 			model.addAttribute("msg","잘못된 접근입니다");
 			return "inc/fail_back";
 		}
+		// 구매자 정보 받기
+		model.addAttribute("member" , memService.getMemberByIdx(idx));
 		System.out.println(map);
 		model.addAttribute("map" , map);
 		
@@ -83,14 +84,15 @@ public class PayController {
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 			// 구매자 회원번호
 			idx = mPrincipalDetails.getMember().getMem_idx();		
-			// 구매자 정보 담기
-			model.addAttribute("member",mPrincipalDetails.getMember());
+
 		}
 		catch(Exception e) {
 			// 로그인 안되어있으면 잘못된 접근이라고 띄우기
 			model.addAttribute("msg","잘못된 접근입니다");
 			return "inc/fail_back";
 		}
+		// 구매자 정보 담기
+		model.addAttribute("member",memService.getMemberByIdx(idx));
 		
 		Integer product_selector = Integer.parseInt((String)map.get("product_selector"));
 		
@@ -154,16 +156,17 @@ public class PayController {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 			
-			// 현재 접속회원
-			member = mPrincipalDetails.getMember();
 			// 구매자 회원번호
 			idx = mPrincipalDetails.getMember().getMem_idx();		
 		}
 		catch(Exception e) {
 			// 로그인 안되어있으면 잘못된 접근이라고 띄우기
-			return "inc/fail_back";
+			jo.put("error", "login error");
+			return jo.toString();
 		}
 		
+		// 현재 접속중 멤버 가져오기
+		member = memService.getMemberByIdx(idx);
 		// 페이 정보 저장 객체 2개
 		PayInfoVO payInfo = new PayInfoVO();
 		PointInoutVO pointInout = new PointInoutVO();
@@ -190,7 +193,9 @@ public class PayController {
 					
 					// 페이 결제 시작 
 					// 페이 결제시 사용할 객체에 정보 담기
+					payInfo.setMem_idx(idx);
 					payInfo.setProduct_idx((String)productEx.get("product_idx"));
+					payInfo.setProduct_selector((int)productEx.get("product_selector"));;
 					payInfo.setPay_method(2);
 					payInfo.setPay_total((int)productEx.get("product_price"));
 					
@@ -216,17 +221,28 @@ public class PayController {
 				
 			}	// =========== 중고거래일때 끝
 		}
-		if(!isPayReady)
-			return null;
-		
-		// 결제 시작
-		// 위에서 받아온 결제 객체들을 넣어 결제 시작
-		if(service.productPayment(payInfo, pointInout) == 1) {
-			jo.put("result",true);
+		if(!isPayReady) {
+			jo.put("error", "isPayReady == false");
 			return jo.toString();
 		}
 		
-		return null;
+		// 결제 시작
+		// 위에서 받아온 결제 객체들을 넣어 결제 시작
+		int result = service.productPayment(payInfo, pointInout);
+		if(result == 1) {
+			
+			// 결제 성공시 상품분류코드(중고, 경매등) 에 따른 동작
+			
+			if(product_selector == 0) {
+				jProductService.updateSellStatus((String)map.get("product_idx"), "거래대기중");
+			}
+			
+			jo.put("result",true);
+			return jo.toString();
+		}
+
+		jo.put("error", "productPayment error " + result);
+		return jo.toString();
 		
 	}
 	

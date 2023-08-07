@@ -39,15 +39,15 @@ const payWithPoint = () => {
 			let d = data.responseJSON;
 			console.log("payWithPoint : " + d.result)
 			
-			if(d.result == "true"){
-				if(param.get("product_selector") == 0){
-					alert("결제에 성공했습니다 !");
-					opener.paySuccess();
-					window.close();
-				}
+			if(d.result == true){
+				alert("결제에 성공했습니다 !");
+				opener.document.querySelector("#btnHidden").click();
+				window.close();
+			
 			}
 			else{
 				alert("결제에 실패했습니다 !");
+				console.log(d.error);
 			}
 		}
 	}// if문 끝

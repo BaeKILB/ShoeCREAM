@@ -233,7 +233,7 @@
 			
             // 메시지 전송 stomp 함수
             const sendMsg = () => {
-                let msg = document.getElementById("msg");
+                let msg = document.getElementById("msg_input");
 
                 console.log(userId + ":" + msg.value);
                 stomp.send('/pub/message', {}, JSON.stringify({chat_room_idx: chat_room_idx, chat_msg_content: msg.value, chat_msg_writer : idx, sId: userId}));

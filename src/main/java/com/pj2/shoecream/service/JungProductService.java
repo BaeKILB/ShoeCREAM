@@ -40,4 +40,7 @@ public class JungProductService {
 		return mapper.selectJungProductCount(jproduct);
 	}
 	
+	public int updateSellStatus(String product_idx, String product_sell_status) {
+		return mapper.updateSellStatus(product_idx, product_sell_status);
+	}
 }

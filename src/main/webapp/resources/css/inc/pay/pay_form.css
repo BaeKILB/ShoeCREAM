@@ -369,9 +369,11 @@ li.lic_num_inp select, li.lic_num_inp input{
 }
 
 
+/* 경인 추가 */
 
-
-
+#btnhidden {
+	display:none;
+}
 
 
 

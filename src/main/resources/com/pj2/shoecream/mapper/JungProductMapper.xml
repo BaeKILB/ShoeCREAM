@@ -107,8 +107,16 @@
 	</select>
 
 	<update id="updateJungBuyerIdx">
-		UPDATE FROM jung_product
+		UPDATE jung_product
 		SET product_buyer_idx = #{product_buyer_idx}
+		WHERE product_idx = #{product_idx}
+		; 
+	</update>
+	
+	<!-- 중고 상태 업데이트 -->
+	<update id="updateSellStatus">
+		UPDATE jung_product
+		SET product_sell_status = #{product_sell_status}
 		WHERE product_idx = #{product_idx}
 		; 
 	</update>

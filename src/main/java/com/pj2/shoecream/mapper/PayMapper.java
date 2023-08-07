@@ -12,8 +12,8 @@ public interface PayMapper {
 	PayInfoVO selectGetPayInfoTop(String product_idx);
 	
 	int updateMemberPoint(
-			@Param("idx") int mem_idx
-			,@Param("idx") int price
+			@Param("mem_idx") int mem_idx
+			,@Param("point") int point
 	);
 	
 	int insertPayInfo(PayInfoVO payInfo);

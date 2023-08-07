@@ -40,6 +40,7 @@ import com.pj2.shoecream.service.CategoryService;
 import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.service.JungProductService;
+import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.vo.JungGoNohVO;
 import com.pj2.shoecream.vo.JungProductVO;
 import com.pj2.shoecream.vo.LCategory;
@@ -55,7 +56,9 @@ public class JunggoController {
 	@Autowired
 	private JungGoNohService jungGoNohService;
 	
-
+	@Autowired
+	private MemberService memService;
+	
 	@Autowired
 	private JungProductService jProductService;
 	
@@ -182,8 +185,7 @@ public class JunggoController {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 			
-			// 현재 접속중 멤버 가져오기
-			member = mPrincipalDetails.getMember();
+
 			// 구매자 회원번호
 			idx = mPrincipalDetails.getMember().getMem_idx();
 		} catch (Exception e) {
@@ -194,6 +196,8 @@ public class JunggoController {
 			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
 			return "inc/fail_forward";
 		}
+		// 현재 접속중 멤버 가져오기
+		member = memService.getMemberByIdx(idx);
 		
 		Map<String,Object> productEx = jProductService.getJungProductExtend((String)map.get("product_idx"));
 		String product_sell_status = (String)productEx.get("product_sell_status");

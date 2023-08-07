@@ -313,6 +313,7 @@
 <!-- 			<button class="res_p" onclick="requestPay()">결제하기</button> -->
 		</form>
 		
+			<input type="button" id="btnHidden" name="btnHidden" onclick="paySuccess()"/>
 	</section>
 	
 	<script>
@@ -327,8 +328,11 @@
 		});
 	</script>
 	<script type="text/javascript">
+		let getParams = new URL(location.href).searchParams;
+		let chat_area = ${map.product_selector } 
+		
 		const paySuccess = () => {
-			location.href = "shoePay?chat_area=" + ${map.product_selector } + "&chat_room_idx=" + ${map.chat_room_idx };
+			location.href = "chatRooms?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx");
 		}
 	</script>
 
