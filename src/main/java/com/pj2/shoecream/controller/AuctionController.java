@@ -225,7 +225,7 @@ public class AuctionController {
 		    } catch (IOException e) {
 			e.printStackTrace();
 		    }
-		    service.modifyAuctionItem(auction);
+		    service.registAuctionItem(auction);
 		}
 		return "redirect:/Auction";
     }
