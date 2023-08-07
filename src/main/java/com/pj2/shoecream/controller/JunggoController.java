@@ -2,6 +2,7 @@ package com.pj2.shoecream.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -462,6 +463,7 @@ public class JunggoController {
 		String fileext3 = filename3.substring(filename3.lastIndexOf(".") + 1);
 		String fileext4 = filename4.substring(filename3.lastIndexOf(".") + 1);
 		
+		//파일 확장명 제한
 		if((fileext1 == null || fileext1.length() == 0))
 		{	
 		}
@@ -873,6 +875,7 @@ public class JunggoController {
 					} 
 				else { //조회 내역이 있을때
 						model.addAttribute("msg", "이미 해당 건에 대해 신고 신청하신 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+						return "inc/fail_back";
 				}
 		
 		
@@ -927,7 +930,10 @@ public class JunggoController {
 	}
 	//-----------------------리뷰 작성 폼 이동-------------------------
 	@GetMapping("registJReviewForm")
-	public String registReviewForm(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh){
+	public String registReviewForm(@RequestParam String product_idx, 
+			@RequestParam(value="mem_idx", required=false) String mem_idx, 
+			@RequestParam(value="buyier_idx", required=false) String buyier_idx, 
+			HttpSession session, Model model, JungGoNohVO jungGoNoh){
 		
 		try {			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -1000,21 +1006,23 @@ public class JunggoController {
 			//입력 전 동일 건에 대한 리뷰 중복 조회
 			String ifReview = jungGoNohService.getReview(jungGoNoh);
 			model.addAttribute("ifReview",ifReview);
-			//System.out.println("&&&&&&&&&&jungGoNoh?"+jungGoNoh);
-			//System.out.println("&&&&&&&&&&ifReport?"+ifReport+"끝");
+			System.out.println("&&&&&&&&&&jungGoNoh?"+jungGoNoh);
+			System.out.println("&&&&&&&&&&ifReview?"+ifReview+"끝");
 			if(ifReview == null) { //조회 내역이 없을 때
 			
 					//입력 작업 시작	
-				int insertReview = jungGoNohService.registReview(jungGoNoh);
+					int insertReview = jungGoNohService.registReview(jungGoNoh);
 				
 					if(insertReview < 0) {
 							model.addAttribute("msg", "신청 실패");
 							return "inc/fail_back";
-							} 	
-						} 
-					else { //조회 내역이 있을때
+						} 	
+				
+				}  else 
+					{ //조회 내역이 있을때
+					
 							model.addAttribute("msg", "이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
-							System.out.println("^^^^^^^^^이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+							return "inc/fail_back";
 					}
 
 			
@@ -1049,6 +1057,8 @@ public class JunggoController {
 			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
 			jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
 			jungGoNoh.setProduct_idx(product_idx);			
+			
+			
 			
 			//수정할 리뷰 데이터 수집
 			JungGoNohVO jungGoNohReview = jungGoNohService.getReview2(jungGoNoh);
