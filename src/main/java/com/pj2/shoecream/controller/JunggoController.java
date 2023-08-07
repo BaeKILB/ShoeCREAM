@@ -202,7 +202,8 @@ public class JunggoController {
 		if(productEx != null 
 				&& (product_sell_status).equals("예약중")
 				&& (product_payment.equals("안전페이") || product_payment.equals("안전페이,직거래"))
-				&& (Integer)productEx.get("product_buyer_idx") == idx) {			
+				&& (Integer)productEx.get("product_buyer_idx") == idx) {
+			
 			model.addAttribute("map",productEx);
 			model.addAttribute("member",member);
 			return "inc/pay/pay_form";

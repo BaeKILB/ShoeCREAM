@@ -28,6 +28,9 @@
 	
 }
 
+#chatHiddenBtn{
+	display:none;
+}
 
 #msgArea {
 	width: 500px;

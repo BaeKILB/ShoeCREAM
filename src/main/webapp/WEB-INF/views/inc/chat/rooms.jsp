@@ -144,6 +144,8 @@
 									<button class="btn btn-outline-secondary" type="button"
 										id="button-send">전송</button>
 								</div>
+								<button id="chatHiddenBtn"></button>
+								<input type="hidden" id="msghidden" >
 							</div>
 						</div>
 		    		</c:when>
@@ -239,8 +241,23 @@
                 myLoad = true;
             }
             
+            // 메시지 전송 stomp 함수 (msghidden 으로 msg받기)
+            const sendMsg2 = () => {
+
+                let msg = document.getElementById("msghidden");
+                
+                console.log(userId + ":" + msg.value);
+                stomp.send('/pub/message', {}, JSON.stringify({chat_room_idx: chat_room_idx, chat_msg_content: msg.value, chat_msg_writer : idx, sId: userId}));
+                msg.value = '';
+                myLoad = true;
+            }
+            
             $("#button-send").on("click", function(e){
             	sendMsg();
+            });
+            
+            $("#chatHiddenBtn").on("click", function(e){
+            	sendMsg2();
             });
             
             //엔터키 입력

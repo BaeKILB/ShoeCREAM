@@ -5,19 +5,22 @@ let getParams = new URL(location.href).searchParams;
 
 // 채팅 메시지 영역 위에 상품 상태에 따라서
 // 상품 정보와 유저 정보 및 버튼 불러오기
-const loadChatMsgBar = (param) => {
-	if(param.get("product_idx") != null &&
-		param.get("product_idx") != undefined){
+const payWithPoint = () => {
+	if(getParams.get("product_idx") != null &&
+		getParams.get("product_idx") != undefined &&
+		getParams.get("product_selector") != null &&
+		getParams.get("product_selector") != undefined
+		){
 			
 			
 		let checkError = false;
 	
 		let data =  $.ajax({
 			type:"post"
-			,url: "checkChatRoomStatus.ajax"
+			,url: "payWithPoint.ajax"
 			,data: {
-				chat_room_area: param.get("chat_area")
-				,chat_room_idx: param.get("chat_room_idx")
+				product_idx: getParams.get("product_idx")
+				,product_selector: getParams.get("product_selector")
 			}
 			,dataType: "json"
 			,async: false
@@ -25,19 +28,27 @@ const loadChatMsgBar = (param) => {
 				checkError = true;
 			}
 		    ,error: function(errorThrown) {
+				alert("결제에 실패했습니다 !");
 		        console.log(errorThrown.statusText);
-		        console.log("error - loadChatMsgBar");
+		        console.log("error - payWithPoint");
 		    }
 		    
 		    
 		}); // ajax 끝
 	    if(checkError){
 			let d = data.responseJSON;
-			console.log("loadChatMsgBar : " + d.html)
-			$(".chat_msg_info_wrap").empty();
-			let itemListWrap = document.querySelector(".chat_msg_info_wrap");
+			console.log("payWithPoint : " + d.result)
 			
-			itemListWrap.insertAdjacentHTML("beforeend", d.html);
+			if(d.result == "true"){
+				if(param.get("product_selector") == 0){
+					alert("결제에 성공했습니다 !");
+					opener.paySuccess();
+					window.close();
+				}
+			}
+			else{
+				alert("결제에 실패했습니다 !");
+			}
 		}
 	}// if문 끝
 	else{

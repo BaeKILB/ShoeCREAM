@@ -5,11 +5,11 @@ let getParams = new URL(location.href).searchParams;
 
 // 채팅 메시지 영역 위에 상품 상태에 따라서
 // 상품 정보와 유저 정보 및 버튼 불러오기
-const loadChatMsgBar = (param) => {
-	if(param.get("chat_area") != null &&
-		param.get("chat_area") != undefined && 
-		param.get("chat_room_idx") != null &&
-		param.get("chat_room_idx") != undefined){
+const loadChatMsgBar = () => {
+	if(getParams.get("chat_area") != null &&
+		getParams.get("chat_area") != undefined && 
+		getParams.get("chat_room_idx") != null &&
+		getParams.get("chat_room_idx") != undefined){
 			
 			
 		let checkError = false;
@@ -18,8 +18,8 @@ const loadChatMsgBar = (param) => {
 			type:"post"
 			,url: "checkChatRoomStatus.ajax"
 			,data: {
-				chat_room_area: param.get("chat_area")
-				,chat_room_idx: param.get("chat_room_idx")
+				chat_room_area: getParams.get("chat_area")
+				,chat_room_idx: getParams.get("chat_room_idx")
 			}
 			,dataType: "json"
 			,async: false
@@ -52,7 +52,7 @@ const loadChatMsgBar = (param) => {
 if(getParams.get("chat_room_idx") != null && 
 	getParams.get("chat_room_idx") != undefined &&
 	getParams.get("chat_area") < 1){
-	loadChatMsgBar(getParams);
+	loadChatMsgBar();
 }
 
 // 채팅방 나가기 신호 보내기
