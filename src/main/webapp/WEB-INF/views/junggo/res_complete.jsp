@@ -32,53 +32,45 @@
 				<h3>예약 정보</h3>
 				<ul>
 					<li>
+						<em>거래 항목</em>
+							<c:choose>
+								<c:when test="${jungGoNoh.product_selector == 0}">
+									<span>중고거래</span>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${jungGoNoh.product_selector == 1}">
+											<span>경매</span>
+										</c:when>
+										<c:otherwise>
+												<span>크림</span>		
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
+					</li>
+					<li>
 						<em>판매자</em>
-						<span>꾸미꾸미꾸</span>
+						<span>${jungGoNoh.mem_nickname}</span>
 					</li>
 					<li>
 						<em>구매자</em>
-						<span>옷산사람1</span>
+						<span>${jungGoNoh.buyier_nickname}</span>
 					</li>
 					<li>
 						<em>거래글 제목</em>
-						<span>
-							블랙야크 남성 기모바지 (33)
-						</span>
+						<span>${jungGoNoh.product_title}</span>
 					</li>
 					<li>
 						<em>거래 방식</em>
-						<span>슈크림페이</span>
+						<span>${jungGoNoh.product_payment}</span>
 					</li> 
 					<li>
-						<em>총 결제 금액</em>
-						<span>25,000원</span>
-					</li> 
+						<em>결제할 총 금액</em>
+						<span><fmt:formatNumber value="${jungGoNoh.product_price}" pattern="#,###"/>원</span>
 				</ul>
 			</div>
-		  
-<!-- 		  	<hr class="com_line"> -->
-		
-<!-- 			<div class="payment_info com_wrap"> -->
-<!-- 				<h3>결제 정보</h3> -->
-<!-- 				<ul> -->
-<!-- 					<li> -->
-<!-- 						<em>결제 수단</em> -->
-<!-- 						<span> -->
-<!-- 							슈크림페이 포인트 -->
-<!-- 						</span> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<em>결제 금액</em> -->
-<!-- 						<span>25,000원</span> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<em>결제 확인 일시</em> -->
-<!-- 						<span>2023.07.18 11:13</span> -->
-<!-- 					</li> -->
-					
-<!-- 				</ul> -->
-<!-- 			</div> -->
-			<div class="finish_btn" align="center">
+		  	<div class="finish_btn" align="center">
 				<a href="${pageContext.request.contextPath }"><button>메인으로</button></a>
 				<a href="${pageContext.request.contextPath }/MemberRes"><button>마이리스트 거래 내역 조회</button></a>
 				<a href="${pageContext.request.contextPath }/MemberRes"><button>해당 1:1대화창으로 이동</button></a>

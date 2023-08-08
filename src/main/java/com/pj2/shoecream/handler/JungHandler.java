@@ -10,6 +10,35 @@ import com.pj2.shoecream.vo.JungProductVO;
 public class JungHandler {
 	public String makeProductHtml(Map<String,Object> jProduct, String localURL) {
 		String htmlStr = "";
+		String dibStr = "";
+		
+		String dibBtnStr = "";
+		
+		if((int)jProduct.get("user_idx") != (int)jProduct.get("mem_idx")) {			
+			if(jProduct.get("favorite_check").equals("Y")) {
+				dibBtnStr = 
+				"					<input type='button'  class='UnFavorite_btn' value='💔 " + jProduct.get("dibs_count") + "'>";
+			}
+			else {
+				dibBtnStr = 
+				"					<input type='button' class='favorite_btn' value='♥ " + jProduct.get("dibs_count") + "'/>		";
+			}
+		}
+		else {
+			dibBtnStr =  "			<button type='button'  class='delete_btn' onclick='deleteConfirmPD()'>삭제하기</button>";
+		}
+		
+		
+		dibStr = 
+				"	<input type='hidden' name='product_idx' id='product_idx' value='" + jProduct.get("product_idx") + "'/>"
+				+ "	<input type='hidden' name='favorite_check' id='favorite_check' value='"  + jProduct.get("favorite_check") +  "'/>"
+				+ "	<input type='hidden' name='mem_id' id='mem_id' value='" + jProduct.get("mem_id") + "'/>"
+				+ "	<input type='hidden' name='mem_idx' id='mem_idx' value='" + jProduct.get("mem_idx") + "'/>"
+				+ "	<!-- buyier_idx 미접속시 -1으로 받아오게끔 하기-->"
+				+ " <input type='hidden' name='buyier_idx' id='buyier_idx' value='"  + jProduct.get("user_idx") +  "'/>"
+				+ "	<!-- buyier_idx 미접속시 -1으로 받아오게끔 하기-->						"
+				+ dibBtnStr
+				;
 		
 		htmlStr = 
 				"<div class='col mt-2'>"
@@ -35,11 +64,13 @@ public class JungHandler {
 			     + "    </ul>"
 			     + "    <div class='itemSimpleInfoBtn'>"
 //			     + "      <input class='btn btn-primary' type='button' value='찜하기' onclick='event.stopPropagation(); location.href=\"#\";' />"
-			     + "    </div>"
+			     + dibStr
+				 + "    </div>"
 			     + "  </div>"
 			     + "</div>"
 			     + "</div>";
 		
+
 		
 		return htmlStr;
 	}

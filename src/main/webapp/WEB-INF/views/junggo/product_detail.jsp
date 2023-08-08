@@ -212,7 +212,8 @@
 							<input type="hidden" name="favorite_check" id="favorite_check" value="${dibs.favorite_check}"/>
 							<input type="hidden" name="mem_id" id="mem_id" value="${jungGoNoh.mem_id}"/>
 							<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNoh.mem_idx}"/>
-
+						<a href="${pageContext.request.contextPath}/cancelOrComplete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message">임시 버튼</a>
+					
 							<!-- buyier_idx 미접속시 0으로 받아오게끔 하기-->
 							<c:choose>
 								<c:when test="${empty principal.member.mem_idx}">
@@ -277,7 +278,7 @@
 			<div class="seller_wrap more_wrap_box col-sm-12 col-lg-6">
 	
 				<div class="seller_profile_wrap">
-					<img class="seller_profile" src="${pageContext.request.contextPath}/${jungGoNoh.mem_profileImageUrl}">
+					<img class="seller_profile" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.mem_profileImageUrl}">
 					<p class="seller_name">${jungGoNoh.mem_nickname}</p>
 					<p class="seller_Lv">${jungGoNoh.mem_rank}</p>
 				</div>
@@ -312,7 +313,7 @@
 						
 						<c:forEach var="moreReviewListSmall" items="${moreReviewListSmall}">
 						<div>
-						<img class="buyer_profile" src="${pageContext.request.contextPath}/${moreReviewListSmall.mem_profileImageUrl}">
+						<img class="buyer_profile" src="${pageContext.request.contextPath}/resources/upload/${moreReviewListSmall.mem_profileImageUrl}">
 							<span class="rev_name">${moreReviewListSmall.mem_nickname}</span>
 							<span class="rev_date">${moreReviewListSmall.review_date}</span>
 							<ul class=""> 

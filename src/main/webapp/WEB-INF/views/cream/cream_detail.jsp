@@ -26,20 +26,90 @@
 <!-- css파일  -->
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <%-- <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css"> --%>
-    <script>
-        function updatePrice() {
-            var selectElement = document.getElementsByName("inputSize")[0];
-            var selectedValue = selectElement.options[selectElement.selectedIndex].value;
-            var priceSpan = document.getElementById("priceSpan");
-            
-            // 선택한 값에 해당하는 hidden input 요소의 값을 가져옵니다.
-            var hiddenInputElement = document.getElementsByName(selectedValue)[0];
-            var hiddenInputValue = hiddenInputElement.value;
+<script>
+//사이즈 선택시 가격 불러오기
+   function updatePrice() {
+       var selectElement = document.getElementsByName("inputSize")[0];
+       var selectedValue = selectElement.options[selectElement.selectedIndex].value;
+       var priceSpan = document.getElementById("priceSpan");
+       
+       // 선택한 값에 해당하는 hidden input 요소의 값을 가져옵니다.
+       var hiddenInputElement = document.getElementsByName(selectedValue)[0];
+       var hiddenInputValue = hiddenInputElement.value;
 
-            // hidden input 요소의 값을 가격 스팬에 업데이트합니다.
-            priceSpan.innerText = hiddenInputValue;
-        }
-    </script>
+       // hidden input 요소의 값을 가격 스팬에 업데이트합니다.
+       priceSpan.innerText = hiddenInputValue;
+   }
+   
+ //웹소켓
+   let socket = null;
+   let ws = new SockJS("<c:url value="/alram"/>");
+   socket = ws;  
+   
+ //결제
+ //입찰하기 버튼 클릭
+function Confirmation(event) {
+    // 사용자에게 확인을 받기 위한 컨펌창 표시
+    var confirmBid = confirm("구매를 진행하시겠습니까?");
+    
+    if (confirmBid) {
+		$.ajax({ // 입찰 ajax
+		    type: "post"
+		    , url: "creamBuyingPro"
+		    , dataType: "json"
+		    , data: {
+		        'cream_idx': $("input[name=cream_idx]").val()
+		    }
+		})
+		.done(function(data) { // 구매 done 시작
+		    if (data.result) {
+		        // 성공
+		        alert(data.msg);
+		        if (${not empty bid }) {
+			         $.ajax({ // 알람 ajax
+			             type: "POST"
+			             , url: "registerAlram"
+			             , dataType: "text"
+			             , data: {
+			                 'cmd':'1'
+			                 , 'sender':'0'
+			                 , 'receiver':'${bid.mem_idx}'
+			                 , 'product_idx':'${auction.auction_idx}'
+			                 , 'product_title':'${auction.auction_title}'
+			             }
+			         })
+			         .done(function(result){ // 알람 done 시작
+			             if(result == 1) { // 성공
+			                 let msg = "auction, 0,${bid.mem_idx},${auction.auction_idx},${auction.auction_title}";
+			                 alert(msg);
+			                 socket.send(msg);
+			             }
+			         	refreshParentWindow(); // 부모 창 새로고침
+						closeCurrentWindow(); // 현재 창 닫기
+			         }) // 알람 done 끝
+			         .fail(function(errorThrown) {
+			         	console.log(errorThrown)
+			         })
+		        } else {
+		            refreshParentWindow(); // 부모 창 새로고침
+		            closeCurrentWindow(); // 현재 창 닫기
+		        } 
+		    } else {
+		        alert(data.msg);
+		        history.back();
+		    }
+		}) // 구매 done 끝
+		.fail(function(errorThrown) {
+		    console.log(errorThrown)
+		})
+    } 
+}
+    
+function closeCurrentWindow() {
+    // 현재 창 닫기
+    window.close();
+}
+</script>
 <!-- 테스트용 css -->
 <style type="text/css">
   Slideshow container  
@@ -166,7 +236,7 @@
 							<button type="button" data-bs-target="#auctionCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
 						</c:if>	
 					</div>
-					<div class="carousel-inner"> <!-- 이미지 순차적으로 나오게 수정 0804이온 -->
+					<div class="carousel-inner">
 					    <div class="carousel-item active">
 					        <img src="${pageContext.request.contextPath }${cream.image_path }/${cream.image1 }" class="d-block w-100" alt="상품이미지1">
 					    </div>
@@ -214,47 +284,47 @@
 							<div class="fs-2 fw-bold">${cream.cream_title }</div>
 						</div>
 					</div>
+					<form action="creamBuyingPro" method="post">	
+						<div class="row">
+						    <div class="col-3">사이즈</div>
+						    <div>
+						        <select name="inputSize" onchange="updatePrice()">
+						            <c:forEach begin="220" step="5" end="310" varStatus="status">
+						                <option value="${status.index}">${status.index}</option>
+						            </c:forEach>
+						        </select>
+						    </div>
+						</div>
 						
-<div class="row">
-    <div class="col-3">사이즈</div>
-    <div>
-        <select name="inputSize" onchange="updatePrice()">
-            <c:forEach begin="220" step="5" end="310" varStatus="status">
-                <option value="${status.index}">${status.index}</option>
-            </c:forEach>
-        </select>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-3">가격</div>
-    <div class="col-4 fw-bold">
-    <input type="hidden" value="${cream.size220 }" name="220">
-    <input type="hidden" value="${cream.size225 }" name="225">
-    <input type="hidden" value="${cream.size230 }" name="230">
-    <input type="hidden" value="${cream.size235 }" name="235">
-    <input type="hidden" value="${cream.size240 }" name="240">
-    <input type="hidden" value="${cream.size245 }" name="245">
-    <input type="hidden" value="${cream.size250 }" name="250">
-    <input type="hidden" value="${cream.size255 }" name="255">
-    <input type="hidden" value="${cream.size260 }" name="260">
-    <input type="hidden" value="${cream.size265 }" name="265">
-    <input type="hidden" value="${cream.size270 }" name="270">
-    <input type="hidden" value="${cream.size275 }" name="275">
-    <input type="hidden" value="${cream.size280 }" name="280">
-    <input type="hidden" value="${cream.size285 }" name="285">
-    <input type="hidden" value="${cream.size290 }" name="290">
-    <input type="hidden" value="${cream.size295 }" name="295">
-    <input type="hidden" value="${cream.size300 }" name="300">
-    <input type="hidden" value="${cream.size305 }" name="305">
-    <input type="hidden" value="${cream.size310 }" name="310">
-        <span id="priceSpan"></span>
-    </div>
-</div>
+						<div class="row">
+						    <div class="col-3">가격</div>
+						    <div class="col-4 fw-bold">
+						    <input type="hidden" value="${cream.size220 }" name="220">
+						    <input type="hidden" value="${cream.size225 }" name="225">
+						    <input type="hidden" value="${cream.size230 }" name="230">
+						    <input type="hidden" value="${cream.size235 }" name="235">
+						    <input type="hidden" value="${cream.size240 }" name="240">
+						    <input type="hidden" value="${cream.size245 }" name="245">
+						    <input type="hidden" value="${cream.size250 }" name="250">
+						    <input type="hidden" value="${cream.size255 }" name="255">
+						    <input type="hidden" value="${cream.size260 }" name="260">
+						    <input type="hidden" value="${cream.size265 }" name="265">
+						    <input type="hidden" value="${cream.size270 }" name="270">
+						    <input type="hidden" value="${cream.size275 }" name="275">
+						    <input type="hidden" value="${cream.size280 }" name="280">
+						    <input type="hidden" value="${cream.size285 }" name="285">
+						    <input type="hidden" value="${cream.size290 }" name="290">
+						    <input type="hidden" value="${cream.size295 }" name="295">
+						    <input type="hidden" value="${cream.size300 }" name="300">
+						    <input type="hidden" value="${cream.size305 }" name="305">
+						    <input type="hidden" value="${cream.size310 }" name="310">
+						        <span id="priceSpan"></span>
+						    </div>
+						</div>
 
 			    	            <div class="col text-center ">
-			    	            	<button class="btn btn-light w-100" id="dibsBox">
-							            <span <c:if test="${cream.isLogin != 0 }">onclick="dibsCheck()"</c:if>> 
+			    	            	<button type="button" class="btn btn-light w-100" id="dibsBox">
+							            <span <c:if test="${cream.isLogin != 0 }" onclick="dibsCheck(event)"></c:if>>
 							                <c:choose>
 												<c:when test="${dibs eq null }">
 													<img class="dibsImage" alt="heart-fill" src="${pageContext.request.contextPath }/resources/img/auction/favorite-heart-false.svg">
@@ -268,6 +338,14 @@
 										</span>
 			    	            	</button>
 								</div>
+								<br>
+								<br>
+								
+			    	            <div class="col text-center ">
+			    	            	 <input type="submit" class="btn btn-secondary" value="구매하기" onclick="Confirmation()">
+								</div>
+		</form>
+								
 					</div>
 				</div>
 		</section>

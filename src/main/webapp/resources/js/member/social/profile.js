@@ -14,7 +14,7 @@ function toggleSubscribe(mem_idx, obj) {
 	if ($(obj).text() === "구독취소") {
 		$.ajax({
 			type: "DELETE",
-			url: "/shoecream/api/follow/" + mem_idx, // 왜 shoecream 을 붙여야하나 하아
+      		url: `${contextPath}/api/follow/${mem_idx}`,
 			dataType: "json"
 		}).done(res => {
 			$(obj).text("구독하기");
@@ -26,7 +26,7 @@ function toggleSubscribe(mem_idx, obj) {
 	} else {
 		$.ajax({
 			type: "POST",
-			url: "/shoecream/api/follow/" + mem_idx,
+      		url: `${contextPath}/api/follow/${mem_idx}`,
 			dataType: "json"
 		}).done(res => {
 			$(obj).text("구독취소");
@@ -45,7 +45,7 @@ function subscribeInfoModalOpen(mem_idx) {
 	$(".modal-subscribe").css("display", "flex");
 	
 	$.ajax({
-		url:`/shoecream/api/social/${mem_idx}/follow`,
+		url: `${contextPath}/api/social/${mem_idx}/follow`,
 		dataType:"json"
 	}).done(res=>{
 //		alert(mem_idx) // 잘 오고

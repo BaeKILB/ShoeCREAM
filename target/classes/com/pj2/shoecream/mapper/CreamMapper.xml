@@ -80,16 +80,43 @@
 	    WHERE cream_idx = #{cream_idx}
 	</select>
 	
-<!-- 	<select id="selectCreamDibs"> -->
-<!-- 	   select -->
-<!-- 	       * -->
-<!-- 	   from -->
-<!-- 	       dibs -->
-<!-- 	   where -->
-<!-- 	       product_idx = #{cream_idx } -->
-<!-- 	       and mem_idx = #{mem_idx } -->
-<!-- 	</select> -->
+	<select id="selectCreamDibs">
+	   select
+	       *
+	   from
+	       dibs
+	   where
+	       product_idx = #{cream_idx }
+	       and mem_idx = #{mem_idx }
+	</select>
 	
+	<insert id="insertDibs">
+	   insert into
+	       dibs
+	   values(
+	       null
+	       , #{mem_idx }
+	       , #{cream_idx }
+	       , 'Y'
+	   )
+	</insert>
+	
+	<delete id="deleteDibs">
+	   delete from
+	       dibs
+	   where
+	       mem_idx = #{mem_idx }
+	       and product_idx = #{cream_idx }
+	</delete>
+	
+	<select id="selectDibsCount">
+        SELECT 
+            count(product_idx) 
+        FROM 
+            dibs
+        WHERE 
+            product_idx=${cream_idx }
+	</select>
 	
 <!-- 	<select id="selectDibsCount"> -->
 <!--         SELECT  -->

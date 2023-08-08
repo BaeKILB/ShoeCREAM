@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>구매 완료</title>
+	<title>거래 완료</title>
 	<link href="${pageContext.request.contextPath }/resources/css/junggo/common.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath }/resources/css/junggo/trade_complete.css" rel="styleSheet">
 <%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
@@ -32,30 +32,42 @@
 				<h3>거래 정보</h3>
 				<ul>
 					<li>
-						<em>거래 번호</em>
-						<span>1090293019309120</span>
-					</li>
+						<em>거래 항목</em>
+							<c:choose>
+								<c:when test="${jungGoNoh.product_selector == 0}">
+									<span>중고거래</span>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${jungGoNoh.product_selector == 1}">
+											<span>경매</span>
+										</c:when>
+										<c:otherwise>
+												<span>크림</span>		
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
+					</li> 
 					<li>
 						<em>판매자</em>
-						<span>꾸미꾸미꾸</span>
+						<span>${jungGoNoh.mem_nickname}</span>
 					</li>
 					<li>
 						<em>구매자</em>
-						<span>옷산사람1</span>
+						<span>${jungGoNoh.buyier_nickname}</span>
 					</li>
 					<li>
 						<em>거래글 제목</em>
-						<span>
-							블랙야크 남성 기모바지 (33)
-						</span>
+						<span>${jungGoNoh.product_title}</span>
 					</li>
 					<li>
 						<em>거래 방식</em>
-						<span>슈크림페이</span>
+						<span>${jungGoNoh.product_payment}</span>
 					</li> 
 					<li>
-						<em>인수날짜</em>
-						<span>2023.07.20 11:13</span>
+						<em>물품 인수 날짜</em>
+						<span>${jungGoNoh.trans_date}</span>
 					</li> 
 				</ul>
 			</div>
@@ -67,17 +79,36 @@
 				<ul>
 					<li>
 						<em>결제 수단</em>
-						<span>
-							슈크림페이 포인트
-						</span>
-					</li>
+							<c:choose>
+								<c:when test="${jungGoNoh.pay_method == 1}">
+									<span>신용카드</span>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${jungGoNoh.pay_method == 2}">
+											<span>간편결제</span>
+										</c:when>
+										<c:otherwise>
+											<c:choose>
+												<c:when test="${jungGoNoh.pay_method == 3}">
+													<span>계좌이체</span>
+												</c:when>
+												<c:otherwise>
+													<span>페이이용X</span>		
+												</c:otherwise>
+											</c:choose>
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
+					</li> 
 					<li>
 						<em>결제 금액</em>
-						<span>25,000원</span>
+						<span><fmt:formatNumber value="${jungGoNoh.pay_total}" pattern="#,###"/>원</span>
 					</li>
 					<li>
 						<em>결제 확인 일시</em>
-						<span>2023.07.18 11:13</span>
+						<span>${jungGoNoh2.trans_date}</span>
 					</li>
 					
 				</ul>

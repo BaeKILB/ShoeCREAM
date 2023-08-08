@@ -97,7 +97,7 @@ public class SocialController {
 	}
 	
 	// 소셜 디테일 이미지 삭제
-	@PostMapping("social/{posts_idx}/ImageFileDelet")
+	@PostMapping("/social/{posts_idx}/ImageFileDelete")
 	public void ImageDelete(
 			@RequestParam String posts_image1,
 			@RequestParam String posts_idx,
