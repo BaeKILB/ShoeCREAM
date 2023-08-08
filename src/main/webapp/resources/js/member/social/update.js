@@ -20,7 +20,8 @@ function imageChoose(obj) {
 	console.log(posts_idx);
     $.ajax({
         type: "POST",
-        url: "ImageFileDelet",
+//        url: "ImageFileDelet",
+		url: `${contextPath}/social/${posts_idx}/ImageFileDelete`,
         data: {
             "posts_idx": posts_idx,
             "posts_image1": postsImage
@@ -30,10 +31,10 @@ function imageChoose(obj) {
             console.log("Result from server:", result);
             if ($.trim(result) === "true") {
                 alert("파일 삭제 성공");
-        $("#imageBtnArea").html("<input type='file' name='file1' onchange='imageChoose(this)' value='${image[0].posts_image1}' /><div class='upload-img'><img src='shoecream/resources/img/member/social/social.png' alt='' id='imageUploadPreview' /></div>");
+        $("#imageBtnArea").html("<input type='file' name='file1' onchange='imageChoose(this)' value='${image[0].posts_image1}' /><div class='upload-img'><img src='${contextPath}/resources/img/member/social/social.png' alt='' id='imageUploadPreview' /></div>");
         
         // 이미지를 설정한 이미지로 변경
-        $("#imageUploadPreview").attr("src", "/shoecream/resources/img/member/social/social.png");
+        $("#imageUploadPreview").attr("src", "${contextPath}/resources/img/member/social/social.png");
             } else {
                 alert("파일 삭제 실패!", result);
             }
