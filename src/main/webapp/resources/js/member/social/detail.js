@@ -61,8 +61,7 @@ function initScrollEvent() {
 
 // 스토리 로드하기
 function storyLoad(pageNum) {
-    let url;
-	url = `/shoecream/api/image/${posts_idx}/detail?pageNum=${pageNum}`;
+	let url = `${contextPath}/api/image/${posts_idx}/detail?pageNum=${pageNum}`;
     $.ajax({
         url: `${url}`,
         dataType: "json"
@@ -214,7 +213,7 @@ function toggleLike(posts_idx) {
 
 		$.ajax({
 			type: "post",
-			url: `/shoecream/api/image/${posts_idx}/likes`,
+            url: `${contextPath}/api/image/${posts_idx}/likes`,
 			ataType:"json"
 		}).done(res=>{
 			
@@ -235,7 +234,7 @@ function toggleLike(posts_idx) {
 		
 		$.ajax({
 			type:"delete",
-			url:`/shoecream/api/image/${posts_idx}/likes`,
+            url:`${contextPath}/api/image/${posts_idx}/likes`,
 			ataType:"json"
 		}).done(res=>{
 			
@@ -275,7 +274,7 @@ function addComment(posts_idx) {
 	
 	$.ajax({
 		type:"POST",
-		url:"/shoecream/api/comment",
+		url:`${contextPath}/api/comment`,
 		data:JSON.stringify(data),
 		contentType:"application/json;charset=utf-8",
 		dataType:"json"
@@ -327,7 +326,7 @@ function deleteComment(comment_idx) {
 	alert(comment_idx);
 	$.ajax({
 		type:"DELETE",
-		url:`/shoecream/api/comment/${comment_idx}`,
+		url:`${contextPath}/api/comment/${comment_idx}`,
 		dataType:"json"
 	}).done(res=>{
 		console.log("댓글 삭제 성공", res);

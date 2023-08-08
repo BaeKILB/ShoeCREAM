@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="../../inc_ex/header.jsp"%>
 <%-- 	<jsp:include page="../../inc_ex/header_social.jsp" /> --%>
-<%@ include file="../layout/header.jsp"%>
+<%-- <%@ include file="../layout/header.jsp"%> --%>
 <style>
 
 </style>
@@ -24,6 +25,9 @@
 	    </div>
 	</section>
 </main>
+<script>
+  var contextPath = "${pageContext.request.contextPath}";
+</script>
 <script src="${pageContext.request.contextPath }/resources/js/member/social/story.js"></script>
 	<!-- 푸터 시작 -->
 	<jsp:include page="../../inc_ex/footer.jsp" />

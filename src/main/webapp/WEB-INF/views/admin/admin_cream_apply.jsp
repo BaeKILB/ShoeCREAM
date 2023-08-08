@@ -25,11 +25,9 @@
 				<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }"> 
 				<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 				<div class="search_wrap">
-					<form action="creamProduct" method="get" class="searchForm">
+					<form action="creamApply" method="get" class="searchForm">
 						<select name="searchType" id="searchType">
-							<option value="brand" <c:if test="${param.searchType eq 'ci_brand'}">selected</c:if>>브랜드</option>
-			                <option value="title" <c:if test="${param.searchType eq 'ci_name'}">selected</c:if>>상품제목</option>
-			                <option value="code" <c:if test="${param.searchType eq 'ci_code'}">selected</c:if>>상품코드</option>
+							<option value="cream_idx" <c:if test="${param.searchType eq 'cream_idx'}">selected</c:if>>디자인 번호</option>
 						</select>
 						<input type="text" name="searchKeyword" value="${param.searchKeyword }" id="searchKeyword">
 						<input type="submit" value="검색" class="searchSubmit" style="cursor: pointer;">
@@ -39,15 +37,13 @@
 					<table class="board_list_table table">
 						<thead>
 							<tr>
-								<th class="code"><span class="ci_code">회원번호</span></th>
-								<th class="code"><span class="ci_code">회원이름</span></th>
-								<th class="code"><span class="ci_code">상품코드</span></th>
-								<th class="ci_name"><span class="ci_name">상품제목</span></th>
-								<th class="brand">브랜드</th>
-								<th class="model">모델번호</th>
-								<th class="image">상품옵션</th>
-								<th class="image">접수상태</th>
-								<th class="image">배송조회</th>
+								<th>신청회원번호</th>
+								<th>디자인코드</th>
+								<th>디자인명</th>
+								<th>사이즈</th>
+								<th>결제가격</th>
+								<th>신청일</th>
+								<th>배송조회</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -101,13 +97,13 @@
 				success: function(data) {
 					console.log(data);
 					$("#t_key").val(apikey);
-					$("#t_code").val('05');
-					$("#t_invoice").val('531930965823');
+					$("#t_code").val('04');
+					$("#t_invoice").val('831000843336');
 					
 					let t_key = $("#t_key").val();
 					let t_code = $("#t_code").val();
 					let t_invoice = $("#t_invoice").val();
-					window.open("http://info.sweettracker.co.kr/tracking/4?t_key="+t_key+"&t_code="+t_code+"&t_invoice="+t_invoice ,"popForm", "toolbar=no, width=540, height=467 left=700 top=300, directories=no, status=no, resizable=no");
+					window.open("http://info.sweettracker.co.kr/tracking/4?t_key="+t_key+"&t_code="+t_code+"&t_invoice="+t_invoice ,"popForm", "toolbar=no, width=540, height=800 left=700 top=100, directories=no, status=no, resizable=no");
 				}, error: function() {
 					
 				}
