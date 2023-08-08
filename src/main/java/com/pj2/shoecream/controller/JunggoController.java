@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cassandra.CassandraProperties.Request;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
 import org.springframework.stereotype.Controller;
@@ -49,11 +50,17 @@ import com.pj2.shoecream.vo.LCategory;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.PageInfoVO;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Controller
+@RequiredArgsConstructor
 public class JunggoController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JunggoController.class);
+	
+	@Autowired
+    private final SimpMessagingTemplate template; //특정 Broker로 메세지를 전달
 	
 	@Autowired
 	private JungGoNohService jungGoNohService;
@@ -243,7 +250,8 @@ public class JunggoController {
 		
 		// spring security 사용하여 idx 들고오기
 		int idx = -1;
-
+		String sId = "";
+		String nickname = "";
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -251,6 +259,8 @@ public class JunggoController {
 
 			// 구매자 회원번호
 			idx = mPrincipalDetails.getMember().getMem_idx();
+			sId = mPrincipalDetails.getMember().getMem_id();
+			nickname = mPrincipalDetails.getMember().getMem_nickname();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("error : JunggoPay");
@@ -284,7 +294,19 @@ public class JunggoController {
 				model.addAttribute("msg","상품 상태 업데이트에 실패하였습니다!");
 				return "inc/fail_back";
 			}
-			
+			  // 내부에서 원하는 시점에 stomp 메시지 보내기
+			 
+		    // ChatMessage 객체 생성하기
+		    Map<String,String> msg = new HashMap<String, String>();
+		    msg.put("chat_room_idx",(String)map.get("chat_room_idx"));
+		    msg.put("chat_msg_writer",Integer.toString(idx));
+		    msg.put("chat_msg_content",nickname + " 님이 예약을 진행하였습니다.");
+		    msg.put("sId",sId);
+		    msg.put("product_sell_status",product_sell_status);
+		    
+		    // convertAndSend() 메서드 사용하기
+		    template.convertAndSend("/pub/checkItemStatus", msg);
+			  
 			rttr.addAttribute("chat_area",map.get("chat_area"));
 			rttr.addAttribute("chat_room_idx",map.get("chat_room_idx"));
 			return "redirect:chatRooms";
@@ -437,6 +459,7 @@ public class JunggoController {
 						|| (product_sell_status.equals("거래대기중") && 
 								(product_payment.equals("안전페이") || product_payment.equals("안전페이,직거래"))
 							)
+						|| (product_sell_status.equals("예약중") && product_payment.equals("안전페이,직거래"))
 					)	
 			)
 		{
@@ -650,6 +673,70 @@ public class JunggoController {
 	}
 
 	
+	//찜하기 ajax
+	@ResponseBody
+	@RequestMapping(
+			value = "jungDibsBtn.ajax",
+			method = RequestMethod.POST,
+			produces = "application/text; charset=UTF-8"
+			)	
+	public String jungDibsBtn(@RequestParam Map<String,Object> map) {
+		// 멤버 dix 가져오기
+		int idx = -1;
+		MemberVO member = null;
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			
+
+			// 구매자 회원번호
+			idx = mPrincipalDetails.getMember().getMem_idx();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			
+		}
+		
+		//JSON 데이터 형태로 담는 객체
+		JSONObject jsonObj = new JSONObject();	
+		//==================================찜 해제, 등록 구현=====================================================
+		String product_idx = (String)map.get("product_idx");
+		JungGoNohVO jungGoNoh = new JungGoNohVO();
+		jungGoNoh.setBuyier_idx(idx);
+		jungGoNoh.setProduct_idx(product_idx);
+		int countReadCount =0;
+		int countDibs = 0;
+		if(((String)map.get("favorite_check")).equals("Y"))
+		{	//해제
+			jsonObj.put("favorite_check", "N");
+			countDibs = jungGoNohService.removeDibs(jungGoNoh);
+			countReadCount =jungGoNohService.removeReadCount(jungGoNoh);
+		}
+		else
+		{	
+			//등록
+			jsonObj.put("favorite_check", "Y");
+			countDibs = jungGoNohService.registDibs(jungGoNoh);
+			countReadCount =jungGoNohService.removeReadCount(jungGoNoh);
+		}
+		
+		//작업 요청 결과 판별
+		if(countDibs > 0 && countReadCount > 0) 
+		{ // 성공
+			try {
+					
+			} 
+			catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+			jsonObj.put("dibs_count", jProductService.getDibsCount(product_idx));
+			jsonObj.put("dibs_result", "true");
+			
+			// 글쓰기 작업 성공 시 리다이렉트
+			return jsonObj.toString(); 
+		} else { // 실패
+			return null;
+		} 
+	}
 	
 	
 

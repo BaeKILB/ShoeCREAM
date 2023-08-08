@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,9 +35,10 @@ import com.pj2.shoecream.vo.JungProductVO;
 
 
 
-
 @Controller
 public class StompController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(StompController.class);
 	
 	@Autowired
 	private ChatService chatService;
@@ -174,6 +177,7 @@ public class StompController {
 	public String makeJungChatRoom(@RequestParam Map<String,Object> map, Model model
 			, RedirectAttributes rttr) {
 		
+		
 		// 현재 로그인 된 아이디의 idx 번호 받을 변수
 		int idx = -1;
 		
@@ -186,6 +190,7 @@ public class StompController {
 		}
 		catch(Exception e) {
 			// 만약 idx 못받아오면 다시 로그인
+			logger.error("makeJungChatRoom - not login");
 			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
 			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
 			return "inc/fail_forward";
@@ -196,6 +201,7 @@ public class StompController {
 		// 다시 돌려보내기
 		if(idx == -1 || map == null) {
 
+			logger.error("makeJungChatRoom - param error");
 			model.addAttribute("msg","올바르지 않는 값입니다 다시 시도해주세요 !");
 			model.addAttribute("targetURL","productDetail?product_idx=" + (String)map.get("product_idx"));
 			return "inc/fail_forward";
@@ -217,6 +223,7 @@ public class StompController {
 			jProduct = jungProductService.getJungProductChat(chatRoom.getProduct_idx());
 		} catch(Exception e) {
 			// 만약 idx 못받아오면 다시 로그인
+			logger.error("makeJungChatRoom - getJungProductChat error");
 			model.addAttribute("msg","현 제품 번호에 해당하는 상품이 없습니다!");
 			model.addAttribute("targetURL","productDetail?product_idx=" + (String)map.get("product_idx"));
 			return "inc/fail_forward";
@@ -240,16 +247,18 @@ public class StompController {
 		}
 		// 만약 해당 방이 없지 만 지금 클릭한게 자기가 쓴 판매글이라면 되돌아 감
 		else if(chatRoom.getMem_seller_idx() == idx) {
-				rttr.addAttribute("msg", "본인의 판매글에 대한 채팅방은 만들 수 없습니다!");
-				rttr.addAttribute("targetURL", "productDetail?product_idx=" + (String)map.get("product_idx"));
+				logger.error("makeJungChatRoom - already make chat room");
+				model.addAttribute("msg", "본인의 판매글에 대한 채팅방은 만들 수 없습니다!");
+				model.addAttribute("targetURL", "productDetail?product_idx=" + (String)map.get("product_idx"));
 				return "inc/fail_forward"; 
 		}
 		
 		// 만약 이미 자신이 아닌 다른사람과 예약중이라면 ? 
 		// 이것도 되돌려 보내기
-		if(jProduct.getProduct_buyer_idx() != -1) {
-			rttr.addAttribute("msg", "이미 다른사람과 예약중에 있습니다. 찜 기능을 이용하시면 현황을 쉽게 확인 할 수 있습니다.");
-			rttr.addAttribute("targetURL", "productDetail?product_idx=" + (String)map.get("product_idx"));
+		if(jProduct.getProduct_buyer_idx() < 0) {
+			logger.error("makeJungChatRoom - already res chat room");
+			model.addAttribute("msg", "이미 다른사람과 예약중에 있습니다. 찜 기능을 이용하시면 현황을 쉽게 확인 할 수 있습니다.");
+			model.addAttribute("targetURL", "productDetail?product_idx=" + (String)map.get("product_idx"));
 			return "inc/fail_forward"; 
 		}
 		
@@ -274,10 +283,11 @@ public class StompController {
 				}
 			}		
 		}
-		
+
+		logger.error("makeJungChatRoom - error already make chat room");
 		//만약 방이 안만들어 졌다면 되돌려 보내기
-		rttr.addAttribute("msg", "채팅방 개설에 문제가 발생하였습니다!");
-		rttr.addAttribute("targetURL", "productDetail?product_idx=" + (String)map.get("product_idx"));
+		model.addAttribute("msg", "채팅방 개설에 문제가 발생하였습니다!");
+		model.addAttribute("targetURL", "productDetail?product_idx=" + (String)map.get("product_idx"));
 		return "inc/fail_forward"; 
 		
 		
@@ -426,7 +436,15 @@ public class StompController {
     		}
         }
        System.out.println("checkChatRoomStatus : getchatroom");
-       // 현재 상품 판매 상태 따라서 채팅창 정보바 레이아웃 설정
+       
+	   	// 아래 html 에 넣을 신고시 사용할 파라미터 문자열 셋업
+	   	String registReport = 
+	   			chatMap.get("product_idx")
+	   			+"," + chatMap.get("mem_seller_idx")
+	   			+"," + idx
+	   			;
+	   	chatMap.put("registReport", registReport);
+	   	// 현재 상품 판매 상태 따라서 채팅창 정보바 레이아웃 설정
 		switch ((String)chatMap.get("product_sell_status")) {
 		case "대기중":
 			if(idx == (Integer)chatMap.get("mem_buyer_idx")) {

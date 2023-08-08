@@ -46,8 +46,14 @@ public class JungProductService {
 		return mapper.selectJungProductCount(jproduct);
 	}
 	
+	// 현재 맴버 찜 리스트 불러오기
 	public List<String> getDibsList(int mem_idx){
 		return mapper.selectDibsList(mem_idx);
+	}
+	
+	// 특정 상품 찜 횟수 들고오기
+	public int getDibsCount(String product_idx) {
+		return mapper.selectDibsCount(product_idx);
 	}
 	
 	// 상품의 판매 상태를 바꾸기

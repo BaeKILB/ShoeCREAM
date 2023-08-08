@@ -10,8 +10,12 @@ import com.pj2.shoecream.vo.ChatMsgVO;
 public class ChatHandler {
 	
 	// ============ 채팅 상단 바에 ajax 로 반환할 html
+	
+
+	
 	// 0. 기본 틀
-	public String chatMsgBarBody(Map<String,Object> map ,boolean isBuyer, String product_btn, String user_btn) {
+	public String chatMsgBarBody(Map<String,Object> map ,boolean isBuyer
+			, String product_btn, String user_btn) {
 		
 		// 구매자 판매자에 따라 다르게 표기
 		String userStr = "";
@@ -78,14 +82,13 @@ public class ChatHandler {
 	}
 	
 	
-	
 	// 1. 대기중 상황 ================================
 	public String buyerWaitingHtml(Map<String,Object> map) {
 		String product_btn = 
 				"<input type='button' class='btn btn-primary' value='예약진행하기' onclick='startRes()'/>";
 		
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		
 				+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(0)'/>		"	    		
 				;
 	
@@ -96,7 +99,7 @@ public class ChatHandler {
 				"";
 		
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		
 				+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(0)'/>		"	    		
 				;
 	
@@ -124,7 +127,7 @@ public class ChatHandler {
 					"<input type='button' class='btn btn-primary' value='거래완료' onclick='transComplete()'/>";	
 		}
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		
 						+ "		<input type='button' class='btn btn-primary' value='예약취소'  onclick='chatRoomOut(1)'/>		"	    		
 						;
 		
@@ -136,7 +139,7 @@ public class ChatHandler {
 		
 		
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")/>		"	    		
 						+ "		<input type='button' class='btn btn-primary' value='예약취소' onclick='chatRoomOut(1)' />		"	    		
 						;
 		
@@ -161,7 +164,7 @@ public class ChatHandler {
 					"<input type='button' class='btn btn-primary' value='거래완료' onclick='transComplete()'/>";	
 		}
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")/>		"	    		
 						+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(2)' />		"	    		
 						;
 		
@@ -182,7 +185,7 @@ public class ChatHandler {
 		}
 		
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")/>		"	    		
 						+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(2)'/>		"	    		
 						;
 		
@@ -199,7 +202,7 @@ public class ChatHandler {
 				"<input type='button' class='btn btn-primary' value='인수 분쟁 신고'/>";	
 		
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		
 						+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(0)'/>		"	    		
 						;
 		
@@ -210,7 +213,7 @@ public class ChatHandler {
 				"<input type='button' class='btn btn-primary' value='인수 분쟁 신고'/>";	
 		
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기'/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		
 						+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(0)'/>		"	    		
 						;
 		

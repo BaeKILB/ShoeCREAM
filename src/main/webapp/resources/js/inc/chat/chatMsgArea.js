@@ -20,6 +20,7 @@ const loadChatMsgBar = () => {
 			,data: {
 				chat_room_area: getParams.get("chat_area")
 				,chat_room_idx: getParams.get("chat_room_idx")
+				,localURL : localURL
 			}
 			,dataType: "json"
 			,async: false

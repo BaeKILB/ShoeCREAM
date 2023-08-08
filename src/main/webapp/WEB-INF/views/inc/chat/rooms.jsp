@@ -131,9 +131,14 @@
 			</div>
 		</section>
    	</main>
+   	
+   	<%-- 채팅창 관련 js --%>
+	<script src="${pageContext.request.contextPath }/resources/js/inc/chat/chatMsgArea.js"></script>
+   	
 	<c:if test="${!empty room}">
 		<script>
-
+		let localURL = "${pageContext.request.contextPath}";
+		
 		//스크롤 자동 내리기
 		function scrolDown() {
 			let msgArea = document.querySelector("#msgArea");
@@ -195,7 +200,11 @@
 					myLoad = false;
 					
 					
-					// 만약 
+					// 만약 product_sell_status 가 담겨져서 오는지 확인하기
+					if(content["product_sell_status"] != null
+							|| content["product_sell_status"] != undefined){
+						loadChatMsgBar();
+					}
                },
                function(){console.log("연결 실패!")});
 
@@ -247,7 +256,5 @@
 		</script>
 	</c:if>
 	
-	<%-- 채팅창 관련 js --%>
-	<script src="${pageContext.request.contextPath }/resources/js/inc/chat/chatMsgArea.js"></script>
 </body>
 </html>

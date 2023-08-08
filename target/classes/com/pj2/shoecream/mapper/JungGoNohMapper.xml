@@ -19,7 +19,7 @@
 				, #{product_readcount} -- product_readcount
 				, #{product_brand} -- product_brand
 				, #{product_size} -- product_size
-				, 1 -- 식별코드 중고
+				, 0 -- 식별코드 중고
 				, #{product_price} -- product_price
 				, #{product_status} -- product_status
 				, '대기중' -- product_sell_status

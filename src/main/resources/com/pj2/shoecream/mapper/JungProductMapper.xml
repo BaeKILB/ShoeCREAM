@@ -203,6 +203,15 @@
 	     ;
 	</select>
 
+	<!-- 찜 갯수 count -->
+	<select id="selectDibsCount" >
+	    SELECT count(product_idx)
+	      FROM dibs
+	     WHERE product_idx = #{product_idx}
+		
+	</select>
+	
+
 	<update id="updateJungBuyerIdx">
 		UPDATE jung_product
 		SET product_buyer_idx = #{product_buyer_idx}
