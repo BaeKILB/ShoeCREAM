@@ -1198,6 +1198,7 @@ public class JunggoController {
 			return "inc/fail_back";
 		}
 		
+		
 		//관련 idx 세팅
 		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
 		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
@@ -1234,11 +1235,17 @@ public class JunggoController {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 			int writer_idx = mPrincipalDetails.getMember().getMem_idx();
+			int subject_idx = Integer.parseInt(mem_idx);
+			
+			if(subject_idx == writer_idx) {
+				model.addAttribute("msg", "리뷰대상자 아이디와 리뷰작성자 아이디가 동일합니다");
+				return "inc/close";
+			}
 			
 			//필요 idx 세팅
 			jungGoNoh.setBuyier_idx(writer_idx);
 			jungGoNoh.setProduct_idx(product_idx);
-			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
+			jungGoNoh.setMem_idx(subject_idx);	
 			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
 			
 			// 별점 미입력시 재입력하도록
@@ -1394,7 +1401,7 @@ public class JunggoController {
 					int ModifySuccess = jungGoNohService.modifyReview(jungGoNoh);
 					
 					if(ModifySuccess < 0) {
-							model.addAttribute("msg", "신청 실패");
+							model.addAttribute("msg", "수정 실패, 접속하신 아이디와 작성자가 다를 수 있으니 재확인 부탁드립니다.");
 							return "inc/fail_back";
 					} 	
 				}
