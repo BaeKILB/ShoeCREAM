@@ -156,7 +156,23 @@
 			LIMIT
 				#{listLimit}
 	</select>
-	
+	<select id="getCreamRequestList" resultType="com.pj2.shoecream.vo.CreamRequestVO">
+		SELECT *
+			FROM cream_item_request
+				<if test="!searchKeyword.equals('')">
+					WHERE 
+					<choose>
+						<when test="searchType.equals('cream_idx')">
+							cream_idx LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+					</choose>
+				</if>
+			ORDER BY
+					request_idx DESC
+			LIMIT
+				#{startRow}
+				, #{listLimit}
+	</select>
 
 <!--  민진 민진 민진민진민진민진민진민진민진민진민진민진 -->
 <!--  중고 상품 조회 -->

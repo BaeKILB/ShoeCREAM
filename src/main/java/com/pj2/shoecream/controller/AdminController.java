@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pj2.shoecream.service.AdminService;
 import com.pj2.shoecream.service.BoardService;
 import com.pj2.shoecream.vo.AuctionVO;
+import com.pj2.shoecream.vo.CreamRequestVO;
 import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
@@ -269,9 +270,26 @@ public class AdminController {
 	
 	// 크림 신청 내역
 	@GetMapping("creamApply")
-	public String creamApply() {
+	public String creamApply(HttpSession session, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "") String searchType, @RequestParam(defaultValue = "") String searchKeyword, Model model) {
 		
+		int listLimit = 10;
+		int startRow = (pageNum - 1) * listLimit;
 		
+		List<CreamRequestVO> creamRequestList = service.getCreamRequestList(searchType, searchKeyword, startRow, listLimit);
+		int listCount = service.getQstListCount(searchType);
+		
+		int pageListLimit = 5;
+		
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		PageInfoVO pageInfo = new PageInfoVO(listCount, pageListLimit, maxPage, startPage, endPage);
+		model.addAttribute("creamRequestList", creamRequestList);
+		model.addAttribute("pageInfo", pageInfo);
 		
 		return "admin/admin_cream_apply";
 	}

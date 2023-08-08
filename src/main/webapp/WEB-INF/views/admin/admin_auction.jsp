@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>경매상품관리</title>
 <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath }/resources/css/admin/adminMain.css" rel="stylesheet" type="text/css">
+<%-- <link href="${pageContext.request.contextPath }/resources/css/admin/adminMain.css" rel="stylesheet" type="text/css"> --%>
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminAuction.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminBoard.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
@@ -94,7 +94,11 @@ $(document).ready(function() {
 										<td class="price">${auctionmap.auc_start_price}</td>
 										<td class="price_dibs">${auctionmap.bid_price}</td>
 										<td class="auction_title">${auctionmap.auction_info}</td>
-										<td><img src="${pageContext.request.contextPath}${auctionmap.image_path }/${auctionmap.image1}" class="imagesize"/></td>
+										<td>
+											<div class="img_wrap">											
+												<img src="${pageContext.request.contextPath}${auctionmap.image_path }/${auctionmap.image1}" class="imagesize"/>
+											</div>
+										</td>
 <%-- 										<td class="date"><fmt:formatDate value="${auctionmap.auc_regist_date}" pattern="YYYY-MM-dd" /></td> --%>
 										<td class="date">${auctionmap.auc_regist_date}</td>
 										<td class="productdel" ><button style='cursor: pointer;'class="moreBtn" onclick="deleteProAuction('${auctionmap.auction_idx}')">삭제하기</button></td>

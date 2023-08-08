@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pj2.shoecream.mapper.AdminMapper;
 import com.pj2.shoecream.vo.AuctionVO;
+import com.pj2.shoecream.vo.CreamRequestVO;
 import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
@@ -77,6 +78,10 @@ public class AdminService {
 	// 일대일 내역 조회
 	public List<InquiryBoardVO> getMainQstBoard(int listLimit) {
 		return mapper.getMainQstBoard(listLimit);
+	}
+	// 크림 신청 내역
+	public List<CreamRequestVO> getCreamRequestList(String searchType, String searchKeyword, int startRow, int listLimit) {
+		return mapper.getCreamRequestList(searchType, searchKeyword, startRow, listLimit);
 	}
 	
 	// --------------- 민진 ---------------------------

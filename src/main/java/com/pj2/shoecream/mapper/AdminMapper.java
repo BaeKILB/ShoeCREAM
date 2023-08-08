@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.pj2.shoecream.vo.AuctionVO;
+import com.pj2.shoecream.vo.CreamRequestVO;
 import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
@@ -46,6 +47,8 @@ public interface AdminMapper {
 	int deleteUpdateQstAns(int qst_idx);
 	// 일대일 내역 조회
 	List<InquiryBoardVO> getMainQstBoard(int listLimit);
+	// 크림 신청 내역
+	List<CreamRequestVO> getCreamRequestList(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
 
 	
 	// --------------- 민진 ---------------------------
