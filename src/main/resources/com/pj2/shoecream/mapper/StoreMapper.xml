@@ -11,7 +11,7 @@
     <result column="product_title" property="productTitle"/>
   </resultMap>
 
-	<!-- 내 중고 판매 -->
+	<!-- 내 중고 판매 내역-->
 	<select id="selectProductSellList" resultMap="productDetailsResultMap">
 	  SELECT 
 	    mi.*,
@@ -37,13 +37,48 @@
 	    ORDER BY ai.auction_date DESC;
 	</select>
 	
+	<!-- 내 찜 내역 -->
+	<select id="selectDibList" resultType="HashMap">
+	SELECT
+	    mi.mem_idx,
+	    mi.mem_id,
+	    mi.mem_name,
+	    mi.mem_nickname,
+	    mi.mem_email,
+	    mi.mem_mtel,
+	    pi.product_idx,
+	    pi.image1,
+	    pi.image2,
+	    pi.image3,
+	    pi.image4,
+	    jp.product_idx AS jung_product_idx,
+	    jp.product_title AS jung_product_title,
+	    jp.product_info AS jung_product_info,
+	    jp.product_price AS jung_product_price,
+	    ai.auction_idx,
+	    ai.auction_title,
+	    ai.auction_info,
+	    ai.auc_start_price,
+	    ai.auc_buy_instantly,
+	    ai.auc_regist_date,
+	    CASE
+	        WHEN jp.product_idx IS NOT NULL THEN '중고상품'
+	        WHEN ai.auction_idx IS NOT NULL THEN '경매상품'
+	    END AS dibs_type
+	FROM
+	    dibs AS d
+	JOIN mem_info AS mi ON mi.mem_idx = d.mem_idx
+	JOIN product_image AS pi ON pi.product_idx = d.product_idx
+	LEFT JOIN jung_product AS jp ON jp.product_idx = d.product_idx
+	LEFT JOIN auction_item AS ai ON ai.auction_idx = d.product_idx
+  	WHERE mi.mem_idx = #{mem_idx}
+	</select>
 	
-	
-	
-	
+	<!-- 상점 회원 번호 -->
 	<select id="selectStoreInfo" resultType="hashMap">
 	    SELECT *
 	    FROM mem_info
 	    WHERE mem_idx = #{mem_idx}
 	</select>
+	
 </mapper>
