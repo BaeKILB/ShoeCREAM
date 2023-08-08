@@ -363,6 +363,7 @@ public class JunggoController {
 						|| (product_sell_status.equals("거래대기중") && 
 								(product_payment.equals("안전페이") || product_payment.equals("안전페이,직거래"))
 							)
+						|| (product_sell_status.equals("예약중") && product_payment.equals("안전페이,직거래"))
 					)	
 			)
 		{
@@ -534,6 +535,20 @@ public class JunggoController {
 		// jsp의 ${pageContext.request.contextPath } 값 들고오기 
 		String localURL = (String)map.get("localURL");
 
+		// 멤버 dix 가져오기
+		int idx = -1;
+		MemberVO member = null;
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			
+
+			// 구매자 회원번호
+			idx = mPrincipalDetails.getMember().getMem_idx();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			
+		}
 		
 		//JSON 데이터 형태로 담는 객체
 		JSONObject jsonObj = new JSONObject();	
@@ -580,11 +595,20 @@ public class JunggoController {
 		
 		// 조건에 맞는 중고 리스트 가져오기
 		System.out.println("조건에 맞는 중고 리스트 가져오기");
+
 		// 리스트 받아올 객체 초기화
 		List<Map<String,Object>> jungList = null;
+
+		// 찜목록 가져오기
+		jungList = jProductService.getJungProductExList(jproduct, pageInfo, orderMethod);
+		List<String> dibsList = jProductService.getDibsList(idx);
+		
+		// 아래 html 만드는 쪽에서 사용할 idx 변수
+		
+		int tempIdx = idx;
 		//에러처리
 		try {			
-			jungList = jProductService.getJungProductExList(jproduct, pageInfo, orderMethod);
+
 			map.put("jungList", jungList);
 		}
 		catch(Exception e){
@@ -596,6 +620,16 @@ public class JunggoController {
 		JSONArray joJungList = new JSONArray();
 		
 		jungList.forEach((e) -> {
+			// 찜한 상품 코드 받아온 리스트 안에 코드가 있을시
+			// faborite_check 를 Y 로
+			// 아니면 N 으로
+			e.put("user_idx" , tempIdx);
+			if(dibsList.contains(e.get("product_idx"))) {
+				e.put("favorite_check", "Y");
+			}
+			else {
+				e.put("favorite_check", "N");				
+			}
 			joJungList.put(jungHandler.makeProductHtml(e,localURL));
 		});
 		// for 문 활용하여 jsonObj에 값 넣어주기

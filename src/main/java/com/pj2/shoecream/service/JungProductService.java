@@ -46,6 +46,11 @@ public class JungProductService {
 		return mapper.selectJungProductCount(jproduct);
 	}
 	
+	public List<String> getDibsList(int mem_idx){
+		return mapper.selectDibsList(mem_idx);
+	}
+	
+	// 상품의 판매 상태를 바꾸기
 	public int updateSellStatus(String product_idx, String product_sell_status) {
 		return mapper.updateSellStatus(product_idx, product_sell_status);
 	}

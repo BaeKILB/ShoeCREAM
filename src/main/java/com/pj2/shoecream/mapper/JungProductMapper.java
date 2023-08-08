@@ -55,6 +55,8 @@ public interface JungProductMapper {
 			
 			);
 	
+	// 회원 찜 한 상품 idx 불러오기
+	List<String> selectDibsList(int mem_idx);
 
 	
 }
