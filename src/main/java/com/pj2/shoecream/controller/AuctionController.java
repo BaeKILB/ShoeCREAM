@@ -45,6 +45,7 @@ import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.JungGoNohVO;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.PayInfoVO;
 import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ProductImageVO;
 
@@ -82,14 +83,15 @@ public class AuctionController {
 			}
 	   	model.addAttribute("sId", sId);
 	   
-	   List<Map<String, Object>> lc_category = categoryService.getLcList();
-	   model.addAttribute("lc_category",lc_category);
+	   	List<Map<String, Object>> lc_category = categoryService.getLcList();
+	   	model.addAttribute("lc_category",lc_category);
 	   
-	   List<Map<String, Object>> mc_category = categoryService.getMcList(0);
-	   model.addAttribute("mc_category",mc_category);
-	   if (map != null) model.addAttribute("code", map);
-		   
-	   return "auction/auction_main";
+	   	List<Map<String, Object>> mc_category = categoryService.getMcList(0);
+	   	model.addAttribute("mc_category",mc_category);
+	   	
+	   	if (map != null) model.addAttribute("code", map);
+	   
+	   	return "auction/auction_main";
    }
    
     @GetMapping("AuctionDetail")
@@ -568,11 +570,18 @@ public class AuctionController {
 		// 구매자가 즉시구매가 가능한 포인트를 가지고 있다면 결제 로직 진행
 		int paymentResult = 0;
 		if(buyer.getCharge_point() > auc_buy_instantly) {
+			PayInfoVO payInfoVO = new PayInfoVO();
+			payInfoVO.setMem_idx(buyer.getMem_idx());
+			payInfoVO.setProduct_idx(auction_idx);
+			payInfoVO.setProduct_selector(1);
+			payInfoVO.setPay_method(2);
+			payInfoVO.setPay_total(auc_buy_instantly);
+			
 			PointInoutVO inVO = new PointInoutVO();
 			inVO.setMem_idx(buyer.getMem_idx());
 			inVO.setCharge_point(auc_buy_instantly);
 			inVO.setPoint_usage("결제사용");
-			paymentResult = payService.withdrawPoints(inVO); // 결제서비스.입출금메소드();
+			paymentResult = payService.productPayment(payInfoVO,inVO); // 결제서비스.입출금메소드();
 			// 결제 성공
 			if(paymentResult > 0) {
 				// 상품 입찰내역 정보
