@@ -420,26 +420,21 @@
 	
 	<!-- 포인트 입출금 -->
 	<select id="selectAdminPointList">
-	    SELECT 
+	    SELECT
 	        point_idx,
 	        mem_idx,
 	        charge_point,
 	        point_status,
 	        point_date,
 	        admin_account_amt
-	    FROM point_inout 
-	    	ORDER BY point_date ASC
+	    FROM point_inout
+	        ORDER BY point_date ASC
 	</select>
 	<select id="selectAdminInfo">
 		SELECT * 
 				FROM mem_info
 				WHERE mem_id = 'admin'
 	</select>
-
-
-
-
-
 
 
 
