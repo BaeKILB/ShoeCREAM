@@ -30,7 +30,7 @@
 <%-- <jsp:include page="../../../inc/top1.jsp"></jsp:include> --%>
 
 <script type="text/javascript">
-	function deleteConfirm() {
+	function deleteConfirmPD() {
 		if(!confirm("게시글을 삭제 하시겠습니까? 삭제하시면 네를 눌려주세요")) {
 			return false;
 		} else {
@@ -38,6 +38,14 @@
 		}
 	}
 	
+	function deleteConfirmRV() {
+		if(!confirm("게시글을 삭제 하시겠습니까? 삭제하시면 네를 눌려주세요")) {
+			return false;
+		} else {
+			location.href="${pageContext.request.contextPath}/reviewDelete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}";
+		}
+	}
+	 
 
 </script>
 
@@ -219,7 +227,7 @@
 							
 							<c:choose>
 								<c:when test="${principal.member.mem_idx == jungGoNoh.mem_idx }">
-									<button type="button"  class="delete_btn" onclick="deleteConfirm()">삭제하기</button>
+									<button type="button"  class="delete_btn" onclick="deleteConfirmPD()">삭제하기</button>
 								</c:when>
 								<c:otherwise>
 									<c:choose>
@@ -297,18 +305,15 @@
 						</div>
 					</div>
 					<div class="more_cont">
-					<a class="modify_btn" href="${pageContext.request.contextPath}/registJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시작성</a>
-							<a class="modify_btn" href="${pageContext.request.contextPath}/modifyJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시수정</a>
-							<a class="modify_btn" href="${pageContext.request.contextPath}/reviewDelete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시삭제</a>
+					<a class="modify_btn" href="${pageContext.request.contextPath}/registJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" onclick="window.open(this.href, '_blank', 'width=500, height=400'); return false;">임시작성</a>
+							<a class="modify_btn" href="${pageContext.request.contextPath}/modifyJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" onclick="window.open(this.href, '_blank', 'width=500, height=400'); return false;">임시수정</a>
+							<a class="modify_btn" onclick="deleteConfirmRV()">임시삭제</a>
 						<div class="rev_cont">  
 						
 						<c:forEach var="moreReviewListSmall" items="${moreReviewListSmall}">
 						<div>
 						<img class="buyer_profile" src="${pageContext.request.contextPath}/${moreReviewListSmall.mem_profileImageUrl}">
 							<span class="rev_name">${moreReviewListSmall.mem_nickname}</span>
-							<a class="modify_btn" href="${pageContext.request.contextPath}/registJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시작성</a>
-							<a class="modify_btn" href="${pageContext.request.contextPath}/modifyJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시수정</a>
-							<a class="modify_btn" href="${pageContext.request.contextPath}/reviewDelete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}">임시삭제</a>
 							<span class="rev_date">${moreReviewListSmall.review_date}</span>
 							<ul class=""> 
 								<li class="">

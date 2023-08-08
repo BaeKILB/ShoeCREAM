@@ -1091,11 +1091,17 @@ public class JunggoController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int reporter_idx = mPrincipalDetails.getMember().getMem_idx();
+		int subject_idx = Integer.parseInt(mem_idx);
+		
+		if(subject_idx == reporter_idx) {
+			model.addAttribute("msg", "신고대상자 아이디와 신고 신청자 아이디가 동일합니다");
+			return "inc/close";
+		}
 
 		//필요한 기초정보 불러올 idx 세팅
 		jungGoNoh.setBuyier_idx(reporter_idx);
 		jungGoNoh.setProduct_idx(product_idx);
-		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
+		jungGoNoh.setMem_idx(subject_idx);	
 		//System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
 		
 		//입력 전 중복신청 사항이 있는지 조회
@@ -1119,7 +1125,7 @@ public class JunggoController {
 				}
 		
 		
-		return "redirect:/productDetail?product_idx="+product_idx;
+		return "inc/close";
 	}
 	
 	//--------------------신고 조회--------------------------
@@ -1266,7 +1272,7 @@ public class JunggoController {
 					}
 
 			
-			return "home";
+			return "inc/close";
 		}
 	
 	
@@ -1409,7 +1415,7 @@ public class JunggoController {
 			
 					
 			
-			return "home";
+			return "inc/close";
 		}
 		
 		//-------------------------리뷰 삭제-----------------------------
