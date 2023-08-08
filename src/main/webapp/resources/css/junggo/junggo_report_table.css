@@ -26,3 +26,16 @@ td {
 	padding:5px;
 	margin:10px;
 }
+
+.back_btn {
+	margin-top:8px;
+	width:20%;
+	height:25px;
+	font-size: 15px;
+	font-weight: 300;
+	color: white;
+	margin-left:10px;
+	background-color: #0a0a31;
+	border-radius: 10px;
+	float:center;
+}

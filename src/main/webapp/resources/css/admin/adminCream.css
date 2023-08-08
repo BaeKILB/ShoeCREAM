@@ -65,3 +65,32 @@ i.fa.pgi {
 	color: white;
 	background: #624bff;
 }
+.moreBtn {
+	display: inline-block;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #624bff;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border: 1px solid;
+    border-radius: 0.375rem;
+    background-color: transparent;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.ins_ans.moreBtn, .mod_ans.moreBtn {
+	padding: 0.2rem 0.5rem;
+}
+.ins_ans {
+	background: #0ea5e9;
+	border: none;
+	color: white !important;
+}
+.ins_ans:hover {
+	background: #32b3ec;
+}

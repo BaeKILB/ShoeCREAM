@@ -110,13 +110,13 @@ public class JungGoNohService {
 			JungGoNohVO jungGoNohReport = jungGoNohMapper.selectReview2(jungGoNoh);
 			return jungGoNohReport;
 		}
-		//리뷰수정
+		//====================리뷰수정===================================
 		public int modifyReview(JungGoNohVO jungGoNoh) {
 			// TODO Auto-generated method stub
 			return jungGoNohMapper.modifyReview(jungGoNoh);
 		}
 		
-		//리뷰삭제
+		//=========================리뷰삭제========================
 		public int deleteReview(JungGoNohVO jungGoNoh) {
 			// TODO Auto-generated method stub
 			return jungGoNohMapper.deleteReview(jungGoNoh);
@@ -125,6 +125,14 @@ public class JungGoNohService {
 		//==========리뷰 관련 판매 목록=======================
 		public List<JungGoNohVO> moreReviewListSmall(int mem_idx) {
 			return jungGoNohMapper.getMoreReviewListSmall(mem_idx);
+		}
+		
+		// == DBPay_info===========================================
+		public JungGoNohVO getPayInfo(String product_idx) {
+
+			JungGoNohVO jungGoNoh = jungGoNohMapper.selectPayInfo(product_idx);
+				
+			return jungGoNoh;
 		}
 
 }

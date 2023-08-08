@@ -1095,11 +1095,17 @@ public class JunggoController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int reporter_idx = mPrincipalDetails.getMember().getMem_idx();
+		int subject_idx = Integer.parseInt(mem_idx);
+		
+		if(subject_idx == reporter_idx) {
+			model.addAttribute("msg", "신고대상자 아이디와 신고 신청자 아이디가 동일합니다");
+			return "inc/close";
+		}
 
 		//필요한 기초정보 불러올 idx 세팅
 		jungGoNoh.setBuyier_idx(reporter_idx);
 		jungGoNoh.setProduct_idx(product_idx);
-		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
+		jungGoNoh.setMem_idx(subject_idx);	
 		//System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
 		
 		//입력 전 중복신청 사항이 있는지 조회
@@ -1123,7 +1129,7 @@ public class JunggoController {
 				}
 		
 		
-		return "redirect:/productDetail?product_idx="+product_idx;
+		return "inc/close";
 	}
 	
 	//--------------------신고 조회--------------------------
@@ -1196,6 +1202,7 @@ public class JunggoController {
 			return "inc/fail_back";
 		}
 		
+		
 		//관련 idx 세팅
 		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
 		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
@@ -1232,11 +1239,17 @@ public class JunggoController {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 			int writer_idx = mPrincipalDetails.getMember().getMem_idx();
+			int subject_idx = Integer.parseInt(mem_idx);
+			
+			if(subject_idx == writer_idx) {
+				model.addAttribute("msg", "리뷰대상자 아이디와 리뷰작성자 아이디가 동일합니다");
+				return "inc/close";
+			}
 			
 			//필요 idx 세팅
 			jungGoNoh.setBuyier_idx(writer_idx);
 			jungGoNoh.setProduct_idx(product_idx);
-			jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));	
+			jungGoNoh.setMem_idx(subject_idx);	
 			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^"+jungGoNoh);
 			
 			// 별점 미입력시 재입력하도록
@@ -1270,7 +1283,7 @@ public class JunggoController {
 					}
 
 			
-			return "home";
+			return "inc/close";
 		}
 	
 	
@@ -1392,7 +1405,7 @@ public class JunggoController {
 					int ModifySuccess = jungGoNohService.modifyReview(jungGoNoh);
 					
 					if(ModifySuccess < 0) {
-							model.addAttribute("msg", "신청 실패");
+							model.addAttribute("msg", "수정 실패, 접속하신 아이디와 작성자가 다를 수 있으니 재확인 부탁드립니다.");
 							return "inc/fail_back";
 					} 	
 				}
@@ -1413,7 +1426,7 @@ public class JunggoController {
 			
 					
 			
-			return "home";
+			return "inc/close";
 		}
 		
 		//-------------------------리뷰 삭제-----------------------------
@@ -1441,38 +1454,103 @@ public class JunggoController {
 		
 		
 	//------------------------- 예약취소 폼 이동---------------------
-	@GetMapping("resCancel")
-	public String resCancel() {
-		return "junggo/res_cancel";
-		
-	}
+		@GetMapping("resCancel")
+		public String resCancel(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+			
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/res_cancel";
+			
+		}
 	
 	//------------------------- 예약완료 폼 이동---------------------
-	@GetMapping("resComplete")
-	public String resComplete() {
-		return "junggo/res_complete";
-		
-	}
+		@GetMapping("resComplete")
+		public String resComplete(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+			
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/res_complete";
+			
+		}
 	
 	//------------------------- 결제완료 폼 이동---------------------
-	@GetMapping("payComplete")
-	public String payComplete() {
-		return "junggo/pay_complete";
+		@GetMapping("payComplete")
+		public String payComplete(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
 			
-	}
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/pay_complete";
+				
+		}
 	
 	//------------------------- 거래취소 폼 이동---------------------
-	@GetMapping("tradeCancel")
-	public String tradeCancel() {
-		return "junggo/trade_cancel";
-		
-	}
+		@GetMapping("tradeCancel")
+		public String tradeCancel(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+			
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/trade_cancel";
+			
+		}
 
 	//------------------------- 거래완료 폼 이동---------------------
-	@GetMapping("tradeComplete")
-	public String resCancelCom() {
-		return "junggo/trade_complete";
-	}
+		@GetMapping("tradeComplete")
+		public String resCancelCom(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+			
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/trade_complete";
+		}
 	
 	
 	

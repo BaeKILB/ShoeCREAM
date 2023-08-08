@@ -45,7 +45,7 @@ public class BidService {
 	}
 	// 즉시구매
 	public int insertBidBuyNow(Map<String, Object> map) {
-		return mapper.updateBidBuyNow(map);
+		return mapper.insertBidBuyNow(map);
 	}
 
 }
