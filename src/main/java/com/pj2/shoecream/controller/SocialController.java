@@ -105,7 +105,7 @@ public class SocialController {
 			HttpServletResponse response,
 			HttpSession session,
 			Model model) {
-		
+		System.out.println("소셜 디테일 이미지 삭제 버튼 클릭 도;ㅣ니..?");
 	    response.setCharacterEncoding("UTF-8");
 	    // 결과를 저장할 변수를 선언합니다.
 	    boolean isFileDeleted;
