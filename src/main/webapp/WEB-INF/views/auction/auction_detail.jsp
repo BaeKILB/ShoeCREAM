@@ -407,6 +407,7 @@
 		                <div class="col"> <!-- 판매자 정보 -->
 							<div class="fs-5 fw-bold">판매자 정보</div>
 							<span id="sellerInfo">
+<%-- 							<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }"> <!-- 판매자 상점 URL 입력필요 --> --%>
 								<a href="#?mem_idx=${sellerInfo.mem_idx }"> <!-- 판매자 상점 URL 입력필요 -->
 									<span>${sellerInfo.mem_nickname }</span>
 								</a>
