@@ -260,9 +260,17 @@ public class AdminController {
 		return isDeleteString;
 	}
 	
-	// 크림 신청
+	// 크림 게시글 등록
+	@GetMapping("creamInsert")
+	public String creamInsert() {
+		return "admin/admin_cream_insert";
+	}
+	
+	// 크림 신청 내역
 	@GetMapping("creamApply")
 	public String creamApply() {
+		
+		
 		
 		return "admin/admin_cream_apply";
 	}

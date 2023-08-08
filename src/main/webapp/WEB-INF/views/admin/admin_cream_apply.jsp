@@ -101,13 +101,13 @@
 				success: function(data) {
 					console.log(data);
 					$("#t_key").val(apikey);
-					$("#t_code").val('05');
-					$("#t_invoice").val('531930965823');
+					$("#t_code").val('04');
+					$("#t_invoice").val('831000843336');
 					
 					let t_key = $("#t_key").val();
 					let t_code = $("#t_code").val();
 					let t_invoice = $("#t_invoice").val();
-					window.open("http://info.sweettracker.co.kr/tracking/4?t_key="+t_key+"&t_code="+t_code+"&t_invoice="+t_invoice ,"popForm", "toolbar=no, width=540, height=467 left=700 top=300, directories=no, status=no, resizable=no");
+					window.open("http://info.sweettracker.co.kr/tracking/4?t_key="+t_key+"&t_code="+t_code+"&t_invoice="+t_invoice ,"popForm", "toolbar=no, width=540, height=800 left=700 top=100, directories=no, status=no, resizable=no");
 				}, error: function() {
 					
 				}
