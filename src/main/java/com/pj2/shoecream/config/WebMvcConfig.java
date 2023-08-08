@@ -14,7 +14,8 @@
 //	
 //    private String uploadDir = 
 //    		"C:/Users/kikir/Documents/itwill/workspace_spring5/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ShoeCREAM/resources/upload/social/";
-//	
+//	C:\Users\ user\Documents\workspace_spring5\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ShoeCREAM\resources\ upload -- 아이티윌 저장 장소
+	
 //    @Override
 //	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //		WebMvcConfigurer.super.addResourceHandlers(registry);

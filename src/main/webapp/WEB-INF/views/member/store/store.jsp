@@ -499,11 +499,19 @@ function payAuction(idx, price, id, title){
 											<div class="goods_image">
 <%-- 												<c:forEach items="${auctionfileList }" var="file"> --%>
 													<c:choose>
+														<c:when	test="${auctionList.auc_state eq '대기' }">
+															<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
+															<span class="goods_front"> 경매 대기 중 </span>
+														</c:when>
 														<c:when	test="${auctionList.auc_state eq '진행' }">
 															<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
 															<span class="goods_front"> 경매 진행 중 </span>
 														</c:when>
-														<c:when test="${file.file_num eq auctionList.auction_idx && auctionList.auction_status eq '경매마감' }">
+														<c:when	test="${auctionList.auc_state eq '낙찰' }">
+															<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
+															<span class="goods_front"> 경매 낙찰 중 </span>
+														</c:when>
+														<c:when test="${file.file_num eq auctionList.auction_idx && auctionList.auction_status eq '입찰' }">
 															<img src="${pageContext.request.contextPath }/resources/fileUpload${file.file_path}/${file.file_name}" alt="상품 이미지">
 															<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
 															경매 마감
