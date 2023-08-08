@@ -201,6 +201,8 @@
 	<select id="selectSellerInfo" resultType="map">
 	    select
 	    	mem_nickname
+	    	, mem_idx
+	    	, mem_profileImageUrl
 	    from
 	    	mem_info
 	    where

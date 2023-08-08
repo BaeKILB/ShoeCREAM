@@ -412,6 +412,17 @@ public class AuctionController {
 			, Model model
 			, HttpSession session) {
 
+	   	int sId = 0;
+		
+	   	try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			sId = mPrincipalDetails.getMember().getMem_idx();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	   	model.addAttribute("sId", sId);
+    	
 		// db에서 자료 불러온다
 		Map<String, Object> auction = service.getAuction(auction_idx);
 		model.addAttribute("auction", auction);

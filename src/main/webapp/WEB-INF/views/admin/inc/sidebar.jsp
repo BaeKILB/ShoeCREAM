@@ -74,6 +74,9 @@
 							</a>
 							<ul class="cont_li_wrap creamList">
 								<li class="cont_item_b">
+									<a class="cont_item_list creamIns" href="creamInsert">크림 상품 등록</a>
+								</li>
+								<li class="cont_item_b">
 									<a class="cont_item_list creamPro" href="creamProduct">크림 상품 관리</a>
 								</li>
 								<li class="cont_item_b">
@@ -104,7 +107,7 @@
 							</a>
 							<ul class="cont_li_wrap dwList">
 								<li class="cont_item_b">
-									<a class="cont_item_list pointList" href="PointList">포인트 입출금 내역</a>
+									<a class="cont_item_list pointList" href="adminPointAccount">포인트 입출금 내역</a>
 								</li>
 								<li class="cont_item_b">
 									<a class="cont_item_list dealList" href="DealList">거래 입출금 내역</a>

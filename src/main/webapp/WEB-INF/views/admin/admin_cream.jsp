@@ -30,9 +30,9 @@
 				<div class="search_wrap">
 					<form action="creamProduct" method="get" class="searchForm">
 						<select name="searchType" id="searchType">
-							 <option value="brand" <c:if test="${param.searchType eq 'ci_brand'}">selected</c:if>>브랜드</option>
-			                <option value="title" <c:if test="${param.searchType eq 'ci_name'}">selected</c:if>>상품제목</option>
-			                <option value="code" <c:if test="${param.searchType eq 'ci_code'}">selected</c:if>>상품코드</option>
+							 <option value="code" <c:if test="${param.searchType eq 'cream_idx'}">selected</c:if>>디자인 코드</option>
+			                <option value="title" <c:if test="${param.searchType eq 'cream_title'}">selected</c:if>>디자인명</option>
+
 						</select>
 						<input type="text" name="searchKeyword" value="${param.searchKeyword }" id="searchKeyword">
 						<input type="submit" value="검색" class="searchSubmit" style="cursor: pointer;">
@@ -42,29 +42,15 @@
 					<table class="board_list_table table">
 						<thead>
 							<tr>
-								<th class="code"><span class="ci_code">상품 코드</span></th>
-								<th class="ci_name"><span class="ci_name">상품제목</span></th>
-								<th class="brand">브랜드</th>
-								<th class="model">모델번호</th>
-								<th class="image">상품이미지</th>
-								<th class="color">상품색상</th>
-								<th class="startdate">발매일</th>
-								<th class="startprice">발매가</th>
-								<th class="delete">삭제하기</th>
+								<th class="code"><span class="cream_idx">디자인 코드</span></th>
+								<th class="cream_title"><span class="cream_title">디자인명</span></th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="creammap" items="${creammap}">
 								<tr>
-									<td class="code"><span class="product_code"> <span class="sv_member">${creammap.ci_code}</span></span></td>
-									<td class="ci_name"> ${creammap.ci_name}</td>
-									<td class="brand">${creammap.ci_brand}</td>
-									<td class="model">${creammap.ci_model_num}</td>
-									<td><img src="${pageContext.request.contextPath}${creammap.image_path }/${creammap.image1}" class="imagesize"/></td>
-									<td class="color">${creammap.ci_color}</td>
-									<td class="startdate"><fmt:formatDate value="${creammap.ci_rel_date}" pattern="YYYY-MM-dd" /></td>
-									<td class="startprice">${creammap.ci_origin_price}</td>
-									<td class="productdel" ><button style='cursor: pointer;'class="moreBtn" onclick="deleteProcream('${creammap.ci_code}')">삭제하기</button></td>
+									<td class="code"><span class="cream_idx"> <span class="sv_member">${creammap.cream_idx}</span></span></td>
+									<td class="cream_title"> ${creammap.cream_title}</td>
 								</tr>
 							</c:forEach>
 						</tbody>

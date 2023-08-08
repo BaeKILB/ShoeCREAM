@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../layout/header.jsp"%>
+<%@ include file="../../inc_ex/header.jsp"%>
 <script>
   let posts_idx = ${posts_idx};
 </script>
@@ -17,7 +17,7 @@
                     <a href="home.html" class="">
                         <img src="${pageContext.request.contextPath }/resources/img/member/social/social.png" alt="">
                     </a>
-                    <p>사진 업로드</p>
+                    <p>사진 수정</p>
                 </div>
                 <!--사진업로드 로고 end-->
                 
@@ -55,5 +55,8 @@
             <!--사진업로드 박스 end-->
         </main>
         <br/><br/>
-	<script src="${pageContext.request.contextPath }/resources/js/member/social/update.js"></script>
+<script>
+	var contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath }/resources/js/member/social/update.js"></script>
 	

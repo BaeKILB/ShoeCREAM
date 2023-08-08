@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	
-<%@ include file="../layout/header.jsp"%>
+<%@ include file="../../inc_ex/header.jsp"%>
 
     <!--사진 업로드페이지 중앙배치-->
         <main class="uploadContainer">

@@ -5,6 +5,7 @@ let dataObj;
 
 // url 파라미터 가져오기
 let getParams = new URL(location.href).searchParams;
+
 console.log(getParams);
 
 let obj = {}
@@ -14,6 +15,7 @@ if(getParams.get("lc_code") != null){
 if(getParams.get("mc_code") != null){	
 	obj["mc_code"] = getParams.get("mc_code");
 }
+obj["localURL"] = localURL;
 console.log(obj);
 
 
@@ -46,9 +48,9 @@ function initAjax() {
 	}
 }
 
-
+// 중고 상품 항목 불러오기
 function loadItemAjax(obj) {
-	
+	obj["localURL"] = localURL;
 	let checkError = false;
 	
 	let data =  $.ajax({
@@ -70,6 +72,7 @@ function loadItemAjax(obj) {
     return data.responseJSON;
 
 }
+
 
 
 // ajax 로 받아온 데이터 페이지에 적용

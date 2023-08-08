@@ -27,12 +27,11 @@ public class StoreController {
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int sId = mPrincipalDetails.getMember().getMem_idx();
 
-
-		
 		// 중고거래 판매 내역
 		List<HashMap<String, Object>> productSellList = storeService.selectProductSellList(mem_idx);
 		model.addAttribute("productSellList", productSellList);
 		System.out.println("스토어 중고거래 값들 :" + productSellList);
+		
 		// 경매 등록 내역
 		List<HashMap<String, String>> auctionList = storeService.selectAuctionList(mem_idx); 
 		model.addAttribute("auctionList", auctionList);

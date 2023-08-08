@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ include file="../layout/header.jsp"%>
+<%@ include file="../../inc_ex/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,7 +103,7 @@ function payAuction(idx, price, id, title){
  
 </script>
 	<!-- 헤더 시작 -->
-	<jsp:include page="../../inc_ex/header_social.jsp" />
+<%-- 	<jsp:include page="../../inc_ex/header_social.jsp" /> --%>
 	<!-- main_content 영역 -->
 	<div id="main_content">
 		<!-- 프로필 영역 -->

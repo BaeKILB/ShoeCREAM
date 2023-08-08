@@ -86,6 +86,93 @@
 		;			
 	</select>
 	
+	
+	<!-- 불러오는 항목들 
+	product_idx,mem_idx,product_title,product_info,product_payment
+	,lc_code,mc_code
+	,product_date,product_readcount,product_brand,product_size
+	,product_selector,product_price,product_status,product_sell_status
+	,product_location,product_buyer_idx
+	,image1,image2,image3,image4,image_path
+	,mem_idx,mem_id,mem_name,mem_nickname,mem_status,mem_profileImageUrl
+	,product_idx,dibs_count -->
+	<select id="selectJungProductExList" resultType="map">
+		SELECT *
+		FROM 
+			(
+				SELECT jp.product_idx, mem_idx, product_title, product_info, product_payment, 
+				lc_code, mc_code, product_date, product_readcount, product_brand, 
+				product_size, product_selector, product_price, product_status, product_sell_status, 
+				product_location, product_buyer_idx, image1, image2, image3, image4, image_path
+				FROM
+					jung_product jp
+					LEFT JOIN
+					product_image img 
+					ON jp.product_idx = img.product_idx 
+				WHERE
+				product_sell_status != "거래완료"
+				<if test='jproduct.lc_code != null'>
+					<if test='jproduct.lc_code != 0'>
+						AND
+						lc_code = #{jproduct.lc_code}
+						<if test='jproduct.mc_code != null'>
+							<if test='jproduct.mc_code != 0'>
+								AND
+								mc_code = #{jproduct.mc_code}
+							</if>
+						</if>
+					</if>
+				</if>
+			
+		 		ORDER BY 
+		 		<choose>
+		 			<when test="orderMethod != null">
+				 		<choose>
+				<!--  			<when test="steamed"> -->
+				<!--  			</when> -->
+				 			<when test="orderMethod.equals('view')">
+				 				product_readcount desc
+				 			</when>
+				 			<otherwise>
+						 		product_date desc
+				 			</otherwise>
+				 		</choose>
+		 			</when>
+		 			<otherwise>
+				 		product_date desc
+		 			</otherwise>
+		 		</choose>
+				LIMIT #{startCount}, #{setPageListLimit}
+			) jp1
+			LEFT JOIN
+			(
+			SELECT mem_idx,mem_id,mem_name,mem_nickname
+			,mem_status,mem_profileImageUrl
+			FROM mem_info
+			) mi
+			ON
+			jp1.mem_idx = mi.mem_idx
+			JOIN 
+			(
+			SELECT
+				jp2.product_idx 
+				, sum(CASE
+					WHEN di.product_idx IS NULL THEN 0
+					ELSE 1
+				END) AS dibs_count
+			FROM
+				jung_product jp2 LEFT JOIN dibs di
+				ON jp2.product_idx = di.product_idx
+			GROUP BY
+				jp2.product_idx
+				) di
+			ON di.product_idx = jp1.product_idx
+			GROUP BY
+				jp1.product_idx	
+			;			
+	</select>
+	
+	<!-- 카테고리에 대한 중고 제품 갯수 구하기 -->
 	<select id="selectJungProductCount" parameterType="JungProductVO">
 		SELECT count(product_idx)
 		FROM 
@@ -104,6 +191,16 @@
 				</if>
 			</if>
 			;
+	</select>
+	
+	<!-- 중고 상품들을 기준으로 찜 목록 불러오기 -->
+		<!-- 찜 검색 -->
+	<select id="selectDibsList" resultType="String">
+	    SELECT product_idx
+	      FROM dibs
+	     WHERE mem_idx = ${buyier_idx}
+	     AND favorite_check = "Y"
+	     ;
 	</select>
 
 	<update id="updateJungBuyerIdx">

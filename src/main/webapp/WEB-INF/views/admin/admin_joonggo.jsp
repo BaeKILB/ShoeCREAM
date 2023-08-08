@@ -31,6 +31,17 @@ function deletePro(product_idx) {
         }
     });
 }
+$(document).ready(function() {
+	  // 상품 제목이 20글자를 넘어가면 나머지를 생략하고 "..."으로 표시
+	  $('.product_info').each(function() {
+	    var title = $(this).text();
+	    var maxLength = 20; // 표시할 최대 글자 수
+	    if (title.length > maxLength) {
+	      var shortenedTitle = title.substring(0, maxLength) + '...';
+	      $(this).text(shortenedTitle);
+	    }
+	  });
+	});
 
 </script>
 <script type="text/javascript">
