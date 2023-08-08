@@ -67,23 +67,13 @@ $(function() { // onload
         $("#mcHref").text('');
         $("#mcHref").parent().addClass('d-none');
 		
+		if($(this).attr('class') == 'accordion-button ct_lc_item_btn collapsed') {
+			$("#itemList").empty();
+			getList();
+			return;
+		}
 		
-		// 동일 대분류 선택시
-        if($(this).siblings().attr('class') == '') {
-            $(this).siblings().addClass('d-none');
-    		$("#itemList").empty();
-            getList();
-            return;
-        }
-        
-        // 초기 또는 다른 대분류 선택시
-        $(".ct_lc_item_btn").each(function() {
-            $(this).siblings().addClass('d-none');
-        });
-        
-        // 중분류 hidden 제거
-        $(this).siblings().removeClass('d-none');
-        lcCode = $(this).children().val();
+        lcCode = $(this).siblings().val();
         
         // 카테고리 경로 업데이트
 		$("#lcHref").attr('href','Auction?lc_code=' + lcCode);

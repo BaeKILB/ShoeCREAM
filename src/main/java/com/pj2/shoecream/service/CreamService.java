@@ -43,5 +43,14 @@ public class CreamService {
 		return mapper.selectDibsCount(map);
 	}
 
+	public void registDibs(Map<String, Object> map) {
+		mapper.insertDibs(map);
+		
+	}
+
+	public void deleteDibs(Map<String, Object> map) {
+		mapper.deleteDibs(map);		
+	}
+
 
 }

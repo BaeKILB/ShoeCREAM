@@ -37,6 +37,7 @@
 					<table class="board_list_table table">
 						<thead>
 							<tr>
+								<th>신청번호</th>
 								<th>신청회원번호</th>
 								<th>디자인코드</th>
 								<th>디자인명</th>
@@ -47,22 +48,23 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>홍길동</td>
-								<td>P001</td>
-								<td>에어포스 커스텀</td>
-								<td>NIKE</td>
-								<td>AIRFORCE 1</td>
-								<td>1</td>
-								<td>배송중</td>
-								<td>
-										<input type="hidden" name="t_key"  id="t_key">
-										<input type="hidden" name="t_code" id="t_code">
-										<input type="hidden" name="t_invoice" id="t_invoice">
-										<input id="tracker" type="button" value="배송조회" class="ins_ans moreBtn">
-								</td>
-							</tr>
+							<c:forEach var="requestList" items="${creamRequestList }">
+								<tr>
+									<td>${requestList.request_idx }</td>
+									<td>${requestList.mem_idx }</td>
+									<td>${requestList.cream_idx }</td>
+									<td>${requestList.cream_title }</td>
+									<td>${requestList.cream_size }</td>
+									<td>${requestList.cream_price }</td>
+									<td>${requestList.request_time }</td>
+									<td>
+											<input type="hidden" name="t_key"  id="t_key" value="vmXicQZCzQaQetF3y0M0xg">
+											<input type="hidden" name="t_code" id="t_code" value="<c:if test="${requestList.tracking_company eq '대한통운' }">'04'</c:if>">
+											<input type="hidden" name="t_invoice" id="t_invoice" value="${requestList.tracking_num }">
+											<input id="tracker" type="button" value="배송조회" class="ins_ans moreBtn">
+									</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -95,11 +97,6 @@
 				url: "http://info.sweettracker.co.kr/api/v1/companylist?t_key=" + apikey,
 				dataType: "JSON",
 				success: function(data) {
-					console.log(data);
-					$("#t_key").val(apikey);
-					$("#t_code").val('04');
-					$("#t_invoice").val('831000843336');
-					
 					let t_key = $("#t_key").val();
 					let t_code = $("#t_code").val();
 					let t_invoice = $("#t_invoice").val();

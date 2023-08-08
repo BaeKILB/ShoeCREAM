@@ -404,7 +404,7 @@
 						</div>
 					</div>
 					<div class="row h-50"> <!-- 높이조절해야됨 -->
-						<div class="col">
+						<div class="col d-none d-xl-block">
 							<div class="fs-5 fw-bold mb-2">거래시 주의사항</div>
 							<div class="border rounded">
 								<p class="mb-1">경매 상품 거래 시 상품 정보에 대한 철저한 파악이 필수적입니다. 상세한 상품 설명과 이미지를 꼼꼼히 검토하여 구매하고자 하는 상품의 가치를 정확하게 판단해야 합니다.<p>

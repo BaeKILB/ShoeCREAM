@@ -26,8 +26,6 @@
 	                            <li class="write_info">
 	                                <div class="write_box">
 	                                    <span class="">[작성자명 : 관리자]</span>
-	                                    <span class="write_t">&nbsp;&nbsp;등록일 :</span> 
-	                                       <fmt:formatDate value="${noticeDetail.bo_sysdate}" pattern="YYYY-MM-dd" />
 	                                </div>
 	                            </li>
 	                        </ul>

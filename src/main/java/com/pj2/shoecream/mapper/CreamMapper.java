@@ -23,5 +23,9 @@ public interface CreamMapper {
 
 	int selectDibsCount(Map<String, Object> map);
 
+	void insertDibs(Map<String, Object> map);
+
+	void deleteDibs(Map<String, Object> map);
+
 
 }
