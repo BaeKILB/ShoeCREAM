@@ -45,6 +45,7 @@ import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.JungGoNohVO;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ProductImageVO;
 
 
@@ -451,6 +452,7 @@ public class AuctionController {
 		// 구매자 회원번호
 		int sId = mPrincipalDetails.getMember().getMem_idx();
     	map.put("mem_idx", sId);
+    	int deposit = Integer.parseInt(String.valueOf(map.get("deposit")));
     	
     	// 상품번호
     	String auction_idx = String.valueOf(map.get("auction_idx"));
@@ -461,41 +463,39 @@ public class AuctionController {
     	// 구매자 정보
     	MemberVO buyer = service.getMember(sId);
     	
-    	// 판매자 정보
-    	MemberVO seller = service.getMember(Integer.parseInt(String.valueOf(auction.get("mem_idx"))));
+//    	 판매자 정보
+//    	MemberVO seller = service.getMember(Integer.parseInt(String.valueOf(auction.get("mem_idx"))));
     	
 		// 상품 입찰내역 정보
 		Map<String, Object> bidInfo = bidService.getBid(auction_idx);
 		
-		int deposit = 0;
+		int oldDeposit = 0;
 		int bid_mem_idx = 0;
-		int price = 0;
 		
 		if(bidInfo != null) {
-			deposit = Integer.parseInt(String.valueOf(bidInfo.get("deposit")));
+			oldDeposit = Integer.parseInt(String.valueOf(bidInfo.get("deposit")));
 			bid_mem_idx = Integer.parseInt(String.valueOf(bidInfo.get("mem_idx")));
-			price = Integer.parseInt(String.valueOf(bidInfo.get("bid_price")));
-		} else {
-			price = Integer.parseInt(String.valueOf(auction.get("auc_start_price")));
 		}
 		// 구매자가 즉시구매가 가능한 포인트를 가지고 있다면 결제 로직 진행
-		boolean paymentResult = false;
-		if(buyer.getMem_balance() > price) {
-			paymentResult = true; // 결제서비스.입출금메소드();
+		int paymentResult = 0;
+		if(buyer.getCharge_point() > 0) {
+			PointInoutVO inVO = new PointInoutVO();
+			inVO.setMem_idx(buyer.getMem_idx());
+			inVO.setCharge_point(deposit);
+			inVO.setPoint_usage("결제사용");
+			paymentResult = payService.withdrawPoints(inVO); // 결제서비스.입출금메소드();
 			// 결제 성공
-			if(paymentResult) {
+			if(paymentResult > 0) {
 				// 입찰내역이 있을경우 
 				if(bidInfo != null) {
-					logger.info("!@#$ : 입찰내역이 있음");
-					
 					// 기존 입찰내역 경매 상태변경(입찰 -> 환불)
 					bidService.modifyBid(map);
-					
 					// 기존 입찰내역 보증금 반환
-					logger.info("!@#$ : 환불 금액 : " + String.valueOf(deposit));
-					logger.info("!@#$ : 환불 대상 : "+String.valueOf(bid_mem_idx));
-					
-					// 포인트결제서비스.출금메서드(bid_mem_idx,deposit);
+					PointInoutVO outVO = new PointInoutVO();
+					outVO.setMem_idx(bid_mem_idx);
+					outVO.setCharge_point(oldDeposit);
+					outVO.setPoint_usage("결제취소출금");
+					paymentResult = payService.depositPoints(outVO); // 결제서비스.입출금메소드();
 				}
 				// 입찰내역 삽입
 				bidService.insertBid(map);
@@ -521,16 +521,18 @@ public class AuctionController {
 		}
     }
     
-    // 즉시 구매 (입출금 로직 필요)
-    @PostMapping("buyingPro")
+//    @ResponseBody
+    @RequestMapping(value= "buyingPro", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
     public String insertBuying(
     		@RequestParam Map<String, Object> map
     		, Model model
     		, HttpSession session) {
     	
+		Map<String, Object> resultData = new HashMap<String,Object>();
+    	
+    	// 구매자 회원번호
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     	PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-    	// 구매자 회원번호
     	int sId = mPrincipalDetails.getMember().getMem_idx();
     	map.put("mem_idx", sId);
     	
@@ -546,16 +548,19 @@ public class AuctionController {
     	MemberVO buyer = service.getMember(sId);
     	
     	// 판매자 정보
-    	MemberVO seller = service.getMember(Integer.parseInt(String.valueOf(auction.get("mem_idx"))));
+//    	MemberVO seller = service.getMember(Integer.parseInt(String.valueOf(auction.get("mem_idx"))));
 
 		// 구매자가 즉시구매가 가능한 포인트를 가지고 있다면 결제 로직 진행
-		boolean paymentResult = false;
-		if(buyer.getMem_balance() > auc_buy_instantly) {
-			paymentResult = true; // 결제서비스.입출금메소드();
+		int paymentResult = 0;
+		if(buyer.getCharge_point() > auc_buy_instantly) {
+			PointInoutVO inVO = new PointInoutVO();
+			inVO.setMem_idx(buyer.getMem_idx());
+			inVO.setCharge_point(auc_buy_instantly);
+			inVO.setPoint_usage("결제사용");
+			paymentResult = payService.withdrawPoints(inVO); // 결제서비스.입출금메소드();
 			// 결제 성공
-			if(paymentResult) {
+			if(paymentResult > 0) {
 				// 상품 입찰내역 정보
-				logger.info("!@#$ 즉시구매 결제완료후");
 				Map<String, Object> bidInfo = bidService.getBid(auction_idx);
 				
 				// 입찰내역이 있을경우 
@@ -565,11 +570,14 @@ public class AuctionController {
 					bidService.modifyBid(map);
 					
 					// 기존 입찰내역 보증금 반환
-					int deposit = Integer.parseInt(String.valueOf(bidInfo.get("deposit")));
+					int oldDeposit = Integer.parseInt(String.valueOf(bidInfo.get("deposit")));
 					int bid_mem_idx = Integer.parseInt(String.valueOf(bidInfo.get("mem_idx")));
-					logger.info("!@#$ : 환불 금액 : " + String.valueOf(deposit));
-					logger.info("!@#$ : 환불 대상 : "+String.valueOf(bid_mem_idx));
-					// 포인트결제서비스.출금메서드(bid_mem_idx,deposit);
+					
+					PointInoutVO outVO = new PointInoutVO();
+					outVO.setMem_idx(bid_mem_idx);
+					outVO.setCharge_point(oldDeposit);
+					outVO.setPoint_usage("결제취소출금");
+					paymentResult = payService.depositPoints(outVO); // 결제서비스.입출금메소드();
 				} 
 				// 입찰내역 추가 및 경매상품 상태 변경
 				bidService.insertBidBuyNow(map);
