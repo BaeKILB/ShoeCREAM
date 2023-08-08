@@ -102,7 +102,6 @@
 		
 		                        var options = {
 // 		                            title: '경매 상품 카테고리별 등록 수',
-		                            is3D: true
 		                        };
 		
 		                        var chart = new google.visualization.PieChart(document.getElementById('auction_chart'));
@@ -137,7 +136,7 @@
 		
 		                        var options = {
 // 		                            title: '중고 상품 카테고리별 등록 수',
-		                            is3D: true
+		                            
 		                        };
 		
 		                        var chart = new google.visualization.PieChart(document.getElementById('product_chart'));

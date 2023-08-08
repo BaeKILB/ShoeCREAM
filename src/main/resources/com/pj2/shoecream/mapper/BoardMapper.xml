@@ -27,7 +27,7 @@
 			</when>
 		</choose>
 	</if>
-	ORDER BY bo_idx ASC
+	ORDER BY bo_idx DESC
 	LIMIT #{cri.skip}, #{cri.amount}
 </select>
 	
@@ -72,5 +72,6 @@
 				0
 			)
 	</insert>
+	
 	
 </mapper>

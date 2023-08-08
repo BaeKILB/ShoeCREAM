@@ -214,6 +214,18 @@
 							<div class="fs-2 fw-bold">${auction.auction_title }</div>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-3">브랜드</div>
+						<div class="col-4 fw-bold">
+							${auction.auction_brand }
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-3">사이즈</div>
+						<div class="col-4 fw-bold">
+							${auction.auction_size }
+						</div>
+					</div>
 					<c:if test="${auction.auc_state eq '진행' }">
 						<div class="row">
 							<div class="col-3">현재가</div>
@@ -384,34 +396,57 @@
 		<hr>
 		<section class="row"> <!-- 상품정보 & 판매자정보 -->
 			<div class="col-xl-8 col-xs-12">
-				<div class="container">
-					<div class="row"> 
+				<div class="container h-100">
+					<div class="row h-50"> 
 						<div class="col">
 							<div class="fs-5 fw-bold">상품정보</div>
 							<p class="border rounded">${auction.auction_info }</p>
 						</div>
 					</div>
-					<div class="row"> <!-- 높이조절해야됨 -->
+					<div class="row h-50"> <!-- 높이조절해야됨 -->
 						<div class="col">
-							<div class="fs-5 fw-bold">거래시 주의사항</div>
-							<p class="border rounded">주의사항 작성</p>
+							<div class="fs-5 fw-bold mb-2">거래시 주의사항</div>
+							<div class="border rounded">
+								<p class="mb-1">경매 상품 거래 시 상품 정보에 대한 철저한 파악이 필수적입니다. 상세한 상품 설명과 이미지를 꼼꼼히 검토하여 구매하고자 하는 상품의 가치를 정확하게 판단해야 합니다.<p>
+								<p class="mb-1">입찰가 결정 시 타당한 입찰가를 제시하여 필요한 만큼의 경쟁력을 보여 줄 수 있도록 노력해야 합니다. 지나친 과도한 입찰가는 제품 가치를 초과할 수 있으며, 반대로 지나치게 낮은 입찰가는 경쟁자들에게 이점을 제공할 수 있습니다.<p>
+								<p class="mb-1">상품의 상태를 반드시 확인하시기 바랍니다. 사진과 설명을 통해 상품의 하자와 결함 등을 철저하게 점검하세요.<p>
+								<p class="mb-1">판매자와의 소통이 어려운 경우, 검색 엔진이나 온라인 커뮤니티 등을 활용하여 정보를 얻을 수 있습니다.<p>
+								<p class="mb-1">경매에서 낙찰된 경우, 추가결제를 완료하지 않으면 판매자가 이로 인해 발생한 손해를 보호하기 위해 보증금 일부 또는 전부를 배상금으로 사용할 수 있습니다. 따라서 추가결제를 완료할 때 까지 신중하게 확인하시기 바랍니다.<p>
+								<p>저희 ShoeCream은 중개 업무를 수행하는 회사입니다. 입찰 과정에서 상품 정보의 정확성과 상태를 확인하는 것은 구매자 본인의 책임이며, 구매자는 상품에 대한 충분한 검토 후 입찰 결정을 하셔야 합니다. 거래와 관련된 모든 책임은 거래 당사자들에게 있습니다.<p>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div>
-	            </div>
 			</div>
 			<div class="col-xl-4 col-xs-12"> <!-- 판매자 정보 & 판매 물품 -->
 				<div class="container">
 					<div class="row mb-3">
 		                <div class="col"> <!-- 판매자 정보 -->
-							<div class="fs-5 fw-bold">판매자 정보</div>
+		                	<div class="container">
+		                		<div class="row">
+									<div class="col fs-5 fw-bold">판매자 정보</div>
+		                		</div>
+		                		<div class="row justify-content-between">
+		                			<div class="col" id="sellerInfo">
+										<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }"> <!-- 판매자 상점 URL 입력필요 -->
+											<span>${sellerInfo.mem_nickname }</span>
+										</a>
+		                			</div>
+		                			<div class="col">
+										<img src="${pageContext.request.contextPath }${sellerInfo.mem_profileImageUrl}" class="img-fluid rounded">
+		                			</div>
+		                		</div>
+		                	</div>
 							<span id="sellerInfo">
-<%-- 							<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }"> <!-- 판매자 상점 URL 입력필요 --> --%>
-								<a href="#?mem_idx=${sellerInfo.mem_idx }"> <!-- 판매자 상점 URL 입력필요 -->
-									<span>${sellerInfo.mem_nickname }</span>
-								</a>
 							</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-8 fw-bold fs-3 fw-bold">${sellerInfo.mem_nickname }님의 판매상품</div>
+						<div class="col-4 align-self-end">
+							<c:if test="${fn:length(sellerItemList) > 5 }">
+								<input type="button" class="btn" onclick="location.href='#?mem_idx=${sellerInfo.mem_idx }'" value="더보기 >"> <!-- 기능구현 필요 -->
+	               			</c:if>
 						</div>
 					</div>
 					<div class="row mb-2 justify-content-center"> <!-- 판매 물품 -->
@@ -427,13 +462,7 @@
 							</c:forEach>
 						</c:if>
 					</div>
-					<c:if test="${fn:length(sellerItemList) > 5 }">
-						<div class="row">
-		               		<div class="col">
-								<input type="button" class="btn w-100" onclick="location.href='#?mem_idx=${sellerInfo.mem_idx }'" value="판매물품 더보기"> <!-- 기능구현 필요 -->
-		               		</div>	
-		               	</div>
-	               	</c:if>
+
 				</div>
 				<div class="container">
 					<c:forEach begin="1" end="5" var="i"> <!-- 후기가져오면 여기 바꾸면됨 -->

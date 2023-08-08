@@ -65,3 +65,16 @@ i.fa.pgi {
 	color: white;
 	background: #624bff;
 }
+.img_wrap {
+	width: 85px;
+	height: 85px;
+	background: #f1f1f1;
+	margin: 0 auto;
+}
+.img_wrap img {
+	width: auto;
+	height: 100%;
+}
+
+
+

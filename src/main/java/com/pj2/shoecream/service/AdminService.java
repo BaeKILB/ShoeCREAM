@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pj2.shoecream.mapper.AdminMapper;
 import com.pj2.shoecream.vo.AuctionVO;
+import com.pj2.shoecream.vo.CreamRequestVO;
 import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.JungProductVO;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ReportVO;
 
 @Service
@@ -76,6 +78,10 @@ public class AdminService {
 	// 일대일 내역 조회
 	public List<InquiryBoardVO> getMainQstBoard(int listLimit) {
 		return mapper.getMainQstBoard(listLimit);
+	}
+	// 크림 신청 내역
+	public List<CreamRequestVO> getCreamRequestList(String searchType, String searchKeyword, int startRow, int listLimit) {
+		return mapper.getCreamRequestList(searchType, searchKeyword, startRow, listLimit);
 	}
 	
 	// --------------- 민진 ---------------------------
@@ -171,6 +177,16 @@ public class AdminService {
 	// 크림 상품 수 세기
 	public int getCreamCount() {
 		return mapper.selectCreamCount();
+	}
+	
+	// 포인트 입출금 내역
+	public List<PointInoutVO> selectPointList(Criteria cri, String searchType, String searchKeyword) {
+		return mapper.selectAdminPointList(cri, searchType, searchKeyword);
+	}
+	
+	// 관리자 정보 조회
+	public List<Map<String, Object>> getAdminInfo() {
+		return mapper.selectAdminInfo();
 	}
 	
 
