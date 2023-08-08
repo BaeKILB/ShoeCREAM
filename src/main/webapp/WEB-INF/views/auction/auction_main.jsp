@@ -27,7 +27,7 @@
 	<main class="container"> <!-- main -->
 	    <div class="row">
 	        <div class="col-xl-2">
-				<aside class="sideCategoryWrap"> <!-- 카테고리 -->
+				<aside class="sideCategoryWrap d-none d-md-block"> <!-- 카테고리 -->
 					<div class="accordion accordion-flush" id="sideCategoryWrap">
 						<c:forEach var="lc" items="${lc_category }">
 							<div class="accordion-item">
