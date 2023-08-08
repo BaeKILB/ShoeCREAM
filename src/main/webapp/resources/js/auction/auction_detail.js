@@ -12,7 +12,7 @@ function tenderPopup() {
    window.open("biddingPopup?auction_idx="+$("#auction_idx").val(), "입찰하기", "width=500, height=800, left=100, top=50"); }
 
 function buyingPopup() { 
-   window.open("buyingPopup?auction_idx="+$("#auction_idx").val(), "즉시구매하기", "width=500, height=800, left=100, top=50"); }
+   window.open("buyingPopup?auction_idx="+$("#auction_idx").val(), "즉시구매하기", "width=500, height=500, left=100, top=50"); }
    
    
 //삭제버튼 클릭시   
