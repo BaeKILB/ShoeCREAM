@@ -1448,6 +1448,28 @@ public class JunggoController {
 		
 
 		
+	
+		
+//		------------------------- 완료 뷰어 연습 이동---------------------
+		@GetMapping("cancelOrComplete")
+		public String cancelOrComplete(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+			
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/cancel_complete";
+			
+		}
+	
 		
 	//------------------------- 예약취소 폼 이동---------------------
 		@GetMapping("resCancel")
@@ -1489,6 +1511,28 @@ public class JunggoController {
 			
 		}
 	
+		
+	//------------------------- 결제취소 폼 이동---------------------
+		@GetMapping("payCancel")
+		public String payCancel(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+			
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/pay_cancel";
+			
+			}
+		
+		
 	//------------------------- 결제완료 폼 이동---------------------
 		@GetMapping("payComplete")
 		public String payComplete(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
