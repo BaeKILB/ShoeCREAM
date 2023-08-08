@@ -12,6 +12,82 @@
 <script src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
+<script>
+//웹소켓
+let socket = null;
+let ws = new SockJS("<c:url value="/alram"/>");
+socket = ws;
+
+//입찰하기 버튼 클릭
+function Confirmation(event) {
+    // 사용자에게 확인을 받기 위한 컨펌창 표시
+    var confirmBid = confirm("구매를 진행하시겠습니까?");
+    
+    if (confirmBid) {
+		$.ajax({ // 입찰 ajax
+		    type: "post"
+		    , url: "buyingPro"
+		    , dataType: "json"
+		    , data: {
+		        'auction_idx': $("input[name=auction_idx]").val()
+		    }
+		})
+		.done(function(data) { // 구매 done 시작
+		    if (data.result) {
+		        // 성공
+		        alert(data.msg);
+		        if (${not empty bid }) {
+			         $.ajax({ // 알람 ajax
+			             type: "POST"
+			             , url: "registerAlram"
+			             , dataType: "text"
+			             , data: {
+			                 'cmd':'1'
+			                 , 'sender':'0'
+			                 , 'receiver':'${bid.mem_idx}'
+			                 , 'product_idx':'${auction.auction_idx}'
+			                 , 'product_title':'${auction.auction_title}'
+			             }
+			         })
+			         .done(function(result){ // 알람 done 시작
+			             if(result == 1) { // 성공
+			                 let msg = "auction, 0,${bid.mem_idx},${auction.auction_idx},${auction.auction_title}";
+			                 alert(msg);
+			                 socket.send(msg);
+			             }
+			         	refreshParentWindow(); // 부모 창 새로고침
+						closeCurrentWindow(); // 현재 창 닫기
+			         }) // 알람 done 끝
+			         .fail(function(errorThrown) {
+			         	console.log(errorThrown)
+			         })
+		        } else {
+		            refreshParentWindow(); // 부모 창 새로고침
+		            closeCurrentWindow(); // 현재 창 닫기
+		        } 
+		    } else {
+		        alert(data.msg);
+		        history.back();
+		    }
+		}) // 구매 done 끝
+		.fail(function(errorThrown) {
+		    console.log(errorThrown)
+		})
+    } 
+}
+    
+function closeCurrentWindow() {
+    // 현재 창 닫기
+    window.close();
+}
+
+function refreshParentWindow() {
+    // 부모 창 새로고침
+    if (window.opener && !window.opener.closed) {
+        window.opener.location.reload();
+    }
+}
+</script>
 </head>
 <body>
 <main class="container">
@@ -68,7 +144,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-2">
-                    <input type="submit" class="btn btn-secondary" value="결제하기" >
+                    <input type="button" class="btn btn-secondary" value="결제하기" onclick="Confirmation()">
                 </div>
                 <div class="col-2">
                     <input type="button" class="btn btn-secondary" value="닫기" onclick="window.close()" >

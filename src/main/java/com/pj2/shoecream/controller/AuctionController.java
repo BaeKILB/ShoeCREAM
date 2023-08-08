@@ -432,6 +432,10 @@ public class AuctionController {
 		// db에서 자료 불러온다
 		Map<String, Object> auction = service.getAuction(auction_idx);
 		model.addAttribute("auction", auction);
+		
+		// bid_table에서도 자료 불러온다 bid_price
+		Map<String, Object> bid = bidService.getBid(auction_idx);
+		model.addAttribute("bid", bid);
 
 		return "auction/buying_popup";
     }
@@ -521,7 +525,7 @@ public class AuctionController {
 		}
     }
     
-//    @ResponseBody
+    @ResponseBody
     @RequestMapping(value= "buyingPro", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
     public String insertBuying(
     		@RequestParam Map<String, Object> map
@@ -565,7 +569,6 @@ public class AuctionController {
 				
 				// 입찰내역이 있을경우 
 				if(bidInfo != null) {
-					logger.info("!@#$ 즉시구매 입찰내역이 있을경우");
 					// 기존 입찰내역 경매 상태변경(입찰 -> 환불)
 					bidService.modifyBid(map);
 					
@@ -579,20 +582,28 @@ public class AuctionController {
 					outVO.setPoint_usage("결제취소출금");
 					paymentResult = payService.depositPoints(outVO); // 결제서비스.입출금메소드();
 				} 
-				// 입찰내역 추가 및 경매상품 상태 변경
-				bidService.insertBidBuyNow(map);
-				service.modifyAuctionState(auction_idx);
-				model.addAttribute("msg","구매 성공!");
-				return "inc/close";
+					// 입찰내역 추가 및 경매상품 상태 변경
+					bidService.insertBidBuyNow(map);
+					service.modifyAuctionState(auction_idx);
+					
+					resultData.put("msg", "구매 성공");
+					resultData.put("result", true);
+					JSONObject jsonObject = new JSONObject(resultData);
+					return jsonObject.toString();
 			// 결제 실패
 			} else {
-				model.addAttribute("msg","결제 실패");
-				return "inc/fail_back";
+				resultData.put("msg", "결제 실패");
+				resultData.put("result", false);
+				JSONObject jsonObject = new JSONObject(resultData);
+				return jsonObject.toString();
+				
 			}
 		// 잔액 부족
 		} else {
-			model.addAttribute("msg","잔액이 부족합니다. 충전후 재시도 바랍니다.");
-			return "inc/fail_back";
+			resultData.put("msg", "잔액이 부족합니다. 충전후 재시도 바랍니다.");
+			resultData.put("result", false);
+			JSONObject jsonObject = new JSONObject(resultData);
+			return jsonObject.toString();
 		}
     }
     
