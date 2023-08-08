@@ -336,35 +336,21 @@
 		
 	<!--  크림 상품 목록 -->
 	<select id="selectcreammap" >
-	    SELECT
-	    c.ci_code,
-	    c.ci_name,
-	    c.ci_brand,
-	    c.ci_model_num,
-	    i.image1,
-	    c.ci_state,
-	    c.ci_rel_date,
-	    c.ci_origin_price,
-	    c.ci_color
-	    FROM 
-	    cream_item AS c
-	    LEFT JOIN product_image AS i ON c.ci_code = i.product_idx
+	    SELECT cream_idx, cream_title
+		FROM cream_item
 	    <where>
 	        <if test="searchType != null and searchKeyword != null">
 	            <choose>
-	                <when test="searchType.equals('brand')">
-	                   AND c.ci_brand LIKE CONCAT('%', #{searchKeyword}, '%')
+	                <when test="searchType.equals('code')">
+	                   AND cream_idx LIKE CONCAT('%', #{searchKeyword}, '%')
 	                </when>
 	                <when test="searchType.equals('title')">
-	                    AND c.ci_name LIKE CONCAT('%', #{searchKeyword}, '%')
-	                </when>
-	                <when test="searchType.equals('code')">
-	                   AND c.ci_code LIKE CONCAT('%', #{searchKeyword}, '%')
+	                    AND cream_title LIKE CONCAT('%', #{searchKeyword}, '%')
 	                </when>
 	            </choose>
 	        </if>
 	    </where>
-	    ORDER BY c.ci_code ASC
+	    ORDER BY cream_idx ASC
 	    LIMIT #{cri.skip}, #{cri.amount}
 	</select>
 	<select id="getcreampaging">
@@ -379,17 +365,17 @@
 	
 	<!--  구글 차트 -->
 	<select id="selectProductList">
-	   SELECT mc.mc_name AS category, COUNT(*) AS count
+	   SELECT mc.lc_name AS category, COUNT(*) AS count
 			FROM auction_item ai
-			JOIN middle_category mc ON ai.mc_code = mc.mc_code
-			GROUP BY ai.mc_code;
+			JOIN large_category mc ON ai.lc_code = mc.lc_code
+			GROUP BY ai.lc_code;
 	</select>
 	
 	<select id="selectAuctionList">
-		SELECT mc.mc_name AS category, COUNT(*) AS count
+		SELECT mc.lc_name AS category, COUNT(*) AS count
 			FROM jung_product jp
-			JOIN middle_category mc ON jp.mc_code = mc.mc_code
-			GROUP BY jp.mc_code;
+			JOIN large_category mc ON jp.lc_code = mc.lc_code
+			GROUP BY jp.lc_code;
 	</select>
 	<!-- 메인페이지 회원 수 세기 -->
 	<select id="selectMemberCount" resultType="int">
@@ -416,5 +402,29 @@
 				FROM cream_item
 	</select>
 	
+	<!-- 포인트 입출금 -->
+	<select id="selectAdminPointList">
+	    SELECT 
+	        point_idx,
+	        mem_idx,
+	        charge_point,
+	        point_status,
+	        point_date,
+	        admin_account_amt
+	    FROM point_inout 
+	    	ORDER BY point_date ASC
+	</select>
+	<select id="selectAdminInfo">
+		SELECT * 
+				FROM mem_info
+				WHERE mem_id = 'admin'
+	</select>
+
+
+
+
+
+
+
 
 </mapper>

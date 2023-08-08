@@ -28,6 +28,7 @@ import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.NoticeVO;
 import com.pj2.shoecream.vo.PageDTO;
 import com.pj2.shoecream.vo.PageInfoVO;
+import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ReportVO;
 
 
@@ -579,6 +580,21 @@ public class AdminController {
 			return  "redirect:/auctionReport";
 		}
 		
+		// 포인트 입출금
+		@GetMapping("adminPointAccount")
+		public String adminPointAccount(Model model,HttpSession session,Criteria cri,
+				@RequestParam(defaultValue = "") String searchType,
+				@RequestParam(defaultValue = "") String searchKeyword) {
+			
+			List<PointInoutVO> pointList = service.selectPointList(cri, searchType, searchKeyword);
+			model.addAttribute("pointList",pointList);
+			
+			List<Map<String, Object>> adminInfo = service.getAdminInfo();
+			model.addAttribute("adminInfo",adminInfo);
+
+			
+			return "main/main_point";
+		}
 		
 }	
 

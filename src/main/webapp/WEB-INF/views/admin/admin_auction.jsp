@@ -31,6 +31,18 @@ function deleteProAuction(auction_idx) {
         }
     });
 }
+$(document).ready(function() {
+	  // 상품 제목이 20글자를 넘어가면 나머지를 생략하고 "..."으로 표시
+	  $('.auction_title').each(function() {
+	    var title = $(this).text();
+	    var maxLength = 20; // 표시할 최대 글자 수
+	    if (title.length > maxLength) {
+	      var shortenedTitle = title.substring(0, maxLength) + '...';
+	      $(this).text(shortenedTitle);
+	    }
+	  });
+	});
+
 
 </script>
 <script type="text/javascript">
@@ -81,7 +93,7 @@ function deleteProAuction(auction_idx) {
 										<td class="brand"> ${auctionmap.auction_brand}</td>
 										<td class="price">${auctionmap.auc_start_price}</td>
 										<td class="price_dibs">${auctionmap.bid_price}</td>
-										<td class="product_info">${auctionmap.auction_info}</td>
+										<td class="auction_title">${auctionmap.auction_info}</td>
 										<td><img src="${pageContext.request.contextPath}${auctionmap.image_path }/${auctionmap.image1}" class="imagesize"/></td>
 <%-- 										<td class="date"><fmt:formatDate value="${auctionmap.auc_regist_date}" pattern="YYYY-MM-dd" /></td> --%>
 										<td class="date">${auctionmap.auc_regist_date}</td>

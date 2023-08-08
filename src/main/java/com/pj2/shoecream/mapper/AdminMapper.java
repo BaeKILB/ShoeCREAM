@@ -13,6 +13,7 @@ import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.JungProductVO;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ReportVO;
 
 @Mapper
@@ -91,6 +92,10 @@ public interface AdminMapper {
 	int selectAuctionCount();
 	// 크림 상품 수 세기
 	int selectCreamCount();
+	//  포인트 입출금
+	List<PointInoutVO> selectAdminPointList(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+	// 관리자 정보조회
+	List<Map<String, Object>> selectAdminInfo();
 	
 	
 	}
