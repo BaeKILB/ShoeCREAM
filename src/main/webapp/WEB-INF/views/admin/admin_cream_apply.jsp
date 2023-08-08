@@ -12,10 +12,6 @@
 <link href="${pageContext.request.contextPath }/resources/css/admin/adminCream.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-
-
-</script>
 </head>
 <body>
 	<aside>
@@ -31,7 +27,7 @@
 				<div class="search_wrap">
 					<form action="creamProduct" method="get" class="searchForm">
 						<select name="searchType" id="searchType">
-							 <option value="brand" <c:if test="${param.searchType eq 'ci_brand'}">selected</c:if>>브랜드</option>
+							<option value="brand" <c:if test="${param.searchType eq 'ci_brand'}">selected</c:if>>브랜드</option>
 			                <option value="title" <c:if test="${param.searchType eq 'ci_name'}">selected</c:if>>상품제목</option>
 			                <option value="code" <c:if test="${param.searchType eq 'ci_code'}">selected</c:if>>상품코드</option>
 						</select>
@@ -43,24 +39,32 @@
 					<table class="board_list_table table">
 						<thead>
 							<tr>
-								<th class="code"><span class="ci_code">상품 코드</span></th>
+								<th class="code"><span class="ci_code">회원번호</span></th>
+								<th class="code"><span class="ci_code">회원이름</span></th>
+								<th class="code"><span class="ci_code">상품코드</span></th>
 								<th class="ci_name"><span class="ci_name">상품제목</span></th>
 								<th class="brand">브랜드</th>
 								<th class="model">모델번호</th>
-								<th class="image">상품이미지</th>
-								<th class="color">상품색상</th>
-								<th class="startdate">발매일</th>
-								<th class="startprice">발매가</th>
-								<th class="delete">삭제하기</th>
+								<th class="image">상품옵션</th>
+								<th class="image">접수상태</th>
+								<th class="image">배송조회</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
+								<td>1</td>
+								<td>홍길동</td>
+								<td>P001</td>
+								<td>에어포스 커스텀</td>
+								<td>NIKE</td>
+								<td>AIRFORCE 1</td>
+								<td>1</td>
+								<td>배송중</td>
 								<td>
 										<input type="hidden" name="t_key"  id="t_key">
 										<input type="hidden" name="t_code" id="t_code">
 										<input type="hidden" name="t_invoice" id="t_invoice">
-										<input id="tracker" type="button" value="배송조회">
+										<input id="tracker" type="button" value="배송조회" class="ins_ans moreBtn">
 								</td>
 							</tr>
 						</tbody>
@@ -85,25 +89,25 @@
 				}, 200);
 	    	}
 	    });
-	    
-	    $('#tracker').click(function() {
+	</script>
+	<script>
+	 	$('#tracker').click(function() {
 			let apikey = "vmXicQZCzQaQetF3y0M0xg";
-			$("#t_key").val(apikey);
-			$("#t_code").val(04);
-			$("#t_invoice").val(831000843336);
-			
-			let t_key = $("#t_key").val();
-			let t_code = $("#t_code").val();
-			let t_invoice = $("#t_invoice").val();
-
-			window.open("http://info.sweettracker.co.kr/tracking/4?t_key="+t_key+"&t_code="+t_code+"&t_invoice="+t_invoice ,"popForm", "toolbar=no, width=540, height=467, directories=no, status=no, resizable=no");
 			
 			$.ajax({
 				type:"GET",
 				url: "http://info.sweettracker.co.kr/api/v1/companylist?t_key=" + apikey,
 				dataType: "JSON",
 				success: function(data) {
-
+					console.log(data);
+					$("#t_key").val(apikey);
+					$("#t_code").val('05');
+					$("#t_invoice").val('531930965823');
+					
+					let t_key = $("#t_key").val();
+					let t_code = $("#t_code").val();
+					let t_invoice = $("#t_invoice").val();
+					window.open("http://info.sweettracker.co.kr/tracking/4?t_key="+t_key+"&t_code="+t_code+"&t_invoice="+t_invoice ,"popForm", "toolbar=no, width=540, height=467 left=700 top=300, directories=no, status=no, resizable=no");
 				}, error: function() {
 					
 				}

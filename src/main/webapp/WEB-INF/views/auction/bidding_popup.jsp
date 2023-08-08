@@ -122,12 +122,10 @@ function bidConfirmation(event) {
 	                            let msg = "auction, 0,${bid.mem_idx},${auction.auction_idx},${auction.auction_title}";
 	                            alert(msg);
 	                            socket.send(msg);
-	                            refreshParentWindow(); // 부모 창 새로고침
-	                            closeCurrentWindow(); // 현재 창 닫기
-	                        } else  { // 실패
-	                            refreshParentWindow(); // 부모 창 새로고침
-	                            closeCurrentWindow(); // 현재 창 닫기
 	                        }
+	                    	
+	                    	refreshParentWindow(); // 부모 창 새로고침
+	                        closeCurrentWindow(); // 현재 창 닫기
 	                    }) // 알람 done 끝
 	                    .fail(function(errorThrown) {
 	                    	console.log(errorThrown)

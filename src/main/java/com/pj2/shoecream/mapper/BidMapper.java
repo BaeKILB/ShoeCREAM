@@ -22,5 +22,5 @@ public interface BidMapper {
 	// 입찰내역 리스트 가져오기
 	List<Map<String, Object>> selectBidList(String auction_idx);
 
-	int updateBidBuyNow(Map<String, Object> map);
+	int insertBidBuyNow(Map<String, Object> map);
 }

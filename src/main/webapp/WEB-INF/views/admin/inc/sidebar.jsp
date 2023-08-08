@@ -15,7 +15,7 @@
 	<div class="sidebar_wrap">
 		<div class="sidebar_cont">
 			<div class="logo_box">
-				<a href="" class="logo_img">
+				<a href="AdminMain" class="logo_img">
 					<img alt="logo" src="resources/img/admin/admin-logo.png" class="logo" >
 				</a>
 			</div>
@@ -53,9 +53,6 @@
 							<ul class="cont_li_wrap aucList">
 								<li class="cont_item_b">
 									<a class="cont_item_list aucPro" href="auctionProduct">경매 상품 관리</a>
-								</li>
-								<li class="cont_item_b">
-									<a class="cont_item_list aucApp" href="auctionApprove">경매 상품 승인</a>
 								</li>
 							</ul>
 						</li>
