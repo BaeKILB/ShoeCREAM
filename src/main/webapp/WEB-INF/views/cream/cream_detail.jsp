@@ -25,20 +25,15 @@
 <%-- <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css"> --%>
 
 <script>
-    // JavaScript function to display the selected price
-    function selectSize(selectedSize) {
-        // Access the priceSpan element
-        var priceSpan = document.getElementById('priceSpan');
+function selectSize(selectedSize) {
+	const creamSize = cream[size+'selectedSize']
+	
 
-        // Get the cream object from the model attribute (스프링 모델 데이터 사용)
-//         var cream = <c:out value="${cream}" />; // 스프링 모델 데이터를 JavaScript 변수로 가져옵니다.
+    const priceSpan = document.getElementById("priceSpan");
 
-        // Get the price for the selected size from the cream object
-        var selectedPrice = cream['size' + selectedSize];
-
-        // Update the priceSpan with the selected price
-        priceSpan.innerText = selectedPrice;
-    }
+    // 가격 정보를 표시합니다.
+    priceSpan.textContent = `creamSize 원`;
+}
 </script>
 <!-- 테스트용 css -->
 <style type="text/css">
@@ -228,7 +223,7 @@
 <div class="row">
     <div class="col-3">가격</div>
     <div class="col-4 fw-bold">
-        <span id="priceSpan"></span>
+        <span id="priceSpan">여기 표시 하고 싶어 </span>
     </div>
 </div>
 
@@ -261,6 +256,8 @@ ${cream }
 						<div class="col">
 							<div class="fs-5 fw-bold">상품정보</div>
 							<p class="border rounded">${cream.cream_info }</p>
+							<p class="border rounded">사진 출처 : https://www.ebay.com/itm/224914231379?var=523785942220</p>
+							
 						</div>
 					</div>
 					<div class="row"> <!-- 높이조절해야됨 -->

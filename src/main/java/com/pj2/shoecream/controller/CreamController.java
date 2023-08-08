@@ -112,7 +112,7 @@ public class CreamController {//크림 컨트롤러 입니다.
 
 
 		String productId = "C" + String.valueOf(new Date().getTime()); // 상품번호
-		cream.setCi_code(productId); // 상품번호 추가
+		cream.setCream_idx(productId); // 상품번호 추가
 		image.setProduct_idx(productId);
 
 		String uploadDir = "/resources/upload/cream";
