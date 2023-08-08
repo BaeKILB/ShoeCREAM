@@ -21,6 +21,12 @@ public class JungProductService {
 		return mapper.selectJungProductList(jproduct,startCount,pageInfo.getPageListLimit(),orderMethod );
 	}
 	
+	// 중고 상품 정보 리스트 받아오기(이미지, 판매자 정보 들고옴)
+	public List<Map<String,Object>> getJungProductExList(JungProductVO jproduct, PageInfoVO pageInfo, String orderMethod) {
+		int startCount = pageInfo.getStartPage() * pageInfo.getPageListLimit();
+		return mapper.selectJungProductExList(jproduct,startCount,pageInfo.getPageListLimit(),orderMethod );
+	}
+	
 	// 중고 상품 정보 idx로 하나 불러오기
 	public JungProductVO getJungProduct(JungProductVO jproduct) {
 		return mapper.selectJungProduct(jproduct);

@@ -22,6 +22,13 @@ public interface JungProductMapper {
 			@Param("orderMethod") String orderMethod
 			);
 	
+	List<Map<String,Object>> selectJungProductExList(	
+		@Param("jproduct") JungProductVO jproduct,
+		@Param("startCount") int startCount,
+		@Param("setPageListLimit") int setPageListLimit,
+		@Param("orderMethod") String orderMethod
+	);
+	
 	//중고 물품 정보 idx에 맞춰 하나만 가져오기
 	JungProductVO selectJungProduct(JungProductVO jproduct);
 
@@ -47,5 +54,7 @@ public interface JungProductMapper {
 			@Param("product_buyer_idx") int product_buyer_idx
 			
 			);
+	
+
 	
 }

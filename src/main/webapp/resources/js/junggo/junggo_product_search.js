@@ -5,6 +5,7 @@ let dataObj;
 
 // url 파라미터 가져오기
 let getParams = new URL(location.href).searchParams;
+
 console.log(getParams);
 
 let obj = {}
@@ -14,6 +15,7 @@ if(getParams.get("lc_code") != null){
 if(getParams.get("mc_code") != null){	
 	obj["mc_code"] = getParams.get("mc_code");
 }
+obj["localURL"] = localURL;
 console.log(obj);
 
 
@@ -48,7 +50,7 @@ function initAjax() {
 
 
 function loadItemAjax(obj) {
-	
+	obj["localURL"] = localURL;
 	let checkError = false;
 	
 	let data =  $.ajax({

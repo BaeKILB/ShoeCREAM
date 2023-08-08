@@ -87,7 +87,9 @@
 <!-- 		</article> -->
 	</main>
 	
-
+	<script type="text/javascript">
+	let localURL = "${pageContext.request.contextPath}";
+	</script>
 	<script	src="${pageContext.request.contextPath }/resources/js/junggo/junggo_product_search.js"></script>
 	<script	src="${pageContext.request.contextPath }/resources/js/inc/side_category.js"></script>
 </body>

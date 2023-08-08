@@ -531,6 +531,10 @@ public class JunggoController {
 	public String getJproduct(
 			@RequestParam Map<String,Object> map) {
 		
+		// jsp의 ${pageContext.request.contextPath } 값 들고오기 
+		String localURL = (String)map.get("localURL");
+
+		
 		//JSON 데이터 형태로 담는 객체
 		JSONObject jsonObj = new JSONObject();	
 		JungProductVO jproduct = new JungProductVO();
@@ -577,10 +581,10 @@ public class JunggoController {
 		// 조건에 맞는 중고 리스트 가져오기
 		System.out.println("조건에 맞는 중고 리스트 가져오기");
 		// 리스트 받아올 객체 초기화
-		List<JungProductVO> jungList = null;
+		List<Map<String,Object>> jungList = null;
 		//에러처리
 		try {			
-			jungList = jProductService.getJungProductList(jproduct, pageInfo, orderMethod);
+			jungList = jProductService.getJungProductExList(jproduct, pageInfo, orderMethod);
 			map.put("jungList", jungList);
 		}
 		catch(Exception e){
@@ -592,7 +596,7 @@ public class JunggoController {
 		JSONArray joJungList = new JSONArray();
 		
 		jungList.forEach((e) -> {
-			joJungList.put(jungHandler.makeProductHtml(e));
+			joJungList.put(jungHandler.makeProductHtml(e,localURL));
 		});
 		// for 문 활용하여 jsonObj에 값 넣어주기
 			
