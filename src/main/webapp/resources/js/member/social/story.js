@@ -90,8 +90,8 @@ function getStoryItem(image) {
 	let item = `<div class="story-list__item" style="width: 100%;">
 	<div class="sl__item__header">
         <div style="margin-left: 5px;">
-            <a href="/shoecream/social/${image.mem_idx}"> <!-- 링크를 추가 -->
-                <img class="profile-image" src="/shoecream/resources/upload/profile/${image.mem_profileImageUrl}"
+            <a href="${contextPath}/social/${image.mem_idx}"> <!-- 링크를 추가 -->
+                <img class="profile-image" src="${contextPath}/resources/upload/profile/${image.mem_profileImageUrl}"
                     onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" style="width: 41.818182px;"/>
             </a>
         </div>
@@ -106,7 +106,7 @@ function getStoryItem(image) {
     </div>
 
 	<div class="sl__item__img">
-		<img src="/shoecream/resources/upload/social/${image.posts_image1}"/>
+		<img src="${contextPath}/resources/upload/social/${image.posts_image1}"/>
 	</div>
 
 	<div class="sl__item__contents">
@@ -138,8 +138,8 @@ function getStoryItem(image) {
                                         <div class="sl__item__header" style="height: 25px;">
                                             <div style="margin-top: 10px;">
                                                 <div style="height: 25px;">
-                                                    <a href="/shoecream/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
-                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
+                                                    <a href="${contextPath}/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
+                                                    <img class="profile-image" src="${contextPath}/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
                                                         style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
                                                 	</a>
                                                 </div>
@@ -279,8 +279,8 @@ function addComment(posts_idx) {
                                         <div class="sl__item__header" style="height: 25px;">
                                             <div style="margin-top: 10px;">
                                                 <div style="height: 25px;">
-                                                    <a href="/shoecream/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
-                                                    <img class="profile-image" src="/shoecream/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
+                                                    <a href="${contextPath}/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
+                                                    <img class="profile-image" src="${contextPath}/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
                                                         style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
                                                 	</a>
                                                 </div>
