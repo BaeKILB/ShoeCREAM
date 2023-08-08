@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>결제 완료</title>
+	<title>결제 취소</title>
 	<link href="${pageContext.request.contextPath }/resources/css/junggo/common.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath }/resources/css/junggo/trade_complete.css" rel="styleSheet">
 <%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
@@ -20,8 +20,8 @@
 	</header>
 	<section id="sec_con" class="inr com_cont">
 		<div class="res_com_txt" align="center">
-			<img alt="" src = "${pageContext.request.contextPath }/resources/img/junggo/yes.png" width ="70px"/>
-	  		<h1>결제가 완료 되었습니다.</h1>
+			<img alt="" src = "${pageContext.request.contextPath }/resources/img/junggo/no.png" width ="70px"/>
+	  		<h1>결제가 취소 되었습니다.</h1>
 	  		<p>물건을 인수한 후 해당 1:1대화방에서 물건 인수 완료 버튼을 눌려주세요!</p>
 		</div>
 		
@@ -32,26 +32,38 @@
 				<h3>거래 정보</h3>
 				<ul>
 					<li>
-						<em>거래 번호(payinfo_결제 번호)</em>
-						<span>1090293019309120</span>
+						<em>거래 항목</em>
+							<c:choose>
+								<c:when test="${jungGoNoh.product_selector == 0}">
+									<span>중고거래</span>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${jungGoNoh.product_selector == 1}">
+											<span>경매</span>
+										</c:when>
+										<c:otherwise>
+												<span>크림</span>		
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
 					</li>
 					<li>
 						<em>판매자</em>
-						<span>꾸미꾸미꾸</span>
+						<span>${jungGoNoh.mem_nickname}</span>
 					</li>
 					<li>
 						<em>구매자</em>
-						<span>옷산사람1</span>
+						<span>${jungGoNoh.buyier_nickname}</span>
 					</li>
 					<li>
 						<em>거래글 제목</em>
-						<span>
-							블랙야크 남성 기모바지 (33)
-						</span>
+						<span>${jungGoNoh.product_title}</span>
 					</li>
 					<li>
 						<em>거래 방식</em>
-						<span>슈크림페이</span>
+						<span>${jungGoNoh.product_payment}</span>
 					</li> 
 				</ul>
 			</div>
@@ -59,21 +71,40 @@
 		  	<hr class="com_line">
 		
 			<div class="payment_info com_wrap">
-				<h3>결제 정보</h3>
+				<h3>취소한 결제 정보 조회</h3>
 				<ul>
 					<li>
 						<em>결제 수단</em>
-						<span>
-							슈크림페이 포인트
-						</span>
-					</li>
+							<c:choose>
+								<c:when test="${jungGoNoh.pay_method == 1}">
+									<span>신용카드</span>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${jungGoNoh.pay_method == 2}">
+											<span>간편결제</span>
+										</c:when>
+										<c:otherwise>
+											<c:choose>
+												<c:when test="${jungGoNoh.pay_method == 3}">
+													<span>계좌이체</span>
+												</c:when>
+												<c:otherwise>
+													<span>페이이용X</span>		
+												</c:otherwise>
+											</c:choose>
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
+					</li> 
 					<li>
 						<em>결제 금액</em>
-						<span>25,000원</span>
+						<span><fmt:formatNumber value="${jungGoNoh.pay_total}" pattern="#,###"/>원</span>
 					</li>
 					<li>
-						<em>결제 일시</em>
-						<span>2023.07.18 11:13</span>
+						<em>이전 결제 완료 일시</em>
+						<span>${jungGoNoh2.trans_date}</span>
 					</li>
 					
 				</ul>
@@ -81,7 +112,6 @@
 			<div class="finish_btn" align="center">
 				<a href="${pageContext.request.contextPath }"><button>메인으로</button></a>
 				<a href="${pageContext.request.contextPath }/MemberRes"><button>마이리스트 거래 내역 조회</button></a>
-				<a href="${pageContext.request.contextPath }/MemberRes"><button>해당 1:1대화창으로 이동</button></a>
 			</div>
 			
 		</div>

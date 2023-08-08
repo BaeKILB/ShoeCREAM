@@ -32,17 +32,35 @@
 				<h3>예약 정보</h3>
 				<ul>
 					<li>
+						<em>거래 항목</em>
+						<c:choose>
+								<c:when test="${jungGoNoh.product_selector == 0}">
+									<span>중고거래</span>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${jungGoNoh.product_selector == 1}">
+											<span>경매</span>
+										</c:when>
+										<c:otherwise>
+												<span>크림</span>		
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
+					</li> 
+					<li>
 						<em>판매자</em>
-						<span>꾸미꾸미꾸</span>
+						<span>${jungGoNoh.mem_nickname}</span>
 					</li>
 					<li>
 						<em>구매자</em>
-						<span>옷산사람1</span>
+						<span>${jungGoNoh.buyier_nickname}</span>
 					</li>
 					<li>
 						<em>거래글 제목</em>
 						<span>
-							블랙야크 남성 기모바지 (33)
+							${jungGoNoh.product_title}
 						</span>
 					</li> 
 				</ul>

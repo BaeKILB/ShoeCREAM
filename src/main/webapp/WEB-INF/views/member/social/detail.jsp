@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../layout/header.jsp"%>
+<%@ include file="../../inc_ex/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,6 @@
   let posts_idx = ${posts_idx};
 </script>
 <!--JS -->
-<script src="${pageContext.request.contextPath }/resources/js/member/social/detail.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/detail.css">
@@ -34,6 +34,10 @@
 	    </div>
 	</section>
 </main>
+<script>
+var contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath }/resources/js/member/social/detail.js"></script>
 
 	<!-- 푸터 시작 -->
 	<jsp:include page="../../inc_ex/footer.jsp" />

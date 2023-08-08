@@ -86,7 +86,7 @@
 				GROUP BY
 					ai.auction_idx) aidi ON ai.auction_idx = aidi.auction_idx
 		WHERE
-			auc_state = '진행' OR '마감'
+			auc_state in ('진행','마감')
 		<if test="!lc_code.equals('')">
 		    <choose>
 		        <when test="mc_code.equals('')">
@@ -201,6 +201,8 @@
 	<select id="selectSellerInfo" resultType="map">
 	    select
 	    	mem_nickname
+	    	, mem_idx
+	    	, mem_profileImageUrl
 	    from
 	    	mem_info
 	    where

@@ -48,7 +48,7 @@ function initAjax() {
 	}
 }
 
-
+// 중고 상품 항목 불러오기
 function loadItemAjax(obj) {
 	obj["localURL"] = localURL;
 	let checkError = false;
@@ -72,6 +72,7 @@ function loadItemAjax(obj) {
     return data.responseJSON;
 
 }
+
 
 
 // ajax 로 받아온 데이터 페이지에 적용

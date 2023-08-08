@@ -246,10 +246,37 @@ LEFT OUTER JOIN product_image pi
 	
 	<!--DB pay_info  -->
 	<select id="selectPayInfo" resultType="com.pj2.shoecream.vo.JungGoNohVO">
-		SELECT pi.pay_idx, pi.product_idx, pi.pay_method, pi.pay_total, pi.pay_status, pi.pay_time
-		     , pi.cancel_trade_date, pi.cancel_trade_reason, pi.cancel_pay, pi.trans_date
+		SELECT pi.pay_idx, pi.mem_idx as buyier_idx, pi.product_idx, pi.product_selector, pi.pay_method, pi.pay_total, pi.pay_status, pi.cancel_trade_reason
+			 , pi.cancel_pay, pi.point_idx, pi.trans_date
+		     , jpd.mem_idx, jpd.product_title, jpd.product_payment, jpd.product_price
+		     , mi.mem_nickname, mi.mem_idx
+		     , bi.mem_nickname as buyier_nickname, bi.mem_idx as buyier_idx
 		  FROM pay_info pi
-		 WHERE product_idx = ${product_idx}
+		  JOIN jung_product jpd
+		  	ON pi.product_idx  = jpd.product_idx
+		  JOIN mem_info mi
+		  	ON jpd.mem_idx = mi.mem_idx
+		  JOIN mem_info bi
+		  	ON pi.mem_idx = bi.mem_idx 
+		 WHERE pi.product_idx = ${product_idx}
+		 ORDER BY pi.trans_date desc
+		 LIMIT 1
+	</select>
+	
+	<select id="selectPayInfo2" resultType="com.pj2.shoecream.vo.JungGoNohVO">
+		SELECT pi.pay_idx, pi.mem_idx as buyier_idx, pi.product_idx, pi.product_selector, pi.pay_method, pi.pay_total, pi.pay_status, pi.cancel_trade_reason
+			 , pi.cancel_pay, pi.point_idx, pi.trans_date
+		     , jpd.mem_idx, jpd.product_title, jpd.product_payment, jpd.product_price
+		     , mi.mem_nickname, mi.mem_idx
+		     , bi.mem_nickname as buyier_nickname, bi.mem_idx as buyier_idx
+		  FROM pay_info pi
+		  JOIN jung_product jpd
+		  	ON pi.product_idx  = jpd.product_idx
+		  JOIN mem_info mi
+		  	ON jpd.mem_idx = mi.mem_idx
+		  JOIN mem_info bi
+		  	ON pi.mem_idx = bi.mem_idx 
+		 WHERE pi.product_idx = ${product_idx} AND pi.mem_idx = ${sub_buyier_idx} AND mi.mem_idx = ${sub_seller_idx} AND pi.pay_total = ${sub_pay}
 	</select>
 	
 </mapper>

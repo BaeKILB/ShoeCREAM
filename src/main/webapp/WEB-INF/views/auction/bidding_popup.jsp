@@ -153,7 +153,6 @@ function bidConfirmation(event) {
                 if (data.result) {
                     // 성공
                     alert(data.msg);
-                    console.log(${bid.length});
                     if (${not empty bid }) {
 	                    $.ajax({ // 알람 ajax
 	                        type: "POST"
@@ -170,7 +169,7 @@ function bidConfirmation(event) {
 	                    .done(function(result){ // 알람 done 시작
 	                        if(result == 1) { // 성공
 	                            let msg = "auction, 0,${bid.mem_idx},${auction.auction_idx},${auction.auction_title}";
-	                            alert(msg);
+// 	                            alert(msg);
 	                            socket.send(msg);
 	                        }
 	                    	
@@ -231,7 +230,23 @@ function refreshParentWindow() {
             <div class="text-center">상품명</div>
         </div>
         <div class="col-6">
-            <div>${auction.auction_title }</div>
+            <div class="fw-bold">${auction.auction_title }</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="text-center">브랜드</div>
+        </div>
+        <div class="col-6">
+            <div class="fw-bold">${auction.auction_brand }</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="text-center">사이즈</div>
+        </div>
+        <div class="col-6">
+            <div class="fw-bold">${auction.auction_size }</div>
         </div>
     </div>
     <div class="row">
@@ -239,7 +254,7 @@ function refreshParentWindow() {
             <div class="text-center">남은시간</div>
         </div>
         <div class="col-6">
-            <div id="acdBox"></div>
+            <div id="acdBox" class="fw-bold text-danger"></div>
         </div>
     </div>
     <div class="row">
@@ -249,10 +264,10 @@ function refreshParentWindow() {
         <div class="col-6">
                <c:choose>
                 <c:when test="${bid eq null }">
-                    <div>${auction.auc_start_price }원</div>                 
+                    <div class="fw-bold">${auction.auc_start_price }원</div>                 
                 </c:when>
                 <c:otherwise>
-                    <div>${bid.bid_price }원</div>
+                    <div class="fw-bold">${bid.bid_price }원</div>
                 </c:otherwise>
                </c:choose>
         </div>
@@ -262,7 +277,7 @@ function refreshParentWindow() {
             <div class="text-center">즉시구매가</div>
         </div>
         <div class="col-6">
-            <div>${auction.auc_buy_instantly }원</div>
+            <div class="fw-bold">${auction.auc_buy_instantly }원</div>
         </div>
     </div>
     <div class="row">
@@ -270,7 +285,7 @@ function refreshParentWindow() {
             <div class="text-center">입찰 단위</div>
         </div>
         <div class="col-6">
-            <div>${auction.auc_bid_unit}원</div>     
+            <div class="fw-bold">${auction.auc_bid_unit}원</div>     
         </div>
     </div>
     <hr>
@@ -285,7 +300,7 @@ function refreshParentWindow() {
                 </div>
             </div>
             <div class="row">
-                <label for="bid_price" class="col-form-label col-3">입찰금액</label>
+                <label for="bid_price" class="col-form-label col-3 text-center">입찰금액</label>
                 <c:choose>
                     <c:when test="${bid eq null }">
                         <c:set var="minimumBid" value="${auction.auc_start_price }" />
@@ -299,7 +314,7 @@ function refreshParentWindow() {
             </div>
             <div class="row">
                 <!-- 보증금 입찰 금액의 10퍼 -->
-                <label class="col-form-label col-3">보증금</label>
+                <label class="col-form-label col-3 text-center">보증금</label>
                 <input type="text" class="form-control-plaintext form-control col" id="guarantee_amount" name="deposit">
             </div>
             <div class="row justify-content-center">

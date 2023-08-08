@@ -611,7 +611,7 @@ public class AdminController {
 			model.addAttribute("adminInfo",adminInfo);
 
 			
-			return "main/main_point";
+			return "admin/admin_point";
 		}
 		
 }	

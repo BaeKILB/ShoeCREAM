@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../layout/header.jsp"%>
+<%@ include file="../../inc_ex/header.jsp"%>
+<%-- <jsp:include page="../../inc_ex/header.jsp" /> --%>
+<%-- <%@ include file="../layout/header.jsp"%> --%>
 <%-- <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script> --%>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/profile.css">
+	
 <!--프로필 섹션-->
 <section class="profile">
 	<!--유저정보 컨테이너-->
@@ -147,8 +151,9 @@
 
 </div>
 
-
-<script
-	src="${pageContext.request.contextPath }/resources/js/member/social/profile.js"></script>
+<script>
+  var contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath }/resources/js/member/social/profile.js"></script>
 
 <%-- <%@ include file="../../inc_ex/footer.jsp"%> --%>

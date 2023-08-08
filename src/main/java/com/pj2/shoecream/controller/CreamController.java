@@ -15,6 +15,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +35,8 @@ import com.pj2.shoecream.service.CreamService;
 import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.CreamVO;
+import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ProductImageVO;
 
 @Controller
@@ -206,11 +209,11 @@ public class CreamController {//크림 컨트롤러 입니다.
 		model.addAttribute("cream", cream);
 
 
-		// 찜
-//		Map<String, Object> dibs = service.getCreamDibs(map);
+		 //찜
+		Map<String, Object> dibs = service.getCreamDibs(map);
 //		
 //		
-//		model.addAttribute("dibs", dibs);
+		model.addAttribute("dibs", dibs);
 //		
 //		// 찜카운트
 //		int dibsCount = service.getDibsCount(map);
@@ -219,6 +222,38 @@ public class CreamController {//크림 컨트롤러 입니다.
 
 		
        return "cream/cream_detail";
+   }
+   
+   
+   @ResponseBody
+   @RequestMapping(value= "dibsEvent2", method = RequestMethod.POST, produces = "application/text; charset=UTF-8")
+   public String dibsEvent2(
+   		@RequestParam Map<String,Object> map
+   		, Model model) {
+       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+       int sId = mPrincipalDetails.getMember().getMem_idx();
+       
+   	map.put("mem_idx", sId);
+   	
+   	Map<String, Object> dibs = service.getCreamDibs(map);
+   	
+   	if (dibs == null) {
+   		service.registDibs(map);
+   		dibs = service.getCreamDibs(map);
+   		dibs.put("result", true);
+   	} else {
+   		service.deleteDibs(map);
+   		dibs = service.getCreamDibs(map);
+   		dibs = new HashMap<String, Object>();
+   		dibs.put("result", false);
+   	}
+   
+   	int count = service.getDibsCount(map);
+   	dibs.put("dibsCount", count);
+   	
+   	JSONObject jsonObject = new JSONObject(dibs);
+		return jsonObject.toString();
    }
 	
 }

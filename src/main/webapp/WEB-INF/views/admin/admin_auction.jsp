@@ -42,8 +42,6 @@ $(document).ready(function() {
 	    }
 	  });
 	});
-
-
 </script>
 <script type="text/javascript">
 </script>
@@ -86,9 +84,7 @@ $(document).ready(function() {
 						<tbody>
 							<c:forEach var="auctionmap" items="${auctionmap}">
 								<tr>
-<!-- 									<td class="txt_prev"><a href="#"> -->
-<%-- 										<h4 class="title_co">${adminProduct.product_title}</h4> --%>
-<!-- 										</a> -->
+
 										<td class="code"><span class="product_code"> <span class="sv_member">${auctionmap.auction_idx}</span></span></td>
 										<td class="brand"> ${auctionmap.auction_brand}</td>
 										<td class="price">${auctionmap.auc_start_price}</td>
@@ -99,12 +95,9 @@ $(document).ready(function() {
 												<img src="${pageContext.request.contextPath}${auctionmap.image_path }/${auctionmap.image1}" class="imagesize"/>
 											</div>
 										</td>
-<%-- 										<td class="date"><fmt:formatDate value="${auctionmap.auc_regist_date}" pattern="YYYY-MM-dd" /></td> --%>
 										<td class="date">${auctionmap.auc_regist_date}</td>
 										<td class="productdel" ><button style='cursor: pointer;'class="moreBtn" onclick="deleteProAuction('${auctionmap.auction_idx}')">삭제하기</button></td>
 								</tr>
-							
-							
 							</c:forEach>
 						</tbody>
 					</table>

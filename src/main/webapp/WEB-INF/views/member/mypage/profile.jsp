@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../layout/header.jsp"%>
+<%@ include file="../../inc_ex/header.jsp"%>
+<%-- <%@ include file="../layout/header.jsp"%> --%>
 <!DOCTYPE html>
 <html lang="en">
 <!-- 원본 파일 이름 member_update -->
@@ -58,7 +59,7 @@
 </head>
 <body>
 	<!--    <header> -->
-	<jsp:include page="../../inc_ex/header.jsp" />
+<%-- 	<jsp:include page="../../inc_ex/header.jsp" /> --%>
 	<!--    </header> -->
 
 	<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" >
