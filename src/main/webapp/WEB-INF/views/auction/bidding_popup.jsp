@@ -14,8 +14,58 @@
 <script type="text/javascript">
 // 웹소켓
 let socket = null;
-let ws = new SockJS("<c:url value="/alram"/>");
-socket = ws;
+
+$(function () {
+    if (${sId} > 0) {
+        connectWs();
+    }
+});
+
+function connectWs() {
+    let wsUrl = "<c:url value='/alram'/>"; // 웹소켓 엔드포인트 URL 설정
+    const maxRetries = 5;
+    let currentRetries = 0;
+
+    function initWs() {
+        const ws = new SockJS(wsUrl);
+        socket = ws;
+
+        ws.onopen = function () {
+            console.log("open");
+            currentRetries = 0;
+        };
+
+        ws.onmessage = function (event) {
+            alert(event.data);
+            let $socketAlert = $('div#socketAlert');
+            $socketAlert.html(event.data);
+            $socketAlert.css('display', 'block');
+
+            setTimeout(function () {
+                $socketAlert.css('display', 'none');
+            }, 5000);
+        };
+
+        ws.onclose = function () {
+            console.log('close');
+            if (currentRetries < maxRetries) {
+                setTimeout(() => {
+                    console.log('Retrying WebSocket...');
+                    currentRetries++;
+                    initWs();
+                }, 2000 * (currentRetries ** 2));
+            } else {
+                console.error('WebSocket reconnection attempts exceeded.');
+            }
+        };
+
+        ws.onerror = function (error) {
+            console.error('WebSocket error:', error);
+        };
+    }
+
+    initWs();
+};
 
 // 보증금
 function calculateGuaranteeAmount() {
