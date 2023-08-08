@@ -84,7 +84,7 @@ div #test_area ul { /* 카테고리 css */
 											<a href="signup">회원가입</a>
 										</div>
 										<div class="col-2" style="text-align: left;">
-											<a href="CustomerCenter.ad">고객센터</a>
+											<a href="UserNotice">공지사항</a>
 										</div>
 									</c:when>
 									<c:otherwise>
