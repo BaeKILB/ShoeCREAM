@@ -1,3 +1,5 @@
+<%@page import="java.util.Map"%>
+<%@page import="com.google.gson.Gson"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,6 +18,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <!-- 자바스크립트 파일 -->
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/cream/cream_detail.js"></script>
@@ -23,18 +26,20 @@
 <!-- css파일  -->
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <%-- <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css"> --%>
+    <script>
+        function updatePrice() {
+            var selectElement = document.getElementsByName("inputSize")[0];
+            var selectedValue = selectElement.options[selectElement.selectedIndex].value;
+            var priceSpan = document.getElementById("priceSpan");
+            
+            // 선택한 값에 해당하는 hidden input 요소의 값을 가져옵니다.
+            var hiddenInputElement = document.getElementsByName(selectedValue)[0];
+            var hiddenInputValue = hiddenInputElement.value;
 
-<script>
-function selectSize(selectedSize) {
-	const creamSize = cream[size+'selectedSize']
-	
-
-    const priceSpan = document.getElementById("priceSpan");
-
-    // 가격 정보를 표시합니다.
-    priceSpan.textContent = `creamSize 원`;
-}
-</script>
+            // hidden input 요소의 값을 가격 스팬에 업데이트합니다.
+            priceSpan.innerText = hiddenInputValue;
+        }
+    </script>
 <!-- 테스트용 css -->
 <style type="text/css">
   Slideshow container  
@@ -139,6 +144,7 @@ function selectSize(selectedSize) {
 
 </head>
 <body>
+
 	<hr>
 	<input type="hidden" value="${cream.cream_idx }" id="cream_idx">
 	<input type="hidden" value="${cream.mem_idx }" id="mem_idx">
@@ -212,7 +218,7 @@ function selectSize(selectedSize) {
 <div class="row">
     <div class="col-3">사이즈</div>
     <div>
-        <select name="inputSize" onchange="selectSize(this.value)">
+        <select name="inputSize" onchange="updatePrice()">
             <c:forEach begin="220" step="5" end="310" varStatus="status">
                 <option value="${status.index}">${status.index}</option>
             </c:forEach>
@@ -223,11 +229,29 @@ function selectSize(selectedSize) {
 <div class="row">
     <div class="col-3">가격</div>
     <div class="col-4 fw-bold">
-        <span id="priceSpan">여기 표시 하고 싶어 </span>
+    <input type="hidden" value="${cream.size220 }" name="220">
+    <input type="hidden" value="${cream.size225 }" name="225">
+    <input type="hidden" value="${cream.size230 }" name="230">
+    <input type="hidden" value="${cream.size235 }" name="235">
+    <input type="hidden" value="${cream.size240 }" name="240">
+    <input type="hidden" value="${cream.size245 }" name="245">
+    <input type="hidden" value="${cream.size250 }" name="250">
+    <input type="hidden" value="${cream.size255 }" name="255">
+    <input type="hidden" value="${cream.size260 }" name="260">
+    <input type="hidden" value="${cream.size265 }" name="265">
+    <input type="hidden" value="${cream.size270 }" name="270">
+    <input type="hidden" value="${cream.size275 }" name="275">
+    <input type="hidden" value="${cream.size280 }" name="280">
+    <input type="hidden" value="${cream.size285 }" name="285">
+    <input type="hidden" value="${cream.size290 }" name="290">
+    <input type="hidden" value="${cream.size295 }" name="295">
+    <input type="hidden" value="${cream.size300 }" name="300">
+    <input type="hidden" value="${cream.size305 }" name="305">
+    <input type="hidden" value="${cream.size310 }" name="310">
+        <span id="priceSpan"></span>
     </div>
 </div>
 
-${cream }
 			    	            <div class="col text-center ">
 			    	            	<button class="btn btn-light w-100" id="dibsBox">
 							            <span <c:if test="${cream.isLogin != 0 }">onclick="dibsCheck()"</c:if>> 
@@ -255,15 +279,15 @@ ${cream }
 					<div class="row"> 
 						<div class="col">
 							<div class="fs-5 fw-bold">상품정보</div>
-							<p class="border rounded">${cream.cream_info }</p>
-							<p class="border rounded">사진 출처 : https://www.ebay.com/itm/224914231379?var=523785942220</p>
+							<p class="border rounded">${cream.cream_content }</p>
+							<p class="border rounded"></p>
 							
 						</div>
 					</div>
 					<div class="row"> <!-- 높이조절해야됨 -->
 						<div class="col">
 							<div class="fs-5 fw-bold">거래시 주의사항</div>
-							<p class="border rounded">주의사항 작성</p>
+							<p class="border rounded">상품은 반드시 슈크림에서 지정한 택배사로 발송해야 합니다 <br> 5일이내 운송장 등록이 되지 않을시,<br> 상품 금액의 5%의 패널티 부과후 환불 됩니다.<br></p>
 						</div>
 					</div>
 				</div>
