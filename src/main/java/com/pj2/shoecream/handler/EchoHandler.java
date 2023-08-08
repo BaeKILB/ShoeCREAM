@@ -31,7 +31,6 @@ public class EchoHandler extends TextWebSocketHandler {
 	// 1:1로 할 경우
 	private Map<String, WebSocketSession> userSessionsMap = new HashMap<String, WebSocketSession>();
 	
-	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {//클라이언트와 서버가 연결
 		logger.info("Socket 연결");
@@ -172,8 +171,8 @@ public class EchoHandler extends TextWebSocketHandler {
 	// 세션값 받아오기
 	private String currentUserIdx() throws Exception {
     	//spring security
+		int sId = 0;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        int sId = -1;
         PrincipalDetails mPrincipalDetails = null;
         try {        	
         	mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -182,10 +181,7 @@ public class EchoHandler extends TextWebSocketHandler {
         catch(Exception e){
         	e.printStackTrace();
         }
-		
 		return String.valueOf(sId);
 	}
-	
-	
 	
 }
