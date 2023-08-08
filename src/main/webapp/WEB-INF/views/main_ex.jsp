@@ -84,14 +84,14 @@
             <!--메인 슬라이드-->
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="${pageContext.request.contextPath }/resources/img/main_ex/market/thunder_main_slider3.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-item">
+                        <img src="${pageContext.request.contextPath }/resources/img/member/social/social.png" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
-                        <img src="${pageContext.request.contextPath }/resources/img/main_ex/메인2.png" class="d-block w-100" alt="..." style="width: 1024px;height: 298.55px;">
+                        <img src="${pageContext.request.contextPath }/resources/img/member/social/social.png" class="d-block w-100" alt="..." style="width: 1024px;height: 298.55px;">
                     </div>
                     <div class="carousel-item">
-                        <img src="${pageContext.request.contextPath }/resources/img/main_ex/메인1.png" class="d-block w-100" alt="..." style="width: 1024px;height: 298.55px;">
+                        <img src="${pageContext.request.contextPath }/resources/img/member/social/jodan.png" class="d-block w-100" alt="..." style="width: 1024px;height: 298.55px;">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -106,10 +106,10 @@
 
             <!--앱 다운 배너-->
             <div class="banner_wrap">
-                <img src="${pageContext.request.contextPath }/resources/img/main_ex/ejclxm.png" onclick="location.href='https://thecheat.co.kr/rb/?mod=_search'" alt="더치트배너" width="100%">
-                <div class="qr_wrap">
-                    <img src="${pageContext.request.contextPath }/resources/img/main_ex/ejclxmQR.png" alt="더치트 앱 다운로드 qr 코드" class="image_qr">
-                </div>
+                <img src="${pageContext.request.contextPath }/resources/img/member/social/jodan.jpg" onclick="location.href='https://thecheat.co.kr/rb/?mod=_search'" alt="더치트배너" width="100%">
+<!--                 <div class="qr_wrap"> -->
+<%--                     <img src="${pageContext.request.contextPath }/resources/img/main_ex/ejclxmQR.png" alt="더치트 앱 다운로드 qr 코드" class="image_qr"> --%>
+<!--                 </div> -->
             </div>
 
 
@@ -119,7 +119,7 @@
                			<h2>${sessionScope.sId }님 맞춤 상품 ❤️</h2>
                		</c:when>
                		<c:otherwise>
-               			<h4>로그인 후 더 많은 정보를 볼 수 있습니다 🎶</h4>
+               			<h4>슈크림</h4>
                		</c:otherwise>
                  </c:choose>
                 
@@ -169,7 +169,7 @@
                 
                 <!--상품 영역-->
             <section class="main_goods">
-                <h2>클레버 인기 상품 👍</h2>
+                <h2>슈크림</h2>
                 <!-- 0614 보아 시작!!!!!!!!!!!! -->
                 <div class="goods_wrap">
 	                <c:forEach items="${selectDibsProduct }" var="selectDibsProduct" begin="0" end="4">
@@ -214,7 +214,7 @@
             
             
              <section class="main_goods">
-                <h2>클레버 최신 상품 🆕</h2>
+                <h2>슈크림</h2>
                 <!--상품 영역-->
                     <div class="goods_wrap col-lg-12 col-md-12"> 
                    		<!-- 상품 1개 카드 -->

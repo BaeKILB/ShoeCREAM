@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pj2.shoecream.mapper.StoreMapper">
+
+  <resultMap id="productDetailsResultMap" type="hashMap">
+    <id column="product_idx" property="productIdx"/>
+    <result column="mem_idx" property="memIdx"/>
+
+    <!-- Add additional results for each column from the joined tables as needed -->
+    <!-- Here's an example for product_title -->
+    <result column="product_title" property="productTitle"/>
+  </resultMap>
+
+	<!-- 내 중고 판매 -->
+	<select id="selectProductSellList" resultMap="productDetailsResultMap">
+	  SELECT 
+	    mi.*,
+	    jp.*,
+	    pi.*
+	  FROM jung_product jp
+	    INNER JOIN mem_info mi ON jp.mem_idx = mi.mem_idx
+	    INNER JOIN product_image pi ON jp.product_idx = pi.product_idx
+	  WHERE jp.mem_idx = #{mem_idx}
+	  ORDER BY jp.product_date DESC;
+	</select>
+
+	<!-- 내 경매 전체 내역 select -->
+	<select id="selectAuctionList" resultType="HashMap">
+	   SELECT 
+	      mi.*,
+	      ai.*,
+	      pi.*
+	    FROM auction_item ai
+	      INNER JOIN mem_info mi ON ai.mem_idx = mi.mem_idx
+	      INNER JOIN product_image pi ON ai.auction_idx = pi.product_idx
+	    WHERE ai.mem_idx = #{mem_idx}
+	    ORDER BY ai.auction_date DESC;
+	</select>
+	
+	
+	
+	
+	
+	<select id="selectStoreInfo" resultType="hashMap">
+	    SELECT *
+	    FROM mem_info
+	    WHERE mem_idx = #{mem_idx}
+	</select>
+</mapper>

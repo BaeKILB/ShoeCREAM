@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -401,23 +402,6 @@ public class MemberController {
     }
     
     
-////    =========================store============================
-    // 상점 개인 페이지
-   	@GetMapping("/store/{mem_idx}")
-   	public String profile(@PathVariable int mem_idx, Model model) {
-//   		User userEntity = userService.회원프로필(id);
-//   		model.addAttribute("user", userEntity);
-//           Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//           PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//   		int sId = mPrincipalDetails.getMember().getMem_idx();
-//           
-//   		MemberProfileDto dto = memberService.memberProfile(mem_idx, mPrincipalDetails.getMember().getMem_idx());
-//   		model.addAttribute("dto", dto);
-//   		List<String> posts_image1 = SocialImageService.findPostImagesByMemIdx(mem_idx);
-//   		model.addAttribute("posts_image1", posts_image1);
-   		
-   		return "member/store/store";
-   	}
     
 /// =====================asd================
    	@GetMapping("authex")

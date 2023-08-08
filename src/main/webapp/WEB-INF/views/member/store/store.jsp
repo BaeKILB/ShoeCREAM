@@ -114,15 +114,15 @@ function payAuction(idx, price, id, title){
                 <div class="col-md-2">
                     <div class="profile_thumb">
                         <input type="file" id="profileImageFile" name="profileImageFile" accept="image/jpeg,image/png" hidden="hidden" onchange="handleImageChange(event)">
-                        <img src="${pageContext.request.contextPath}/resources/upload/profile/${principal.member.mem_profileImageUrl}" alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
+                        <img src="${pageContext.request.contextPath}/resources/upload/profile/${storeInfo.member.mem_profileImageUrl}" alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex flex-column">
                     <div class="profile_detail">
-                        <strong class="name">${principal.member.mem_nickname}</strong>
+                        <strong class="name">${storeInfo.mem_nickname}</strong>
                     </div>
                     <div class="mem_email">
-                   	 	<p class="text-black-50">${principal.member.mem_email}</p>
+                   	 	<p class="text-black-50">${storeInfo.mem_email}</p>
                     </div>
                     <div class="profile_btn_box mt-auto">
                         <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/mypage/profile'">프로필 관리</button>
@@ -223,35 +223,35 @@ function payAuction(idx, price, id, title){
 									<div class="goods_one">
 										<a href="product_detail?product_idx=${productSellList.product_idx }">
 											<div class="goods_image">
-												<c:forEach items="${fileList }" var="fileList">
-													<c:set var="length" value="${fn:length(fileList.file_name) }" />
-													<c:set var="index" value="${fn:indexOf(fileList.file_name, '_') }" />
-													<c:set var="file_name" value="${fn:substring(fileList.file_name, index + 1, length) }" />
+<%-- 												<c:forEach items="${fileList }" var="fileList"> --%>
+													<c:set var="length" value="${fn:length(productSellList.file_name) }" />
+													<c:set var="index" value="${fn:indexOf(productSellList.file_name, '_') }" />
+													<c:set var="file_name" value="${fn:substring(productSellList.file_name, index + 1, length) }" />
 													<c:choose>
-														<c:when test="${fileList.file_num eq productSellList.product_idx && productSellList.sale_status eq '판매중' }">
-															<img src="${pageContext.request.contextPath }/resources/fileUpload/${file_name}" alt="상품 이미지">
+														<c:when test="${productSellList.file_num eq productSellList.product_idx && productSellList.product_sell_status eq '대기중' }">
+															<img src="${pageContext.request.contextPath}/resources/upload/${productSellList.image1}" alt="상품 이미지">
 														</c:when>
 														<c:when
-															test="${fileList.file_num eq productSellList.product_idx && productSellList.sale_status eq '판매완료' }">
-															<img src="${pageContext.request.contextPath }/resources/fileUpload/${file_name}" alt="상품 이미지">
+															test="${productSellList.file_num eq productSellList.product_idx && productSellList.product_sell_status eq '판매완료' }">
+															<img src="${pageContext.request.contextPath }/resources/fileUpload/${productSellList.image1}" alt="상품 이미지">
 															<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
 															거래완료
 															</span>
 														</c:when>
 													</c:choose>
-												</c:forEach>
+<%-- 												</c:forEach> --%>
 											</div>
 											<div class="goods_info">
-												<h2 class="goods_title">${productSellList.product_subject }</h2>
+												<h2 class="goods_title">${productSellList.product_title }</h2>
 												<p class="goods_price">
 													<span class="bold">${productSellList.product_price }</span>원
 												</p>
-												<p class="goods_shop">${productSellList.member_id }</p>
+												<p class="goods_shop">${productSellList.mem_id }</p>
 												<c:choose>
-													<c:when test="${productSellList.sale_status eq '판매중'}">
+													<c:when test="${productSellList.product_sell_status eq '대기중'}">
 														<p class="goods_date">${productSellList.product_date }</p>
 													</c:when>
-													<c:when test="${productSellList.sale_status eq '판매완료'}">
+													<c:when test="${productSellList.sale_status eq '거래완료'}">
 														<c:forEach items="${productSellDate }" var="productSellDate">
 															<p class="goods_date">${productSellDate.sell_date }</p>
 														</c:forEach>
@@ -476,7 +476,7 @@ function payAuction(idx, price, id, title){
 							<!--필터-->
 							<nav class="filter_nav">
 								<div class="status_filter">
-									<button type="button" class="all_buy_status active">전체 상태</button>
+									<button type="button" class="all_buy_status active">전체상태</button>
 <!-- 									<button type="button" class="buying_status">진행중</button> -->
 <!-- 									<button type="button" class="bought_status">완료</button> -->
 <!-- 									<button type="button" class="cancle_status">취소/환불</button> -->
@@ -497,10 +497,10 @@ function payAuction(idx, price, id, title){
 									<div class="goods_one">
 										<a href="auction_detail?auction_idx=${auctionList.auction_idx }&param=${auctionList.auction_Scategory }">
 											<div class="goods_image">
-												<c:forEach items="${auctionfileList }" var="file">
+<%-- 												<c:forEach items="${auctionfileList }" var="file"> --%>
 													<c:choose>
-														<c:when	test="${file.file_num eq auctionList.auction_idx && auctionList.auction_status eq '경매중' }">
-															<img src="${pageContext.request.contextPath }/resources/fileUpload${file.file_path}/${file.file_name}" alt="상품 이미지">
+														<c:when	test="${auctionList.auc_state eq '진행' }">
+															<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
 															<span class="goods_front"> 경매 진행 중 </span>
 														</c:when>
 														<c:when test="${file.file_num eq auctionList.auction_idx && auctionList.auction_status eq '경매마감' }">
@@ -510,7 +510,7 @@ function payAuction(idx, price, id, title){
 															</span>
 														</c:when>
 													</c:choose>
-												</c:forEach>
+<%-- 												</c:forEach> --%>
 											</div>
 											<div class="goods_info">
 												<h2 class="goods_title">${auctionList.auction_title }</h2>
