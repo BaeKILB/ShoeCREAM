@@ -316,7 +316,7 @@ public class JunggoController {
 	 * 판매자 유저 점수 mem_seller_rank
 	 * 판매자 판매 횟수 mem_seller_sellCount
 	 */
-	@GetMapping("transComplete")
+	@GetMapping("transForm")
 	public String transComplete(@RequestParam Map<String,Object> map, Model model
 			,RedirectAttributes redirectAttributes) {
 		
