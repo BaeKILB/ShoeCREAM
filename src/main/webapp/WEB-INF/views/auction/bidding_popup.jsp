@@ -153,7 +153,6 @@ function bidConfirmation(event) {
                 if (data.result) {
                     // 성공
                     alert(data.msg);
-                    console.log(${bid.length});
                     if (${not empty bid }) {
 	                    $.ajax({ // 알람 ajax
 	                        type: "POST"
@@ -170,7 +169,7 @@ function bidConfirmation(event) {
 	                    .done(function(result){ // 알람 done 시작
 	                        if(result == 1) { // 성공
 	                            let msg = "auction, 0,${bid.mem_idx},${auction.auction_idx},${auction.auction_title}";
-	                            alert(msg);
+// 	                            alert(msg);
 	                            socket.send(msg);
 	                        }
 	                    	

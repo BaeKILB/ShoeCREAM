@@ -52,7 +52,7 @@ function Confirmation(event) {
 			         .done(function(result){ // 알람 done 시작
 			             if(result == 1) { // 성공
 			                 let msg = "auction, 0,${bid.mem_idx},${auction.auction_idx},${auction.auction_title}";
-			                 alert(msg);
+// 			                 alert(msg);
 			                 socket.send(msg);
 			             }
 			         	refreshParentWindow(); // 부모 창 새로고침
