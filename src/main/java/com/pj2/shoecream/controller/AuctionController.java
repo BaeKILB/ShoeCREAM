@@ -264,7 +264,7 @@ public class AuctionController {
 		map.remove("listLimit");
 
 		int listCount = service.getAuctionList(map).size();
-		int pageListLimit = 20;
+		int pageListLimit = 12;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
 		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
 		int endPage = startPage + pageListLimit - 1;

@@ -28,35 +28,28 @@
 	    <div class="row">
 	        <div class="col-xl-2">
 				<aside class="sideCategoryWrap"> <!-- 카테고리 -->
-					<ul>
-		                <!-- 대분류 -->
-		                <c:forEach var="lc" items="${lc_category }">
-				            <li class="ct_lc_item" >
-				                <div class="ct_lc_item_btn">
-			                    	<input type="hidden" class="lc_code" value="${lc.lc_code }">
-				                    <span>${lc.lc_name }</span>
-				                    <button class="ct_up_down_btn"></button>
-				                </div>
-				                <!-- 중분류 -->
-							    <div id="${lc.lc_code }_mc_list" class="d-none">
-							        <ul>
-		                                 <c:forEach var="mc" items="${mc_category }">
-		                                    <c:if test="${lc.lc_code eq mc.parent_code }">
-									            <li class="ct_mc_item">
-									                <div class="ct_mc_item_btn">
-			                    						<input type="hidden" class="mc_code" value="${mc.mc_code }">
-									                    <span>${mc.mc_name }</span>
-									                </div>
-									            </li>
-		                                    </c:if>
-							           </c:forEach>
-							        </ul>
+					<div class="accordion accordion-flush" id="sideCategoryWrap">
+						<c:forEach var="lc" items="${lc_category }">
+							<div class="accordion-item">
+							    <h2 class="accordion-header" id="${lc.lc_code }_header">
+									<button class="accordion-button collapsed ct_lc_item_btn" type="button" data-bs-toggle="collapse" data-bs-target="#${lc.lc_code }_lcList" aria-expanded="false" aria-controls="${lc.lc_code }_lcList">
+										<span>${lc.lc_name }</span>
+									</button>
+									<input type="hidden" class="lc_code" value="${lc.lc_code }">
+							    </h2>
+							    <div id="${lc.lc_code }_lcList" class="accordion-collapse collapse" aria-labelledby="${lc.lc_code }_header" data-bs-parent="#sideCategoryWrap">
+									<c:forEach var="mc" items="${mc_category }">
+										<c:if test="${lc.lc_code eq mc.parent_code }">
+											<div class="accordion-body ct_mc_item_btn">
+												<input type="hidden" class="mc_code" value="${mc.mc_code }">
+												<span>${mc.mc_name }</span>
+											</div>
+										</c:if>
+									</c:forEach>
 							    </div>
-		                        <!-- 중분류 -->
-				            </li>
-		                </c:forEach>
-			            <!-- 대분류 -->
-		            </ul>
+					  		</div>
+						</c:forEach>
+					</div>
 				</aside>
 	        </div>
             <div class="col-xl-10">
