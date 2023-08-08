@@ -5,9 +5,9 @@
 		insert into
 			cream_item
 		values(
-			#{ci_code}
-			, #{ci_name}
-			, #{ci_content}
+			#{cream_idx}
+			, #{cream_title}
+			, #{cream_content}
 			, #{size220}
 			, #{size225}
 			, #{size230}
