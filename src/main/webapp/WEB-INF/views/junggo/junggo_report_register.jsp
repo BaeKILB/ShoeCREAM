@@ -97,7 +97,7 @@
 
 	<div class="lastContainner">
 		<input type="submit" class="register_btn" value="등록" >
-		<button type="button" class="back_btn" onclick="location.href='address'">돌아가기</button>
+		<button type="button" class="back_btn" onclick='window.close()'>창닫기</button>
 	</div>
 </form>
 	</section>

@@ -49,7 +49,7 @@
 	
 
 	</table>
-		
+		<button type="button" class="back_btn" onclick='window.close()'>창닫기</button>
 	</section>
 	</main>
 	<footer>

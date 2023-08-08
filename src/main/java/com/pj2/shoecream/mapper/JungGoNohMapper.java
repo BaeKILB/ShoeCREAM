@@ -25,7 +25,6 @@ public interface JungGoNohMapper {
 	// 등록된 상품 찜
 	JungGoNohVO selectDibs(JungGoNohVO jungGoNoh);
 		
-	
 	// 조회수 증가
 	void updateReadcount(JungGoNohVO jungGoNoh);
 	
@@ -71,7 +70,8 @@ public interface JungGoNohMapper {
 	//삭제 프로
 	int deleteReview(JungGoNohVO jungGoNoh);
 	
-	
+	//DB payinfo
+	JungGoNohVO selectPayInfo(String product_idx);
 	
 
 

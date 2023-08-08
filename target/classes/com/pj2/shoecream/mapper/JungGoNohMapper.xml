@@ -213,7 +213,7 @@ LEFT OUTER JOIN product_image pi
 	       AND seller_idx = #{mem_idx}
 	       AND writer_idx = #{buyier_idx}
 	</select>
-	
+		<!-- 리뷰 수정 -->
 	<update id="modifyReview">
 		UPDATE jung_reviews
 			SET review_content = #{review_content},
@@ -222,7 +222,7 @@ LEFT OUTER JOIN product_image pi
 	        AND seller_idx = #{mem_idx}
 	        AND writer_idx = #{buyier_idx}
 	</update>
-	
+	<!-- 리뷰 삭제 -->
 	<delete id="deleteReview">
 		DELETE 
 		  FROM jung_reviews
@@ -244,5 +244,12 @@ LEFT OUTER JOIN product_image pi
 	   LIMIT 3;   
 	</select>
 	
+	<!--DB pay_info  -->
+	<select id="selectPayInfo" resultType="com.pj2.shoecream.vo.JungGoNohVO">
+		SELECT pi.pay_idx, pi.product_idx, pi.pay_method, pi.pay_total, pi.pay_status, pi.pay_time
+		     , pi.cancel_trade_date, pi.cancel_trade_reason, pi.cancel_pay, pi.trans_date
+		  FROM pay_info pi
+		 WHERE product_idx = ${product_idx}
+	</select>
 	
 </mapper>

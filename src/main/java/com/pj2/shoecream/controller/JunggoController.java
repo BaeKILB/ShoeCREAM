@@ -1437,38 +1437,103 @@ public class JunggoController {
 		
 		
 	//------------------------- 예약취소 폼 이동---------------------
-	@GetMapping("resCancel")
-	public String resCancel() {
-		return "junggo/res_cancel";
-		
-	}
+		@GetMapping("resCancel")
+		public String resCancel(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+			
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/res_cancel";
+			
+		}
 	
 	//------------------------- 예약완료 폼 이동---------------------
-	@GetMapping("resComplete")
-	public String resComplete() {
-		return "junggo/res_complete";
-		
-	}
+		@GetMapping("resComplete")
+		public String resComplete(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+			
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/res_complete";
+			
+		}
 	
 	//------------------------- 결제완료 폼 이동---------------------
-	@GetMapping("payComplete")
-	public String payComplete() {
-		return "junggo/pay_complete";
+		@GetMapping("payComplete")
+		public String payComplete(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
 			
-	}
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/pay_complete";
+				
+		}
 	
 	//------------------------- 거래취소 폼 이동---------------------
-	@GetMapping("tradeCancel")
-	public String tradeCancel() {
-		return "junggo/trade_cancel";
-		
-	}
+		@GetMapping("tradeCancel")
+		public String tradeCancel(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+			
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/trade_cancel";
+			
+		}
 
 	//------------------------- 거래완료 폼 이동---------------------
-	@GetMapping("tradeComplete")
-	public String resCancelCom() {
-		return "junggo/trade_complete";
-	}
+		@GetMapping("tradeComplete")
+		public String resCancelCom(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				int buyier_idx = mPrincipalDetails.getMember().getMem_idx(); // 사는사람(접속 idx
+				jungGoNoh.setBuyier_idx(buyier_idx);
+			}
+			catch(Exception e) {
+
+			}
+			
+			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			model.addAttribute("jungGoNoh", payInfo);
+			
+			return "junggo/trade_complete";
+		}
 	
 	
 	

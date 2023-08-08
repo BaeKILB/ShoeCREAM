@@ -213,7 +213,7 @@
 		<div class="fifth_content">
 			<div class="radio_box">
 				<label> <input type="radio" name="product_status"
-					value="중고(상급)" /> <span>중고(상급)</span>
+					value="중고(상급)" checked/> <span>중고(상급)</span>
 				</label> <label> <input type="radio" name="product_status"
 					value="중고(하급)" /> <span>중고(하급)</span>
 				</label> <label> <input type="radio" name="product_status"
@@ -287,11 +287,12 @@
 		<div class="tenth_title">결제수단</div>
 		<div class="tenth_content">
 			<div class="check_box">
-				<label> <input type="checkbox" name="product_payment"
-					checked="checked" value="안전페이" />&nbsp; 안전페이 가능
-					&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox"
-					name="product_payment" checked="checked" value="직거래" />&nbsp; 직거래
-					가능
+				<label> 
+					<input type="checkbox" name="product_payment" checked="checked" value="안전페이" />&nbsp; 안전페이 가능
+					&nbsp;&nbsp;&nbsp;&nbsp; 	
+				</label>
+				<label>
+					<input type="checkbox" name="product_payment" checked="checked" value="직거래" />&nbsp; 직거래 가능
 				</label>
 
 			</div>
@@ -302,6 +303,6 @@
 
 	<div class="lastContainner">
 		<input type="submit" class="register_btn" value="등록">
-		<button type="button" class="back_btn" onclick="location.href='address'">돌아가기</button>
+		<button type="button" class="back_btn" onclick="history.back()">돌아가기</button>
 	</div>
 </form>
