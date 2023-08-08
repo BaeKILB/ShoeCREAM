@@ -36,6 +36,23 @@
             <div>${auction.auction_title }</div>
         </div>
     </div>
+        <div class="row">
+        <div class="col-3">
+            <div class="text-center">사이즈</div>
+        </div>
+        <div class="col-6">
+            <div>${auction.auction_size}</div>
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-3">
+            <div class="text-center">브랜드</div>
+        </div>
+        <div class="col-6">
+            <div>${auction.auction_brand}</div>
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-3">
             <div class="text-center">즉시구매가</div>
@@ -44,6 +61,7 @@
             <div>${auction.auc_buy_instantly }원</div>
         </div>
     </div>
+
     <form method="post" action="buyingPro">
         <input type="hidden" value="${auction.auction_idx }"  name="auction_idx">
         <input type="hidden" value="${auction.auc_buy_instantly }"  name="auc_buy_instantly">
@@ -60,6 +78,13 @@
         <!-- <input type="button" value="입찰하기" onclick="placeBid()" id="bidButton" disabled> -->
         <!-- 보증금 결제 로직 완료되면 사용하기 -->
     </form>
+    
+    <div>
+    	<p>즉시구매를 신청하시고 바로 결제를 완료하지 않으시면,즉시구매가 취소됩니다.</p>
+    	<p>슈크림은 통신판매 중개자로서 통신판매의 당사자가 아닙니다. 
+    	본 상품은 개별판매자가 등록한 상품으로 상품, 상품정보, 거래에 관한 의무와 책임은 각 판매자에게 있습니다.</p>
+    	<p>슈크림의 결제시스템을 이용하지 않고 판매자의 계좌로 상품대금을 송금 하는등의 방법으로 직거래를 하는경우, 상품을 받지못하는 등의 피해가 발생할 수 있습니다. 직거래로 인한 피해 발생시, 슈크림은 일체의 책임을 지지 않습니다.</p>
+    </div>
 </main>
 </body>
 </html>
