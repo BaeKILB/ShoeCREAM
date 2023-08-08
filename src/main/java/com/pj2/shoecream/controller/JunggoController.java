@@ -1563,8 +1563,20 @@ public class JunggoController {
 
 			}
 			
+			
+			
 			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			int sub_pay = payInfo.getPay_total();
+			int sub_buyier_idx = payInfo.getBuyier_idx();
+			int sub_seller_idx = payInfo.getMem_idx();
+			String sub_product_idx = payInfo.getProduct_idx();
+			JungGoNohVO payInfo2 = jungGoNohService.getPayInfo2(sub_pay, sub_buyier_idx, sub_seller_idx, sub_product_idx);
+			
+			
+			
+			
 			model.addAttribute("jungGoNoh", payInfo);
+			model.addAttribute("jungGoNoh2", payInfo2);
 			
 			return "junggo/pay_cancel";
 			
@@ -1585,7 +1597,17 @@ public class JunggoController {
 			}
 			
 			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			int sub_pay = payInfo.getPay_total();
+			int sub_buyier_idx = payInfo.getBuyier_idx();
+			int sub_seller_idx = payInfo.getMem_idx();
+			String sub_product_idx = payInfo.getProduct_idx();
+			JungGoNohVO payInfo2 = jungGoNohService.getPayInfo2(sub_pay, sub_buyier_idx, sub_seller_idx, sub_product_idx);
+			
+			
+			
+			
 			model.addAttribute("jungGoNoh", payInfo);
+			model.addAttribute("jungGoNoh2", payInfo2);
 			
 			return "junggo/pay_complete";
 				
@@ -1605,7 +1627,17 @@ public class JunggoController {
 			}
 			
 			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			int sub_pay = payInfo.getPay_total();
+			int sub_buyier_idx = payInfo.getBuyier_idx();
+			int sub_seller_idx = payInfo.getMem_idx();
+			String sub_product_idx = payInfo.getProduct_idx();
+			JungGoNohVO payInfo2 = jungGoNohService.getPayInfo2(sub_pay, sub_buyier_idx, sub_seller_idx, sub_product_idx);
+			
+			
+			
+			
 			model.addAttribute("jungGoNoh", payInfo);
+			model.addAttribute("jungGoNoh2", payInfo2);
 			
 			return "junggo/trade_cancel";
 			
@@ -1625,7 +1657,17 @@ public class JunggoController {
 			}
 			
 			JungGoNohVO payInfo = jungGoNohService.getPayInfo(product_idx);
+			int sub_pay = payInfo.getPay_total();
+			int sub_buyier_idx = payInfo.getBuyier_idx();
+			int sub_seller_idx = payInfo.getMem_idx();
+			String sub_product_idx = payInfo.getProduct_idx();
+			JungGoNohVO payInfo2 = jungGoNohService.getPayInfo2(sub_pay, sub_buyier_idx, sub_seller_idx, sub_product_idx);
+			
+			
+			
+			
 			model.addAttribute("jungGoNoh", payInfo);
+			model.addAttribute("jungGoNoh2", payInfo2);
 			
 			return "junggo/trade_complete";
 		}

@@ -112,7 +112,7 @@
 					</li>
 					<li>
 						<em>결제 확인 일시</em>
-						<span>2023.07.18 11:13</span>
+						<span>${jungGoNoh2.trans_date}</span>
 					</li>
 				</ul>
 			</div>
