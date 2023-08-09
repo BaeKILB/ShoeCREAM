@@ -69,9 +69,9 @@ public class CreamController {//크림 컨트롤러 입니다.
        
 		int pageNum = Integer.parseInt(String.valueOf(map.get("pageNum")));
 		int listLimit = 12;
-		if (map.containsKey("main")) {
-			listLimit = 4;
-		}
+//		if (map.containsKey("main")) {
+//			listLimit = 4;
+//		}
 		int startRow = (pageNum - 1) * listLimit;
        
 		map.put("startRow", startRow);
@@ -102,6 +102,10 @@ public class CreamController {//크림 컨트롤러 입니다.
 		creamList.add(pageInfo);
 
 		JSONArray jsonArray = new JSONArray(creamList);
+		
+		System.out.println("!@#$");
+		System.out.println(jsonArray.toString());
+		
 		return jsonArray.toString();
 	}
 	

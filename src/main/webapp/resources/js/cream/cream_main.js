@@ -33,9 +33,8 @@ function getList() {
         , url: "getCreamList"
         , dataType: "json"
         , data: {
-//            'orderMethod': orderMethod
-//            ,
-             'pageNum': pageNum
+            'orderMethod': orderMethod
+             , 'pageNum': pageNum
 //            , 'lc_code': lcCode
 //            , 'mc_code': mcCode
         } 
