@@ -44,6 +44,7 @@
 							<tr>
 								<th class="code"><span class="cream_idx">디자인 코드</span></th>
 								<th class="cream_title"><span class="cream_title">디자인명</span></th>
+								<th class="cream_modify"><span class="cream_modify">수정하기</span></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -51,6 +52,11 @@
 								<tr>
 									<td class="code"><span class="cream_idx"> <span class="sv_member">${creammap.cream_idx}</span></span></td>
 									<td class="cream_title"> ${creammap.cream_title}</td>
+									<td class="cream_modify">
+										<a href="CreamModifyForm?cream_idx=${cream.cream_idx }&pageNum=${pageNum }" class="mod_ans moreBtn">
+												수정
+										</a> 
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

@@ -215,9 +215,9 @@ public class CreamController {//크림 컨트롤러 입니다.
 //		
 		model.addAttribute("dibs", dibs);
 //		
-//		// 찜카운트
-//		int dibsCount = service.getDibsCount(map);
-//		model.addAttribute("dibsCount", dibsCount);
+		// 찜카운트
+		int dibsCount = service.getDibsCount(map);
+		model.addAttribute("dibsCount", dibsCount);
 //		
 
 		
@@ -254,6 +254,13 @@ public class CreamController {//크림 컨트롤러 입니다.
    	
    	JSONObject jsonObject = new JSONObject(dibs);
 		return jsonObject.toString();
+   }
+   
+   
+   @GetMapping("CreamModifyForm")
+   public String CreamModifyForm() {
+	   
+	   return "admin/admin_cream_modify";
    }
 	
 }
