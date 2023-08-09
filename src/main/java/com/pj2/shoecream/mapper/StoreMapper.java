@@ -24,5 +24,8 @@ public interface StoreMapper {
 	
     // 상점 개인 페이지 정보 조회
 	HashMap<String, Object> selectStoreInfo(int mem_idx);
+	
+	// 중고 리뷰 조회
+	HashMap<String, Object> selectJungReviewList(int mem_idx);
 
 }

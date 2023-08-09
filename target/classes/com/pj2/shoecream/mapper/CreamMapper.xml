@@ -59,7 +59,17 @@
 		LEFT JOIN
 		    dibs d ON ci.cream_idx = d.product_idx
 		GROUP BY
-		    ci.cream_idx, pi.image_path, pi.image1, ci.cream_title, ci.size220, ci.cream_readcount;
+		    ci.cream_idx, pi.image_path, pi.image1, ci.cream_title, ci.size220, ci.cream_readcount
+			<if test="!orderMethod.equals('')">
+				ORDER BY
+					cream_readcount desc
+			</if>
+			<if test="startRow != null and listLimit != null">
+			        limit
+			            #{startRow}
+			            , #{listLimit}
+       	 </if>
+			
 	</select>
 	
 	
@@ -109,23 +119,16 @@
 	       and product_idx = #{cream_idx }
 	</delete>
 	
+
+	
 	<select id="selectDibsCount">
         SELECT 
             count(product_idx) 
         FROM 
             dibs
         WHERE 
-            product_idx=${cream_idx }
+            product_idx='${cream_idx }'
 	</select>
-	
-<!-- 	<select id="selectDibsCount"> -->
-<!--         SELECT  -->
-<!--             count(product_idx)  -->
-<!--         FROM  -->
-<!--             dibs -->
-<!--         WHERE  -->
-<!--             product_idx=${cream_idx } -->
-<!-- 	</select> -->
 
 
 </mapper>

@@ -8,6 +8,7 @@
 ###spring###
 pom.properties
 MANIFEST.MF
+root-context.xml
 ###SPRING###
 
 

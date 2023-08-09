@@ -693,7 +693,7 @@ function payAuction(idx, price, id, title){
 													<span class="bold">최종 낙찰가 : ${dibList.auction_final_price}</span>원
 												</p>
 												<p class="goods_shop">${dibList.mem_id}</p>
-												<p class="goods_date">경매 시작 시간 : ${dibList.auction_date}</p>
+												<p class="goods_date">경매 시작 시간 : ${dibList.auc_regist_date}</p>
 											</div>
 										</a>
 										<button type="button" name="auction" onclick="location.href='A_DibsCancel?type_num=${dibList.auction_idx}'">찜 취소</button>

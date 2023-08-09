@@ -54,19 +54,7 @@ public class MemberController {
 	private Map<String, String> codeMap; 
 	
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	// 메인페이지
-	@GetMapping("/")
-	public String mainform(
-			Model model) {
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//		System.out.println("세션 정보2 : " + mPrincipalDetails.getMember());
-//		
-//		model.addAttribute("member", mPrincipalDetails.getMember());
-		return "main_ex";
-	}
-	
+		
 //	==========================Member(auth)==================
 	//폰 중복 확인
 	@PostMapping("/phondCheck")

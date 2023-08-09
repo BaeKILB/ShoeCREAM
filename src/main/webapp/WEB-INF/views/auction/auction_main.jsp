@@ -68,8 +68,7 @@
 			            </div>
 			            <div class="col-lg-2 col-md-3 col"> <!-- 정렬 방식 -->
 			                <select class="form-select orderMethod" id="orderMethod">
-                                <option value="" selected>정렬방식</option>
-                                <option value="newest">최신순</option>
+                                <option value="newest" selected>최신순</option>
                                 <option value="deadline">마감임박순</option>
                                 <option value="steamed">찜순</option>
                                 <option value="popular">인기순</option>
