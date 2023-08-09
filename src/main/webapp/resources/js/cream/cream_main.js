@@ -27,7 +27,8 @@ $(function() { // onload
  }); // onload
 
 function getList() {
-	console.log("test");
+	console.log("호출");
+	
     $.ajax({
         type: "get"
         , url: "getCreamList"
@@ -54,7 +55,7 @@ const doneResult = data => {
     listCount = pageInfo.listCount;
     pageListLimit = pageInfo.pageListLimit;
     
-    let index = 0;
+//    let index = 0;
     for (let item of data) {
         // 입찰내역이 있을경우 가격을 입찰가로 바꿔야함 가져올때 bid_list 도 같이 가져오자
   
@@ -88,7 +89,7 @@ const doneResult = data => {
                 +"  </a>"
                 +"</div>";
         $("#itemList").append(result);
-        index++;
+//        index++;
     }
 };
 

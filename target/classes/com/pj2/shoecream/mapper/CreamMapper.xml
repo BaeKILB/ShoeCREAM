@@ -64,6 +64,12 @@
 				ORDER BY
 					cream_readcount desc
 			</if>
+			<if test="startRow != null and listLimit != null">
+			        limit
+			            #{startRow}
+			            , #{listLimit}
+       	 </if>
+			
 	</select>
 	
 	
