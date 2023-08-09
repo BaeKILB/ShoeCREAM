@@ -253,7 +253,7 @@ public class CreamController {//크림 컨트롤러 입니다.
    @GetMapping("CreamModifyForm")
    public String CreamModifyForm(HttpSession session
 	        , Model model
-	        , @RequestParam Map<String, Object> map ) {
+	        , @RequestParam Map<String, Object> map, @RequestParam int pageNum ) {
 		String cream_idx = (String)map.get("cream_idx");
 		
 		
