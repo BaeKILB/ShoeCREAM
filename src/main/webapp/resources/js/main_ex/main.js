@@ -145,7 +145,6 @@ setInterval(() => {
 
 // 크림
 function getCreamList() {
-	console.log("test");
     $.ajax({
         type: "get"
         , url: "getCreamList"
@@ -171,7 +170,6 @@ const doneCreamResult = data => {
     listCount = pageInfo.listCount;
     pageListLimit = pageInfo.pageListLimit;
     
-    let index = 0;
     for (let item of data) {
         // 입찰내역이 있을경우 가격을 입찰가로 바꿔야함 가져올때 bid_list 도 같이 가져오자
   
@@ -205,7 +203,6 @@ const doneCreamResult = data => {
                 +"  </a>"
                 +"</div>";
         $("#creamList").append(result);
-        index++;
     }
 };
 

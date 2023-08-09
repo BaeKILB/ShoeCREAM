@@ -42,6 +42,7 @@ import com.pj2.shoecream.service.CategoryService;
 import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.service.PayService;
+import com.pj2.shoecream.service.ReportService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.JungGoNohVO;
 import com.pj2.shoecream.vo.MemberVO;
@@ -63,7 +64,10 @@ public class AuctionController {
    @Autowired 
    private PayService payService;
    @Autowired
+   private ReportService reportService;
+   @Autowired
    private JungGoNohService jungGoNohService;
+   
    
    private static final Logger logger = LoggerFactory.getLogger(AuctionController.class);
    
@@ -900,10 +904,6 @@ public class AuctionController {
 			e.printStackTrace();
 		}
 		
-		
-		
-				
-		
 		return "home";
 	}
 	
@@ -927,6 +927,44 @@ public class AuctionController {
 		}
 	}
 		
+	// 경매 신고폼 이동
+	@GetMapping("auctionReportForm")
+	public String registerAuctionReport(
+			@RequestParam String auction_idx
+			, Model model) {
+		
+    	// 구매자 회원번호
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+    	int sId = mPrincipalDetails.getMember().getMem_idx();
+		
+		// 상품 정보
+		Map<String,Object> auction = service.getAuction(auction_idx);
+		model.addAttribute("auction",auction);
+		
+    	// 신고자 정보
+    	MemberVO reporter = service.getMember(sId);
+    	model.addAttribute("reporter",reporter);
+    	
+    	// 판매자 정보
+    	MemberVO seller = service.getMember(Integer.parseInt(String.valueOf(auction.get("mem_idx"))));
+    	model.addAttribute("seller",seller);
+		
+		return "auction/auction_reportForm";
+	}
+	
+	@PostMapping("registAuctionReport")
+	public String registAuctionReport(@RequestParam Map<String, Object> map) {
+		
+		int insertCount = 0;
+		insertCount = reportService.registAuctionReport(map);
+		if (insertCount > 0) {
+			logger.info("신고 성공");
+		} else {
+			logger.info("신고 실패");
+		}
+		return "inc/close";
+	}
 		
     
     

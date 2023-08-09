@@ -27,17 +27,13 @@
 
 <!-- 테스트용 css -->
 <style type="text/css">
- #dibsBox { 
-     cursor: pointer; 
- } 
+ .cursorPoint {
+ 	cursor: pointer;
+ }
 
  .dibsImage { 
      width: 20px; 
      height: 20px; 
- } 
-
- #sellerInfo { 
-     cursor: pointer; 
  } 
 
  .card-img-top { 
@@ -264,7 +260,7 @@
 				    				</c:otherwise>
 				    			</c:choose>
 			    	            <div class="col text-center ">
-			    	            	<button class="btn btn-light w-100" id="dibsBox">
+			    	            	<button class="btn btn-light w-100 cursorPoint" id="dibsBox">
 							            <span <c:if test="${auction.isLogin != 0 }">onclick="dibsCheck()"</c:if>> 
 							                <c:choose>
 												<c:when test="${dibs eq null }">
@@ -322,23 +318,18 @@
 		<section class="row"> <!-- 상품정보 & 판매자정보 -->
 			<div class="col-xl-8 col-xs-12">
 				<div class="container h-100">
+					<div class="row"> <!-- 높이조절해야됨 -->
+						<div class="col d-none d-xl-block text-center bg-light rounded">
+							<p class="fs-5 fw-bold text-danger">⚠️거래시 주의 사항</p>
+							<p>판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<p>
+							<p>유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<p>
+							<p class="fs-6 fw-bold cursorPoint" onclick="window.open('auctionReportForm?auction_idx=${auction.auction_idx}', 'auctionReport', 'width=800, height=640')">여기를 클릭하여 고객센터로 신고해주시기 바랍니다.</p>
+						</div>
+					</div>
 					<div class="row h-50"> 
 						<div class="col">
 							<div class="fs-5 fw-bold">상품정보</div>
-							<p class="border rounded">${auction.auction_info }</p>
-						</div>
-					</div>
-					<div class="row h-50"> <!-- 높이조절해야됨 -->
-						<div class="col d-none d-xl-block">
-							<div class="fs-5 fw-bold mb-2">거래시 주의사항</div>
-							<div class="border rounded">
-								<p class="mb-1">경매 상품 거래 시 상품 정보에 대한 철저한 파악이 필수적입니다. 상세한 상품 설명과 이미지를 꼼꼼히 검토하여 구매하고자 하는 상품의 가치를 정확하게 판단해야 합니다.<p>
-								<p class="mb-1">입찰가 결정 시 타당한 입찰가를 제시하여 필요한 만큼의 경쟁력을 보여 줄 수 있도록 노력해야 합니다. 지나친 과도한 입찰가는 제품 가치를 초과할 수 있으며, 반대로 지나치게 낮은 입찰가는 경쟁자들에게 이점을 제공할 수 있습니다.<p>
-								<p class="mb-1">상품의 상태를 반드시 확인하시기 바랍니다. 사진과 설명을 통해 상품의 하자와 결함 등을 철저하게 점검하세요.<p>
-								<p class="mb-1">판매자와의 소통이 어려운 경우, 검색 엔진이나 온라인 커뮤니티 등을 활용하여 정보를 얻을 수 있습니다.<p>
-								<p class="mb-1">경매에서 낙찰된 경우, 추가결제를 완료하지 않으면 판매자가 이로 인해 발생한 손해를 보호하기 위해 보증금 일부 또는 전부를 배상금으로 사용할 수 있습니다. 따라서 추가결제를 완료할 때 까지 신중하게 확인하시기 바랍니다.<p>
-								<p>저희 ShoeCream은 중개 업무를 수행하는 회사입니다. 입찰 과정에서 상품 정보의 정확성과 상태를 확인하는 것은 구매자 본인의 책임이며, 구매자는 상품에 대한 충분한 검토 후 입찰 결정을 하셔야 합니다. 거래와 관련된 모든 책임은 거래 당사자들에게 있습니다.<p>
-							</div>
+							<p class="bg-light rounded fs-6">${auction.auction_info }</p>
 						</div>
 					</div>
 				</div>
@@ -352,7 +343,7 @@
 									<div class="col fs-5 fw-bold">판매자 정보</div>
 		                		</div>
 		                		<div class="row justify-content-between">
-		                			<div class="col" id="sellerInfo">
+		                			<div class="col cursorPoint" id="sellerInfo">
 										<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }"> <!-- 판매자 상점 URL 입력필요 -->
 											<span>${sellerInfo.mem_nickname }</span>
 										</a>

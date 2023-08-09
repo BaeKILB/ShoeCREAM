@@ -1,6 +1,7 @@
 package com.pj2.shoecream.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,10 @@ public class ReportService {
 	public int deleteAuction(String product_idx) {
 	
 		return mapper.deleteAuction(product_idx);
+	}
+
+	public int registAuctionReport(Map<String, Object> map) {
+		return mapper.insertAuctionReport(map);
 	}
 }
 

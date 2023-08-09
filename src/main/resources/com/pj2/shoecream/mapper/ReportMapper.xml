@@ -99,6 +99,20 @@ DELETE
         WHERE auction_idx = #{auction_idx};
    
 </delete>
+	<insert id="insertAuctionReport">
+		insert into
+			auction_report
+		values(
+			null
+			, #{report_content}
+			, #{auction_idx}
+			, #{seller_idx}
+			, #{reporter_idx}
+			, #{report_div}
+			, #{report_detail}
+			, now()
+		)
+	</insert>
 
 
 </mapper>
