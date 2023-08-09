@@ -2,7 +2,7 @@ let pageNum = 1;
 let maxPage = 1;
 let listCount = '';
 let pageListLimit = '';
-let orderMethod = "";
+let orderMethod = "newest";
 let lcCode = '';
 let mcCode = '';
 
@@ -55,7 +55,7 @@ $(function() { // onload
 		// 변수 초기화
 		lcCode = '';
 		mcCode = '';
-		orderMethod = '';
+		orderMethod = 'newest';
 		pageNum = 1;
 		maxPage = 1;
 		
