@@ -138,7 +138,7 @@ const doneResult = data => {
                 +"  <a href='AuctionDetail?auction_idx="+ item.auction_idx +"'>"
                 +"      <img src='"+ path + item.image_path + "/" + item.image1 +"' class='card-img-top' alt='productImage'>"
                 +"      <div class='card-body'>"
-                +"        <h5 class='card-title'>"+item.auction_title+"</h5>"
+                +"        <h6 class='card-title'>"+item.auction_title+"</h6>"
                 +"      </div>"
                 +"      <ul class='list-group list-group-flush'>"
                 +"        <li class='list-group-item'>가격 "+price+"원</li>"
