@@ -173,7 +173,7 @@ public class CreamController {//크림 컨트롤러 입니다.
 		    }
 		    service.registCreamItem(cream);
 		}
-		return "redirect:/";
+		return "admin/admin_cream";
     }	
    
    @GetMapping("CreamDetail")

@@ -60,6 +60,42 @@
 						</tbody>
 					</table>
 				</div>
+				<ul id="pageList">
+						<c:if test="${pageMaker.cri.pageNum > 1 }">
+							<li class='pgi'>
+								<a href="creamProduct?pageNum=${pageMaker.cri.pageNum - 1 }" class='allprev'><i class='fa fa-angle-double-left pgi' aria-hidden='true'></i></a>
+							</li>
+						</c:if>
+						<c:if test="${pageMaker.cri.pageNum > 1 }">
+							<li class='pgi'>
+							<a href="creamProduct?pageNum=${pageMaker.cri.pageNum - 1 }" class='prev'><i class='fa fa-angle-left pgi' aria-hidden='true'></i></a>
+							</li>
+						</c:if>
+						<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+							<c:choose>
+								<c:when test="${pageMaker.cri.pageNum == num }">
+									<li>
+										<a href="creamProduct?pageNum=${num }" class='pageNum current'>${num }</a>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li>
+										<a href="creamProduct?pageNum=${num }" class='pageNum'>${num }</a>
+									</li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
+							<li class='pgi'>
+								<a href="reportProcess?pageNum=${pageMaker.cri.pageNum + 1 }" class='next'><i class='fa fa-angle-right pgi' aria-hidden='true'></i></a>
+							</li>
+						</c:if>
+						<c:if test="${pageMaker.endPage < pageMaker.realEnd || pageMaker.endPage > 1 && pageMaker.cri.pageNum < pageMaker.realEnd}">
+							<li class='pgi'>
+								<a href="reportProcess?pageNum=${pageMaker.cri.pageNum + 1 }" class='allnext'><i class='fa fa-angle-double-right pgi' aria-hidden='true'></i></a>
+							</li>
+						</c:if>
+				</ul>
 			</div>
 		</div>
 	</section>
