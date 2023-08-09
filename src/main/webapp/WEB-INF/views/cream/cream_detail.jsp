@@ -41,74 +41,6 @@
        priceSpan.innerText = hiddenInputValue;
    }
    
- //웹소켓
-   let socket = null;
-   let ws = new SockJS("<c:url value="/alram"/>");
-   socket = ws;  
-   
- //결제
- //입찰하기 버튼 클릭
-function Confirmation(event) {
-    // 사용자에게 확인을 받기 위한 컨펌창 표시
-    var confirmBid = confirm("구매를 진행하시겠습니까?");
-    
-    if (confirmBid) {
-		$.ajax({ // 입찰 ajax
-		    type: "post"
-		    , url: "creamBuyingPro"
-		    , dataType: "json"
-		    , data: {
-		        'cream_idx': $("input[name=cream_idx]").val()
-		    }
-		})
-		.done(function(data) { // 구매 done 시작
-		    if (data.result) {
-		        // 성공
-		        alert(data.msg);
-		        if (${not empty bid }) {
-			         $.ajax({ // 알람 ajax
-			             type: "POST"
-			             , url: "registerAlram"
-			             , dataType: "text"
-			             , data: {
-			                 'cmd':'1'
-			                 , 'sender':'0'
-			                 , 'receiver':'${bid.mem_idx}'
-			                 , 'product_idx':'${auction.auction_idx}'
-			                 , 'product_title':'${auction.auction_title}'
-			             }
-			         })
-			         .done(function(result){ // 알람 done 시작
-			             if(result == 1) { // 성공
-			                 let msg = "auction, 0,${bid.mem_idx},${auction.auction_idx},${auction.auction_title}";
-			                 alert(msg);
-			                 socket.send(msg);
-			             }
-			         	refreshParentWindow(); // 부모 창 새로고침
-						closeCurrentWindow(); // 현재 창 닫기
-			         }) // 알람 done 끝
-			         .fail(function(errorThrown) {
-			         	console.log(errorThrown)
-			         })
-		        } else {
-		            refreshParentWindow(); // 부모 창 새로고침
-		            closeCurrentWindow(); // 현재 창 닫기
-		        } 
-		    } else {
-		        alert(data.msg);
-		        history.back();
-		    }
-		}) // 구매 done 끝
-		.fail(function(errorThrown) {
-		    console.log(errorThrown)
-		})
-    } 
-}
-    
-function closeCurrentWindow() {
-    // 현재 창 닫기
-    window.close();
-}
 </script>
 <!-- 테스트용 css -->
 <style type="text/css">
@@ -284,7 +216,7 @@ function closeCurrentWindow() {
 							<div class="fs-2 fw-bold">${cream.cream_title }</div>
 						</div>
 					</div>
-					<form action="creamBuyingPro" method="post">	
+<!-- 					<form action="creamBuyingPro" method="post">	 -->
 						<div class="row">
 						    <div class="col-3">사이즈</div>
 						    <div>
@@ -322,9 +254,9 @@ function closeCurrentWindow() {
 						    </div>
 						</div>
 
-			    	            <div class="col text-center ">
-			    	            	<button type="button" class="btn btn-light w-100" id="dibsBox">
-							            <span <c:if test="${cream.isLogin != 0 }" onclick="dibsCheck(event)"></c:if>>
+   								<div class="col text-center ">
+			    	            	<button class="btn btn-light w-100" id="dibsBox">
+							            <span <c:if test="${cream.isLogin != 0 }">onclick="dibsCheck()"</c:if>> 
 							                <c:choose>
 												<c:when test="${dibs eq null }">
 													<img class="dibsImage" alt="heart-fill" src="${pageContext.request.contextPath }/resources/img/auction/favorite-heart-false.svg">
@@ -344,7 +276,7 @@ function closeCurrentWindow() {
 			    	            <div class="col text-center ">
 			    	            	 <input type="submit" class="btn btn-secondary" value="구매하기" onclick="Confirmation()">
 								</div>
-		</form>
+<!-- 		</form> -->
 								
 					</div>
 				</div>

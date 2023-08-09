@@ -38,7 +38,7 @@ function showSlides(n) {
 const dibsCheck = () => {
     $.ajax({
         type: "post"
-        , url: "dibsEvent"
+        , url: "dibsEvent2"
         , data: {
             cream_idx: $("#cream_idx").val()
         }
@@ -51,6 +51,13 @@ const dibsCheck = () => {
         }
     })
 }
+//
+//$(document).ready(function() {
+//    $("#dibsBox").on("click", function(event) {
+//        event.preventDefault(); // 폼 제출을 막음
+//        dibsCheck(); // dibsCheck() 함수 호출
+//    });
+//});
 
 // 찜하기 이벤트 결과값
 const dibsResult = (data) => {
