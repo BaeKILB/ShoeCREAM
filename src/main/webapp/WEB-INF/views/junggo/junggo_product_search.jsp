@@ -83,7 +83,7 @@
 				        </select>
 					</div>
 				</article>
-				<div id="itemList" class="row row-cols-auto">
+				<div id="itemList" class="row">
 
 				</div>
 			</section>

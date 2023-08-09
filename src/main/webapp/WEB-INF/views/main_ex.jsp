@@ -115,7 +115,7 @@
             <!-- 중고리스트 -->
 			<section id="container">
 				<div>중고상품</div>
-				<div id="junggoList"></div>
+				<div class="row" id="junggoList"></div>
 			</section>
             <!-- 경매리스트 -->
 			<section id="container">

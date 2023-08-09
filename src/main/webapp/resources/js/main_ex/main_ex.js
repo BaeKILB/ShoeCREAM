@@ -15,7 +15,7 @@ function initAjax() {
 	let data =  $.ajax({
         url: "junggoSearchInit.ajax",
         type: "post",
-        data: obj,
+        data: {},
         dataType: "json",
         async: false,
         error: function(errorThrown) {
@@ -65,7 +65,11 @@ function loadItemAjax(obj) {
 // 찜 하기 ajax
 function dibsAjax(obj) {
 	let checkError = false;
-	console.log(obj)
+	
+	if(obj["buyier_idx"] <= 0){
+		alert("로그인 되어있지 않습니다 로그인해주세요!")		
+		return;
+	}
 	let data =  $.ajax({
         url: "jungDibsBtn.ajax",
         type: "post",
@@ -115,7 +119,7 @@ function addItems(obj){	// 만약 마지막 리스트까지 검색했으면 더�
 //		resLoadBtn.setAttribute("style","display:none")	
 //	}
 	
-	let itemListWrap = document.querySelector("#itemList");
+	let itemListWrap = document.querySelector("#junggoList");
 	
 	let limit = obj.jungListHtml.length;
 	
@@ -124,7 +128,7 @@ function addItems(obj){	// 만약 마지막 리스트까지 검색했으면 더�
 	}
 	
 	for(let i = 0; i < limit; i++ ){
-		
+		itemListWrap.insertAdjacentHTML("beforeend", obj.jungListHtml[i]);
 	}
 	
 	
@@ -171,15 +175,12 @@ const loadItems = () => {
 
 
 // =================== onload
-$(function() { 
 
-	dataObj = initAjax();
-	if(!loadItems()){
-		console.log("onload - loadItems() error !");
-	}
-	
-});
-
+dataObj = initAjax();
+if(!loadItems()){
+	console.log("onload - loadItems() error !");
+}
+console.log("test");
 
 
 
