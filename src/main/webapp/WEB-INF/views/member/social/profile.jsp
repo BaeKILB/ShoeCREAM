@@ -23,7 +23,7 @@
 				</form>
 
 				<img class="profile-image" src="${pageContext.request.contextPath}/resources/upload/profile/${dto.member.mem_profileImageUrl}"
-					onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/person3.jpg'"
+					onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/memProfile.jpg'"
 					id="userProfileImage" />
 			</div>
 		</div>

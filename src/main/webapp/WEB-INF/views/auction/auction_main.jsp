@@ -15,7 +15,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/auction/auction_main.css"	rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/side_category.css"    rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="stylesheet" >
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
 </head>
 <body>
 	<header> <!-- header -->
@@ -81,8 +81,8 @@
     	    </div>
 	    </div>
 	</main>
-	<footer> <!-- footer -->
-		<jsp:include page="../inc/footer.jsp" />
-	</footer>
+    <footer>
+        <jsp:include page="../inc_ex/footer.jsp" />
+    </footer>
 </body>
 </html>

@@ -26,9 +26,15 @@ public class StoreService {
 		return mapper.selectAuctionList(mem_idx);
 	}
 	
+    // 찜 내역
+	public List<HashMap<String, String>> selectDibList(int mem_idx) {
+		return mapper.selectDibList(mem_idx);
+	}
 	
 	// 상점 개인 페이지 정보 조회
     public HashMap<String, Object> selectStoreInfo(int mem_idx) {
         return mapper.selectStoreInfo(mem_idx);
     }
+    
+
 }

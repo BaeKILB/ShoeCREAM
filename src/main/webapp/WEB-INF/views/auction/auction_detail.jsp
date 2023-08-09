@@ -22,82 +22,11 @@
 <script src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <!-- css파일  -->
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
-<%-- <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css"> --%>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
 
 
 <!-- 테스트용 css -->
 <style type="text/css">
-  Slideshow container  
- .slideshow-container { 
-    max-width: 1000px; 
-    position: relative; 
-    margin: auto; 
- } 
-
-  Hide the images by default  
- .mySlides { 
-    display: none; 
- } 
-
-  Next & previous buttons  
- .prev, .next { 
-    cursor: pointer; 
-    position: absolute; 
-    top: 50%; 
-    width: auto; 
-    margin-top: -22px; 
-    padding: 16px; 
-    color: white; 
-    font-weight: bold; 
-    font-size: 18px; 
-    transition: 0.6s ease; 
-    border-radius: 0 3px 3px 0; 
-    user-select: none; 
- } 
-
-  Position the "next button" to the right  
- .next { 
-    right: 0; 
-    border-radius: 3px 0 0 3px; 
- } 
-
-  On hover, add a black background color with a little bit see-through  
- .prev:hover, .next:hover { 
-    background-color: rgba(0, 0, 0, 0.8); 
- } 
-
-  The dots/bullets/indicators  
- .dot { 
-    cursor: pointer; 
-    height: 15px; 
-    width: 15px; 
-    margin: 0 2px; 
-    background-color: #bbb; 
-    border-radius: 50%; 
-    display: inline-block; 
-    transition: background-color 0.6s ease; 
- } 
-
- .active, .dot:hover { 
-    background-color: #717171; 
- } 
-
-  Fading animation  
- .fade { 
-    animation-name: fade; 
-    animation-duration: 1.5s; 
- } 
-
- @ 
- keyframes fade { 
-    from {opacity: .4 
- } 
-
- to { 
-    opacity: 1 
- } 
- } 
-
  #dibsBox { 
      cursor: pointer; 
  } 
@@ -111,14 +40,10 @@
      cursor: pointer; 
  } 
 
- .hidden { 
- 	display: none; 
- }
- 
-  .card-img-top { 
-  	height: 10rem; 
-  	object-fit: cover; 
-  } 
+ .card-img-top { 
+ 	height: 10rem; 
+ 	object-fit: cover; 
+ } 
  
  a {
  	text-decoration: none;
@@ -252,7 +177,7 @@
 				            <span>입찰수</span> <!-- 입찰내역 count -->
 				            <span class="fw-bold"> 
 								<c:choose>
-								    <c:when test="${bidCount eq null }">
+								    <c:when test="${bidCount eq 0 }">
 								        0
 								    </c:when>
 								    <c:otherwise>
@@ -264,11 +189,11 @@
 						<div class="col">
 							<div>
 								<c:choose>
-									<c:when test="${bidCount eq null }">
+									<c:when test="${bidCount eq 0 }">
 										<div>경매기록 없음</div>
 									</c:when>
 									<c:otherwise>
-							            <button class="btn" id="bidHistoryBtn">경매기록</button>
+							            <button class="btn btn-sm btn-secondary" id="bidHistoryBtn">경매기록</button>
 									</c:otherwise>
 								</c:choose>
 				            </div>
@@ -442,8 +367,8 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-8 fw-bold fs-3 fw-bold">${sellerInfo.mem_nickname }님의 판매상품</div>
-						<div class="col-4 align-self-end">
+						<div class="col-8 fw-bold fs-5 fw-bold">${sellerInfo.mem_nickname }님의 판매상품</div>
+						<div class="col-4 text-end text-xl-center">
 							<c:if test="${fn:length(sellerItemList) > 5 }">
 								<input type="button" class="btn" onclick="location.href='#?mem_idx=${sellerInfo.mem_idx }'" value="더보기 >"> <!-- 기능구현 필요 -->
 	               			</c:if>
@@ -477,5 +402,8 @@
 			</div>
         </section>
 	</main>
+	<footer>
+        <jsp:include page="../inc_ex/footer.jsp" />
+	</footer>
 </body>
 </html>

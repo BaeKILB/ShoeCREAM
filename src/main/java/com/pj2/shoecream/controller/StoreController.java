@@ -37,6 +37,11 @@ public class StoreController {
 		model.addAttribute("auctionList", auctionList);
 		System.out.println("내 경매 값들 :" + auctionList);
 		
+		// 경매 & 찜 내역
+		List<HashMap<String, String>> dibList = storeService.selectDibList(mem_idx);
+		model.addAttribute("dibList", dibList);
+		System.out.println("내 찜 값들 :" + dibList);
+		
         // 상점 개인 페이지 정보 조회
         HashMap<String, Object> storeInfo = storeService.selectStoreInfo(mem_idx);
         model.addAttribute("storeInfo", storeInfo);

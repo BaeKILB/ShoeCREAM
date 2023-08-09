@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 img {
-	width: 150px;
-	height: 150px;
+	width: 240px;
+	height: 300px;
 }
 
 a {
@@ -10,6 +10,11 @@ a {
 	color: #000;
 }
 
-.hidden {
-    display: none;
+.ct_mc_item_btn {
+	cursor: pointer;
 }
+
+.card-body {
+	height: 130px;
+}
+

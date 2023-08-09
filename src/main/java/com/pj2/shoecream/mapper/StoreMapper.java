@@ -17,10 +17,12 @@ public interface StoreMapper {
 	// 경매등록 내역
 	List<HashMap<String, String>> selectAuctionList(int mem_idx);
 	
-	
+	// 찜 내역
+	List<HashMap<String, String>> selectDibList(int mem_idx);
 	
 	
 	
     // 상점 개인 페이지 정보 조회
 	HashMap<String, Object> selectStoreInfo(int mem_idx);
+
 }

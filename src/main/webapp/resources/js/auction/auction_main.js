@@ -148,7 +148,7 @@ const doneResult = data => {
                 +"                  <input type=hidden name='auction_idx' value='"+item.auction_idx+"'>"
                 +"                  <input type=hidden name='auc_close_date' value='"+item.auc_close_date+"'>"
                 +"              </div>"
-                +"              <div id='remainingTime"+item.auction_idx+"'></div>"
+                +"              <div id='remainingTime"+item.auction_idx+"'>&nbsp;</div>"
                 +"          </div>"
                 +"        </li>"
                 +"        <li class='list-group-item'>"

@@ -28,14 +28,16 @@
 								<c:when test="${empty image[0].posts_image1 }">
                     				<input  type="file" name="file1" onchange="imageChoose(this)" value="${image[0].posts_image1}"  />
 									<div class="upload-img">
-				                        <img src="${pageContext.request.contextPath }/resources/img/member/social/social.png"  alt="" id="imageUploadPreview" />
+				                        <img src="${pageContext.request.contextPath }/resources/img/member/social/thunder_emptyImage.svg"  alt="" id="imageUploadPreview" 
+				                        onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"/>
 				                    </div>
 								</c:when>
 								<c:otherwise>
 									<div class="upload-form-detail" id="imageBtnArea">
 										<input type="button" class="btn btn-light btn-sm" value="삭제" onclick="deleteFile('${image[0].posts_image1}', ${posts_idx})">
 										<div class="upload-img">
-											<img src="${pageContext.request.contextPath }/resources/upload/social/${image[0].posts_image1}" alt="Car Image" class="car-image">
+											<img src="${pageContext.request.contextPath }/resources/upload/social/${image[0].posts_image1}" alt="Car Image" class="car-image"
+											onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';">
 										</div>
 										<%-- 삭제버튼 클릭 시 deleteFile() 함수 호출(파라미터로 글번호, 파일명 전달) --%>
 									</div>
