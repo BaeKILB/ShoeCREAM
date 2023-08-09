@@ -33,10 +33,7 @@ import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.service.AuctionService;
 import com.pj2.shoecream.service.CreamService;
 import com.pj2.shoecream.service.ImageService;
-import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.CreamVO;
-import com.pj2.shoecream.vo.MemberVO;
-import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ProductImageVO;
 
 @Controller
@@ -68,7 +65,10 @@ public class CreamController {//크림 컨트롤러 입니다.
           @RequestParam Map<String, Object> map) {
        
 		int pageNum = Integer.parseInt(String.valueOf(map.get("pageNum")));
-		int listLimit = 20;
+		int listLimit = 12;
+		if (map.containsKey("main")) {
+			listLimit = 4;
+		}
 		int startRow = (pageNum - 1) * listLimit;
        
 		map.put("startRow", startRow);
@@ -102,13 +102,6 @@ public class CreamController {//크림 컨트롤러 입니다.
 		return jsonArray.toString();
 	}
 	
-	
-//	@GetMapping("CreamRegisterForm")
-//	public String creamRegisterForm(
-//	    Model model) {
-//
-//		return "cream/cream_register";
-//	}
 	
    @PostMapping("CreamRegister")
     public String creamRegister(CreamVO cream , ProductImageVO image, HttpSession session) {
@@ -173,7 +166,7 @@ public class CreamController {//크림 컨트롤러 입니다.
 		    }
 		    service.registCreamItem(cream);
 		}
-		return "redirect:/";
+		return "admin/admin_cream";
     }	
    
    @GetMapping("CreamDetail")
@@ -215,10 +208,10 @@ public class CreamController {//크림 컨트롤러 입니다.
 //		
 		model.addAttribute("dibs", dibs);
 //		
-//		// 찜카운트
-//		int dibsCount = service.getDibsCount(map);
-//		model.addAttribute("dibsCount", dibsCount);
-//		
+		 //찜카운트
+		int dibsCount = service.getDibsCount(map);
+		model.addAttribute("dibsCount", dibsCount);
+		
 
 		
        return "cream/cream_detail";
@@ -255,5 +248,29 @@ public class CreamController {//크림 컨트롤러 입니다.
    	JSONObject jsonObject = new JSONObject(dibs);
 		return jsonObject.toString();
    }
+   
+   
+   @GetMapping("CreamModifyForm")
+   public String CreamModifyForm(HttpSession session
+	        , Model model
+	        , @RequestParam Map<String, Object> map ) {
+		String cream_idx = (String)map.get("cream_idx");
+		
+		
+		Map<String, Object> cream = service.getCream(cream_idx);
+		model.addAttribute("cream", cream); 
+	   
+	   return "admin/admin_cream_modify";
+   }
+   
+   @PostMapping("CreamModifyPro")
+   public String CreamModifyPro(Model model, ProductImageVO image
+	          , HttpSession session) {
+	   
+	   
+	   return "admin/admin_cream";
+   }
+   
+   
 	
 }

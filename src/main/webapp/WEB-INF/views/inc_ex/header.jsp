@@ -198,11 +198,12 @@ body {
 					</div>
 					<div class="col-md-4 sell_center">
 						<p style="width: 400px">
-							<a href="JunggoSearch" style="color: black;">중고거래 </a> <a
-								href="${pageContext.request.contextPath }/Auction" style="color: black;">경매하기 </a> <a
-								href="Cream" style="color: black;">굿즈 스토어 </a> 
-								<a href="community" style="color: black;">커뮤니티 </a>
-								<a href="${pageContext.request.contextPath }/chatRooms?chat_area=0" style="color: black;">중고채팅 </a>
+							<a href="JunggoSearch" style="color: black;">중고거래 </a> 
+							<a href="${pageContext.request.contextPath }/Auction" style="color: black;">경매하기 </a> 
+							<a href="${pageContext.request.contextPath }/RegisterForm" style="color: black;">상품등록 </a> 
+							<a href="Cream" style="color: black;">굿즈 스토어 </a> 
+							<a href="community" style="color: black;">커뮤니티 </a>
+							<a href="${pageContext.request.contextPath }/chatRooms?chat_area=0" style="color: black;">중고채팅 </a>
 						</p>
 					</div>
 				</div>

@@ -46,6 +46,10 @@ public class StoreController {
         HashMap<String, Object> storeInfo = storeService.selectStoreInfo(mem_idx);
         model.addAttribute("storeInfo", storeInfo);
 		
+        // 중고 후기 조회
+        HashMap<String, Object> jungReivewList = storeService.selectJungReivewList(mem_idx);
+        model.addAttribute("중고 리뷰 값들 : ", jungReivewList);
+        
    		return "member/store/store";
    	}
 }

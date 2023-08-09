@@ -35,6 +35,8 @@ public class CreamService {
 		return mapper.selectCream(cream_idx);
 	}
 
+	
+	//이하 찜하기 관련
 	public Map<String, Object> getCreamDibs(Map<String, Object> map) {
 		return mapper.selectCreamDibs(map);
 	}
