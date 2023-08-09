@@ -80,17 +80,17 @@
 					<li>
 						<em>결제 수단</em>
 							<c:choose>
-								<c:when test="${jungGoNoh.pay_method == 1}">
+								<c:when test="${jungGoNoh2.pay_method == 1}">
 									<span>신용카드</span>
 								</c:when>
 								<c:otherwise>
 									<c:choose>
-										<c:when test="${jungGoNoh.pay_method == 2}">
+										<c:when test="${jungGoNoh2.pay_method == 2}">
 											<span>간편결제</span>
 										</c:when>
 										<c:otherwise>
 											<c:choose>
-												<c:when test="${jungGoNoh.pay_method == 3}">
+												<c:when test="${jungGoNoh2.pay_method == 3}">
 													<span>계좌이체</span>
 												</c:when>
 												<c:otherwise>
@@ -104,7 +104,7 @@
 					</li> 
 					<li>
 						<em>결제 금액</em>
-						<span><fmt:formatNumber value="${jungGoNoh.pay_total}" pattern="#,###"/>원</span>
+						<span><fmt:formatNumber value="${jungGoNoh2.pay_total}" pattern="#,###"/>원</span>
 					</li>
 					<li>
 						<em>결제 확인 일시</em>

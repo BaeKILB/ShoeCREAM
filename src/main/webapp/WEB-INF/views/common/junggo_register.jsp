@@ -5,13 +5,13 @@
 <!DOCTYPE html>
 
 
-
+<div class="total_container col-sm-12 col-lg-12">
 <form action="registProductPro" method="post" enctype="multipart/form-data">
-	<div class="titleContainner">
+	<div class="titleContainner" >
 		<p class="title_title">기본 정보</p>
 	</div>
 	<div class="firstContainner">
-		<div class="first_title">상품 이미지()</div>
+		<div class="first_title">상품 이미지</div>
 		<div class="first_content">
 			<div class=image_box>
 				<input type="file" name="file1" /><br>
@@ -20,8 +20,10 @@
 				<input type="file" name="file4" /><br>
 			</div>
 			<div class="warning_text">
-				* 상품 이미지는 640x640에 최적화 되어 있습니다.<br> - 상품 이미지는 PC에서는 1:1, 모바일에서는
-				1:1.23 비율로 보여집니다.<br> - 이미지는 상품 등록 시 정사각형으로 잘려서 등록됩니다.<br>
+				* 상품 이미지는 640x640에 최적화 되어 있습니다.<br> 
+				- 상품 이미지는 PC에서는 1:1, 모바일에서는 <br> 
+				1:1.23 비율로 보여집니다.<br> 
+				- 이미지는 상품 등록 시 정사각형으로 잘려서 등록됩니다.<br>
 				- 큰 이미지일 경우 이미지가 깨지는 경우가 발생할 수 있습니다.<br> 최대 지원 사이즈인 640 X 640으로
 				리사이즈 해서 올려주세요.(개당 이미지 최대 10M)<br>
 			</div>
@@ -213,9 +215,9 @@
 		<div class="fifth_content">
 			<div class="radio_box">
 				<label> <input type="radio" name="product_status"
-					value="중고(상급)" checked/> <span>중고(상급)</span>
+					value="중고(상급)" checked/> <span>중고(상급)&nbsp;&nbsp;  </span>
 				</label> <label> <input type="radio" name="product_status"
-					value="중고(하급)" /> <span>중고(하급)</span>
+					value="중고(하급)" /> <span>중고(하급)&nbsp;&nbsp;  </span>
 				</label> <label> <input type="radio" name="product_status"
 					value="미개봉" /> <span>미개봉</span>
 				</label>
@@ -234,7 +236,7 @@
 					onclick="window.open('${pageContext.request.contextPath}/resources/img/junggo/sizeTable.png','사이즈 표','width=502,height=500,location=no,status=no,scrollbars=yes');">사이즈표</button>
 			</div>
 			<div class="brand_box">
-				<label> <span>브랜드</span> 
+				<label class="brand_label"> <span>브랜드</span> 
 				<input type="text" class="brand" name="product_brand" /> 
 				<select name="inputBrand" onchange="sellectBrand(this.value)">
 						<option value="">기타(직접입력)</option>
@@ -306,3 +308,4 @@
 		<button type="button" class="back_btn" onclick="history.back()">돌아가기</button>
 	</div>
 </form>
+</div>

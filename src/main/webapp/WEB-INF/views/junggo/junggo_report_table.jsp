@@ -44,6 +44,8 @@
 			
 			<td>🔔${moreReportList.report_content}</td>
 			<td>사유 : ${moreReportList.report_div}</td>
+			<td>🕐${moreReportList.report_date}</td>
+			
 		</tr>
 	</c:forEach>
 	
