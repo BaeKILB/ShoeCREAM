@@ -63,6 +63,16 @@
 			;
 	</select>
 	
+	
+		<!-- 불러오는 항목들 
+	product_idx,mem_idx,product_title,product_info,product_payment
+	,lc_code,mc_code
+	,product_date,product_readcount,product_brand,product_size
+	,product_selector,product_price,product_status,product_sell_status
+	,product_location,product_buyer_idx
+	,image1,image2,image3,image4,image_path
+	,mem_idx,mem_id,mem_name,mem_nickname,mem_status,mem_profileImageUrl
+	,product_idx,dibs_count -->
 	<select id="selectJungProductExtend" resultType="map">
 		SELECT *
 		FROM 

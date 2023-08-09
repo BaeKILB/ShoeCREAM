@@ -264,5 +264,15 @@
 	<footer>
 		<jsp:include page="./inc_ex/footer.jsp" />
 	</footer>
+	<script src="${pageContext.request.contextPath }/resources/js/main_ex/market/login_modal.js"></script>
+	
+	<%-- 상품정보 불러올 ajax --%>
+	<%-- root 주소값 불러오기 --%>
+	<script type="text/javascript">
+		let localURL = "${pageContext.request.contextPath}";
+	</script>
+	<script src="${pageContext.request.contextPath }/resources/js/main_ex/main_ex.js"></script>
+	
+	
 </body>
 </html>

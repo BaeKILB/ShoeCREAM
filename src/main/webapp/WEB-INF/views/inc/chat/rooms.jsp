@@ -132,13 +132,16 @@
 		</section>
    	</main>
    	
+   	<script type="text/javascript">
+		let localURL = "${pageContext.request.contextPath}";
+	</script>
+   	
    	<%-- 채팅창 관련 js --%>
 	<script src="${pageContext.request.contextPath }/resources/js/inc/chat/chatMsgArea.js"></script>
    	
 	<c:if test="${!empty room}">
 		<script>
-		let localURL = "${pageContext.request.contextPath}";
-		
+
 		//스크롤 자동 내리기
 		function scrolDown() {
 			let msgArea = document.querySelector("#msgArea");
