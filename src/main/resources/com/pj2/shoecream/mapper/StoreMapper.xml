@@ -51,6 +51,7 @@
 	    pi.image2,
 	    pi.image3,
 	    pi.image4,
+	    pi.image_path,
 	    jp.product_idx AS jung_product_idx,
 	    jp.product_title AS jung_product_title,
 	    jp.product_info AS jung_product_info,
@@ -61,6 +62,7 @@
 	    ai.auc_start_price,
 	    ai.auc_buy_instantly,
 	    ai.auc_regist_date,
+	    ai.auc_state,
 	    CASE
 	        WHEN jp.product_idx IS NOT NULL THEN '중고상품'
 	        WHEN ai.auction_idx IS NOT NULL THEN '경매상품'
@@ -85,16 +87,19 @@
 	<select id="selectJungReviewList" resultType="HashMap">
 	SELECT 
 	    jr.jung_rev_idx, jr.product_idx, jr.writer_idx, jr.review_content, jr.review_star, jr.review_date,
-	    jp.product_title, jp.product_info, jp.product_price, jp.product_status, jp.product_sell_status, jp.product_location,
-	    pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path
+	    jp.mem_idx, jp.product_title, jp.product_info, jp.product_price, jp.product_status, jp.product_sell_status, jp.product_location,
+	    pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path,
+	    mi.mem_id, mi.mem_name, mi.mem_nickname, mi.mem_address, mi.mem_birthday, mi.mem_interest, mi.mem_email, mi.mem_mtel, mi.role, mi.mem_bio,
+	    mi.mem_account_auth, mi.mem_status, mi.mem_rank, mi.mem_point, mi.charge_point, mi.mem_balance, mi.mem_profileImageUrl, mi.mem_sign_date
 	FROM 
 	    jung_reviews AS jr
 	JOIN
 	    jung_product AS jp ON jr.product_idx = jp.product_idx
 	JOIN
 	    product_image AS pi ON jr.product_idx = pi.product_idx
-	WHERE  jr.writer_idx = ${mem_idx}
-	ORDER BY review_date DESC;
+	JOIN 
+	    mem_info AS mi ON jp.mem_idx = mi.mem_idx
+	WHERE jp.mem_idx = #{mem_idx};
 	</select>
 	
 </mapper>

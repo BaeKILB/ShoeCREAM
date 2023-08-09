@@ -28,6 +28,11 @@
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/market/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/market/menu_hover.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/market/login_modal.js"></script>
+	<%-- 상품정보 불러올 ajax --%>
+	<%-- root 주소값 불러오기 --%>
+<script type="text/javascript">
+	let localURL = "${pageContext.request.contextPath}";
+</script>
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/main.js"></script>
 </head>
 <body>
@@ -114,17 +119,17 @@
             </div>
             <!-- 중고리스트 -->
 			<section id="container">
-				<div>중고상품</div>
+				<div class="fw-bold fs-5">중고상품</div>
 				<div class="row" id="junggoList"></div>
 			</section>
             <!-- 경매리스트 -->
 			<section id="container">
-				<div>인기경매상품</div>
+				<div class="fw-bold fs-5">인기경매상품</div>
 				<div class="row" id="auctionList"></div>
 			</section>
             <!-- 크림리스트 -->
 			<section id="container">
-				<div>크림상품</div>
+				<div class="fw-bold fs-5">크림상품</div>
 				<div class="row" id="creamList"></div>
 			</section>
 
@@ -137,14 +142,5 @@
 		<jsp:include page="./inc_ex/footer.jsp" />
 	</footer>
 	<script src="${pageContext.request.contextPath }/resources/js/main_ex/market/login_modal.js"></script>
-	
-	<%-- 상품정보 불러올 ajax --%>
-	<%-- root 주소값 불러오기 --%>
-	<script type="text/javascript">
-		let localURL = "${pageContext.request.contextPath}";
-	</script>
-	<script src="${pageContext.request.contextPath }/resources/js/main_ex/main_ex.js"></script>
-	
-	
 </body>
 </html>

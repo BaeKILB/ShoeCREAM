@@ -145,7 +145,7 @@
 			<div class="view_info col-sm-12 col-lg-6">
 
 				<div class="view_cont">
-					<p class="product_catrgory">HOME > ${jungGoNoh.lc_name} > ${jungGoNoh.mc_name}
+					<p class="product_catrgory">&nbsp;&nbsp;&nbsp;&nbsp;HOME > ${jungGoNoh.lc_name} > ${jungGoNoh.mc_name}
 <%-- 						<c:choose> --%>
 <%-- 							<c:when test="${jungGoNoh.lc_code == '1'}"> --%>
 <!-- 								남성 > -->
@@ -172,9 +172,12 @@
 					
 					
 					<div class="product_viewStatus">
-						🕐&nbsp;<div id="prd_date"></div> &nbsp;&nbsp;&nbsp;&nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;&nbsp;&nbsp;&nbsp;   ❤️&nbsp;  ${jungGoNoh.dibs_count }
-						&nbsp;&nbsp;&nbsp;&nbsp; 🔔&nbsp; ${jungGoNoh.report_count }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="view_status">
+						🕐&nbsp;<span id="prd_date"></span> &nbsp;👁‍🗨&nbsp; ${jungGoNoh.product_readcount} &nbsp;❤️&nbsp;  ${jungGoNoh.dibs_count } &nbsp;🔔&nbsp; ${jungGoNoh.report_count }
+						</div>
+						<div class="reportBtn">
 						<a href="${pageContext.request.contextPath}/reportCountTable?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}" class="report_btn" onclick="window.open(this.href, '_blank', 'width=500, height=400'); return false;">신고조회</a>
+						</div>
 					</div>
 					<div class="product_productStatus">
 						상품 상태 : ${jungGoNoh.product_status}<br>
@@ -207,12 +210,12 @@
 					
 					<div class="button_array">
 						
-						<form action="dibsPro" method="post" enctype="multipart/form-data">						
+						<form action="dibsPro" method="post" enctype="multipart/form-data" class ="muti_button">						
 							<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNoh.product_idx}"/>
 							<input type="hidden" name="favorite_check" id="favorite_check" value="${dibs.favorite_check}"/>
 							<input type="hidden" name="mem_id" id="mem_id" value="${jungGoNoh.mem_id}"/>
 							<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNoh.mem_idx}"/>
-						<a href="${pageContext.request.contextPath}/cancelOrComplete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message">임시 버튼</a>
+							<a href="${pageContext.request.contextPath}/cancelOrComplete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message">임시 버튼</a>
 					
 							<!-- buyier_idx 미접속시 0으로 받아오게끔 하기-->
 							<c:choose>
@@ -264,8 +267,8 @@
 					<div>
 						<p>⚠️&nbsp;&nbsp;거래전 주의 사항</p>
 						<br>
-						판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<br>
-						유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<br>
+						판매자가 별도의 메신저로 결제링크를 보내거나 <br>
+						직거래(직접송금)을 유도하는 경우<br> 사기일 가능성이 높으니 거래를 자제해 주시고<br>
 						<br><!-- a href="${pageContext.request.contextPath }/reviewList -->
 						<a href="${pageContext.request.contextPath}/registReportForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message" onclick="window.open(this.href, '_blank', 'width=800, height=400'); return false;">여기를 클릭하여 중고나라 고객센터로 신고해주시기 바랍니다.</a>
 					</div>
@@ -312,7 +315,7 @@
 						<div class="rev_cont">  
 						
 						<c:forEach var="moreReviewListSmall" items="${moreReviewListSmall}">
-						<div>
+						<div class="repeat">
 						<img class="buyer_profile" src="${pageContext.request.contextPath}/resources/upload/${moreReviewListSmall.mem_profileImageUrl}">
 							<span class="rev_name">${moreReviewListSmall.mem_nickname}</span>
 							<span class="rev_date">${moreReviewListSmall.review_date}</span>

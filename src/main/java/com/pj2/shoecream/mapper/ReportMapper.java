@@ -1,6 +1,7 @@
 package com.pj2.shoecream.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,6 +27,8 @@ public interface ReportMapper {
 	int deleteAuctionlist(ReportVO report);
 //
 	int deleteAuction(String product_idx);
+
+	int insertAuctionReport(Map<String, Object> map);
 
 
 }

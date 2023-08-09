@@ -243,7 +243,6 @@
 							</c:choose>
 							
 						</form>		
-		
 						<div style=" cursor: pointer;" onclick="location.href='resComplete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}';">
 							예약 성공
 						</div>

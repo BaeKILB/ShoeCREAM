@@ -37,8 +37,8 @@ public class StoreService {
     }
     
     // 중고 리뷰 조회
-	public HashMap<String, Object> selectJungReivewList(int mem_idx) {
-		return mapper.selectJungReviewList(mem_idx);
+	public List<HashMap<String, Object>> selectJungReivewList(int mem_idx) {
+	    return mapper.selectJungReviewList(mem_idx);
 	}
     
 

@@ -90,7 +90,7 @@ public class JungGoNohVO {
 			//신고 대상자(파는 사람 위에 VO에서 재활용
 			private int report_count;//신고횟수
 			
-		//================================결제====================================
+//================================결제====================================
 			
 			private int pay_idx; // 결제번호
 			private String pay_method; // 결제수단
@@ -100,11 +100,18 @@ public class JungGoNohVO {
 			private int cancel_pay;//취소금액
 			private int point_idx;//충전출금내역idx
 			private Timestamp trans_date;//거래정보기록
-		    
+			
+			//===========================================
+		
+			private int sub_pay;
+			private int sub_buyier_idx; 
+			private int sub_seller_idx; 
+			private String sub_product_idx;
+			
 			
 			
 		//==============================필터링==================================
-			private String trashArr[] = {"미친", "욕", "나쁜말"};
+			private String trashArr[] = {"미친", "욕", "나쁜말"};//괄호안에 단어 추가
 
 
 }

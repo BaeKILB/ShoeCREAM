@@ -72,11 +72,9 @@ public interface JungGoNohMapper {
 	
 	//DB payinfo
 	JungGoNohVO selectPayInfo(String product_idx);
-	JungGoNohVO selectPayInfo2(int sub_pay, int sub_buyier_idx, int sub_seller_idx, String sub_product_idx);
+	JungGoNohVO selectPayInfo2(JungGoNohVO jungGoNoh);
 	
 
-
 	
-
 	
 }

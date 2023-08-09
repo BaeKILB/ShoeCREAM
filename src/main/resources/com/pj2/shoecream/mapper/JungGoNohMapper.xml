@@ -155,6 +155,7 @@ LEFT OUTER JOIN product_image pi
 				, #{buyier_idx} -- 신고 신청자 번호
 				, #{report_div} -- 신고유형
 				, #{report_detail} -- 상세내용
+				, now() -- 신고일자
 				
 			)
 	</insert>
@@ -170,7 +171,7 @@ LEFT OUTER JOIN product_image pi
 	
 		<!-- 신고 조회 -->
 	<select id="moreReportListSmall" resultType="map" parameterType="com.pj2.shoecream.vo.JungGoNohVO">
-	  SELECT jr.report_idx, jr.report_content, jr.product_idx, jr.seller_idx, jr.reporter_idx, jr.report_div, jr.report_detail
+	  SELECT jr.report_idx, jr.report_content, jr.product_idx, jr.seller_idx, jr.reporter_idx, jr.report_div, jr.report_detail, jr.report_date
 	  		, mi.mem_idx, mi.mem_nickname
 	      FROM joonggo_report jr
 	      JOIN mem_info mi
@@ -241,7 +242,7 @@ LEFT OUTER JOIN product_image pi
 		ON jr.writer_idx = mi.mem_idx 
 	  WHERE seller_idx = #{mem_idx}
     ORDER BY product_idx desc 
-	   LIMIT 3;   
+	   LIMIT 2;   
 	</select>
 	
 	<!--DB pay_info  -->
@@ -251,6 +252,13 @@ LEFT OUTER JOIN product_image pi
 		     , jpd.mem_idx, jpd.product_title, jpd.product_payment, jpd.product_price
 		     , mi.mem_nickname, mi.mem_idx
 		     , bi.mem_nickname as buyier_nickname, bi.mem_idx as buyier_idx
+		     
+		     , pi.product_idx as sub_product_idx
+		     , pi.mem_idx as sub_buyier_idx
+		     , mi.mem_idx as sub_seller_idx
+		     , jpd.product_price as sub_pay
+		     
+		     
 		  FROM pay_info pi
 		  JOIN jung_product jpd
 		  	ON pi.product_idx  = jpd.product_idx
@@ -269,6 +277,10 @@ LEFT OUTER JOIN product_image pi
 		     , jpd.mem_idx, jpd.product_title, jpd.product_payment, jpd.product_price
 		     , mi.mem_nickname, mi.mem_idx
 		     , bi.mem_nickname as buyier_nickname, bi.mem_idx as buyier_idx
+		     , pi.product_idx as sub_product_idx
+		     , pi.mem_idx as sub_buyier_idx
+		     , mi.mem_idx as sub_seller_idx
+		     , jpd.product_price as sub_pay
 		  FROM pay_info pi
 		  JOIN jung_product jpd
 		  	ON pi.product_idx  = jpd.product_idx
@@ -276,7 +288,7 @@ LEFT OUTER JOIN product_image pi
 		  	ON jpd.mem_idx = mi.mem_idx
 		  JOIN mem_info bi
 		  	ON pi.mem_idx = bi.mem_idx 
-		 WHERE pi.product_idx = ${product_idx} AND pi.mem_idx = ${sub_buyier_idx} AND mi.mem_idx = ${sub_seller_idx} AND pi.pay_total = ${sub_pay}
+		 WHERE pi.product_idx = ${sub_product_idx} AND pi.mem_idx = ${sub_buyier_idx} AND mi.mem_idx = ${sub_seller_idx} AND pi.pay_total = ${sub_pay}
 	</select>
 	
 </mapper>

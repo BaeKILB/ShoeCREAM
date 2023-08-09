@@ -64,15 +64,29 @@
 }
 </style>
 <script type="text/javascript">
+
 //이미지 관련
 let count = 0;
 $(function() {
 	// 숨김 처리
-	$("input[type=file]").not("input[name=image1]").each(function(index) {
-		$(this).addClass("hidden");
+	$(".imageView").each(function(index) {
+		count = index + 1;
 	})
+	
+	$("input[type=file]").each(function(index) {
+		if (index+1 <= count) {
+		$(this).addClass("hidden");
+		return;
+		}
+	});
+	
+	if(count < 4) {
+		$(".image_box").removeClass("hidden");
+	} else {
+		$(".image_box").addClass("hidden");
+	}
 });
-// 추가된 이미지 삭제
+//추가된 이미지 삭제
 const imgDelete = (currentId) => {
 	$("button[value="+currentId+"]").remove();
 	$("#"+currentId).removeClass("hidden").val('');	
@@ -81,7 +95,7 @@ const imgDelete = (currentId) => {
 		$(".image_box").removeClass("hidden");
 	};
 };
-// 이미지 등록시 사진출력
+//이미지 등록시 사진출력
 const setImages = (e) => {
 	let currentId = e.target.name;
 	$("#"+currentId).next().removeClass("hidden");
@@ -91,7 +105,7 @@ const setImages = (e) => {
 	for(let image of e.target.files) {
 		reader.onload = function (event) {
 			let result = (
-				"<button type='button' class='imgDelete' onclick='imgDelete(this.value)' value='"+currentId+"'>"
+				"<button type='button' onclick='imgDelete(this.value)' value='"+currentId+"'>"
 				+"<img class='imageView' src='"+event.target.result+"'>"
 				+"</button>"
 			);
@@ -104,7 +118,6 @@ const setImages = (e) => {
 		$(".image_box").addClass("hidden");
 	};
 };
-
 </script>
 </head>
 <body>
@@ -130,7 +143,28 @@ const setImages = (e) => {
 							</div>
 						</div>
 						<div class="first_content">
-						    <div class="ivBox"></div>
+						     <div class="ivBox">
+						    	<c:if test="${cream.image1 != '' }">
+							    	<button type="button" onclick='imgDelete(this.value)' value="image1">
+							    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }">
+							    	</button>
+						    	</c:if>
+						    	<c:if test="${cream.image2 != '' }">
+							    	<button type="button" onclick='imgDelete(this.value)' value="image2">
+							    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }">
+							    	</button>
+						    	</c:if>
+						    	<c:if test="${cream.image3 != '' }">
+							    	<button type="button" onclick='imgDelete(this.value)' value="image3">
+							    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }">
+							    	</button>
+						    	</c:if>
+						    	<c:if test="${cream.image4 != '' }">
+							    	<button type="button" onclick='imgDelete(this.value)' value="image4">
+							    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }">
+							    	</button>
+						    	</c:if>
+						    </div>
 							<div class="warning_text">
 							
 								* 상품 이미지는 640x640에 최적화 되어 있습니다.<br> - 상품 이미지는 PC에서는 1:1, 모바일에서는
@@ -157,9 +191,13 @@ const setImages = (e) => {
 				    </thead>
 				    <tbody>
 				        <c:forEach begin="220" end="310" step="5" varStatus="status">
-				            <tr>
-				                <td>${status.index}</td>
-				                <td><input type="number" name="size${status.index}" ></td>
+				          <tr>
+				              <td> 
+				           
+				                    <input type="number" name="size${status.index}" value="
+										<c:forEach begin=" ${cream['size' + status.index]}" end="310" step="5" > </c:forEach>
+				                    ">
+				                </td>
 				            </tr>
 				        </c:forEach>
 				    </tbody>
@@ -169,7 +207,7 @@ const setImages = (e) => {
 					<div class="ninthContainner">
 						<div class="ninth_title">상품설명</div>
 						<div class="ninth_content">
-							<textarea class="product_detail" name="cream_content" placeholder="상품에 대한 설명을 작성해주세요" ></textarea>
+							<textarea class="product_detail" name="cream_content"  >${cream.cream_content }</textarea>
 						</div>
 					</div>
 				

@@ -135,11 +135,11 @@ public class JungGoNohService {
 			return jungGoNoh;
 		}
 
-		public JungGoNohVO getPayInfo2(int sub_pay, int sub_buyier_idx, int sub_seller_idx, String sub_product_idx) {
-			JungGoNohVO jungGoNoh = jungGoNohMapper.selectPayInfo2(sub_pay, sub_buyier_idx, sub_seller_idx, sub_product_idx);
-			return jungGoNoh;
+		public JungGoNohVO getPayInfo2(JungGoNohVO jungGoNoh) {
+			JungGoNohVO jungGoNohData = jungGoNohMapper.selectPayInfo2(jungGoNoh);
+			return jungGoNohData;
 		}
 
-}
+	}
 
 

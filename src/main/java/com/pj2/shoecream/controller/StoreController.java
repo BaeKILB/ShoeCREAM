@@ -47,9 +47,10 @@ public class StoreController {
         model.addAttribute("storeInfo", storeInfo);
 		
         // 중고 후기 조회
-        HashMap<String, Object> jungReivewList = storeService.selectJungReivewList(mem_idx);
-        model.addAttribute("중고 리뷰 값들 : ", jungReivewList);
-        
+        List<HashMap<String, Object>> jungReivewList = storeService.selectJungReivewList(mem_idx);
+        model.addAttribute("jungReivewList", jungReivewList);
+		System.out.println("내 찜 리뷰 값들 :" + jungReivewList);
+
    		return "member/store/store";
    	}
 }

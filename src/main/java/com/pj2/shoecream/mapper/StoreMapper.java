@@ -26,6 +26,7 @@ public interface StoreMapper {
 	HashMap<String, Object> selectStoreInfo(int mem_idx);
 	
 	// 중고 리뷰 조회
-	HashMap<String, Object> selectJungReviewList(int mem_idx);
+	List<HashMap<String, Object>> selectJungReviewList(int mem_idx);
+
 
 }
