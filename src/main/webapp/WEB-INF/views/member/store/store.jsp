@@ -20,12 +20,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
 <!-- 부트스트랩 -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" -->
 <!-- rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
 
 <!-- 부트스트랩 icon -->
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
 <!--css-->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/market/common.css">
@@ -76,6 +82,15 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.cs
 }
 .btn_confirm {
     color: #fff;
+}
+
+ .btn-half-height {
+     font-size: 0.5rem !important;
+     padding: 0.25rem 0.5rem !important;
+ }
+ 
+.btn-half-height {
+  height: 50%;
 }
 
 </style>
@@ -659,143 +674,172 @@ function payAuction(idx, price, id, title){
 					        </ul>
 					    </div>
 					</div>
-					<div>
-							<c:forEach items="${dibList}" var="dibList">
-							<c:if test="${dibList.dibs_type eq '경매상품'}">
-								<div class="goods" data-dib-type="${dibList.dibs_type}">
-									<div class="goods_one">
-										<a href="product_detail?product_idx=${dibList.auction_idx}">
-											<div class="goods_image">
-							   					<c:choose>
-												    <c:when test="${dibList.auc_state eq '대기'}">
-													    <img src="${pageContext.request.contextPath}${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
-													    <span class="goods_front"> 경매 대기 중 </span>
-							   						</c:when>
-							   						<c:when test="${dibList.auc_state eq '진행'}">
-													    <img src="${pageContext.request.contextPath}${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
-													    <span class="goods_front"> 경매 진행 중 </span>
-							   						</c:when>
-							   						<c:when test="${dibList.auc_state eq '낙찰'}">
-													    <img src="${pageContext.request.contextPath}${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
-													    <span class="goods_front"> 경매 낙찰 중 </span>
-							   						</c:when>
-							   						<c:when test="${dibList.auc_state eq '입찰'}">
-													    <img src="${pageContext.request.contextPath}${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
-													    <span class="goods_front"> <i class="far fa-check-circle"></i><br>
-													    경매 마감
-													    </span>
-							   						</c:when>
-							   					</c:choose>
-							                   </div>
-											<div class="goods_info">
-												<h2 class="goods_title">${dibList.auction_title}</h2>
-												<p class="goods_price">
-													<span class="bold">최종 낙찰가 : ${dibList.auction_final_price}</span>원
-												</p>
-												<p class="goods_shop">${dibList.mem_id}</p>
-												<p class="goods_date">경매 시작 시간 : ${dibList.auc_regist_date}</p>
-											</div>
-										</a>
-										<button type="button" name="auction" onclick="location.href='A_DibsCancel?type_num=${dibList.auction_idx}'">찜 취소</button>
-										</div>
-									</div>
-								</c:if>
-									<c:if test="${dibList.dibs_type eq '중고상품'}">
-										<div class="goods">
-											<div class="goods_one">
-												<a href="product_detail?product_idx=${dibList.product_idx }">
-													<div class="goods_image">
-														<c:choose>
-															<c:when test="${dibList.product_sell_status eq '대기중' }">
-																<img src="${pageContext.request.contextPath}/resources/upload/${dibList.image1}" alt="상품 이미지">
-															</c:when>
-															<c:when
-																test="${dibList.file_num eq dibList.product_idx && dibList.product_sell_status eq '판매완료' }">
-																<img src="${pageContext.request.contextPath }/resources/fileUpload/${dibList.image1}" alt="상품 이미지">
-																<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
-																거래완료
-																</span>
-															</c:when>
-														</c:choose>
-													</div>
-													<div class="goods_info">
-														<h2 class="goods_title">${dibList.product_title }</h2>
-														<p class="goods_price">
-															<span class="bold">${dibList.product_price }</span>원
-														</p>
-														<p class="goods_shop">${dibList.mem_id }</p>
-														<c:choose>
-															<c:when test="${dibList.product_sell_status eq '대기중'}">
-																<p class="goods_date">${dibList.product_date }</p>
-															</c:when>
-															<c:when test="${dibList.sale_status eq '거래완료'}">
-							<%-- 							<p class="goods_date">${dibList.sell_date }</p> --%>
-															</c:when>
-														</c:choose>
-													</div>
-												</a>
-												<div class="btn_area">
-													<button type="button" class="" onclick="location.href='myChatting'">채팅</button>
-												</div>
-											</div>
-										</div>
-									</c:if>
-								</c:forEach>
-							</div>
-						</div>
+<!--찜-->
+<div class="container mt-4">
+  <c:forEach items="${dibList}" var="dibList">
+    <!--경매 상품-->
+    <c:if test="${dibList.dibs_type eq '경매상품'}">
+      <div class="goods mb-4" data-dib-type="${dibList.dibs_type}">
+        <div class="row no-gutters">
+
+          <div class="col-12 col-md-2">
+            <a href="product_detail?product_idx=${dibList.auction_idx}">
+              <div class="goods_image" style=" width: 94px; height: 94px;">
+				<c:choose>
+					<c:when	test="${dibList.auc_state eq '대기' }">
+						<img src="${pageContext.request.contextPath }/resources/upload/auction/${dibList.image1}" alt="상품 이미지">
+						<span class="goods_front"> 경매 대기 중 </span>
+					</c:when>
+					<c:when	test="${dibList.auc_state eq '진행' }">
+						<img src="${pageContext.request.contextPath }${dibList.image_path}/${dibList.image1}" alt="상품 이미지">
+						<span class="goods_front"> 경매 진행 중 </span>
+					</c:when>
+					<c:when	test="${dibList.auc_state eq '낙찰' }">
+						<img src="${pageContext.request.contextPath }${dibList.image_path}/${dibList.image1}" alt="상품 이미지">
+						<span class="goods_front"> 경매 낙찰 중 </span>
+					</c:when>
+					<c:when test="${dibList.auction_status eq '입찰' }">
+						<img src="${pageContext.request.contextPath }/resources/fileUpload${file.file_path}/${file.file_name}" alt="상품 이미지">
+						<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+						경매 마감
+						</span>
+					</c:when>
+				</c:choose>
+              </div>
+            </a>
+          </div>
+          <div class="col-12 col-md-5">
+            <div class="goods_info">
+              <h2 class="goods_title">${dibList.auction_title}</h2>
+              <p class="goods_price">
+                <span class="bold">최종 낙찰가 : ${dibList.auction_final_price}</span>원
+              </p>
+              <p class="goods_shop">${dibList.mem_id}</p>
+              <p class="goods_date">경매 시작 시간 : ${dibList.auc_regist_date}</p>
+            </div>
+          </div>
+         <div class="col-12 col-md-3">
+		      <div>
+		        <button type="button" class="btn btn-light btn-half-height mr-2" onclick="location.href='myChatting'">수정</button>
+		        <button type="button" class="btn btn-light btn-half-height" onclick="location.href='myChatting'">삭제</button>
+		      </div>
+          </div>
+
+        </div>
+      </div>
+    </c:if>
+    <!--중고 상품-->
+    <c:if test="${dibList.dibs_type eq '중고상품'}">
+      <div class="goods mb-4">
+        <div class="row no-gutters">
+
+          <div class="col-12 col-md-2">
+            <a href="product_detail?product_idx=${dibList.product_idx}">
+              <div class="goods_image" style=" width: 94px; height: 94px;">
+                <!-- 이미지 및 상태 출력 -->
+              </div>
+            </a>
+          </div>
+          <div class="col-12 col-md-5">
+            <div class="goods_info">
+              <h2 class="goods_title">${dibList.product_title}</h2>
+              <p class="goods_price">
+                <span class="bold">${dibList.product_price}</span>원
+              </p>
+              <p class="goods_shop">${dibList.mem_id}</p>
+              <p class="goods_date">
+                <!-- 날짜 출력 -->
+              </p>
+            </div>
+          </div>
+          <div class="col-12 col-md-3">
+		      <div>
+		        <button type="button" class="btn btn-light btn-half-height mr-2" onclick="location.href='myChatting'">수정</button>
+		        <button type="button" class="btn btn-light btn-half-height" onclick="location.href='myChatting'">삭제</button>
+		      </div>
+
+        </div>
+      </div>
+    </c:if>
+  </c:forEach>
+</div>
+</div>
 				<!-- 찜 끝 -->
 				
-				<!-- 후기 시작 -->
-				<div id="auctiongoods_menu_area" class="common_menu">
-					<div style="display: flex; justify-content: space-between; align-items: center;">
-					    <div>
-					        <p>
-					            후기
-					        </p>
-					        <!-- 생략된 주석 -->
+<!-- 후기 시작 -->
+<div id="auctiongoods_menu_area" class="common_menu">
+	<div style="display: flex; justify-content: space-between; align-items: center;">
+	    <div>
+	        <p>
+	           내 후기
+	        </p>
+	        <!-- 생략된 주석 -->
+	    </div>
+	    <div class="">
+	        <ul class="goods_cate">
+	            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+	              <option selected>전체</option>
+	              <option value="junggo">중고상품</option>
+	              <option value="action">경매상품</option>
+	            </select>
+	        </ul>
+	    </div>
+	</div>
+    <!-- 중략 -->
+    <div>
+        <!--후기-->
+ <div class="container mt-4">
+    <c:forEach items="${jungReivewList}" var="jungReivewList">
+        <div class="goods mb-4">
+            <div class="goods_one row no-gutters" >
+                <div class="col-12 col-md-2">
+                    <a href="goodsDetail.ad?goods_idx=${jungReivewList.product_idx}">
+                        <div class="goods_image">
+                            <img src="${pageContext.request.contextPath}${jungReivewList.image_path}/${jungReivewList.image1}" alt="상품 이미지" class="img-fluid">
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="goods_info growing_content">
+                        <style>
+                            .growing_content .goods_title {
+                                white-space: pre-wrap;
+                                overflow-wrap: break-word;
+                            }
+                        </style>
+                        <p class="goods_price">
+                            <span class="bold">${jungReivewList.mem_nickname}</span>
+                        </p>
+
+                        <p class="goods_shop">${jungReivewList.review_star} </p>
+                        <a href="goodsDetail.ad?goods_idx=${jungReivewList.product_idx}" class="text-decoration-none">
+                            <p class="goods_title d-flex flex-grow-1">${jungReivewList.product_title}</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <a href="goodsDetail.ad?goods_idx=${jungReivewList.product_idx}" class="text-decoration-none">
+                        <p class="goods_title text-truncate">${jungReivewList.review_content }</p>
+                    </a>
+                </div>
+					<div class="col-12 col-md-3">
+					  <div class="goods_info">
+					    <div class="d-flex flex-column align-items-end justify-content-end">
+					      <p class="goods_date">${jungReivewList.review_date}</p>
+					      <div>
+					        <button type="button" class="btn btn-light btn-half-height mr-2" onclick="location.href='myChatting'">수정</button>
+					        <button type="button" class="btn btn-light btn-half-height" onclick="location.href='myChatting'">삭제</button>
+					      </div>
 					    </div>
-					    <div class="">
-					        <ul class="goods_cate">
-					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-					              <option selected>전체</option>
-					              <option value="2">중고상품</option>
-					              <option value="3">경매상품</option>
-					            </select>
-					        </ul>
-					    </div>
+					  </div>
 					</div>
-					<div>
-						<!--찜 상풍-->
-						<c:forEach items="${goodsList }" var="goodsList">
-							<div class="goods">
-								<div class="goods_one">
-									<a href="goodsDetail.ad?goods_idx=${goodsList.goods_idx }">
-										<div class="goods_image">
-											<c:forEach items="${goodsFile }" var="file">
-												<c:choose>
-													<c:when	test="${file.file_num eq goodsList.goods_idx }">
-														<img src="${pageContext.request.contextPath }/resources/fileUpload${file.file_path}/${file.file_name}" alt="상품 이미지">
-													</c:when>
-												</c:choose>
-											</c:forEach>
-										</div>
-										<div class="goods_info">
-											<h2 class="goods_title">${goodsList.buy_title }</h2>
-											<p class="goods_price">
-												<span class="bold">${goodsList.buy_price }</span>원
-											</p>
-											<p class="goods_shop"></p>
-											<p class="goods_date">${goodsList.buy_date }</p>
-										</div>
-									</a>
-									<button type="button" name="goods" onclick="location.href='DeleteGoods?buy_idx=${goodsList.buy_idx}'">굿즈 삭제</button>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
-				</div>
-				<!-- 굿즈 구매 내역 끝 -->
-				
+            	</div>
+        </div>
+    </c:forEach>
+</div>
+
+</div>
+				<!-- 후기 끝 -->
 			</div>
 		</div>
 		<!-- 하단 내역 부분 끝 -->
