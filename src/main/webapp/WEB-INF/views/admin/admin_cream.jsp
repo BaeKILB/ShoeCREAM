@@ -53,9 +53,7 @@
 									<td class="code"><span class="cream_idx"> <span class="sv_member">${creammap.cream_idx}</span></span></td>
 									<td class="cream_title"> ${creammap.cream_title}</td>
 									<td class="cream_modify">
-										<a href="CreamModifyForm?cream_idx=${cream.cream_idx }&pageNum=${pageNum }" class="mod_ans moreBtn">
-												수정
-										</a> 
+										<button class="mod_ans moreBtn" onclick="location.href='CreamModifyForm?cream_idx=${creammap.cream_idx}'">수정</button>
 									</td>
 								</tr>
 							</c:forEach>

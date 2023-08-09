@@ -258,7 +258,14 @@ public class CreamController {//크림 컨트롤러 입니다.
    
    
    @GetMapping("CreamModifyForm")
-   public String CreamModifyForm() {
+   public String CreamModifyForm(HttpSession session
+	        , Model model
+	        , @RequestParam Map<String, Object> map ) {
+		String cream_idx = (String)map.get("cream_idx");
+		
+		
+		Map<String, Object> cream = service.getCream(cream_idx);
+		model.addAttribute("cream", cream); 
 	   
 	   return "admin/admin_cream_modify";
    }
