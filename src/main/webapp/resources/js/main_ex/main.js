@@ -152,6 +152,7 @@ function getCreamList() {
         , dataType: "json"
         , data: {
              'pageNum': pageNum
+             , 'orderMethod':'1'
              , 'main': '1'
         } 
     })
