@@ -156,7 +156,8 @@ public class BankController {
 		result.put("mem_idx", idx);
 		result.put("mem_seq_no", user_seq_no);
 		result.put("access_token", access_token);
-		result.put("refresh_token",responseToken.getRefresh_token() );
+		result.put("refresh_token",responseToken.getRefresh_token());
+		result.put("bank_code_std", account.getBank_code_std());
 		result.put("account_num", account.getAccount_num_masked());
 		result.put("fintech_use_num", account.getFintech_use_num());
 		

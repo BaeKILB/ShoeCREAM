@@ -244,6 +244,12 @@ public class MemberService {
 
 
 
+	
+	// ------------------ 0809 배경인 추가 ---------------------
+	// 계좌 인증 여부 업데이트
+	public boolean changeMemAccountAuth(String mem_account_auth) {
+		return memberMapper.updateMemAccountAuth(mem_account_auth) > 0;
+	}
 
 	//아이디 중복체크 mapper 접근
 //	public int idCheck(String id) {

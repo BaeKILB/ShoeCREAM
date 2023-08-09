@@ -170,6 +170,17 @@
 	    WHERE mem_idx = #{mem_idx}
 	</update>
 	
+	<!-- 0809 경인 추가 -->
+	<!-- 계좌 인증 여부 수정 update문 -->
+	
+	<update id="updateMemAccountAuth" >
+	    UPDATE mem_info
+	    SET mem_account_auth = #{mem_account_auth}
+	    WHERE mem_idx = #{mem_idx}
+	    ;
+	</update>
+	
+	
 	<!-- 해당 회원 프로필 mem_idx 셀렉 -->
 	<select id="findMemberByMemIdx"
 		resultType="com.pj2.shoecream.vo.MemberVO">
