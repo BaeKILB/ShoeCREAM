@@ -36,5 +36,10 @@ public class StoreService {
         return mapper.selectStoreInfo(mem_idx);
     }
     
+    // 중고 리뷰 조회
+	public HashMap<String, Object> selectJungReivewList(int mem_idx) {
+		return mapper.selectJungReviewList(mem_idx);
+	}
+    
 
 }
