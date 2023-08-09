@@ -252,7 +252,10 @@ public class AuctionController {
           @RequestParam Map<String, Object> map) {
        
 		int pageNum = Integer.parseInt(String.valueOf(map.get("pageNum")));
-		int listLimit = 20;
+		int listLimit = 12;
+		if (map.containsKey("main")) {
+			listLimit = 4;
+		}
 		int startRow = (pageNum - 1) * listLimit;
        
 		map.put("startRow", startRow);

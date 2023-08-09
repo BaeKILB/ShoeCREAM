@@ -59,7 +59,11 @@
 		LEFT JOIN
 		    dibs d ON ci.cream_idx = d.product_idx
 		GROUP BY
-		    ci.cream_idx, pi.image_path, pi.image1, ci.cream_title, ci.size220, ci.cream_readcount;
+		    ci.cream_idx, pi.image_path, pi.image1, ci.cream_title, ci.size220, ci.cream_readcount
+			<if test="main.equals('1')">
+				ORDER BY
+					cream_readcount desc
+			</if>
 	</select>
 	
 	
