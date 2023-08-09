@@ -103,13 +103,6 @@ public class CreamController {//크림 컨트롤러 입니다.
 	}
 	
 	
-//	@GetMapping("CreamRegisterForm")
-//	public String creamRegisterForm(
-//	    Model model) {
-//
-//		return "cream/cream_register";
-//	}
-	
    @PostMapping("CreamRegister")
     public String creamRegister(CreamVO cream , ProductImageVO image, HttpSession session) {
 
@@ -215,10 +208,10 @@ public class CreamController {//크림 컨트롤러 입니다.
 //		
 		model.addAttribute("dibs", dibs);
 //		
-		// 찜카운트
+		 //찜카운트
 		int dibsCount = service.getDibsCount(map);
 		model.addAttribute("dibsCount", dibsCount);
-//		
+		
 
 		
        return "cream/cream_detail";
@@ -269,5 +262,15 @@ public class CreamController {//크림 컨트롤러 입니다.
 	   
 	   return "admin/admin_cream_modify";
    }
+   
+   @PostMapping("CreamModifyPro")
+   public String CreamModifyPro(Model model, ProductImageVO image
+	          , HttpSession session) {
+	   
+	   
+	   return "admin/admin_cream";
+   }
+   
+   
 	
 }

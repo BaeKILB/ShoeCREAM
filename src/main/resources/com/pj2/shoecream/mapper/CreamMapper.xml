@@ -109,23 +109,16 @@
 	       and product_idx = #{cream_idx }
 	</delete>
 	
+
+	
 	<select id="selectDibsCount">
         SELECT 
             count(product_idx) 
         FROM 
             dibs
         WHERE 
-            product_idx=${cream_idx }
+            product_idx='${cream_idx }'
 	</select>
-	
-<!-- 	<select id="selectDibsCount"> -->
-<!--         SELECT  -->
-<!--             count(product_idx)  -->
-<!--         FROM  -->
-<!--             dibs -->
-<!--         WHERE  -->
-<!--             product_idx=${cream_idx } -->
-<!-- 	</select> -->
 
 
 </mapper>
