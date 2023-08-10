@@ -109,25 +109,25 @@
 	
 	<!-- 내 후기 내역 -->
 	<select id="selectJungReviewList" resultType="map">
-	  SELECT 
-	    jr.jung_rev_idx, jr.product_idx, jr.writer_idx, jr.review_content, jr.review_star, jr.review_date,
-	    jp.mem_idx, jp.product_title, jp.product_info, jp.product_price, jp.product_status, jp.product_sell_status, jp.product_location,
-	    pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path,
-	    mi.mem_id, mi.mem_name, mi.mem_nickname, mi.mem_address, mi.mem_birthday, mi.mem_interest, mi.mem_email, mi.mem_mtel, mi.role, mi.mem_bio,
-	    mi.mem_account_auth, mi.mem_status, mi.mem_rank, mi.mem_point, mi.charge_point, mi.mem_balance, mi.mem_profileImageUrl, mi.mem_sign_date,
-	    writer.mem_id AS writer_mem_id
-	  FROM 
-	    jung_reviews AS jr
-	  JOIN
-	    jung_product AS jp ON jr.product_idx = jp.product_idx
-	  JOIN
-	    product_image AS pi ON jr.product_idx = pi.product_idx
-	  JOIN 
-	    mem_info AS mi ON jp.mem_idx = mi.mem_idx
-	  JOIN
-	    mem_info AS writer ON jr.writer_idx = writer.mem_idx
-	  WHERE jp.mem_idx = #{mem_idx}
-	  ORDER BY review_date DESC;
+    SELECT
+      jr.jung_rev_idx, jr.product_idx, jr.writer_idx, jr.review_content, jr.review_star, jr.review_date,
+      jp.mem_idx, jp.product_title, jp.product_info, jp.product_price, jp.product_status, jp.product_sell_status, jp.product_location,
+      pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path,
+      mi.mem_id, mi.mem_name, mi.mem_nickname, mi.mem_address, mi.mem_birthday, mi.mem_interest, mi.mem_email, mi.mem_mtel, mi.role, mi.mem_bio,
+      mi.mem_account_auth, mi.mem_status, mi.mem_rank, mi.mem_point, mi.charge_point, mi.mem_balance, mi.mem_profileImageUrl, mi.mem_sign_date,
+      writer.mem_id AS writer_mem_id, writer.mem_profileImageUrl AS writer_profileImageUrl
+    FROM
+      jung_reviews AS jr
+    JOIN
+      jung_product AS jp ON jr.product_idx = jp.product_idx
+    JOIN
+      product_image AS pi ON jr.product_idx = pi.product_idx
+    JOIN
+      mem_info AS mi ON jp.mem_idx = mi.mem_idx
+    JOIN
+      mem_info AS writer ON jr.writer_idx = writer.mem_idx
+    WHERE jp.mem_idx = #{mem_idx}
+    ORDER BY review_date DESC;
 	</select>
 <!-- 	<select id="selectJungReviewList" resultType="map"> -->
 <!-- 	SELECT  -->
