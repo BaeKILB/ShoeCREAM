@@ -68,6 +68,7 @@
    <section id="sec_con">
 <!--       <h1 class="con_title">내 정보 수정</h1> -->
       <div class="inq_container">
+      <!-- Sidebar -->
          <jsp:include page="../../inc_ex/mem_sidebar.jsp"></jsp:include>
 
          <div class="member-update-cont">
