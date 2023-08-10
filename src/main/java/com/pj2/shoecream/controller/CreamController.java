@@ -270,7 +270,6 @@ public class CreamController {//크림 컨트롤러 입니다.
 	   
 	   return "admin/admin_cream";
    }
-   
-   
+
 	
 }
