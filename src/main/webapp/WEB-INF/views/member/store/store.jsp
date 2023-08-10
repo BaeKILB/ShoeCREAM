@@ -90,6 +90,23 @@
     width: 94px;
     height: 94px;
 }
+
+.btn-check-label {
+  font-size: 13px;
+}
+
+.ReviewImage {
+ border-radius: 70%;
+}
+
+.goods_date {
+  font-size:13px; 
+  color:#6c757d;
+}
+
+.goods_button {
+  font-size:14px;
+}
 </style>
 
 
@@ -119,60 +136,60 @@ function payAuction(idx, price, id, title){
 	<!-- main_content 영역 -->
 	<div id="main_content">
 		<!-- 프로필 영역 -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="d-flex my-3">
-                <div class="col-md-2">
-                    <div class="profile_thumb">
-                        <input type="file" id="profileImageFile" name="profileImageFile" accept="image/jpeg,image/png" hidden="hidden" onchange="handleImageChange(event)">
-                        <img src="${pageContext.request.contextPath}/resources/upload/profile/${storeInfo.mem_profileImageUrl}" alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
-                    </div>
-                </div>
-                <div class="col-md-6 d-flex flex-column">
-                    <div class="profile_detail">
-                        <strong class="name">${storeInfo.mem_nickname}</strong>
-                    </div>
-                    <div class="mem_email">
-                   	 	<p class="text-black-50">${storeInfo.mem_email}</p>
-                    </div>
-                    <c:choose>
-                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
-		                    <div class="profile_btn_box mt-auto">
-		                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/mypage/profile'">프로필 관리</button>
-		                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/social/${mem_idx}'">내 소셜</button>
-		                    </div>                    	
-                    	</c:when>
-                    	<c:otherwise>
-                    		<div class="profile_btn_box mt-auto">
-                    			<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/mypage/profile'">뭘로 하지</button>
-		                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/social/${mem_idx}'">${storeInfo.mem_nickname }님 소셜</button>
-                    		</div> 
-                    	</c:otherwise>
-                    </c:choose>
-                </div>
-                 <div class="col-md-2">
-                    <div class="member_rank d-flex flex-column align-items-center justify-content-center">
-                        <a class="membership_item disabled" style="text-decoration: none;">
-                            <strong class="info" style="color: black;"> 일반 회원 </strong>
-                            <p class="title" style="color: gray;">회원 등급</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="member_point d-flex flex-column align-items-center justify-content-center">
-                        <a class="membership_item" style="text-decoration: none;">
-                            <strong class="info" style="color: black;"> 0P </strong>
-                            <p class="title" style="color: gray;">포인트</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+		<div class="container">
+		    <div class="row">
+		        <div class="col-md-12">
+		            <div class="d-flex my-3">
+		                <div class="col-md-2">
+		                    <div class="profile_thumb">
+		                        <input type="file" id="profileImageFile" name="profileImageFile" accept="image/jpeg,image/png" hidden="hidden" onchange="handleImageChange(event)">
+		                        <img src="${pageContext.request.contextPath}/resources/upload/profile/${storeInfo.mem_profileImageUrl}" alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
+		                    </div>
+		                </div>
+		                <div class="col-md-6 d-flex flex-column">
+		                    <div class="profile_detail">
+		                        <strong class="name">${storeInfo.mem_nickname}</strong>
+		                    </div>
+		                    <div class="mem_email">
+		                   	 	<p class="text-black-50">${storeInfo.mem_email}</p>
+		                    </div>
+		                    <c:choose>
+		                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
+				                    <div class="profile_btn_box mt-auto">
+				                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/mypage/profile'">프로필 관리</button>
+				                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/social/${mem_idx}'">내 소셜</button>
+				                    </div>                    	
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<div class="profile_btn_box mt-auto">
+		                    			<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/mypage/profile'">뭘로 하지</button>
+				                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/social/${mem_idx}'">${storeInfo.mem_nickname }님 소셜</button>
+		                    		</div> 
+		                    	</c:otherwise>
+		                    </c:choose>
+		                </div>
+		                 <div class="col-md-2">
+		                    <div class="member_rank d-flex flex-column align-items-center justify-content-center">
+		                        <a class="membership_item disabled" style="text-decoration: none;">
+		                            <strong class="info" style="color: black;"> 일반 회원 </strong>
+		                            <p class="title" style="color: gray;">회원 등급</p>
+		                        </a>
+		                    </div>
+		                </div>
+		                <div class="col-md-2">
+		                    <div class="member_point d-flex flex-column align-items-center justify-content-center">
+		                        <a class="membership_item" style="text-decoration: none;">
+		                            <strong class="info" style="color: black;"> 0P </strong>
+		                            <p class="title" style="color: gray;">포인트</p>
+		                        </a>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 		<!-- 프로필 영역 끝 -->
-
+		
 		<!-- 하단 내역 부분 -->
 		<div id="my_store_menu">
 			<div class="container text-center menu_bar">
@@ -200,17 +217,17 @@ function payAuction(idx, price, id, title){
 					</div>
 				</div>
 			</div>
-
+			
 			<div id="my_store_menu_content">
 				<div id="sales_menu_area" class="common_menu">
-					<div style="display: flex; justify-content: space-between; align-items: center;">
-					    <div>
+					<div class="row" style="display: flex; justify-content: space-between; align-items: center;">
+					    <div class ="col-sm-10">
 					        <p>
 					            판매내역
 					        </p>
 					        <!-- 생략된 주석 -->
 					    </div>
-					    <div class="">
+					    <div class="col-sm-2 justify-content-end">
 					        <ul class="goods_cate">
 					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
 					              <option selected>전체</option>
@@ -220,63 +237,98 @@ function payAuction(idx, price, id, title){
 					        </ul>
 					    </div>
 					</div>
-					<div>
-						<!-- 판매 내역 시작 -->
-						<div id="main_content">
-							<nav class="filter_nav">
-								<div class="status_filter">
-									<button type="button" class="all_buy_status active">전체상태</button>
-<!-- 									<button type="button" class="buying_status">진행중</button> -->
-<!-- 									<button type="button" class="bought_status">거래완료</button> -->
-								</div>
-								<div class="pay_filter">
-									<button type="button" class="pay_filter">
-										<svg width="20" height="20" fill="#000" viewBox="0 0 20 20">
-					                     <path d="M0 3a1 1 0 011-1h3.185A2.995 2.995 0 017 0a2.995 2.995 0 012.815 2H19a1 1 0 010 2H9.815A2.995 2.995 0 017 6a2.995 2.995 0 01-2.815-2H1a1 1 0 01-1-1zm20 14a1 1 0 01-1 1H9.815A2.995 2.995 0 017 20a2.995 2.995 0 01-2.815-2H1a1 1 0 010-2h3.185A2.995 2.995 0 017 14a2.995 2.995 0 012.815 2H19a1 1 0 011 1zm0-7a1 1 0 01-1 1h-3.185A2.995 2.995 0 0113 13a2.995 2.995 0 01-2.815-2H1a1 1 0 010-2h9.185A2.995 2.995 0 0113 7a2.995 2.995 0 012.815 2H19a1 1 0 011 1zM6 3a1 1 0 102 0 1 1 0 00-2 0zm2 14a1 1 0 10-2 0 1 1 0 002 0zm6-7a1 1 0 10-2 0 1 1 0 002 0z"
-											fill-rule="evenodd" fill="#000">
-					                     </path>
-	                 					</svg>
-									</button>
-								</div>
-							</nav>
-							<!--상품 내용-->
-							<c:forEach items="${productSellList }" var="productSellList">
-								<div class="goods">
-									<div class="goods_one">
-										<a href="product_detail?product_idx=${productSellList.product_idx }">
-											<div class="goods_image">
-													<c:set var="length" value="${fn:length(productSellList.file_name) }" />
-													<c:set var="index" value="${fn:indexOf(productSellList.file_name, '_') }" />
-													<c:set var="file_name" value="${fn:substring(productSellList.file_name, index + 1, length) }" />
-													<c:choose>
-														<c:when test="${productSellList.product_sell_status eq '대기중' }">
-															<img src="${pageContext.request.contextPath}/resources/upload/${productSellList.image1}" alt="상품 이미지">
-														</c:when>
-														<c:when
-															test="${productSellList.product_sell_status eq '거래완료' }">
-															<img src="${pageContext.request.contextPath }/resources/fileUpload/${productSellList.image1}" alt="상품 이미지">
-															<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
-															거래완료
-															</span>
-														</c:when>
-													</c:choose>
-											</div>
-											<div class="goods_info">
-												<h2 class="goods_title">${productSellList.product_title }</h2>
-												<p class="goods_price">
-													<span class="bold">${productSellList.product_price }</span>원
-												</p>
-												<p class="goods_shop">${productSellList.mem_id }</p>
-												<p class="goods_date">${productSellList.product_date }</p>
-											</div>
-										</a>
-										<div class="btn_area">
-											<button type="button" class="" onclick="location.href='myChatting'">채팅</button>
-										</div>
-									</div>
-								</div>
-							</c:forEach>
+					<!-- 최신순 ~ 저가 -->
+					<div class="container">
+						<div class="row">
+							<div class="col-1">
+								<div>전체</div>
+							</div>
+							<div class="col-8">
+								<div class="sc-bqjOQT kIgFPj"><b>2개</b></div>
+							</div>
+							<div class="col-auto" style="">
+						      <input type="radio" class="btn-check" name="productSellCheck" id="productSellLatest" autocomplete="off" checked>
+						      <label class="btn btn-check-label" for="productSellLatest">최신순</label>
+						      
+						      <input type="radio" class="btn-check" name="productSellCheck" id="productSellPopular" autocomplete="off">
+						      <label class="btn btn-check-label" for="productSellPopular">인기순</label>
+						      
+						      <input type="radio" class="btn-check" name="productSellCheck" id="productSellCheckHigh" autocomplete="off">
+						      <label class="btn btn-check-label" for="productSellCheckHigh">고가</label>
+						      
+						      <input type="radio" class="btn-check" name="productSellCheck" id="productSellCheckLow" autocomplete="off">
+						      <label class="btn btn-check-label" for="productSellCheckLow">저가</label>
+							</div>
 						</div>
+					</div>
+					
+					<div class="container mt-4">
+					  <c:forEach items="${productSellList}" var="productSellList">
+					    <!--중고 후기 상품-->
+					<%--     <c:if test="${dibList.dibs_type eq '경매상품'}"> --%>
+					      <div class="goods mb-4">
+					        <div class="row no-gutters">
+					
+					          <div class="col-12 col-md-auto">
+					            <a href="${pageContext.request.contextPath}/productDetail?product_idx=${productSellList.product_idx}">
+					                <div class="goods_image" style="width: 94px; height: 94px;">
+					                    <!-- 실제 이미지 구현 부분 -->
+										<c:choose>
+											<c:when test="${productSellList.product_sell_status eq '대기중' }">
+												<img src="${pageContext.request.contextPath}${productSellList.image_path }/${productSellList.image1}" alt="상품 이미지">
+											</c:when>
+											<c:when
+												test="${productSellList.product_sell_status eq '예약중' }">
+												<img src="${pageContext.request.contextPath }${productSellList.image_path }/${productSellList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												예약중
+												</span>
+											</c:when>
+											<c:when
+												test="${productSellList.product_sell_status eq '거래대기중' }">
+												<img src="${pageContext.request.contextPath }${productSellList.image_path }/${productSellList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												거래대기중
+												</span>
+											</c:when>
+											<c:when
+												test="${productSellList.product_sell_status eq '거래완료' }">
+												<img src="${pageContext.request.contextPath }${productSellList.image_path }/${productSellList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												거래완료
+												</span>
+											</c:when>
+										</c:choose>
+					                </div>
+					            </a>
+					          </div>
+					          <div class="col-12 col-md-2">
+					            <div class="goods_info">
+					              <h2 class="goods_title">${productSellList.product_title}</h2>
+					              <p class="goods_price">
+					                <span class="bold">${productSellList.product_price}</span>원
+					              </p>
+					              <p class="goods_shop">${productSellList.mem_nickname}</p>
+					            </div>
+					          </div>
+					            <div class="col-12 col-md-7">
+					<%--               <p class="goods_date" style=" width: 400px;" >${productSellList.review_content}</p> --%>
+					          	</div>
+					            <div class="col-12 col-md-auto">
+					                <div class="ml-auto">
+					                    <div class="goods_date">
+										    <time datetime="${productSellList.product_date}">${productSellList.product_date}</time>
+										</div>
+										<div class="goods_button">
+					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
+					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+					                	</div>
+					                </div>
+					            </div>
+					        </div>
+					      </div>
+					<%--     </c:if> --%>
+					  </c:forEach>
 					</div>
 				</div>
 				<!-- 판매 내역 끝 -->
@@ -299,7 +351,31 @@ function payAuction(idx, price, id, title){
 					            </select>
 					        </ul>
 					    </div>
+
 					</div>
+						 <div class="container">
+							<div class="row">
+								<div class="col-1">
+									<div>전체</div>
+								</div>
+								<div class="col-8">
+									<div class="sc-bqjOQT kIgFPj"><b>2개</b></div>
+								</div>
+								<div class="col-auto" style="">
+							      <input type="radio" class="btn-check" name="productBuyCheck" id="productBuyLatest" autocomplete="off" checked>
+							      <label class="btn btn-check-label" for="productBuyLatest">최신순</label>
+							      
+							      <input type="radio" class="btn-check" name="productBuyCheck" id="productBuyPopular" autocomplete="off">
+							      <label class="btn btn-check-label" for="productBuyPopular">인기순</label>
+							      
+							      <input type="radio" class="btn-check" name="productBuyCheck" id="productBuyCheckHigh" autocomplete="off">
+							      <label class="btn btn-check-label" for="productBuyCheckHigh">고가</label>
+							      
+							      <input type="radio" class="btn-check" name="productBuyCheck" id="productBuyCheckLow" autocomplete="off">
+							      <label class="btn btn-check-label" for="productBuyCheckLow">저가</label>
+								</div>
+							</div>
+						</div>
 					<div>
 						<!-- 구매 내역 메인 컨텐츠 -->
 						<!--반품 모달-->
@@ -348,23 +424,6 @@ function payAuction(idx, price, id, title){
 						</div>
 						<div id="main_content">
 							<!--필터-->
-							<nav class="filter_nav">
-								<div class="status_filter">
-									<button type="button" class="all_buy_status active">전체상태</button>
-<!-- 									<button type="button" class="buying_status">진행중</button> -->
-<!-- 									<button type="button" class="bought_status">완료</button> -->
-<!-- 									<button type="button" class="cancle_status">취소/환불</button> -->
-								</div>
-								<div class="pay_filter">
-									<button type="button" class="pay_filter">
-										<svg width="20" height="20" fill="#000" viewBox="0 0 20 20">
-				                           <path d="M0 3a1 1 0 011-1h3.185A2.995 2.995 0 017 0a2.995 2.995 0 012.815 2H19a1 1 0 010 2H9.815A2.995 2.995 0 017 6a2.995 2.995 0 01-2.815-2H1a1 1 0 01-1-1zm20 14a1 1 0 01-1 1H9.815A2.995 2.995 0 017 20a2.995 2.995 0 01-2.815-2H1a1 1 0 010-2h3.185A2.995 2.995 0 017 14a2.995 2.995 0 012.815 2H19a1 1 0 011 1zm0-7a1 1 0 01-1 1h-3.185A2.995 2.995 0 0113 13a2.995 2.995 0 01-2.815-2H1a1 1 0 010-2h9.185A2.995 2.995 0 0113 7a2.995 2.995 0 012.815 2H19a1 1 0 011 1zM6 3a1 1 0 102 0 1 1 0 00-2 0zm2 14a1 1 0 10-2 0 1 1 0 002 0zm6-7a1 1 0 10-2 0 1 1 0 002 0z"
-											fill-rule="evenodd" fill="#000">
-				                           </path>
-				                       </svg>
-									</button>
-								</div>
-							</nav>
 							<!--상품 내용-->
 							<c:forEach items="${productBuyList }" var="productBuyList">
 								<div class="goods">
@@ -419,7 +478,7 @@ function payAuction(idx, price, id, title){
 				</div>
 				<!-- 구매 내역 끝 -->
 					
-								<!-- 내 경매 시작 -->
+				<!-- 내 경매 시작 -->
 				<div id="auction_menu_area" class="common_menu">
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 					    <div>
@@ -438,69 +497,92 @@ function payAuction(idx, price, id, title){
 					        </ul>
 					    </div>
 					</div>
-<div class="container mt-4">
-  <c:forEach items="${auctionList}" var="auctionList">
-    <!--경매 상품-->
-      <div class="goods mb-4">
-        <div class="row no-gutters">
-
-          <div class="col-12 col-md-auto">
-            <a href="product_detail?product_idx=${auctionList.auction_idx}">
-              <div class="goods_image" style=" width: 94px; height: 94px;">
-				<c:choose>
-					<c:when	test="${auctionList.auc_state eq '대기' }">
-						<img src="${pageContext.request.contextPath }${auctionList.image_path }/${auctionList.image1}" alt="상품 이미지">
-						<span class="goods_front"> 경매 대기 중 </span>
-					</c:when>
-					<c:when	test="${auctionList.auc_state eq '진행' }">
-						<img src="${pageContext.request.contextPath }${auctionList.image_path }/${auctionList.image1}" alt="상품 이미지">
-						<span class="goods_front"> 경매 진행 중 </span>
-					</c:when>
-					<c:when	test="${auctionList.auc_state eq '낙찰' }">
-						<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
-						<span class="goods_front"> 경매 낙찰 중 </span>
-					</c:when>
-					<c:when test="${auctionList.auc_state eq '입찰' }">
-						<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
-						<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
-						경매 마감
-						</span>
-					</c:when>
-				</c:choose>
-              </div>
-            </a>
-          </div>
-          <div class="col-12 col-md-9">
-            <div class="goods_info">
-              <h2 class="goods_title">${auctionList.auction_title}</h2>
-              <p class="goods_price">
-                <span class="bold">최종 낙찰가 : ${auctionList.auction_final_price}</span>원
-              </p>
-              <p class="goods_shop">${auctionList.mem_nickname}</p>
-              <p class="goods_date">경매 시작 시간 : ${auctionList.auc_regist_date}</p>
-            </div>
-          </div>
-            <div class="col-12 col-md-auto">
-                <div class="ml-auto">
-                    <div class="goods_date">
-					    <time datetime="${auctionList.product_date}">${auctionList.auction_date}</time>
-					</div>
-					<div>
-                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
-                	</div>
-                </div>
-            </div>
-        </div>
-      </div>
-    </c:forEach>
+					    <div class="container">
+							<div class="row">
+								<div class="col-1">
+									<div>전체</div>
+								</div>
+								<div class="col-8">
+									<div class=""><b>2개</b></div>
+								</div>
+								<div class="col-3">
+							        <input type="radio" class="btn-check" name="autionSellCheck" id="option5" autocomplete="off" checked>
+									<label class="btn btn-check-label" for="option5">최신순</label>
+									
+									<input type="radio" class="btn-check" name="autionSellCheck" id="option6" autocomplete="off">
+									<label class="btn btn-check-label" for="option6">인기순</label>
+									
+									<input type="radio" class="btn-check" name="autionSellCheck" id="option7" autocomplete="off" >
+									<label class="btn btn-check-label" for="option7">고가</label>
+									
+									<input type="radio" class="btn-check" name="autionSellCheck" id="option8" autocomplete="off">
+									<label class="btn btn-check-label" for="option8">저가</label>
+								</div>
+							</div>
+						</div>
+						<div class="container mt-4">
+						  <c:forEach items="${auctionList}" var="auctionList">
+						    <!--경매 상품-->
+						      <div class="goods mb-4">
+						        <div class="row no-gutters">
+						
+						          <div class="col-12 col-md-auto">
+						            <a href="${pageContext.request.contextPath}/AuctionDetail?auction_idx=${auctionList.product_idx}">
+						              <div class="goods_image" style=" width: 94px; height: 94px;">
+										<c:choose>
+											<c:when	test="${auctionList.auc_state eq '대기' }">
+												<img src="${pageContext.request.contextPath }${auctionList.image_path }/${auctionList.image1}" alt="상품 이미지">
+												<span class="goods_front"> 경매 대기 중 </span>
+											</c:when>
+											<c:when	test="${auctionList.auc_state eq '진행' }">
+												<img src="${pageContext.request.contextPath }${auctionList.image_path }/${auctionList.image1}" alt="상품 이미지">
+												<span class="goods_front"> 경매 진행 중 </span>
+											</c:when>
+											<c:when	test="${auctionList.auc_state eq '낙찰' }">
+												<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
+												<span class="goods_front"> 경매 낙찰 중 </span>
+											</c:when>
+											<c:when test="${auctionList.auc_state eq '입찰' }">
+												<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												경매 마감
+												</span>
+											</c:when>
+										</c:choose>
+						              </div>
+						            </a>
+						          </div>
+						          <div class="col-12 col-md-9">
+						            <div class="goods_info">
+						              <h2 class="goods_title">${auctionList.auction_title}</h2>
+						              <p class="goods_price">
+						                <span class="bold">최종 낙찰가 : ${auctionList.auction_final_price}</span>원
+						              </p>
+						              <p class="goods_shop">${auctionList.mem_nickname}</p>
+						              <p class="goods_date">경매 시작 시간 : ${auctionList.auc_regist_date}</p>
+						            </div>
+						          </div>
+						            <div class="col-12 col-md-auto">
+						                <div class="ml-auto">
+						                    <div class="goods_date">
+											    <time datetime="${auctionList.product_date}">${auctionList.auction_date}</time>
+											</div>
+											<div>
+						                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
+						                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+						                	</div>
+						                </div>
+						            </div>
+						        </div>
+						      </div>
+						    </c:forEach>
 				</div>
 				</div>
 				
 				<!-- 내 경매 끝 -->	
 				
 				<!-- 경매참가내역 시작 -->
-					<div id="auctionbid_menu_area" class="common_menu">
+				<div id="auctionbid_menu_area" class="common_menu">
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 					    <div>
 					        <p>
@@ -508,7 +590,7 @@ function payAuction(idx, price, id, title){
 					        </p>
 					        <!-- 생략된 주석 -->
 					    </div>
-					    <div class="">
+					    <div class="auctionSelect">
 					        <ul class="goods_cate">
 					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
 					              <option selected>전체</option>
@@ -517,6 +599,30 @@ function payAuction(idx, price, id, title){
 					            </select>
 					        </ul>
 					    </div>
+					</div>
+				<!-- 최신순 ~ 저가 -->
+					<div class="container">
+						<div class="row">
+							<div class="col-1">
+								<div>전체</div>
+							</div>
+							<div class="col-8">
+								<div class="sc-bqjOQT kIgFPj"><b>2개</b></div>
+							</div>
+							<div class="col-auto" style="">
+						      <input type="radio" class="btn-check" name="dibsCheck" id="CheckLatest" autocomplete="off" checked>
+						      <label class="btn btn-check-label" for="dibsCheckLatest">최신순</label>
+						      
+						      <input type="radio" class="btn-check" name="dibsCheck" id="CheckPopular" autocomplete="off">
+						      <label class="btn btn-check-label" for="dibsCheckPopular">인기순</label>
+						      
+						      <input type="radio" class="btn-check" name="dibsCheck" id="CheckHigh" autocomplete="off">
+						      <label class="btn btn-check-label" for="dibsCheckHigh">고가</label>
+						      
+						      <input type="radio" class="btn-check" name="dibsCheck" id="CheckLow" autocomplete="off">
+						      <label class="btn btn-check-label" for="dibsCheckLow">저가</label>
+							</div>
+						</div>
 					</div>
 				<div class="container mt-4">
 				  <c:forEach items="${auctionList}" var="auctionList">
@@ -597,6 +703,29 @@ function payAuction(idx, price, id, title){
 					        </ul>
 					    </div>
 					</div>
+					    <div class="container">
+							<div class="row">
+								<div class="col-1">
+									<div>전체</div>
+								</div>
+								<div class="col-8">
+									<div class=""><b>2개</b></div>
+								</div>
+								<div class="col-auto" style="">
+							        <input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off" checked>
+									<label class="btn btn-check-label" for="option9">최신순</label>
+									
+									<input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off">
+									<label class="btn btn-check-label" for="option10">인기순</label>
+									
+									<input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off" >
+									<label class="btn btn-check-label" for="option11">고가</label>
+									
+									<input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off">
+									<label class="btn btn-check-label" for="option12">저가</label>
+								</div>
+							</div>
+						</div>
 					<div>
 						<!--커스텀-->
 						<c:forEach items="${productdibsList }" var="productdibsList">
@@ -649,7 +778,7 @@ function payAuction(idx, price, id, title){
 					    </div>
 					    <div class="">
 					        <ul class="goods_cate">
-					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+					            <select class="form-dibselect form-select-sm" aria-label=".form-select-sm example">
 					              <option selected>전체</option>
 					              <option value="junggo">중고상품</option>
 					              <option value="action">경매상품</option>
@@ -657,114 +786,138 @@ function payAuction(idx, price, id, title){
 					        </ul>
 					    </div>
 					</div>
-<!--찜-->
-<div class="container mt-4">
-  <c:forEach items="${dibList}" var="dibList">
-    <!--경매 상품-->
-    <c:if test="${dibList.dibs_type eq '경매상품'}">
-      <div class="goods mb-4" data-dib-type="${dibList.dibs_type}">
-        <div class="row no-gutters">
-
-          <div class="col-12 col-md-auto">
-            <a href="product_detail?product_idx=${dibList.auction_idx}">
-              <div class="goods_image" style=" width: 94px; height: 94px;">
-				<c:choose>
-					<c:when	test="${dibList.auc_state eq '대기' }">
-						<img src="${pageContext.request.contextPath }${image_path }/${dibList.image1}" alt="상품 이미지">
-						<span class="goods_front"> 경매 대기 중 </span>
-					</c:when>
-					<c:when	test="${dibList.auc_state eq '진행' }">
-						<img src="${pageContext.request.contextPath }${image_path }/${dibList.image1}" alt="상품 이미지">
-						<span class="goods_front"> 경매 진행 중 </span>
-					</c:when>
-					<c:when	test="${dibList.auc_state eq '낙찰' }">
-						<img src="${pageContext.request.contextPath }${dibList.image_path}/${dibList.image1}" alt="상품 이미지">
-						<span class="goods_front"> 경매 낙찰 중 </span>
-					</c:when>
-					<c:when test="${dibList.auction_status eq '입찰' }">
-						<img src="${pageContext.request.contextPath }${dibList.image_path}/${dibList.image1}" alt="상품 이미지">
-						<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
-						경매 마감
-						</span>
-					</c:when>
-				</c:choose>
-              </div>
-            </a>
-          </div>
-          <div class="col-12 col-md-9">
-            <div class="goods_info">
-              <h2 class="goods_title">${dibList.auction_title}</h2>
-              <p class="goods_price">
-                <span class="bold">최종 낙찰가 : ${dibList.auction_final_price}</span>원
-              </p>
-              <p class="goods_shop">${dibList.seller_nickname}</p>
-              <p class="goods_date">경매 시작 시간 : ${dibList.auc_regist_date}</p>
-            </div>
-          </div>
-            <div class="col-12 col-md-auto">
-                <div class="ml-auto">
-                    <div class="goods_date">
-					    <time datetime="${dibList.product_date}">${dibList.auction_date}</time>
+					<div class="container">
+						<div class="row">
+							<div class="col-1">
+								<div>전체</div>
+							</div>
+							<div class="col-8">
+								<div class="sc-bqjOQT kIgFPj"><b>2개</b></div>
+							</div>
+							<div class="col-auto" style="">
+						      <input type="radio" class="btn-check" name="dibsCheck" id="dibsCheckLatest" autocomplete="off" checked>
+						      <label class="btn btn-check-label" for="dibsCheckLatest">최신순</label>
+						      
+						      <input type="radio" class="btn-check" name="dibsCheck" id="dibsCheckPopular" autocomplete="off">
+						      <label class="btn btn-check-label" for="dibsCheckPopular">인기순</label>
+						      
+						      <input type="radio" class="btn-check" name="dibsCheck" id="dibsCheckHigh" autocomplete="off">
+						      <label class="btn btn-check-label" for="dibsCheckHigh">고가</label>
+						      
+						      <input type="radio" class="btn-check" name="dibsCheck" id="dibsCheckLow" autocomplete="off">
+						      <label class="btn btn-check-label" for="dibsCheckLow">저가</label>
+							</div>
+						</div>
 					</div>
-					<div>
-                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
-                	</div>
-                </div>
-            </div>
-        </div>
-      </div>
-    </c:if>
-    <!--중고 상품-->
-<c:if test="${dibList.dibs_type eq '중고상품'}">
-    <div class="goods mb-4">
-        <div class="row no-gutters align-items-start">
-            <div class="col-12 col-md-auto">
-                <div class="goods_image" style="width: 94px; height: 94px;">
-                    <!-- 실제 이미지 구현 부분 -->
-					<c:choose>
-						<c:when test="${dibList.product_sell_status eq '대기중' }">
-							<img src="${pageContext.request.contextPath}/resources/upload/${dibList.image1}" alt="상품 이미지">
-						</c:when>
-						<c:when
-							test="${dibList.product_sell_status eq '판매완료' }">
-							<img src="${pageContext.request.contextPath }/resources/upload/${dibList.image1}" alt="상품 이미지">
-							<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
-							거래완료
-							</span>
-						</c:when>
-					</c:choose>
-                </div>
-            </div>
-            <div class="col-12 col-md-9">
-				<div class="goods_info">
-					<h2 class="goods_title">${dibList.product_title }</h2>
-					<p class="goods_price">
-						<span class="bold">${dibList.product_price }</span>원
-					</p>
-					<p class="goods_shop">${dibList.seller_nickname }</p>
-<%-- 					<p class="goods_date">${dibList.product_date }</p> --%>
+					<!--내 찜 시작-->
+					<div class="container mt-4">
+					  <c:forEach items="${dibList}" var="dibList">
+					    <!--경매 상품-->
+					    <c:if test="${dibList.dibs_type eq '경매상품'}">
+					      <div class="goods mb-4" data-dib-type="${dibList.dibs_type}" data-dib-type="경매상품">
+					        <div class="row no-gutters">
+					
+					          <div class="col-12 col-md-auto">
+						        <a href="${pageContext.request.contextPath}/AuctionDetail?auction_idx=${dibList.product_idx}">
+					              <div class="goods_image" style=" width: 94px; height: 94px;">
+									<c:choose>
+										<c:when	test="${dibList.auc_state eq '대기' }">
+											<img src="${pageContext.request.contextPath }${image_path }/${dibList.image1}" alt="상품 이미지">
+											<span class="goods_front"> 경매 대기 중 </span>
+										</c:when>
+										<c:when	test="${dibList.auc_state eq '진행' }">
+											<img src="${pageContext.request.contextPath }${image_path }/${dibList.image1}" alt="상품 이미지">
+											<span class="goods_front"> 경매 진행 중 </span>
+										</c:when>
+										<c:when	test="${dibList.auc_state eq '낙찰' }">
+											<img src="${pageContext.request.contextPath }${dibList.image_path}/${dibList.image1}" alt="상품 이미지">
+											<span class="goods_front"> 경매 낙찰 중 </span>
+										</c:when>
+										<c:when test="${dibList.auction_status eq '입찰' }">
+											<img src="${pageContext.request.contextPath }${dibList.image_path}/${dibList.image1}" alt="상품 이미지">
+											<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+											경매 마감
+											</span>
+										</c:when>
+									</c:choose>
+					              </div>
+					            </a>
+					          </div>
+					          <div class="col-12 col-md-9">
+					            <div class="goods_info">
+					              <h2 class="goods_title">${dibList.auction_title}</h2>
+					              <p class="goods_price">
+					                <span class="bold">최종 낙찰가 : ${dibList.auction_final_price}</span>원
+					              </p>
+					              <p class="goods_shop">${dibList.seller_nickname}</p>
+					              <p class="goods_date">경매 시작 시간 : ${dibList.auc_regist_date}</p>
+					            </div>
+					          </div>
+					            <div class="col-12 col-md-auto">
+					                <div class="ml-auto">
+					                    <div class="goods_date">
+										    <time datetime="${dibList.product_date}">${dibList.auction_date}</time>
+										</div>
+										<div>
+					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
+					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+					                	</div>
+					                </div>
+					            </div>
+					        </div>
+					      </div>
+					    </c:if>
+				    <!--중고 상품 찜-->
+						<c:if test="${dibList.dibs_type eq '중고상품'}">
+						    <div class="goods mb-4" data-dib-type="중고상품">
+						        <div class="row no-gutters align-items-start">
+						            <div class="col-12 col-md-auto">
+					            		<a href="${pageContext.request.contextPath}/productDetail?product_idx=${dibList.product_idx}">
+							                <div class="goods_image" style="width: 94px; height: 94px;">
+							                    <!-- 실제 이미지 구현 부분 -->
+												<c:choose>
+													<c:when test="${dibList.product_sell_status eq '대기중' }">
+														<img src="${pageContext.request.contextPath}/resources/upload/${dibList.image1}" alt="상품 이미지">
+													</c:when>
+													<c:when
+														test="${dibList.product_sell_status eq '판매완료' }">
+														<img src="${pageContext.request.contextPath }/resources/upload/${dibList.image1}" alt="상품 이미지">
+														<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+														거래완료
+														</span>
+													</c:when>
+												</c:choose>
+							                </div>
+						                </a>
+						            </div>
+						            <div class="col-12 col-md-9">
+										<div class="goods_info">
+											<h2 class="goods_title">${dibList.product_title }</h2>
+											<p class="goods_price">
+												<span class="bold">${dibList.product_price }</span>원
+											</p>
+											<p class="goods_shop">${dibList.seller_nickname }</p>
+						<%-- 					<p class="goods_date">${dibList.product_date }</p> --%>
+										</div>
+						            </div>
+						            <div class="col-12 col-md-auto">
+						                <div class="ml-auto">
+						                    <div class="goods_date">
+											    <time datetime="${dibList.product_date}">${dibList.product_date}</time>
+											</div>
+											<div>
+						                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
+						                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+						                	</div>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</c:if>
+				  </c:forEach>
 				</div>
-            </div>
-            <div class="col-12 col-md-auto">
-                <div class="ml-auto">
-                    <div class="goods_date">
-					    <time datetime="${dibList.product_date}">${dibList.product_date}</time>
-					</div>
-					<div>
-                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
-                	</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</c:if>
-  </c:forEach>
-</div>
-</div>
-
-				<!-- 찜 끝 -->
+			</div>
+			<!-- 내 찜 끝 -->
 				
 			<!-- 후기 시작 -->
 			<div id="auctiongoods_menu_area" class="common_menu">
@@ -786,63 +939,68 @@ function payAuction(idx, price, id, title){
 				    </div>
 				</div>
 			    <!-- 중략 -->
-<div class="container mt-4">
-  <c:forEach items="${jungReivewList}" var="jungReivewList">
-    <!--중고 후기 상품-->
-<%--     <c:if test="${dibList.dibs_type eq '경매상품'}"> --%>
-      <div class="goods mb-4">
-        <div class="row no-gutters">
-
-          <div class="col-12 col-md-auto">
-            <a href="product_detail?product_idx=${jungReivewList.product_idx}">
-                <div class="goods_image" style="width: 94px; height: 94px;">
-                    <!-- 실제 이미지 구현 부분 -->
-					<c:choose>
-						<c:when test="${jungReivewList.product_sell_status eq '대기중' }">
-							<img src="${pageContext.request.contextPath}${jungReivewList.image_path }/${jungReivewList.image1}" alt="상품 이미지">
-						</c:when>
-						<c:when
-							test="${jungReivewList.product_sell_status eq '판매완료' }">
-							<img src="${pageContext.request.contextPath }${jungReivewList.image_path }/${jungReivewList.image1}" alt="상품 이미지">
-							<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
-							거래완료
-							</span>
-						</c:when>
-					</c:choose>
-                </div>
-            </a>
-          </div>
-          <div class="col-12 col-md-4">
-            <div class="goods_info">
-              <h2 class="goods_title">${jungReivewList.product_title}</h2>
-              <p class="goods_price">
-                <span class="bold">${jungReivewList.product_price}</span>원
-              </p>
-              <p class="goods_shop">${jungReivewList.writer_mem_id}</p>
-            </div>
-          </div>
-            <div class="col-12 col-md-5">
-              <p class="goods_date">${jungReivewList.review_content}</p>
-          	</div>
-            <div class="col-12 col-md-auto">
-                <div class="ml-auto">
-                    <div class="goods_date">
-					    <time datetime="${jungReivewList.product_date}">${jungReivewList.review_date}</time>
+			    <div class="container">
+					<div class="row">
+						<div class="col-1">
+							<div>전체</div>
+						</div>
+						<div class="col-8">
+							<div class="sc-bqjOQT kIgFPj"><b>2개</b></div>
+						</div>
+<!-- 						<div class="col-auto" style=""> -->
+<!-- 					      <input type="radio" class="btn-check" name="" id="" autocomplete="off" checked> -->
+<!-- 					      <label class="btn btn-check-label" for="">최신순</label> -->
+					      
+<!-- 					      <input type="radio" class="btn-check" name="" id="" autocomplete="off"> -->
+<!-- 					      <label class="btn btn-check-label" for="">별점순</label> -->
+<!-- 						</div> -->
 					</div>
-					<div>
-                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
-                	</div>
-                </div>
-            </div>
-        </div>
-      </div>
-<%--     </c:if> --%>
-  </c:forEach>
-
-				<!-- 후기 끝 -->
-		</div>
-		</div>
+				</div>
+				<div class="container mt-4">
+				  <c:forEach items="${jungReivewList}" var="jungReivewList">
+				    <!--중고 후기 상품-->
+				<%--     <c:if test="${dibList.dibs_type eq '경매상품'}"> --%>
+				      <div class="goods mb-4">
+				        <div class="row no-gutters">
+				
+				          <div class="col-12 col-md-auto">
+				            <a href="${pageContext.request.contextPath}/social/${jungReivewList.writer_idx}">
+				                <div class="goods_image " style="width: 94px; height: 94px; border-radius: 70%">
+									<img src="${pageContext.request.contextPath}/resources/upload/profile/${jungReivewList.writer_profileImageUrl}" alt="상품 이미지" class ="ReviewImage">
+				                </div>
+				            </a>
+				          </div>
+				          <div class="col-12 col-md-2">
+				            <div class="goods_info">
+				              <h2 class="goods_title border" style="font-size:14px;">
+				              	<a href="${pageContext.request.contextPath}/productDetail?product_idx=${jungReivewList.product_idx}">${jungReivewList.product_title}</a>
+			              	  </h2>
+				              <p class="goods_price">
+				                <span class="bold">${jungReivewList.product_price}</span>원
+				              </p>
+				              <p class="goods_shop">${jungReivewList.writer_mem_id}</p>
+				            </div>
+				          </div>
+				            <div class="col-12 col-md-7">
+				              <p class="goods_date" style=" width: 400px;" >${jungReivewList.review_content}</p>
+				          	</div>
+				            <div class="col-12 col-md-auto">
+				                <div class="ml-auto">
+				                    <div class="goods_date">
+									    <time datetime="${jungReivewList.product_date}">${jungReivewList.review_date}</time>
+									</div>
+									<div>
+				                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
+				                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+				                	</div>
+				                </div>
+				            </div>
+				        </div>
+				      </div>
+				<%--     </c:if> --%>
+				  </c:forEach>
+				</div>
+			</div>
 				<!-- 후기 끝 -->
 		</div>
 	</div>
@@ -850,26 +1008,28 @@ function payAuction(idx, price, id, title){
 </div>
 	<!-- main_content 영역 끝 -->
 <script>
-  $(function() {
-    // 셀렉트 박스의 값을 변경할 때마다 실행되는 함수
-    $('.form-select').on('change', function() {
-      const selectedValue = $(this).val();
-      
-      // 전체를 선택했을 경우 모든 찜 상품을 보여주고, 그렇지 않은 경우 필터링
-      if (selectedValue === '전체') {
-        $('.goods').show();
-      } else {
-        $('.goods').each(function() {
-          const dibType = $(this).data('dib-type');
-          if (dibType === selectedValue) {
-            $(this).show();
-          } else {
-            $(this).hide();
-          }
-        });
-      }
-    });
-  });
+$(document).ready(function() {
+	  // 셀렉트 박스의 값을 변경할 때마다 실행되는 함수
+	  $('.form-dibselect').on('change', function() {
+	    const selectedValue = $(this).val();
+	    
+	    // 전체를 선택했을 경우 모든 찜 상품을 보여주고, 그렇지 않은 경우 필터링
+	    if (selectedValue === '전체') {
+	      $('.goods').show();
+	    } else {
+	      const dibTypeValue = selectedValue === 'junggo' ? '중고상품' : '경매상품';
+
+	      $('.goods').each(function() {
+	        const dibType = $(this).data('dib-type');
+	        if (dibType === dibTypeValue) {
+	          $(this).show();
+	        } else {
+	          $(this).hide();
+	        }
+	      });
+	    }
+	  });
+	});
   
 //   시간
   function formatTimeAgo(date) {
