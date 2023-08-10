@@ -41,6 +41,11 @@ public class StoreService {
 	public List<Map<String, Object>> selectJungReivewList(int mem_idx) {
 	    return mapper.selectJungReviewList(mem_idx);
 	}
+
+	// 경매 참여내역
+	public List<Map<String, Object>> selectAuctionBidList(int mem_idx) {
+		return mapper.selectAuctionBidList(mem_idx);
+	}
     
 
 }

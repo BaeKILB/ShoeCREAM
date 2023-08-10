@@ -1,5 +1,3 @@
-<%@page import="java.util.Map"%>
-<%@page import="com.google.gson.Gson"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -27,18 +25,20 @@
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <%-- <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css"> --%>
 <script>
-$(document).ready(function() {
-    $('select[name="inputSize"]').on('change', function() {
-        var selectedSize = $(this).val();
-        var creamSizeValue = $('input[name="cream.size' + selectedSize + '"]').val();
+ $(document).ready(function() {
+     $('select[name="inputSize"]').on('change', function() {
+         var selectedSize = $(this).val();
+         var creamSizeValue = $('input[name="cream.size' + selectedSize + '"]').val();
         
-        // .value()를 사용한 방식
-        var creamSizeValue = $('#creamSize' + selectedSize).val();
+      // .value()를 사용한 방식
+         var creamSizeValue = $('#creamSize' + selectedSize).val();
         
-        $('#priceSpan').text(creamSizeValue);
-    });
-});
+         $('#priceSpan').text(creamSizeValue);
+     });
+ });
 </script>
+
+
 
 <!-- 테스트용 css -->
 <style type="text/css">
@@ -218,7 +218,8 @@ $(document).ready(function() {
 						<div class="row">
 						    <div class="col-3">사이즈</div>
 						    <div>
-						        <select name="inputSize" >
+						    
+						        <select name="inputSize" id="inputSizeSelect">
 						            <c:forEach begin="220" step="5" end="310" varStatus="status">
 						                <option value="${status.index}">${status.index}</option>
 						            </c:forEach>
@@ -226,13 +227,15 @@ $(document).ready(function() {
 						    </div>
 						</div>
 						
+				
+						
 					<div class="row">
 					    <div class="col-3">가격</div>
 					    <div class="col-4 fw-bold">
-							<input type="hidden" name="${cream.size220}" value="${cream.size220}" id="creamSize220">
-							<input type="hidden" name="${cream.size225}" value="${cream.size225}" id="creamSize225">
-							<input type="hidden" name="${cream.size230}" value="${cream.size230}" id="creamSize230">
-							<input type="hidden" name="${cream.size235}" value="${cream.size235}" id="creamSize235">
+							<input type="hidden" name="cream.size220" value="${cream.size220}" id="220">
+							<input type="hidden" name="cream.size225" value="${cream.size225}" id="225">
+							<input type="hidden" name="cream.size230" value="${cream.size230}" id="230">
+							<input type="hidden" name="cream.size235" value="${cream.size235}" id="235">
 							<input type="hidden" name="${cream.size240}" value="${cream.size240}" id="creamSize240">
 							<input type="hidden" name="${cream.size245}" value="${cream.size245}" id="creamSize245">
 							<input type="hidden" name="${cream.size250}" value="${cream.size250}" id="creamSize250">
@@ -272,7 +275,12 @@ $(document).ready(function() {
 								<br>
 								
 			    	            <div class="col text-center ">
-			    	            	 <input type="submit" class="btn btn-secondary" value="구매하기" onclick="Confirmation()">
+			    	            <button type="button" id="payTest" class="btn btn-secondary">결제테스트</button>
+
+			    	   <button id="applyButton">Apply</button>
+			    	            
+<!-- 			    	            	 <input type="submit" class="btn btn-secondary" value="구매하기"   -->
+<%-- 			    	            	 onclick="location.href='payForm2?cream_idx=${cream.cream_idx}&size=${creammap.cream_idx}'"> --%>
 								</div>
 <!-- 		</form> -->
 								
@@ -316,5 +324,22 @@ $(document).ready(function() {
 			</div>
         </section>
 	</main>
+<script>
+    const selectElement = document.getElementById('inputSizeSelect');
+    const applyButton = document.getElementById('applyButton');
+
+    applyButton.addEventListener('click', function () {
+        const selectedValue = selectElement.value;
+        const creamIdx = "${cream.cream_idx}"; 
+        const url = new URL('http://localhost:8089/ShoeCREAM/payForm2'); 
+        
+        url.searchParams.set('cream_idx', creamIdx); // 파라미터 이름 수정
+        url.searchParams.set('selectedSize', selectedValue);
+        
+        location.href = url; // URL로 이동
+    });
+</script>
+
+	
 </body>
 </html>

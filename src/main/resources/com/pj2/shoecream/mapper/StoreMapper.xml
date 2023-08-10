@@ -41,34 +41,17 @@
 
 	<!-- 내 경매 전체 내역 select -->
 	<select id="selectAuctionList" resultType="map">
-	   SELECT 
-	 	mi.mem_idx
-		, mi.mem_id
-		, mi.mem_name
-		, mi.mem_nickname
-		, mi.mem_email
-		, mi.mem_mtel
-		, auction_title
-		, auction_info
-		, auction_date
-		, auction_brand
-		, auc_start_price
-		, auc_buy_instantly
-		, auc_bid_unit
-		, auc_regist_date
-		, auc_close_date
-		, auc_state
- 	    , pi.product_idx
-	    , pi.image1
-	    , pi.image2
-	    , pi.image3
-	    , pi.image4
-	    , pi.image_path
-	    FROM auction_item ai
-	      INNER JOIN mem_info mi ON ai.mem_idx = mi.mem_idx
-	      INNER JOIN product_image pi ON ai.auction_idx = pi.product_idx
-	    WHERE ai.mem_idx = #{mem_idx}
-	    ORDER BY ai.auction_date DESC;
+		SELECT
+		    *
+		FROM
+		    auction_item ai 
+		    JOIN product_image pi ON ai.auction_idx = pi.product_idx
+		    LEFT JOIN bid_list bl ON ai.auction_idx = bl.auction_idx
+		    LEFT JOIN pay_info pai ON bl.bid_date = pai.trans_date
+		    LEFT JOIN jung_reviews jr ON ai.auction_idx = jr.product_idx
+		    LEFT JOIN courier_info ci ON ai.auction_idx = ci.product_idx
+		WHERE
+		    ai.mem_idx = #{mem_idx}
 	</select>
 	
 <!-- 내 찜 내역 (회원 닉네임 값 추가) -->
@@ -126,25 +109,25 @@
 	
 	<!-- 내 후기 내역 -->
 	<select id="selectJungReviewList" resultType="map">
-	  SELECT 
-	    jr.jung_rev_idx, jr.product_idx, jr.writer_idx, jr.review_content, jr.review_star, jr.review_date,
-	    jp.mem_idx, jp.product_title, jp.product_info, jp.product_price, jp.product_status, jp.product_sell_status, jp.product_location,
-	    pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path,
-	    mi.mem_id, mi.mem_name, mi.mem_nickname, mi.mem_address, mi.mem_birthday, mi.mem_interest, mi.mem_email, mi.mem_mtel, mi.role, mi.mem_bio,
-	    mi.mem_account_auth, mi.mem_status, mi.mem_rank, mi.mem_point, mi.charge_point, mi.mem_balance, mi.mem_profileImageUrl, mi.mem_sign_date,
-	    writer.mem_id AS writer_mem_id
-	  FROM 
-	    jung_reviews AS jr
-	  JOIN
-	    jung_product AS jp ON jr.product_idx = jp.product_idx
-	  JOIN
-	    product_image AS pi ON jr.product_idx = pi.product_idx
-	  JOIN 
-	    mem_info AS mi ON jp.mem_idx = mi.mem_idx
-	  JOIN
-	    mem_info AS writer ON jr.writer_idx = writer.mem_idx
-	  WHERE jp.mem_idx = #{mem_idx}
-	  ORDER BY review_date DESC;
+    SELECT
+      jr.jung_rev_idx, jr.product_idx, jr.writer_idx, jr.review_content, jr.review_star, jr.review_date,
+      jp.mem_idx, jp.product_title, jp.product_info, jp.product_price, jp.product_status, jp.product_sell_status, jp.product_location,
+      pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path,
+      mi.mem_id, mi.mem_name, mi.mem_nickname, mi.mem_address, mi.mem_birthday, mi.mem_interest, mi.mem_email, mi.mem_mtel, mi.role, mi.mem_bio,
+      mi.mem_account_auth, mi.mem_status, mi.mem_rank, mi.mem_point, mi.charge_point, mi.mem_balance, mi.mem_profileImageUrl, mi.mem_sign_date,
+      writer.mem_id AS writer_mem_id, writer.mem_profileImageUrl AS writer_profileImageUrl
+    FROM
+      jung_reviews AS jr
+    JOIN
+      jung_product AS jp ON jr.product_idx = jp.product_idx
+    JOIN
+      product_image AS pi ON jr.product_idx = pi.product_idx
+    JOIN
+      mem_info AS mi ON jp.mem_idx = mi.mem_idx
+    JOIN
+      mem_info AS writer ON jr.writer_idx = writer.mem_idx
+    WHERE jp.mem_idx = #{mem_idx}
+    ORDER BY review_date DESC;
 	</select>
 <!-- 	<select id="selectJungReviewList" resultType="map"> -->
 <!-- 	SELECT  -->
@@ -163,5 +146,18 @@
 <!-- 	    mem_info AS mi ON jp.mem_idx = mi.mem_idx -->
 <!-- 	WHERE jp.mem_idx = #{mem_idx}; -->
 <!-- 	</select> -->
+    <select id="selectAuctionBidList" resultType="map">
+		SELECT
+		    *
+		FROM
+		    auction_item ai 
+		    JOIN product_image pi ON ai.auction_idx = pi.product_idx
+		    LEFT JOIN (SELECT * FROM bid_list WHERE bid_state != '유찰') bl ON ai.auction_idx = bl.auction_idx
+		    LEFT JOIN pay_info pai ON bl.bid_date = pai.trans_date
+		    LEFT JOIN jung_reviews jr ON ai.auction_idx = jr.product_idx
+		    LEFT JOIN courier_info ci ON ai.auction_idx = ci.product_idx
+		WHERE
+		    ai.mem_idx = #{mem_idx}
+    </select>
 	
 </mapper>

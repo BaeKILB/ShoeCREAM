@@ -78,10 +78,10 @@ function bidUnit() {
     const bidPriceInput = document.getElementById("bid_price");
     const bidPrice = parseFloat(bidPriceInput.value);
     const bidUnit = "${auction.auc_bid_unit}";
-    const minimumBid = "${bid.bid_price + auction.auc_bid_unit}";
+    const minimumBid = $("#nowPrice").val();
     const guaranteeAmountInput = document.getElementById("guarantee_amount");
 
-    if (bidPrice % parseFloat(bidUnit) !== 0 || bidPrice<minimumBid) {
+    if ((minimumBid-bidPrice) % parseFloat(bidUnit) !== 0 || bidPrice<minimumBid) {
         alert(bidUnit + "원 단위로, \n"+minimumBid+"원 이상의 값을 입력해주세요.");
         bidPriceInput.value = ''; // 입력값 초기화
         guaranteeAmountInput.value = ''; // 보증금 값 초기화
@@ -264,10 +264,12 @@ function refreshParentWindow() {
         <div class="col-6">
                <c:choose>
                 <c:when test="${bid eq null }">
+                    <input type="hidden" id="nowPrice" value="${auction.auc_start_price }">
                     <div class="fw-bold">${auction.auc_start_price }원</div>                 
                 </c:when>
                 <c:otherwise>
-                    <div class="fw-bold">${bid.bid_price }원</div>
+                    <input type="hidden" id="nowPrice" value="${bid.bid_price }">
+                    <div id="nowPrice" class="fw-bold">${bid.bid_price }원</div>
                 </c:otherwise>
                </c:choose>
         </div>
