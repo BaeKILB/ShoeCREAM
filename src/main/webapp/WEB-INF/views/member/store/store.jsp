@@ -112,6 +112,11 @@
 	text-shadow: 0 0 0 #FFA500;
 	color :transparent;
 }
+
+.btn btn-light btn-half-height {
+	font-size: 14px;
+}
+
 </style>
 
 
@@ -326,10 +331,22 @@ function payAuction(idx, price, id, title){
 					                    <div class="goods_date">
 										    <time datetime="${productSellList.product_date}">${productSellList.product_date}</time>
 										</div>
-										<div class="goods_button">
-					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
-					                	</div>
+										<c:choose>
+					                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
+							                    <div class="profile_btn_box mt-auto">
+							                    	<div class="goods_button">
+								                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
+								                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+								                	</div>
+							                    </div>                    	
+					                    	</c:when>
+					                    	<c:otherwise>
+					                    		<div class="profile_btn_box mt-auto">
+					                    				<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">찜하기</button>
+					                    				<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/productDetail?product_idx=${productSellList.product_idx}'">상세보기</button>
+					                    		</div> 
+					                    	</c:otherwise>
+					                    </c:choose>
 					                </div>
 					            </div>
 					        </div>
@@ -873,8 +890,18 @@ function payAuction(idx, price, id, title){
 										    <time datetime="${dibList.product_date}">${dibList.auction_date}</time>
 										</div>
 										<div>
-					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+						                    <c:choose>
+						                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
+								                    <div class="profile_btn_box mt-auto">
+								                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">찜취소</button>
+								                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">상세보기</button>
+								                    </div>                    	
+						                    	</c:when>
+						                    	<c:otherwise>
+						                    		<div class="profile_btn_box mt-auto">
+						                    		</div> 
+						                    	</c:otherwise>
+						                    </c:choose>
 					                	</div>
 					                </div>
 					            </div>
@@ -920,8 +947,18 @@ function payAuction(idx, price, id, title){
 											    <time datetime="${dibList.product_date}">${dibList.product_date}</time>
 											</div>
 											<div>
-						                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-						                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+					                    		<c:choose>
+							                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
+									                    <div class="profile_btn_box mt-auto">
+									                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">찜취소</button>
+									                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">상세보기</button>
+									                    </div>                    	
+							                    	</c:when>
+							                    	<c:otherwise>
+							                    		<div class="profile_btn_box mt-auto">
+							                    		</div> 
+							                    	</c:otherwise>
+						                    	</c:choose>
 						                	</div>
 						                </div>
 						            </div>
