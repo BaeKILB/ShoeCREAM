@@ -1,0 +1,126 @@
+@charset "UTF-8";
+
+/* 정보 수정 */
+.member-update-cont {
+	width: 70%;
+	margin-left: 5%;
+}
+
+.member-update-cont ul {
+	padding: 40px 0 50px 0;
+}
+
+.member-update-cont ul > li {
+	display: flex;
+	align-items: center;
+}
+
+.member-update-cont li label {
+	width: 20%;
+	font-size: 18px;
+	font-weight: 400;
+	color: #666;
+}
+
+.member-update-cont li:nth-child(n+2) {
+	margin-top: 30px;
+}
+
+.member-update-cont input, .member-update-cont select {
+	border: 1px solid #ffffff;
+	border-radius: 3px;
+	padding: 8px 10px;
+	font-size: 17px;
+}
+
+.form-input {
+	width: 80%;
+}
+
+.form-input input.form-control {
+	width: 100%;
+}
+
+.form-select {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#birthYear, #birthMonth, #birthDay {
+	width: 25%;
+}
+
+#gen_i input {
+	width: 15px;
+	height: 15px;
+	margin-right: 10px;
+}
+
+#check_i {
+	text-align: right;
+	margin-top: 5px;
+}
+
+#check_i label {
+	font-size: 15px;
+	margin-left: 5px;
+}
+
+.form-phone {
+	display: inline-block;
+	width: 20%;
+}
+
+.form-phone .form-control, .form-phone1 .form-control {
+	width: 100%;
+}
+
+.form-phone1 {
+	width: 35%;	
+}
+
+#phoneType {
+	width: 20%;
+}
+
+.form-control.imeKr {
+	margin-top: 5px;
+}
+
+.btn_info_update {
+	text-align: center;
+}
+
+.btn_info_update .upd_btn {
+	width: 30%;
+	padding: 13px 0;
+	background: rgb(255, 255, 255);
+	color: rgb(192, 192, 192);
+	font-size: 18px;
+	font-weight: 600;
+	border: 1;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.error{
+    font-size: 1px;
+    height: 20px;
+    color:red;
+    font-weight: 700;
+}
+
+.registered_account_box {
+    background-color: #fafafa;
+    border: 1px solid #ebebeb;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-top: 21px;
+    overflow: hidden;
+    padding: 15px 15px 16px;
+}
+
+.box_account_info {
+	font-size : 18px;
+}

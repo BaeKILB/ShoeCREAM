@@ -2,34 +2,68 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.StoreMapper">
 
-  <resultMap id="productDetailsResultMap" type="hashMap">
-    <id column="product_idx" property="productIdx"/>
-    <result column="mem_idx" property="memIdx"/>
+<!--   <resultMap id="productDetailsResultMap" type="hashMap"> -->
+<!--     <id column="product_idx" property="productIdx"/> -->
+<!--     <result column="mem_idx" property="memIdx"/> -->
 
-    <!-- Add additional results for each column from the joined tables as needed -->
-    <!-- Here's an example for product_title -->
-    <result column="product_title" property="productTitle"/>
-  </resultMap>
+<!--     Add additional results for each column from the joined tables as needed -->
+<!--     Here's an example for product_title -->
+<!--     <result column="product_title" property="productTitle"/> -->
+<!--   </resultMap> -->
 
 	<!-- 내 중고 판매 내역-->
-	<select id="selectProductSellList" resultMap="productDetailsResultMap">
+	<select id="selectProductSellList" resultType="map">
 	  SELECT 
-	    mi.*,
-	    jp.*,
-	    pi.*
-	  FROM jung_product jp
-	    INNER JOIN mem_info mi ON jp.mem_idx = mi.mem_idx
-	    INNER JOIN product_image pi ON jp.product_idx = pi.product_idx
-	  WHERE jp.mem_idx = #{mem_idx}
-	  ORDER BY jp.product_date DESC;
+	  mi.mem_idx,
+	  mi.mem_id,
+	  mi.mem_name,
+	  mi.mem_nickname,
+	  mi.mem_email,
+	  mi.mem_mtel,
+	  jp.product_idx,
+	  jp.product_title,
+	  jp.product_info,
+	  jp.product_price,
+	  jp.product_sell_status,
+	  jp.product_date,
+	  pi.product_idx,
+	  pi.image1,
+	  pi.image2,
+	  pi.image3,
+	  pi.image4,
+	  pi.image_path
+	FROM jung_product jp
+	  INNER JOIN mem_info mi ON jp.mem_idx = mi.mem_idx
+	  INNER JOIN product_image pi ON jp.product_idx = pi.product_idx
+	WHERE jp.mem_idx = #{mem_idx}
+	ORDER BY jp.product_date DESC;
 	</select>
 
 	<!-- 내 경매 전체 내역 select -->
-	<select id="selectAuctionList" resultType="HashMap">
+	<select id="selectAuctionList" resultType="map">
 	   SELECT 
-	      mi.*,
-	      ai.*,
-	      pi.*
+	 	mi.mem_idx
+		, mi.mem_id
+		, mi.mem_name
+		, mi.mem_nickname
+		, mi.mem_email
+		, mi.mem_mtel
+		, auction_title
+		, auction_info
+		, auction_date
+		, auction_brand
+		, auc_start_price
+		, auc_buy_instantly
+		, auc_bid_unit
+		, auc_regist_date
+		, auc_close_date
+		, auc_state
+ 	    , pi.product_idx
+	    , pi.image1
+	    , pi.image2
+	    , pi.image3
+	    , pi.image4
+	    , pi.image_path
 	    FROM auction_item ai
 	      INNER JOIN mem_info mi ON ai.mem_idx = mi.mem_idx
 	      INNER JOIN product_image pi ON ai.auction_idx = pi.product_idx
@@ -37,8 +71,8 @@
 	    ORDER BY ai.auction_date DESC;
 	</select>
 	
-	<!-- 내 찜 내역 -->
-	<select id="selectDibList" resultType="HashMap">
+<!-- 내 찜 내역 (회원 닉네임 값 추가) -->
+	<select id="selectDibList" resultType="map">
 	SELECT
 	    mi.mem_idx,
 	    mi.mem_id,
@@ -53,9 +87,12 @@
 	    pi.image4,
 	    pi.image_path,
 	    jp.product_idx AS jung_product_idx,
-	    jp.product_title AS jung_product_title,
-	    jp.product_info AS jung_product_info,
-	    jp.product_price AS jung_product_price,
+	    jp.product_title,
+	    jp.product_info,
+	    jp.product_price,
+	    jp.product_sell_status,
+	    jp.product_date,
+	    jp.mem_idx as jp_mem_idx,
 	    ai.auction_idx,
 	    ai.auction_title,
 	    ai.auction_info,
@@ -63,43 +100,68 @@
 	    ai.auc_buy_instantly,
 	    ai.auc_regist_date,
 	    ai.auc_state,
+	    ai.mem_idx as ai_mem_idx,
 	    CASE
 	        WHEN jp.product_idx IS NOT NULL THEN '중고상품'
 	        WHEN ai.auction_idx IS NOT NULL THEN '경매상품'
-	    END AS dibs_type
+	    END AS dibs_type,
+	    sell_member.mem_nickname as seller_nickname
 	FROM
 	    dibs AS d
 	JOIN mem_info AS mi ON mi.mem_idx = d.mem_idx
 	JOIN product_image AS pi ON pi.product_idx = d.product_idx
 	LEFT JOIN jung_product AS jp ON jp.product_idx = d.product_idx
 	LEFT JOIN auction_item AS ai ON ai.auction_idx = d.product_idx
-  	WHERE mi.mem_idx = #{mem_idx}
+	LEFT JOIN mem_info AS sell_member ON sell_member.mem_idx = IFNULL(jp.mem_idx, ai.mem_idx)
+	WHERE d.mem_idx = #{mem_idx}
 	</select>
+
 	
 	<!-- 상점 회원 번호 -->
-	<select id="selectStoreInfo" resultType="hashMap">
+	<select id="selectStoreInfo" resultType="map">
 	    SELECT *
 	    FROM mem_info
 	    WHERE mem_idx = #{mem_idx}
 	</select>
 	
-	<!-- 내 찜 내역 -->
-	<select id="selectJungReviewList" resultType="HashMap">
-	SELECT 
+	<!-- 내 후기 내역 -->
+	<select id="selectJungReviewList" resultType="map">
+	  SELECT 
 	    jr.jung_rev_idx, jr.product_idx, jr.writer_idx, jr.review_content, jr.review_star, jr.review_date,
 	    jp.mem_idx, jp.product_title, jp.product_info, jp.product_price, jp.product_status, jp.product_sell_status, jp.product_location,
 	    pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path,
 	    mi.mem_id, mi.mem_name, mi.mem_nickname, mi.mem_address, mi.mem_birthday, mi.mem_interest, mi.mem_email, mi.mem_mtel, mi.role, mi.mem_bio,
-	    mi.mem_account_auth, mi.mem_status, mi.mem_rank, mi.mem_point, mi.charge_point, mi.mem_balance, mi.mem_profileImageUrl, mi.mem_sign_date
-	FROM 
+	    mi.mem_account_auth, mi.mem_status, mi.mem_rank, mi.mem_point, mi.charge_point, mi.mem_balance, mi.mem_profileImageUrl, mi.mem_sign_date,
+	    writer.mem_id AS writer_mem_id
+	  FROM 
 	    jung_reviews AS jr
-	JOIN
+	  JOIN
 	    jung_product AS jp ON jr.product_idx = jp.product_idx
-	JOIN
+	  JOIN
 	    product_image AS pi ON jr.product_idx = pi.product_idx
-	JOIN 
+	  JOIN 
 	    mem_info AS mi ON jp.mem_idx = mi.mem_idx
-	WHERE jp.mem_idx = #{mem_idx};
+	  JOIN
+	    mem_info AS writer ON jr.writer_idx = writer.mem_idx
+	  WHERE jp.mem_idx = #{mem_idx}
+	  ORDER BY review_date DESC;
 	</select>
+<!-- 	<select id="selectJungReviewList" resultType="map"> -->
+<!-- 	SELECT  -->
+<!-- 	    jr.jung_rev_idx, jr.product_idx, jr.writer_idx, jr.review_content, jr.review_star, jr.review_date, -->
+<!-- 	    jp.mem_idx, jp.product_title, jp.product_info, jp.product_price, jp.product_status, jp.product_sell_status, jp.product_location, -->
+<!-- 	    pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path, -->
+<!-- 	    mi.mem_id, mi.mem_name, mi.mem_nickname, mi.mem_address, mi.mem_birthday, mi.mem_interest, mi.mem_email, mi.mem_mtel, mi.role, mi.mem_bio, -->
+<!-- 	    mi.mem_account_auth, mi.mem_status, mi.mem_rank, mi.mem_point, mi.charge_point, mi.mem_balance, mi.mem_profileImageUrl, mi.mem_sign_date -->
+<!-- 	FROM  -->
+<!-- 	    jung_reviews AS jr -->
+<!-- 	JOIN -->
+<!-- 	    jung_product AS jp ON jr.product_idx = jp.product_idx -->
+<!-- 	JOIN -->
+<!-- 	    product_image AS pi ON jr.product_idx = pi.product_idx -->
+<!-- 	JOIN  -->
+<!-- 	    mem_info AS mi ON jp.mem_idx = mi.mem_idx -->
+<!-- 	WHERE jp.mem_idx = #{mem_idx}; -->
+<!-- 	</select> -->
 	
 </mapper>

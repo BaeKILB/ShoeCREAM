@@ -168,7 +168,7 @@ div.hidden {
 .goods_info .goods_shop, .goods_info .goods_date{
     line-height: 1rem;
     color: rgb(94, 92, 107);
-    font-size: 0.75rem;
+/*     font-size: 0.75rem; */
 }
 
 /*버튼*/

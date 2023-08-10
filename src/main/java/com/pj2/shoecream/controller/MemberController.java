@@ -259,15 +259,6 @@ public class MemberController {
 	}
 	
 //    ===========================MyPage===========================
-    // 마이페이지 폼
-    @GetMapping("mypage")
-    public String myPageForm(MemberVO member, Model model) {
-//    	public String myPageForm(@PathVariable int mem_idx, Model model) {
-//    	System.out.println("마이페이지 member" + member);
-//		model.addAttribute("member", member);
-    	
-    	return "member/mypage/mypage2";
-    }
     
     // 회원수정 폼 (마이페이지 메인)
 //    @GetMapping("mypage/{mem_idx}/update")
@@ -389,7 +380,16 @@ public class MemberController {
 
     }
     
-    
+    // 마이페이지 - 내 계좌
+    @GetMapping("mypage/account")
+    public String accountform(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		model.addAttribute("member", mPrincipalDetails.getMember());
+		
+		
+    	return "member/mypage/account";
+    }
     
 /// =====================asd================
    	@GetMapping("authex")
