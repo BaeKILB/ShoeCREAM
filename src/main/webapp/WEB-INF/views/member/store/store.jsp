@@ -107,6 +107,11 @@
 .goods_button {
   font-size:14px;
 }
+
+.reviewStar {
+	text-shadow: 0 0 0 #FFA500;
+	color :transparent;
+}
 </style>
 
 
@@ -238,13 +243,15 @@ function payAuction(idx, price, id, title){
 					    </div>
 					</div>
 					<!-- 최신순 ~ 저가 -->
+					<c:set var="productCount" value="${productSellList.size()}"/> 
+					
 					<div class="container">
 						<div class="row">
-							<div class="col-1">
+							<div class="col-1 " style="height:50%">
 								<div>전체</div>
 							</div>
 							<div class="col-8">
-								<div class="sc-bqjOQT kIgFPj"><b>2개</b></div>
+								<div class="sc-bqjOQT kIgFPj"><b>${productCount}개</b></div>
 							</div>
 							<div class="col-auto" style="">
 						      <input type="radio" class="btn-check" name="productSellCheck" id="productSellLatest" autocomplete="off" checked>
@@ -353,6 +360,8 @@ function payAuction(idx, price, id, title){
 					    </div>
 
 					</div>
+<%-- 					<c:set var="productCount" value="${productSellList.size()}"/>  --%>
+					
 						 <div class="container">
 							<div class="row">
 								<div class="col-1">
@@ -789,13 +798,15 @@ function payAuction(idx, price, id, title){
 					        </ul>
 					    </div>
 					</div>
+					<!-- 최신순 ~ 저가 -->
+					<c:set var="dibListCount" value="${dibList.size()}"/> 
 					<div class="container">
 						<div class="row">
 							<div class="col-1">
 								<div>전체</div>
 							</div>
 							<div class="col-8">
-								<div class="sc-bqjOQT kIgFPj"><b>2개</b></div>
+								<div class="sc-bqjOQT kIgFPj"><b>${dibListCount }개</b></div>
 							</div>
 							<div class="col-auto" style="">
 						      <input type="radio" class="btn-check" name="dibsCheck" id="dibsCheckLatest" autocomplete="off" checked>
@@ -942,13 +953,14 @@ function payAuction(idx, price, id, title){
 				    </div>
 				</div>
 			    <!-- 중략 -->
+			 	<c:set var="jungReivewListCount" value="${jungReivewList.size()}"/> 
 			    <div class="container">
 					<div class="row">
 						<div class="col-1">
 							<div>전체</div>
 						</div>
 						<div class="col-8">
-							<div class="sc-bqjOQT kIgFPj"><b>2개</b></div>
+							<div class="sc-bqjOQT kIgFPj"><b>${jungReivewListCount }개</b></div>
 						</div>
 <!-- 						<div class="col-auto" style=""> -->
 <!-- 					      <input type="radio" class="btn-check" name="" id="" autocomplete="off" checked> -->
@@ -979,7 +991,56 @@ function payAuction(idx, price, id, title){
 				              	<a href="${pageContext.request.contextPath}/productDetail?product_idx=${jungReivewList.product_idx}">${jungReivewList.product_title}</a>
 			              	  </h2>
 				              <p class="goods_price">
-				                <span class="bold">${jungReivewList.product_price}</span>원
+            						<span class="reviewStar">
+										<span>
+											<!-- 별점 구현 초보, 새로운 거 알면 바꾸기-->
+											<c:choose>
+	   											<c:when test="${jungReivewList.review_star eq 0 }">
+	 												<span>★</span>
+													<span>★</span>
+													<span>★</span>
+													<span>★</span>
+													<span>★</span>
+	   											</c:when>
+	   											<c:when test="${jungReivewList.review_star eq 1 }">
+	 												<span class="fill">★</span>
+													<span>★</span>
+													<span>★</span>
+													<span>★</span>
+													<span>★</span>
+	   											</c:when>
+	   											<c:when test="${jungReivewList.review_star eq 2 }">
+	 												<span class="fill">★</span>
+													<span class="fill">★</span>
+													<span>★</span>
+													<span>★</span>
+													<span>★</span>
+	   											</c:when>
+	   											<c:when test="${jungReivewList.review_star eq 3 }">
+	 												<span class="fill">★</span>
+													<span class="fill">★</span>
+													<span class="fill">★</span>
+													<span>★</span>
+													<span>★</span>
+	   											</c:when>
+	   											<c:when test="${jungReivewList.review_star eq 4 }">
+	 												<span class="fill">★</span>
+													<span class="fill">★</span>
+													<span class="fill">★</span>
+													<span class="fill">★</span>
+													<span>★</span>
+	   											</c:when>
+	  											<c:otherwise>
+	   												<span class="fill">★</span>
+													<span class="fill">★</span>
+													<span class="fill">★</span>
+	   												<span class="fill">★</span>
+													<span class="fill">★</span>
+												</c:otherwise>
+											</c:choose>
+											<!-- 별점 구현 초보 -->
+										</span>
+									</span>
 				              </p>
 				              <p class="goods_shop">${jungReivewList.writer_mem_id}</p>
 				            </div>
@@ -1000,7 +1061,7 @@ function payAuction(idx, price, id, title){
 				            </div>
 				        </div>
 				      </div>
-				<%--     </c:if> --%>
+				<%--     </c:if> --%> 
 				  </c:forEach>
 				</div>
 			</div>
@@ -1058,6 +1119,11 @@ $(document).ready(function() {
       const formattedTime = formatTimeAgo(originalDate);
       timeElement.textContent = formattedTime;
   });
+  
+  
+  
+  
+  
 </script>
 
 	<!-- 푸터 시작 -->

@@ -64,10 +64,12 @@ function getSubscribeModalItem(u) {
 //	alert("나 실행됨?");
 	let item=`<div class="subscribe__item" id="subscribeModalItem-${u.mem_idx}">
 	<div class="subscribe__img">
-		<img src="/upload/${u.profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" />
+	<a href="${contextPath}/social/${u.mem_idx}">
+		<img src="${contextPath}/resources/upload/profile/${u.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" />
 	</div>
 	<div class="subscribe__text">
 		<h2>${u.mem_id}</h2>
+	</a>
 	</div>
 	<div class="subscribe__btn">`;
 	

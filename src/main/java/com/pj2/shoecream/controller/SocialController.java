@@ -72,8 +72,10 @@ public class SocialController {
         
 		MemberProfileDto dto = memberService.memberProfile(mem_idx, mPrincipalDetails.getMember().getMem_idx());
 		model.addAttribute("dto", dto);
+		System.out.println("dto 값 :" + dto);
 		List<SocialVO> social = socialImageService.findSocialProfile(mem_idx);
 		model.addAttribute("social", social);
+		System.out.println("socaial 값 :" + social);
 		System.out.println("프로필 페이지에서 social :" + social);
 		
 		return "member/social/profile";

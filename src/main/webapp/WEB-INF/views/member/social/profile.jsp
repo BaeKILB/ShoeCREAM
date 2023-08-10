@@ -7,7 +7,17 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/profile.css">
-	
+<style>
+.likeHeart{
+	width: 400px;
+    height: 300px;
+    padding-left: 140px;
+    padding-top: 140px;
+    padding-bottom: 140px;
+    padding-right: 100px;
+}  
+
+</style>
 <!--프로필 섹션-->
 <section class="profile">
 	<!--유저정보 컨테이너-->
@@ -66,7 +76,7 @@
 
 			<div class="subscribe">
 				<ul>
-					<li><a href=""> 게시물<span>${posts_image1.size()}</span>
+					<li><a href=""> 게시물<span>${social.size()}</span>
 					</a></li>
 					<li><a href="javascript:subscribeInfoModalOpen(${dto.member.mem_idx });"> 구독정보<span>${dto.followCount}</span>
 					</a></li>
@@ -96,7 +106,7 @@
 						        <img src="${pageContext.request.contextPath}/resources/upload/social/${social.posts_image1}" />
 						    </a>
 						<div class="comment">
-							<a href="${pageContext.request.contextPath }/social/${social.posts_idx}/detail" class=""> 
+							<a href="${pageContext.request.contextPath }/social/${social.posts_idx}/detail" class="likeHeart"> 
 							<i class="fas fa-heart"></i><span>${social.likeCount }</span>
 							</a>
 						</div>

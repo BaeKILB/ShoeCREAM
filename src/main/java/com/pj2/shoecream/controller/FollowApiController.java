@@ -85,6 +85,7 @@ public class FollowApiController {
 		
 		// sId = 현재 로그인 한 mem_idx // mem_dix = 해당 페이지 mem_idx
 		List<FollowingDto> followingDto = followService.followList(sId, mem_idx);
+		System.out.println("구독자 모달 값:" + followingDto);
 		
 		return new ResponseEntity<>(new CMRespDto<>(1,"구독자 정보 리스트 불러오기 성공", followingDto),HttpStatus.OK);
 	}
