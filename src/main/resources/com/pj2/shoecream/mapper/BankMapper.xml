@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.BankMapper">
-	<!-- 토큰 정보 저장(id, access_token, refresh_token, scope, user_seq_no) -->
+	<!-- 계좌 정보 저장 -->
 	<insert id="insertMemAccount">
 		INSERT
 			INTO
@@ -26,8 +26,18 @@
 			#{fintech_use_num},
 			#{balance_amt}
 		)
+		;
 	</insert>
 	
+	<!-- 계좌 정보 조회 -->
+	<select id="selectMemAccount">
+		SELECT *
+		FROM mem_account
+		WHERE mem_idx = #{mem_idx}
+		;
+	</select>
+	
+	<!-- 안씀 -->
 	<!-- 토큰 정보 조회 -->
 	<!-- mem_account 테이블에서 아이디가 일치하는 레코드 조회 -->
 	<select id="selectToken" resultType="Token">

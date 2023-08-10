@@ -8,9 +8,16 @@ import com.pj2.shoecream.vo.ResponseTokenVO;
 
 public interface BankMapper {
 
-	// 토큰 정보 저장
+	// 계좌 정보 저장
 	int insertMemAccount(Map<String,Object> account);
 
+	//계좌 정보 조회
+	Map<String,Object> selectMemAccount(int mem_idx);
+	
+	
+	
+	
+	// ================ 사용 안함 ===================
 	// 토큰 정보 조회
 	ResponseTokenVO selectToken(String id);
 

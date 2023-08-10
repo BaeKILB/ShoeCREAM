@@ -269,9 +269,9 @@ public class BankApiClient {
 		jo.put("cntr_account_num", "70667066"); // 약정계좌 계좌번호(테스트데이터 출금계좌 항목에 등록할 계좌번호)
 		jo.put("dps_print_content", "출금테스트"); // 입금계좌 인자내역
 		jo.put("fintech_use_num", map.get("fintech_use_num")); // 출금계좌 핀테크이용번호(전달받은 값)
-		jo.put("tran_amt", "1000"); // 거래금액
+		jo.put("tran_amt", map.get("point_amount")); // 거래금액
 		jo.put("tran_dtime", valueGenerator.getTranDTime()); // 거래요청일시
-		jo.put("req_client_name", "이연태"); // 거래를 요청한 사용자 이름
+		jo.put("req_client_name", "배경인"); // 거래를 요청한 사용자 이름
 		jo.put("req_client_fintech_use_num", map.get("fintech_use_num")); // 거래를 요청한 사용자 핀테크번호
 		jo.put("req_client_num", "1"); //  // 거래를 요청한 사용자 번호(아이디처럼 사용되는 번호, 임의부여)
 		jo.put("transfer_purpose", "TR"); // 출금(송금)

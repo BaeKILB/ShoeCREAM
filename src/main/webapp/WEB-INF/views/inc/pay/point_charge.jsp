@@ -27,33 +27,33 @@
 				<span>계정 포인트 잔액</span>
 				<span class="productName">${member.charge_point}</span>
 			</p>
-			<p class="pay_total_p">
-				<span>상품 가격</span>
-				<span><b id="productPrice">${map.product_price}</b>원</span>
-			</p>
-			<p>
-				<span>결제 후 잔액</span>
-				<span class="resTotalAmount">
-					<c:choose>
-						<c:when test="${member.charge_point < map.product_price }">
-							잔액이 부족합니다 !!
-						</c:when>
-						<c:otherwise>
-							${member.charge_point - map.product_price }
-						</c:otherwise>
-					</c:choose>
-				</span>
-			</p>
+
 		</div>
-		<div class="container">
-			<div class="row">
-				<input class="res_p"  type="button" value="취소" >
-				<input class="res_p"  type="button" value="충전" onclick="location.href = '${pageContext.request.contextPath }/chargePointForm'">
-				<c:if test="${member.charge_point >= map.product_price }">				
-					<input class="res_p"  type="button" value="결제"  onclick="payWithPoint()" >
-				</c:if>
-			</div>
-		</div>
+		<form action="chargePointPro" method="post">
+			<input type="radio" class="btn-check" name="point_amount" id="option1" value="5000" >
+			<label class="btn btn-outline-primary" for="option4">5,000원</label>
+			
+			<input type="radio" class="btn-check" name="point_amount" id="option2" value="10000" >
+			<label class="btn btn-outline-danger" for="option2">10,000원</label>
+			
+			<input type="radio" class="btn-check" name="point_amount" id="option3" value="50000" >
+			<label class="btn btn-outline-warning" for="option3">50,000원</label>
+			
+			<input type="radio" class="btn-check" name="point_amount" id="option4" value="100000" >
+			<label class="btn btn-outline-info" for="option1">100,000원</label>
+		
+
+		
+		<%-- 2.5.1. 출금이체 API 요청을 위한 폼 생성(PDF p74) --%>
+		<%-- 계좌 에서 돈 빼서 관리자 계좌로 보낸 뒤
+				해당 금액만큼 포인트 추가 --%>
+		
+		<%-- hidden 타입으로 은행명, 핀테크이용번호 전달 --%>
+			<input type="hidden" name="bank_name" value="${account.bank_name }">
+			<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }">
+			<input type="submit" value="충전">
+		</form>
+		<input class="res_p"  type="button" value="취소"  onclick="history.back();">
 	</fieldset>
 	
 	<script src="${pageContext.request.contextPath }/resources/js/inc/pay/shoe_pay.js">

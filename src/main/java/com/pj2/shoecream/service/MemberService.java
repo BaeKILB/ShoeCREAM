@@ -247,7 +247,7 @@ public class MemberService {
 	
 	// ------------------ 0809 배경인 추가 ---------------------
 	// 계좌 인증 여부 확인 체크
-	public String selectAccountAuth(int mem_idx) {
+	public String getAccountAuth(int mem_idx) {
 		return ((MemberVO)memberMapper.findMemberById(mem_idx)).getMem_account_auth();
 	
 	}
@@ -256,6 +256,11 @@ public class MemberService {
 	// 계좌 인증 여부 업데이트
 	public boolean changeMemAccountAuth(int mem_idx, String mem_account_auth) {
 		return memberMapper.updateMemAccountAuth(mem_idx, mem_account_auth) > 0;
+	}
+	
+	// 멤버 포인트 충전,출금 액수 업데이트
+	public boolean updatePointAmount(int mem_idx, int pointAmount) {
+		return memberMapper.updatePointAmount(mem_idx,pointAmount) > 0;
 	}
 
 	//아이디 중복체크 mapper 접근

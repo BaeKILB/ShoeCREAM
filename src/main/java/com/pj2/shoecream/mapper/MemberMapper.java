@@ -86,4 +86,9 @@ public interface MemberMapper {
 			@Param("mem_idx") int mem_idx 
 			,@Param("mem_account_auth") String mem_account_auth);
 	
+	// 포인트 충전 출금 액수 업데이트
+	int updatePointAmount(
+			@Param("mem_idx") int mem_idx
+			,@Param("pointAmount") int pointAmount);
+	
 }

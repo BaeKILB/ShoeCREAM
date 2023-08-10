@@ -134,6 +134,9 @@ public class PayController {
 		return "inc/fail_back";
 	}
 	
+
+	
+	
 	
 	// ==================== ajax =====================
 	

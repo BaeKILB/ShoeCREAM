@@ -18,6 +18,11 @@ public class BankService {
 		return mapper.insertMemAccount(account) > 0; 
 	}
 
+	// 유저 통장 정보 조회
+	public Map<String,Object> getMemAccount(int mem_idx){
+		return mapper.selectMemAccount(mem_idx);
+	}
+	
 	// 토큰 정보 조회 요청
 	public ResponseTokenVO getToken(String id) {
 		return mapper.selectToken(id);

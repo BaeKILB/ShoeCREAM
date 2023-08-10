@@ -180,6 +180,16 @@
 	    ;
 	</update>
 	
+	<!-- 멤버 포인트 업데이트 -->
+	<update id="updatePointAmount" >
+	    UPDATE mem_info
+	    SET charge_point = #{charge_point}
+	    WHERE mem_idx = #{mem_idx}
+	    ;
+	</update>
+	
+	
+	<!-- ================ -->
 	
 	<!-- 해당 회원 프로필 mem_idx 셀렉 -->
 	<select id="findMemberByMemIdx"
