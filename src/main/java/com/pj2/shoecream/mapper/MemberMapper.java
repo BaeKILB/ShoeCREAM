@@ -82,6 +82,8 @@ public interface MemberMapper {
 
 //--------- 0809 배경인 추가 ----------
 	// 계좌인증 여부 업데이트
-	int updateMemAccountAuth(String mem_account_auth);
+	int updateMemAccountAuth(
+			@Param("mem_idx") int mem_idx 
+			,@Param("mem_account_auth") String mem_account_auth);
 	
 }

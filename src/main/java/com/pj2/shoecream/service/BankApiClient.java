@@ -51,10 +51,12 @@ public class BankApiClient {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BankApiClient.class);
 
+	static final String REDIRCT_URI = "http://localhost:8088/shoecream/callback";
+	
 	// 인증코드 요청
 	public String requestAuth(String access_token, String user_seq_no) {
 		String url = baseUrl + "/oauth/2.0/authorize";
-		String redirectUri = "http://localhost:8089/fintech/callback";
+		String redirectUri = REDIRCT_URI;
 		String scope = "login inquiry transfer";
 		String state = "12345678901234567890123456789012";
 		
@@ -126,7 +128,7 @@ public class BankApiClient {
 		parameters.add("code", authResponse.get("code")); // 응답데이터 활용
 		parameters.add("client_id", clientId); // @Value 어노테이션으로 포함한 속성값
 		parameters.add("client_secret", clientSecret); // @Value 어노테이션으로 포함한 속성값
-		parameters.add("redirect_uri", "http://localhost:8089/fintech/callback"); // 기존 콜백 URL 그대로 활용
+		parameters.add("redirect_uri", REDIRCT_URI); // 기존 콜백 URL 그대로 활용
 		parameters.add("grant_type", "authorization_code"); // 고정값
 		logger.info("□□□□□□ parameters : " + parameters.toString());
 		

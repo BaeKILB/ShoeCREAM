@@ -2,17 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.BankMapper">
 	<!-- 토큰 정보 저장(id, access_token, refresh_token, scope, user_seq_no) -->
-	<insert id="insertToken">
+	<insert id="insertMemAccount">
 		INSERT
-			INTO mem_account
-			VALUES (
-				#{token.user_seq_no}
-				, #{idx}
-				, #{token.access_token}
-				, #{token.refresh_token}
-				, #{token.scope}
-				, 
-			);
+			INTO
+			mem_account 
+			(
+			mem_idx,
+			mem_seq_no,
+			access_token,
+			refresh_token,
+			bank_code_std,
+			account_num,
+			fintech_use_num,
+			balance_amt
+			)
+		VALUES (
+			#{mem_idx},
+			#{mem_seq_no},
+			#{access_token},
+			#{refresh_token},
+			#{bank_code_std},
+			#{account_num},
+			#{fintech_use_num},
+			#{balance_amt}
+		)
 	</insert>
 	
 	<!-- 토큰 정보 조회 -->

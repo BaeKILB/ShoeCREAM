@@ -41,6 +41,19 @@
         <websocket:sockjs websocket-enabled="true"/>
     </websocket:handlers>
     
+    	<!-- 속성값을 외부 파일에 저장 후 사용을 위한 properties 파일 등록 -->
+	<!-- webapp/resources 디렉토리가 아닌 src/main/resources 패키지 접근 시 classpath:/ 로 접근 -->
+	<!-- (설정 항목 중 classpath 가 가리키는 기본 위치 : src/main/resources 패키지) -->
+	<context:property-placeholder location="classpath:/config/appdata.properties"/>
+	<!-- 
+	각 클래스에서 지정한 properties 파일 내의 속성에 접근 시 어노테이션을 통해 접근 가능하며
+	사용하고자 하는 클래스에서 멤버변수 선언 시 @Value 어노테이션을 적용
+	
+	< 기본 문법 >
+	@Value("${속성명}")
+	private 데이터타입 변수명;
+	-->
+    
     <!-- @Controller 를 비롯한 어노테이션을 통해 자동 주입될 클래스가 포함되는 패키지 지정 -->
     <context:component-scan base-package="com.pj2.shoecream" />
 </beans:beans>

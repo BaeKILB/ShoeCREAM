@@ -1,5 +1,7 @@
 package com.pj2.shoecream.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +13,9 @@ public class BankService {
 	@Autowired
 	private BankMapper mapper;
 
-	// 토큰 관련 정보 저장 요청
-	public boolean registToken(int idx, ResponseTokenVO responseToken) {
-		if(mapper.insertToken(idx, responseToken) > 0) {
-			return true;
-		} else {
-			return false;
-		}
+	// 유저 통장 토큰, 핀테크 사용 번호 db 저장
+	public boolean registAccount(Map<String,Object> account) {
+		return mapper.insertMemAccount(account) > 0; 
 	}
 
 	// 토큰 정보 조회 요청
