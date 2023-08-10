@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.service.BankApiService;
 import com.pj2.shoecream.service.BankService;
+import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.vo.BankAccountDetailVO;
 import com.pj2.shoecream.vo.BankAccountVO;
 import com.pj2.shoecream.vo.MemberVO;
@@ -31,11 +32,12 @@ import com.pj2.shoecream.vo.ResponseWithdrawVO;
 
 @Controller
 public class BankController {
-	@Autowired
-	private BankService bankService;
 	
 	@Autowired
 	private BankApiService bankApiService;
+	
+	@Autowired
+	private MemberService memService;
 	
 	// 로그 출력을 위한 변수 선언 => getLogger() 메서드 파라미터로 로그를 처리할 현재 클래스 지정
 	private static final Logger logger = LoggerFactory.getLogger(BankController.class);
@@ -161,7 +163,8 @@ public class BankController {
 		result.put("account_num", account.getAccount_num_masked());
 		result.put("fintech_use_num", account.getFintech_use_num());
 		
-		// Model 객체에 리다이렉트할 페이지 저장(MemberInfo - 회원정보 갱신)
+		memService.updateMemberInfo(idx, member);
+		
 		model.addAttribute("msg", "계좌인증 완료!");
 		model.addAttribute("targetURL", "/mypage/update");
 		model.addAttribute("isClose", true); // true : 창 닫기, false : 창 닫기 X(이전페이지로 돌아가기)
