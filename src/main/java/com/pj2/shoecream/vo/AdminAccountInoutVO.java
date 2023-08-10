@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class AdminAccountinout {
+public class AdminAccountInoutVO {
 	   private int admin_account_idx;
 	   private int mem_idx;
 	   private int tran_amount;

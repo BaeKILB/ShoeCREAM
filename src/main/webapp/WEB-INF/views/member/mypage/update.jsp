@@ -198,7 +198,16 @@
                <li>
                	<label>사용자 계좌</label>
                		<div class="form-input">
-               			   <input type="button" value="계좌인증" id="btnAccountAuth" class="form-control btn btn-dark" ">
+               		<c:choose>
+               			<c:when test='${member.mem_account_auth eq "Y"}'>								
+               			   <input type="button" value="계좌정보" 
+               			   id="btnAccountinfo" class="form-control btn btn-dark" 
+               			   onclick="location.href='${pageContext.request.contextPath }/mypage/account'">
+               			</c:when>
+               			<c:otherwise>
+               			   <input type="button" value="계좌인증" id="btnAccountAuth" class="form-control btn btn-dark" >
+               			</c:otherwise>
+               		</c:choose>
                		</div>
                </li>
             </ul>

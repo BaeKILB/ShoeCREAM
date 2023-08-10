@@ -39,6 +39,9 @@ public class BankController {
 	@Autowired
 	private MemberService memService;
 	
+	@Autowired
+	private BankService bankService;
+	
 	// 로그 출력을 위한 변수 선언 => getLogger() 메서드 파라미터로 로그를 처리할 현재 클래스 지정
 	private static final Logger logger = LoggerFactory.getLogger(BankController.class);
 	
@@ -162,8 +165,20 @@ public class BankController {
 		result.put("bank_code_std", account.getBank_code_std());
 		result.put("account_num", account.getAccount_num_masked());
 		result.put("fintech_use_num", account.getFintech_use_num());
+		result.put("balance_amt", accountDetail.getBalance_amt());
 		
-		memService.updateMemberInfo(idx, member);
+		// db 에 저장하기
+		if(!bankService.registAccount(result)) {
+			// Model 객체를 통해 출력할 메세지(msg) 전달 및 창 닫기 여부(isClose)도 전달
+			model.addAttribute("msg", "계좌 정보 등록에 실패하였습니다! 다시 시도해주세요");
+			return "inc/close";
+		}
+		
+		// 유저 db에 저장하기
+		if(!memService.changeMemAccountAuth(idx, "Y")) {
+			model.addAttribute("msg", "계좌 인증 완료 정보 등록에 실패하였습니다! 다시 시도해주세요");
+			return "inc/close";			
+		}
 		
 		model.addAttribute("msg", "계좌인증 완료!");
 		model.addAttribute("targetURL", "/mypage/update");
@@ -196,7 +211,7 @@ public class BankController {
 		// Model 객체에 ResponseUserInfoVO 객체 저장
 		model.addAttribute("userInfo", userInfo);
 		
-		return "bank/bank_user_info";
+		return "member/mypage/bank_user_info";
 	}
 	
 	// 2.3. 조회서비스(사용자) - 2.3.1. 잔액조회 API

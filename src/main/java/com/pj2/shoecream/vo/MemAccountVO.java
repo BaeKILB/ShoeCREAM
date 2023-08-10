@@ -1,15 +1,16 @@
 package com.pj2.shoecream.vo;
 
-import java.sql.Timestamp;
-
 import lombok.Data;
 
 @Data
 public class MemAccountVO {
-	   private int admin_account_idx;
-	   private int mem_idx;
-	   private int tran_amount;
-	   private String tran_type;
-	   private Timestamp tran_date;
-	   private int admin_account_balance;
+	private int mem_account_idx;
+	private String mem_idx;
+	private String mem_seq_no;
+	private String access_token;
+	private String refresh_token;
+	private String bank_code_std;
+	private String account_num;
+	private String fintech_use_num;
+	private Long balance_amt;
 }
