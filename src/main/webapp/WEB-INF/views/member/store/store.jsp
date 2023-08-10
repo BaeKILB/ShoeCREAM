@@ -419,7 +419,7 @@ function payAuction(idx, price, id, title){
 				</div>
 				<!-- 구매 내역 끝 -->
 					
-								<!-- 내 경매 시작 -->
+				<!-- 내 경매 시작 -->
 				<div id="auction_menu_area" class="common_menu">
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 					    <div>
@@ -438,66 +438,88 @@ function payAuction(idx, price, id, title){
 					        </ul>
 					    </div>
 					</div>
-<div class="container mt-4">
-  <c:forEach items="${auctionList}" var="auctionList">
-    <!--경매 상품-->
-      <div class="goods mb-4">
-        <div class="row no-gutters">
-
-          <div class="col-12 col-md-auto">
-            <a href="product_detail?product_idx=${auctionList.auction_idx}">
-              <div class="goods_image" style=" width: 94px; height: 94px;">
-				<c:choose>
-					<c:when	test="${auctionList.auc_state eq '대기' }">
-						<img src="${pageContext.request.contextPath }${auctionList.image_path }/${auctionList.image1}" alt="상품 이미지">
-						<span class="goods_front"> 경매 대기 중 </span>
-					</c:when>
-					<c:when	test="${auctionList.auc_state eq '진행' }">
-						<img src="${pageContext.request.contextPath }${auctionList.image_path }/${auctionList.image1}" alt="상품 이미지">
-						<span class="goods_front"> 경매 진행 중 </span>
-					</c:when>
-					<c:when test="${auctionList.auc_state eq '마감' }">
-						<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
-						<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
-						경매 마감
-						</span>
-					</c:when>
-				</c:choose>
-              </div>
-            </a>
-          </div>
-          <div class="col-12 col-md-9">
-            <div class="goods_info">
-              <h2 class="goods_title">${auctionList.auction_title}</h2>
-              <p class="goods_price">
-                <span class="bold">최종 낙찰가 : ${auctionList.auction_final_price}</span>원
-              </p>
-              <p class="goods_shop">${auctionList.mem_nickname}</p>
-              <p class="goods_date">경매 시작 시간 : ${auctionList.auc_regist_date}</p>
-            </div>
-          </div>
-            <div class="col-12 col-md-auto">
-                <div class="ml-auto">
-                    <div class="goods_date">
-					    <time datetime="${auctionList.product_date}">${auctionList.auction_date}</time>
-					</div>
-					<div>
-                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
-                	</div>
+					<div class="container mt-4">
+					  <c:forEach items="${auctionList}" var="auctionList">
+					    <!--경매 상품-->
+					      <div class="goods mb-4">
+					        <div class="row no-gutters">
+					          <div class="col-12 col-md-auto">
+					            <a href="${pageContext.request.contextPath }/AuctionDetail?auction_idx=${auctionList.auction_idx}">
+					              <div class="goods_image" style=" width: 94px; height: 94px;">
+									<c:choose>
+										<c:when	test="${auctionList.auc_state eq '대기' }">
+											<img src="${pageContext.request.contextPath }${auctionList.image_path }/${auctionList.image1}" alt="상품 이미지">
+											<span class="goods_front"> 경매 대기 중 </span>
+										</c:when>
+										<c:when	test="${auctionList.auc_state eq '진행' }">
+											<img src="${pageContext.request.contextPath }${auctionList.image_path }/${auctionList.image1}" alt="상품 이미지">
+											<span class="goods_front"> 경매 진행 중 </span>
+										</c:when>
+										<c:when test="${auctionList.auc_state eq '마감' }">
+											<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
+											<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+											경매 마감
+											</span>
+										</c:when>
+									</c:choose>
+					              </div>
+					            </a>
+					          </div>
+					          <div class="col-12 col-md-9">
+					            <div class="goods_info">
+					              <h2 class="goods_title">${auctionList.auction_title}</h2>
+					              <p class="goods_price">
+					               <c:choose>
+					                   <c:when test="${auctionList.auc_state eq '대기' }">
+					                       <span class="bold">경매 시작전</span>
+					                       <p class="goods_date">경매 시작 시간 : ${auctionList.auc_regist_date}</p>
+					                   </c:when>
+					                   <c:when test="${auctionList.auc_state eq '진행' }">
+					                       <c:choose>
+                                                <c:when test="${auctionList.bid_price eq null }">
+									                <span class="bold">입찰 없음</span>
+                                                    <p class="goods_date">경매 마감 시간 : ${auctionList.auc_close_date}</p>
+                                                </c:when>
+                                                <c:when test="${auctionList.bid_price ne null }">
+									                <span class="bold">현재 입찰가 : ${auctionList.bid_price}</span>원
+                                                    <p class="goods_date">경매 마감 시간 : ${auctionList.auc_close_date}</p>
+                                                </c:when>
+					                       </c:choose>
+					                   </c:when>
+					                   <c:when test="${auctionList.auc_state eq '마감' }">
+					                       <c:choose>
+					                           <c:when test="${auctionList.bid_price eq null }">
+									                <span class="bold">입찰 없음</span>
+					                           </c:when>
+					                           <c:when test="${auctionList.bid_price ne null && auctionList.auc_state eq '낙찰'}">
+									                <span class="bold">낙찰가 : ${auctionList.bid_price }</span>
+					                           </c:when>
+					                           <c:when test="${auctionList.bid_price ne null && auctionList.auc_state eq '즉시구매'}">
+									                <span class="bold">즉시구매가 : ${auctionList.bid_price }</span>
+					                           </c:when>
+					                       </c:choose>
+					                   </c:when>
+					               </c:choose>
+					              </p>
+					            </div>
+					          </div>
+					            <div class="col-12 col-md-auto">
+					                <div class="ml-auto">
+					                    <div class="goods_date">
+										    <time datetime="${auctionList.product_date}">${auctionList.auction_date}</time>
+										</div>
+										<div>
+					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
+					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+					                	</div>
+					                </div>
+					            </div>
+					        </div>
+					      </div>
+				        </c:forEach>
+				    </div>
                 </div>
-            </div>
-        </div>
-      </div>
-    </c:forEach>
-				</div>
-				</div>
-				
 				<!-- 내 경매 끝 -->	
-				
-				<hr>
-				${auctionBidList }
-				<hr>
 				<!-- 경매참가내역 시작 -->
 					<div id="auctionbid_menu_area" class="common_menu">
 					<div style="display: flex; justify-content: space-between; align-items: center;">
@@ -533,7 +555,9 @@ function payAuction(idx, price, id, title){
 									</c:when>
 									<c:when	test="${auctionList.bid_state eq '낙찰' }">
 										<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
-										<span class="goods_front"> 낙찰 </span>
+                                          <span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+                                            낙찰
+                                          </span>
 									</c:when>
 									<c:when test="${auctionList.bid_state eq '유찰' }">
 										<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
@@ -541,7 +565,9 @@ function payAuction(idx, price, id, title){
 									</c:when>
 									<c:when test="${auctionList.bid_state eq '즉시구매' }">
 										<img src="${pageContext.request.contextPath }${auctionList.image_path}/${auctionList.image1}" alt="상품 이미지">
-										<span class="goods_front"> 즉시구매 </span>
+                                          <span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+                                            즉시구매
+                                          </span>
 									</c:when>
 								</c:choose>
 				              </div>

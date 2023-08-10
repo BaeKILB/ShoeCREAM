@@ -20,8 +20,6 @@ public interface StoreMapper {
 	// 찜 내역
 	List<Map<String, Object>> selectDibList(int mem_idx);
 	
-	
-	
     // 상점 개인 페이지 정보 조회
 	Map<String, Object> selectStoreInfo(int mem_idx);
 	
