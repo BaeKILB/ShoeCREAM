@@ -50,6 +50,10 @@ public class StoreController {
         List<Map<String, Object>> jungReivewList = storeService.selectJungReivewList(mem_idx);
         model.addAttribute("jungReivewList", jungReivewList);
 		System.out.println("내 후기 값들 :" + jungReivewList);
+		
+		// 경매 참가 내역
+		List<Map<String, Object>> auctionBidList = storeService.selectAuctionBidList(mem_idx);
+		model.addAttribute("auctionBidList",auctionBidList);
 
    		return "member/store/store";
    	}

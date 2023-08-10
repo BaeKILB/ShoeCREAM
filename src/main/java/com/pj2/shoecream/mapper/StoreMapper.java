@@ -28,5 +28,8 @@ public interface StoreMapper {
 	// 중고 리뷰 조회
 	List<Map<String, Object>> selectJungReviewList(int mem_idx);
 
+	// 경매 참여 내역
+	List<Map<String, Object>> selectAuctionBidList(int mem_idx);
+
 
 }
