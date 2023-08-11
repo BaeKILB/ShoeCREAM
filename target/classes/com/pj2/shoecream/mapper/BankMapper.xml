@@ -29,15 +29,41 @@
 		;
 	</insert>
 	
+	<!-- 관리자 계좌 입출금 내역 기록 -->
+	<insert id="insertAdmAccountInout" parameterType="AdminAccountInoutVO">
+		INSERT 
+			INTO admin_account_inout
+		VALUES(
+			,null
+			,#{mem_idx}
+			,#{tran_amount}
+			,#{tran_type}
+			,now()
+			,#{admin_account_balance}
+		)
+		;
+	</insert>
+	
+	
 	<!-- 계좌 정보 조회 -->
-	<select id="selectMemAccount">
+	<select id="selectMemAccount" resultType="map">
 		SELECT *
 		FROM mem_account
 		WHERE mem_idx = #{mem_idx}
 		;
 	</select>
 	
-	<!-- 안씀 -->
+	<!-- 계좌 잔액 업데이트 -->
+	<update id="updateMemAccountAmount">
+		UPDATE mem_account
+		SET 
+			balance_amt = #{balance_amt}
+		WHERE
+			mem_idx = #{mem_idx}
+		;
+	</update>
+	
+	<!-- 안씀 ============ -->
 	<!-- 토큰 정보 조회 -->
 	<!-- mem_account 테이블에서 아이디가 일치하는 레코드 조회 -->
 	<select id="selectToken" resultType="Token">

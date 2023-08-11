@@ -22,6 +22,7 @@ import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.service.BankApiService;
 import com.pj2.shoecream.service.BankService;
 import com.pj2.shoecream.service.MemberService;
+import com.pj2.shoecream.vo.AdminAccountInoutVO;
 import com.pj2.shoecream.vo.BankAccountDetailVO;
 import com.pj2.shoecream.vo.BankAccountVO;
 import com.pj2.shoecream.vo.MemberVO;
@@ -256,7 +257,7 @@ public class BankController {
 		ResponseWithdrawVO withdrawResult = bankApiService.requestWithdraw(map);
 		
 		// 입금 상태 확인하여 실패시 에러처리
-		if(withdrawResult.getBank_rsp_code().equals("000")) {
+		if(!withdrawResult.getBank_rsp_code().equals("000")) {
 			model.addAttribute("msg","포인트 충전이 정상적으로 진행되지 않았습니다! (출금 문제)");
 			return "inc/fail_back";
 		}
@@ -266,6 +267,19 @@ public class BankController {
 			model.addAttribute("msg","포인트 충전이 정상적으로 진행되지 않았습니다!(DB error)");
 			return "inc/fail_back";
 		}
+		
+		// 관리자 계좌 현황과 관리자 계좌 잔액 업데이트 하기
+		
+		AdminAccountInoutVO admAccountInout = new AdminAccountInoutVO();
+		admAccountInout.setMem_idx(idx);
+		admAccountInout.setTran_amount(Integer.parseInt( map.get("point_amount")));
+		admAccountInout.setTran_type("w");		
+		
+		if(!bankService.addAdmAccountLog(admAccountInout)) {
+			model.addAttribute("msg","포인트 충전이 정상적으로 진행되지 않았습니다!(DB error)");
+			return "inc/fail_back";
+		}
+		
 		
 		// Model 객체에 ResponseWithdrawVO 객체 저장
 //		model.addAttribute("withdrawResult", withdrawResult);

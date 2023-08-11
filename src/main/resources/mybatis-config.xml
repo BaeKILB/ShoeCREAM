@@ -15,5 +15,6 @@
 		<!-- bank 관련 -->
 		<typeAlias type="com.pj2.shoecream.vo.AuthInfoVO" alias="AuthInfo"/>
 		<typeAlias type="com.pj2.shoecream.vo.ResponseTokenVO" alias="Token"/>
+		<typeAlias type="com.pj2.shoecream.vo.AdminAccountInoutVO" alias="AdminAccountInoutVO"/>
 	</typeAliases>
 </configuration>
