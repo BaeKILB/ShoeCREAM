@@ -22,7 +22,6 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- 아임포트 -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 <script type="text/javascript">
 //주소찾기 
 function sample6_execDaumPostcode() {
@@ -85,7 +84,7 @@ function sample6_execDaumPostcode() {
 	</header>
 	<section id="sec_con" class="inr res_page">
 <!-- 		<form action="resInfoPro" method="post"> -->
-		<form action="commonPay" method="post">
+		<form action="commonPayPro" method="post">
 			<input type="hidden" name="product_selector" value="${map.product_selector }">
 			<input type="hidden" name="product_idx" value="${map.product_idx }">
 			<input type="hidden" name="pay_total" class="pay_total" value="${map.product_price }">
@@ -107,7 +106,7 @@ function sample6_execDaumPostcode() {
 						<span class="productName">${cream.cream_title}</span>
 						
 					</p>
-					${buyer }
+					
 					<p class="pay_total_p">
 						<span>상품 가격</span>
 						<span><b id="productPrice">${price}</b>원</span>
@@ -118,35 +117,49 @@ function sample6_execDaumPostcode() {
 					</p>
 				</div>
 			</fieldset>
+			
+			
 			<fieldset class="img_sec_wrap">
-				<b>배송지 정보</b>
-				<div class="txt_sec_p">
-					<p>
-						<span>수령인</span>
-						<span class="sellerNickname">${map.mem_name}</span>
-						<input type="text" >
-					</p>
-					
-					<p>
-						<span>배송지 주소</span>
-						<span><b id="sellerRank"></b>${map.mem_address}</span>
-				        <div class="addr">
-				            <input id="sample6_postcode" name="sample6_postcode" type="text" placeholder="우편번호">
-				            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				            <input type="text" id="sample6_address" name="sample6_address" placeholder="주소"><br>
-							<input type="text" id="sample6_detailAddress" name="sample6_detailAddress" placeholder="상세주소">
-							<input type="text" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
-				        </div>
-				   
-					<p>
-						<span>연락처</span>
-						<span>${map.mem_mtel}</span>
-						<div class="phone" >
-				            <input id="phone1"  name="phone1" type="text" size="1" maxlength="3" oninput="changePhone1()" > -
-				            <input id="phone2" name="phone2" type="text" size="3" maxlength="4" oninput="changePhone2()" > -
-				            <input id="phone3" name="phone3" type="text" size="3" maxlength="4" oninput="changePhone3()" >
-				            <input type="hidden" id="mem_mtel" name="mem_mtel">
-				       </div>  
+				${buyer}
+				<b>배송지 정보</b><br>
+				<input type="checkbox"  id="sameAsMemberInfo">배송지 정보와 회원 정보가 동일합니다.
+				<script>
+					$("#sameAsMemberInfo").on("click",function() {
+						if($('#addrtest').attr('class') != 'd-none') {
+							$("#addrtest").addClass('d-none');
+						} else if ($('#addrtest').attr('class') == 'd-none') {
+							$("#addtest").removeClass('d-none');
+						}
+					});
+				</script>
+<!-- 				<div class="txt_sec_p"> -->
+					<div id="addrtest">
+						<p>
+							<span>수령인</span>
+							<span id="buyerName">${buyer.mem_name}</span>
+							<input type="text" >
+						</p>
+						<p>
+							<div>
+							<span>배송지 주소</span>
+							<span><b id="buyerAddr"></b>${buyer.mem_address}</span>
+					        <div class="addr">
+					            <input id="sample6_postcode" name="sample6_postcode" type="text" placeholder="우편번호">
+					            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+					            <input type="text" id="sample6_address" name="sample6_address" placeholder="주소"><br>
+								<input type="text" id="sample6_detailAddress" name="sample6_detailAddress" placeholder="상세주소">
+								<input type="text" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
+					        </div>
+						<p>
+							<span>연락처</span>
+							<span id="buyerPhone" >${buyer.mem_mtel}</span>
+							<div class="phone" >
+					            <input id="phone1"  name="phone1" type="text" size="1" maxlength="3" oninput="changePhone1()" > -
+					            <input id="phone2" name="phone2" type="text" size="3" maxlength="4" oninput="changePhone2()" > -
+					            <input id="phone3" name="phone3" type="text" size="3" maxlength="4" oninput="changePhone3()" >
+					            <input type="hidden" id="mem_mtel" name="mem_mtel">
+					       </div>
+				    </div>     
 				       
 						<span>배송 메모</span>
 						<div class="phone" >
@@ -154,37 +167,10 @@ function sample6_execDaumPostcode() {
 				       </div>  
 				</div>
 			</fieldset>
+			
+
 			<ul class="res_page_wrap">
-				<li>
-					<div class="menu_tit ">
-						<span>결제수단</span>
-					</div>
-					<ul class="side_sub">
-						<li class="payment_wrap">
-							<div class="payment_p active" id="box0" style="cursor : pointer;">
-								<input type="radio" name="pay_method" id="pointPay" value="1" checked>슈페이
-							</div>
-<!-- 							<div class="payment_p" id="box1" style="cursor : pointer;"> -->
-<!-- 								<input type="radio" name="pay_method" id="card" value="0">신용/체크카드 -->
-<!-- 							</div> -->
-<!-- 							<div class="payment_p" id="box2" style="cursor : pointer;"> -->
-<!-- 								<input type="radio" name="pay_method" id="virtual_account" value="1">가상계좌이체 -->
-<!-- 							</div> -->
-<!-- 							<div class="payment_p" id="box3" style="cursor : pointer;"> -->
-<!-- 								<input type="radio" name="pay_method" id="transfer" value="2">무통장입금 -->
-<!-- 							</div> -->
-						</li>
-					</ul>
-					<script>
-							$('.payment_p').click(function() {
-								$(this).addClass('active');
-								$(this).siblings('.payment_p').removeClass('active'); 
-								$(this).find("input[name='pay_method']").prop("checked",true);
-								
-							});
-					</script>
-				</li>
-				
+
 				
 				<li class="agreement_p">
 					<div class="menu_tit">
@@ -272,151 +258,25 @@ function sample6_execDaumPostcode() {
 							</li>
 					</ul>
 				</li>
-				
 
 			</ul>
+			<input type="submit" class="res_p" value="결제하기" >
+	</form>
 			
-
-	
-			<script>
-				
-				// 결제 금액 계산
-				var totalAmount = 0; // 총 결제 금액 초기값
-				
-// 				if(weekdayRent == '0' || weekdayRent == '6') {
-// 					totalAmount = Math.ceil((${carInfo.car_weekend} * (hours / 24)) + ${carInfo.car_weekend} * days);
-// 				} else {
-// 					totalAmount = Math.ceil((${carInfo.car_weekdays} * (hours / 24)) + ${carInfo.car_weekdays} * days);
-// 				}
-				
-				document.addEventListener('DOMContentLoaded', function() {
-					  totalAmount = ${map.product_price};
-				});
-
-			</script>
-			
-			<script>
-			// 유효성 검사 함수
-			function validateForm() {
-	
-				var agreeBtn = document.querySelector('input[name="agreeBtn"]');
-
-				// 이용 약관
-				if (!agreeBtn.checked) {
-				   alert('이용약관에 동의해야 합니다.');
-				   agreeBtn.checked = true;
-				   return false;
-				}
-
-				return true;
-			}
-			
-			// pay결제
-				const IMP = window.IMP;
-				IMP.init('imp31006863'); // 가맹점 식별코드
-			
-			// 결제하기 버튼 누를떄 동작
-				function requestPay() {
-					
-					// 결제 API 실행 전 유효성 검사
-					if(!validateForm()) {
-						return false;
-					}
-					
-					//결제 체크박스 들고오기
-					let checkShoePay = document.getElementsByName("pay_method");
-					if(checkShoePay[0].checked){
-						window.open("shoePay?product_idx=" + ${map.product_idx } +"&product_selector=" + ${map.product_selector }
-						,"shoePay",'width=700, height=700')
-						return false;		
-					}
-					
-					// IMP.request_pay(param, callback) 결제창 호출
-					IMP.request_pay({ // param
-						pg : "html5_inicis", // 
-						pay_method : "card", // 결제방법
-						merchant_uid : "${map.mem_idx}" + new Date().getTime(), // 가맹점에서 구별할 수 있는 고유 id
-						name : "${map.product_title}(${map.mem_seller_nickname})", // 주문명
-// 						amount : document.querySelector('.pay_total').value, // 가격
-						amount : 100, // 가격
-						buyer_email : "${member.mem_id}", // 구매자 이메일
-						buyer_name : "${member.mem_name}", // 구매자 이름
-						buyer_tel : "${member.mem_mtel}", // 구매자 번호
-					}, function (rsp) { // callback
-					      //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
-					      if(rsp.success) {
-					    	  // 결제 성공 시 로직
-					    	  let data = {
-									imp_uid: rsp.imp_uid,
-									merchant_uid: rsp.merchant_uid,
-									amount: rsp.paid_amount,
-							  };
-					    	  // ajax 로직
-					    	  $.ajax({
-					    		  type:"POST",
-									url:"verifyIamport/" + rsp.imp_uid,
-									data:JSON.stringify(data),
-									contentType:"application/json; charset=utf-8",
-									dataType:"json",
-									success: function(result) {
-										if(rsp.paid_amount == result.response.amount) {
-											alert("결제검증 완료");
-											document.querySelector('.pay_status').value = "결제완료";
-											document.querySelector('input[name="merchant_uid"]').value = rsp.merchant_uid;
-											$("form").submit();
-										} else {
-											location.href="cancelPayments";
-											alert("결제 검증 실패");
-										}
-									},
-									error: function(result){
-										alert(result.responseText);
-										cancelPayments(rsp);
-									}
-					    	  });
-					      } else {
-					    	  // 결제 실패 시 로직
-					    	  alert("결제에 실패하였습니다 : " + rsp.error_msg);
-						      return false;
-					      }
-				    });
-					
-				}
-				
-
-			</script>
-			
-
-			<input type="button" class="res_p" value="결제하기" onclick="requestPay()">
-<!-- 			<button class="res_p" onclick="requestPay()">결제하기</button> -->
-		</form>
-		
-			<input type="button" id="btnHidden" name="btnHidden" onclick="paySuccess()"/>
-	</section>
-	
-	<script>
-		$('.menu_tit').click(function() {
-			$(this).children('span').addClass('on');
-			if ($(this).siblings('.side_sub').is(':hidden')) {
-				$(this).siblings('.side_sub').slideDown();
-				$(this).children('span').removeClass('on');
-			} else {
-				$(this).siblings('.side_sub').slideUp();
-			}
-		});
-	</script>
-	<script type="text/javascript">
-		let getParams = new URL(location.href).searchParams;
-		let chat_area = ${map.product_selector } 
-		
-		const paySuccess = () => {
-			location.href = "chatRooms?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx");
-		}
-	</script>
-	
-
-
-	<!-- footer 추가 -->
+<script>
+// 유효성 검사 함수
+function validateForm() {
+	var agreeBtn = document.querySelector('input[name="agreeBtn"]');
+	// 이용 약관
+	if (!agreeBtn.checked) {
+	   alert('이용약관에 동의해야 합니다.');
+	   agreeBtn.checked = true;
+	   return false;
+	}
+	return true;
+}
+</script>
+	</section>	<!-- footer 추가 -->
 	<footer>
 <%-- 		<jsp:include page="../../inc/footer.jsp"></jsp:include> --%>
 	</footer>
