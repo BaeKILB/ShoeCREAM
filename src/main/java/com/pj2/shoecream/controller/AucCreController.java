@@ -17,6 +17,7 @@ import com.pj2.shoecream.service.CreamService;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.PointInoutVO;
 
 import ch.qos.logback.classic.Logger;
 
@@ -29,11 +30,9 @@ public class AucCreController {
 	@Autowired
 	private PayService payService;
 	
-	  @Autowired
-	  private CreamService creamService;
-	  
-	  @Autowired
-	  private AuctionService aucService;
+  @Autowired
+  private CreamService creamService;
+  
 	
 	
 	   
@@ -95,31 +94,48 @@ public class AucCreController {
 		
 	   
 	   //멤버정보
-	   memService.getMemberByIdx(mem_idx);
+	  MemberVO buyer = memService.getMemberByIdx(mem_idx);
 	   
 	   //주소랑 결제한내역 받아와야함
 	   
 	   String product_idx = (String) map.get("cream_idx");
 	   System.out.println(product_idx);
 	   
+	   int charge_point = buyer.getCharge_point();
+	   
+	   Integer price = (Integer.parseInt((String) map.get("price"))) ;
+	   
 	   //
 	   
 	   //포인트 있는경우 없는경우 따져봐야함 
-//	   if(포인트>결제금액) {
-		   //결제로직
-		   //회원 포인트에서price만큼 차감하고 관리자 포인트는 업뎃 시켜야함
-		   //크림 테이블, 택배테이블 업데이트 해야함
-		   //결제가 완료되면 상점페이지로 넘겨주나? 
-		   
-//	   }else {
-		   //포인트 충전창
-		   //포인트를 충전하면 어떻게함? 어디로 보내줘야함?
-//	   }
-	   
+	   int paymentResult = 0;
 
-	   
-	   
-	   return "";
+	   if(charge_point > price) {
+		   PointInoutVO inVO = new PointInoutVO();
+			inVO.setMem_idx(buyer.getMem_idx());
+			inVO.setCharge_point(price);
+			inVO.setPoint_usage("결제사용");
+			paymentResult = payService.withdrawPoints(inVO); // 결제서비스.입출금메소드();
+			
+			if(paymentResult == 1) {
+				//결제가 성공하면 
+				//테이블 업데이트
+				
+				return "home";
+			}else {
+				System.out.println("결제 실패함 왜??왜??");
+				
+				
+				return "";
+			}
+		   
+	   		//결제가 완료되면 상점페이지로 넘겨주나? 
+	   }else {
+		   model.addAttribute("msg","포인트 충전하셈");
+		   
+		   return "";
+	   }
+
    }
 
 }
