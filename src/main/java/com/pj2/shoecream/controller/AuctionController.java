@@ -449,6 +449,18 @@ public class AuctionController {
 			, Model model
 			, HttpSession session) {
        
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
+		MemberVO buyer = service.getMember(mem_idx);
+		
+		String[] addrArr = buyer.getMem_address().split("/");
+		
+		logger.info("!@#$");
+		logger.info(addrArr.toString());
+		
+    	model.addAttribute("buyer",buyer);
+    	
 		// db에서 자료 불러온다
 		Map<String, Object> auction = service.getAuction(auction_idx);
 		model.addAttribute("auction", auction);
@@ -457,7 +469,7 @@ public class AuctionController {
 		Map<String, Object> bid = bidService.getBid(auction_idx);
 		model.addAttribute("bid", bid);
 
-		return "auction/buying_popup";
+		return "common/pay_form2";
     }
     
     // 입찰
