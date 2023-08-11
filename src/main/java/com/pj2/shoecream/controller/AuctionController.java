@@ -406,11 +406,30 @@ public class AuctionController {
 	}
     
     //글 삭제
-	@PostMapping("AuctionDelete")
-	public String auctionDelete() {
+	@GetMapping("AuctionDelete")
+	public String auctionDelete(
+			@RequestParam(value = "auction_idx") String auction_idx
+			, Model model) {
 		
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
 		
-		return "";
+		Map<String,Object> auction = service.getAuction(auction_idx);
+		
+		if (mem_idx == Integer.parseInt(String.valueOf(auction.get("mem_idx")))) {
+			boolean isDelete = service.deleteAuction(auction_idx);
+			if(isDelete) {
+				return "redirect:/store/"+mem_idx;
+			} else {
+				model.addAttribute("msg","삭제실패");
+				return "inc/fail_back";
+			}
+			
+		} else {
+			model.addAttribute("msg","접근권한 없음");
+			return "inc/fail_back";
+		}
 	}
 	
     
@@ -453,12 +472,6 @@ public class AuctionController {
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
 		MemberVO buyer = service.getMember(mem_idx);
-		
-		String[] addrArr = buyer.getMem_address().split("/");
-		
-		logger.info("!@#$");
-		logger.info(addrArr.toString());
-		
     	model.addAttribute("buyer",buyer);
     	
 		// db에서 자료 불러온다
@@ -469,7 +482,8 @@ public class AuctionController {
 		Map<String, Object> bid = bidService.getBid(auction_idx);
 		model.addAttribute("bid", bid);
 
-		return "common/pay_form2";
+//		return "common/pay_form2";
+		return "auction/buying_popup";
     }
     
     // 입찰
@@ -976,6 +990,29 @@ public class AuctionController {
 			logger.info("신고 실패");
 		}
 		return "inc/close";
+	}
+	
+	@GetMapping("deliveryInfo")
+	public String deliveryInfo(
+			@RequestParam(value = "auction_idx") String auction_idx
+			, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
+		
+		Map<String,Object> auction = service.getAuction(auction_idx);
+		
+		if (mem_idx == Integer.parseInt(String.valueOf(auction.get("mem_idx")))) {
+			Map<String,Object> bid = bidService.getSuccessfulBid(auction_idx);
+			int buyer_idx = Integer.parseInt(String.valueOf(bid.get("mem_idx")));
+			Map<String,Object> deliveryInfo = service.getDeliveryInfo(buyer_idx);
+			model.addAttribute("deliveryInfo",deliveryInfo);
+			return "auction/auction_delivery_Info";
+		} else {
+			model.addAttribute("msg","접근권한이 없습니다.");
+			return "redirect:/store/"+mem_idx;
+		}
+		
 	}
 		
     

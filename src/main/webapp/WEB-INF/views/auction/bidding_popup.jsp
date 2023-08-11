@@ -128,6 +128,12 @@ setInterval(() => {
 //입찰하기 버튼 클릭
 function bidConfirmation(event) {
     // 사용자에게 확인을 받기 위한 컨펌창 표시
+    if($("#bid_price").val() == '') {
+    	alert("입찰금액을 입력해주세요");
+    	$("#bid_price").focus();
+    	return false;
+    }
+    
     var confirmBid = confirm("입찰을 진행하시겠습니까? 입찰 후에는 취소가 불가능합니다.");
     //value
     const bidPrice = parseFloat(document.getElementById("bid_price").value);

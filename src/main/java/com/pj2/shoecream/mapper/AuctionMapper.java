@@ -43,5 +43,11 @@ public interface AuctionMapper {
 	// member service로 옮겨야함
 	MemberVO selectMember(int mem_idx);
 
+	boolean deleteAuction(String auction_idx);
+
+	boolean deleteImage(String auction_idx);
+
+	Map<String, Object> selectDeliveryInfo(int mem_idx);
+
 
 }

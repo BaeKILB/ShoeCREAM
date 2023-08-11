@@ -563,11 +563,15 @@ function payAuction(idx, price, id, title){
 					                       <c:choose>
                                                 <c:when test="${auctionList.bid_price eq null }">
 									                <span class="bold">입찰 없음</span>
-                                                    <p class="goods_date">경매 마감 시간 : ${auctionList.auc_close_date}</p>
+                                                    <p class="goods_date">경매 마감 시간 : ${auctionList.auc_close_date}
+<%--                                                         <fmt:formatDate value="${auctionList.auc_close_date}" pattern="yyyy-MM-dd HH:mm"/> --%>
+                                                    </p>
                                                 </c:when>
                                                 <c:when test="${auctionList.bid_price ne null }">
 									                <span class="bold">현재 입찰가 : ${auctionList.bid_price}</span>원
-                                                    <p class="goods_date">경매 마감 시간 : ${auctionList.auc_close_date}</p>
+                                                    <p class="goods_date">경매 마감 시간 : ${auctionList.auc_close_date}
+<%--                                                         <fmt:formatDate value="${auctionList.auc_close_date}" pattern="yyyy-MM-dd HH:mm"/> --%>
+                                                    </p>
                                                 </c:when>
 					                       </c:choose>
 					                   </c:when>
@@ -596,11 +600,14 @@ function payAuction(idx, price, id, title){
 										<div>
 											<c:choose>
 												<c:when test="${auctionList.auc_state eq '대기' }">
-							                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-							                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+							                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath }/AuctionModifyForm?auction_idx=${auctionList.auction_idx}'">수정</button>
+							                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="aucDeleteConfirm(${auctionList.auction_idx})">삭제</button>
 												</c:when>
 												<c:when test="${auctionList.auc_state eq '진행' }">
-													
+													<c:if test="${auctionList.bid_price eq null }">
+    							                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath }/AuctionModifyForm?auction_idx=${auctionList.auction_idx}'">수정</button>
+    							                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="aucDeleteConfirm(${auctionList.auction_idx})">삭제</button>
+													</c:if>
 												</c:when>
 												<c:when test="${auctionList.auc_state eq '마감' }">
 													<c:choose>
@@ -608,12 +615,13 @@ function payAuction(idx, price, id, title){
 															<c:choose>
 																<c:when test="${auctionList.pay_status eq '결제완료' }"> <!-- 결제완료시 -->
 																	<c:choose>
-																		<c:when test=""> <!-- 운송장 등록시 -->
-																		
+																		<c:when test="${auctionList.tracking_num eq null }"> <!-- 운송장 미등록시 -->
+                                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/deliveryInfo?auction_idx=${auctionList.auction_idx}', '구매자정보', 'width=580, height=360, left=100, top=50')">구매자 정보</button>
+                                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">운송장 등록</button>
 																		</c:when>
-																		<c:otherwise> 
-																			
-																		</c:otherwise>
+																		<c:when test="${auctionList.tracking_num ne null }"> <!-- 운송장 등록시 -->
+                                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">뭘로하지</button>
+																		</c:when>
 																	</c:choose>
 																</c:when>
 																<c:otherwise> <!-- 결제 완료 외 -->
@@ -1188,9 +1196,14 @@ $(document).ready(function() {
       const formattedTime = formatTimeAgo(originalDate);
       timeElement.textContent = formattedTime;
   });
-  
-  
-  
+
+const aucDeleteConfirm = idx => {
+	if(confirm("상품을 삭제하시겠습니까?")) {
+		location.href='${pageContext.request.contextPath }/AuctionDelete?auction_idx='+idx;
+	} else {
+		return false;
+	}
+}
   
   
 </script>

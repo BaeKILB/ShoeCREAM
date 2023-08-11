@@ -64,4 +64,13 @@
             , '즉시구매'
         )
     </insert>
+    <select id="selectSuccessBid">
+        select
+            *
+        from
+            bid_list
+        where
+            auction_idx = #{auction_idx}
+            and bid_state in ('즉시구매', '낙찰')
+    </select>
 </mapper>
