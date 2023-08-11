@@ -591,11 +591,43 @@ function payAuction(idx, price, id, title){
 					            <div class="col-12 col-md-auto">
 					                <div class="ml-auto">
 					                    <div class="goods_date">
-										    <time datetime="${auctionList.product_date}">${auctionList.auction_date}</time>
+										    <time datetime="${auctionList.auction_date}">${auctionList.auction_date}</time>
 										</div>
 										<div>
-					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-					                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+											<c:choose>
+												<c:when test="${auctionList.auc_state eq '대기' }">
+							                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
+							                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+												</c:when>
+												<c:when test="${auctionList.auc_state eq '진행' }">
+													
+												</c:when>
+												<c:when test="${auctionList.auc_state eq '마감' }">
+													<c:choose>
+														<c:when test="${auctionList.bid_price ne null }"> <!-- 입찰이 있을경우 -->
+															<c:choose>
+																<c:when test="${auctionList.pay_status eq '결제완료' }"> <!-- 결제완료시 -->
+																	<c:choose>
+																		<c:when test=""> <!-- 운송장 등록시 -->
+																		
+																		</c:when>
+																		<c:otherwise> 
+																			
+																		</c:otherwise>
+																	</c:choose>
+																</c:when>
+																<c:otherwise> <!-- 결제 완료 외 -->
+																	
+																</c:otherwise>
+															</c:choose>
+														</c:when>
+														<c:when test="${auctionList.bid_price eq null }"> <!-- 입찰이 없을경우 -->
+															<!-- 재등록이나 기간연장으로 대체 -->
+														</c:when>
+													</c:choose>
+												</c:when>
+											
+											</c:choose>
 					                	</div>
 					                </div>
 					            </div>

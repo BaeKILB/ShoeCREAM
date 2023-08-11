@@ -31,7 +31,7 @@
          var creamSizeValue = $('input[name="cream.size' + selectedSize + '"]').val();
         
       // .value()를 사용한 방식
-         var creamSizeValue = $('#creamSize' + selectedSize).val();
+//          var creamSizeValue = $('#creamSize' + selectedSize).val();
         
          $('#priceSpan').text(creamSizeValue);
      });
