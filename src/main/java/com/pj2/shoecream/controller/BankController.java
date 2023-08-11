@@ -22,10 +22,12 @@ import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.service.BankApiService;
 import com.pj2.shoecream.service.BankService;
 import com.pj2.shoecream.service.MemberService;
+import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.AdminAccountInoutVO;
 import com.pj2.shoecream.vo.BankAccountDetailVO;
 import com.pj2.shoecream.vo.BankAccountVO;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ResponseDepositVO;
 import com.pj2.shoecream.vo.ResponseTokenVO;
 import com.pj2.shoecream.vo.ResponseUserInfoVO;
@@ -42,6 +44,9 @@ public class BankController {
 	
 	@Autowired
 	private BankService bankService;
+	
+	@Autowired
+	private PayService payService;
 	
 	// 로그 출력을 위한 변수 선언 => getLogger() 메서드 파라미터로 로그를 처리할 현재 클래스 지정
 	private static final Logger logger = LoggerFactory.getLogger(BankController.class);
@@ -224,7 +229,7 @@ public class BankController {
 	
 	// 계좌에서 돈 빼고 포인트 충전
 	// 되돌아갈 url 받아오기 !!
-	@GetMapping("chargePointPro")
+	@PostMapping("chargePointPro")
 	public String chargePointPro(@RequestParam Map<String,String> map , Model model) {
 		int idx = -1;
 		// 로그인 되어있는지 확인하기
@@ -262,12 +267,6 @@ public class BankController {
 			return "inc/fail_back";
 		}
 		
-		// 멤버 db 에 업데이트 처리
-		if(!memService.updatePointAmount(idx,Integer.parseInt( map.get("point_amount")))) {
-			model.addAttribute("msg","포인트 충전이 정상적으로 진행되지 않았습니다!(DB error)");
-			return "inc/fail_back";
-		}
-		
 		// 관리자 계좌 현황과 관리자 계좌 잔액 업데이트 하기
 		
 		AdminAccountInoutVO admAccountInout = new AdminAccountInoutVO();
@@ -275,10 +274,27 @@ public class BankController {
 		admAccountInout.setTran_amount(Integer.parseInt( map.get("point_amount")));
 		admAccountInout.setTran_type("w");		
 		
+		// 로그 불러오면서 관리자 계정에 자동으로 금액 최신화 반영
 		if(!bankService.addAdmAccountLog(admAccountInout)) {
 			model.addAttribute("msg","포인트 충전이 정상적으로 진행되지 않았습니다!(DB error)");
 			return "inc/fail_back";
 		}
+		
+		// 멤버 db 에 업데이트 처리
+		// 포인트 충전(입금)
+		PointInoutVO pointInout = new PointInoutVO();
+		
+		pointInout.setMem_idx(idx);
+		pointInout.setCharge_point(Integer.parseInt( map.get("point_amount")));
+		pointInout.setPoint_usage("계좌충전");
+		
+		int depositPointResult = payService.depositPoints(pointInout);
+		if(depositPointResult != 1) {
+			model.addAttribute("msg","포인트 충전이 정상적으로 진행되지 않았습니다!(DB error " + depositPointResult + ")");
+			return "inc/fail_back";
+		}
+		
+	
 		
 		
 		// Model 객체에 ResponseWithdrawVO 객체 저장

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>shoePay</title>
+<title>슈크림 포인트 충전</title>
 <!-- 부트스트랩 -->
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
@@ -31,7 +31,7 @@
 		</div>
 		<form action="chargePointPro" method="post">
 			<input type="radio" class="btn-check" name="point_amount" id="option1" value="5000" >
-			<label class="btn btn-outline-primary" for="option4">5,000원</label>
+			<label class="btn btn-outline-primary" for="option1">5,000원</label>
 			
 			<input type="radio" class="btn-check" name="point_amount" id="option2" value="10000" >
 			<label class="btn btn-outline-danger" for="option2">10,000원</label>
@@ -40,7 +40,7 @@
 			<label class="btn btn-outline-warning" for="option3">50,000원</label>
 			
 			<input type="radio" class="btn-check" name="point_amount" id="option4" value="100000" >
-			<label class="btn btn-outline-info" for="option1">100,000원</label>
+			<label class="btn btn-outline-info" for="option4">100,000원</label>
 		
 
 		
@@ -51,7 +51,7 @@
 		<%-- hidden 타입으로 은행명, 핀테크이용번호 전달 --%>
 			<input type="hidden" name="bank_name" value="${account.bank_name }">
 			<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }">
-			<input type="submit" value="충전">
+			<input class="res_p" type="submit" value="충전">
 		</form>
 		<input class="res_p"  type="button" value="취소"  onclick="history.back();">
 	</fieldset>

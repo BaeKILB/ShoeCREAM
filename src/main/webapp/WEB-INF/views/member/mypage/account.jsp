@@ -62,10 +62,10 @@
 <%-- 	<jsp:include page="../../inc_ex/header.jsp" /> --%>
 	<!--    </header> -->
 
-	<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" >
+<%-- 	<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" > --%>
 		<!--    <form id="memberUpdate" name="fr"> -->
 		<section id="sec_con">
-			<!--       <h1 class="con_title">내 정보 수정</h1> -->
+	      <h1 class="con_title">계좌 및 포인트</h1>
 			<div class="inq_container">
 				<jsp:include page="../../inc_ex/mem_sidebar.jsp"></jsp:include>
 				
@@ -75,9 +75,9 @@
 					<div class="registered_account_box border rounded-4">
 						<h4 class="box_title">등록된 계좌 정보</h4>
 						<p class="box_account_info">
-							<span class="account">농협은행 3020375741041</span>
+							<span class="account">${bank_name } ${account.account_num }</span>
 							<span class="account_devider">/</span>
-							<span class="name">김태윤</span>
+							<span class="name">${member.mem_name }</span>
 						</p>
 					</div>
 					<%-- 				<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" onsubmit='return signUpCheck();'> --%>
@@ -86,30 +86,57 @@
 						<li><label for="name">은행명</label>
 							<div class="form-input border-bottom">
 								<input type="text" name="mem_nickname" class="form-control"
-									value="농협은행">
+									value="${bank_name }">
 							</div></li>
 						<li><label for="name">예금주</label>
 							<div class="form-input border-bottom">
 								<input type="text" name="mem_nickname" class="form-control"
 									value="${member.mem_name }">
 							</div></li>
-						<li><label for="name">계좌 번호</label>
+						<li>
+							<label for="name">계좌 번호</label>
 							<div class="form-input border-bottom">
 								<input type="text" name="mem_bio" id="name"
-									class="form-control" value="3020375741041"
+									class="form-control" value="${account.account_num }"
 									>
-							</div></li>
+							</div>
+						</li>
+					</ul>
+					</div>
+					
+					<!-- ======================== -->
+					<!-- 포인트 정보 -->
+					
+					<div class="registered_account_box border rounded-4">
+						<h4 class="box_title">포인트 현황</h4>
+					</div>
+					<%-- 				<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" onsubmit='return signUpCheck();'> --%>
+					<div>
+					<ul>
+						<li>
+							<label for="name">현재 포인트 잔액</label>
+							<div class="form-input border-bottom">
+								<input type="text" name="mem_bio" id="name"
+									class="form-control" value="${member.charge_point }"
+									>
+							</div>
+						</li>
 					</ul>
 					</div>
 					<div class="btn_info_update cr">
 						<!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
-						<button type="submit" class="upd_btn">수정하기</button>
+						<button class="upd_btn" 
+						onclick='window.open("${pageContext.request.contextPath }/chargePointForm", "포인트충전", "width=500, height=650, left=100, top=50"); '>
+						포인트 충전하기
+						</button>
+						<button class="upd_btn">포인트 계좌로 출금하기</button>
+<!-- 						<button type="submit" class="upd_btn">수정하기</button> -->
 						<%-- 			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button> --%>
 					</div>
 				</div>
 			</div>
 		</section>
-	</form>
+<!-- 	</form> -->
 	<!--    <footer> -->
 	<%--       <jsp:include page="../../../inc/footer.jsp"></jsp:include> --%>
 	<!--    </footer> -->

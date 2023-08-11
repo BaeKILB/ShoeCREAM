@@ -20,7 +20,10 @@ public interface BankMapper {
 	
 	
 	// 계좌 잔액 업데이트
-	int updateMemAccountAmount(int balance_amt, int mem_idx);
+	int updateMemAccountAmount(
+			@Param("mem_idx") int mem_idx,
+			@Param("balance_amt") Long balance_amt
+			);
 	
 	// ================ 사용 안함 ===================
 	// 토큰 정보 조회

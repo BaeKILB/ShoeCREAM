@@ -249,6 +249,12 @@ public class BankApiClient {
 
 	// 2.5. 이체서비스 - 2.5.1. 출금이체 API 요청을 위한 폼 생성(PDF p74)
 	public ResponseWithdrawVO requestWithdraw(Map<String, String> map) {
+		// 서비스 요청시 보낼 값
+		// 유의사항) 현재 테스트를 위한 은행 계좌 임으로 
+		// 여러 요청값을 수동으로 사이트에 넣어야함
+		// 따라서 지금은 테스트로 지정된 고정된 출금자 이름과 계좌로 출금 수행
+//		String req_client_name = "윤성혁";
+//		String fintech_use_num = "";
 		// 출금이체 요청 API 의 URL 생성 - POST 방식
 		String url = baseUrl + "/v2.0/transfer/withdraw/fin_num";
 		
@@ -266,8 +272,8 @@ public class BankApiClient {
 		JSONObject jo = new JSONObject();
 		jo.put("bank_tran_id", valueGenerator.getBankTranId());
 		jo.put("cntr_account_type", "N"); // 약정 계좌/계정 구분(N:계좌, C:계정 => N 고정)
-		jo.put("cntr_account_num", "70667066"); // 약정계좌 계좌번호(테스트데이터 출금계좌 항목에 등록할 계좌번호)
-		jo.put("dps_print_content", "출금테스트"); // 입금계좌 인자내역
+		jo.put("cntr_account_num", "50000009"); // 약정계좌 계좌번호(테스트데이터 출금계좌 항목에 등록할 계좌번호)
+		jo.put("dps_print_content", "포인트대금입금"); // 입금계좌 인자내역
 		jo.put("fintech_use_num", map.get("fintech_use_num")); // 출금계좌 핀테크이용번호(전달받은 값)
 		jo.put("tran_amt", map.get("point_amount")); // 거래금액
 		jo.put("tran_dtime", valueGenerator.getTranDTime()); // 거래요청일시
@@ -276,7 +282,7 @@ public class BankApiClient {
 		jo.put("req_client_num", "1"); //  // 거래를 요청한 사용자 번호(아이디처럼 사용되는 번호, 임의부여)
 		jo.put("transfer_purpose", "TR"); // 출금(송금)
 		// 아래 3개 정보는 피싱 등의 사고 발생 시 지급 정지를 위한 정보(검증 수행하지 않음)
-		jo.put("recv_client_name", "이연태3"); // 출금이체 테스트 데이터 등록 시 수취인 성명에 기록할 이름
+		jo.put("recv_client_name", "슈크림"); // 출금이체 테스트 데이터 등록 시 수취인 성명에 기록할 이름
 		jo.put("recv_client_bank_code", "002");
 		jo.put("recv_client_account_num", "123123123");
 		logger.info("□□□□□□ 출금이체 요청 JSON 데이터 : " + jo.toString());

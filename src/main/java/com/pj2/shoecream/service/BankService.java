@@ -47,10 +47,10 @@ public class BankService {
 		// 멤버 id admin으로 된 아이디 찾아 거기의 mem_idx 로 넣기
 		
 		int adm_idx = memMapper.findMemberById("admin").getMem_idx();
-		
+		System.out.println("adm_idx : " + adm_idx);
 		
 		int tran_amount = admAccountInout.getTran_amount();
-		Long admAccountBalance = (Long)mapper.selectMemAccount(adm_idx).get("admin_account_balance");
+		Long admAccountBalance = (Long)mapper.selectMemAccount(adm_idx).get("balance_amt");
 		
 		if(admAccountInout.getTran_type().equals("d")) {
 			admAccountInout.setAdmin_account_balance(
@@ -67,15 +67,15 @@ public class BankService {
 		if(mapper.insertAdmAccountInout(admAccountInout) > 0) {
 			
 			return mapper.updateMemAccountAmount(
-					admAccountInout.getAdmin_account_idx(), adm_idx) > 0;
+					 adm_idx,admAccountInout.getAdmin_account_balance()) > 0;
 		}
 		
 		return false;
 		
 	}
 	
-	public boolean updateMemAccountAmount(int balance_amt, int mem_idx){
-		return mapper.updateMemAccountAmount(balance_amt, mem_idx) > 0;
+	public boolean updateMemAccountAmount(int mem_idx , Long balance_amt){
+		return mapper.updateMemAccountAmount(mem_idx, balance_amt) > 0;
 	}
 	
 	// 사용 하지 않음 ==========

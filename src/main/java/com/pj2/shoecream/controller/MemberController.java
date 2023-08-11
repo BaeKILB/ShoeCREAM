@@ -34,7 +34,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.handler.BankHandler;
 import com.pj2.shoecream.handler.CustomValidationException;
+import com.pj2.shoecream.service.BankService;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.util.FindUtil;
 import com.pj2.shoecream.util.SendUtil;
@@ -52,6 +54,12 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	private Map<String, String> codeMap; 
+	
+	@Autowired
+	private BankService bankService;
+	
+	@Autowired
+	private BankHandler bankHandler;
 	
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 		
@@ -380,15 +388,48 @@ public class MemberController {
 
     }
     
-    // 마이페이지 - 내 계좌
+    // 마이페이지 - 내 계좌 및 포인트
+    // 0811 경인 수정 
+    // 계좌 정보와 포인트 출력을 위한 정보 넘겨주기
     @GetMapping("mypage/account")
     public String accountform(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-		model.addAttribute("member", mPrincipalDetails.getMember());
 		
 		
-    	return "member/mypage/account";
+		// 현재 접속 유저 idx 가져오기
+		int idx = mPrincipalDetails.getMember().getMem_idx();
+		
+		// 최신 유저정보 불러오기
+		// 이유 : spring security 의 유저 정보가 항상 새 데이터가 아님
+		MemberVO member = memberService.getMemberByIdx(idx);
+
+		if(!member.getMem_account_auth().equals("Y")) {
+			model.addAttribute("msg", "계좌인증이 되지 않았습니다! 회원 정보 수정에서 계좌 인증을 진행해주세요!");
+			return "/inc/fail_back";
+		}
+
+		// 계좌 정보 가져오기
+		Map<String,Object> account = bankService.getMemAccount(idx);
+		
+		// 계좌정보 확인
+		if(account == null) {
+			model.addAttribute("msg", "사용자 계좌 정보를 불러올수 없습니다! 관리자에게 문의해주세요");
+			return "/inc/fail_back";
+		}
+		
+		System.out.println(account);
+		// 은행 코드로 은행 이름 가져오기
+		String bankName = bankHandler.bankCode2BankName((String)account.get("bank_code_std"));
+		
+		model.addAttribute("account", account);
+		model.addAttribute("member", member);
+		if(bankName == null) {
+			bankName = "기타은행(관리자 문의)";
+		}
+		model.addAttribute("bank_name",bankName);
+    	
+		return "member/mypage/account";
     }
     
 /// =====================asd================

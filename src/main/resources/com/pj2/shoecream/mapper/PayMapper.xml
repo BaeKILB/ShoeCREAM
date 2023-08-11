@@ -15,7 +15,7 @@
 	
 	<update id="updateMemberPoint">
 		UPDATE mem_info
-		SET charge_point = #{point}
+		SET charge_point = #{charge_point}
 		WHERE mem_idx = #{mem_idx}
 		;
 	</update>

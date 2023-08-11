@@ -13,7 +13,7 @@ public interface PayMapper {
 	
 	int updateMemberPoint(
 			@Param("mem_idx") int mem_idx
-			,@Param("point") int point
+			,@Param("charge_point") int charge_point
 	);
 	
 	int insertPayInfo(PayInfoVO payInfo);
