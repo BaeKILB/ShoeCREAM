@@ -15,7 +15,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/etc/common.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/css/inc/pay/pay_form.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/inc/pay/pay_form2.css" rel="stylesheet">
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet"> --%>
 <!-- jQuery -->
