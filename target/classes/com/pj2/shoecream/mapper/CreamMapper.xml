@@ -130,16 +130,43 @@
             product_idx='${cream_idx }'
 	</select>
 
-	<insert id="insertDelivery">
+	<insert id="insertCreamItemRequest">
 	insert into
-	       delivery_info
+	       cream_item_request
 	   values(
-	       #{mem_idx }
-	       , #{name }
-	       , CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})
-	       , #{m_tel}
+	   		null
+	   		,#{mem_idx }
+	   		,#{cream_idx }
+	   		,#{cream_title }
+	   		,#{cream_size }
+	   		,#{price }
+	   		,#{name }
+	        , CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})
+	   		,#{m_tel}
+	   		,#{memo}
+	   		,'배송전'
+	   		,null
+	   		,null
+	   		,now()
+	   		
 	   )
 	
+	</insert>
+	
+	<insert id="insertTrackingNumber">
+	   insert into
+            courier_info
+        values(
+            null
+            , #{cream_idx}
+            , #{seller_idx}
+            , #{buyer_idx}
+            , #{tracking_company}
+            , #{tracking_code}
+            , #{tracking_number}
+            , ''
+            , now()
+        )
 	</insert>
 
 </mapper>

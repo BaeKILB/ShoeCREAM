@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pj2.shoecream.mapper.StoreMapper;
+import com.pj2.shoecream.vo.CreamRequestVO;
 
 @Service
 public class StoreService {
@@ -45,6 +46,11 @@ public class StoreService {
 	// 경매 참여내역
 	public List<Map<String, Object>> selectAuctionBidList(int mem_idx) {
 		return mapper.selectAuctionBidList(mem_idx);
+	}
+
+	// 크림 구매내역
+	public List<CreamRequestVO> selectCreamList(int mem_idx) {
+		return mapper.selectCreamList(mem_idx);
 	}
     
 

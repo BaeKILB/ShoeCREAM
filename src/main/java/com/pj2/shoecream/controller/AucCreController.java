@@ -119,12 +119,13 @@ public class AucCreController {
 			paymentResult = payService.withdrawPoints(inVO); // 결제서비스.입출금메소드();
 			
 			if(paymentResult == 1) {
-				model.addAttribute("msg","결제가 완료되었습니다!");
 				//결제가 성공하면 
 				//일단 크림 배송 정보 테이블 업데이트
 				creamService.insertCreamDelivery(map);
 				
-				return "home";
+				
+		        
+		        return "redirect:/store/" + buyer.getMem_idx();
 			}else {
 				System.out.println("결제 실패함 왜??왜??");
 				
@@ -132,7 +133,6 @@ public class AucCreController {
 				return "";
 			}
 		   
-	   		//결제가 완료되면 상점페이지로 넘겨주나? 
 	   }else {
 		   model.addAttribute("msg","포인트 충전하셈");
 		   
