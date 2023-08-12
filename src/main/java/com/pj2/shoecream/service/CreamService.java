@@ -55,8 +55,12 @@ public class CreamService {
 	}
 
 	public void insertCreamDelivery(Map<String, Object> map) {
-		mapper.insertDelivery(map);
+		mapper.insertCreamItemRequest(map);
 		
+	}
+
+	public int registTracking(Map<String, Object> map) {
+		return mapper.insertTrackingNumber(map);
 	}
 
 

@@ -250,7 +250,7 @@ public class CreamController {//크림 컨트롤러 입니다.
 		return jsonObject.toString();
    }
    
-   //크림 수정 폼
+   //크림 수정 폼 - 페이지 안넘어가짐 이유를 모르겠음
    @GetMapping("CreamModify")
    public String CreamModifyForm(HttpSession session
 	        , Model model,Criteria cri
@@ -274,5 +274,45 @@ public class CreamController {//크림 컨트롤러 입니다.
 	   return "admin/admin_cream";
    }
 
+   //구매자가 운송장 등록하는 폼 던지기
+	@GetMapping("trackingRegisterForm2")
+	public String trackingRegisterForm2(
+			@RequestParam String cream_idx
+			, Model model) {
+		Map<String,Object> cream = service.getCream(cream_idx);
+		model.addAttribute("cream",cream);
+		return "cream/tracking_register";
+	}
+	
+	//운송장 등록 로직
+	@PostMapping("trackingRegister2")
+	public String trackingRegister(
+			@RequestParam Map<String, Object> map
+			, Model model) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		
+		int seller_idx = mPrincipalDetails.getMember().getMem_idx();
+		
+		//구매자는 고정값으로 넣음
+		int buyer_idx = 1234;
+		
+		String cream_idx = (String)map.get("cream_idx");
+		
+		map.put("seller_idx", seller_idx); // 판매자 정보
+		map.put("buyer_idx", buyer_idx); 
+		map.put("cream_idx", cream_idx);
+		
+		if(service.registTracking(map) > 0) {
+			model.addAttribute("msg","운송장번호 등록성공");
+			return "inc/close";
+		} else {
+			model.addAttribute("msg","등록실패");
+			return "inc/fail_back";
+		}
+		
+	}
+		
 	
 }

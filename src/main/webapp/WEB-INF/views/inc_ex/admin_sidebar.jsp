@@ -100,5 +100,17 @@
                 </ul>
             </div>
         </div>
+        
+        <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const links = document.querySelectorAll(".cont_item_a.sub");
+            links.forEach(link => {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault(); // 기본 동작 중단
+                    // 원하는 작업 수행 (예: 내부 컨텐츠를 변경하거나 다른 페이지를 AJAX로 로드)
+                });
+            });
+        });
+        </script>
 </body>
 </html>

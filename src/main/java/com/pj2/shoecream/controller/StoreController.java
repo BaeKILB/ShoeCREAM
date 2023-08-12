@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.service.AdminService;
 import com.pj2.shoecream.service.StoreService;
+import com.pj2.shoecream.vo.CreamRequestVO;
 
 @Controller
 public class StoreController {
 	
 	@Autowired
 	private StoreService storeService;
+
 	
     // 상점 개인 페이지
    	@GetMapping("/store/{mem_idx}")
@@ -55,6 +58,11 @@ public class StoreController {
 		List<Map<String, Object>> auctionBidList = storeService.selectAuctionBidList(mem_idx);
 		model.addAttribute("auctionBidList",auctionBidList);
 
-   		return "member/store/store";
+		//크림 구매내역
+		List<CreamRequestVO> creamList = storeService.selectCreamList(mem_idx);
+		model.addAttribute("creamList", creamList);
+
+		
+		return "member/store/store";
    	}
 }

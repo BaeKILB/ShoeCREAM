@@ -269,7 +269,7 @@ function sample6_execDaumPostcode() {
 					return true;
 				}
 			</script>
-			
+			<div>${msg}</div>
 
 			<input type="submit" class="res_p" value="결제하기">
 			

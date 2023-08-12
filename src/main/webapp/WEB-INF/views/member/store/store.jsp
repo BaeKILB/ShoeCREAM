@@ -799,43 +799,48 @@ function payAuction(idx, price, id, title){
 						</div>
 					<div>
 						<!--커스텀-->
-						<c:forEach items="${productdibsList }" var="productdibsList">
-							<div class="goods">
-								<div class="goods_one">
-									<a href="product_detail?product_idx=${productdibsList.product_idx }">
-										<div class="goods_image">
-											<c:forEach items="${fileList }" var="fileList">
-												<c:set var="length" value="${fn:length(fileList.file_name) }" />
-												<c:set var="index" value="${fn:indexOf(fileList.file_name, '_') }" />
-												<c:set var="file_name" value="${fn:substring(fileList.file_name, index + 1, length) }" />
-												<c:choose>
-													<c:when	test="${fileList.file_num eq productdibsList.product_idx }">
-														<img src="${pageContext.request.contextPath }/resources/fileUpload/${file_name}" alt="상품 이미지">
-													</c:when>
-													<c:when	test="${fileList.file_num eq productdibsList.product_idx }">
-														<img src="${pageContext.request.contextPath }/resources/fileUpload/${file_name}" alt="상품 이미지">
-														<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
-														거래완료
-														</span>
-													</c:when>
-												</c:choose>
-											</c:forEach>
-										</div>
-										<div class="goods_info">
-											<h2 class="goods_title">${productdibsList.product_subject }</h2>
-											<p class="goods_price">
-												<span class="bold">${productdibsList.product_price }원</span>
-											</p>
-											<p class="goods_shop">${productdibsList.member_id }</p>
-											<p class="goods_date">${productdibsList.product_date }</p>
-										</div>
-									</a>
-									<button type="button" name="product" onclick="location.href='P_DibsCancel?type_num=${productdibsList.product_idx}'">찜 취소</button>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
-				</div>
+					<div class="container mt-4">
+					  <c:forEach items="${creamList }" var="creamList">
+					      <div class="goods mb-4">
+					        <div class="row no-gutters">
+					          <div class="col-12 col-md-auto"> <!-- 이미지랑 하이퍼링크 섹션 -->
+					              <div class="goods_image" style=" width: 94px; height: 94px;">
+					            <a href="${pageContext.request.contextPath }/CreamDetail?cream_idx=${creamList.cream_idx}">
+									<img src="${pageContext.request.contextPath }${creamList.image_path }/${creamList.image1}" alt="상품 이미지">
+					            </a>
+									</div>
+					          </div>
+					          
+					          <div class="col-12 col-md-9">
+					            <div class="goods_info">
+					              <h2 class="goods_title">상품명 : ${creamList.cream_title}</h2>
+					              <p class="goods_price">사이즈 : ${creamList.cream_size}</p>
+					              <p class="goods_price">결제금액 : ${creamList.cream_price} 원</p>
+					              <c:choose>
+					              	<c:when test="${creamList.tracking_num eq null }">
+						              <p class="goods_price">현재상태 : 입고대기중</p>
+					              	</c:when>
+					                <c:when test="${creamList.tracking_num ne null }"> <!-- 운송장 등록시 -->
+					                  <p class="goods_price">현재상태 : 입고중</p>
+									</c:when>
+					              </c:choose>
+					            </div>
+					          </div>
+					            <div class="col-12 col-md-auto">
+									<c:choose>
+										<c:when test="${creamList.tracking_num eq null }"> <!-- 운송장 미등록시 -->
+                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm2?cream_idx=${creamList.cream_idx}', '구매자정보', 'width=580, height=360, left=100, top=50')">운송장 등록</button>
+										</c:when>
+										<c:when test="${creamList.tracking_num ne null }"> <!-- 운송장 등록시 -->
+	                                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">배송 조회</button>
+										</c:when>
+									</c:choose>
+					       	     </div>
+					      </div>
+					      </div>
+				        </c:forEach>
+				    </div>
+
 				<!-- 커스텀 끝 -->
 				
 				<!-- 찜 시작 -->
