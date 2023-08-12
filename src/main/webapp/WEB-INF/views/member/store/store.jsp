@@ -725,7 +725,7 @@ function payAuction(idx, price, id, title){
 									    <c:if test="${auctionList.bid_state eq '낙찰' || auctionList.bid_state eq '즉시구매'}">
 	                                        <c:choose>
 	                                            <c:when test="${auctionList.pay_status eq null }">
-							                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href=''">결제</button>
+							                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href='auctionPayForm?auction_idx=${auctionList.auction_idx}&auctionMethod=0'">결제</button>
 	                                            </c:when>
 	                                            <c:when test="${auctionList.pay_status eq '결제완료' && auctionList.delivery_status ne '인수'}">
 	                                               <c:choose>
