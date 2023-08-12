@@ -32,6 +32,7 @@
 	<%-- root 주소값 불러오기 --%>
 <script type="text/javascript">
 	let localURL = "${pageContext.request.contextPath}";
+	let keyWord = "${product_search}";
 </script>
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/main.js"></script>
 </head>
