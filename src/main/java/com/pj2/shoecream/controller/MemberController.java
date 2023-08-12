@@ -1,16 +1,10 @@
 package com.pj2.shoecream.controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -21,18 +15,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.pj2.shoecream.auth.SNSLogin;
+import com.pj2.shoecream.auth.SnsValue;
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.BankHandler;
 import com.pj2.shoecream.handler.CustomValidationException;
@@ -50,6 +50,18 @@ public class MemberController {
 	
 	// 로그 확인
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
+	
+	@Inject
+	private SnsValue naverSns;
+	
+	@Inject
+	private SnsValue googleSns;
+	
+	@Inject
+	private GoogleConnectionFactory googleConnectionFactory; 
+
+	@Inject
+	private OAuth2Parameters googleOAuth2Parameters;	
 	
 	@Autowired
 	private MemberService memberService;
@@ -110,8 +122,34 @@ public class MemberController {
 	
 	// 로그인 폼
 	@GetMapping("login")
-	public String loginform() {
+	public String loginform(Model model) {
+		SNSLogin snsLogin = new SNSLogin(naverSns);
+		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
+		
+//		SNSLogin googleLogin = new SNSLogin(googleSns);
+//		model.addAttribute("google_url", googleLogin.getNaverAuthURL());
+		
+		/* 구글code 발행을 위한 URL 생성 */
+		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+
+		model.addAttribute("google_url", url);
+		
 		return "member/auth/login";
+	}
+	
+	// API 로그인 콜백
+	@RequestMapping(value = "/auth/google/callback", method = { RequestMethod.GET , RequestMethod.POST})
+	public String snsLoginCallback(Model model, @RequestParam String code) throws Exception {
+		// 1. code를 이용해서 access_token 받기
+		// 2. aeccess_token을 이용해서 사용자 profile 정보 가져오기
+		SNSLogin snslogin = new SNSLogin(googleSns);
+		String profile = snslogin.getUserProfile(code);
+		System.out.println("Profile 값 :" + profile);
+		model.addAttribute("result", profile);
+		// 3. DB 해당 유저 존재하는지 체크 (googleid, naverid 칼럼 추가)
+		// 4. 존재시 강제로그인, 미존재시 가입페이지로 !!
+		return "member/auth/loginResult";
 	}
 	
 	// 회원가입 폼
@@ -165,6 +203,9 @@ public class MemberController {
 	    }
 
 	}
+	
+//	@PostMapping("auth/kakao/callback")
+	 
 	
 	//id 중복 확인 - signup.js
     @ResponseBody

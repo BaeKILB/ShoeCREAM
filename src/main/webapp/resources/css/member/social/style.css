@@ -126,25 +126,6 @@ button {
   font-size: 14px;
 }
 
-/* 페이스북로그인 영역 */
-.login__facebook {
-  padding: 0 40px;
-  margin-top: 15px;
-}
-/*페이스북 로그인 버튼*/
-.login__facebook button {
-  background-color: #fff;
-  width: 100%;
-  height: 30px;
-  border: 0;
-  font-weight: 600;
-  font-size: 15px;
-}
-/*페이스북 로그인 색깔*/
-.login__facebook button i,
-span {
-/*   color: #385185; */
-}
 
 /*가입페이지로 이동*/
 .login__register {
