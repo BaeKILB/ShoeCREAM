@@ -126,10 +126,13 @@
 					<div class="btn_info_update cr">
 						<!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
 						<button class="upd_btn" 
-						onclick='window.open("${pageContext.request.contextPath }/chargePointForm", "포인트충전", "width=500, height=650, left=100, top=50"); '>
+						onclick='window.open("${pageContext.request.contextPath }/chargePointForm?isPopup=true", "포인트충전", "width=500, height=650, left=100, top=50"); '>
 						포인트 충전하기
 						</button>
-						<button class="upd_btn">포인트 계좌로 출금하기</button>
+						<button class="upd_btn"
+						onclick='window.open("${pageContext.request.contextPath }/withdrawPointForm?isPopup=true", "포인트계좌이체", "width=500, height=650, left=100, top=50"); '>
+						>포인트 계좌이체하기
+						</button>
 <!-- 						<button type="submit" class="upd_btn">수정하기</button> -->
 						<%-- 			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button> --%>
 					</div>

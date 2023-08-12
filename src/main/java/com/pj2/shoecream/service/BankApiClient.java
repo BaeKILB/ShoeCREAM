@@ -53,6 +53,7 @@ public class BankApiClient {
 
 	static final String REDIRCT_URI = "http://localhost:8088/shoecream/callback";
 	
+	
 	// 인증코드 요청
 	public String requestAuth(String access_token, String user_seq_no) {
 		String url = baseUrl + "/oauth/2.0/authorize";
@@ -247,14 +248,20 @@ public class BankApiClient {
 		return responseEntity.getBody();
 	}
 
+	
+	// ** 0811 배경인 계좌 출금 > 포인트로 전환 입금시 사용
+	// 파라미터로 사용할 map 에서 access_token , point_amount 가져옴
 	// 2.5. 이체서비스 - 2.5.1. 출금이체 API 요청을 위한 폼 생성(PDF p74)
 	public ResponseWithdrawVO requestWithdraw(Map<String, String> map) {
 		// 서비스 요청시 보낼 값
+
 		// 유의사항) 현재 테스트를 위한 은행 계좌 임으로 
 		// 여러 요청값을 수동으로 사이트에 넣어야함
 		// 따라서 지금은 테스트로 지정된 고정된 출금자 이름과 계좌로 출금 수행
-//		String req_client_name = "윤성혁";
-//		String fintech_use_num = "";
+		String req_client_name = "배경인";
+		String fintech_use_num = "120211385488932375480309";
+		String cntr_account_num = "50000009";
+		
 		// 출금이체 요청 API 의 URL 생성 - POST 방식
 		String url = baseUrl + "/v2.0/transfer/withdraw/fin_num";
 		
@@ -272,13 +279,15 @@ public class BankApiClient {
 		JSONObject jo = new JSONObject();
 		jo.put("bank_tran_id", valueGenerator.getBankTranId());
 		jo.put("cntr_account_type", "N"); // 약정 계좌/계정 구분(N:계좌, C:계정 => N 고정)
-		jo.put("cntr_account_num", "50000009"); // 약정계좌 계좌번호(테스트데이터 출금계좌 항목에 등록할 계좌번호)
-		jo.put("dps_print_content", "포인트대금입금"); // 입금계좌 인자내역
-		jo.put("fintech_use_num", map.get("fintech_use_num")); // 출금계좌 핀테크이용번호(전달받은 값)
+		jo.put("cntr_account_num", cntr_account_num); // 약정계좌 계좌번호(테스트데이터 출금계좌 항목에 등록할 계좌번호)
+		jo.put("dps_print_content", "슈크림포인트입금"); // 입금계좌 인자내역
+//		jo.put("fintech_use_num", map.get("fintech_use_num")); // 출금계좌 핀테크이용번호(전달받은 값)
+		jo.put("fintech_use_num", fintech_use_num); // 출금계좌 핀테크이용번호(전달받은 값)
 		jo.put("tran_amt", map.get("point_amount")); // 거래금액
 		jo.put("tran_dtime", valueGenerator.getTranDTime()); // 거래요청일시
-		jo.put("req_client_name", "배경인"); // 거래를 요청한 사용자 이름
-		jo.put("req_client_fintech_use_num", map.get("fintech_use_num")); // 거래를 요청한 사용자 핀테크번호
+		jo.put("req_client_name", req_client_name); // 거래를 요청한 사용자 이름
+//		jo.put("req_client_fintech_use_num", map.get("fintech_use_num")); // 거래를 요청한 사용자 핀테크번호
+		jo.put("req_client_fintech_use_num",fintech_use_num); // 거래를 요청한 사용자 핀테크번호
 		jo.put("req_client_num", "1"); //  // 거래를 요청한 사용자 번호(아이디처럼 사용되는 번호, 임의부여)
 		jo.put("transfer_purpose", "TR"); // 출금(송금)
 		// 아래 3개 정보는 피싱 등의 사고 발생 시 지급 정지를 위한 정보(검증 수행하지 않음)
@@ -305,10 +314,21 @@ public class BankApiClient {
 	}
 
 	
+	// ** 0812 배경인 포인트 출금 > 계좌로 입금 시 사용
+	// 포인트 계좌 이체
+	// 파라미터로 사용할 map 에서 access_token , point_amount 가져옴
 	// 2.5. 이체서비스 - 2.5.2. 입금이체 API 요청을 위한 폼 생성(PDF p83)
 	public ResponseDepositVO requestDeposit(Map<String, String> map) {
 		// 입금이체 요청 API 의 URL 생성 - POST 방식
 		String url = baseUrl + "/v2.0/transfer/deposit/fin_num";
+		
+		// 유의사항) 현재 테스트를 위한 은행 계좌 임으로 
+		// 여러 요청값을 수동으로 사이트에 넣어야함
+		// 따라서 지금은 테스트로 지정된 고정된 출금자 이름과 계좌로 출금 수행
+		String req_client_name = "배경인";
+		String fintech_use_num = "120211385488932375480309";
+		String cntr_account_num = "50000009";
+				
 		
 		// 헤더 생성
 		// => Content-Type 속성 JSON 형식으로 변경
@@ -316,16 +336,16 @@ public class BankApiClient {
 		httpHeaders.setBearerAuth(map.get("access_token")); // Bearer 토큰 설정
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON); // JSON 타입 요청 헤더 설정
 		
-		// 1개 입금정보를 저장할 JSONObject 객체 생성
+		// 1개 입금정보(송금인)를 저장할 JSONObject 객체 생성
 		JSONObject joReq = new JSONObject();
 		joReq.put("tran_no", "1"); // 거래순번
 		joReq.put("bank_tran_id", valueGenerator.getBankTranId());
-		joReq.put("fintech_use_num", map.get("fintech_use_num")); // 입금계좌 핀테크이용번호(전달받은 값)
-		joReq.put("print_content", "입금테스트"); // 입금계좌 인자내역(테스트 데이터 등록)
-		joReq.put("tran_amt", "2000"); // 거래금액(테스트 데이터 등록)
-		joReq.put("req_client_name", "이연태2222"); // 거래를 요청한 사용자 이름
-		joReq.put("req_client_fintech_use_num", map.get("fintech_use_num")); // 거래를 요청한 사용자 핀테크번호
-		joReq.put("req_client_num", "1"); //  // 거래를 요청한 사용자 번호(아이디처럼 사용되는 번호, 임의부여)
+		joReq.put("fintech_use_num", fintech_use_num); // 입금계좌 핀테크이용번호(전달받은 값)
+		joReq.put("print_content", "슈크림포인트계좌이체"); // 입금계좌 인자내역(테스트 데이터 등록)
+		joReq.put("tran_amt", map.get("point_amount")); // 거래금액(테스트 데이터 등록)
+		joReq.put("req_client_name", "슈크림"); // 거래를 요청한 사용자 이름(송금인)
+		joReq.put("req_client_fintech_use_num", fintech_use_num); // 거래를 요청한 사용자 핀테크번호
+		joReq.put("req_client_num", "15"); //  // 거래를 요청한 사용자 번호(아이디처럼 사용되는 번호, 임의부여)
 		joReq.put("transfer_purpose", "TR"); // 출금(송금)
 		
 		// 입금 정보를 배열로 관리할 JSONArray 객체 생성
@@ -335,9 +355,9 @@ public class BankApiClient {
 		// 요청 파라미터를 JSON 형식으로 생성하기 - org.json 패키지 클래스 활용
 		JSONObject jo = new JSONObject();
 		jo.put("cntr_account_type", "N"); // 약정 계좌/계정 구분(N:계좌, C:계정 => N 고정)
-		jo.put("cntr_account_num", "70667066"); // 약정계좌 계좌번호(테스트데이터 입금계좌 항목에 등록할 계좌번호)
+		jo.put("cntr_account_num", cntr_account_num); // 약정계좌 계좌번호(테스트데이터 입금계좌 항목에 등록할 계좌번호)
 		jo.put("wd_pass_phrase", "NONE"); // 테스트용은 "NONE" 값 고정
-		jo.put("wd_print_content", "이연태고객송금"); // 출금계좌인자내역
+		jo.put("wd_print_content", "슈크림포인트계좌이체"); // 출금계좌인자내역
 		jo.put("name_check_option", "on"); // 수취인성명 검증 여부(on:검증함) - 생략 시 기본값 on
 		jo.put("tran_dtime", valueGenerator.getTranDTime()); // 거래요청일시
 		jo.put("req_cnt", "1"); // 입금요청건수("1" 고정)
