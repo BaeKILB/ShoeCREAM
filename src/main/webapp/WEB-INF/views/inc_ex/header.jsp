@@ -120,7 +120,7 @@ body {
 											<a href="${pageContext.request.contextPath }/logout" onclick="return confirmLogout()">로그아웃</a>
 										</div>
 										<div class="col-2" style="text-align: left;">
-											<a href="noticeMain.ad">고객센터</a>
+											<a href="UserNotice">고객센터</a>
 										</div>
 									</c:otherwise>
 								</c:choose>
