@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>슈크림 포인트 충전</title>
+<title>슈크림 포인트 출금</title>
 <!-- 부트스트랩 -->
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
@@ -29,7 +29,7 @@
 			</p>
 
 		</div>
-		<form action="chargePointPro" method="post">
+		<form action="withdrawPointPro" method="post">
 			<input type="radio" class="btn-check" name="point_amount" id="option1" value="5000" >
 			<label class="btn btn-outline-primary" for="option1">5,000원</label>
 			
@@ -51,7 +51,14 @@
 		<%-- hidden 타입으로 은행명, 핀테크이용번호 전달 --%>
 			<input type="hidden" name="bank_name" value="${account.bank_name }">
 			<input type="hidden" name="fintech_use_num" value="${account.fintech_use_num }">
-			<input class="res_p" type="submit" value="충전">
+			<c:choose>
+				<c:when test="${member.charge_point > 5000}">
+					<input class="res_p" type="submit" value="포인트 출금 및 계좌이체">
+				</c:when>
+				<c:otherwise>
+					<input class="res_p" disabled="disabled" value="포인트가 5000 이상일때 출금 가능합니다.">
+				</c:otherwise>
+			</c:choose>
 		</form>
 		<c:choose>
 			<c:when test="${empty isPopup }">
