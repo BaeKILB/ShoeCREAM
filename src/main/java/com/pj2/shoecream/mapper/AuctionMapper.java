@@ -49,5 +49,7 @@ public interface AuctionMapper {
 
 	Map<String, Object> selectDeliveryInfo(int mem_idx);
 
+	int insertTracking(Map<String, Object> map);
+
 
 }

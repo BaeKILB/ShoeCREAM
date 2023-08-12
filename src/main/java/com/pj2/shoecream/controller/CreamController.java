@@ -34,6 +34,7 @@ import com.pj2.shoecream.service.AuctionService;
 import com.pj2.shoecream.service.CreamService;
 import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.vo.CreamVO;
+import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.ProductImageVO;
 
 @Controller
@@ -249,16 +250,18 @@ public class CreamController {//크림 컨트롤러 입니다.
 		return jsonObject.toString();
    }
    
-   
-   @GetMapping("CreamModifyForm")
+   //크림 수정 폼
+   @GetMapping("CreamModify")
    public String CreamModifyForm(HttpSession session
-	        , Model model
-	        , @RequestParam Map<String, Object> map, @RequestParam int pageNum ) {
+	        , Model model,Criteria cri
+	        , @RequestParam Map<String, Object> map ) {
 		String cream_idx = (String)map.get("cream_idx");
-		
+		model.addAttribute("cri", cri);
 		
 		Map<String, Object> cream = service.getCream(cream_idx);
 		model.addAttribute("cream", cream); 
+		model.addAttribute("cri", cri);
+		
 	   
 	   return "admin/admin_cream_modify";
    }

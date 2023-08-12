@@ -27,5 +27,7 @@ public interface CreamMapper {
 
 	void deleteDibs(Map<String, Object> map);
 
+	void insertDelivery(Map<String, Object> map);
+
 
 }
