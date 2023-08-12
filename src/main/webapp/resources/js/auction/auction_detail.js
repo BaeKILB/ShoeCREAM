@@ -11,8 +11,8 @@
 function tenderPopup() { 
 	window.open("biddingPopup?auction_idx="+$("#auction_idx").val(), "입찰하기", "width=500, height=800, left=100, top=50"); }
 
-function PayForm() { 
-	location.href="auctionPayForm?auction_idx="+$("#auction_idx").val()+"&auctionMethod=1";
+function buyingPopup() { 
+	location.href="buyingPopup?auction_idx="+$("#auction_idx").val();
    }
    
    

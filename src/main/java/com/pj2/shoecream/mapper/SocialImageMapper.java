@@ -25,7 +25,8 @@ public interface SocialImageMapper {
 			@Param("listLimit") int listLimit);
 	
 	// 소셜 인기페이지 (좋아요 많은 순서)
-	List<SocialVO> selectPopular();
+	List<Map<String, Object>> selectAllInfo();
+//	List<SocialVO> selectPopular();
 	
 	// 소셜 디테일 (내가 클릭한 멤버의 게시물)
 	List<SocialVO> selectDetail(@Param("posts_idx") int posts_idx,
@@ -64,6 +65,8 @@ public interface SocialImageMapper {
 	
 	// 소셜 포스트 삭제할 이미지 셀렉
 	String selectPostsImage(int posts_idx);
+
+	
 	
 
 

@@ -43,7 +43,7 @@ import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.service.ReportService;
-import com.pj2.shoecream.service.CourierService;
+import com.pj2.shoecream.service.courierService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.JungGoNohVO;
 import com.pj2.shoecream.vo.MemberVO;
@@ -71,7 +71,7 @@ public class AuctionController {
    @Autowired
    private JungGoNohService jungGoNohService;
    @Autowired
-   private CourierService courierService;
+   private courierService courierService;
    
    
    private static final Logger logger = LoggerFactory.getLogger(AuctionController.class);
@@ -445,9 +445,15 @@ public class AuctionController {
 			, Model model
 			, HttpSession session) {
 
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-		int	sId = mPrincipalDetails.getMember().getMem_idx();
+	   	int sId = 0;
+		
+	   	try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			sId = mPrincipalDetails.getMember().getMem_idx();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	   	model.addAttribute("sId", sId);
     	
 		// db에서 자료 불러온다
@@ -461,42 +467,28 @@ public class AuctionController {
 	}
     
     
-    // 결제 폼이동
-    @GetMapping("auctionPayForm")
-    public String buyingPopup(
-    		@RequestParam String auction_idx
-    		, @RequestParam String auctionMethod
-			, Model model) {
+    // 즉시구매 폼이동
+    @GetMapping("buyingPopup")
+    public String buyingPopup(@RequestParam String auction_idx
+			, Model model
+			, HttpSession session) {
        
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-		int buyer_idx = mPrincipalDetails.getMember().getMem_idx();
-		
-		MemberVO buyer = service.getMember(buyer_idx);
+		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
+		MemberVO buyer = service.getMember(mem_idx);
     	model.addAttribute("buyer",buyer);
     	
 		// db에서 자료 불러온다
 		Map<String, Object> auction = service.getAuction(auction_idx);
 		model.addAttribute("auction", auction);
 		
-		Map<String, Object> deliveryInfo = service.getDeliveryInfo(buyer_idx);
-		model.addAttribute("deliveryInfo",deliveryInfo);
-		
-		int price = 0;
-		if(auctionMethod == "0") {
-			// bid_table에서도 자료 불러온다 bid_price
-			Map<String, Object> bid = bidService.getSuccessfulBid(auction_idx);
-			model.addAttribute("bid", bid);
-			int bid_price = Integer.parseInt(String.valueOf(bid.get("bid_price")));
-			int deposit = Integer.parseInt(String.valueOf(bid.get("deposit")));
-			price = bid_price - deposit;
-		} else {
-			price = Integer.parseInt(String.valueOf(auction.get("auc_buy_instantly")));
-		}
-		
-		model.addAttribute("price", price); 
+		// bid_table에서도 자료 불러온다 bid_price
+		Map<String, Object> bid = bidService.getBid(auction_idx);
+		model.addAttribute("bid", bid);
 
-		return "common/auc_pay_form";
+//		return "common/pay_form2";
+		return "auction/buying_popup";
     }
     
     // 입찰

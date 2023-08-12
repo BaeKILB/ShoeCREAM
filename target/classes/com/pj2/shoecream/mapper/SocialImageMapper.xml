@@ -55,11 +55,18 @@
 	</select>
 	
 	<!-- 소셜 인기페이지 (좋아요 많은 순서) -->
-	<select id="selectPopular" resultType="com.pj2.shoecream.vo.SocialVO">
-		SELECT * FROM social_posts 
-		WHERE likeCount 
-		ORDER BY likeCount DESC
+	<select id="selectAllInfo" resultType="map">
+		SELECT A.*, B.*, C.*
+		FROM mem_info A
+		JOIN social_posts B ON A.mem_idx = B.mem_idx
+		LEFT JOIN social_likes C ON B.posts_idx = C.posts_idx
 	</select>
+	
+<!-- 	<select id="selectPopular" resultType="com.pj2.shoecream.vo.SocialVO"> -->
+<!-- 		SELECT * FROM social_posts  -->
+<!-- 		WHERE likeCount  -->
+<!-- 		ORDER BY likeCount DESC -->
+<!-- 	</select> -->
 	
 	<select id="selectSocial" resultType="com.pj2.shoecream.vo.SocialVO">
 		SELECT * FROM social_posts
