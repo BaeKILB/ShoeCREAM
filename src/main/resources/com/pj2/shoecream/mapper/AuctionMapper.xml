@@ -226,11 +226,11 @@
 			mem_idx = #{mem_idx }
 	</select>
 	<select id="selectMember">
-		select
-			*
-		from
-			mem_info
-		where
+		SELECT
+		    *
+		FROM
+		    mem_info
+		WHERE 
 			mem_idx = #{mem_idx }
 	</select>
 	<select id="selectRelatedAuctionList" resultType="map">
@@ -270,7 +270,7 @@
         from
             delivery_info
         where
-            mem_idx = #{mem_idx }
+            recipient_mem_idx = #{mem_idx }
     </select>
     <insert id="insertTracking">
         insert into

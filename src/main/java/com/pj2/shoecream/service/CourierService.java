@@ -18,7 +18,7 @@ import com.pj2.shoecream.mapper.CourierMapper;
 import com.pj2.shoecream.vo.CourierVO;
 
 @Service
-public class courierService {
+public class CourierService {
 
 	@Autowired
 	private CourierMapper mapper;
@@ -36,7 +36,6 @@ public class courierService {
 	}
 	
 	public CourierVO requestCourierInfo(Map<String, Object> map) {
-		// 사용자정보조회 요청 API 의 URL 생성 - GET 방식
 		String url = baseUrl + "/api/v1/trackingInfo";
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
