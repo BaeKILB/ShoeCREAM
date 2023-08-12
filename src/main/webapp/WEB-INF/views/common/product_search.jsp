@@ -34,7 +34,7 @@
 	let localURL = "${pageContext.request.contextPath}";
 	let keyWord = "${product_search}";
 </script>
-<script src="${pageContext.request.contextPath }/resources/js/main_ex/main.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/common/product_search.js"></script>
 </head>
 <body>
 	<!-- 헤더 시작 -->
@@ -94,6 +94,9 @@
 			<section id="container">
 				<div class="fw-bold fs-5">중고상품</div>
 				<div class="row" id="junggoList"></div>
+				<div class="row">
+					<input type="button" class="offset-3 col-6 btn btn-dark" value="더보기" onclick="loadMoreJunggo();">
+				</div>
 			</section>
             <!-- 경매리스트 -->
 			<section id="container">

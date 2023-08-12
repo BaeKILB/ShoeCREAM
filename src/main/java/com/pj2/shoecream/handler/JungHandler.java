@@ -1,5 +1,7 @@
 package com.pj2.shoecream.handler;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
@@ -14,6 +16,8 @@ public class JungHandler {
 		
 		String dibBtnStr = "";
 		String href = "onclick='location.href=\"./productDetail?product_idx=" + jProduct.get("product_idx") + "\"'";
+		
+		String date = ((LocalDateTime)jProduct.get("product_date")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 		
 		if((int)jProduct.get("user_idx") != (int)jProduct.get("mem_idx")) {			
 			if(jProduct.get("favorite_check").equals("Y")) {
@@ -66,7 +70,7 @@ public class JungHandler {
 			     + "        <p class='itemPayment'>" + jProduct.get("product_payment") + "</p>"
 			     + "      </li>"
 			     + "      <li class='list-group-item' " + href + ">"
-			     + 			jProduct.get("product_date")
+			     + 			date
 			     + "      </li>"
 			     + "      <li class='list-group-item'>"
 			     + 			dibStr

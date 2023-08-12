@@ -605,7 +605,12 @@ public class JunggoController {
 		
 		// 중고 물품 총 갯수 구해서 페이지 최대 갯수 설정
 		System.out.println("중고 물품 총 갯수 구해서 페이지 최대 갯수 설정");
-		pageInfo.setPageListLimit(JUNG_PRODUCT_LIMIT);
+		
+		int jungProductLimit = JUNG_PRODUCT_LIMIT;
+		if(map.get("limit") != null) {
+			jungProductLimit = Integer.parseInt((String)map.get("limit"));
+		}
+		pageInfo.setPageListLimit(jungProductLimit);
 		pageInfo.setListCount(jProductService.getMaxJungProduct(jproduct));
 		pageInfo.setMaxPage((pageInfo.getListCount() / pageInfo.getPageListLimit()) + 1);
 				

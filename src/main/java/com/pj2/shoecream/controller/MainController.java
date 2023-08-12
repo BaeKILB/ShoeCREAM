@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
@@ -23,8 +24,8 @@ public class MainController {
 	
 	// 헤더 검색창에 검색시 이동
 	@GetMapping("productSearch")
-	public String productSearch(Map<String,String> map, Model model) {
-		model.addAttribute("product_search", map.get("product_search").trim());
+	public String productSearch(@RequestParam Map<String,Object> map, Model model) {
+		model.addAttribute("product_search", ((String)map.get("product_search")).trim());
 		return "common/product_search";
 	}
 }
