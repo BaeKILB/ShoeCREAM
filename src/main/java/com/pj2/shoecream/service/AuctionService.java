@@ -86,4 +86,8 @@ public class AuctionService {
 	public Map<String, Object> getDeliveryInfo(int mem_idx) {
 		return mapper.selectDeliveryInfo(mem_idx);
 	}
+
+	public int registTracking(Map<String, Object> map) {
+		return mapper.insertTracking(map);
+	}
 }

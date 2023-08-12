@@ -1014,6 +1014,39 @@ public class AuctionController {
 		}
 		
 	}
+	
+	@GetMapping("trackingRegisterForm")
+	public String trackingRegisterForm(
+			@RequestParam String auction_idx
+			, Model model) {
+		Map<String,Object> auction = service.getAuction(auction_idx);
+		model.addAttribute("auction",auction);
+		return "auction/tracking_register";
+	}
+	
+	@PostMapping("trackingRegister")
+	public String trackingRegister(
+			@RequestParam Map<String, Object> map
+			, Model model) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int seller_idx = mPrincipalDetails.getMember().getMem_idx();
+		
+		Map<String, Object> successBid = bidService.getSuccessfulBid(String.valueOf(map.get("auction_idx")));
+		
+		map.put("seller_idx", seller_idx); // 판매자 정보
+		map.put("buyer_idx", Integer.parseInt(String.valueOf(successBid.get("mem_idx"))));
+		
+		if(service.registTracking(map) > 0) {
+			model.addAttribute("msg","운송장번호 등록성공");
+			return "inc/close";
+		} else {
+			model.addAttribute("msg","등록실패");
+			return "inc/fail_back";
+		}
+		
+	}
 		
     
     

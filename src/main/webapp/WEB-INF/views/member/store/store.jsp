@@ -617,7 +617,7 @@ function payAuction(idx, price, id, title){
 																	<c:choose>
 																		<c:when test="${auctionList.tracking_num eq null }"> <!-- 운송장 미등록시 -->
                                                                             <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/deliveryInfo?auction_idx=${auctionList.auction_idx}', '구매자정보', 'width=580, height=360, left=100, top=50')">구매자 정보</button>
-                                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">운송장 등록</button>
+                                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm?auction_idx=${auctionList.auction_idx}', '구매자정보', 'width=580, height=360, left=100, top=50')">운송장 등록</button>
 																		</c:when>
 																		<c:when test="${auctionList.tracking_num ne null }"> <!-- 운송장 등록시 -->
                                                                             <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">뭘로하지</button>
@@ -728,12 +728,14 @@ function payAuction(idx, price, id, title){
 							                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href=''">결제</button>
 	                                            </c:when>
 	                                            <c:when test="${auctionList.pay_status eq '결제완료' && auctionList.delivery_status ne '인수'}">
-	                                                <c:if test="${auctionList.tracking_num ne null && auctionList.tracking_company ne null }">
-								                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href=''">배송조회</button>
-	                                                </c:if>
-	                                                <c:if test="${auctionList.delivery_status eq '배송완료' }">
-								                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href=''">인수확인</button>
-	                                                </c:if>
+	                                               <c:choose>
+		                                                <c:when test="${auctionList.tracking_num ne null && auctionList.tracking_company ne null && auctionList.delivery_status ne '배송완료' }">
+									                    	<button type="button" class="btn btn-light btn-half-height" onclick="trackingInfo('${auctionList.tracking_code }','${auctionList.tracking_num}')">배송조회</button>
+		                                                </c:when>
+		                                                <c:when test="${auctionList.delivery_status eq '배송완료' }">
+									                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href=''">인수확인</button>
+		                                                </c:when>
+	                                               </c:choose>
 	                                            </c:when>
 	                                            <c:when test="${auctionList.jung_rev_idx eq null }">
 							                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href=''">구매후기 작성</button>
@@ -1203,6 +1205,11 @@ const aucDeleteConfirm = idx => {
 	} else {
 		return false;
 	}
+}
+
+const trackingInfo = (code,number) => {
+	const apiKey = 'uIHsZSYtgUJ8qn8YkWBIkw';
+	window.open('http://info.sweettracker.co.kr/tracking/4?t_key='+apiKey+'&t_code='+code+'&t_invoice='+number ,'trackingInfo', 'toolbar=no, width=540, height=800 left=700 top=100, directories=no, status=no, resizable=no');
 }
   
   

@@ -272,4 +272,19 @@
         where
             mem_idx = #{mem_idx }
     </select>
+    <insert id="insertTracking">
+        insert into
+            courier_info
+        values(
+            null
+            , #{auction_idx}
+            , #{seller_idx}
+            , #{buyer_idx}
+            , #{tracking_company}
+            , #{tracking_code}
+            , #{tracking_number}
+            , ''
+            , now()
+        )
+    </insert>
 </mapper>
