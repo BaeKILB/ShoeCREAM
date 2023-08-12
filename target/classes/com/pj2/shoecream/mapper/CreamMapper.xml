@@ -130,5 +130,16 @@
             product_idx='${cream_idx }'
 	</select>
 
+	<insert id="insertDelivery">
+	insert into
+	       delivery_info
+	   values(
+	       #{mem_idx }
+	       , #{name }
+	       , CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})
+	       , #{m_tel}
+	   )
+	
+	</insert>
 
 </mapper>

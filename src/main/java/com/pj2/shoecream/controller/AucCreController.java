@@ -81,7 +81,8 @@ public class AucCreController {
 	   
    @PostMapping("commonPayPro")
    	public String commonPayPro(@RequestParam Map<String,Object> map , Model model) {
-	   //결제 성공시 넘어오는 페이지임
+	   
+	   
 	   
 	   	int mem_idx = 0;
 	   	
@@ -93,7 +94,7 @@ public class AucCreController {
 			}
 		
 	   
-	   //멤버정보
+	   //멤버정보 받아옴 ->구매자 정보에 뿌렸음
 	  MemberVO buyer = memService.getMemberByIdx(mem_idx);
 	   
 	   //주소랑 결제한내역 받아와야함
@@ -103,9 +104,9 @@ public class AucCreController {
 	   
 	   int charge_point = buyer.getCharge_point();
 	   
-	   Integer price = (Integer.parseInt((String) map.get("price"))) ;
-	   
-	   //
+	   int price = Integer.parseInt((String) map.get("price"));
+	 
+	   System.out.println("★★★★"+map);
 	   
 	   //포인트 있는경우 없는경우 따져봐야함 
 	   int paymentResult = 0;
@@ -118,8 +119,10 @@ public class AucCreController {
 			paymentResult = payService.withdrawPoints(inVO); // 결제서비스.입출금메소드();
 			
 			if(paymentResult == 1) {
+				model.addAttribute("msg","결제가 완료되었습니다!");
 				//결제가 성공하면 
-				//테이블 업데이트
+				//일단 크림 배송 정보 테이블 업데이트
+				creamService.insertCreamDelivery(map);
 				
 				return "home";
 			}else {

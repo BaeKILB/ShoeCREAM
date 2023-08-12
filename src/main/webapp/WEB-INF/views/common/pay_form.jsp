@@ -83,9 +83,14 @@ function sample6_execDaumPostcode() {
 	<header>
 <%-- 		<jsp:include page="../../inc/top1.jsp"></jsp:include> --%>
 	</header>
+	
 	<section id="sec_con" class="inr res_page">
-<!-- 		<form action="resInfoPro" method="post"> -->
-				${buyer}
+		<form action="commonPayPro" method="post">
+			<input type="hidden" name="price" value="${price}" />
+			<input type="hidden" name="cream_idx" value="${cream.cream_idx}" />
+			<input type="hidden" name="cream_title" value="${cream.cream_title }" />
+			<input type="hidden" name="cream_size" value="${map.selectedSize }" />
+			<input type="hidden" name="mem_idx" value="${buyer.mem_idx}" />
 		
 			<fieldset class="img_sec_wrap">
 				<div class="img_sec_p">
@@ -108,12 +113,12 @@ function sample6_execDaumPostcode() {
 					<p>
 						<span>금액</span>
 						<span><b class="resTotalAmount">${price }</b>원</span>
+
 					</p>
 				</div>
 			</fieldset>
 			<br>
 			<br>
-		<form action="commonPayPro" method="post">
 			<ul class="res_page_wrap">
 
 				<li class="drv_per_p res-com">
@@ -162,7 +167,7 @@ function sample6_execDaumPostcode() {
 					</div>
 					<ul class="side_sub">
 						<li>
-							<textarea name="tos">
+							<textarea >
 슈크림 상품판매 서비스 이용약관
 제1조    (목적)
 이 슈크림 상품판매 시범 서비스 이용약관(이하 “이 약관”)은, 주식회사 슈크림(이하 “슈크림” 또는 “회사”라 함)과 회사가 제공하는 슈크림 상품 판매 시범 서비스(이하 “상품 판매 시범 서비스" 또는 “이 서비스”)를 이용하고자 하는 사업자(이하 “판매자"라 함)간의 권리와 의무 및 기타 제반사항을 명확히 하는 것을 목적으로 합니다.
@@ -266,7 +271,7 @@ function sample6_execDaumPostcode() {
 			</script>
 			
 
-			<input type="button" class="res_p" value="결제하기">
+			<input type="submit" class="res_p" value="결제하기">
 			
 		</form>
 		

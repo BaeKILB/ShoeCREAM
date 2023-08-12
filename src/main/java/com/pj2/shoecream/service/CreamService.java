@@ -54,5 +54,10 @@ public class CreamService {
 		mapper.deleteDibs(map);		
 	}
 
+	public void insertCreamDelivery(Map<String, Object> map) {
+		mapper.insertDelivery(map);
+		
+	}
+
 
 }
