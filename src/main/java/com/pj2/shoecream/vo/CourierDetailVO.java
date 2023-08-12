@@ -8,7 +8,7 @@ import com.pj2.shoecream.handler.DateDeserializer;
 import lombok.Data;
 
 @Data
-public class TrackingDetailVO {
+public class CourierDetailVO {
 	private String kind;
 	private String level;
 	private String manName;

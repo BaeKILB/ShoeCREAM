@@ -14,14 +14,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.pj2.shoecream.mapper.SchedulerMapper;
-import com.pj2.shoecream.vo.TrackingVO;
+import com.pj2.shoecream.mapper.CourierMapper;
+import com.pj2.shoecream.vo.CourierVO;
 
 @Service
-public class SchedulerService {
+public class courierService {
 
 	@Autowired
-	private SchedulerMapper mapper;
+	private CourierMapper mapper;
 	
 	@Value("${t_key}")
 	private String key;
@@ -31,11 +31,11 @@ public class SchedulerService {
 	
 	private RestTemplate restTemplate;
 	
-	public List<Map<String, Object>> getTrackingList() {
-		return mapper.selectTrackingList();
+	public List<Map<String, Object>> getCourierList() {
+		return mapper.selectCourierList();
 	}
 	
-	public TrackingVO requestTracking(Map<String, Object> map) {
+	public CourierVO requestCourierInfo(Map<String, Object> map) {
 		// 사용자정보조회 요청 API 의 URL 생성 - GET 방식
 		String url = baseUrl + "/api/v1/trackingInfo";
 		
@@ -54,14 +54,18 @@ public class SchedulerService {
 		
 		restTemplate = new RestTemplate();
 		
-		ResponseEntity<TrackingVO> responseEntity = 
-				restTemplate.exchange(uriComponents.toString(), HttpMethod.GET, httpEntity, TrackingVO.class);
+		ResponseEntity<CourierVO> responseEntity = 
+				restTemplate.exchange(uriComponents.toString(), HttpMethod.GET, httpEntity, CourierVO.class);
 		
 		return responseEntity.getBody();
 	}
 
-	public void modifyTracking(String trackingNumber, String kind) {
-		mapper.updateTracking(trackingNumber,kind);
+	public void modifyCourier(String trackingNumber, String kind) {
+		mapper.updateCourier(trackingNumber,kind);
+	}
+
+	public Map<String, Object> getCourier(String auction_idx) {
+		return mapper.selectCourier(auction_idx);
 	}
 	
 	

@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class TrackingVO {
+public class CourierVO {
 	private String adUrl;
 	private String complete;
 	private String invoiceNo;
@@ -17,13 +17,13 @@ public class TrackingVO {
 	private String recipient;
 	private String result;
 	private String senderName;
-	private List<TrackingDetailVO> trackingDetails;
+	private List<CourierDetailVO> trackingDetails;
 	private String orderNumber;
 	private String estimate;
 	private String productInfo;
 	private String zipCode;
-	private TrackingDetailVO lastDetail;
-	private TrackingDetailVO lastStateDetail;
-	private TrackingDetailVO firstDetail;
+	private CourierDetailVO lastDetail;
+	private CourierDetailVO lastStateDetail;
+	private CourierDetailVO firstDetail;
 	private String completeYN;
 }

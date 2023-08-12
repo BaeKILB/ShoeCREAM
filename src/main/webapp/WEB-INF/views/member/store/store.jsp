@@ -733,7 +733,7 @@ function payAuction(idx, price, id, title){
 									                    	<button type="button" class="btn btn-light btn-half-height" onclick="trackingInfo('${auctionList.tracking_code }','${auctionList.tracking_num}')">배송조회</button>
 		                                                </c:when>
 		                                                <c:when test="${auctionList.delivery_status eq '배송완료' }">
-									                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href=''">인수확인</button>
+									                    	<button type="button" class="btn btn-light btn-half-height" onclick="confirmAcquisition(${auctionList.auction_idx})">인수확인</button>
 		                                                </c:when>
 	                                               </c:choose>
 	                                            </c:when>
@@ -1205,16 +1205,22 @@ const aucDeleteConfirm = idx => {
 	} else {
 		return false;
 	}
-}
+;}
 
 const trackingInfo = (code,number) => {
 	const apiKey = 'uIHsZSYtgUJ8qn8YkWBIkw';
 	window.open('http://info.sweettracker.co.kr/tracking/4?t_key='+apiKey+'&t_code='+code+'&t_invoice='+number ,'trackingInfo', 'toolbar=no, width=540, height=800 left=700 top=100, directories=no, status=no, resizable=no');
-}
+};
   
+const confirmAcquisition = idx => {
+    if(confirm("택배 상품 확인이 완료되었다면, 확인을 눌러주세요.")) {
+    	location.href='${pageContext.request.contextPath }/acquisitionComplete?auction_idx='+idx;
+    } else {
+    	return false;
+    }
+};
   
 </script>
-
 	<!-- 푸터 시작 -->
 	<jsp:include page="../../inc_ex/footer.jsp" />
 </body>

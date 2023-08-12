@@ -43,12 +43,15 @@ import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.service.ReportService;
+import com.pj2.shoecream.service.courierService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.JungGoNohVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.PayInfoVO;
 import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ProductImageVO;
+
+import retrofit2.http.GET;
 
 
 @Controller
@@ -67,6 +70,8 @@ public class AuctionController {
    private ReportService reportService;
    @Autowired
    private JungGoNohService jungGoNohService;
+   @Autowired
+   private courierService courierService;
    
    
    private static final Logger logger = LoggerFactory.getLogger(AuctionController.class);
@@ -1047,8 +1052,33 @@ public class AuctionController {
 		}
 		
 	}
+	
+	@GetMapping("acquisitionComplete")
+	public String acquisitionComplete(
+			@RequestParam String auction_idx
+			, Model model) {
 		
-    
-    
-    
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int buyer_idx = mPrincipalDetails.getMember().getMem_idx();
+		
+		Map<String, Object> auction = service.getAuction(auction_idx);
+		int seller_idx = Integer.parseInt(String.valueOf(auction.get("mem_idx")));
+		
+		Map<String,Object> bid = bidService.getSuccessfulBid(auction_idx);
+		int payment = Integer.parseInt(String.valueOf(bid.get("bid_price")));
+		
+		PointInoutVO outVO = new PointInoutVO();
+		outVO.setMem_idx(seller_idx);
+		outVO.setCharge_point(payment);
+		outVO.setPoint_usage("결제대금입금");
+		if (payService.depositPoints(outVO) > 0) {
+			Map<String,Object> courier = courierService.getCourier(auction_idx);
+			String tracking_num = String.valueOf(courier.get("tracking_num"));
+			String kind = "인수";
+			courierService.modifyCourier(tracking_num, kind);
+		}; 
+		
+		return "redirect:/store/"+buyer_idx;
+	}
 }

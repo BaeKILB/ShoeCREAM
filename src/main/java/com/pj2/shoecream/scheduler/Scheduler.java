@@ -7,31 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.pj2.shoecream.service.SchedulerService;
-import com.pj2.shoecream.vo.TrackingVO;
+import com.pj2.shoecream.service.courierService;
+import com.pj2.shoecream.vo.CourierVO;
 
 @Component
 public class Scheduler {
 
 	@Autowired
-	private SchedulerService service;
+	private courierService service;
 	
 	@Scheduled(cron = "0 0/30 10-20 * * *")
 //	@Scheduled(fixedRate = 10000000)
-	public void trackingUpdate() {
-		List<Map<String,Object>> trackingList = service.getTrackingList();
+	public void courierUpdate() {
+		List<Map<String,Object>> courierList = service.getCourierList();
 		
-		for(Map<String, Object> tracking : trackingList) {
-			String trackingNumber = String.valueOf(tracking.get("tracking_num"));
-			TrackingVO item = service.requestTracking(tracking);
+		for(Map<String, Object> courier : courierList) {
+			String trackingNumber = String.valueOf(courier.get("tracking_num"));
+			CourierVO item = service.requestCourierInfo(courier);
 			if (item.getLastDetail() != null) {
 				String kind = item.getLastDetail().getKind();
-				service.modifyTracking(trackingNumber,kind);
-				System.out.println("상태 변경 완료 : " + tracking.get("tracking_num"));
+				service.modifyCourier(trackingNumber,kind);
+				System.out.println("상태 변경 완료 : " + courier.get("tracking_num"));
 			}
-			System.out.println(tracking.toString());
+			System.out.println(courier.toString());
 			System.out.println(item.toString());
 		}
-		
 	}
 }
