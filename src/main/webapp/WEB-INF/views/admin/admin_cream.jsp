@@ -53,7 +53,10 @@
 									<td class="code"><span class="cream_idx"> <span class="sv_member">${creammap.cream_idx}</span></span></td>
 									<td class="cream_title"> ${creammap.cream_title}</td>
 									<td class="cream_modify">
-										<button class="mod_ans moreBtn" onclick="location.href='CreamModifyForm?pageNum=${pageMaker.cri.pageNum}&cream_idx=${creammap.cream_idx}'">수정</button>
+										<a href="CreamModify?cream_idx=${creammap.cream_idx}&pageNum=${pageMaker.cri.pageNum} " class="mod_ans moreBtn">
+														수정
+													</a> 
+<%-- 										<button class="mod_ans moreBtn" onclick="location.href='CreamModifyForm?pageNum=${pageMaker.cri.pageNum}&cream_idx=${creammap.cream_idx}'">수정</button> --%>
 									</td>
 								</tr>
 							</c:forEach>

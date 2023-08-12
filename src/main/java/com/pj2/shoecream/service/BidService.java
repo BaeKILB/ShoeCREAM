@@ -48,4 +48,8 @@ public class BidService {
 		return mapper.insertBidBuyNow(map);
 	}
 
+	public Map<String, Object> getSuccessfulBid(String auction_idx) {
+		return mapper.selectSuccessBid(auction_idx);
+	}
+
 }

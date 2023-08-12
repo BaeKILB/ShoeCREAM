@@ -23,4 +23,6 @@ public interface BidMapper {
 	List<Map<String, Object>> selectBidList(String auction_idx);
 
 	int insertBidBuyNow(Map<String, Object> map);
+
+	Map<String, Object> selectSuccessBid(String auction_idx);
 }

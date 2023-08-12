@@ -27,6 +27,15 @@
 <body>
 	<h1>junggo search</h1>
 	<main class="container" >	
+<%-- 		<c:if test="${!empty keyWord }"> --%>
+<%-- 			<section class="row"> --%>
+<!-- 				<div class="offset-md-3 col-md-9 col-sm-12 "> -->
+<!-- 					<p class="alert alert-primary"> -->
+<%-- 						${keyWord } 에 대한 검색결과입니다 --%>
+<!-- 					</p> -->
+<!-- 				</div> -->
+<%-- 			</section> --%>
+<%-- 		</c:if> --%>
 		<article class="row">
 
 				<aside class="sideCategoryWrap categoryTop ct_lc_list categoryList"> 

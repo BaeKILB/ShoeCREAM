@@ -43,12 +43,15 @@ import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.service.ReportService;
+import com.pj2.shoecream.service.courierService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.JungGoNohVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.PayInfoVO;
 import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ProductImageVO;
+
+import retrofit2.http.GET;
 
 
 @Controller
@@ -67,6 +70,8 @@ public class AuctionController {
    private ReportService reportService;
    @Autowired
    private JungGoNohService jungGoNohService;
+   @Autowired
+   private courierService courierService;
    
    
    private static final Logger logger = LoggerFactory.getLogger(AuctionController.class);
@@ -406,11 +411,30 @@ public class AuctionController {
 	}
     
     //글 삭제
-	@PostMapping("AuctionDelete")
-	public String auctionDelete() {
+	@GetMapping("AuctionDelete")
+	public String auctionDelete(
+			@RequestParam(value = "auction_idx") String auction_idx
+			, Model model) {
 		
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
 		
-		return "";
+		Map<String,Object> auction = service.getAuction(auction_idx);
+		
+		if (mem_idx == Integer.parseInt(String.valueOf(auction.get("mem_idx")))) {
+			boolean isDelete = service.deleteAuction(auction_idx);
+			if(isDelete) {
+				return "redirect:/store/"+mem_idx;
+			} else {
+				model.addAttribute("msg","삭제실패");
+				return "inc/fail_back";
+			}
+			
+		} else {
+			model.addAttribute("msg","접근권한 없음");
+			return "inc/fail_back";
+		}
 	}
 	
     
@@ -453,12 +477,6 @@ public class AuctionController {
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
 		MemberVO buyer = service.getMember(mem_idx);
-		
-		String[] addrArr = buyer.getMem_address().split("/");
-		
-		logger.info("!@#$");
-		logger.info(addrArr.toString());
-		
     	model.addAttribute("buyer",buyer);
     	
 		// db에서 자료 불러온다
@@ -469,7 +487,8 @@ public class AuctionController {
 		Map<String, Object> bid = bidService.getBid(auction_idx);
 		model.addAttribute("bid", bid);
 
-		return "common/pay_form2";
+//		return "common/pay_form2";
+		return "auction/buying_popup";
     }
     
     // 입찰
@@ -977,8 +996,89 @@ public class AuctionController {
 		}
 		return "inc/close";
 	}
+	
+	@GetMapping("deliveryInfo")
+	public String deliveryInfo(
+			@RequestParam(value = "auction_idx") String auction_idx
+			, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
 		
-    
-    
-    
+		Map<String,Object> auction = service.getAuction(auction_idx);
+		
+		if (mem_idx == Integer.parseInt(String.valueOf(auction.get("mem_idx")))) {
+			Map<String,Object> bid = bidService.getSuccessfulBid(auction_idx);
+			int buyer_idx = Integer.parseInt(String.valueOf(bid.get("mem_idx")));
+			Map<String,Object> deliveryInfo = service.getDeliveryInfo(buyer_idx);
+			model.addAttribute("deliveryInfo",deliveryInfo);
+			return "auction/auction_delivery_Info";
+		} else {
+			model.addAttribute("msg","접근권한이 없습니다.");
+			return "redirect:/store/"+mem_idx;
+		}
+		
+	}
+	
+	@GetMapping("trackingRegisterForm")
+	public String trackingRegisterForm(
+			@RequestParam String auction_idx
+			, Model model) {
+		Map<String,Object> auction = service.getAuction(auction_idx);
+		model.addAttribute("auction",auction);
+		return "auction/tracking_register";
+	}
+	
+	@PostMapping("trackingRegister")
+	public String trackingRegister(
+			@RequestParam Map<String, Object> map
+			, Model model) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int seller_idx = mPrincipalDetails.getMember().getMem_idx();
+		
+		Map<String, Object> successBid = bidService.getSuccessfulBid(String.valueOf(map.get("auction_idx")));
+		
+		map.put("seller_idx", seller_idx); // 판매자 정보
+		map.put("buyer_idx", Integer.parseInt(String.valueOf(successBid.get("mem_idx"))));
+		
+		if(service.registTracking(map) > 0) {
+			model.addAttribute("msg","운송장번호 등록성공");
+			return "inc/close";
+		} else {
+			model.addAttribute("msg","등록실패");
+			return "inc/fail_back";
+		}
+		
+	}
+	
+	@GetMapping("acquisitionComplete")
+	public String acquisitionComplete(
+			@RequestParam String auction_idx
+			, Model model) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int buyer_idx = mPrincipalDetails.getMember().getMem_idx();
+		
+		Map<String, Object> auction = service.getAuction(auction_idx);
+		int seller_idx = Integer.parseInt(String.valueOf(auction.get("mem_idx")));
+		
+		Map<String,Object> bid = bidService.getSuccessfulBid(auction_idx);
+		int payment = Integer.parseInt(String.valueOf(bid.get("bid_price")));
+		
+		PointInoutVO outVO = new PointInoutVO();
+		outVO.setMem_idx(seller_idx);
+		outVO.setCharge_point(payment);
+		outVO.setPoint_usage("결제대금입금");
+		if (payService.depositPoints(outVO) > 0) {
+			Map<String,Object> courier = courierService.getCourier(auction_idx);
+			String tracking_num = String.valueOf(courier.get("tracking_num"));
+			String kind = "인수";
+			courierService.modifyCourier(tracking_num, kind);
+		}; 
+		
+		return "redirect:/store/"+buyer_idx;
+	}
 }

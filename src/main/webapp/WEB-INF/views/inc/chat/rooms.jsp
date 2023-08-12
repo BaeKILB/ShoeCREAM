@@ -246,8 +246,8 @@
             });
             
             //엔터키 입력
-            $("#msg_input").keydown(function(key){
-            	if(key.keycode == 13){
+            $("#msg_input").keyup(function(key){
+            	if(key.keyCode == 13){
             		sendMsg();
             	}
             });

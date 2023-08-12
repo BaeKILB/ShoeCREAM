@@ -159,5 +159,28 @@
 		WHERE
 		    bl.mem_idx = #{mem_idx}
     </select>
-	
+    
+    <select id="selectCreamList" resultType="map">
+
+		 SELECT 
+		    request_idx 
+		    ,cream_idx 
+		    ,cream_title 
+		    ,cream_size 
+		    ,cream_price 
+		    ,request_time 
+		    ,image1 
+		    ,image_path 
+		  	,co.tracking_num
+		  	,co.delivery_status 
+		FROM 
+		    cream_item_request AS ci
+		JOIN 
+		    product_image AS pi ON ci.cream_idx = pi.product_idx
+		LEFT JOIN 
+		    courier_info AS co ON ci.cream_idx = co.product_idx
+		WHERE 
+			ci.mem_idx = #{mem_idx};
+    </select>
+    
 </mapper>

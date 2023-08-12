@@ -1,5 +1,7 @@
 package com.pj2.shoecream.controller;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,5 +19,12 @@ public class MainController {
 //		
 //		model.addAttribute("member", mPrincipalDetails.getMember());
 		return "main_ex";
+	}
+	
+	// 헤더 검색창에 검색시 이동
+	@GetMapping("productSearch")
+	public String productSearch(Map<String,String> map, Model model) {
+		model.addAttribute("product_search", map.get("product_search").trim());
+		return "common/product_search";
 	}
 }

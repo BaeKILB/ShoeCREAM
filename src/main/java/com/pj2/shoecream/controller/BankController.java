@@ -142,7 +142,7 @@ public class BankController {
 		
 		// 요청에 사용될 엑세스토큰을 Map 객체에 추가
 		List<BankAccountVO> resList = userInfo.getRes_list();
-		BankAccountVO account = resList.get(resList.size() - 1);
+		BankAccountVO account = resList.get(0);
 
 		Map<String, String> map = new HashMap<String,String>();
 		
@@ -224,6 +224,7 @@ public class BankController {
 		
 		// 충전 후 되돌아갈 url 담기 (없으면 비워도 됨)
 		model.addAttribute("return_url",map.get("return_url"));
+		model.addAttribute("isPopup",map.get("isPopup"));
 		return "inc/pay/point_charge";
 	}
 	
@@ -272,7 +273,7 @@ public class BankController {
 		AdminAccountInoutVO admAccountInout = new AdminAccountInoutVO();
 		admAccountInout.setMem_idx(idx);
 		admAccountInout.setTran_amount(Integer.parseInt( map.get("point_amount")));
-		admAccountInout.setTran_type("w");		
+		admAccountInout.setTran_type("d");		
 		
 		// 로그 불러오면서 관리자 계정에 자동으로 금액 최신화 반영
 		if(!bankService.addAdmAccountLog(admAccountInout)) {
@@ -301,6 +302,148 @@ public class BankController {
 //		model.addAttribute("withdrawResult", withdrawResult);
 		logger.debug(withdrawResult.toString());
 		model.addAttribute("msg","포인트가 충전되었습니다!");
+		
+		// 되돌아갈 url 이 있다면 그 url 로 되돌아가기
+		if(map.get("return_url") != null) {
+			model.addAttribute((String)map.get("return_url"));
+			return "success_forward";
+		}
+		else {
+			return "inc/fail_back";
+		}
+		
+		
+	}
+
+	
+	// 포인트 출금뒤 계좌이체  
+	@GetMapping("withdrawPointForm")
+	public String withdrawPointForm(@RequestParam Map<String,Object> map , Model model) {
+		int idx = -1;
+		// 로그인 되어있는지 확인하기
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			// 구매자 회원번호
+			idx = mPrincipalDetails.getMember().getMem_idx();		
+			
+		}
+		catch(Exception e) {
+			// 로그인 안되어있으면 잘못된 접근이라고 띄우기
+			model.addAttribute("msg","잘못된 접근입니다");
+			return "inc/fail_back";
+		}
+		
+		// db 에서 멤버 정보 가져오기
+		MemberVO member = memService.getMemberByIdx(idx);
+		
+		// 현재 맴버가 계좌등록이 되어있는지 확인
+		if(!member.getMem_account_auth().equals("Y")) {
+			model.addAttribute("msg","계좌 인증이 필요합니다!");
+			return "inc/fail_back";
+		}
+				
+		// 충전 회원 정보 담기
+		model.addAttribute("member",member);
+		model.addAttribute("account", bankService.getMemAccount(idx));
+		
+		// 충전 후 되돌아갈 url 담기 (없으면 비워도 됨)
+		model.addAttribute("return_url",map.get("return_url"));
+		model.addAttribute("isPopup",map.get("isPopup"));
+		return "inc/pay/point_withdraw";
+	}
+	
+	// 포인트 빼고 계좌에 포인트만큼 입금 
+	// 포인트 계좌이체
+	// 되돌아갈 url 받아오기 !!
+	@PostMapping("withdrawPointPro")
+	public String withdrawPointPro(@RequestParam Map<String,String> map , Model model) {
+		int idx = -1;
+		// 로그인 되어있는지 확인하기
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			// 구매자 회원번호
+			idx = mPrincipalDetails.getMember().getMem_idx();		
+			
+		}
+		catch(Exception e) {
+			// 로그인 안되어있으면 잘못된 접근이라고 띄우기
+			model.addAttribute("msg","잘못된 접근입니다");
+			return "inc/fail_back";
+		}
+		
+		// db 에서 멤버 정보 가져오기
+		MemberVO member = memService.getMemberByIdx(idx);
+				
+		// 현재 맴버가 계좌등록이 되어있는지 확인
+		if(!member.getMem_account_auth().equals("Y")) {
+			model.addAttribute("msg","계좌 인증이 필요합니다!");
+			return "inc/fail_back";
+		}
+		
+		// 현재 맴버에 포인트가 충분히 있는지 체크
+		if(member.getCharge_point() < 5000) {
+			model.addAttribute("msg","포인트 출금 및 계좌이체는 5000포인트 이상 일시 가능합니다 !");
+			return "inc/fail_back";			
+		}
+
+		// 현재 출금할 금액이상으로 멤버에 포인트 있는지 체크
+		if(member.getCharge_point() < Integer.parseInt(map.get("point_amount"))) {
+			model.addAttribute("msg","현재 회원님의 포인트가 출금할 금액보다 적습니다! 다시한번 확인해주세요.");
+			return "inc/fail_back";			
+		}
+
+		
+		Map<String, Object> account = bankService.getMemAccount(idx);
+		
+		// Map 객체에 엑세스토큰 추가
+		map.put("access_token", (String)account.get("access_token"));
+		
+		// BankApiService - requestDeposit() 메서드를 호출하여 입금이체 요청
+		// => 파라미터 : Map 객체   리턴타입 : ResponseDepositVO
+		ResponseDepositVO withdrawResult = bankApiService.requestDeposit(map);
+		
+		// 입금 상태 확인하여 실패시 에러처리
+		if(!withdrawResult.getRsp_code().equals("A0000")) {
+			model.addAttribute("msg","포인트 계좌이체가 정상적으로 진행되지 않았습니다! (출금 문제)");
+			return "inc/fail_back";
+		}
+		
+		// 관리자 계좌 현황과 관리자 계좌 잔액 업데이트 하기
+		
+		AdminAccountInoutVO admAccountInout = new AdminAccountInoutVO();
+		admAccountInout.setMem_idx(idx);
+		admAccountInout.setTran_amount(Integer.parseInt( map.get("point_amount")));
+		admAccountInout.setTran_type("w");		
+		
+		// 로그 불러오면서 관리자 계정에 자동으로 금액 최신화 반영
+		if(!bankService.addAdmAccountLog(admAccountInout)) {
+			model.addAttribute("msg","포인트 계좌이체가 정상적으로 진행되지 않았습니다!(DB error)");
+			return "inc/fail_back";
+		}
+		
+		// 멤버 db 에 업데이트 처리
+		// 포인트 충전(입금)
+		PointInoutVO pointInout = new PointInoutVO();
+		
+		pointInout.setMem_idx(idx);
+		pointInout.setCharge_point(Integer.parseInt( map.get("point_amount")));
+		pointInout.setPoint_usage("계좌이체출금");
+		
+		int depositPointResult = payService.withdrawPoints(pointInout);
+		if(depositPointResult != 1) {
+			model.addAttribute("msg","포인트 계좌이체가 정상적으로 진행되지 않았습니다!(DB error " + depositPointResult + ")");
+			return "inc/fail_back";
+		}
+		
+		
+		
+		
+		// Model 객체에 ResponseWithdrawVO 객체 저장
+//		model.addAttribute("withdrawResult", withdrawResult);
+		logger.debug(withdrawResult.toString());
+		model.addAttribute("msg","포인트 계좌이체가 정상적으로 진행되었습니다!");
 		
 		// 되돌아갈 url 이 있다면 그 url 로 되돌아가기
 		if(map.get("return_url") != null) {

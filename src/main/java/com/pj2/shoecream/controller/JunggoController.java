@@ -621,9 +621,16 @@ public class JunggoController {
 
 		// 리스트 받아올 객체 초기화
 		List<Map<String,Object>> jungList = null;
-
+		
+		// 중고리스트 가져오기
+		jungList = jProductService.getJungProductExList(
+				jproduct
+				, pageInfo
+				, orderMethod
+				, (String)map.get("isSearchCloseItem")
+				, (String)map.get("keyWord")
+				);
 		// 찜목록 가져오기
-		jungList = jProductService.getJungProductExList(jproduct, pageInfo, orderMethod);
 		List<String> dibsList = jProductService.getDibsList(idx);
 		
 		// 아래 html 만드는 쪽에서 사용할 idx 변수

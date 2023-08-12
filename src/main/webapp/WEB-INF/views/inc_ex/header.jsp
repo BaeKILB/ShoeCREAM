@@ -74,7 +74,7 @@ body {
 			let search = $("#product_search").val();
 			console.log('검색');
 			if (code == 'Enter') {
-				location.href = 'product_searchPro?product_search=' + search;
+				location.href = 'productSearch?product_search=' + search;
 			}
 		}
 	</script>
@@ -120,7 +120,7 @@ body {
 											<a href="${pageContext.request.contextPath }/logout" onclick="return confirmLogout()">로그아웃</a>
 										</div>
 										<div class="col-2" style="text-align: left;">
-											<a href="noticeMain.ad">고객센터</a>
+											<a href="UserNotice">고객센터</a>
 										</div>
 									</c:otherwise>
 								</c:choose>

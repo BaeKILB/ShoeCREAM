@@ -33,7 +33,7 @@ function reportDiv(value){
 					<input type="hidden" name="seller_idx" value="${seller.mem_idx }">
 					<input type="hidden" name="reporter_idx" value="${reporter.mem_idx }">
 					<div class="mb-3 row">
-						<label for="report_content" class="col-sm-2 col-form-label">제목</label>
+						<label for="report_content" class="col-sm-2 col-form-label">상품명</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control-plaintext" id="report_content" name="report_content" value="${auction.auction_title }" readonly>
 						</div>

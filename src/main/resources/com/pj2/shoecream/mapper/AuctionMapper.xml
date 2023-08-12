@@ -252,4 +252,39 @@
 	        limit
 	        	4
 	</select>
+    <delete id="deleteAuction">
+        delete from
+            auction_item
+        where
+            auction_idx = #{auction_idx }
+    </delete>
+    <delete id="deleteImage">
+        delete from
+            product_image
+        where
+            product_idx = #{auction_idx }
+    </delete>
+    <select id="selectDeliveryInfo" resultType="map">
+        select
+            *
+        from
+            delivery_info
+        where
+            mem_idx = #{mem_idx }
+    </select>
+    <insert id="insertTracking">
+        insert into
+            courier_info
+        values(
+            null
+            , #{auction_idx}
+            , #{seller_idx}
+            , #{buyer_idx}
+            , #{tracking_company}
+            , #{tracking_code}
+            , #{tracking_number}
+            , ''
+            , now()
+        )
+    </insert>
 </mapper>

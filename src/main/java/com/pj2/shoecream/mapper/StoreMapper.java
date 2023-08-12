@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.pj2.shoecream.vo.CreamRequestVO;
+
 
 @Mapper
 public interface StoreMapper {
@@ -28,6 +30,9 @@ public interface StoreMapper {
 
 	// 경매 참여 내역
 	List<Map<String, Object>> selectAuctionBidList(int mem_idx);
+	
+	//크림 구매내역
+	List<CreamRequestVO> selectCreamList(int mem_idx);
 
 
 }

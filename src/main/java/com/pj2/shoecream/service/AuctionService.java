@@ -74,4 +74,20 @@ public class AuctionService {
 	public List<Map<String, Object>> getRelatedAuctionList(Map<String, Object> map) {
 		return mapper.selectRelatedAuctionList(map);
 	}
+
+	public boolean deleteAuction(String auction_idx) {
+		if (mapper.deleteAuction(auction_idx) && mapper.deleteImage(auction_idx)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Map<String, Object> getDeliveryInfo(int mem_idx) {
+		return mapper.selectDeliveryInfo(mem_idx);
+	}
+
+	public int registTracking(Map<String, Object> map) {
+		return mapper.insertTracking(map);
+	}
 }

@@ -27,5 +27,9 @@ public interface CreamMapper {
 
 	void deleteDibs(Map<String, Object> map);
 
+	void insertCreamItemRequest(Map<String, Object> map);
+
+	int insertTrackingNumber(Map<String, Object> map);
+
 
 }
