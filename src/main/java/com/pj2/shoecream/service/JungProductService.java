@@ -22,10 +22,30 @@ public class JungProductService {
 	}
 	
 	// 중고 상품 정보 리스트 받아오기(이미지, 판매자 정보 들고옴)
-	public List<Map<String,Object>> getJungProductExList(JungProductVO jproduct, PageInfoVO pageInfo, String orderMethod) {
+	public List<Map<String,Object>> getJungProductExList(
+			JungProductVO jproduct
+			, PageInfoVO pageInfo
+			, String orderMethod
+			, String isSearchCloseItem
+			,String keyWord) {
+		
+		// 페이징 처리를 위한 시작 값 셋팅
 		int startCount = pageInfo.getStartPage() * pageInfo.getPageListLimit();
-		return mapper.selectJungProductExList(jproduct,startCount,pageInfo.getPageListLimit(),orderMethod );
+		
+		// 키워드 null 체크 밎 양 옆에 % 붙이기(임의의 문자 허용)
+		String keyWordParam = "%";
+		if(keyWord != null) {
+			keyWordParam = "%" + keyWord + "%";
+		}
+		
+		return mapper.selectJungProductExList(jproduct
+				,startCount
+				,pageInfo.getPageListLimit()
+				,orderMethod 
+				,isSearchCloseItem
+				,keyWordParam);
 	}
+	
 	
 	// 중고 상품 정보 idx로 하나 불러오기
 	public JungProductVO getJungProduct(JungProductVO jproduct) {

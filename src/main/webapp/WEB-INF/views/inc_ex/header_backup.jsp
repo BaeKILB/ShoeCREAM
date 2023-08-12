@@ -57,7 +57,7 @@ div #test_area ul { /* 카테고리 css */
 			let search = $("#product_search").val();
 			console.log('검색');
 			if (code == 'Enter') {
-				location.href = 'product_searchPro?product_search=' + search;
+				location.href = 'productSearch?product_search=' + search;
 			}
 		}
 	</script>
