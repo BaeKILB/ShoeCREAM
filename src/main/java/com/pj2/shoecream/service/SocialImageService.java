@@ -39,9 +39,13 @@ public class SocialImageService {
 	
 	// 소셜 인기페이지 (좋아요 많은 순서)
 	@Transactional(readOnly = true)
-	public List<SocialVO> popularImage() {
-		return socialImageMapper.selectPopular();
+	public List<Map<String, Object>> getAllInfo() {
+	    return socialImageMapper.selectAllInfo();
 	}
+	
+//	public List<SocialVO> popularImage() {
+//		return socialImageMapper.selectPopular();
+//	}
 
 	
 //	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)

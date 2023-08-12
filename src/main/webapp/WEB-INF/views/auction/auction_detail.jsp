@@ -236,7 +236,7 @@
 				    				    <c:choose>
 				    				        <c:when test="${bid.mem_idx eq principal.member.mem_idx}">
 												<div class="col-12">
-													<button class="btn btn-secondary text-light w-100" onclick="PayForm()">
+													<button class="btn btn-secondary text-light w-100" onclick="buyingPopup()">
 														<div class="fs-5 fw-bold">즉시 구매</div>
 													</button>
 											    </div>
@@ -251,7 +251,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-6">
-                                                    <button class="btn btn-secondary text-light w-100" onclick="PayForm()">
+                                                    <button class="btn btn-secondary text-light w-100" onclick="buyingPopup()">
                                                         <div class="fs-5 fw-bold">즉시 구매</div>
                                                     </button>
                                                 </div>

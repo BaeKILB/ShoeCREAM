@@ -472,11 +472,5 @@ public class MemberController {
     	
 		return "member/mypage/account";
     }
-    
-/// =====================asd================
-   	@GetMapping("authex")
-   	public String authex() {
-   		return "member/authex/user-info";
-   	}
    	
 }
