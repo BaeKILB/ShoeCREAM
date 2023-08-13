@@ -133,6 +133,7 @@ const setImages = (e) => {
 					<input type="hidden" name="cream_idx" value=${cream.cream_idx }>
 					<div class="firstContainner">
 						<div class="first_title">상품 이미지	
+						${cream }
 							<div class="image_box">
 							    <div>
 							        이미지 등록
@@ -147,22 +148,22 @@ const setImages = (e) => {
 						     <div class="ivBox">
 						    	<c:if test="${cream.image1 != '' }">
 							    	<button type="button" onclick='imgDelete(this.value)' value="image1">
-							    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1 }">
+							    		<img class="imageView" src="${pageContext.request.contextPath }${cream.image_path }/${cream.image1 }">
 							    	</button>
 						    	</c:if>
 						    	<c:if test="${cream.image2 != '' }">
 							    	<button type="button" onclick='imgDelete(this.value)' value="image2">
-							    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image2 }">
+							    		<img class="imageView" src="${pageContext.request.contextPath }${cream.image_path }/${cream.image2 }">
 							    	</button>
 						    	</c:if>
 						    	<c:if test="${cream.image3 != '' }">
 							    	<button type="button" onclick='imgDelete(this.value)' value="image3">
-							    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image3 }">
+							    		<img class="imageView" src="${pageContext.request.contextPath }${cream.image_path }/${cream.image3 }">
 							    	</button>
 						    	</c:if>
 						    	<c:if test="${cream.image4 != '' }">
 							    	<button type="button" onclick='imgDelete(this.value)' value="image4">
-							    		<img class="imageView" src="${pageContext.request.contextPath }${auction.image_path }/${auction.image4 }">
+							    		<img class="imageView" src="${pageContext.request.contextPath }${cream.image_path }/${cream.image4 }">
 							    	</button>
 						    	</c:if>
 						    </div>
@@ -210,7 +211,7 @@ const setImages = (e) => {
 					</div>
 				
 					<div class="lastContainner">
-						<button type="submit" class="register_btn">등록하기</button>
+						<button type="submit" class="register_btn">수정하기</button>
 						<button type="button" class="back_btn" onclick="location.href='./'">돌아가기</button>
 					</div>
 				</form>

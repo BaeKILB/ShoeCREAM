@@ -11,7 +11,63 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
 <script	src="${pageContext.request.contextPath }/resources/js/etc/jquery.datetimepicker.full.min.js"></script>
-<script	src="${pageContext.request.contextPath }/resources/js/auction/auction_modify_form.js"></script>
+<%-- <script	src="${pageContext.request.contextPath }/resources/js/auction/auction_modify_form.js"></script> --%>
+<script type="text/javascript">
+//이미지 관련
+let count = 0;
+$(function() {
+	// 숨김 처리
+	$(".imageView").each(function(index) {
+		count = index + 1;
+	})
+	
+	$("input[type=file]").each(function(index) {
+		if (index+1 <= count) {
+		$(this).addClass("hidden");
+		return;
+		}
+	});
+	
+	if(count < 4) {
+		$(".image_box").removeClass("hidden");
+	} else {
+		$(".image_box").addClass("hidden");
+	}
+});
+// 추가된 이미지 삭제
+const imgDelete = (currentId) => {
+	$("button[value="+currentId+"]").remove();
+	$("#"+currentId).removeClass("hidden").val('');	
+	count--;
+	if(count < 4) {
+		$(".image_box").removeClass("hidden");
+	};
+};
+// 이미지 등록시 사진출력
+const setImages = (e) => {
+	let currentId = e.target.name;
+	$("#"+currentId).next().removeClass("hidden");
+	$("#"+currentId).addClass("hidden");
+	
+	let reader = new FileReader();
+	for(let image of e.target.files) {
+		reader.onload = function (event) {
+			let result = (
+				"<button type='button' onclick='imgDelete(this.value)' value='"+currentId+"'>"
+				+"<img class='imageView' src='"+event.target.result+"'>"
+				+"</button>"
+			);
+			$(".ivBox").append(result);
+		};
+		reader.readAsDataURL(image);
+	}; 
+	count ++;
+	if(count >= 4) {
+		$(".image_box").addClass("hidden");
+	};
+};
+
+</script>
 </head>
 <form action="AuctionModifyPro" method="post" enctype="multipart/form-data">
 	<h1>경매 상품등록</h1>

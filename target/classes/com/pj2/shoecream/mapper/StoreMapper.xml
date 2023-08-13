@@ -47,7 +47,7 @@
 		    auction_item ai 
 		    JOIN product_image pi ON ai.auction_idx = pi.product_idx
 		    LEFT JOIN (select * from bid_list where bid_state != '유찰') bl ON ai.auction_idx = bl.auction_idx
-		    LEFT JOIN pay_info pai ON bl.bid_date = pai.trans_date
+   		    LEFT JOIN pay_info pai ON bl.auction_idx = pai.product_idx and (bl.bid_price-bl.deposit) = pai.pay_total
 		    LEFT JOIN jung_reviews jr ON ai.auction_idx = jr.product_idx
 		    LEFT JOIN courier_info ci ON ai.auction_idx = ci.product_idx
 		WHERE
@@ -153,7 +153,7 @@
 		    auction_item ai 
 		    JOIN product_image pi ON ai.auction_idx = pi.product_idx
 		    JOIN bid_list bl ON ai.auction_idx = bl.auction_idx
-		    LEFT JOIN pay_info pai ON bl.bid_date = pai.trans_date
+   		    LEFT JOIN pay_info pai ON bl.auction_idx = pai.product_idx and (bl.bid_price-bl.deposit) = pai.pay_total
 		    LEFT JOIN jung_reviews jr ON ai.auction_idx = jr.product_idx
 		    LEFT JOIN courier_info ci ON ai.auction_idx = ci.product_idx
 		WHERE
@@ -178,7 +178,7 @@
 		JOIN 
 		    product_image AS pi ON ci.cream_idx = pi.product_idx
 		LEFT JOIN 
-		    courier_info AS co ON ci.cream_idx = co.product_idx
+		    courier_info AS co ON ci.request_idx = co.product_idx
 		WHERE 
 			ci.mem_idx = #{mem_idx};
     </select>

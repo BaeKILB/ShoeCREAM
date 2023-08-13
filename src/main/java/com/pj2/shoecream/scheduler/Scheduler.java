@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.pj2.shoecream.service.courierService;
+import com.pj2.shoecream.service.CourierService;
 import com.pj2.shoecream.vo.CourierVO;
 
 @Component
 public class Scheduler {
 
 	@Autowired
-	private courierService service;
+	private CourierService service;
 	
 //	@Scheduled(cron = "0 0/30 10-20 * * *")
 	@Scheduled(fixedRate = 10000000)

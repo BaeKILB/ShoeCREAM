@@ -18,7 +18,7 @@ import com.pj2.shoecream.mapper.CourierMapper;
 import com.pj2.shoecream.vo.CourierVO;
 
 @Service
-public class courierService {
+public class CourierService {
 
 	@Autowired
 	private CourierMapper mapper;

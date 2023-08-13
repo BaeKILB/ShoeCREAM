@@ -12,15 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pj2.shoecream.config.PrincipalDetails;
-import com.pj2.shoecream.service.AuctionService;
 import com.pj2.shoecream.service.CreamService;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.PointInoutVO;
-
-import ch.qos.logback.classic.Logger;
-
 
 @Controller
 public class AucCreController {
@@ -36,7 +32,7 @@ public class AucCreController {
 	
 	
 	   
-   @GetMapping("payForm2")
+   @GetMapping("payForm2") //크림용
 	public String payForm22(@RequestParam Map<String,Object> map , Model model) {
 	   
 //	   {cream_idx=C1691664108524, mem_idx=2}
@@ -62,6 +58,7 @@ public class AucCreController {
 		
 		
 		//--------------여기는 크림 정보 받아오는 곳입니다 성혁씨---------------
+		//--------------내가 테스트를 할수 있을까? ---------------
 		// selectedSize -- cream.size+selectedSize
 		String selectedSize = (String) map.get("selectedSize");
 		String key = "size" + selectedSize;
@@ -134,9 +131,9 @@ public class AucCreController {
 			}
 		   
 	   }else {
-		   model.addAttribute("msg","포인트 충전하셈");
+//		   model.addAttribute("msg","포인트 충전하셈");
 		   
-		   return "";
+		   return "redirect:/mypage/update";
 	   }
 
    }
