@@ -105,70 +105,70 @@ function getStoryItem(image) {
                     onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';" style="width: 41.818182px;"/>
             </a>
         </div>
-<div class="nickname-date-wrapper" style="display: flex; flex-direction: column; margin-left: 10px;">
-    <div style="font-size:14px; height: 20px;">
-        <strong>${image.mem_nickname}</strong>
-    </div>
-    <div style="font-size:12px; color:#adb5bd;">
-        ${displayedAt(image.posts_date)}
-    </div>
-</div>
-    </div>
-
-	<div class="sl__item__img">
-		<img src="${contextPath}/resources/upload/social/${image.posts_image1}"/>
-	</div>
-
-	<div class="sl__item__contents">
-		<div class="sl__item__contents__icon">
-
-			<button>`;
-			
-			if(image.likeState) {
-				item += `<i class="fas fa-heart active" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
-			} else {
-				item += `<i class="far fa-heart" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
-			}
-				
-			
-		item += `
-			</button>
+		<div class="nickname-date-wrapper" style="display: flex; flex-direction: column; margin-left: 10px;">
+		    <div style="font-size:14px; height: 20px;">
+		        <strong>${image.mem_nickname}</strong>
+		    </div>
+		    <div style="font-size:12px; color:#adb5bd;">
+		        ${displayedAt(image.posts_date)}
+		    </div>
 		</div>
-
-		<span class="like">좋아요<b id="storyLikeCount-${image.posts_idx}">${image.likeCount}</b>개</span>
-
-		<div class="sl__item__contents__content">
-			<p>${image.posts_content}</p>
-		</div>
-
-		<div id="storyCommentList-${image.posts_idx}">`;
+		    </div>
 		
-			image.comment_contents.forEach((comment)=>{
-				item+=`	
-				<div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">`+getIndentation(comment.comment_re_lev)+`
-                                        <div class="sl__item__header" style="height: 25px;">
-                                            <div style="margin-top: 10px;">
-                                                <div style="height: 25px;">
-                                                    <a href="${contextPath}/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
-                                                    <img class="profile-image" src="${contextPath}/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
-                                                        style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
-                                                	</a>
-                                                </div>
-                                            </div>
+			<div class="sl__item__img">
+				<img src="${contextPath}/resources/upload/social/${image.posts_image1}"/>
+			</div>
+		
+			<div class="sl__item__contents">
+				<div class="sl__item__contents__icon">
+		
+					<button>`;
+					
+					if(image.likeState) {
+						item += `<i class="fas fa-heart active" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
+					} else {
+						item += `<i class="far fa-heart" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`;
+					}
+						
+					
+				item += `
+					</button>
+				</div>
+		
+				<span class="like">좋아요<b id="storyLikeCount-${image.posts_idx}">${image.likeCount}</b>개</span>
+		
+				<div class="sl__item__contents__content">
+					<p>${image.posts_content}</p>
+				</div>
+		
+				<div id="storyCommentList-${image.posts_idx}">`;
+				
+					image.comment_contents.forEach((comment)=>{
+						item+=`	
+						<div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">`+getIndentation(comment.comment_re_lev)+`
+                            <div class="sl__item__header" style="height: 25px;">
+                                <div style="margin-top: 10px;">
+                                    <div style="height: 25px;">
+                                        <a href="${contextPath}/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
+                                        <img class="profile-image" src="${contextPath}/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
+                                            style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
+                                    	</a>
+                                    </div>
+                                </div>
 
-                                            <div class="d-flex flex-column w-100" style="height: 40px;" id="storyReComment">
-                                                <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
-                                                    <span><strong>${comment.mem_nickname}</strong></span>
-                                                    <span class="ms-2" style="white-space: nowrap; color :#495057;">${comment.comment_content}</span>
-                                                </div>
-                                                <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.7rem;">
-                                                    <span class="" style="color:#adb5bd;">${displayedAt(comment.comment_date)}</span>
-                                                    <span class="ms-2">
-														<button class="reply-btn btn-sm text-black-50" onclick="openReplyForm(${image.posts_idx}, ${comment.comment_idx})"><strong>답변달기</strong></button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>`;
+                                <div class="d-flex flex-column w-100" style="height: 40px;" id="storyReComment">
+                                    <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
+                                        <span><strong>${comment.mem_nickname}</strong></span>
+                                        <span class="ms-2" style="white-space: nowrap; color :#495057;">${comment.comment_content}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.7rem;">
+                                        <span class="" style="color:#adb5bd;">${displayedAt(comment.comment_date)}</span>
+                                        <span class="ms-2">
+											<button class="reply-btn btn-sm text-black-50" onclick="openReplyForm(${image.posts_idx}, ${comment.comment_idx})"><strong>답변달기</strong></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>`;
 				
 			if (principalId == comment.mem_idx) {
 				item +=
