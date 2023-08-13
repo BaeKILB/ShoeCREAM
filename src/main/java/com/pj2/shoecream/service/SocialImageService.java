@@ -251,6 +251,8 @@ public class SocialImageService {
 		    int insertedCommentIdx = socialCommentVO.getComment_idx();
 		    socialCommentVO.setComment_re_ref(insertedCommentIdx);
 		    socialImageMapper.updateComment_ref(socialCommentVO);
+		    
+		    System.out.println("댓글 값 :" + socialCommentVO);
 		    return socialCommentVO;
 		}
 		
@@ -289,16 +291,23 @@ public class SocialImageService {
 		  String profileImageUrl = socialImageMapper.findProfileImageUrlByMemberId(socialCommentVO.getMem_idx());
 		    // 프로필 이미지 URL 조회 후 SocialCommentVO에 set
 		  socialCommentVO.setMem_profileImageUrl(profileImageUrl);
-			// 대댓글 작성하기 전에 레벨과 시퀀스 값을 설정합니다.
-		  SocialCommentVO originalComment = socialImageMapper.findById(socialCommentVO.getComment_re_ref());
+		  // 대댓글 작성하기 전에 원본 댓글과 원본 답변의 값을 확인하여 comment_re_ref를 설정합니다.
+		  SocialCommentVO originalComment;
+		  if(socialCommentVO.getComment_re_ref() != socialCommentVO.getComment_idx()){  // 답변의 답변인 경우
+		    originalComment = socialImageMapper.findById(socialCommentVO.getComment_re_ref());
+		  } else {  // 댓글의 답변인 경우
+		    originalComment = socialImageMapper.findById(socialCommentVO.getComment_re_ref());
+		  }
+
 		  socialCommentVO.setComment_re_lev(originalComment.getComment_re_lev());
 		  socialCommentVO.setComment_re_seq(originalComment.getComment_re_seq());
+		  socialCommentVO.setComment_re_ref(originalComment.getComment_re_ref());
 
 		  socialImageMapper.insertReComment(socialCommentVO);
-		  socialImageMapper.findCommentById(socialCommentVO.getComment_idx());
-//		  SocialCommentVO insertedComment = socialImageMapper.findCommentById(socialCommentVO.getComment_idx());
-		    // 프로필 이미지 URL을 가져와서 필드를 채우기
-//		  socialCommentVO.setMem_profileImageUrl(insertedComment.getMem_profileImageUrl());
+		  SocialCommentVO insertedComment = socialImageMapper.findCommentById(socialCommentVO.getComment_idx());
+		  socialCommentVO.setComment_date(insertedComment.getComment_date());
+		  socialCommentVO.setComment_re_seq(insertedComment.getComment_re_seq());
+		  socialCommentVO.setComment_re_ref(insertedComment.getComment_re_ref());
 		  return socialCommentVO;
 		}
 

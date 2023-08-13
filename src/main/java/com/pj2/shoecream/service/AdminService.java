@@ -144,9 +144,9 @@ public class AdminService {
 	public int getcreampaging() {
 		return mapper.getcreampaging();
 	}
-	public int deletecream(String cream_idx) {
+	public int deletecream(int ci_code) {
 		// TODO Auto-generated method stub
-		return mapper.deletecream(cream_idx);
+		return mapper.deletecream(ci_code);
 	}
 
 	// 경매 차트 계산하기

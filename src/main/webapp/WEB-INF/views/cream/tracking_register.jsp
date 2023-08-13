@@ -101,7 +101,7 @@ function trackingSubmit() {
 			<div class="col">
 				<form action="trackingRegister2" method="post" class="container bg-light rounded-3">
 					<input type="hidden" name="cream_idx" value="${cream.cream_idx }">
-					<input type="hidden" name="request_idx" value="${request_idx }">
+					<input type="hidden" name="request_idx" value="${cream.request_idx }">
 					<div class="mb-3 row">
 						<label for="auction_title" class="col-sm-2 col-form-label">상품명</label>
 						<div class="col-sm-10">

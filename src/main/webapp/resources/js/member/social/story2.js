@@ -7,16 +7,6 @@
 	(5) 댓글삭제
  */
  
- 
-// 댓글의 답변일시 띄어쓰기해서 보여주기
-function getIndentation(comment_re_lev) {
-    let indentation = "";
-    for (let i = 0; i < comment_re_lev; i++) {
-        indentation += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    }
-    return indentation;
-}
-
  // 댓글 및 게시물 시간 계산 표시
 function displayedAt(createdAt) {
   const milliSeconds = new Date() - new Date(createdAt)
@@ -193,6 +183,14 @@ function getStoryItem(image) {
 	return item;
 }
 
+function getIndentation(comment_re_lev) {
+    let indentation = "";
+    for (let i = 0; i < comment_re_lev; i++) {
+        indentation += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    }
+    return indentation;
+}
+
 // (2) 스토리 스크롤 페이징하기
 //$(window).scroll(() => {
 //
@@ -279,7 +277,7 @@ function addComment(posts_idx) {
     let profileImageUrl = comment.mem_profileImageUrl;
 
     let content = `
-   <div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
+    <div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
     	 <div class="sl__item__header" style="height: 25px;">
 	        <div style="margin-top: 10px;">
 	            <div style="height: 25px;">
@@ -345,6 +343,7 @@ function deleteComment(comment_idx) {
 	    return;
 	  }
 
+	
 	$.ajax({
 		type:"POST",
         url:`${contextPath}/api/Recomment`,
@@ -359,7 +358,8 @@ function deleteComment(comment_idx) {
 
     // 답변을 보여주는 코드입니다.
     let content = `
-	<div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">` + getIndentation(comment.comment_re_seq) + `
+    <div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
+        <div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
      		<div class="sl__item__header" style="height: 25px;">
                 <div style="margin-top: 10px;">
                     <div style="height: 25px;">
@@ -382,6 +382,7 @@ function deleteComment(comment_idx) {
                         </span>
                     </div>
                 </div>
+            </div>
     </div>`;
 	  // 올바른 위치를 찾습니다.
 	  const targetPos = $(`#storyCommentItem-${comment_idx}`);

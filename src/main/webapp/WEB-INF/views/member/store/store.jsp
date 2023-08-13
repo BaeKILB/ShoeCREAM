@@ -616,8 +616,8 @@ function payAuction(idx, price, id, title){
 																<c:when test="${auctionList.pay_status eq '결제완료' }"> <!-- 결제완료시 -->
 																	<c:choose>
 																		<c:when test="${auctionList.tracking_num eq null }"> <!-- 운송장 미등록시 -->
-                                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/deliveryInfo?auction_idx=${auctionList.auction_idx}', '구매자정보', 'width=580, height=550, left=100, top=50')">구매자 정보</button>
-                                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm?auction_idx=${auctionList.auction_idx}', '운송장 등록', 'width=580, height=360, left=100, top=50')">운송장 등록</button>
+                                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/deliveryInfo?auction_idx=${auctionList.auction_idx}', '구매자정보', 'width=580, height=360, left=100, top=50')">구매자 정보</button>
+                                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm?auction_idx=${auctionList.auction_idx}', '구매자정보', 'width=580, height=360, left=100, top=50')">운송장 등록</button>
 																		</c:when>
 																		<c:when test="${auctionList.tracking_num ne null }"> <!-- 운송장 등록시 -->
                                                                             <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">뭘로하지</button>
@@ -725,7 +725,7 @@ function payAuction(idx, price, id, title){
 									    <c:if test="${auctionList.bid_state eq '낙찰' || auctionList.bid_state eq '즉시구매'}">
 	                                        <c:choose>
 	                                            <c:when test="${auctionList.pay_status eq null }">
-                                                    <button type="button" class="btn btn-light btn-half-height" onclick="location.href='${pageContext.request.contextPath }/auctionPayForm?auction_idx=${auctionList.auction_idx}&auctionMethod=0'">결제</button>
+							                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href=''">결제</button>
 	                                            </c:when>
 	                                            <c:when test="${auctionList.pay_status eq '결제완료' && auctionList.delivery_status ne '인수'}">
 	                                               <c:choose>

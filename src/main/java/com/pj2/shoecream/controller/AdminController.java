@@ -286,7 +286,7 @@ public class AdminController {
 		if(endPage > maxPage) {
 			endPage = maxPage;
 		}
-	
+		
 		//0813 이온추가 구매자가 택배 보낼때 등록한 운송장 테이블 조회
 		
 		PageInfoVO pageInfo = new PageInfoVO(listCount, pageListLimit, maxPage, startPage, endPage);
@@ -524,9 +524,9 @@ public class AdminController {
 		
 		// 크림 삭제
 		@GetMapping("deleteCream")
-		public String deleteCream(HttpSession session, @RequestParam String cream_idx, Model model) {
+		public String deleteCream(HttpSession session, @RequestParam int ci_code, Model model) {
 			
-			int deleteCreamCount = service.deletecream(cream_idx);
+			int deleteCreamCount = service.deletecream(ci_code);
 			
 			if (deleteCreamCount < 0) {
 				model.addAttribute("msg", "삭제 실패");

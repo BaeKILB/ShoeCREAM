@@ -308,8 +308,6 @@ public class CreamController {//크림 컨트롤러 입니다.
 	        image.setImage2_name("");
 	        image.setImage3_name("");
 	        image.setImage4_name("");
-	        
-	        
 
 	        String imageName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
 			String imageName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
@@ -323,6 +321,7 @@ public class CreamController {//크림 컨트롤러 입니다.
 
 
 			int insertCount = isService.modifyProductImage(image);
+			System.out.println("★★★★★ "+insertCount);
 			if (insertCount > 0) {
 			    try {
 				if (!mFile1.getOriginalFilename().equals("")) mFile1.transferTo(new File(saveDir, imageName1));
@@ -334,6 +333,8 @@ public class CreamController {//크림 컨트롤러 입니다.
 			    } catch (IOException e) {
 				e.printStackTrace();
 			    }
+			    System.out.println("★★★★크림수정 되냐구");
+			    //이미지 업로드가 성공하면 
 			    service.modifyCream(map);
 			}
 			
@@ -341,21 +342,20 @@ public class CreamController {//크림 컨트롤러 입니다.
 	   return "admin/admin_cream";
    }
    
-   //크림 삭제 admin에 있던데
-
+   //크림 삭제
+   @PostMapping("CreamDelete")
+   public String CreamDelete() {
+	   
+	   return "";
+   }
 
    //구매자가 운송장 등록하는 폼 던지기
 	@GetMapping("trackingRegisterForm2")
 	public String trackingRegisterForm2(
-			@RequestParam String cream_idx, @RequestParam String request_idx
+			@RequestParam String cream_idx
 			, Model model) {
-		
-		
 		Map<String,Object> cream = service.getCream(cream_idx);
 		model.addAttribute("cream",cream);
-		model.addAttribute("request_idx",request_idx);
-		
-		
 		return "cream/tracking_register";
 	}
 	
@@ -374,16 +374,11 @@ public class CreamController {//크림 컨트롤러 입니다.
 		int buyer_idx = 1234;
 		
 		String cream_idx = (String)map.get("cream_idx");
-		String request_idx = String.valueOf(map.get("request_idx"));
 		
-		System.out.println("★★★★★★★★"+map.toString());
-				
-				
 		map.put("seller_idx", seller_idx); // 판매자 정보
 		map.put("buyer_idx", buyer_idx); 
 		map.put("cream_idx", cream_idx);
-		map.put("request_idx", request_idx);
-		System.out.println(request_idx);
+		
 		if(service.registTracking(map) > 0) {
 			model.addAttribute("msg","운송장번호 등록성공");
 			return "inc/close";
