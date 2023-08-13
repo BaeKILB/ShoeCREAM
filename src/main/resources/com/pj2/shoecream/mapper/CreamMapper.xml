@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.CreamMapper">
+
 	<insert id="insertCreamItem">
 		insert into
 			cream_item
@@ -30,6 +31,33 @@
 			,'0'
 		)
 	</insert>
+	
+	<update id="modifyCream">
+		UPDATE cream_item
+		SET cream_title = #{cream_title},
+		    cream_content = #{cream_content},
+		    size220 = #{size220},
+		    size225 = #{size225},
+		    size230 = #{size230},
+		    size235 = #{size235},
+		    size240 = #{size240},
+		    size245 = #{size245},
+		    size250 = #{size250},
+		    size255 = #{size255},
+		    size260 = #{size260},
+		    size265 = #{size265},
+		    size270 = #{size270},
+		    size275 = #{size275},
+		    size280 = #{size280},
+		    size285 = #{size285},
+		    size290 = #{size290},
+		    size295 = #{size295},
+		    size300 = #{size300},
+		    size305 = #{size305},
+		    size310 = #{size310}
+		WHERE cream_idx = #{cream_idx};
+
+	</update>
 	
 <!-- 	<select id="getCreamList" resultType="map"> -->
 <!-- 		SELECT  -->
@@ -158,7 +186,7 @@
             courier_info
         values(
             null
-            , #{cream_idx}
+            , #{request_idx}
             , #{seller_idx}
             , #{buyer_idx}
             , #{tracking_company}

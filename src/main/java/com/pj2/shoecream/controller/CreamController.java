@@ -250,7 +250,7 @@ public class CreamController {//크림 컨트롤러 입니다.
 		return jsonObject.toString();
    }
    
-   //크림 수정 폼 - 페이지 안넘어가짐 이유를 모르겠음
+   //크림 수정 폼 
    @GetMapping("CreamModify")
    public String CreamModifyForm(HttpSession session
 	        , Model model,Criteria cri
@@ -266,12 +266,87 @@ public class CreamController {//크림 컨트롤러 입니다.
 	   return "admin/admin_cream_modify";
    }
    
+   //크림 수정 작업
    @PostMapping("CreamModifyPro")
    public String CreamModifyPro(Model model, ProductImageVO image
-	          , HttpSession session) {
+	          , HttpSession session, @RequestParam Map<String, Object> map) {
 	   
+	   System.out.println("넘어오나 ?");
 	   
+	      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+	        int sId = mPrincipalDetails.getMember().getMem_idx();
+
+
+	        String productId = (String) map.get("cream_idx");
+	        
+			String uploadDir = "/resources/upload/cream";
+			String saveDir = session.getServletContext().getRealPath(uploadDir);
+			String subDir = "";
+			try {
+	           Date date = new Date();
+	           SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+	           subDir = sdf.format(date);
+	           saveDir += "/" + subDir;
+	           Path path = Paths.get(saveDir);
+	           Files.createDirectories(path);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+	        image.setProduct_idx(productId);
+	        image.setImage_path(uploadDir+"/"+subDir);
+
+	        MultipartFile mFile1 = image.getImage1();
+	        MultipartFile mFile2 = image.getImage2();
+	        MultipartFile mFile3 = image.getImage3();
+	        MultipartFile mFile4 = image.getImage4();
+
+	        String uuid = UUID.randomUUID().toString();
+
+	        image.setImage1_name("");
+	        image.setImage2_name("");
+	        image.setImage3_name("");
+	        image.setImage4_name("");
+
+	        String imageName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
+			String imageName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
+			String imageName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
+			String imageName4 = uuid.substring(0, 8) + "_" + mFile4.getOriginalFilename();
+
+			if(!mFile1.getOriginalFilename().equals("")) image.setImage1_name(imageName1);
+			if(!mFile2.getOriginalFilename().equals("")) image.setImage2_name(imageName2);
+			if(!mFile3.getOriginalFilename().equals("")) image.setImage3_name(imageName3);
+			if(!mFile4.getOriginalFilename().equals("")) image.setImage4_name(imageName4);
+
+
+			int insertCount = isService.modifyProductImage(image);
+			System.out.println("★★★★★ "+insertCount);
+			if (insertCount > 0) {
+			    try {
+				if (!mFile1.getOriginalFilename().equals("")) mFile1.transferTo(new File(saveDir, imageName1));
+				if (!mFile2.getOriginalFilename().equals("")) mFile2.transferTo(new File(saveDir, imageName2));
+				if (!mFile3.getOriginalFilename().equals("")) mFile3.transferTo(new File(saveDir, imageName3));
+				if (!mFile4.getOriginalFilename().equals("")) mFile4.transferTo(new File(saveDir, imageName4));
+			    } catch (IllegalStateException e) {
+				e.printStackTrace();
+			    } catch (IOException e) {
+				e.printStackTrace();
+			    }
+			    System.out.println("★★★★크림수정 되냐구");
+			    //이미지 업로드가 성공하면 
+			    service.modifyCream(map);
+			}
+			
+
 	   return "admin/admin_cream";
+   }
+   
+   //크림 삭제
+   @PostMapping("CreamDelete")
+   public String CreamDelete() {
+	   
+	   return "";
    }
 
    //구매자가 운송장 등록하는 폼 던지기

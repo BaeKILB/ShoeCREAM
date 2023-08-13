@@ -129,7 +129,8 @@ const setImages = (e) => {
 		<hr class="tit_line">
 		<div class="board_cont">	
 			<div class="board_list_wrap">
-				<form action="CreamRegister" method="post" enctype="multipart/form-data">
+				<form action="CreamModifyPro" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="cream_idx" value=${cream.cream_idx }>
 					<div class="firstContainner">
 						<div class="first_title">상품 이미지	
 							<div class="image_box">
@@ -178,7 +179,7 @@ const setImages = (e) => {
 					<div class="secondContainner">
 						<div class="second_title">제목</div>
 						<div class="second_content">
-							<input type="text" class="product_name" name="cream_title" placeholder="품목을 입력해주세요."/>
+							<input type="text" class="product_name" name="cream_title" placeholder="품목을 입력해주세요." value="${cream.cream_title }"/>
 						</div>
 					</div>
 					
@@ -192,14 +193,11 @@ const setImages = (e) => {
 				    <tbody>
 				        <c:forEach begin="220" end="310" step="5" varStatus="status">
 				          <tr>
-				              <td> 
-				           
-				                    <input type="number" name="size${status.index}" value="
-										<c:forEach begin=" ${cream['size' + status.index]}" end="310" step="5" > </c:forEach>
-				                    ">
-				                </td>
-				            </tr>
+				              <td>${status.index}</td>
+				              <td><input type="number" name="size${status.index}" ></td>
+				           </tr>
 				        </c:forEach>
+				        	
 				    </tbody>
 				</table>
 				
