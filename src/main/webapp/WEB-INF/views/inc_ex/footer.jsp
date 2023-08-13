@@ -54,7 +54,7 @@
                             <p>고객센터 ></p>
                             <p>051-803-0909</p>
                             <p>운영시간 9시 - 18시 (주말/공휴일 휴무, 점심시간 12시 - 13시)</p>
-                            <span>공지사항</span> <span>문의하기</span><span>자주 묻는 질문</span>
+                            <span><a href="UserNotice">공지사항</a></span> <span>문의하기</span><span>자주 묻는 질문</span>
                         </div>
 <!--                         <div id="mid_footer_right2"> -->
 <!--                             <p>우리은행 채무지급보증 안내</p> -->
