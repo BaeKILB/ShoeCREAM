@@ -779,7 +779,6 @@ public class JunggoController {
 	}
 	
 	
-
 	//========================================================================================
 	//==================================노용석================================================
 	
@@ -854,10 +853,10 @@ public class JunggoController {
 		}
 		
 		// JungGoNohVO 객체에 전달된 MultipartFile 객체 꺼내기
-		MultipartFile mFile1 = jungGoNoh.getFile1();
-		MultipartFile mFile2 = jungGoNoh.getFile2();
-		MultipartFile mFile3 = jungGoNoh.getFile3();
-		MultipartFile mFile4 = jungGoNoh.getFile4();
+		MultipartFile mFile1 = jungGoNoh.getImage1();
+		MultipartFile mFile2 = jungGoNoh.getImage2();
+		MultipartFile mFile3 = jungGoNoh.getImage3();
+		MultipartFile mFile4 = jungGoNoh.getImage4();
 
 		String filename1 = mFile1.getOriginalFilename();
 		String filename2 = mFile2.getOriginalFilename();
@@ -866,7 +865,9 @@ public class JunggoController {
 		String fileext1 = filename1.substring(filename1.lastIndexOf(".") + 1);
 		String fileext2 = filename2.substring(filename2.lastIndexOf(".") + 1);
 		String fileext3 = filename3.substring(filename3.lastIndexOf(".") + 1);
-		String fileext4 = filename4.substring(filename3.lastIndexOf(".") + 1);
+		String fileext4 = filename4.substring(filename4.lastIndexOf(".") + 1);
+		
+		
 		
 		//파일 확장명 제한
 		if((fileext1 == null || fileext1.length() == 0))
@@ -919,12 +920,12 @@ public class JunggoController {
 		}
 		else
 		{	
-			if(fileext4.equals("png") || fileext4.equals("jpg") || fileext3.equals("jpeg"))
+			if(fileext4.equals("png") || fileext4.equals("jpg") || fileext4.equals("jpeg"))
 			{
 			}
 			else 
 			{
-				model.addAttribute("msg", "세번째 파일 업로드는 이미지만 업로드 가능합니다.");
+				model.addAttribute("msg", "네번째 파일 업로드는 이미지만 업로드 가능합니다.");
 				return "inc/fail_back";
 			}
 		}
@@ -944,10 +945,10 @@ public class JunggoController {
 //				System.out.println(uuid.substring(0, 8));
 		// 생성된 UUID 값(8자리 추출)과 업로드 파일명을 결합하여 JungGoNohVO 객체에 저장(구분자로 _ 기호 추가)
 		// => 단, 파일명이 존재하는 경우에만 파일명 생성(없을 경우를 대비하여 기본 파일명 널스트링으로 처리)
-		jungGoNoh.setImage1("");
-		jungGoNoh.setImage2("");
-		jungGoNoh.setImage3("");
-		jungGoNoh.setImage4("");
+		jungGoNoh.setImage1_name("");
+		jungGoNoh.setImage2_name("");
+		jungGoNoh.setImage3_name("");
+		jungGoNoh.setImage4_name("");
 		
 		// 파일명을 저장할 변수 선언
 		String fileName1 = uuid.substring(0, 8) + "_" + mFile1.getOriginalFilename();
@@ -956,24 +957,24 @@ public class JunggoController {
 		String fileName4 = uuid.substring(0, 8) + "_" + mFile4.getOriginalFilename();
 		
 		if(!mFile1.getOriginalFilename().equals("")) {
-			jungGoNoh.setImage1(subDir + "/" + fileName1);
+			jungGoNoh.setImage1_name(subDir + "/" + fileName1);
 		}
 		
 		if(!mFile2.getOriginalFilename().equals("")) {
-			jungGoNoh.setImage2(subDir + "/" + fileName2);
+			jungGoNoh.setImage2_name(subDir + "/" + fileName2);
 		}
 		
 		if(!mFile3.getOriginalFilename().equals("")) {
-			jungGoNoh.setImage3(subDir + "/" + fileName3);
+			jungGoNoh.setImage3_name(subDir + "/" + fileName3);
 		}
 		
 		if(!mFile4.getOriginalFilename().equals("")) {
-			jungGoNoh.setImage4(subDir + "/" + fileName4);
+			jungGoNoh.setImage4_name(subDir + "/" + fileName4);
 		}
-		System.out.println("실제 업로드 파일명1 : " + jungGoNoh.getImage1());
-		System.out.println("실제 업로드 파일명2 : " + jungGoNoh.getImage2());
-		System.out.println("실제 업로드 파일명3 : " + jungGoNoh.getImage3());
-		System.out.println("실제 업로드 파일명3 : " + jungGoNoh.getImage4());
+		System.out.println("실제 업로드 파일명1 : " + jungGoNoh.getImage1_name());
+		System.out.println("실제 업로드 파일명2 : " + jungGoNoh.getImage2_name());
+		System.out.println("실제 업로드 파일명3 : " + jungGoNoh.getImage3_name());
+		System.out.println("실제 업로드 파일명3 : " + jungGoNoh.getImage4_name());
 	
 	
 		// -----------------------------필터링-------------------------------------------
@@ -1276,20 +1277,20 @@ public class JunggoController {
 		//System.out.println("&&&&&&&&&&ifReport?"+ifReport+"끝");
 		if(ifReport == null) { //조회 내역이 없을 때
 		
-				//입력 작업 시작	
-				int insertReport = jungGoNohService.registReport(jungGoNoh);
-			
-				if(insertReport < 0) {
-						model.addAttribute("msg", "신청 실패");
-						return "inc/fail_back";
-						} 	
-					} 
-				else { //조회 내역이 있을때
-						model.addAttribute("msg", "이미 해당 건에 대해 신고 신청하신 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
-						return "inc/fail_back";
-				}
+		//입력 작업 시작	
+		int insertReport = jungGoNohService.registReport(jungGoNoh);
+	
+		if(insertReport < 0) {
+				model.addAttribute("msg", "신청 실패");
+				return "inc/fail_back";
+				} 	
+			} 
+		else { //조회 내역이 있을때
+				model.addAttribute("msg", "이미 해당 건에 대해 신고 신청하신 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+				return "inc/fail_back";
+		}
 		
-		
+		model.addAttribute("msg", "신청 성공");
 		return "inc/close";
 	}
 	
@@ -1615,6 +1616,8 @@ public class JunggoController {
 		
 
 	
+		
+
 		
 
 		

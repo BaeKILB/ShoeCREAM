@@ -116,7 +116,7 @@
 			<div class="finish_btn" align="center">
 				<a href="${pageContext.request.contextPath }"><button>메인으로</button></a>
 				<a href="${pageContext.request.contextPath }/MemberRes"><button>마이리스트 거래 내역 조회</button></a>
-				<a href="${pageContext.request.contextPath }/MemberRes"><button>거래후기 작성</button></a>
+				<a href="${pageContext.request.contextPath }/registJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${jungGoNoh.buyier_idx}" onclick="window.open(this.href, '_blank', 'width=500, height=400'); return false;""><button>거래후기 작성</button></a>
 				<a href='chatRooms?chat_area=${param.chat_area}&chat_room_idx=${param.chat_room_idx}'><button>해당 1:1대화창으로 이동</button></a>
 			</div>
 			
