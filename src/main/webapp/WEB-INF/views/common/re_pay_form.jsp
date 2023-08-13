@@ -83,6 +83,7 @@ $(function() {
 	            $("#sample6_extraAddress").val('');
 	            $("#recipient_name").val('');
 	            $("#recipient_phone").val('');
+	            $("#delivery_request").val('');
 	            $(this).addClass('on');
 		 } else {
 			 deliveryCheck();
@@ -342,17 +343,13 @@ function connectWs() {
 								<input type="text" id="sample6_detailAddress" name="sample6_detailAddress" placeholder="상세주소">
 								<input type="text" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
 							</div>
-					
 						</li>
                         <li class="drv_input">
                             <label for="delivery_request">배송 요청 사항</label>
                             <input type="text" id="delivery_request" name="delivery_request" placeholder="배송 메모를 입력해 주세요" class="drv_80">
                         </li>
-					
 					</ul>
 				</li>
-				
-				
 				<li class="agreement_p">
 					<div class="menu_tit">
 						<span>이용약관</span>
@@ -437,24 +434,17 @@ function connectWs() {
 	                             <input type="checkbox" id="agreeBtn" class="agreeBtns">이용약관에 동의합니다.
 	                             <br>
                             </p>
-							</li>
+						</li>
 					</ul>
 				</li>
-
 			</ul>
 			<input type="button" class="res_p" value="결제하기" onclick="Confirmation()">
 			<input type="button" class="res_p" value="뒤로가기" onclick="history.back()">
 		</form>
-		
 	</section>
 	<!-- footer 추가 -->
 	<footer>
 <%-- 		<jsp:include page="../../inc/footer.jsp"></jsp:include> --%>
 	</footer>
-	
-	
 </body>
-
-
-
 </html>
