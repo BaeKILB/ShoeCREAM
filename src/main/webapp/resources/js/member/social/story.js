@@ -134,7 +134,8 @@ function getStoryItem(image) {
 		<div id="storyCommentList-${image.posts_idx}">`;
 		
 			image.comment_contents.forEach((comment)=>{
-				item+=`<div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
+				item+=`	
+				<div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
                                         <div class="sl__item__header" style="height: 25px;">
                                             <div style="margin-top: 10px;">
                                                 <div style="height: 25px;">
@@ -145,7 +146,7 @@ function getStoryItem(image) {
                                                 </div>
                                             </div>
 
-                                            <div class="d-flex flex-column w-100" style="height: 40px;">
+                                            <div class="d-flex flex-column w-100" style="height: 40px;" id="storyReComment">
                                                 <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
                                                     <span><strong>${comment.mem_nickname}</strong></span>
                                                     <span class="ms-2" style="white-space: nowrap; color :#495057;">${comment.comment_content}</span>
@@ -153,17 +154,11 @@ function getStoryItem(image) {
                                                 <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.7rem;">
                                                     <span class="" style="color:#adb5bd;">${displayedAt(comment.comment_date)}</span>
                                                     <span class="ms-2">
-                                                        <button class="reply-btn btn-sm text-black-50"><strong>답변달기</strong></button>
+														<button class="reply-btn btn-sm text-black-50" onclick="openReplyForm(${image.posts_idx}, ${comment.comment_idx})"><strong>답변달기</strong></button>
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>`;
-				
-//				
-//				
-//				<p>
-//					<b>${comment.mem_nickname} :</b> ${comment.comment_content}
-//				</p>`;
 				
 			if (principalId == comment.mem_idx) {
 				item +=
@@ -271,35 +266,38 @@ function addComment(posts_idx) {
 		dataType:"json"
     }).done(res=>{
         console.log("성공", res);
-
-        let comment = res.data;
-        let profileImageUrl = comment.mem_profileImageUrl;
         
-       let content = `<div class="sl__item__contents__comment small-header " id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
-                                        <div class="sl__item__header" style="height: 25px;">
-                                            <div style="margin-top: 10px;">
-                                                <div style="height: 25px;">
-                                                    <a href="${contextPath}/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
-                                                    <img class="profile-image" src="${contextPath}/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
-                                                        style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
-                                                	</a>
-                                                </div>
-                                            </div>
+    let comment = res.data;
+    let profileImageUrl = comment.mem_profileImageUrl;
 
-                                            <div class="d-flex flex-column w-100" style="height: 40px;">
-                                                <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
-                                                    <span><strong>${comment.mem_nickname}</strong></span>
-                                                    <span class="ms-2" style="white-space: nowrap; color :#495057;">${res.data.comment_content}</span>
-                                                </div>
-                                                <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.7rem;">
-                                                    <span class="" style="color:#adb5bd;">${displayedAt(comment.comment_date)}</span>
-                                                    <span class="ms-2">
-                                                        <button class="reply-btn btn-sm text-black-50"><strong>답변달기</strong></button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>`;
-        commentList.prepend(content);
+    // 답변을 보여주는 코드입니다.
+    let content = `
+    <div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
+    	 <div class="sl__item__header" style="height: 25px;">
+	        <div style="margin-top: 10px;">
+	            <div style="height: 25px;">
+	                <a href="${contextPath}/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
+	                <img class="profile-image" src="${contextPath}/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
+	                    style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
+	            	</a>
+	            </div>
+	        </div>
+	
+	        <div class="d-flex flex-column w-100" style="height: 40px;">
+	            <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
+	                <span><strong>${comment.mem_nickname}</strong></span>
+	                <span class="ms-2" style="white-space: nowrap; color :#495057;">${res.data.comment_content}</span>
+	            </div>
+	            <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.7rem;">
+	                <span class="" style="color:#adb5bd;">${displayedAt(comment.comment_date)}</span>
+	                <span class="ms-2">
+	                    <button class="reply-btn btn-sm text-black-50"><strong>답변달기</strong></button>
+	                </span>
+	            </div>
+	        </div>
+        </div>
+    </div>`;
+    commentList.append(content); // 해당 답변 리스트에 추가합니다.
 
     }).fail(error=>{
         console.log("실패", error);
@@ -324,8 +322,76 @@ function deleteComment(comment_idx) {
 	});
 }
 
+// (6) 댓글 답변 달기
+	function openReplyForm(posts_idx, comment_idx) {
+	  let commentInput = $(`#storyCommentInput-${posts_idx}`);
+	  let commentList = $(`#storyReComment-${comment_idx}`);
+	
+	  let data = {
+	    posts_idx: posts_idx,
+	    comment_content: commentInput.val(),
+	    comment_re_ref: comment_idx // 댓글의 원본 번호를 추가
+	  };
+	
+	  if (data.comment_content === "") {
+	    alert("답변을 작성해주세요!");
+	    return;
+	  }
 
+	
+	$.ajax({
+		type:"POST",
+        url:`${contextPath}/api/Recomment`,
+		data:JSON.stringify(data),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json"
+    }).done(res=>{
+        console.log("성공", res);
+        
+    let comment = res.data;
+    let profileImageUrl = comment.mem_profileImageUrl;
 
+    // 답변을 보여주는 코드입니다.
+    let content = `
+    <div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
+        <div class="sl__item__contents__comment small-header" id="storyCommentItem-${comment.comment_idx}" style="padding-left: 5px;margin-bottom: 20px;">
+     		<div class="sl__item__header" style="height: 25px;">
+                <div style="margin-top: 10px;">
+                    <div style="height: 25px;">
+                        <a href="${contextPath}/social/${comment.mem_idx}"> <!-- 링크를 추가 -->
+                        <img class="profile-image" src="${contextPath}/resources/upload/profile/${comment.mem_profileImageUrl}" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png';"
+                            style="width: 28.63636px;height: 28.63636px;margin-right: 5px; margin-left: 0px;" />
+                    	</a>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column w-100" style="height: 40px;">
+                    <div class="d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
+                        <span><strong>${comment.mem_nickname}</strong></span>
+                        <span class="ms-2" style="white-space: nowrap; color :#495057;">${res.data.comment_content}</span>
+                    </div>
+                    <div class="d-flex align-items-center no-vertical-margins " style="font-size: 0.7rem;">
+                        <span class="" style="color:#adb5bd;">${displayedAt(comment.comment_date)}</span>
+                        <span class="ms-2">
+                            <button class="reply-btn btn-sm text-black-50"><strong>답변달기</strong></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+    </div>`;
+	  // 올바른 위치를 찾습니다.
+	  const targetPos = $(`#storyCommentItem-${comment_idx}`);
+	
+	  // 새로운 답변을 원본 댓글 하단에 추가합니다.
+	  $(content).insertAfter(targetPos); 
+
+    }).fail(error=>{
+        console.log("실패", error);
+        alert("오류 : " + error.responseJSON.data.comment_content)
+    });
+
+    commentInput.val("");
+}
 
 
 

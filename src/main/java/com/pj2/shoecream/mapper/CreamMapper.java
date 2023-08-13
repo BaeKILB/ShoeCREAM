@@ -31,5 +31,8 @@ public interface CreamMapper {
 
 	int insertTrackingNumber(Map<String, Object> map);
 
+	void modifyCream(Map<String, Object> map);
+
+
 
 }

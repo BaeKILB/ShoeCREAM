@@ -17,10 +17,10 @@
 	<update id="modifyProductImage" parameterType="com.pj2.shoecream.vo.ProductImageVO">
 	    update product_image
 	    set
-	        image1_name = #{image1_name},
-	        image2_name = #{image2_name},
-	        image3_name = #{image3_name},
-	        image4_name = #{image4_name},
+	        image1 = #{image1_name},
+	        image2 = #{image2_name},
+	        image3 = #{image3_name},
+	        image4 = #{image4_name},
 	        image_path = #{image_path}
 	    where product_idx = #{product_idx}
 	</update>

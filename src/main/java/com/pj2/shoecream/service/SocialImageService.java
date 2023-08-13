@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -247,6 +248,8 @@ public class SocialImageService {
 		    socialCommentVO.setMem_profileImageUrl(profileImageUrl);
 
 		    socialImageMapper.insertComment(socialCommentVO);
+		    int insertedCommentIdx = socialCommentVO.getComment_idx();
+		    socialCommentVO.setComment_re_ref(insertedCommentIdx);
 		    socialImageMapper.updateComment_ref(socialCommentVO);
 		    return socialCommentVO;
 		}
@@ -281,6 +284,23 @@ public class SocialImageService {
 			return socialImageMapper.selectPostsImage(posts_idx);
 		}
 
+		// 서비스
+		public SocialCommentVO writeReComment(SocialCommentVO socialCommentVO) {
+		  String profileImageUrl = socialImageMapper.findProfileImageUrlByMemberId(socialCommentVO.getMem_idx());
+		    // 프로필 이미지 URL 조회 후 SocialCommentVO에 set
+		  socialCommentVO.setMem_profileImageUrl(profileImageUrl);
+			// 대댓글 작성하기 전에 레벨과 시퀀스 값을 설정합니다.
+		  SocialCommentVO originalComment = socialImageMapper.findById(socialCommentVO.getComment_re_ref());
+		  socialCommentVO.setComment_re_lev(originalComment.getComment_re_lev());
+		  socialCommentVO.setComment_re_seq(originalComment.getComment_re_seq());
+
+		  socialImageMapper.insertReComment(socialCommentVO);
+		  socialImageMapper.findCommentById(socialCommentVO.getComment_idx());
+//		  SocialCommentVO insertedComment = socialImageMapper.findCommentById(socialCommentVO.getComment_idx());
+		    // 프로필 이미지 URL을 가져와서 필드를 채우기
+//		  socialCommentVO.setMem_profileImageUrl(insertedComment.getMem_profileImageUrl());
+		  return socialCommentVO;
+		}
 
 
 

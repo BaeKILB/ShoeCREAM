@@ -287,6 +287,8 @@ public class AdminController {
 			endPage = maxPage;
 		}
 		
+		//0813 이온추가 구매자가 택배 보낼때 등록한 운송장 테이블 조회
+		
 		PageInfoVO pageInfo = new PageInfoVO(listCount, pageListLimit, maxPage, startPage, endPage);
 		model.addAttribute("creamRequestList", creamRequestList);
 		model.addAttribute("pageInfo", pageInfo);

@@ -16,8 +16,8 @@ public class Scheduler {
 	@Autowired
 	private CourierService service;
 	
-	@Scheduled(cron = "0 0/30 10-20 * * *")
-//	@Scheduled(fixedRate = 10000000)
+//	@Scheduled(cron = "0 0/30 10-20 * * *")
+	@Scheduled(fixedRate = 10000000)
 	public void courierUpdate() {
 		List<Map<String,Object>> courierList = service.getCourierList();
 		

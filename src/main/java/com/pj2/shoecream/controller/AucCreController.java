@@ -37,7 +37,7 @@ public class AucCreController {
 	
 	   
    @GetMapping("payForm2")
-	public String payForm(@RequestParam Map<String,Object> map , Model model) {
+	public String payForm22(@RequestParam Map<String,Object> map , Model model) {
 	   
 //	   {cream_idx=C1691664108524, mem_idx=2}
 //		int idx = -1;

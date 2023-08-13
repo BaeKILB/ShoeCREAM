@@ -44,7 +44,8 @@
 								<th>사이즈</th>
 								<th>결제가격</th>
 								<th>신청일</th>
-								<th>배송조회</th>
+								<th>입고상태</th> 입고전/ 운송장 번호가 등록되면 입고중(클릭시 배송조회)/ 배송완료되면 입고완료
+								<th>주문상태</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -63,6 +64,7 @@
 											<input type="hidden" name="t_invoice" id="t_invoice" value="${requestList.tracking_num }">
 											<input id="tracker" type="button" value="배송조회" class="ins_ans moreBtn">
 									</td>
+									<td>출고전</td>
 								</tr>
 							</c:forEach>
 						</tbody>
