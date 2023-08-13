@@ -82,7 +82,7 @@ public interface AdminMapper {
 	// 크림 페이징
 	int getcreampaging();
 	// 크림 삭제
-	int deletecream(int ci_code);
+	int deletecream(String cream_idx);
 	// 경매 차트 계산
 	List<Map<String, Object>> selectProductList();
 	// 중고 차트 계산

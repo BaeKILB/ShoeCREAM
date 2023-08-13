@@ -178,7 +178,7 @@
 		JOIN 
 		    product_image AS pi ON ci.cream_idx = pi.product_idx
 		LEFT JOIN 
-		    courier_info AS co ON ci.cream_idx = co.product_idx
+		    courier_info AS co ON ci.request_idx = co.product_idx
 		WHERE 
 			ci.mem_idx = #{mem_idx};
     </select>

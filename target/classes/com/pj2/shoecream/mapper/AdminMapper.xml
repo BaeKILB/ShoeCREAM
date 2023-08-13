@@ -156,9 +156,41 @@
 			LIMIT
 				#{listLimit}
 	</select>
+<!-- 	<select id="getCreamRequestList" resultType="com.pj2.shoecream.vo.CreamRequestVO"> -->
+<!-- 		SELECT * -->
+<!-- 			FROM cream_item_request -->
+<!-- 				<if test="!searchKeyword.equals('')"> -->
+<!-- 					WHERE  -->
+<!-- 					<choose> -->
+<!-- 						<when test="searchType.equals('cream_idx')"> -->
+<!-- 							cream_idx LIKE CONCAT('%', #{searchKeyword},'%') -->
+<!-- 						</when> -->
+<!-- 					</choose> -->
+<!-- 				</if> -->
+<!-- 			ORDER BY -->
+<!-- 					request_idx DESC -->
+<!-- 			LIMIT -->
+<!-- 				#{startRow} -->
+<!-- 				, #{listLimit} -->
+<!-- 	</select> -->
 	<select id="getCreamRequestList" resultType="com.pj2.shoecream.vo.CreamRequestVO">
-		SELECT *
-			FROM cream_item_request
+			SELECT    
+				cir.request_idx,
+			    cir.mem_idx,
+			    cir.cream_idx,
+			    cir.cream_title,
+			    cir.cream_size,
+			    cir.cream_price,
+			    cir.delivery_status,
+			    cir.tracking_company,
+			    cir.tracking_num,
+			    cir.request_time,
+			    ci.delivery_status as inbound_delivery_status ,
+			    ci.tracking_company as inbound_tracking_company,
+			    ci.tracking_code as inbound_tracking_code,
+			    ci.tracking_num as inbound_tracking_num
+		
+			FROM cream_item_request cir
 				<if test="!searchKeyword.equals('')">
 					WHERE 
 					<choose>
@@ -167,6 +199,8 @@
 						</when>
 					</choose>
 				</if>
+			JOIN
+    			courier_info ci ON cir.request_idx = ci.product_idx	
 			ORDER BY
 					request_idx DESC
 			LIMIT

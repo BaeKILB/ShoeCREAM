@@ -36,7 +36,7 @@ public class AucCreController {
 	
 	
 	   
-   @GetMapping("payForm2")
+   @GetMapping("payForm2") //크림용
 	public String payForm22(@RequestParam Map<String,Object> map , Model model) {
 	   
 //	   {cream_idx=C1691664108524, mem_idx=2}
@@ -134,9 +134,9 @@ public class AucCreController {
 			}
 		   
 	   }else {
-		   model.addAttribute("msg","포인트 충전하셈");
+//		   model.addAttribute("msg","포인트 충전하셈");
 		   
-		   return "";
+		   return "redirect:/mypage/update";
 	   }
 
    }

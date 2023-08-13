@@ -236,25 +236,25 @@
 							<input type="hidden" name="cream.size225" value="${cream.size225}" id="225">
 							<input type="hidden" name="cream.size230" value="${cream.size230}" id="230">
 							<input type="hidden" name="cream.size235" value="${cream.size235}" id="235">
-							<input type="hidden" name="${cream.size240}" value="${cream.size240}" id="creamSize240">
-							<input type="hidden" name="${cream.size245}" value="${cream.size245}" id="creamSize245">
-							<input type="hidden" name="${cream.size250}" value="${cream.size250}" id="creamSize250">
-							<input type="hidden" name="${cream.size255}" value="${cream.size255}" id="creamSize255">
-							<input type="hidden" name="${cream.size260}" value="${cream.size260}" id="creamSize260">
-							<input type="hidden" name="${cream.size265}" value="${cream.size265}" id="creamSize265">
-							<input type="hidden" name="${cream.size270}" value="${cream.size270}" id="creamSize270">
-							<input type="hidden" name="${cream.size275}" value="${cream.size275}" id="creamSize275">
-							<input type="hidden" name="${cream.size280}" value="${cream.size280}" id="creamSize280">
-							<input type="hidden" name="${cream.size285}" value="${cream.size285}" id="creamSize285">
-							<input type="hidden" name="${cream.size290}" value="${cream.size290}" id="creamSize290">
-							<input type="hidden" name="${cream.size295}" value="${cream.size295}" id="creamSize295">
-							<input type="hidden" name="${cream.size300}" value="${cream.size300}" id="creamSize300">
-							<input type="hidden" name="${cream.size305}" value="${cream.size305}" id="creamSize305">
-							<input type="hidden" name="${cream.size310}" value="${cream.size310}" id="creamSize310">
+							<input type="hidden" name="cream.size240" value="${cream.size240}" id="240">
+							<input type="hidden" name="cream.size245" value="${cream.size245}" id="245">
+							<input type="hidden" name="cream.size250" value="${cream.size250}" id="250">
+							<input type="hidden" name="cream.size255" value="${cream.size255}" id="255">
+							<input type="hidden" name="cream.size260" value="${cream.size260}" id="260">
+							<input type="hidden" name="cream.size265" value="${cream.size265}" id="265">
+							<input type="hidden" name="cream.size270" value="${cream.size270}" id="270">
+							<input type="hidden" name="cream.size275" value="${cream.size275}" id="275">
+							<input type="hidden" name="cream.size280" value="${cream.size280}" id="280">
+							<input type="hidden" name="cream.size285" value="${cream.size285}" id="285">
+							<input type="hidden" name="cream.size290" value="${cream.size290}" id="290">
+							<input type="hidden" name="cream.size295" value="${cream.size295}" id="295">
+							<input type="hidden" name="cream.size300" value="${cream.size300}" id="300">
+							<input type="hidden" name="cream.size305" value="${cream.size305}" id="305">
+							<input type="hidden" name="cream.size310" value="${cream.size310}" id="310">
 					        <span id="priceSpan"></span>
 					    </div>
 					</div>
-						</div> ${cream }
+						</div> 
    								<div class="col text-center ">
 			    	            	<button class="btn btn-light w-100" id="dibsBox">
 							            <span <c:if test="${cream.isLogin != 0 }">onclick="dibsCheck()"</c:if>> 
@@ -275,9 +275,9 @@
 								<br>
 								
 			    	            <div class="col text-center ">
-			    	            <button type="button" id="payTest" class="btn btn-secondary">결제테스트</button>
+<!-- 			    	            <button type="button" id="payTest" class="btn btn-secondary">결제테스트</button> -->
 
-			    	   <button id="applyButton">Apply</button>
+			    	 			  <button id="applyButton" class="btn btn-secondary">결제하기</button>
 			    	            
 <!-- 			    	            	 <input type="submit" class="btn btn-secondary" value="구매하기"   -->
 <%-- 			    	            	 onclick="location.href='payForm2?cream_idx=${cream.cream_idx}&size=${creammap.cream_idx}'"> --%>
