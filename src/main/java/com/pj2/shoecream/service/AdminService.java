@@ -13,6 +13,7 @@ import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.JungProductVO;
+import com.pj2.shoecream.vo.MemAccountVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ReportVO;
@@ -188,7 +189,10 @@ public class AdminService {
 	public List<Map<String, Object>> getAdminInfo() {
 		return mapper.selectAdminInfo();
 	}
+	public List<MemAccountVO> selectMemAccount() {
+		return mapper.selectMemAccount();
+	}
 	
 
-}
+	}
 

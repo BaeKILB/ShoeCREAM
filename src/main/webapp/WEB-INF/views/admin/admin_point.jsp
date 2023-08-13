@@ -26,25 +26,27 @@
 					<div class="search_wrap">
 				</div>
 				 <div class="card-header">
-                      <h4 class="card-title">현재 잔액 : ${admininfo.mem_balance }원</h4>
+<%--                       <h4 class="card-title">현재 잔액 : ${admininfo.mem_balance }원</h4> --%>
                   </div>
 				<div class="table_container">
 					<table class="board_list_table table">
 						<thead>
 							<tr>
 								<th class="mem_id">회원번호</th>
+								<th class="charge_point_amount">충전/출금 전 잔액</th>
 								<th class="amount">금액</th>
 								<th class="date">입금일</th>
-								<th class="balance">잔액</th>
+								<th class="point_usage">포인트 사용처</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="adminPointAccount" items="${pointList}">
 								<tr>
 										<td class="mem_id">${adminPointAccount.mem_idx}</td>
+										<td class="mem_id">${adminPointAccount.charge_point_amount}</td>
 										<td class="amount"> ${adminPointAccount.charge_point}원 ${adminPointAccount.point_status }</td>
 										<td class="date"><fmt:formatDate value="${adminPointAccount.point_date}" pattern="YYYY-MM-dd" /></td>
-										<td class="balance">${adminPointAccount.admin_account_amt}원  (+${adminPointAccount.charge_point })</td>
+										<td class="point_usage">${adminPointAccount.point_usage}</td>
 								</tr>
 							</c:forEach>
 						</tbody>

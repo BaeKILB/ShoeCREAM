@@ -419,21 +419,18 @@
 	</select>
 	
 	<!-- 포인트 입출금 -->
-	<select id="selectAdminPointList">
-	    SELECT
-	        point_idx,
-	        mem_idx,
-	        charge_point,
-	        point_status,
-	        point_date,
-	        admin_account_amt
-	    FROM point_inout
-	        ORDER BY point_date ASC
+	<select id="selectAdminPointList" >
+		SELECT *
+			FROM point_inout
+			WHERE point_usage = '관리자입출금';
 	</select>
 	<select id="selectAdminInfo">
 		SELECT * 
 				FROM mem_info
 				WHERE mem_id = 'admin'
+	</select>
+	<select id="selectMemAccount">
+	select * from mem_account;
 	</select>
 
 

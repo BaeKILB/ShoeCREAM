@@ -25,6 +25,7 @@ import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.JungProductVO;
+import com.pj2.shoecream.vo.MemAccountVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.NoticeVO;
 import com.pj2.shoecream.vo.PageDTO;
@@ -606,16 +607,22 @@ public class AdminController {
 				@RequestParam(defaultValue = "") String searchType,
 				@RequestParam(defaultValue = "") String searchKeyword) {
 			
+			// 포인트 입출금 내역
 			List<PointInoutVO> pointList = service.selectPointList(cri, searchType, searchKeyword);
 			model.addAttribute("pointList",pointList);
+			System.out.println("나와라제발" + pointList);
+			
+			List<MemAccountVO> memaccount = service.selectMemAccount();
+			model.addAttribute("memaccount",memaccount);
+		
 			
 			List<Map<String, Object>> adminInfo = service.getAdminInfo();
 			model.addAttribute("adminInfo",adminInfo);
 
 			
 			return "admin/admin_point";
-		}
-		
-}	
+				}
+				
+		}	
 
 

@@ -13,6 +13,7 @@ import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.DidListVO;
 import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.JungProductVO;
+import com.pj2.shoecream.vo.MemAccountVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ReportVO;
@@ -99,10 +100,10 @@ public interface AdminMapper {
 	List<PointInoutVO> selectAdminPointList(@Param("cri") Criteria cri, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	// 관리자 정보조회
 	List<Map<String, Object>> selectAdminInfo();
-	
-	
-	}
-
+	List<MemAccountVO> selectMemAccount();
+		
+		
+		}
 	
 	
 	
