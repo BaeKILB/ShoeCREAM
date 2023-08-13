@@ -171,6 +171,7 @@ public class ImageApiController {
 		socialCommentVO.setMem_idx(sId);
 		socialCommentVO.setMem_nickname(mem_nickname);
 		SocialCommentVO comment = socialImageService.writeComment(socialCommentVO);
+		System.out.println("댓글 값 정보: " + comment);
 		return new ResponseEntity<>(new CMRespDto<>(1,"댓글쓰기성공",comment),HttpStatus.CREATED);
 	}
 	
@@ -182,4 +183,28 @@ public class ImageApiController {
 		return new ResponseEntity<>(new CMRespDto<>(1, "댓글 삭제 성공",null), HttpStatus.OK);
 	}
 	
+	@PostMapping("/api/Recomment")
+	public ResponseEntity<?> RecommentInsert(@RequestBody SocialCommentVO socialCommentVO, BindingResult bindingResult) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int sId = mPrincipalDetails.getMember().getMem_idx();
+		String mem_nickname = mPrincipalDetails.getMember().getMem_nickname();
+		
+		if (bindingResult.hasErrors()) {
+			System.out.println("여기까지오긴 오니 ..?");
+		     Map<String, String> errorMap = new HashMap<>();
+		     for (FieldError error : bindingResult.getFieldErrors()) {
+		         errorMap.put(error.getField(), error.getDefaultMessage());
+		         System.out.println("================");
+		         System.out.println(error.getDefaultMessage());
+		         System.out.println("================");
+		     }
+		     throw new CustomValidationApiException("유효성 검사 실패", errorMap);
+		}
+		socialCommentVO.setMem_idx(sId);
+		socialCommentVO.setMem_nickname(mem_nickname);
+		SocialCommentVO comment = socialImageService.writeReComment(socialCommentVO);
+		System.out.println("댓글 답변 값:" + comment);
+		return new ResponseEntity<>(new CMRespDto<>(1,"댓글답변쓰기성공",comment),HttpStatus.CREATED);
+	}
 }
