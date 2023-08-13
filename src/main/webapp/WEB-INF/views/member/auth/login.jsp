@@ -73,7 +73,8 @@
 								  </button>
 								</div>
 								
-<!--                                 <a href="javascript:kakaoLogin();"><img src="https://kefe.co.kr/m/image/sub/signup/signup_28.jpg" style="height:60px; width:auto;"></a> -->
+<%--                                 <a href="javascript:kakaoLogin();"><img src="${pageContext.request.contextPath }/resources/img/member/login/kakao_login_large_wide.png" style="height:60px; width:auto;"></a> --%>
+                                <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=29eee1b4771daa5dc16c4084cc6defc9&redirect_uri=http://localhost:8089/shoecream/auth/kakao/callback"><img src="${pageContext.request.contextPath }/resources/img/member/login/kakao_login_large_wide.png" style="height:75px; width:auto;"></a>
 		                        
 		                        <!-- Oauth 소셜로그인end -->
 								

@@ -97,7 +97,7 @@ function getStoryItem(image) {
 //    let contextPath = "C:/Users/kikir/Documents/itwill/workspace_spring5/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ShoeCREAM/resources/upload/social/";
 //    let contextPath = "/resources/upload/social/";
 
-	let item = `<div class="story-list__item" style="width: 100%;">
+	let item = `<div class="story-list__item" style="width: 642px;">
 	<div class="sl__item__header">
         <div style="margin-left: 5px;">
             <a href="${contextPath}/social/${image.mem_idx}"> <!-- 링크를 추가 -->
@@ -115,7 +115,7 @@ function getStoryItem(image) {
 		</div>
 		    </div>
 		
-			<div class="sl__item__img">
+			<div class="sl__item__img" style="height: 850px;">
 				<img src="${contextPath}/resources/upload/social/${image.posts_image1}"/>
 			</div>
 		
