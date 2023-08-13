@@ -186,7 +186,7 @@
             courier_info
         values(
             null
-            , #{cream_idx}
+            , #{request_idx}
             , #{seller_idx}
             , #{buyer_idx}
             , #{tracking_company}

@@ -801,6 +801,7 @@ function payAuction(idx, price, id, title){
 						<!--커스텀-->
 					<div class="container mt-4">
 					  <c:forEach items="${creamList }" var="creamList">
+						<input type="hidden" name="request_idx" value="${creamList.request_idx }">
 					      <div class="goods mb-4">
 					        <div class="row no-gutters">
 					          <div class="col-12 col-md-auto"> <!-- 이미지랑 하이퍼링크 섹션 -->
@@ -829,7 +830,7 @@ function payAuction(idx, price, id, title){
 					            <div class="col-12 col-md-auto">
 									<c:choose>
 										<c:when test="${creamList.tracking_num eq null }"> <!-- 운송장 미등록시 -->
-                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm2?cream_idx=${creamList.cream_idx}', '구매자정보', 'width=580, height=360, left=100, top=50')">운송장 등록</button>
+                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm2?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=580, height=360, left=100, top=50')">운송장 등록</button>
 										</c:when>
 										<c:when test="${creamList.tracking_num ne null }"> <!-- 운송장 등록시 -->
 	                                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">배송 조회</button>
