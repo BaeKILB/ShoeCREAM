@@ -3,6 +3,8 @@ package com.pj2.shoecream.mapper;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -65,6 +67,12 @@ public interface SocialImageMapper {
 	
 	// 소셜 포스트 삭제할 이미지 셀렉
 	String selectPostsImage(int posts_idx);
+
+	void insertReComment(SocialCommentVO socialCommentVO);
+
+	SocialCommentVO findById(int comment_re_ref);
+
+	SocialCommentVO findCommentById(int comment_idx);
 
 	
 	

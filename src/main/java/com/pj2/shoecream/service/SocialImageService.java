@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -247,7 +248,11 @@ public class SocialImageService {
 		    socialCommentVO.setMem_profileImageUrl(profileImageUrl);
 
 		    socialImageMapper.insertComment(socialCommentVO);
+		    int insertedCommentIdx = socialCommentVO.getComment_idx();
+		    socialCommentVO.setComment_re_ref(insertedCommentIdx);
 		    socialImageMapper.updateComment_ref(socialCommentVO);
+		    
+		    System.out.println("댓글 값 :" + socialCommentVO);
 		    return socialCommentVO;
 		}
 		
@@ -281,6 +286,30 @@ public class SocialImageService {
 			return socialImageMapper.selectPostsImage(posts_idx);
 		}
 
+		// 서비스
+		public SocialCommentVO writeReComment(SocialCommentVO socialCommentVO) {
+		  String profileImageUrl = socialImageMapper.findProfileImageUrlByMemberId(socialCommentVO.getMem_idx());
+		    // 프로필 이미지 URL 조회 후 SocialCommentVO에 set
+		  socialCommentVO.setMem_profileImageUrl(profileImageUrl);
+		  // 대댓글 작성하기 전에 원본 댓글과 원본 답변의 값을 확인하여 comment_re_ref를 설정합니다.
+		  SocialCommentVO originalComment;
+		  if(socialCommentVO.getComment_re_ref() != socialCommentVO.getComment_idx()){  // 답변의 답변인 경우
+		    originalComment = socialImageMapper.findById(socialCommentVO.getComment_re_ref());
+		  } else {  // 댓글의 답변인 경우
+		    originalComment = socialImageMapper.findById(socialCommentVO.getComment_re_ref());
+		  }
+
+		  socialCommentVO.setComment_re_lev(originalComment.getComment_re_lev());
+		  socialCommentVO.setComment_re_seq(originalComment.getComment_re_seq());
+		  socialCommentVO.setComment_re_ref(originalComment.getComment_re_ref());
+
+		  socialImageMapper.insertReComment(socialCommentVO);
+		  SocialCommentVO insertedComment = socialImageMapper.findCommentById(socialCommentVO.getComment_idx());
+		  socialCommentVO.setComment_date(insertedComment.getComment_date());
+		  socialCommentVO.setComment_re_seq(insertedComment.getComment_re_seq());
+		  socialCommentVO.setComment_re_ref(insertedComment.getComment_re_ref());
+		  return socialCommentVO;
+		}
 
 
 
