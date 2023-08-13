@@ -229,7 +229,7 @@
 					if(!validateForm()) {
 						return false;
 					}
-					paySuccess();
+					tranSuccess();
 				}
 				
 
@@ -240,7 +240,7 @@
 <!-- 			<button class="res_p" onclick="requestPay()">결제하기</button> -->
 		</form>
 		
-			<input type="button" id="btnHidden" name="btnHidden" onclick="paySuccess()"/>
+			<input type="button" id="btnHidden" name="btnHidden" onclick="tranSuccess()"/>
 	</section>
 	
 	<script>
@@ -258,8 +258,9 @@
 		let getParams = new URL(location.href).searchParams;
 		let chat_area = ${map.product_selector } 
 		
-		const paySuccess = () => {
-			location.href = "transComPro?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx");
+		const tranSuccess = () => {
+			location.href = '${pageContext.request.contextPath }/tradeComplete' + "?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx") + "&product_idx=${map.product_idx }";
+// 			location.href = "transComPro?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx");
 		}
 	</script>
 

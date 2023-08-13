@@ -89,9 +89,9 @@
 							<div class="payment_p active" id="box0" style="cursor : pointer;">
 								<input type="radio" name="pay_method" id="pointPay" value="1" checked>슈페이
 							</div>
-							<div class="payment_p" id="box1" style="cursor : pointer;">
-								<input type="radio" name="pay_method" id="card" value="0">신용/체크카드
-							</div>
+<!-- 							<div class="payment_p" id="box1" style="cursor : pointer;"> -->
+<!-- 								<input type="radio" name="pay_method" id="card" value="0">신용/체크카드 -->
+<!-- 							</div> -->
 <!-- 							<div class="payment_p" id="box2" style="cursor : pointer;"> -->
 <!-- 								<input type="radio" name="pay_method" id="virtual_account" value="1">가상계좌이체 -->
 <!-- 							</div> -->
@@ -333,7 +333,8 @@
 	<script type="text/javascript">
 
 		const paySuccess = () => {
-			location.href = "chatRooms?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx");
+			location.href = '${pageContext.request.contextPath }/payComplete' + "?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx") + "&product_idx=${map.product_idx }";
+// 			location.href = "chatRooms?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx");
 		}
 	</script>
 
