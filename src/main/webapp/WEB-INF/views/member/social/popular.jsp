@@ -30,10 +30,21 @@
 			                           <div class="col d-flex align-items-center no-vertical-margins" style="font-size: 0.8rem;">
 			                               <span><strong>${image.mem_nickname }</strong></span>
 			                           </div>
+			                           <div class ="col-1">
+										<div class="sl__item__contents__icon">
+											<button>
+												<i class="fas fa-heart active" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>
+											<%-- <i class="far fa-heart" id="storyLikeIcon-${image.posts_idx}" onclick="toggleLike(${image.posts_idx})"></i>`; --%>
+											</button>
+										</div>
+			                           </div>
+			                          <div class="col-1">
+			                           	<span class="like"><b id="storyLikeCount-${image.posts_idx}">${image.likeCount}</b></span>
+									</div> 
 									</div>
-									<div class="row" style="margin-top: 3px;">
+									<div class="row" style="margin-top: 3px; word-break: normal;">
 			                           <div class="col" style="padding-right: 0px; padding-left: 0px;">
-			                           		<span class="" style="white-space: nowrap; color :#495057;">${image.posts_content }</span>
+										<span class="" style="white-space: pre-wrap; word-wrap: break-word; word-break: break-word; color :#495057;">${image.posts_content }</span>
 			                           </div>
 		                           </div>
 								</div>
@@ -45,6 +56,7 @@
 
 	</div>
 </main>
+<script src="${pageContext.request.contextPath }/resources/js/member/social/popular.js"></script>
 <script>
 var contextPath = "${pageContext.request.contextPath}";
 </script>

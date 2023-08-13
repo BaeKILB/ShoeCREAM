@@ -100,7 +100,6 @@ public class MemberController {
 		codeMap = new HashMap<String, String>();
 		codeMap.put("phone", code);
 
-		
 		return "0";
     }
 	

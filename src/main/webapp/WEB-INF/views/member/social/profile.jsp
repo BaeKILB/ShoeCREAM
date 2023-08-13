@@ -25,16 +25,18 @@
 
 		<!--유저이미지-->
 		<div class="profile-left">
-			<div class="profile-img-wrap story-border"
-				onclick="popup('.modal-image')">
+			<div class="profile-img-wrap story-border">
 				<form id="userProfileImageForm">
 					<input type="file" name="profileImageFile" style="display: none;"
 						id="userProfileImageInput" />
 				</form>
 
+<%-- 				<img class="profile-image" src="${pageContext.request.contextPath}/resources/upload/profile/${dto.member.mem_profileImageUrl}" --%>
+<%-- 					onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/memProfile.jpg'" --%>
+<!-- 					id="userProfileImage" /> -->
 				<img class="profile-image" src="${pageContext.request.contextPath}/resources/upload/profile/${dto.member.mem_profileImageUrl}"
 					onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/memProfile.jpg'"
-					id="userProfileImage" />
+					onclick="location.href='${pageContext.request.contextPath }/store/${dto.member.mem_idx}'" />
 			</div>
 		</div>
 		<!--유저이미지end-->
@@ -67,6 +69,7 @@
 								<button class="cta" onclick="toggleSubscribe(${dto.member.mem_idx},this)">구독하기</button>
 							</c:otherwise>
 						</c:choose>
+						<button class="cta" onclick="location.href='${pageContext.request.contextPath }/store/${dto.member.mem_idx}'">${dto.member.mem_nickname}상점</button>
 					</c:otherwise>
 				</c:choose>
 				<button class="modi" onclick="popup('.modal-info')">

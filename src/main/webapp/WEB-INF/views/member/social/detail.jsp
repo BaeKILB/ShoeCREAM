@@ -22,8 +22,8 @@
 		<!--전체 리스트 시작-->
 			    <!-- 부트스트랩 레이아웃을 적용한 부분 -->
     	<div class="row">
-      		<div class="col-md-2"></div> <!-- Left empty column -->
-      			<div class="col-md-8"> 
+      		<div class="col-md-1"></div> <!-- Left empty column -->
+      			<div class="col-md-9"> 
 				<article class="story-list" id="storyList">
 			<!--전체 리스트 아이템-->
 

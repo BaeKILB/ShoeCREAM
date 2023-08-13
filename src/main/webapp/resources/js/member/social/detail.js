@@ -115,23 +115,20 @@ function getStoryItem(image) {
 		        ${displayedAt(image.posts_date)}
 		    </div>
 		</div>`;
-						if (principalId == image.mem_idx) {
-					item += 
-        		`    <div class="right-part" style="display: flex; flex-grow: 1;">
-    <div class="edit-delete-buttons">
-        <div>
-            <button type="button" class="btn btn-light edit-btn" style="font-size: 12px;" onclick="window.location.href='${contextPath}/social/${image.posts_idx }/update'">수정</button>
-        </div>
-        <div>
-            <button type="button" class="btn btn-light delete-btn" style=" font-size: 12px;" onclick="deleteConfirm();">삭제</button>
-        </div>
-    </div>
-    </div>`;
-		
+		if (principalId == image.mem_idx) {
+					item += `
+		<div class="right-part" style="display: flex; flex-grow: 1;">
+		    <div class="edit-delete-buttons">
+		        <div>
+		            <button type="button" class="btn btn-light edit-btn" style="font-size: 12px;" onclick="window.location.href='${contextPath}/social/${image.posts_idx }/update'">수정</button>
+		        </div>
+		        <div>
+		            <button type="button" class="btn btn-light delete-btn" style=" font-size: 12px;" onclick="deleteConfirm();">삭제</button>
+		        </div>
+		    </div>
+	    </div>`;
 		        }
 		item+=`
-		
-		
 		    </div>
 		
 			<div class="sl__item__img">

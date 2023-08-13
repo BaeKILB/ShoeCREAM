@@ -30,3 +30,22 @@
 .rounded-image {
     border-radius: 20px;
 }
+
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__contents
+  .sl__item__contents__icon
+  button:first-child
+  .active {
+  color: red;
+}
+
+.sl__item__contents__icon button {
+    background-color: transparent;
+/*     width: 40px; */
+/*     font-size: 25px; */
+    border: 0;
+/*     cursor: pointer; */
+}
