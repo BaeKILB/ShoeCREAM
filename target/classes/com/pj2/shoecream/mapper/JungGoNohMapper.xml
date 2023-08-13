@@ -35,10 +35,10 @@
 			INTO product_image
 			VALUES (
 				  #{product_idx} -- product_idx
-				, #{image1} -- image1
-				, #{image2} -- image2
-				, #{image3} -- image3
-				, #{image4} -- image4
+				, #{image1_name} -- image1_name
+				, #{image2_name} -- image2
+				, #{image3_name} -- image3
+				, #{image4_name} -- image4
 				, '/resources/upload' -- path
 			)
 	</insert>
@@ -50,7 +50,7 @@
 		, jpd.product_date, jpd.product_readcount, jpd.product_brand, jpd.product_size, jpd.product_selector
 		, mi.mem_idx, mi.mem_id, mi.mem_nickname, mi.mem_rank, mi.mem_profileImageUrl
 		, lcg.lc_name, mcg.mc_name
-		, pi.image1, pi.image2, pi.image3, pi.image4, pi.image_path 
+		, pi.image1 as image1_name, pi.image2 as image2_name, pi.image3 as image3_name, pi.image4 as image4_name, pi.image_path 
 		, (select count(*) from dibs di where jpd.product_idx = di.product_idx) dibs_count
 		, (select count(*) from joonggo_report jgr where jpd.product_idx = jgr.product_idx) report_count
 		FROM jung_product jpd
