@@ -204,15 +204,15 @@
 					
 					
 					// 만약 product_sell_status 가 담겨져서 오는지 확인하기
-					if(content["product_sell_status"] != null
-							|| content["product_sell_status"] != undefined){
+					if(content.product_sell_status != null
+							|| content.product_sell_status != undefined){
 						loadChatMsgBar();
 					}
                },
                function(){console.log("연결 실패!")});
 
                //3. send(path, header, chat_msg_content)로 메세지를 보낼 수 있음
-               stomp.send('/pub/enter', {}, JSON.stringify({chat_room_idx: chat_room_idx, sId: userId}))
+//                stomp.send('/pub/enter', {}, JSON.stringify({chat_room_idx: chat_room_idx, sId: userId}))
 				
             });
 			

@@ -1,5 +1,6 @@
 package com.pj2.shoecream.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.service.JungProductService;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.service.PayService;
@@ -34,6 +36,9 @@ public class PayController {
 	
 	@Autowired
 	private JungProductService jProductService;
+	
+	@Autowired
+	private ChatService chatService;
 	
 	// 결제 정보창 열기
 	// payForm 사용시 필요한 파라미터
@@ -99,6 +104,7 @@ public class PayController {
 		
 		// 결제가 어디서 왔는지 따라서 데이터 받기
 		if(product_selector != null) {
+			// 중고의 경우
 			if(product_selector == 0) {
 				
 				Map<String,Object> productEx = jProductService.getJungProductExtend((String)map.get("product_idx"));
@@ -115,6 +121,11 @@ public class PayController {
 				// 만약 다른 거래 상황이면 ...
 				else if(product_sell_status.equals("대기중")){
 					model.addAttribute("msg","예약 진행중이 아닙니다 예약 진행 먼저 해주세요");
+				}
+				else if( product_sell_status.equals("거래대기중") 
+						&& (Integer)productEx.get("product_buyer_idx") == idx) {
+					model.addAttribute("msg","이미 결제된 상태 입니다!!");
+					
 				}
 				// 이미 자신이 아닌 다른 사람이 예약, 거래 중 이라면
 				else if(product_sell_status.equals("예약중")
@@ -151,7 +162,8 @@ public class PayController {
 		// 리턴 보낼 json 
 		JSONObject jo = new JSONObject();
 		
-		
+		//에러 기록 string
+		String error = "etc";
 		int idx = -1;
 		MemberVO member = null;
 		// 로그인 되어있는지 확인하기
@@ -205,20 +217,26 @@ public class PayController {
 					pointInout.setMem_idx(idx);
 					pointInout.setPoint_usage("결제사용");
 				} 
+				// 이미 결제 되었으면
+				else if( product_sell_status.equals("거래대기중") 
+						&& (Integer)productEx.get("product_buyer_idx") == idx) {
+					error = "이미 결제된 상태 입니다!!";
+					
+				}
 				// 만약 다른 거래 상황이면 ...
 				else if(product_sell_status.equals("대기중")){
-					model.addAttribute("msg","예약 진행중이 아닙니다 예약 진행 먼저 해주세요");
+					error = "예약 진행중이 아닙니다 예약 진행 먼저 해주세요";
 				}
 				// 이미 자신이 아닌 다른 사람이 예약, 거래 중 이라면
 				else if(product_sell_status.equals("예약중")
 						|| product_sell_status.equals("거래대기중")){
-					model.addAttribute("msg","다른 유저가 예약중에 있습니다!");
+					error = "다른 유저가 예약중에 있습니다!";
 				}
 				else if(product_sell_status.equals("거래완료")){
-					model.addAttribute("msg","이미 거래가 완료된 상품입니다");
+					error = "이미 거래가 완료된 상품입니다";
 				}
 				else {
-					model.addAttribute("msg","잘못된 접근입니다");
+					error = "잘못된 접근입니다";
 				}
 				
 				
@@ -238,13 +256,22 @@ public class PayController {
 			
 			if(product_selector == 0) {
 				jProductService.updateSellStatus((String)map.get("product_idx"), "거래대기중");
+				// 내부에서 원하는 시점에 stomp 메시지 보내기
+				
+				// ChatMessage 객체 생성하기
+				Map<String,Object> msg = new HashMap<String, Object>();
+				msg.put("member",member);
+				msg.put("chat_room_idx",(String)map.get("chat_room_idx"));
+				msg.put("chat_msg_content",member.getMem_nickname() + " 님이 결제를 진행하였습니다.");
+				msg.put("product_sell_status","거래대기중");
+				chatService.sandchatInJava(msg);
 			}
 			
 			jo.put("result",true);
 			return jo.toString();
 		}
 
-		jo.put("error", "productPayment error " + result);
+		jo.put("error", "productPayment error : " + result + " / " + error);
 		return jo.toString();
 		
 	}

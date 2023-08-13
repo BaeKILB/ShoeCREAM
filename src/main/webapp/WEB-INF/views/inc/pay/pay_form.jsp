@@ -218,6 +218,9 @@
 			</script>
 			
 			<script>
+			let getParams = new URL(location.href).searchParams;
+			let chat_area = ${map.product_selector } 
+			
 			// 유효성 검사 함수
 			function validateForm() {
 	
@@ -248,7 +251,7 @@
 					//결제 체크박스 들고오기
 					let checkShoePay = document.getElementsByName("pay_method");
 					if(checkShoePay[0].checked){
-						window.open("shoePay?product_idx=" + ${map.product_idx } +"&product_selector=" + ${map.product_selector }
+						window.open("shoePay?product_idx=" + ${map.product_idx } +"&product_selector=" + ${map.product_selector } + "&chat_room_idx=" + getParams.get("chat_room_idx")
 						,"shoePay",'width=700, height=700')
 						return false;		
 					}
@@ -328,9 +331,7 @@
 		});
 	</script>
 	<script type="text/javascript">
-		let getParams = new URL(location.href).searchParams;
-		let chat_area = ${map.product_selector } 
-		
+
 		const paySuccess = () => {
 			location.href = "chatRooms?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx");
 		}

@@ -1,21 +1,36 @@
 package com.pj2.shoecream.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import com.pj2.shoecream.handler.JsonHandler;
 import com.pj2.shoecream.mapper.ChatMapper;
 import com.pj2.shoecream.mapper.MemberMapper;
 import com.pj2.shoecream.vo.ChatMsgVO;
 import com.pj2.shoecream.vo.ChatRoomVO;
 import com.pj2.shoecream.vo.MemberVO;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ChatService {
 
+	// stomp 로 메시지 보내기 위한 객체
+	@Autowired
+    private final SimpMessagingTemplate template; //특정 Broker로 메세지를 전달
+	
+	
+	@Autowired
+	private JsonHandler jsonHandler;
+	
 	@Autowired
 	private ChatMapper mapper;
 	
@@ -121,5 +136,35 @@ public class ChatService {
 		}
 	}
 	
+	// java 내부에서 stomp로 채팅을 원하는 시점에 메시지 보내기
+	// map 에 있어야할 값
+	/*
+	 * member : 메시지 보낼 멤버정보
+	 * chat_room_idx : 현재 채팅방 번호
+	 * chat_msg_content : 채팅 내용 넣기
+	 * product_sell_status(선택) : 현재 상품의 거래 상태 넣을시 중고 채팅쪽의 상품, 회원 상태바 변경
+	 * */
+	public void sandchatInJava(Map<String,Object> map) {
+		  // 내부에서 원하는 시점에 stomp 메시지 보내기
+		 
+		MemberVO member = (MemberVO)map.get("member");
+		
+	    // ChatMessage 객체 생성하기
+	    Map<String,String> msg = new HashMap<String, String>();
+	    msg.put("chat_room_idx",(String)map.get("chat_room_idx"));
+	    msg.put("chat_msg_writer",Integer.toString(member.getMem_idx()));
+	    msg.put("chat_msg_content",(String)map.get("chat_msg_content"));
+	    msg.put("sId",member.getMem_id());
+	    msg.put("nickname",member.getMem_nickname());
+	    if(map.get("product_sell_status") != null) {	    	
+	    	msg.put("product_sell_status",(String)map.get("product_sell_status"));
+	    }
+	    
+	    // convertAndSend() 메서드 사용하기
+	    
+		JSONObject jo = jsonHandler.map2Json(msg);
+		addChat(msg);
+		template.convertAndSend("/topic/room" + msg.get("chat_room_idx"),jo.toString());
+	}
 	
 }

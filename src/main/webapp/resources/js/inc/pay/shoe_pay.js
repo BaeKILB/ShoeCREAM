@@ -21,6 +21,7 @@ const payWithPoint = () => {
 			,data: {
 				product_idx: getParams.get("product_idx")
 				,product_selector: getParams.get("product_selector")
+				, chat_room_idx: getParams.get("chat_room_idx")
 			}
 			,dataType: "json"
 			,async: false

@@ -180,8 +180,13 @@ public class PayService {
 		}
 		
 		// 최근 거래정보에 해당 상품이 결제완료 상태인지 확인
-		if(!payInfo.getPay_status().equals("결제완료")) {
-			return 3;
+		if(payInfo != null) {			
+			if(!payInfo.getPay_status().equals("결제완료")) {
+				return 3;
+			}
+		}
+		else {
+			return 2;
 		}
 		
 		// 포인트 충전을 위한 PointInoutVO 만들기
@@ -200,7 +205,7 @@ public class PayService {
 		pointInout.setPoint_status("충전");
 		pointInout.setCharge_point_amount(member.getCharge_point());
 		pointInout.setMem_idx(mem_seller_idx);
-
+		
 		pointInout.setCharge_point(payInfo.getPay_total());
 		
 		// 수수료율 존재시 수수료율 적용 및 관리자에게 수수료 전송
@@ -215,9 +220,66 @@ public class PayService {
 		}
 		pointInout.setPoint_usage("결제대금입금");
 		
+		// 판매자 송금 성공시 기록 남기기
 		if(depositPoints(pointInout) == 1) {
-			return 1;
+			// 거래 성공시 거래정보 추가
+			payInfo.setPay_status("거래완료");
+			payInfo.setPay_method(3);
+			if(mapper.insertPayInfo(payInfo) > 0) {
+				return 1;
+			}
+			else {
+				return 6;
+			}
 		}
 		return 6;
+	}
+
+	
+	// 구매자가 거래완료를 누를시 직거래일때 사용
+	// 1. 성공
+	// 2. 결제 정보 불러오기 실패
+	// 3. 상품 결제 정보가 결제 완료가 아님
+	// 4. 판매자 정보 불러오기 실패
+	// 6. 기타 실패
+	public int transCompleteJik(int mem_buyer_idx, int mem_seller_idx ,String product_idx) {
+		// 최근 거래정보 가져오기
+		PayInfoVO payInfoTop = null;
+		try {
+			payInfoTop = mapper.selectGetPayInfoTop(product_idx);
+		}
+		catch(Exception e) {
+			return 2;
+		}
+		
+		// 최근 거래정보에 해당 상품이 결제완료 상태인지 확인
+		if(payInfoTop != null) {			
+			if(!payInfoTop.getPay_status().equals("결제완료")) {
+				return 3;
+			}
+		}
+		
+		PayInfoVO payInfo = new PayInfoVO();
+		// 페이 결제 시작 
+		// 페이 결제시 사용할 객체에 정보 담기
+		payInfo.setMem_idx(mem_buyer_idx);
+		payInfo.setProduct_idx(product_idx);
+		payInfo.setProduct_selector(0);;
+		payInfo.setPay_method(2);
+		payInfo.setPay_total(0);
+		
+		
+		// 직거래시에는 추가적인 포인트 입 출금, 기록 필요 X
+		
+		// 거래 성공시 거래정보 추가
+		payInfo.setPay_status("거래완료");
+		payInfo.setPay_method(4); // 4 : 직거래시 사용
+		if(mapper.insertPayInfo(payInfo) > 0) {
+			return 1;
+		}
+		else {
+			return 6;
+		}
+
 	}
 }

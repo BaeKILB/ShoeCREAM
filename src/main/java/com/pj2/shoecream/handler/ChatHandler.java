@@ -4,11 +4,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.pj2.shoecream.vo.ChatMsgVO;
-
 @Component
 public class ChatHandler {
-	
+		
 	// ============ 채팅 상단 바에 ajax 로 반환할 html
 	
 
@@ -68,6 +66,7 @@ public class ChatHandler {
 						+ "		<p>" + map.get("product_price") + "원</p>"
 						+ "	</section>"
 						+ "	<section>"
+						+ "		<p>거래상태 : " + map.get("product_sell_status") + "</p>"
 						+ "		<p>상품상태 : " + map.get("product_status") + "</p>"
 						+ "	</section>"
 						+ "	<section>"
@@ -139,7 +138,7 @@ public class ChatHandler {
 		
 		
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		
 						+ "		<input type='button' class='btn btn-primary' value='예약취소' onclick='chatRoomOut(1)' />		"	    		
 						;
 		
@@ -156,7 +155,7 @@ public class ChatHandler {
 		if(map.get("product_payment").equals("안전페이")
 				|| map.get("product_payment").equals("안전페이,직거래")) {
 			product_btn = 
-					"<input type='button' class='btn btn-dark' value='결제취소 요청'/>"	
+					"<input type='button' class='btn btn-dark' value='결제취소 요청' />"	
 							+ "<input type='button' class='btn btn-primary' value='거래완료' onclick='transComplete()'/>";	
 		}
 		else {
@@ -164,7 +163,7 @@ public class ChatHandler {
 					"<input type='button' class='btn btn-primary' value='거래완료' onclick='transComplete()'/>";	
 		}
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		
 						+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(2)' />		"	    		
 						;
 		
@@ -185,7 +184,7 @@ public class ChatHandler {
 		}
 		
 		String user_btn = 
-				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")/>		"	    		
+				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		
 						+ "		<input type='button' class='btn btn-primary' value='나가기' onclick='chatRoomOut(2)'/>		"	    		
 						;
 		
@@ -219,5 +218,8 @@ public class ChatHandler {
 		
 		return chatMsgBarBody(map,true,product_btn,user_btn);
 	}
+	
+	
+
 	
 }

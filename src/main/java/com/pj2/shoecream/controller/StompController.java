@@ -358,6 +358,7 @@ public class StompController {
 		boolean checkResult = false;
 		// 관리자인 경우부터 체크
 		if(id.equals("admin")) {
+			// 관리자일 경우
 			// chatRoomIdx 를 9 로 변경하기
 			if(chatService.changeChatRoomArea(chatRoomIdx, 9)) {
 				checkResult = true;

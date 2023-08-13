@@ -2,7 +2,6 @@ package com.pj2.shoecream.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,15 +18,12 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cassandra.CassandraProperties.Request;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.*;
 import org.springframework.security.core.context.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,10 +39,9 @@ import com.pj2.shoecream.service.ChatService;
 import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.service.JungProductService;
 import com.pj2.shoecream.service.MemberService;
-import com.pj2.shoecream.vo.ChatRoomVO;
+import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.JungGoNohVO;
 import com.pj2.shoecream.vo.JungProductVO;
-import com.pj2.shoecream.vo.LCategory;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.PageInfoVO;
 
@@ -58,9 +53,6 @@ import lombok.RequiredArgsConstructor;
 public class JunggoController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JunggoController.class);
-	
-	@Autowired
-    private final SimpMessagingTemplate template; //특정 Broker로 메세지를 전달
 	
 	@Autowired
 	private JungGoNohService jungGoNohService;
@@ -82,6 +74,9 @@ public class JunggoController {
 	
 	@Autowired
 	private ChatService chatService;
+	
+	@Autowired
+	private PayService payService;
 	
 	// 중고 항목 페이징 처리때 사용될 상수
 	// 중고 리스트 불러올때 최대 리미트
@@ -250,8 +245,7 @@ public class JunggoController {
 		
 		// spring security 사용하여 idx 들고오기
 		int idx = -1;
-		String sId = "";
-		String nickname = "";
+		MemberVO member = null;
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -259,8 +253,7 @@ public class JunggoController {
 
 			// 구매자 회원번호
 			idx = mPrincipalDetails.getMember().getMem_idx();
-			sId = mPrincipalDetails.getMember().getMem_id();
-			nickname = mPrincipalDetails.getMember().getMem_nickname();
+			member = mPrincipalDetails.getMember();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("error : JunggoPay");
@@ -297,15 +290,13 @@ public class JunggoController {
 			  // 내부에서 원하는 시점에 stomp 메시지 보내기
 			 
 		    // ChatMessage 객체 생성하기
-		    Map<String,String> msg = new HashMap<String, String>();
+		    Map<String,Object> msg = new HashMap<String, Object>();
+		    msg.put("member",member);
 		    msg.put("chat_room_idx",(String)map.get("chat_room_idx"));
-		    msg.put("chat_msg_writer",Integer.toString(idx));
-		    msg.put("chat_msg_content",nickname + " 님이 예약을 진행하였습니다.");
-		    msg.put("sId",sId);
+		    msg.put("chat_msg_content",member.getMem_nickname() + " 님이 예약을 진행하였습니다.");
 		    msg.put("product_sell_status",product_sell_status);
+		    chatService.sandchatInJava(msg);
 		    
-		    // convertAndSend() 메서드 사용하기
-		    template.convertAndSend("/pub/checkItemStatus", msg);
 			  
 			rttr.addAttribute("chat_area",map.get("chat_area"));
 			rttr.addAttribute("chat_room_idx",map.get("chat_room_idx"));
@@ -463,11 +454,48 @@ public class JunggoController {
 					)	
 			)
 		{
+			
+
 			// 상품 상태 업데이트
 			if(jProductService.updateSellStatus((String)chatRoom.get("product_idx"), "거래완료") <= 0) {
 				model.addAttribute("msg","상품 상태 업데이트에 실패하였습니다!");
 				return "inc/fail_back";
 			}
+			
+
+			// 판매자에게 판매 포인트 대금 전송
+			int depositResult = 1;
+			if(product_sell_status.equals("거래대기중") && 
+					(product_payment.equals("안전페이") || product_payment.equals("안전페이,직거래"))
+			) {				
+				depositResult = payService.transCompleteDeposit(
+						(Integer)productEx.get("mem_idx")
+						, (String)productEx.get("product_idx")
+						, 0);
+			}
+			else if(product_sell_status.equals("예약중") && 
+					(product_payment.equals("직거래") || product_payment.equals("안전페이,직거래"))) {
+				depositResult = payService.transCompleteJik(
+						idx
+						,(Integer)productEx.get("mem_idx")
+						, (String)productEx.get("product_idx")
+						);
+			}
+			
+			if(depositResult != 1) {
+				model.addAttribute("msg","거래 완료 진행중 문제가 발생하였습니다 (" + depositResult + ")");
+				return "inc/fail_back";
+			}
+			
+			 // 내부에서 원하는 시점에 stomp 메시지 보내기
+			 
+		    // ChatMessage 객체 생성하기
+		    Map<String,Object> msg = new HashMap<String, Object>();
+		    msg.put("member",member);
+		    msg.put("chat_room_idx",(String)map.get("chat_room_idx"));
+		    msg.put("chat_msg_content",member.getMem_nickname() + " 님이 거래완료 진행하였습니다.");
+		    msg.put("product_sell_status",product_sell_status);
+		    chatService.sandchatInJava(msg);
 			
 			rttr.addAttribute("chat_room_idx",(String)map.get("chat_room_idx"));
 			rttr.addAttribute("chat_area",(String)map.get("chat_area"));
