@@ -63,5 +63,12 @@ public class CreamService {
 		return mapper.insertTrackingNumber(map);
 	}
 
+	public void modifyCream(Map<String, Object> map) {
+		mapper.modifyCream(map);
+		
+	}
+
+
+
 
 }
