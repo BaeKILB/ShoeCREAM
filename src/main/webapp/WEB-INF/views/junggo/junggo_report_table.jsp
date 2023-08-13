@@ -44,8 +44,19 @@
 			
 			<td>🔔${moreReportList.report_content}</td>
 			<td>사유 : ${moreReportList.report_div}</td>
-			<td>🕐${moreReportList.report_date}</td>
-			
+			<td>🕐&nbsp;<span id="rpt_date"></span></td>
+			<script>
+					function removeSecond(){
+						let rptIDate = document.querySelector('#rpt_date');
+						
+						
+						let rptID = "${jungGoNoh.product_date}";
+						
+						rptIDate.innerText = rptID.slice(0,rptID.length-2);
+						
+					}
+					removeSecond();
+					</script>
 		</tr>
 	</c:forEach>
 	
