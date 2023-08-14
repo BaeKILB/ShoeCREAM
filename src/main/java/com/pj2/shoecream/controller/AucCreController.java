@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pj2.shoecream.config.PrincipalDetails;
+import com.pj2.shoecream.service.CommonService;
 import com.pj2.shoecream.service.CreamService;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.service.PayService;
@@ -26,8 +27,11 @@ public class AucCreController {
 	@Autowired
 	private PayService payService;
 	
-  @Autowired
-  private CreamService creamService;
+	@Autowired
+	private CreamService creamService;
+	
+	@Autowired
+	private CommonService commonService;
   
 	
 	
@@ -55,6 +59,10 @@ public class AucCreController {
 		model.addAttribute("buyer" , buyer);
 		System.out.println(map);
 		model.addAttribute("map" , map);
+		
+		// 구매자 배송지 정보 받기
+		Map<String, Object> deliveryInfo = commonService.getDeliveryInfo(mem_idx);
+		model.addAttribute("deliveryInfo",deliveryInfo);
 		
 		
 		//--------------여기는 크림 정보 받아오는 곳입니다 성혁씨---------------

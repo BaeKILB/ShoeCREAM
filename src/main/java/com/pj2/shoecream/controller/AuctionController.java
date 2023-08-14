@@ -741,7 +741,7 @@ public class AuctionController {
 	public String registReviewForm(@RequestParam String product_idx, 
 			@RequestParam(value="mem_idx", required=false) Integer mem_idx, 
 			@RequestParam(value="buyer_idx", required=false) Integer buyer_idx, 
-			HttpSession session, Model model, JungGoNohVO jungGoNoh){
+			HttpSession session, Model model){
 		
 		try {			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -754,43 +754,31 @@ public class AuctionController {
 			return "inc/fail_forward";
 		}
 		
+		
+		
 		// product_idx 는 무조건 받아와야함
 		if(product_idx == null) {
 			model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
 			return "inc/fail_back";
 		}
 		
-		//관련 idx 세팅
-//		jungGoNoh.setMem_idx(mem_idx);
-//		jungGoNoh.setMem_idx(Integer.valueOf(mem_idx));
-//		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
-//		jungGoNoh.setBuyier_idx(Integer.valueOf(buyer_idx));
-		jungGoNoh.setProduct_idx(product_idx);		
+		Map<String,Object> auction = service.getAuction(product_idx);
+		model.addAttribute("auction",auction);
 		
-	    if (mem_idx != null) {
-	        jungGoNoh.setMem_idx(mem_idx);
-	    }
-	    
-	    if (buyer_idx != null) {
-	        jungGoNoh.setBuyier_idx(buyer_idx);
-	    }
+		Map<String,Object> seller = service.getSellerInfo(mem_idx);
+		model.addAttribute("seller",seller);
 		
-		//리뷰 작성할 상품 정보 세팅
-		JungGoNohVO jungGoNohReview = jungGoNohService.getProduct(product_idx);
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-		String buyier_nickname = mPrincipalDetails.getMember().getMem_nickname();
-		jungGoNohReview.setBuyier_nickname(buyier_nickname);
-		model.addAttribute("jungGoNohReview", jungGoNohReview);
+		model.addAttribute("buyer_idx",buyer_idx);
 		
 
-		return "junggo/review_write_form";
+		return "auction/review_write_form";
 	}
 	
 	//-----------------------리뷰 작성----------------------------------
 	@PostMapping("AucRegistReviewPro")
-	public String registJReviewPro(@RequestParam String auction_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
+	public String registJReviewPro(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
 			JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
+		
 		try {			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -805,7 +793,7 @@ public class AuctionController {
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int writer_idx = mPrincipalDetails.getMember().getMem_idx();
 		
-		String product_idx = auction_idx;
+		
 		
 		jungGoNoh.setBuyier_idx(writer_idx);
 		jungGoNoh.setProduct_idx(product_idx);
@@ -840,7 +828,7 @@ public class AuctionController {
 				}
 
 		
-		return "home";
+		return "redirect:/store/" + jungGoNoh.getBuyier_idx();
 	}
 
 
@@ -848,7 +836,10 @@ public class AuctionController {
 
 	@GetMapping("AucModifyReviewForm")
 	//public String modifyReviewForm(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh){
-	public String modifyReviewForm(@RequestParam String auction_idx, @RequestParam String mem_idx, @RequestParam String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh){
+	public String modifyReviewForm(@RequestParam String product_idx, 
+			@RequestParam(value="mem_idx", required=false) Integer mem_idx, 
+			@RequestParam(value="buyer_idx", required=false) Integer buyer_idx, 
+			HttpSession session, Model model, JungGoNohVO jungGoNoh){
 		
 		try {			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -861,15 +852,21 @@ public class AuctionController {
 			return "inc/fail_forward";
 		}
 		
-		String product_idx = auction_idx;
 		
 		// product_idx 는 무조건 받아와야함
 		if(product_idx == null) {
 			model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
 			return "inc/fail_back";
 		}
-		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
-		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
+		
+		Map<String,Object> auction = service.getAuction(product_idx);
+		model.addAttribute("auction",auction);
+		
+		Map<String,Object> seller = service.getSellerInfo(mem_idx);
+		model.addAttribute("seller",seller);
+		
+		jungGoNoh.setMem_idx(mem_idx);
+		jungGoNoh.setBuyier_idx(buyer_idx);
 		jungGoNoh.setProduct_idx(product_idx);			
 		
 		JungGoNohVO jungGoNohReview = jungGoNohService.getReview2(jungGoNoh);
@@ -891,8 +888,14 @@ public class AuctionController {
 //-------------------------리뷰 수정-----------------------------
 	
 	@PostMapping("AucModifyReviewPro")
-	public String modifyReviewPro(@RequestParam String auction_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
+	public String modifyReviewPro(
+			@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, 
 			JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
+		
+		
+		
+		
+		
 		try {			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -907,7 +910,6 @@ public class AuctionController {
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		int writer_idx = mPrincipalDetails.getMember().getMem_idx();
 
-		String product_idx = auction_idx;
 		
 		jungGoNoh.setBuyier_idx(writer_idx);
 		jungGoNoh.setProduct_idx(product_idx);
@@ -976,12 +978,13 @@ public class AuctionController {
 			e.printStackTrace();
 		}
 		
-		return "home";
+		return "redirect:/store/" + jungGoNoh.getBuyier_idx();
 	}
 	
 	//-------------------------리뷰 삭제-----------------------------
+	//3일까지 수정 가능하고 그 이후 리뷰삭제 노출되는건지?
 	@GetMapping("AucReviewDelete")
-	public String reviewDelete(@RequestParam String auction_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+	public String reviewDelete(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
 	
 		
 		int countReview = 0;
@@ -992,7 +995,7 @@ public class AuctionController {
 		{ // 성공
 			
 			// 글쓰기 작업 성공 시 글목록(BoardList)으로 리다이렉트
-			return "redirect:/productDetail?auction_idx="+auction_idx; 
+			return "redirect:/productDetail?auction_idx="+product_idx; 
 		} else { // 실패
 			model.addAttribute("msg", "글 쓰기 실패!");
 			return "inc/fail_back";

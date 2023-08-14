@@ -29,6 +29,13 @@
 								<ul class="list">
 									<li>
 										<div class="subject">
+											<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1}" alt="사진나온나">
+												상품명 :${auction.auction_title }<br>
+												판매자 :${seller.mem_nickname }
+										</div>
+									</li>
+									<li>
+										<div class="subject">
 											평가점수와 리뷰를 작성해주세요<br>
 											거래완료 후 3일동안만 수정가능합니다.
 										</div>
@@ -54,7 +61,7 @@
 
 								<div class="write_cont">
 									<p><input type="text" class="inputBox" name="review_content" value="${jungGoNohReview.review_content}" style="word-break:break-all;"></p>
-									<input type="hidden" name="auction_idx" id="product_idx" value="${jungGoNohReview.product_idx}"/>
+									<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNohReview.product_idx}"/>
 									<input type="hidden" name="buyier_idx" id="buyier_idx" value="${jungGoNohReview.buyier_idx}"/><!-- writer_idx = buyier_idx -->
 									<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNohReview.mem_idx}"/> <!--seller_idx = mem_idx -->
 									<input type="hidden" name="review_date" id="review_date" value="${jungGoNohReview.review_date}"/>
