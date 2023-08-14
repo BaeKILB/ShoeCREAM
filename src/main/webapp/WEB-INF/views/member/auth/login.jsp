@@ -77,9 +77,10 @@
 								
 		                        <!-- Oauth 카카오 로그인 -->
 <%--                                 <a href="javascript:kakaoLogin();"><img src="${pageContext.request.contextPath }/resources/img/member/login/kakao_login_large_wide.png" style="height:60px; width:auto;"></a> --%>
+								<button class="btn_login btn_typeB2" >로그인</button>
+
                                 <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=29eee1b4771daa5dc16c4084cc6defc9&redirect_uri=http://localhost:8089/shoecream/auth/kakao/callback"><img src="${pageContext.request.contextPath }/resources/img/member/login/kakao_login_large_wide.png" style="height:75px; width:auto;"></a>
 								
-								<button class="btn_login btn_typeB2" >로그인</button>
 <!--                                 <input type="submit" class="btn_login btn_typeB2" value="로그인"> -->
                                 <div class="join">
                                     <p>아이디가 없으신가요? </p>

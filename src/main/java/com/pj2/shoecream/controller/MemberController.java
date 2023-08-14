@@ -6,30 +6,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.hibernate.validator.ap.internal.checks.MultiValuedChecks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.social.google.connect.GoogleConnectionFactory;
-import org.springframework.social.oauth2.GrantType;
-import org.springframework.social.oauth2.OAuth2Operations;
-import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -39,8 +31,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
@@ -48,8 +38,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pj2.shoecream.auth.SNSLogin;
-import com.pj2.shoecream.auth.SnsValue;
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.BankHandler;
 import com.pj2.shoecream.handler.CustomValidationException;
@@ -69,18 +57,6 @@ public class MemberController {
 	
 	// 로그 확인
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
-	
-	@Inject
-	private SnsValue naverSns;
-	
-	@Inject
-	private SnsValue googleSns;
-	
-	@Inject
-	private GoogleConnectionFactory googleConnectionFactory; 
-
-	@Inject
-	private OAuth2Parameters googleOAuth2Parameters;	
 	
 	@Autowired
 	private MemberService memberService;
@@ -102,7 +78,6 @@ public class MemberController {
 		int cnt = memberService.phoneCheck(phone);
 		return cnt;
 	}
-	
 	
 	//문자인증
 	@PostMapping("/send-phone-authentication")
@@ -141,44 +116,16 @@ public class MemberController {
 	// 로그인 폼
 	@GetMapping("login")
 	public String loginform(Model model) {
-		SNSLogin snsLogin = new SNSLogin(naverSns);
-		model.addAttribute("naver_url", snsLogin.getNaverAuthURL());
-		
-//		SNSLogin googleLogin = new SNSLogin(googleSns);
-//		model.addAttribute("google_url", googleLogin.getNaverAuthURL());
-		
-		/* 구글code 발행을 위한 URL 생성 */
-		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
-		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-
-		model.addAttribute("google_url", url);
-		
 		return "member/auth/login";
-	}
-	
-	// API 로그인 콜백
-	@RequestMapping(value = "/auth/google/callback", method = { RequestMethod.GET , RequestMethod.POST})
-	public String snsLoginCallback(@RequestParam String code, Model model) throws Exception {
-		// 1. code를 이용해서 access_token 받기
-		// 2. aeccess_token을 이용해서 사용자 profile 정보 가져오기
-		SNSLogin snslogin = new SNSLogin(googleSns);
-		String profile = snslogin.getUserProfile(code);
-		System.out.println("Profile 값 :" + profile);
-		model.addAttribute("result", profile);
-		// 3. DB 해당 유저 존재하는지 체크 (googleid, naverid 칼럼 추가)
-		// 4. 존재시 강제로그인, 미존재시 가입페이지로 !!
-		return "member/auth/loginResult";
 	}
 	
 	// 카카오 OAuth2 로그인 콜백
 	@GetMapping(value = "auth/kakao/callback", produces = "application/json;charset=utf-8")
 	public String kakaoCallback(String code, HttpSession httpSession) { // Data를 리턴해주는 컨트롤러 함수
-		
 		// POST 방식으로 key=value 데이터를 요청 (카카오쪽으로)
 		// Restrofit2
 		// OkHttp
 		// RestTemplate
-		
 		RestTemplate rt = new RestTemplate();
 		
 		// HttpHeader 오브젝트 생성
@@ -285,8 +232,6 @@ public class MemberController {
 		} else {
 		    System.out.println("기존 회원입니다.");
 		    originMember = memberService.updateAndReturnMemberWithKakao(kakaoMember);
-//		    httpSession.removeAttribute("logInInfo"); // 기존 세션 삭제
-//		    httpSession.setAttribute("logInInfo", originMember); // 새로운 회원 정보로 세션 생성
 		}
 		
 		// 로그인 처리
@@ -294,13 +239,8 @@ public class MemberController {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-
-//		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoMember.getMem_id(), kakaoMember.getMem_passwd()));
-//		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
 		
 		//		return response2.getBody();
-		
 		return "redirect:/";
 	}
 	
@@ -472,27 +412,40 @@ public class MemberController {
     	// 2. 쓰읍 이 방법을 써야하는가 .. 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		
 		// 주소 관련 값 설정
-//		if(mPrincipalDetails.getMember().getMem_address() != null) {
-//			mPrincipalDetails.getMember().setSample6_postcode(mPrincipalDetails.getMember().getMem_address().split("/")[0]); 
-//			mPrincipalDetails.getMember().setSample6_address(mPrincipalDetails.getMember().getMem_address().split("/")[1]);  
-//			mPrincipalDetails.getMember().setSample6_detailAddress(mPrincipalDetails.getMember().getMem_address().split("/")[2]);  
-//			mPrincipalDetails.getMember().setSample6_extraAddress(mPrincipalDetails.getMember().getMem_address().split("/")[3]); 
-//		}
-//
-//      // 생년월일 관련 값 설정
-//		if(mPrincipalDetails.getMember().getMem_birthday() != null) {
-//			mPrincipalDetails.getMember().setMem_bir1(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[0]);  
-//			mPrincipalDetails.getMember().setMem_bir2(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[1]);  
-//			mPrincipalDetails.getMember().setMem_bir3(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[2]);  
-//		} else {
-//			return null;
-//		}
+		if(mPrincipalDetails.getMember().getMem_address() != null) {
+			mPrincipalDetails.getMember().setSample6_postcode(mPrincipalDetails.getMember().getMem_address().split("/")[0]); 
+			mPrincipalDetails.getMember().setSample6_address(mPrincipalDetails.getMember().getMem_address().split("/")[1]);  
+			mPrincipalDetails.getMember().setSample6_detailAddress(mPrincipalDetails.getMember().getMem_address().split("/")[2]);  
+			mPrincipalDetails.getMember().setSample6_extraAddress(mPrincipalDetails.getMember().getMem_address().split("/")[3]); 
+		} else { 
+			mPrincipalDetails.getMember().setSample6_postcode(""); 
+			mPrincipalDetails.getMember().setSample6_address("");  
+			mPrincipalDetails.getMember().setSample6_detailAddress("");  
+			mPrincipalDetails.getMember().setSample6_extraAddress(""); 
+		}
+      // 생년월일 관련 값 설정
+		if(mPrincipalDetails.getMember().getMem_birthday() != null) {
+			mPrincipalDetails.getMember().setMem_bir1(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[0]);  
+			mPrincipalDetails.getMember().setMem_bir2(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[1]);  
+			mPrincipalDetails.getMember().setMem_bir3(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[2]);  
+		} else {
+			mPrincipalDetails.getMember().setMem_bir1("");  
+			mPrincipalDetails.getMember().setMem_bir2("");  
+			mPrincipalDetails.getMember().setMem_bir3("");
+		}
 //
 //      // 휴대폰번호 관련 값 설정
-//		mPrincipalDetails.getMember().setPhone1(mPrincipalDetails.getMember().getMem_mtel().split("-")[0]);  
-//		mPrincipalDetails.getMember().setPhone2(mPrincipalDetails.getMember().getMem_mtel().split("-")[1]);  
-//		mPrincipalDetails.getMember().setPhone3(mPrincipalDetails.getMember().getMem_mtel().split("-")[2]); 
+		if(mPrincipalDetails.getMember().getMem_mtel() != null) {
+			mPrincipalDetails.getMember().setPhone1(mPrincipalDetails.getMember().getMem_mtel().split("-")[0]);  
+			mPrincipalDetails.getMember().setPhone2(mPrincipalDetails.getMember().getMem_mtel().split("-")[1]);  
+			mPrincipalDetails.getMember().setPhone3(mPrincipalDetails.getMember().getMem_mtel().split("-")[2]); 
+		} else {
+			mPrincipalDetails.getMember().setPhone1("");  
+			mPrincipalDetails.getMember().setPhone2("");  
+			mPrincipalDetails.getMember().setPhone3(""); 
+		}
 		
 		System.out.println("세션 정보2 : " + mPrincipalDetails.getMember());
     	
