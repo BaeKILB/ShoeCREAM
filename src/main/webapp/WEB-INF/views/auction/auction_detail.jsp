@@ -45,7 +45,6 @@
  	text-decoration: none;
  	color: #000;
  }
- 
 </style>
 </head>
 <body>
@@ -319,7 +318,7 @@
 			<div class="col-xl-8 col-xs-12">
 				<div class="container h-100">
 					<div class="row"> <!-- 높이조절해야됨 -->
-						<div class="col d-none d-xl-block text-center bg-light rounded">
+						<div class="col text-center bg-light rounded">
 							<p class="fs-5 fw-bold text-danger">⚠️거래시 주의 사항</p>
 							<p>판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<p>
 							<p>유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<p>
@@ -342,26 +341,24 @@
 		                		<div class="row">
 									<div class="col fs-5 fw-bold">판매자 정보</div>
 		                		</div>
-		                		<div class="row justify-content-between">
-		                			<div class="col cursorPoint" id="sellerInfo">
+		                		<div class="row">
+		                			<div class="col" id="sellerInfo">
 										<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }"> <!-- 판매자 상점 URL 입력필요 -->
 											<span>${sellerInfo.mem_nickname }</span>
 										</a>
 		                			</div>
 		                			<div class="col">
-										<img src="${pageContext.request.contextPath }${sellerInfo.mem_profileImageUrl}" class="img-fluid rounded">
+										<img src="${pageContext.request.contextPath }/resources/upload/profile/${sellerInfo.mem_profileImageUrl}" class="img-fluid rounded">
 		                			</div>
 		                		</div>
 		                	</div>
-							<span id="sellerInfo">
-							</span>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-8 fw-bold fs-5 fw-bold">${sellerInfo.mem_nickname }님의 판매상품</div>
 						<div class="col-4 text-end text-xl-center">
 							<c:if test="${fn:length(sellerItemList) > 5 }">
-								<input type="button" class="btn" onclick="location.href='#?mem_idx=${sellerInfo.mem_idx }'" value="더보기 >"> <!-- 기능구현 필요 -->
+								<input type="button" class="btn" onclick="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }'" value="더보기 >"> <!-- 기능구현 필요 -->
 	               			</c:if>
 						</div>
 					</div>
@@ -381,11 +378,52 @@
 
 				</div>
 				<div class="container">
-					<c:forEach begin="1" end="5" var="i"> <!-- 후기가져오면 여기 바꾸면됨 -->
-						<div class="row">
-							<div class="col">
-								<span>작성자${i }</span>
-								<span>후기내용${i }</span>
+					<div class="row">
+						<div class="col-8 fw-bold fs-5 fw-bold">${sellerInfo.mem_nickname }님의 판매후기</div>
+						<div class="col-4 text-end text-xl-center">
+							<c:if test="${fn:length(reviewList) > 5 }">
+								<input type="button" class="btn" onclick="location.href='${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }'" value="더보기 >"> <!-- 기능구현 필요 -->
+               				</c:if>
+						</div>
+					</div>
+					<c:forEach items="${reviewList }" var="review"> <!-- 후기가져오면 여기 바꾸면됨 -->
+						<div class="row h-75">
+							<div class="col-4">
+								<img src="${pageContext.request.contextPath }/resources/upload/profile/${review.mem_profileImageUrl }" class="img-fluid rounded">
+							</div>
+							<div class="col-8">
+								<div class="container">
+									<div class="row">
+										<div class="col">
+											<span>
+												<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }" class="fw-bold fs-5">
+													<span>${review.mem_nickname }</span>
+												</a>
+											</span>
+											<span>
+												<c:forEach begin="0" end="4" step="1" varStatus="status">
+													<c:choose>
+														<c:when test="${status.index < review.review_star }">
+															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+  																<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+															</svg>
+														</c:when>
+														<c:otherwise>
+															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+															  <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+															</svg>
+														</c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<b class="fs-6">${review.review_content }</b>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</c:forEach>

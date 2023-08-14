@@ -287,4 +287,13 @@
             , now()
         )
     </insert>
+    <select id="selectReviewList" resultType="map">
+    	select
+    		*
+    	from
+    		jung_reviews jr 
+    		join mem_info mi on jr.writer_idx = mi.mem_idx
+    	where
+    		jr.seller_idx = #{seller_idx }
+    </select>
 </mapper>

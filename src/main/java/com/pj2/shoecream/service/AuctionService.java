@@ -90,4 +90,9 @@ public class AuctionService {
 	public int registTracking(Map<String, Object> map) {
 		return mapper.insertTracking(map);
 	}
+
+	public List<Map<String, Object>> getReviewList(int seller_idx) {
+		return mapper.selectReviewList(seller_idx);
+	}
+
 }
