@@ -738,7 +738,10 @@ public class AuctionController {
     
 	//-----------------------리뷰 작성 폼 이동-------------------------
 	@GetMapping("AucRegistReviewForm")
-	public String registReviewForm(@RequestParam String auction_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh){
+	public String registReviewForm(@RequestParam String product_idx, 
+			@RequestParam(value="mem_idx", required=false) Integer mem_idx, 
+			@RequestParam(value="buyer_idx", required=false) Integer buyer_idx, 
+			HttpSession session, Model model, JungGoNohVO jungGoNoh){
 		
 		try {			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -751,17 +754,28 @@ public class AuctionController {
 			return "inc/fail_forward";
 		}
 		
-		String product_idx = auction_idx;
-		
 		// product_idx 는 무조건 받아와야함
 		if(product_idx == null) {
 			model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
 			return "inc/fail_back";
 		}
-		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
-		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
-		jungGoNoh.setProduct_idx(product_idx);			
 		
+		//관련 idx 세팅
+//		jungGoNoh.setMem_idx(mem_idx);
+//		jungGoNoh.setMem_idx(Integer.valueOf(mem_idx));
+//		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
+//		jungGoNoh.setBuyier_idx(Integer.valueOf(buyer_idx));
+		jungGoNoh.setProduct_idx(product_idx);		
+		
+	    if (mem_idx != null) {
+	        jungGoNoh.setMem_idx(mem_idx);
+	    }
+	    
+	    if (buyer_idx != null) {
+	        jungGoNoh.setBuyier_idx(buyer_idx);
+	    }
+		
+		//리뷰 작성할 상품 정보 세팅
 		JungGoNohVO jungGoNohReview = jungGoNohService.getProduct(product_idx);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
