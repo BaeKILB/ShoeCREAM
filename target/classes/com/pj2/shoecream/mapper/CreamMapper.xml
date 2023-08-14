@@ -168,10 +168,10 @@
 	   		,#{cream_title }
 	   		,#{cream_size }
 	   		,#{price }
-	   		,#{name }
+	   		,#{recipient_name }
 	        , CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})
-	   		,#{m_tel}
-	   		,#{memo}
+	   		,#{recipient_phone}
+	   		,#{delivery_request}
 	   		,'배송전'
 	   		,null
 	   		,null
