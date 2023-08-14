@@ -955,7 +955,7 @@ public class JunggoController {
 		String fileName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
 		String fileName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
 		String fileName4 = uuid.substring(0, 8) + "_" + mFile4.getOriginalFilename();
-		
+		//
 		if(!mFile1.getOriginalFilename().equals("")) {
 			jungGoNoh.setImage1_name(subDir + "/" + fileName1);
 		}
