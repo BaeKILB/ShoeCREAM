@@ -46,6 +46,8 @@ import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.util.FindUtil;
 import com.pj2.shoecream.util.SendUtil;
 import com.pj2.shoecream.vo.KakaoProfile;
+import com.pj2.shoecream.vo.MemberUpdatePasswdVO;
+import com.pj2.shoecream.vo.MemberUpdateVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.OAuthToken;
 
@@ -315,13 +317,6 @@ public class MemberController {
 	// 아이디 찾기
 	@PostMapping("find/findIdPro")
 	public String findIdPro(MemberVO member, Model model) {
-//		System.out.println("여기까지 오니?");
-		//count==0일때 history.back
-		//else 모델에 저장하고 뷰페이지에 아이디 보여주기
-		//핸드폰 번호 입력부분 어떻게 할지?
-		//DB에는 010-1234-5678 형태로 저장 되어있음
-		//^js로 해결완료~__~
-
 		//로그인 방식으로 다시 시도 해봅니다..
 		String idResult = memberService.getId(member);
 //		System.out.println(idResult);
@@ -401,7 +396,7 @@ public class MemberController {
 	
 //    ===========================MyPage===========================
     
-    // 회원수정 폼 (마이페이지 메인)
+    // 회원수정 정보 폼 (마이페이지 메인)
 //    @GetMapping("mypage/{mem_idx}/update")
     @GetMapping("mypage/update")
     public String updateForm(Model model) {//@AuthenticationPrincipal 이녀석을 통해 시큐리티가 저장한 세션을 접근할 수 있다.
@@ -453,10 +448,56 @@ public class MemberController {
 		
     	return "member/mypage/update";
     }	
-   
- // 회원수정
+    
+    // 회원수정 프로
     @PostMapping("MemberUpdatePro")
-    public String updatePro(@Valid MemberVO member, BindingResult bindingResult,
+    public String updatePro(@Valid MemberUpdateVO member, BindingResult bindingResult, HttpSession session, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("회원수정 에러로 오니? ..?");
+            Map<String, String> errorMap = new HashMap<>();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+                System.out.println("================");
+                System.out.println("회원수정 유효성 에러" + error.getDefaultMessage());
+                System.out.println("================");
+            }
+            throw new CustomValidationException("회원 수정 실패", errorMap);
+        } else {
+            // 새 비밀번호 유효성 검사를 통과한 경우에만 인코딩된 새 비밀번호를 사용합니다.
+            int insertCount = memberService.ModifyMember(member);
+
+            if (insertCount > 0) {
+                MemberVO updatedMember = memberService.loadMemberData(member.getMem_id());
+                mPrincipalDetails.setMember(updatedMember);
+                model.addAttribute("member", updatedMember);
+            }
+
+            System.out.println("회원정보성공해서 member에 뭐가 들었음 ? " + mPrincipalDetails.getMember());
+            model.addAttribute("msg", "회원 정보 수정 성공!");
+            model.addAttribute("targetURL", "mypage/update");
+
+            return "member/success_forward";
+        }
+    }
+    
+    
+    
+    // 회원수정 비밀번호 번경 폼
+    @GetMapping("mypage/updatePasswd")
+    public String updatePasswdForm(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		System.out.println("회원수정 비밀번호 변경 폼 : " + mPrincipalDetails.getMember());
+		model.addAttribute("member", mPrincipalDetails.getMember());
+    	return "member/mypage/updatePasswd";
+    }
+    
+ // 회원수정 패스워드
+    @PostMapping("MemberPasswdUpdatePro")
+    public String updatePasswdPro(@Valid MemberUpdatePasswdVO member, BindingResult bindingResult,
             @RequestParam String newPasswd, @RequestParam String newPasswd1,
             HttpSession session, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -473,7 +514,7 @@ public class MemberController {
             model.addAttribute("msg", "현재 비밀번호 불일치!");
             return "member/fail_back";
         }
-
+        
         // 새 비밀번호가 둘 다 입력되었고 두 비밀번호 요소가 일치하면 새 비밀번호 유효성 검사를 수행합니다.
         if (!newPasswd.isEmpty() && !newPasswd1.isEmpty() && newPasswd.equals(newPasswd1)) {
             if (newPasswd.length() < 8 || newPasswd.length() > 20) {
@@ -499,17 +540,12 @@ public class MemberController {
         } else {
             // 새 비밀번호 유효성 검사를 통과한 경우에만 인코딩된 새 비밀번호를 사용합니다.
             String encodedNewPassword = newPasswd.isEmpty() ? null : bCryptPasswordEncoder.encode(newPasswd);
-            int insertCount = memberService.ModifyMember(member, newPasswd, encodedNewPassword);
+            int insertCount = memberService.ModifyMemberPasswd(member, newPasswd, encodedNewPassword);
 
             if (insertCount > 0) {
-                MemberVO updatedMember = memberService.loadMemberData(member.getMem_id());
-                mPrincipalDetails.setMember(updatedMember);
-                model.addAttribute("member", updatedMember);
+                model.addAttribute("msg", "회원 정보 수정 성공!");
+                model.addAttribute("targetURL", "mypage/updatePasswd");
             }
-
-            System.out.println("회원정보성공해서 member에 뭐가 들었음 ? " + mPrincipalDetails.getMember());
-            model.addAttribute("msg", "회원 정보 수정 성공!");
-            model.addAttribute("targetURL", "mypage/update");
 
             return "member/success_forward";
         }

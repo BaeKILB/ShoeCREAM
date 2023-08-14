@@ -2,9 +2,13 @@ package com.pj2.shoecream.mapper;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.pj2.shoecream.vo.MemberUpdatePasswdVO;
+import com.pj2.shoecream.vo.MemberUpdateVO;
 import com.pj2.shoecream.vo.MemberVO;
 
 @Mapper
@@ -32,17 +36,21 @@ public interface MemberMapper {
 	
 	// 시큐리티에 mem_id 셀렉해주기
     MemberVO findMemberById(String mem_id);
-
-	MemberVO updateMember(int mem_idx, MemberVO member);
-
-	Object findMemberById(int mem_idx);
-	
-	// 회원정보 수정 
-	int updateMember(@Param("member") MemberVO member, @Param("newPasswd") String newPasswd,
-			@Param("newPasswd1") String newPasswd1);
+    
+    // 회원 정보 수정
+	int updateMember(MemberUpdateVO member);
 	
 	// 회원정보 수정 새로운 값 셀렉
 	MemberVO selectMember(String mem_id);
+	
+	Object findMemberById(int mem_idx);
+	
+	// 회원 비밀번호 정보 수정 
+	int updateMemberPasswd(@Param("member") @Valid MemberUpdatePasswdVO member, @Param("newPasswd") String newPasswd,
+			@Param("newPasswd1") String newPasswd1);
+	
+	// 회원 비밀번호 정보 수정 새로운 값 셀렉
+	MemberUpdatePasswdVO selectMemberPasswd(String mem_id);
 
 	//폰번호 중복확인
 	int phoneCheck(String phone);

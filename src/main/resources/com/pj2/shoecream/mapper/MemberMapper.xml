@@ -38,7 +38,7 @@
 	</select>
 	
 	<!-- 카카오 로그인 정보로 기존 회원 정보 업데이트 -->
-	<update id="updateMemberWithKakao" parameterType="com.pj2.shoecream.vo.MemberVO">
+	<update id="updateMemberWithKakao" parameterType="com.pj2.shoecream.vo.MemberUpdateVO">
 	    UPDATE mem_info SET
 	        mem_passwd = #{mem_passwd},
 	        mem_nickname = #{mem_nickname},
@@ -99,34 +99,49 @@
 		SELECT COUNT(mem_mtel) FROM mem_info WHERE mem_mtel=#{mem_mtel}
 	</select>
 
-
-
-
-
-	<!-- 회원 정보 수정하기 -->
-	<update id="updateMember">
-		UPDATE mem_info
-		SET mem_name=#{member.mem_name}
-		<if test="newPasswd neq ''">
-			, mem_passwd = #{newPasswd1}
-		</if>
-		, mem_nickname=#{member.mem_nickname}
-		, mem_birthday =
-		CONCAT(#{member.mem_bir1}, '-', #{member.mem_bir2},
-		'-',
-		#{member.mem_bir3})
-		, mem_mtel = CONCAT(#{member.phone1}, '-',
-		#{member.phone2}, '-',
-		#{member.phone3})
-		, mem_address =
-		CONCAT(#{member.sample6_postcode},'/',#{member.sample6_address},'/',#{member.sample6_detailAddress},'/',#{member.sample6_extraAddress})
-		WHERE mem_id = #{member.mem_id}
-	</update>
+		<!-- 회원 정보 수정하기 -->
+		<update id="updateMember">
+		  UPDATE mem_info
+		  SET mem_name=#{mem_name}
+		  , mem_nickname=#{mem_nickname}
+		  <if test="mem_bir1 != null and mem_bir1 != '' and mem_bir2 != null and mem_bir2 != '' and mem_bir3 != null and mem_bir3 != ''">
+		    , mem_birthday = CONCAT(#{mem_bir1}, '-', #{mem_bir2}, '-', #{mem_bir3})
+		  </if>
+		  <if test="phone1 != null and phone1 != '' and phone2 != null and phone2 != '' and phone3 != null and phone3 != ''">
+		    , mem_mtel = CONCAT(#{phone1}, '-', #{phone2}, '-', #{phone3})
+		  </if>
+		  <if test="sample6_postcode != null and sample6_postcode != '' and sample6_address != null and sample6_address != '' and sample6_detailAddress != null and sample6_detailAddress != '' and sample6_extraAddress != null and sample6_extraAddress != ''">
+		    , mem_address = CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})
+		  </if>
+		  WHERE mem_id = #{mem_id}
+		</update>
 
 	<!-- 회원 정보 수정 후 바로 정보 교체 -->
 	<select id="selectMember"
 		resultType="com.pj2.shoecream.vo.MemberVO">
-		SELECT * FROM mem_info
+		SELECT *
+		FROM mem_info
+		WHERE mem_id = #{mem_id}
+	</select>
+	
+	
+	
+
+	<!-- 회원 비밀번호 정보 수정하기 -->
+	<update id="updateMemberPasswd">
+	    UPDATE mem_info
+	    SET 
+	    <if test="newPasswd != null and newPasswd != ''">
+	        mem_passwd = #{newPasswd1}
+	    </if>
+	    WHERE mem_id = #{member.mem_id}
+	</update>
+
+	<!-- 회원 정보 수정 후 바로 정보 교체 -->
+	<select id="selectMemberPasswd"
+		resultType="com.pj2.shoecream.vo.MemberVO">
+		SELECT mem_passwd
+		FROM mem_info
 		WHERE mem_id = #{mem_id}
 	</select>
 

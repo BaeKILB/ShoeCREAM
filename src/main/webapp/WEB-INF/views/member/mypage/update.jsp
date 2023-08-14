@@ -91,26 +91,26 @@
                      <input type="text" name="mem_nickname" id="nickname" class="form-control" value="${member.mem_nickname }" >
                   </div>
                </li>
-               <li>
-                  <label for="name">현재 비밀번호</label>
-                  <div class="form-input border-bottom">
-                     <input type="password" name="mem_passwd"  class="form-control" >
-                  </div>
-               </li>
-               <li>
-                  <label for="name">비밀번호 변경</label>
-                  <div class="form-input border-bottom">
-                     <input type="password"  name="newPasswd" id="mem_passwd"  autoComplete="off" class="form-control"  placeholder="비밀변호 변경 시 입력하세요" oninput="checkPassword()">
-                    <div id="passwordError" class="error"></div>
-                  </div>
-               </li>
-               <li>
-                  <label for="name">비밀번호 변경 확인</label>
-                  <div class="form-input border-bottom">
-                     <input type="password" name="newPasswd1" oninput='validatePassword()'  id="passwordCheck" class="form-control" placeholder="비밀변호 변경 시 입력하세요">
-                      <div id="passwordCheckError" class="error"></div>
-                  </div>
-               </li> 
+<!--                <li> -->
+<!--                   <label for="name">현재 비밀번호</label> -->
+<!--                   <div class="form-input border-bottom"> -->
+<!--                      <input type="password" name="mem_passwd"  class="form-control" > -->
+<!--                   </div> -->
+<!--                </li> -->
+<!--                <li> -->
+<!--                   <label for="name">비밀번호 변경</label> -->
+<!--                   <div class="form-input border-bottom"> -->
+<!--                      <input type="password"  name="newPasswd" id="mem_passwd"  autoComplete="off" class="form-control"  placeholder="비밀변호 변경 시 입력하세요" oninput="checkPassword()"> -->
+<!--                     <div id="passwordError" class="error"></div> -->
+<!--                   </div> -->
+<!--                </li> -->
+<!--                <li> -->
+<!--                   <label for="name">비밀번호 변경 확인</label> -->
+<!--                   <div class="form-input border-bottom"> -->
+<!--                      <input type="password" name="newPasswd1" oninput='validatePassword()'  id="passwordCheck" class="form-control" placeholder="비밀변호 변경 시 입력하세요"> -->
+<!--                       <div id="passwordCheckError" class="error"></div> -->
+<!--                   </div> -->
+<!--                </li>  -->
                <li id="ad">
                   <label for="name">주소</label>
                     <div class="addr border-bottom">

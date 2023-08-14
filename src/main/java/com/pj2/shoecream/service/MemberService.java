@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,8 @@ import com.pj2.shoecream.handler.CustomValidationException;
 import com.pj2.shoecream.mapper.FollowMapper;
 import com.pj2.shoecream.mapper.MemberMapper;
 import com.pj2.shoecream.vo.MemberProfileDto;
+import com.pj2.shoecream.vo.MemberUpdatePasswdVO;
+import com.pj2.shoecream.vo.MemberUpdateVO;
 import com.pj2.shoecream.vo.MemberVO;
 
 import lombok.RequiredArgsConstructor;
@@ -107,30 +110,41 @@ public class MemberService {
 	
 	// 회원 정보 수정
 	@Transactional
-	public MemberVO updateMemberInfo(int mem_idx, MemberVO member) {
-		
-		MemberVO memberEntity = memberMapper.updateMember(mem_idx, member);
-		
-        String rawPassword = member.getMem_passwd();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        
-        memberEntity.setMem_passwd(encPassword);
-        memberEntity.setMem_nickname(member.getMem_nickname());
-        memberEntity.setMem_birthday(member.getMem_birthday());
-        memberEntity.setMem_address(member.getMem_address());
-        
-		return memberEntity;
-	}
+//	public MemberVO updateMemberInfo(int mem_idx, MemberVO member) {
+//		
+//		MemberVO memberEntity = memberMapper.updateMember(mem_idx, member);
+//		
+//        String rawPassword = member.getMem_passwd();
+//        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+//        
+//        memberEntity.setMem_passwd(encPassword);
+//        memberEntity.setMem_nickname(member.getMem_nickname());
+//        memberEntity.setMem_birthday(member.getMem_birthday());
+//        memberEntity.setMem_address(member.getMem_address());
+//        
+//		return memberEntity;
+//	}
 	
 	// 회원 정보 수정
-	public int ModifyMember(MemberVO member, String newPasswd, @RequestParam String newPasswd1) {
-		return memberMapper.updateMember(member,newPasswd, newPasswd1);
-		
+	public int ModifyMember(MemberUpdateVO member) {
+		return memberMapper.updateMember(member);
 	}
+	
 	// 회원 수정 새로운 정보 담기
 	public MemberVO loadMemberData(String mem_id) {
 		return memberMapper.selectMember(mem_id);
 	}
+	
+	// 회원 수정 새로운 정보 담기
+	public MemberUpdatePasswdVO loadMemberPassWdData(String mem_id) {
+		return memberMapper.selectMemberPasswd(mem_id);
+	}
+	
+	// 회원 비밀번호 정보 수정
+	public int ModifyMemberPasswd(@Valid MemberUpdatePasswdVO member, String newPasswd, @RequestParam String newPasswd1) {
+		return memberMapper.updateMemberPasswd(member,newPasswd, newPasswd1);
+	}
+	
 	
 	//핸드폰 중복확인
 	public int phoneCheck(String phone) {
@@ -282,6 +296,8 @@ public class MemberService {
 	public boolean updatePointAmount(int mem_idx, int pointAmount) {
 		return memberMapper.updatePointAmount(mem_idx,pointAmount) > 0;
 	}
+	
+	
 
 	// 카카오 로그인 회원가입 있으면 업데이트
 //	@Transactional
