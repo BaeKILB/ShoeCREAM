@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -270,18 +271,22 @@ public class MemberController {
 		MemberVO kakaoMember = new MemberVO();
 		kakaoMember.setMem_id(kakaoProfile.getKakao_account().getEmail() +"_"+ kakaoProfile.getId());
 		kakaoMember.setMem_passwd(garbagePassword.toString());
+		kakaoMember.setMem_name(kakaoProfile.getProperties().getNickname());
 		kakaoMember.setMem_nickname(kakaoProfile.getProperties().getNickname());
 		kakaoMember.setMem_email(kakaoProfile.getKakao_account().getEmail());
 		
 		// 가입자 혹은 비가입자 체크 해서 처리
 		MemberVO originMember =  memberService.selectMember(kakaoMember.getMem_id());
 		
-		if(originMember == null) {
-			System.out.println("신규 회원입니다.");
-			memberService.registMember(kakaoMember);
-			originMember = kakaoMember;
+		if (originMember == null) {
+		    System.out.println("신규 회원입니다.");
+		    memberService.registMember(kakaoMember);
+		    originMember = memberService.selectMember(kakaoMember.getMem_id()); // 신규 회원 가입 후 mem_idx를 포함한 회원 정보를 조회
 		} else {
-			System.out.println("기존 회원입니다.");
+		    System.out.println("기존 회원입니다.");
+		    originMember = memberService.updateAndReturnMemberWithKakao(kakaoMember);
+//		    httpSession.removeAttribute("logInInfo"); // 기존 세션 삭제
+//		    httpSession.setAttribute("logInInfo", originMember); // 새로운 회원 정보로 세션 생성
 		}
 		
 		// 로그인 처리
@@ -289,8 +294,12 @@ public class MemberController {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-//		
-//		return response2.getBody();
+
+//		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoMember.getMem_id(), kakaoMember.getMem_passwd()));
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		
+		//		return response2.getBody();
 		
 		return "redirect:/";
 	}

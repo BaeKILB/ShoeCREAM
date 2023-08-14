@@ -56,6 +56,13 @@ public class MemberService {
     	return member;
 	}
     
+    // 카카오 로그인 회원가입 존재시 리턴
+	@Transactional
+	public MemberVO updateAndReturnMemberWithKakao(MemberVO kakaoMember) {
+	    memberMapper.updateMemberWithKakao(kakaoMember);
+	    return memberMapper.findMemberById(kakaoMember.getMem_id());
+	}
+    
     
     // 회원가입
     @Transactional
@@ -275,6 +282,14 @@ public class MemberService {
 	public boolean updatePointAmount(int mem_idx, int pointAmount) {
 		return memberMapper.updatePointAmount(mem_idx,pointAmount) > 0;
 	}
+
+	// 카카오 로그인 회원가입 있으면 업데이트
+//	@Transactional
+//	public void updateMemberWithKakao(MemberVO kakaoMember) {
+//	    memberMapper.updateMemberWithKakao(kakaoMember);
+//	}
+
+
 
 
 	//아이디 중복체크 mapper 접근
