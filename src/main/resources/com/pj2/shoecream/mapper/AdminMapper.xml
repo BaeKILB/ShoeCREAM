@@ -199,7 +199,7 @@
 						</when>
 					</choose>
 				</if>
-			JOIN
+			LEFT JOIN
     			courier_info ci ON cir.request_idx = ci.product_idx	
 			ORDER BY
 					request_idx DESC

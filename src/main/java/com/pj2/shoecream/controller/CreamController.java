@@ -376,22 +376,48 @@ public class CreamController {//크림 컨트롤러 입니다.
 		String cream_idx = (String)map.get("cream_idx");
 		String request_idx = String.valueOf(map.get("request_idx"));
 		
-		System.out.println("★★★★★★★★"+map.toString());
-				
+//		System.out.println("★★★★★★★★"+map.toString());
 				
 		map.put("seller_idx", seller_idx); // 판매자 정보
 		map.put("buyer_idx", buyer_idx); 
 		map.put("cream_idx", cream_idx);
 		map.put("request_idx", request_idx);
-		System.out.println(request_idx);
-		if(service.registTracking(map) > 0) {
-			model.addAttribute("msg","운송장번호 등록성공");
-			return "inc/close";
-		} else {
-			model.addAttribute("msg","등록실패");
-			return "inc/fail_back";
+				
+		//courier_info 테이블의 tracking_num 이 null일때 운송장 등록 1차 else cir 테이블 update
+		int trackingNumCount = service.getTrackingNum(request_idx);
+		
+
+		System.out.println("♥♥♥♥"+trackingNumCount);
+		
+		if(trackingNumCount == 0) {
+			
+			System.out.println(request_idx);
+			if(service.registTracking(map) > 0) {
+				model.addAttribute("msg","운송장번호 등록성공");
+				return "inc/close";
+			} else {
+				model.addAttribute("msg","등록실패");
+				return "inc/fail_back";
+			}
+		}else {
+			if(service.updateTrackingNum(map) > 0) {
+				model.addAttribute("msg","운송장번호 등록성공");
+				return "inc/close";
+			} else {
+				model.addAttribute("msg","등록실패");
+				return "inc/fail_back";
+			}
+			
 		}
 		
+		
+	}
+	
+	@GetMapping("shippingDetail")
+	public String shippingDetail(@RequestParam Integer request_idx, @RequestParam String cream_idx, Model model) {
+		Map<String, Object> map = service.getCreamOrder(request_idx);
+		model.addAttribute("map",map);
+		return"cream/shipping_detail";
 	}
 		
 	

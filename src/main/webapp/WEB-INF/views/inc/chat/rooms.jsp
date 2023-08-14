@@ -206,6 +206,13 @@
 					// 만약 product_sell_status 가 담겨져서 오는지 확인하기
 					if(content.product_sell_status != null
 							|| content.product_sell_status != undefined){
+						if(chat_writer != userId &&
+								(content.isCancel != null
+								|| content.isCancel != undefined)){
+							
+							window.open("payCancel?product_idx=${room.product_idx}&chat_area=" + getParams.get("chat_area")  + "&chat_room_idx=" + getParams.get("chat_room_idx")
+									, "취소 상세", "width=500, height=6500, left=100, top=50");
+						}				
 						loadChatMsgBar();
 					}
                },

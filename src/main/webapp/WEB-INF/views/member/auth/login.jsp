@@ -41,7 +41,7 @@
                     <div class="layout2">
                         <div class="wrap_box">
                             <div class="inner600">
-                                <h3 class="t_tit1">로그인</h3>
+                                <img src="${pageContext.request.contextPath }/resources/img/member/social/ShoeCreamLogo.png" alt="">
 								<!-- 아이디 -->
                                 <div class="login_input">
                                     <div class="inp_bundle">
@@ -55,51 +55,37 @@
                                 </div>
 
                                 <div class="input_bottom">
-                                    <div class="checkbox_ui type1">
-                                        <input type="checkbox" id="rememberId" name="rememberId" <c:if test="${not empty cookie.REMEMBER_ID.value}">checked</c:if>>
-                                        <label for="rememberId">아이디 저장</label>
-                                    </div>
+<!--                                     <div class="checkbox_ui type1"> -->
+<%--                                         <input type="checkbox" id="rememberId" name="rememberId" <c:if test="${not empty cookie.REMEMBER_ID.value}">checked</c:if>> --%>
+<!--                                         <label for="rememberId">아이디 저장</label> -->
+<!--                                     </div> -->
                                     <div class="find_btns">
 <!--                                         <a href="memberFind" onclick="">비밀번호 찾기</a> -->
                                         <a href="find/memid" onclick="">아이디/비밀번호 찾기</a>
                                     </div>
+                                    <div class="find_btns">
+                                    
+                                    </div>
                                 </div>
 								
-		                        <!-- Oauth 소셜로그인 -->
-		                        <div class="d-grid gap-2 col mx-auto">
-								  <button class="btn btn-primary btn_login btn_typeB2" type="button" style="font-size:20px;">
-								  	<i class="fab fa-facebook-square" ></i>
-								  	Facebook으로 로그인
-								  </button>
-								</div>
+<!-- 		                        <div class="d-grid gap-2 col mx-auto"> -->
+<!-- 								  <button class="btn btn-primary btn_login btn_typeB2" type="button" style="font-size:20px;"> -->
+<!-- 								  	<i class="fab fa-facebook-square" ></i> -->
+<!-- 								  	Facebook으로 로그인 -->
+<!-- 								  </button> -->
+<!-- 								</div> -->
 								
+		                        <!-- Oauth 카카오 로그인 -->
 <%--                                 <a href="javascript:kakaoLogin();"><img src="${pageContext.request.contextPath }/resources/img/member/login/kakao_login_large_wide.png" style="height:60px; width:auto;"></a> --%>
-                                <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=29eee1b4771daa5dc16c4084cc6defc9&redirect_uri=http://localhost:8089/shoecream/auth/kakao/callback"><img src="${pageContext.request.contextPath }/resources/img/member/login/kakao_login_large_wide.png" style="height:75px; width:auto;"></a>
-		                        
-		                        <!-- Oauth 소셜로그인end -->
-								
 								<button class="btn_login btn_typeB2" >로그인</button>
+
+                                <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=29eee1b4771daa5dc16c4084cc6defc9&redirect_uri=http://localhost:8089/shoecream/auth/kakao/callback"><img src="${pageContext.request.contextPath }/resources/img/member/login/kakao_login_large_wide.png" style="height:75px; width:auto;"></a>
+								
 <!--                                 <input type="submit" class="btn_login btn_typeB2" value="로그인"> -->
                                 <div class="join">
                                     <p>아이디가 없으신가요? </p>
                                     <a href="signup">회원가입</a>
                                 </div>
-                                              
-                                
-<!-- 								  <ul> -->
-<!-- 									<li onclick="kakaoLogin();"> -->
-<!-- 								      <a href="javascript:void(0)"> -->
-<!-- 								          <span>카카오 로그인</span> -->
-<!-- 								      </a> -->
-<!-- 									</li> -->
-<!-- 									<li onclick="kakaoLogout();"> -->
-<!-- 								      <a href="javascript:void(0)"> -->
-<!-- 								          <span>카카오 로그아웃</span> -->
-<!-- 								      </a> -->
-<!-- 									</li> -->
-<!-- 								</ul> -->
-								
-								
                             </div>
                         </div>
                     </div>

@@ -115,7 +115,7 @@ public class PayService {
 	// 반환값은 int
 	// 1: 완료 
 	// 2: 잔고부족
-	// 3: 결제완료된 상품
+	// 3: 결제완료 또는 거래완료된 상품
 	// 4: 결제 정보 저장 실패
 	// 5: 기타오류
 	public int productPayment(PayInfoVO payInfo, PointInoutVO pointInout) {
@@ -135,7 +135,9 @@ public class PayService {
 		
 		// 최근 거래정보에 해당 상품이 결제완료 상태인지 확인
 		if(mapper.selectGetPayInfoTop(payInfo.getProduct_idx()) != null) {
-			if(mapper.selectGetPayInfoTop(payInfo.getProduct_idx()).getPay_status().equals("결제완료")) {
+			String payStatus = mapper.selectGetPayInfoTop(payInfo.getProduct_idx()).getPay_status();
+			if(payStatus.equals("결제완료")
+					|| payStatus.equals("거래완료")) {
 				return 3;
 			}
 		}
@@ -159,6 +161,70 @@ public class PayService {
 		}
 		// 기타 실패시 5 반환
 		return 5;
+	}
+
+	// 결제 환불
+	
+	// 반환값은 int
+	// 1. 성공
+	// 2. 결제 정보 불러오기 실패
+	// 3. 상품 결제 정보가 결제 완료가 아님
+	// 4. 판매자 정보 불러오기 실패
+	// 5. 
+	// 6. 기타 실패
+	public int productCancelPayment(int mem_buyer_idx ,String product_idx) {
+		// 최근 거래정보 가져오기
+		PayInfoVO payInfo = null;
+		try {
+			payInfo = mapper.selectGetPayInfoTop(product_idx);
+		}
+		catch(Exception e) {
+			return 2;
+		}
+		
+		// 최근 거래정보에 해당 상품이 결제완료 상태인지 확인
+		if(payInfo != null) {			
+			if(!payInfo.getPay_status().equals("결제완료")) {
+				return 3;
+			}
+		}
+		else {
+			return 2;
+		}
+		
+		// 포인트 환불 위한 PointInoutVO 만들기
+		PointInoutVO pointInout = new PointInoutVO();
+		
+		// 판매자 정보 불러오기
+		MemberVO member = null;
+		
+		try {
+			member = memMapper.findMemberByMemIdx(mem_buyer_idx);
+		}
+		catch(Exception e) {
+			return 4;
+		}
+		
+		pointInout.setPoint_status("충전");
+		pointInout.setCharge_point_amount(member.getCharge_point());
+		pointInout.setMem_idx(mem_buyer_idx);
+		pointInout.setCharge_point(payInfo.getPay_total());
+		pointInout.setPoint_usage("취소결제충전");
+		
+		// 판매자 송금 성공시 기록 남기기
+		if(depositPoints(pointInout) == 1) {
+			// 거래 성공시 거래정보 추가
+			payInfo.setPay_status("결제취소");
+			payInfo.setPay_method(2);
+			payInfo.setCancel_pay(payInfo.getPay_total());
+			if(mapper.insertPayInfo(payInfo) > 0) {
+				return 1;
+			}
+			else {
+				return 6;
+			}
+		}
+		return 6;
 	}
 	
 	// 구매자가 거래완료를 누를시 판매자에게 해당 상품 금액 입금 되도록 하기
@@ -224,7 +290,7 @@ public class PayService {
 		if(depositPoints(pointInout) == 1) {
 			// 거래 성공시 거래정보 추가
 			payInfo.setPay_status("거래완료");
-			payInfo.setPay_method(3);
+			payInfo.setPay_method(2);
 			if(mapper.insertPayInfo(payInfo) > 0) {
 				return 1;
 			}

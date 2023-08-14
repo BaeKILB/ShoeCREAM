@@ -239,59 +239,6 @@
 		</dependency>
 		<!-- 스프링 시큐리티 끝 -->
 		
-		<!-- Spring Security OAuth2 -->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-oauth2-client</artifactId>
-		    <version>2.5.6</version> <!-- 버전은 최신 버전 또는 프로젝트에 맞는 버전으로 바꿔주세요. -->
-		</dependency>
-		
-<!-- 		<dependency> -->
-<!-- 		    <groupId>org.springframework.security.oauth</groupId> -->
-<!-- 		    <artifactId>spring-security-oauth2</artifactId> -->
-<!-- 		    <version>2.5.1.RELEASE</version> -->
-<!-- 		</dependency> -->
-		
-		<!-- OAuth2 -->
-		<!-- https://mvnrepository.com/artifact/com.github.scribejava/scribejava-apis -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>com.github.scribejava</groupId> -->
-<!-- 		    <artifactId>scribejava-apis</artifactId> -->
-<!-- 		    <version>8.3.1</version> -->
-<!-- 		    <scope>runtime</scope> -->
-<!-- 		</dependency> -->
-		
-<!-- 		<dependency> -->
-<!-- 		    <groupId>com.github.scribejava</groupId> -->
-<!-- 		    <artifactId>scribejava-core</artifactId> -->
-<!-- 		    <version>8.3.1</version> -->
-<!-- 		</dependency> -->
-		
-<!-- 		<dependency> -->
-<!-- 		    <groupId>org.springframework.social</groupId> -->
-<!-- 		    <artifactId>spring-social-config</artifactId> -->
-<!-- 		    <version>1.1.4.RELEASE</version> -->
-<!-- 		</dependency> -->
-			
-			<!-- OAuth2 -->
-			<dependency>
-				<groupId>com.github.scribejava</groupId>
-				<artifactId>scribejava-apis</artifactId>
-				<version>5.6.0</version>
-			</dependency>
-		
-			<dependency>
-				<groupId>com.github.scribejava</groupId>
-				<artifactId>scribejava-core</artifactId>
-				<version>5.6.0</version>
-			</dependency>
-		
-			<dependency>
-				<groupId>org.springframework.social</groupId>
-				<artifactId>spring-social-google</artifactId>
-				<version>1.0.0.RELEASE</version>
-			</dependency>
-		
 		<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
 		<dependency>
 		    <groupId>javax.activation</groupId>

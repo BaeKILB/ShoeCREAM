@@ -304,6 +304,7 @@ LEFT OUTER JOIN product_image pi
 		  JOIN mem_info bi
 		  	ON pi.mem_idx = bi.mem_idx 
 		 WHERE pi.product_idx = ${sub_product_idx} AND pi.mem_idx = ${sub_buyier_idx} AND mi.mem_idx = ${sub_seller_idx} AND pi.pay_total = ${sub_pay}
+		 LIMIT 1
 	</select>
 	
 </mapper>

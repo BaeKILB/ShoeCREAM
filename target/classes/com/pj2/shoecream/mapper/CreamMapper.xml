@@ -172,7 +172,8 @@
 	        , CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})
 	   		,#{recipient_phone}
 	   		,#{delivery_request}
-	   		,'배송전'
+	   		,'상품준비중'
+	   		,null
 	   		,null
 	   		,null
 	   		,now()
@@ -196,5 +197,31 @@
             , now()
         )
 	</insert>
+	
+	<select id="selectCreamOrderDetail" resultType="Map">
+		select *
+		from cream_item_request
+		where request_idx = #{request_idx}
+	
+	</select>
+	
+	<select id="getTrackingStatus" resultType="int">
+	 select COUNT(*) 
+	 from courier_info
+	 where product_idx = #{request_idx}
+	</select>
+	
+	<update id="updateCIR">
+	
+	UPDATE cream_item_request
+	SET
+	    delivery_status = '배송중',
+	    tracking_company = #{tracking_company},
+	    tracking_code = #{tracking_code},
+	    tracking_num = #{tracking_number}
+	WHERE
+	    request_idx = #{request_idx};
+		
+	</update>
 
 </mapper>
