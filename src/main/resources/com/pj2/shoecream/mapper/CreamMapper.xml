@@ -172,7 +172,7 @@
 	        , CONCAT(#{sample6_postcode},'/',#{sample6_address},'/',#{sample6_detailAddress},'/',#{sample6_extraAddress})
 	   		,#{recipient_phone}
 	   		,#{delivery_request}
-	   		,'배송전'
+	   		,'상품준비중'
 	   		,null
 	   		,null
 	   		,now()
@@ -196,5 +196,12 @@
             , now()
         )
 	</insert>
+	
+	<select id="selectCreamOrderDetail" resultType="Map">
+		select *
+		from cream_item_request
+		where request_idx = #{request_idx}
+	
+	</select>
 
 </mapper>

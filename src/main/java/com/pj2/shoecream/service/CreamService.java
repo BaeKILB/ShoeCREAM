@@ -68,6 +68,10 @@ public class CreamService {
 		
 	}
 
+	public Map<String, Object> getCreamOrder(Integer request_idx) {
+		return mapper.selectCreamOrderDetail(request_idx);
+	}
+
 
 
 

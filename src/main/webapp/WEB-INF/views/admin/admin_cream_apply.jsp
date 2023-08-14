@@ -47,6 +47,7 @@
 								<th>신청일</th>
 								<th>입고상태</th> 
 								<th>주문상태</th>
+								<th>상세보기</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -78,7 +79,10 @@
 <%-- 											<input type="hidden" name="t_invoice" id="t_invoice" value="${requestList.tracking_num }"> --%>
 <!-- 											<input id="tracker" type="button" value="배송조회" class="ins_ans moreBtn"> -->
 <!-- 									</td> -->
-									<td>출고전</td>
+									<td>주문상태</td>
+									<td>
+										<button type="button" class="ins_ans moreBtn" onclick="window.open('${pageContext.request.contextPath }/shippingDetail?cream_idx=${requestList.cream_idx}&request_idx=${requestList.request_idx }', '운송장 등록', 'width=580, height=360, left=100, top=50')">상세보기</button>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

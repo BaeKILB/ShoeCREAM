@@ -393,6 +393,13 @@ public class CreamController {//크림 컨트롤러 입니다.
 		}
 		
 	}
+	
+	@GetMapping("shippingDetail")
+	public String shippingDetail(@RequestParam Integer request_idx, @RequestParam String cream_idx, Model model) {
+		Map<String, Object> map = service.getCreamOrder(request_idx);
+		model.addAttribute("map",map);
+		return"cream/shipping_detail";
+	}
 		
 	
 }
