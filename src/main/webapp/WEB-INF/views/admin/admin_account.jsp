@@ -33,7 +33,6 @@
 						<select name="searchType" id="searchType">
 							<option value="" <c:if test="${param.searchType eq '' }">selected</c:if>>전체검색</option>			
 							<option value="회원번호" <c:if test="${param.searchType eq '회원번호' }">selected</c:if>>회원번호</option>			
-							<option value="계좌번호" <c:if test="${param.searchType eq '계좌번호' }">selected</c:if>>계좌번호</option>			
 						</select>
 						<input type="text" name="searchKeyword" value="${param.searchKeyword }" id="searchKeyword">
 						<input type="submit" value="검색" class="searchSubmit" style="cursor: pointer;">

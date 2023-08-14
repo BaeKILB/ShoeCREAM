@@ -224,11 +224,11 @@
 			<if test="!searchKeyword.equals('')">
 				WHERE 
 				<choose>
-					<when test="searchType.equals('회원번호')">
+					<when test="searchType.equals('')">
 						ma.mem_idx LIKE CONCAT('%', #{searchKeyword},'%')
 					</when>
-					<when test="searchType.equals('계좌번호')">
-						ma.account_num LIKE CONCAT('%', #{searchKeyword},'%')
+					<when test="searchType.equals('회원번호')">
+						ma.mem_idx LIKE CONCAT('%', #{searchKeyword},'%')
 					</when>
 				</choose>
 			</if>
@@ -246,9 +246,6 @@
 					<choose>
 						<when test="searchType.equals('회원번호')">
 							mem_idx LIKE CONCAT('%', #{searchKeyword},'%')
-						</when>
-						<when test="searchType.equals('계좌번호')">
-							account_num LIKE CONCAT('%', #{searchKeyword},'%')
 						</when>
 					</choose>
 				</if>
