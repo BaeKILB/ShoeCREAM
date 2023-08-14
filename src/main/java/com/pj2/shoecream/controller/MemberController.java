@@ -1,8 +1,10 @@
 package com.pj2.shoecream.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +20,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
@@ -40,6 +44,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pj2.shoecream.auth.SNSLogin;
 import com.pj2.shoecream.auth.SnsValue;
 import com.pj2.shoecream.config.PrincipalDetails;
@@ -49,7 +56,9 @@ import com.pj2.shoecream.service.BankService;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.util.FindUtil;
 import com.pj2.shoecream.util.SendUtil;
+import com.pj2.shoecream.vo.KakaoProfile;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.OAuthToken;
 
 import lombok.RequiredArgsConstructor;
 
@@ -148,7 +157,7 @@ public class MemberController {
 	
 	// API 로그인 콜백
 	@RequestMapping(value = "/auth/google/callback", method = { RequestMethod.GET , RequestMethod.POST})
-	public String snsLoginCallback(Model model, @RequestParam String code) throws Exception {
+	public String snsLoginCallback(@RequestParam String code, Model model) throws Exception {
 		// 1. code를 이용해서 access_token 받기
 		// 2. aeccess_token을 이용해서 사용자 profile 정보 가져오기
 		SNSLogin snslogin = new SNSLogin(googleSns);
@@ -161,8 +170,8 @@ public class MemberController {
 	}
 	
 	// 카카오 OAuth2 로그인 콜백
-	@GetMapping("auth/kakao/callback")
-	public @ResponseBody String kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
+	@GetMapping(value = "auth/kakao/callback", produces = "application/json;charset=utf-8")
+	public String kakaoCallback(String code, HttpSession httpSession) { // Data를 리턴해주는 컨트롤러 함수
 		
 		// POST 방식으로 key=value 데이터를 요청 (카카오쪽으로)
 		// Restrofit2
@@ -173,7 +182,7 @@ public class MemberController {
 		
 		// HttpHeader 오브젝트 생성
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-type", "application/x-www-form-urlencoded");
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
 		// HttpBody 오브젝트 생성
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -194,7 +203,96 @@ public class MemberController {
 				String.class
 		);
 		
-		return "kakao auth ok : token request :" + response;
+		// Gson, Json Simple, ObjectMapper
+		ObjectMapper objectMapper = new ObjectMapper();
+		OAuthToken oauthToken = null;
+		
+		try {
+			oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("카카오 엑세스 토큰 :" + oauthToken.getAccess_token());
+		
+		RestTemplate rt2 = new RestTemplate();
+		
+		// HttpHeader 오브젝트 생성
+		HttpHeaders headers2 = new HttpHeaders();
+		headers2.add("Authorization", "Bearer "+oauthToken.getAccess_token());
+		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+//		headers2.add("property_keys", "['kakao_account.email', 'kakao_account.profile']");
+		
+		// HttpBody에 property_keys 추가
+//		MultiValueMap<String, String> body2 = new LinkedMultiValueMap<>();
+//		body2.add("property_keys", "[\"kakao_account.email\", \"kakao_account.profile\"]");
+//		
+//		// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
+		HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 = 
+				new HttpEntity<>(headers2);
+		
+		// Http 요청하기 - Post방식으로 - 그리고 response 변수의 응답 받음.
+		ResponseEntity<String> response2 = rt2.exchange(
+				"https://kapi.kakao.com/v2/user/me",
+				HttpMethod.POST,
+				kakaoProfileRequest2,
+				String.class
+		);
+		System.out.println("response2.getBody() 값 :" + response2.getBody());
+		
+	
+		ObjectMapper objectMapper2 = new ObjectMapper();
+		KakaoProfile kakaoProfile = null;
+		
+		try {
+			kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("카카오 아이디(번호) : " + kakaoProfile.getId());
+		System.out.println("카카오 이메일 : " + kakaoProfile.getKakao_account().getEmail());
+		System.out.println("카카오 닉네임 : " + kakaoProfile.getProperties().getNickname());
+		
+		System.out.println("슈크림서버 유저네임(mem_id) : " + kakaoProfile.getKakao_account().getEmail() +"_"+ kakaoProfile.getId());
+		System.out.println("슈크림서버 이메일(mem_email) : " + kakaoProfile.getKakao_account().getEmail());
+		System.out.println("슈크림서버 닉네임(mem_nickname) : " + kakaoProfile.getProperties().getNickname());
+		UUID garbagePassword = UUID.randomUUID();
+		System.out.println("슈크림서버 패스워드 : " + garbagePassword);
+		
+		MemberVO kakaoMember = new MemberVO();
+		kakaoMember.setMem_id(kakaoProfile.getKakao_account().getEmail() +"_"+ kakaoProfile.getId());
+		kakaoMember.setMem_passwd(garbagePassword.toString());
+		kakaoMember.setMem_nickname(kakaoProfile.getProperties().getNickname());
+		kakaoMember.setMem_email(kakaoProfile.getKakao_account().getEmail());
+		
+		// 가입자 혹은 비가입자 체크 해서 처리
+		MemberVO originMember =  memberService.selectMember(kakaoMember.getMem_id());
+		
+		if(originMember == null) {
+			System.out.println("신규 회원입니다.");
+			memberService.registMember(kakaoMember);
+			originMember = kakaoMember;
+		} else {
+			System.out.println("기존 회원입니다.");
+		}
+		
+		// 로그인 처리
+		PrincipalDetails user = new PrincipalDetails(originMember);
+		Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+//		
+//		return response2.getBody();
+		
+		return "redirect:/";
 	}
 	
 	// 회원가입 폼
@@ -366,22 +464,26 @@ public class MemberController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		// 주소 관련 값 설정
-		if(mPrincipalDetails.getMember().getMem_address() != null) {
-			mPrincipalDetails.getMember().setSample6_postcode(mPrincipalDetails.getMember().getMem_address().split("/")[0]); 
-			mPrincipalDetails.getMember().setSample6_address(mPrincipalDetails.getMember().getMem_address().split("/")[1]);  
-			mPrincipalDetails.getMember().setSample6_detailAddress(mPrincipalDetails.getMember().getMem_address().split("/")[2]);  
-			mPrincipalDetails.getMember().setSample6_extraAddress(mPrincipalDetails.getMember().getMem_address().split("/")[3]); 
-		}
-
-      // 생년월일 관련 값 설정
-		mPrincipalDetails.getMember().setMem_bir1(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[0]);  
-		mPrincipalDetails.getMember().setMem_bir2(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[1]);  
-		mPrincipalDetails.getMember().setMem_bir3(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[2]);  
-
-      // 휴대폰번호 관련 값 설정
-		mPrincipalDetails.getMember().setPhone1(mPrincipalDetails.getMember().getMem_mtel().split("-")[0]);  
-		mPrincipalDetails.getMember().setPhone2(mPrincipalDetails.getMember().getMem_mtel().split("-")[1]);  
-		mPrincipalDetails.getMember().setPhone3(mPrincipalDetails.getMember().getMem_mtel().split("-")[2]); 
+//		if(mPrincipalDetails.getMember().getMem_address() != null) {
+//			mPrincipalDetails.getMember().setSample6_postcode(mPrincipalDetails.getMember().getMem_address().split("/")[0]); 
+//			mPrincipalDetails.getMember().setSample6_address(mPrincipalDetails.getMember().getMem_address().split("/")[1]);  
+//			mPrincipalDetails.getMember().setSample6_detailAddress(mPrincipalDetails.getMember().getMem_address().split("/")[2]);  
+//			mPrincipalDetails.getMember().setSample6_extraAddress(mPrincipalDetails.getMember().getMem_address().split("/")[3]); 
+//		}
+//
+//      // 생년월일 관련 값 설정
+//		if(mPrincipalDetails.getMember().getMem_birthday() != null) {
+//			mPrincipalDetails.getMember().setMem_bir1(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[0]);  
+//			mPrincipalDetails.getMember().setMem_bir2(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[1]);  
+//			mPrincipalDetails.getMember().setMem_bir3(mPrincipalDetails.getMember().getMem_birthday().toString().split("-")[2]);  
+//		} else {
+//			return null;
+//		}
+//
+//      // 휴대폰번호 관련 값 설정
+//		mPrincipalDetails.getMember().setPhone1(mPrincipalDetails.getMember().getMem_mtel().split("-")[0]);  
+//		mPrincipalDetails.getMember().setPhone2(mPrincipalDetails.getMember().getMem_mtel().split("-")[1]);  
+//		mPrincipalDetails.getMember().setPhone3(mPrincipalDetails.getMember().getMem_mtel().split("-")[2]); 
 		
 		System.out.println("세션 정보2 : " + mPrincipalDetails.getMember());
     	

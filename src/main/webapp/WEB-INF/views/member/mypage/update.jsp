@@ -82,7 +82,7 @@
                <li>
                   <label for="name">이름</label>
                   <div class="form-input border-bottom">
-                     <input type="text" name="mem_name" id="name" class="form-control" value="${member.mem_name }"  readonly="readonly">
+                     <input type="text" name="mem_name" id="name" class="form-control" value="${member.mem_name }">
                   </div>
                </li>
                <li>

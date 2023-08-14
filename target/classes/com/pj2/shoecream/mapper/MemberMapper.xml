@@ -29,7 +29,14 @@
 		, now() -- 회원 가입일
 		)
 	</insert>
-
+	
+	<!-- 카카오 로그인 회원가입 아이디 중복 체크 -->
+	<select id="findMemberByMemId" resultType="com.pj2.shoecream.vo.MemberVO">
+		SELECT mem_id
+		FROM mem_info 
+		WHERE mem_id = #{mem_id}
+	</select>
+	
 	<select id="selectIdCheck">
 		select
 		count(*)

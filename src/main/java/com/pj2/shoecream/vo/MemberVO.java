@@ -21,19 +21,19 @@ public class MemberVO {
 	private int mem_idx;
 	
 //	@ValidNonConflictId // 아이디 중복 검사
-    @Size(min = 2, max = 20, message = "아이디는 2자 이상 20자 이내로 입력해주세요.")
+//    @Size(min = 2, max = 20, message = "아이디는 2자 이상 20자 이내로 입력해주세요.")
     @NotBlank(message = "아이디를 입력해 주세요")
 	private String mem_id;
     
-    @Size(min = 2, max = 5, message = "이름은 2자 이상 5자 이내로 입력해주세요")
-	@NotBlank
+//    @Size(min = 2, max = 5, message = "이름은 2자 이상 5자 이내로 입력해주세요")
+//	@NotBlank
 	private String mem_name;
     
     @Size(min = 2, max = 10, message = "별명은 2자 이상 10자 이내로 입력해주세요")
     private String mem_nickname;
     
 //    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$" ,message = "비밀번호는 8~20글자 이상 입력해주세요.")
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$" ,message = "비밀번호는 영문, 숫자, 특수문자 포함 8~20글자 이상 입력해주세요.")
+//    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$" ,message = "비밀번호는 영문, 숫자, 특수문자 포함 8~20글자 이상 입력해주세요.")
 	@Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이내로 입력해주세요.")
     @NotBlank(message = "비밀번호를 입력해주세요.")
 	private String mem_passwd;
@@ -66,14 +66,14 @@ public class MemberVO {
 //	@Pattern(regexp = "/01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/",message = "유효한 핸드폰 번호를 입력 해 주세요.")
 	@Pattern(regexp = "^01[016789]-\\d{3,4}-\\d{3,4}$", message = "유효한 핸드폰 번호를 입력 해 주세요.")
 	private String mem_mtel;
+//	@NotBlank
 	@Size(max = 3) 
-	@NotBlank
 	private String phone1;//ㅇ
+//	@NotBlank
 	@Size(max = 4)
-	@NotBlank
 	private String phone2;//ㅇ
+//	@NotBlank
 	@Size(max = 4)
-	@NotBlank
 	private String phone3;//ㅇ
 //	-------------------------------------------------
 	private String mem_bio; // 회원 프로필 자기소개 

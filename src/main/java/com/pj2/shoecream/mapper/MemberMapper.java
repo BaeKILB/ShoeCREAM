@@ -10,6 +10,9 @@ import com.pj2.shoecream.vo.MemberVO;
 @Mapper
 public interface MemberMapper {
    
+	// 카카오 로그인 회원가입 아이디 중복 찾기
+	MemberVO findMemberByMemId(String mem_id);
+	
 	// 회원가입
 	int insertMember(MemberVO member);
 	
@@ -90,5 +93,7 @@ public interface MemberMapper {
 	int updatePointAmount(
 			@Param("mem_idx") int mem_idx
 			,@Param("charge_point") int charge_point);
+
+	
 	
 }
