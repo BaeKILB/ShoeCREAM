@@ -955,7 +955,7 @@ public class JunggoController {
 		String fileName2 = uuid.substring(0, 8) + "_" + mFile2.getOriginalFilename();
 		String fileName3 = uuid.substring(0, 8) + "_" + mFile3.getOriginalFilename();
 		String fileName4 = uuid.substring(0, 8) + "_" + mFile4.getOriginalFilename();
-		
+		//
 		if(!mFile1.getOriginalFilename().equals("")) {
 			jungGoNoh.setImage1_name(subDir + "/" + fileName1);
 		}
@@ -1550,7 +1550,7 @@ public class JunggoController {
 				System.out.println("a_parseDate.getTime()!!!!!!!!!!!!!!!!!!" + a_parseDate.getTime());
 				System.out.println("b_parseDate.getTime()!!!!!!!!!!!!!!!!!!" + b_parseDate.getTime());
 				
-				long resultTime = b_parseDate.getTime() - a_parseDate.getTime();
+				long resultTime = a_parseDate.getTime() - b_parseDate.getTime();
 				
 				System.out.println("resultTime !!!!!!!!!!!!!!!!!!: "+resultTime);
 				

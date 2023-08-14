@@ -72,6 +72,109 @@ function sample6_execDaumPostcode() {
     }).open();
 }
 </script>
+<script>
+$(function() {
+    deliveryCheck();
+    
+    $("#resetAll").on("change",function() {
+        if($(this).attr('class') == 'agreeBtns') {
+               $("#sample6_postcode").val('');
+               $("#sample6_address").val('');
+               $("#sample6_detailAddress").val('');
+               $("#sample6_extraAddress").val('');
+               $("#recipient_name").val('');
+               $("#recipient_phone").val('');
+               $("#delivery_request").val('');
+               $(this).addClass('on');
+        } else {
+            deliveryCheck();
+            $(this).removeClass('on');
+        }
+    });
+    
+    $('.menu_tit').click(function() {
+           $(this).children('span').addClass('on');
+           if ($(this).siblings('.side_sub').is(':hidden')) {
+               $(this).siblings('.side_sub').slideDown();
+               $(this).children('span').removeClass('on');
+           } else {
+               $(this).siblings('.side_sub').slideUp();
+           }
+   });
+});
+
+   const deliveryCheck = () => {
+        // 주소
+     let address = '';
+     if("${deliveryInfo.delivery_address}" == "") {
+        address = "${buyer.mem_address}";
+     } else {
+        address = "${deliveryInfo.delivery_address}";
+     }
+     let addrArr = address.split("/");
+     if(addrArr[0] != null) $("#sample6_postcode").val(addrArr[0]);
+     if(addrArr[1] != null) $("#sample6_address").val(addrArr[1]);
+     if(addrArr[2] != null) $("#sample6_detailAddress").val(addrArr[2]);
+     if(addrArr[3] != null) $("#sample6_extraAddress").val(addrArr[3]);
+
+     // 이름
+     let name = '';
+     if ("${deliveryInfo.recipient_name}" == "") {
+       name = "${buyer.mem_name}"; 
+     } else {
+       name = "${deliveryInfo.recipient_name}";
+     }
+     $("#recipient_name").val(name);
+     
+     // 휴대폰 번호
+     let phone = '';
+     if ("${deliveryInfo.recipient_phone}" == "") {
+       phone = "${buyer.mem_mtel}"; 
+     } else {
+       phone = "${deliveryInfo.recipient_phone}";
+     }
+     $("#recipient_phone").val(phone);
+     
+     // 휴대폰 번호
+     let request = '';
+     if ("${deliveryInfo.delivery_request}" != '') {
+       request = "${deliveryInfo.delivery_request}";
+     } 
+     $("#delivery_request").val(request);
+     // 배송정보
+   };
+    
+   const autoHyphen2 = (target) => {
+     target.value = target.value
+       .replace(/[^0-9]/g, '')
+      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+   }
+
+function Confirmation(event) {
+   
+   if(!$("#agreeBtn").prop('checked')) {
+       alert("약관에 동의해야 결제진행이 가능합니다.");
+       return false;
+   }
+   
+   // 사용자에게 확인을 받기 위한 컨펌창 표시
+   var confirmBid = confirm("결제를 진행하시겠습니까?");
+   
+   if (confirmBid) {
+       $.ajax({
+           type: "post"
+           , url: "deliveryRegister"
+           , data: $("form").serialize()
+       })
+       .done(function() {
+           $("form").submit();
+       })
+       .fail(function() {
+           console.log("deliveryInfo fail");
+       });
+   }
+}
+</script>
 
 
 
@@ -106,10 +209,6 @@ function sample6_execDaumPostcode() {
 						<span>사이즈</span>
 						<span class="resAmount"><b>${map.selectedSize }</b></span>
 					</p>
-<!-- 					<p> -->
-<!-- 						<span>브랜드</span> -->
-<!-- 						<span><b id="ins_result"></b>원</span> -->
-<!-- 					</p> -->
 					<p>
 						<span>금액</span>
 						<span><b class="resTotalAmount">${price }</b>원</span>
@@ -120,54 +219,46 @@ function sample6_execDaumPostcode() {
 			<br>
 			<br>
 			<ul class="res_page_wrap">
-
-				<li class="drv_per_p res-com">
-					<div class="menu_tit driver_info">
-						<span>배송정보(필수입력)</span> 
-					</div>
-					<ul class="side_sub">
-						<li>
-							<input type="checkbox" id="resetAll" class="agreeBtns" onclick="resetForm()"> 새로운 배송지를 입력합니다.
-						</li>
-						<li class="drv_input">
-							<label for="name">받는분</label>
-							<input type="text" name="name" placeholder="수취인 이름을 입력해주세요" class="drv_80" required="required" value="">
-						</li>
-						
-						<li class="drv_input">
-							<label for="name">휴대폰 번호</label>
-							<input type="text" oninput="autoHyphen2(this)" id="phone" name="m_tel" placeholder="수취인 핸드폰 번호를 입력해주세요" class="drv_80" required="required" value="">
-						</li>
-						<li>
-							<label for="addr">주소</label>
-							<div>
-								<input id="sample6_postcode" name="sample6_postcode" type="text" placeholder="우편번호">
-					            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-					            <input type="text" id="sample6_address" name="sample6_address" placeholder="주소"><br>
-								<input type="text" id="sample6_detailAddress" name="sample6_detailAddress" placeholder="상세주소">
-								<input type="text" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
-							</div>
-					
-						</li>
-						<li>
-							<label for="memo">배송 요청 사항</label>
-							<div>
-								<textarea name="memo" placeholder="배송 메모를 입력해 주세요" ></textarea>
-							</div>
-					
-						</li>
-					
-					</ul>
-				</li>
-				
-				
-				<li class="agreement_p">
-					<div class="menu_tit">
-						<span>이용약관</span>
-					</div>
-					<ul class="side_sub">
-						<li>
-							<textarea >
+                <li class="drv_per_p res-com">
+                    <div class="menu_tit driver_info">
+                        <span>배송정보(필수입력)</span> 
+                    </div>
+                    <ul class="side_sub">
+                        <li>
+                            <input type="checkbox" id="resetAll" class="agreeBtns"> 새로운 배송지를 입력합니다.
+                        </li>
+                        <li class="drv_input">
+                            <label for="recipient_name">받는분</label>
+                            <input type="text" name="recipient_name" id="recipient_name" placeholder="수취인 이름을 입력해주세요" class="drv_80" required="required">
+                        </li>
+                        
+                        <li class="drv_input">
+                            <label for="recipient_phone">휴대폰 번호</label>
+                            <input type="text" oninput="autoHyphen2(this)" id="recipient_phone" name="recipient_phone" placeholder="수취인 핸드폰 번호를 입력해주세요" class="drv_80" required="required">
+                        </li>
+                        <li>
+                            <label for="addr">주소</label>
+                            <div>
+                                <input id="sample6_postcode" name="sample6_postcode" type="text" placeholder="우편번호">
+                                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+                                <input type="text" id="sample6_address" name="sample6_address" placeholder="주소"><br>
+                                <input type="text" id="sample6_detailAddress" name="sample6_detailAddress" placeholder="상세주소">
+                                <input type="text" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
+                            </div>
+                        </li>
+                        <li class="drv_input">
+                            <label for="delivery_request">배송 요청 사항</label>
+                            <input type="text" id="delivery_request" name="delivery_request" placeholder="배송 메모를 입력해 주세요" class="drv_80">
+                        </li>
+                    </ul>
+                </li>
+                <li class="agreement_p">
+                    <div class="menu_tit">
+                        <span>이용약관</span>
+                    </div>
+                    <ul class="side_sub">
+                        <li>
+                            <textarea readonly>
 슈크림 상품판매 서비스 이용약관
 제1조    (목적)
 이 슈크림 상품판매 시범 서비스 이용약관(이하 “이 약관”)은, 주식회사 슈크림(이하 “슈크림” 또는 “회사”라 함)과 회사가 제공하는 슈크림 상품 판매 시범 서비스(이하 “상품 판매 시범 서비스" 또는 “이 서비스”)를 이용하고자 하는 사업자(이하 “판매자"라 함)간의 권리와 의무 및 기타 제반사항을 명확히 하는 것을 목적으로 합니다.
@@ -242,137 +333,19 @@ function sample6_execDaumPostcode() {
                             </textarea>
                             <br>
                             <p class="terms_p">
-	                             <input type="checkbox" name="agreeBtn" class="agreeBtns">이용약관에 동의합니다.
-	                             <br>
+                                 <input type="checkbox" id="agreeBtn" class="agreeBtns">이용약관에 동의합니다.
+                                 <br>
                             </p>
-							</li>
+                        </li>
 					</ul>
 				</li>
-
 			</ul>
-
-			<script>
-
-				// 유효성 검사 함수
-				function validateForm() {
-					
-					var agreeBtn = document.querySelector('input[name="agreeBtn"]');
-					
-					
-					// 이용 약관
-					if (!agreeBtn.checked) {
-					   alert('이용약관에 동의해야 합니다.');
-					   agreeBtn.checked = true;
-					   return false;
-					}
-				
-					return true;
-				}
-			</script>
-			<div>${msg}</div>
-
-			<input type="submit" class="res_p" value="결제하기">
-			
+            <input type="button" class="res_p" value="결제하기" onclick="Confirmation()">
 		</form>
-		
 	</section>
-	
-	<script>
-		$('.menu_tit').click(function() {
-			$(this).children('span').addClass('on');
-			if ($(this).siblings('.side_sub').is(':hidden')) {
-				$(this).siblings('.side_sub').slideDown();
-				$(this).children('span').removeClass('on');
-			} else {
-				$(this).siblings('.side_sub').slideUp();
-			}
-		});
-	</script>
-	
-	
-	<script>
-         $(function() {
-
-             let address = "${buyer.mem_address}";
-             let addrArr = address.split("/");
-             // 주소
-             if(addrArr[0] != null) $("#sample6_postcode").val(addrArr[0]);
-             if(addrArr[1] != null) $("#sample6_address").val(addrArr[1]);
-             if(addrArr[2] != null) $("#sample6_detailAddress").val(addrArr[2]);
-             if(addrArr[3] != null) $("#sample6_extraAddress").val(addrArr[3]);
-
-//              let phoneNumber = "${buyer.mem_mtel}";
-//              let phoneNumArr = phoneNumber.split("-");
-//              if(phoneNumArr[0] != null) $("#phone1").val(phoneNumArr[0]);
-//              if(phoneNumArr[1] != null) $("#phone2").val(phoneNumArr[1]);
-//              if(phoneNumArr[2] != null) $("#phone3").val(phoneNumArr[2]);
-
-             $("input[name=name]").val("${buyer.mem_name}");
-             $("input[name=m_tel]").val("${buyer.mem_mtel}");
-         });
-     </script>
-     
-
-	<script>
-		const autoHyphen2 = (target) => {
-			 target.value = target.value
-			   .replace(/[^0-9]/g, '')
-			  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
-			}
-	</script>
-
-	<script>
-		var originalValues = {}; // 원래 값들을 저장할 객체
-		
-		// 페이지 로딩 시 원래 값들을 저장
-		window.onload = function() {
-		    originalValues.name = document.getElementsByName("name")[0].value;
-		    originalValues.phone = document.getElementById("phone").value;
-		    originalValues.postcode = document.getElementById("sample6_postcode").value;
-		    originalValues.address = document.getElementById("sample6_address").value;
-		    originalValues.detailAddress = document.getElementById("sample6_detailAddress").value;
-		    originalValues.extraAddress = document.getElementById("sample6_extraAddress").value;
-		    originalValues.memo = document.getElementsByName("memo")[0].value;
-		};
-		
-		function resetForm() {
-		    var checkbox = document.getElementById("resetAll");
-		    var nameInput = document.getElementsByName("name")[0];
-		    var phoneInput = document.getElementById("phone");
-		    var postcodeInput = document.getElementById("sample6_postcode");
-		    var addressInput = document.getElementById("sample6_address");
-		    var detailAddressInput = document.getElementById("sample6_detailAddress");
-		    var extraAddressInput = document.getElementById("sample6_extraAddress");
-		    var memoInput = document.getElementsByName("memo")[0];
-		
-		    if (checkbox.checked) {
-		        nameInput.value = "";
-		        phoneInput.value = "";
-		        postcodeInput.value = "";
-		        addressInput.value = "";
-		        detailAddressInput.value = "";
-		        extraAddressInput.value = "";
-		        memoInput.value = "";
-		    } else {
-		        nameInput.value = originalValues.name;
-		        phoneInput.value = originalValues.phone;
-		        postcodeInput.value = originalValues.postcode;
-		        addressInput.value = originalValues.address;
-		        detailAddressInput.value = originalValues.detailAddress;
-		        extraAddressInput.value = originalValues.extraAddress;
-		        memoInput.value = originalValues.memo;
-		    }
-		}
-	</script>
-
 	<!-- footer 추가 -->
 	<footer>
 <%-- 		<jsp:include page="../../inc/footer.jsp"></jsp:include> --%>
 	</footer>
-	
-	
 </body>
-
-
-
 </html>

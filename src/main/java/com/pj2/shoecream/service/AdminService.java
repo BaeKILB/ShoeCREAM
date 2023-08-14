@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pj2.shoecream.mapper.AdminMapper;
 import com.pj2.shoecream.vo.AuctionVO;
+import com.pj2.shoecream.vo.BankAccountVO;
 import com.pj2.shoecream.vo.CreamRequestVO;
 import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.DidListVO;
@@ -83,6 +84,13 @@ public class AdminService {
 	// 크림 신청 내역
 	public List<CreamRequestVO> getCreamRequestList(String searchType, String searchKeyword, int startRow, int listLimit) {
 		return mapper.getCreamRequestList(searchType, searchKeyword, startRow, listLimit);
+	}
+	// 계좌 조회
+	public List<MemAccountVO> getMemberAccount(String searchType, String searchKeyword, int startRow, int listLimit) {
+		return mapper.getMemberAccount(searchType, searchKeyword, startRow, listLimit);
+	}
+	public int getAccountListCount(String searchType) {
+		return mapper.getAccountListCount(searchType);
 	}
 	
 	// --------------- 민진 ---------------------------
@@ -192,6 +200,8 @@ public class AdminService {
 	public List<MemAccountVO> selectMemAccount() {
 		return mapper.selectMemAccount();
 	}
+	
+	
 	
 
 	}

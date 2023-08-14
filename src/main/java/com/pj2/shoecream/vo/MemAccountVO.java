@@ -6,6 +6,7 @@ import lombok.Data;
 public class MemAccountVO {
 	private int mem_account_idx;
 	private String mem_idx;
+	private String mem_name;
 	private String mem_seq_no;
 	private String access_token;
 	private String refresh_token;

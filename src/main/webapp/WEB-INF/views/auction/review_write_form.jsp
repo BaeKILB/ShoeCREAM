@@ -29,6 +29,13 @@
 								<ul class="list">
 									<li>
 										<div class="subject">
+											<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1}" alt="사진나온나">
+												상품명 :${auction.auction_title }<br>
+												판매자 :${seller.mem_nickname }
+										</div>
+									</li>
+									<li>
+										<div class="subject">
 											평가점수와 리뷰를 작성해주세요<br>
 											거래완료 후 3일동안만 수정가능합니다.
 										</div>
@@ -57,9 +64,9 @@
 									<p>
 										<textarea rows="" cols="" class="inputBox" name="review_content" placeholder="내용을 100자 이내로 입력해주세요. 남을 비방하는 말, 비속어, 음란성 글, 광고성이 포함된 글은 관리자 임의로 삭제될 수 있습니다." required="required" style="word-break:break-all;"></textarea>
 									</p>
-									<input type="hidden" name="auction_idx" id="product_idx" value="${jungGoNohReview.product_idx}"/>
-									<input type="hidden" name="buyier_idx" id="buyier_idx" value="${jungGoNohReview.buyier_idx}"/>
-									<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNohReview.mem_idx}"/>
+									<input type="hidden" name="product_idx" id="product_idx" value="${auction.product_idx }"/>
+									<input type="hidden" name="buyier_idx" id="buyer_idx" value="${buyer_idx }"/>
+									<input type="hidden" name="mem_idx" id="mem_idx" value="${seller.mem_idx }"/>
 								</div>
 								<div class="mod_box">
 										<input type="submit" class="delete_btn" value="등록">

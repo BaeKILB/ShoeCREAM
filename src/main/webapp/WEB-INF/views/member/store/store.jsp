@@ -738,10 +738,10 @@ function payAuction(idx, price, id, title){
 	                                               </c:choose>
 	                                            </c:when>
 	                                            <c:when test="${auctionList.jung_rev_idx eq null }">
-							                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href=''">구매후기 작성</button>
+							                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href='${pageContext.request.contextPath }/AucRegistReviewForm?product_idx=${auctionList.auction_idx}&mem_idx=${auctionList.mem_idx }&buyer_idx=${auctionList.buyer_idx }'">구매후기 작성</button>
 	                                            </c:when>
 	                                            <c:otherwise>
-							                    	<button type="button" class="btn btn-light btn-half-height" onclick="location.href=''">구매후기</button>
+	                                            	<button type="button" class="btn btn-light btn-half-height" onclick="location.href='${pageContext.request.contextPath }/AucModifyReviewForm?product_idx=${auctionList.auction_idx}&mem_idx=${auctionList.mem_idx }&buyer_idx=${auctionList.buyer_idx }'">구매후기 수정</button>
 	                                            </c:otherwise>
 	                                        </c:choose>
 									    </c:if>

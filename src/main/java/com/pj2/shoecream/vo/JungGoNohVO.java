@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class JungGoNohVO {
 	//===============================중고 jung_product=========================================
-	
+	/////이 부분 추가해도 이상하게 안뜨네요
 		private int product_price; // 상품 가격(천원단위당 쉼표 표시)
 		private String product_status; //상품 물건상태(중고,미개봉)
 		private String product_sell_status; //상품 판매 상황
@@ -51,18 +51,30 @@ public class JungGoNohVO {
 		
 		//============================파일=====================================
 		// 파일명을 저장할 변수 선언
-			private String image1;
-			private String image2;
-			private String image3;
-			private String image4;
+			private String image1_name;
+			private String image2_name;
+			private String image3_name;
+			private String image4_name;
 			// 주의! 폼에서 전달받는 실제 파일 자체를 다룰 MultipartFile 타입 변수 선언도 필요
 			// => 이 때, 멤버변수명은 input type="file" 태그의 name 속성명(파라미터명)과 동일해야함
-			private MultipartFile file1;
-			private MultipartFile file2;
-			private MultipartFile file3;
-			private MultipartFile file4;
-			
-			
+			//private MultipartFile file1;
+			//private MultipartFile file2;
+			//private MultipartFile file3;
+			//private MultipartFile file4;
+
+//			private String image1;
+//			private String image2;
+//			private String image3;
+//			private String image4;
+			private MultipartFile image1;
+			private MultipartFile image2;
+			private MultipartFile image3;
+			private MultipartFile image4;
+//			private String image1_name;
+//			private String image2_name;
+//			private String image3_name;
+//			private String image4_name;
+//			private String image_path;
 		
 		//================================찜======================================
 		
