@@ -175,6 +175,7 @@
 	   		,'상품준비중'
 	   		,null
 	   		,null
+	   		,null
 	   		,now()
 	   		
 	   )
@@ -203,5 +204,24 @@
 		where request_idx = #{request_idx}
 	
 	</select>
+	
+	<select id="getTrackingStatus" resultType="int">
+	 select COUNT(*) 
+	 from courier_info
+	 where product_idx = #{request_idx}
+	</select>
+	
+	<update id="updateCIR">
+	
+	UPDATE cream_item_request
+	SET
+	    delivery_status = '배송중',
+	    tracking_company = #{tracking_company},
+	    tracking_code = #{tracking_code},
+	    tracking_num = #{tracking_number}
+	WHERE
+	    request_idx = #{request_idx};
+		
+	</update>
 
 </mapper>

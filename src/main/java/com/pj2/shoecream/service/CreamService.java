@@ -72,6 +72,15 @@ public class CreamService {
 		return mapper.selectCreamOrderDetail(request_idx);
 	}
 
+	public int getTrackingNum(String request_idx) {
+		return mapper.getTrackingStatus(request_idx);
+	}
+
+	public int updateTrackingNum(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.updateCIR(map);
+	}
+
 
 
 

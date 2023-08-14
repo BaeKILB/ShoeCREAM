@@ -35,6 +35,10 @@ public interface CreamMapper {
 
 	Map<String, Object> selectCreamOrderDetail(Integer request_idx);
 
+	int getTrackingStatus(String request_idx);
+
+	int updateCIR(Map<String, Object> map);
+
 
 
 }
