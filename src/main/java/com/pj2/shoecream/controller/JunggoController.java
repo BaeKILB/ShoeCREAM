@@ -1550,7 +1550,7 @@ public class JunggoController {
 				System.out.println("a_parseDate.getTime()!!!!!!!!!!!!!!!!!!" + a_parseDate.getTime());
 				System.out.println("b_parseDate.getTime()!!!!!!!!!!!!!!!!!!" + b_parseDate.getTime());
 				
-				long resultTime = b_parseDate.getTime() - a_parseDate.getTime();
+				long resultTime = a_parseDate.getTime() - b_parseDate.getTime();
 				
 				System.out.println("resultTime !!!!!!!!!!!!!!!!!!: "+resultTime);
 				
