@@ -207,6 +207,53 @@
 				#{startRow}
 				, #{listLimit}
 	</select>
+	
+	<select id="getMemberAccount" resultType="com.pj2.shoecream.vo.MemAccountVO">
+			SELECT
+			    ma.mem_account_idx,
+			    ma.mem_idx,
+			    mi.mem_name,
+			    ma.mem_seq_no,
+			    ma.bank_code_std,
+			    ma.account_num,
+			    ma.fintech_use_num
+			FROM
+			    mem_account ma
+			JOIN
+    			mem_info mi ON ma.mem_idx = mi.mem_idx
+			<if test="!searchKeyword.equals('')">
+				WHERE 
+				<choose>
+					<when test="searchType.equals('회원번호')">
+						ma.mem_idx LIKE CONCAT('%', #{searchKeyword},'%')
+					</when>
+					<when test="searchType.equals('계좌번호')">
+						ma.account_num LIKE CONCAT('%', #{searchKeyword},'%')
+					</when>
+				</choose>
+			</if>
+			ORDER BY
+				ma.mem_account_idx
+			LIMIT
+				#{startRow}
+				, #{listLimit}
+	</select>
+	<select id="getAccountListCount" resultType="int">
+		SELECT COUNT(*)
+			FROM mem_account
+				<if test="!searchType.equals('')">
+					WHERE 
+					<choose>
+						<when test="searchType.equals('회원번호')">
+							mem_idx LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+						<when test="searchType.equals('계좌번호')">
+							account_num LIKE CONCAT('%', #{searchKeyword},'%')
+						</when>
+					</choose>
+				</if>
+	</select>
+	
 
 <!--  민진 민진 민진민진민진민진민진민진민진민진민진민진 -->
 <!--  중고 상품 조회 -->

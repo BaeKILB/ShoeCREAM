@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.pj2.shoecream.vo.AuctionVO;
+import com.pj2.shoecream.vo.BankAccountVO;
 import com.pj2.shoecream.vo.CreamRequestVO;
 import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.DidListVO;
@@ -50,6 +51,9 @@ public interface AdminMapper {
 	List<InquiryBoardVO> getMainQstBoard(int listLimit);
 	// 크림 신청 내역
 	List<CreamRequestVO> getCreamRequestList(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
+	// 계좌 조회
+	List<MemAccountVO> getMemberAccount(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
+	int getAccountListCount(String searchType);
 
 	
 	// --------------- 민진 ---------------------------
@@ -102,8 +106,7 @@ public interface AdminMapper {
 	List<Map<String, Object>> selectAdminInfo();
 	List<MemAccountVO> selectMemAccount();
 		
-		
-		}
+}
 	
 	
 	
