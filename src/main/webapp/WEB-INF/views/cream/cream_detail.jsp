@@ -29,11 +29,11 @@
      $('select[name="inputSize"]').on('change', function() {
          var selectedSize = $(this).val();
          var creamSizeValue = $('input[name="cream.size' + selectedSize + '"]').val();
-        
+         var formattedPrice = creamSizeValue + '원';
       // .value()를 사용한 방식
 //          var creamSizeValue = $('#creamSize' + selectedSize).val();
         
-         $('#priceSpan').text(creamSizeValue);
+         $('#priceSpan').text(formattedPrice);
      });
  });
 </script>
@@ -214,11 +214,10 @@
 							<div class="fs-2 fw-bold">${cream.cream_title }</div>
 						</div>
 					</div>
-<!-- 					<form action="creamBuyingPro" method="post">	 -->
+					<div class="card p-3">
 						<div class="row">
-						    <div class="col-3">사이즈</div>
-						    <div>
-						    
+						    <div class="col-md-6">사이즈</div>
+						    <div  class="col-md-6">
 						        <select name="inputSize" id="inputSizeSelect">
 						            <c:forEach begin="220" step="5" end="310" varStatus="status">
 						                <option value="${status.index}">${status.index}</option>
@@ -226,35 +225,35 @@
 						        </select>
 						    </div>
 						</div>
-						
-				
-						
-					<div class="row">
-					    <div class="col-3">가격</div>
-					    <div class="col-4 fw-bold">
-							<input type="hidden" name="cream.size220" value="${cream.size220}" id="220">
-							<input type="hidden" name="cream.size225" value="${cream.size225}" id="225">
-							<input type="hidden" name="cream.size230" value="${cream.size230}" id="230">
-							<input type="hidden" name="cream.size235" value="${cream.size235}" id="235">
-							<input type="hidden" name="cream.size240" value="${cream.size240}" id="240">
-							<input type="hidden" name="cream.size245" value="${cream.size245}" id="245">
-							<input type="hidden" name="cream.size250" value="${cream.size250}" id="250">
-							<input type="hidden" name="cream.size255" value="${cream.size255}" id="255">
-							<input type="hidden" name="cream.size260" value="${cream.size260}" id="260">
-							<input type="hidden" name="cream.size265" value="${cream.size265}" id="265">
-							<input type="hidden" name="cream.size270" value="${cream.size270}" id="270">
-							<input type="hidden" name="cream.size275" value="${cream.size275}" id="275">
-							<input type="hidden" name="cream.size280" value="${cream.size280}" id="280">
-							<input type="hidden" name="cream.size285" value="${cream.size285}" id="285">
-							<input type="hidden" name="cream.size290" value="${cream.size290}" id="290">
-							<input type="hidden" name="cream.size295" value="${cream.size295}" id="295">
-							<input type="hidden" name="cream.size300" value="${cream.size300}" id="300">
-							<input type="hidden" name="cream.size305" value="${cream.size305}" id="305">
-							<input type="hidden" name="cream.size310" value="${cream.size310}" id="310">
-					        <span id="priceSpan"></span>
-					    </div>
-					</div>
-						</div> 
+						<br>
+							<div class="row">
+							    <div class="col-md-6" >가격</div>
+							    <div class="col-4 fw-bold">
+									<input type="hidden" name="cream.size220" value="${cream.size220}" id="220">
+									<input type="hidden" name="cream.size225" value="${cream.size225}" id="225">
+									<input type="hidden" name="cream.size230" value="${cream.size230}" id="230">
+									<input type="hidden" name="cream.size235" value="${cream.size235}" id="235">
+									<input type="hidden" name="cream.size240" value="${cream.size240}" id="240">
+									<input type="hidden" name="cream.size245" value="${cream.size245}" id="245">
+									<input type="hidden" name="cream.size250" value="${cream.size250}" id="250">
+									<input type="hidden" name="cream.size255" value="${cream.size255}" id="255">
+									<input type="hidden" name="cream.size260" value="${cream.size260}" id="260">
+									<input type="hidden" name="cream.size265" value="${cream.size265}" id="265">
+									<input type="hidden" name="cream.size270" value="${cream.size270}" id="270">
+									<input type="hidden" name="cream.size275" value="${cream.size275}" id="275">
+									<input type="hidden" name="cream.size280" value="${cream.size280}" id="280">
+									<input type="hidden" name="cream.size285" value="${cream.size285}" id="285">
+									<input type="hidden" name="cream.size290" value="${cream.size290}" id="290">
+									<input type="hidden" name="cream.size295" value="${cream.size295}" id="295">
+									<input type="hidden" name="cream.size300" value="${cream.size300}" id="300">
+									<input type="hidden" name="cream.size305" value="${cream.size305}" id="305">
+									<input type="hidden" name="cream.size310" value="${cream.size310}" id="310">
+							        <span id="priceSpan" ></span>
+							    </div>
+							</div>
+					</div> 
+					<br>
+					<br>
    								<div class="col text-center ">
 			    	            	<button class="btn btn-light w-100" id="dibsBox">
 							            <span <c:if test="${cream.isLogin != 0 }">onclick="dibsCheck()"</c:if>> 
@@ -272,21 +271,22 @@
 			    	            	</button>
 								</div>
 								<br>
+								<div>
+			    	 			  <button id="applyButton" class="btn btn-light w-100">결제하기</button>
+			    	            </div>
+			    	            <br>
 								<br>
-								
-			    	            <div class="col text-center ">
-<!-- 			    	            <button type="button" id="payTest" class="btn btn-secondary">결제테스트</button> -->
-
-			    	 			  <button id="applyButton" class="btn btn-secondary">결제하기</button>
-			    	            
-<!-- 			    	            	 <input type="submit" class="btn btn-secondary" value="구매하기"   -->
-<%-- 			    	            	 onclick="location.href='payForm2?cream_idx=${cream.cream_idx}&size=${creammap.cream_idx}'"> --%>
+									<div class="row"> 
+										<div class="fs-5 fw-bold">상품 보내실 곳</div>
+										<p class="border rounded">
+											(주)슈크림<br>
+											주소 : 부산광역시 부산진구 동천로 109 삼한골든게이트 7층 <br>
+											051-803-0909<br>
+											상품을 보내신후 <a href="/ShoeCREAM/store/${cream.isLogin}">이곳</a> 을 눌러 운송장 번호를 등록해주세요</p>
+									</div>
 								</div>
-<!-- 		</form> -->
-								
-					</div>
+</div>
 		</section>
-
 		<hr>
 		<section class="row"> <!-- 상품정보 & 판매자정보 -->
 			<div class="col-xl-8 col-xs-12">
@@ -299,12 +299,7 @@
 							
 						</div>
 					</div>
-					<div class="row"> <!-- 높이조절해야됨 -->
-						<div class="col">
-							<div class="fs-5 fw-bold">거래시 주의사항</div>
-							<p class="border rounded">상품은 반드시 슈크림에서 지정한 택배사로 발송해야 합니다 <br> 5일이내 운송장 등록이 되지 않을시,<br> 상품 금액의 5%의 패널티 부과후 환불 됩니다.<br></p>
-						</div>
-					</div>
+
 				</div>
 				<div>
 	            </div>
