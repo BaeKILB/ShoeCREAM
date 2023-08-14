@@ -159,6 +159,9 @@ public class ChatService {
 	    if(map.get("product_sell_status") != null) {	    	
 	    	msg.put("product_sell_status",(String)map.get("product_sell_status"));
 	    }
+	    if(map.get("isCancel") != null) {	    	
+	    	msg.put("isCancel",(String)map.get("isCancel"));
+	    }
 	    
 	    // convertAndSend() 메서드 사용하기
 	    

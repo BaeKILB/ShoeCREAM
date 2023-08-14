@@ -2,14 +2,22 @@
 // url 에서 파라미터 받아오기
 let getParams = new URL(location.href).searchParams;
 
-
-// 채팅 메시지 영역 위에 상품 상태에 따라서
-// 상품 정보와 유저 정보 및 버튼 불러오기
-const loadChatMsgBar = () => {
+// 파라미터 정상적으로 있는지 확인하는 메서드
+const isParamsReady = () => {
+	
 	if(getParams.get("chat_area") != null &&
 		getParams.get("chat_area") != undefined && 
 		getParams.get("chat_room_idx") != null &&
 		getParams.get("chat_room_idx") != undefined){
+		return true;
+	}
+	else false;
+}
+
+// 채팅 메시지 영역 위에 상품 상태에 따라서
+// 상품 정보와 유저 정보 및 버튼 불러오기
+const loadChatMsgBar = () => {
+	if(isParamsReady()){
 			
 			
 		let checkError = false;
@@ -74,10 +82,7 @@ const chatRoomOut = (check) => {
 	}
 	
 	if(result){
-		if(getParams.get("chat_area") != null &&
-		getParams.get("chat_area") != undefined && 
-		getParams.get("chat_room_idx") != null &&
-		getParams.get("chat_room_idx") != undefined){		
+		if(isParamsReady()){		
 			location.href = "chatRoomOut?chat_area=" + getParams.get("chat_area") 
 			+ "&chat_room_idx=" + getParams.get("chat_room_idx");
 		}
@@ -92,10 +97,7 @@ const startRes = () => {
 	result = confirm("예약 진행 하시겠습니까?");		
 	
 	if(result){
-		if(getParams.get("chat_area") != null &&
-		getParams.get("chat_area") != undefined && 
-		getParams.get("chat_room_idx") != null &&
-		getParams.get("chat_room_idx") != undefined){		
+		if(isParamsReady()){		
 			location.href = "startRes?chat_area=" + getParams.get("chat_area") 
 			+ "&chat_room_idx=" + getParams.get("chat_room_idx");
 		}
@@ -109,12 +111,92 @@ const transComplete = () => {
 	result = confirm("거래 완료를 진행 하시겠습니까?");		
 	
 	if(result){
-		if(getParams.get("chat_area") != null &&
-		getParams.get("chat_area") != undefined && 
-		getParams.get("chat_room_idx") != null &&
-		getParams.get("chat_room_idx") != undefined){		
+		if(isParamsReady()){		
 			location.href = "transForm?chat_area=" + getParams.get("chat_area") 
 			+ "&chat_room_idx=" + getParams.get("chat_room_idx");
 		}
 	}
 }
+
+// 결제 취소요청 눌렀을때 ajax 신호 보내기
+const sandCancelPay = () => {
+		let result = false;
+	
+		result = confirm("거래 취소 요청을 보내시겠습니까?");		
+		if(result){
+			if(isParamsReady()){		
+				let checkError = false;
+			
+				let data =  $.ajax({
+					type:"post"
+					,url: "sandCancelPayJung.ajax"
+					,data: {
+						chat_area: getParams.get("chat_area")
+						,chat_room_idx: getParams.get("chat_room_idx")
+				
+					}
+					,dataType: "json"
+					,async: false
+					,success:function(){
+						checkError = true;
+					}
+				    ,error: function(errorThrown) {
+				        console.log(errorThrown.statusText);
+				        console.log("error - loadChatMsgBar");
+				        alert("취소 요청이 실패했습니다!");
+				    }
+				    
+				    
+				}); // ajax 끝
+			    if(checkError){
+					let d = data.responseJSON;
+					alert(d.msg);
+
+				}
+				
+			}
+		}
+}
+
+// 결제 취소요청 허용 눌렀을때 ajax 신호 보내기
+const allowCancelPay = () => {
+		let result = false;
+	
+		result = confirm("거래 취소 요청을 허용 하시겠습니까?");	
+		if(result){			
+			result = confirm("거래 요청 요청 허용시 바로 포인트 환불이 됩니다 계속 하시겠습니까?");		
+		}
+		if(result){
+			if(isParamsReady()){		
+				let checkError = false;
+			
+				let data =  $.ajax({
+					type:"post"
+					,url: "allowCancelPayJung.ajax"
+					,data: {
+						chat_area: getParams.get("chat_area")
+						,chat_room_idx: getParams.get("chat_room_idx")
+				
+					}
+					,dataType: "json"
+					,async: false
+					,success:function(){
+						checkError = true;
+					}
+				    ,error: function(errorThrown) {
+				        console.log(errorThrown.statusText);
+				        console.log("error - loadChatMsgBar");
+				        alert("취소 요청이 실패했습니다!");
+				    }
+				    
+				    
+				}); // ajax 끝
+			    if(checkError){
+					let d = data.responseJSON;
+					alert(d.msg);
+				}
+				
+			}
+		}
+}
+

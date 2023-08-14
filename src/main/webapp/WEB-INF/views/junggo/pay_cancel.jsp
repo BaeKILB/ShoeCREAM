@@ -112,6 +112,8 @@
 			<div class="finish_btn" align="center">
 				<a href="${pageContext.request.contextPath }"><button>메인으로</button></a>
 				<a href="${pageContext.request.contextPath }/MemberRes"><button>마이리스트 거래 내역 조회</button></a>
+				<a href='javascript:window.close();'><button>창닫기</button></a>
+			
 			</div>
 			
 		</div>

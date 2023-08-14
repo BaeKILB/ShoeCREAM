@@ -778,6 +778,239 @@ public class JunggoController {
 		} 
 	}
 	
+	// 구매자가 결제 취소를 요청했을때
+	@ResponseBody
+	@RequestMapping(
+			value = "sandCancelPayJung.ajax",
+			method = RequestMethod.POST,
+			produces = "application/text; charset=UTF-8"
+	)	
+	public String sandCancelPayJung(
+			@RequestParam Map<String,Object> map) {
+		//JSON 데이터 형태로 담는 객체
+		JSONObject jsonObj = new JSONObject();	
+				
+		int idx = -1;
+		MemberVO member = null;
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			
+
+			// 구매자 회원번호
+			idx = mPrincipalDetails.getMember().getMem_idx();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("error : sandCancelPay");
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			jsonObj.put("msg","권한이 없습니다 ! 로그인 해주세요");
+			jsonObj.put("result","false"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return jsonObj.toString();
+		}
+		// 현재 접속중 멤버 가져오기
+		member = memService.getMemberByIdx(idx);
+		
+		// 현재 채팅방 정보 가져오기
+		Map<String,Object> chatRoom = chatService.getChatRoom(
+				Integer.parseInt((String)map.get("chat_room_idx")),
+				Integer.parseInt((String)map.get("chat_area"))
+				);
+		
+		if(chatRoom == null) {
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			jsonObj.put("msg","채팅방 정보를 불러오는데 실패하였습니다!");
+			jsonObj.put("result","false"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return jsonObj.toString();
+		}
+		
+		
+		Map<String,Object> productEx = jProductService.getJungProductExtend((String)chatRoom.get("product_idx"));
+		String product_sell_status = (String)productEx.get("product_sell_status");
+		String product_payment = (String)productEx.get("product_payment");
+		
+		// 현재 물품의 거래 상황과 예약중인 유저 체크
+		if(productEx != null 
+				&& (Integer)productEx.get("product_buyer_idx") == idx 
+				&& (product_sell_status.equals("거래대기중") && 
+					(product_payment.equals("안전페이") || product_payment.equals("안전페이,직거래")))	
+			)
+		{
+			// 내부에서 원하는 시점에 stomp 메시지 보내기
+			 
+		    // ChatMessage 객체 생성하기
+		    Map<String,Object> msg = new HashMap<String, Object>();
+		    msg.put("member",member);
+		    msg.put("chat_room_idx",(String)map.get("chat_room_idx"));
+		    msg.put("chat_msg_content",member.getMem_nickname() + " 님이 거래 취소를 요청하였습니다!");
+		    msg.put("product_sell_status",product_sell_status);
+		    chatService.sandchatInJava(msg);
+		    
+			jsonObj.put("msg","결제 취소 요청을 보냈습니다!");
+			jsonObj.put("result","true"); 
+			
+			
+		} 
+		// 만약 다른 거래 상황이면 ...
+		else if(	
+					(Integer)productEx.get("product_buyer_idx") == idx &&
+					(
+							(product_sell_status.equals("예약중") && product_payment.equals("직거래")) || 
+							(product_sell_status.equals("예약중") && product_payment.equals("안전페이,직거래"))
+					)
+				) 
+		{
+			jsonObj.put("msg","현재 결제된 상태가 아닙니다!");
+			jsonObj.put("result","false"); 
+		}
+		else if(product_sell_status.equals("대기중")){
+			jsonObj.put("msg","예약 진행중이 아닙니다 예약 진행 먼저 해주세요.");
+			jsonObj.put("result","false"); 
+			
+		}
+		else if(product_sell_status.equals("거래완료")){
+			jsonObj.put("msg","이미 거래를 완료한 상품입니다!");
+			jsonObj.put("result","false"); 
+			}
+		// 이미 자신이 아닌 다른 사람이 예약, 거래 중 이라면
+		else if(product_sell_status.equals("예약중")
+				|| product_sell_status.equals("거래대기중")){
+			jsonObj.put("msg","다른 유저가 예약중에 있습니다!");
+			jsonObj.put("result","false"); 
+			}
+		else {
+			jsonObj.put("msg","잘못된 접근입니다");
+			jsonObj.put("result","false"); 
+			}
+		
+		return jsonObj.toString();
+	}
+	
+	// 판매자가 결제 취소 허용을 했을때 
+	@ResponseBody
+	@RequestMapping(
+			value = "allowCancelPayJung.ajax",
+			method = RequestMethod.POST,
+			produces = "application/text; charset=UTF-8"
+			)	
+	public String allowCancelPayJung(
+			@RequestParam Map<String,Object> map) {
+		//JSON 데이터 형태로 담는 객체
+		JSONObject jsonObj = new JSONObject();	
+		
+		int idx = -1;
+		MemberVO member = null;
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+			
+			// 구매자 회원번호
+			idx = mPrincipalDetails.getMember().getMem_idx();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("error : sandCancelPay");
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			jsonObj.put("msg","권한이 없습니다 ! 로그인 해주세요");
+			jsonObj.put("result","false"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return jsonObj.toString();
+		}
+		// 현재 접속중 멤버 가져오기
+		member = memService.getMemberByIdx(idx);
+		
+		// 현재 채팅방 정보 가져오기
+		Map<String,Object> chatRoom = chatService.getChatRoom(
+				Integer.parseInt((String)map.get("chat_room_idx")),
+				Integer.parseInt((String)map.get("chat_area"))
+				);
+		
+		if(chatRoom == null) {
+			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+			jsonObj.put("msg","채팅방 정보를 불러오는데 실패하였습니다!");
+			jsonObj.put("result","false"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
+			return jsonObj.toString();
+		}
+		
+		
+		Map<String,Object> productEx = jProductService.getJungProductExtend((String)chatRoom.get("product_idx"));
+		String product_sell_status = (String)productEx.get("product_sell_status");
+		String product_payment = (String)productEx.get("product_payment");
+		
+		// 현재 물품의 거래 상황과 예약중인 유저 체크
+		if(productEx != null 
+				&& (Integer)productEx.get("mem_idx") == idx // 현재 접속한 유저가 현 상품 판매자인지 체크
+				&& (product_sell_status.equals("거래대기중") && 
+					(product_payment.equals("안전페이") || product_payment.equals("안전페이,직거래")))	
+			)
+		{
+			
+			int resultCancel = payService.productCancelPayment(
+					(Integer)productEx.get("product_buyer_idx") 
+					, (String)productEx.get("product_idx"));
+			if(resultCancel != 1) {
+				jsonObj.put("msg","결제 취소중 오류가 발생했습니다! : " + resultCancel);
+				jsonObj.put("result","false"); 
+			}
+			else {
+				// 상품 상태 바꾸기
+				if(jProductService.updateSellStatus((String)productEx.get("product_idx"), "대기중") <= 0) {
+
+					jsonObj.put("msg","결제 취소중 상품 정보 변경에 실패했습니다!");
+					jsonObj.put("result","false"); 
+				}
+				else {					
+					// 내부에서 원하는 시점에 stomp 메시지 보내기
+					
+					// ChatMessage 객체 생성하기
+					Map<String,Object> msg = new HashMap<String, Object>();
+					msg.put("member",member);
+					msg.put("chat_room_idx",(String)map.get("chat_room_idx"));
+					msg.put("chat_msg_content",member.getMem_nickname() + " 님이 결제 취소룰 허용 하였습니다! 금액이 환불 되었습니다!");
+					msg.put("product_sell_status",product_sell_status);
+					msg.put("isCancel","true");
+					chatService.sandchatInJava(msg);
+					
+					jsonObj.put("msg","결제 취소 요청을 허용했습니다!");
+					jsonObj.put("result","true"); 
+				}
+			}
+			
+			
+		} 
+		// 만약 다른 거래 상황이면 ...
+		else if(	
+				(Integer)productEx.get("product_buyer_idx") == idx &&
+				(
+						(product_sell_status.equals("예약중") && product_payment.equals("직거래")) || 
+						(product_sell_status.equals("예약중") && product_payment.equals("안전페이,직거래"))
+				)
+			) 
+		{
+			jsonObj.put("msg","현재 결제된 상태가 아닙니다!");
+			jsonObj.put("result","false"); 
+		}
+		else if(product_sell_status.equals("대기중")){
+			jsonObj.put("msg","예약 진행중이 아닙니다 예약 진행 먼저 해주세요.");
+			jsonObj.put("result","false"); 
+			
+		}
+		else if(product_sell_status.equals("거래완료")){
+			jsonObj.put("msg","이미 거래를 완료한 상품입니다!");
+			jsonObj.put("result","false"); 
+		}
+		// 이미 자신이 아닌 다른 사람이 예약, 거래 중 이라면
+		else if(product_sell_status.equals("예약중")
+				|| product_sell_status.equals("거래대기중")){
+			jsonObj.put("msg","다른 유저가 예약중에 있습니다!");
+			jsonObj.put("result","false"); 
+		}
+		else {
+			jsonObj.put("msg","잘못된 접근입니다");
+			jsonObj.put("result","false"); 
+		}
+		
+		return jsonObj.toString();
+	}
+	
+	
 	
 	//========================================================================================
 	//==================================노용석================================================
