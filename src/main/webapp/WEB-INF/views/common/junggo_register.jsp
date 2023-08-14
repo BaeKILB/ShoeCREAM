@@ -3,14 +3,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
-
+<head>
+<!--  <link href="${pageContext.request.contextPath }/resources/css/common/auction_register.css" rel="stylesheet">-->
+</head>
 
 <div class="total_container col-sm-12 col-lg-12">
 <form action="registProductPro" method="post" enctype="multipart/form-data">
 	<div class="titleContainner" >
 		<p class="title_title">기본 정보</p>
 	</div>
-	<div class="firstContainner">
+	<!-- <div class="firstContainner">
 		<div class="first_title">상품 이미지</div>
 		<div class="first_content">
 			<div class=image_box>
@@ -28,8 +30,51 @@
 				리사이즈 해서 올려주세요.(개당 이미지 최대 10M)<br>
 			</div>
 		</div>
-	</div>
-		
+	</div>-->
+	<div class="firstContainner">
+		<div class="first_title">상품 이미지	
+			<div class="image_box">
+			    <div>
+			        이미지 등록
+			        <input type="file" id="image1" name="image1" accept="image/*" onchange="setImages(event)">
+			        <input type="file" id="image2" name="image2" accept="image/*" onchange="setImages(event)">
+			        <input type="file" id="image3" name="image3" accept="image/*" onchange="setImages(event)">
+			        <input type="file" id="image4" name="image4" accept="image/*" onchange="setImages(event)">
+			    </div>
+			</div>
+		</div>
+		<div class="first_content">
+		    <div class="ivBox"></div>
+			<div class="warning_text">
+				* 상품 이미지는 640x640에 최적화 되어 있습니다.<br> - 상품 이미지는 PC에서는 1:1, 모바일에서는
+				1:1.23 비율로 보여집니다.<br> - 이미지는 상품 등록 시 정사각형으로 잘려서 등록됩니다.<br>
+				- 큰 이미지일 경우 이미지가 깨지는 경우가 발생할 수 있습니다.<br> 최대 지원 사이즈인 640 X 640으로
+				리사이즈 해서 올려주세요.(개당 이미지 최대 10M)<br>
+			</div>
+		</div>
+	</div>	
+<!-- 	<div class="firstContainner"> -->
+<!-- 		<div class="first_title">상품 이미지	 -->
+<!-- 			<div class="image_box"> -->
+<!-- 			    <div> -->
+<!-- 			        이미지 등록 -->
+<!-- 			        <input type="file" id="image1" name="file1" accept="image/*" onchange="setImages(event)"> -->
+<!-- 			        <input type="file" id="image2" name="file2" accept="image/*" onchange="setImages(event)"> -->
+<!-- 			        <input type="file" id="image3" name="file3" accept="image/*" onchange="setImages(event)"> -->
+<!-- 			        <input type="file" id="image4" name="file4" accept="image/*" onchange="setImages(event)"> -->
+<!-- 			    </div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 		<div class="first_content"> -->
+<!-- 		    <div class="ivBox"></div> -->
+<!-- 			<div class="warning_text"> -->
+<!-- 				* 상품 이미지는 640x640에 최적화 되어 있습니다.<br> - 상품 이미지는 PC에서는 1:1, 모바일에서는 -->
+<!-- 				1:1.23 비율로 보여집니다.<br> - 이미지는 상품 등록 시 정사각형으로 잘려서 등록됩니다.<br> -->
+<!-- 				- 큰 이미지일 경우 이미지가 깨지는 경우가 발생할 수 있습니다.<br> 최대 지원 사이즈인 640 X 640으로 -->
+<!-- 				리사이즈 해서 올려주세요.(개당 이미지 최대 10M)<br> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div>	 -->
 	<div class="secondContainner">
 		<div class="second_title">제목</div>
 		<div class="second_content">
@@ -38,122 +83,6 @@
 		</div>
 	</div>
 	
-	<!-- <div class="thirdContainner">
-		<div class="third_title">카테고리</div>
-		<div class="third_content">
-			<div class="category_box">
-				
-				제1분류 : <select name="lc_code" id="lc_code" style="width:200px">
-			        <option value="">전체</option>
-			    </select>
-			    제2분류 : <select name="mc_code" id="mc_code" style="width:200px" onchange="changeHtml();">
-			       	<option value="">전체</option>
-			    </select>
-				
-			</div>
-			<p class="selected_category">선택한 카테고리 :<div id="selected_category" name="selected_category"></div></p>
-		</div>
-	</div>
-	
-
-	<script type="text/javascript">
-	 
-	$(document).ready(function() {
-	    
-	    //Main 카테고리를 선택 할때 마다 AJAX를 호출할 수 있지만 DB접속을 매번 해야 하기 때문에 main, sub카테고리 전체을 들고온다.
-	    
-	    //****************이부분은 DB로 셋팅하세요.
-	    //Main 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
-	    var lc_codeArray = new Array();
-	    var lc_codeObject = new Object();
-	    
-	    lc_codeObject = new Object();
-	    lc_codeObject.lc_code_id = "1";
-	    lc_codeObject.lc_code_name = "남성";
-	    lc_codeArray.push(lc_codeObject);
-	    
-	    lc_codeObject = new Object();
-	    lc_codeObject.lc_code_id = "2";
-	    lc_codeObject.lc_code_name = "여성";
-	    lc_codeArray.push(lc_codeObject);
-	    
-	    //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
-	    var mc_codeArray = new Array();
-	    var mc_codeObject = new Object();
-	    
-	    //스포츠에 해당하는 sub category 리스트
-	    mc_codeObject = new Object();
-	    mc_codeObject.lc_code_id = "1";
-	    mc_codeObject.mc_code_id = "1"
-	    mc_codeObject.mc_code_name = "운동화"    
-	    mc_codeArray.push(mc_codeObject);
-	    
-	    mc_codeObject = new Object();
-	    mc_codeObject.lc_code_id = "1";
-	    mc_codeObject.mc_code_id = "2"
-	    mc_codeObject.mc_code_name = "구두"    
-	    mc_codeArray.push(mc_codeObject);
-	   
-	    //공연에 해당하는 sub category 리스트
-	    mc_codeObject = new Object();
-	    mc_codeObject.lc_code_id = "2";
-	    mc_codeObject.mc_code_id = "1"
-	    mc_codeObject.mc_code_name = "운동화"    
-	    mc_codeArray.push(mc_codeObject);
-	    
-	    mc_codeObject = new Object();
-	    mc_codeObject.lc_code_id = "2";
-	    mc_codeObject.mc_code_id = "2"
-	    mc_codeObject.mc_code_name = "구두"    
-	    mc_codeArray.push(mc_codeObject);
-	    
-	    
-	    //****************이부분은 DB로 셋팅하세요.
-	    
-	    
-	    //메인 카테고리 셋팅
-	    var lc_codeSelectBox = $("select[name='lc_code']");
-	    
-	    for(var i=0;i<lc_codeArray.length;i++){
-	        lc_codeSelectBox.append("<option value='"+lc_codeArray[i].lc_code_id+"'>"+lc_codeArray[i].lc_code_name+"</option>");
-	    }
-	    
-	    //*********** 1depth카테고리 선택 후 2depth 생성 START ***********
-	    $(document).on("change","select[name='lc_code']",function(){
-	        
-	        //두번째 셀렉트 박스를 삭제 시킨다.
-	        var mc_codeSelectBox = $("select[name='mc_code']");
-	        mc_codeSelectBox.children().remove(); //기존 리스트 삭제
-	        
-	        //선택한 첫번째 박스의 값을 가져와 일치하는 값을 두번째 셀렉트 박스에 넣는다.
-	        $("option:selected", this).each(function(){
-	            var selectValue = $(this).val(); //main category 에서 선택한 값
-	            mc_codeSelectBox.append("<option value=''>전체</option>");
-	            for(var i=0;i<mc_codeArray.length;i++){
-	                if(selectValue == mc_codeArray[i].lc_code_id){
-	                    
-	                    mc_codeSelectBox.append("<option value='"+mc_codeArray[i].mc_code_id+"'>"+mc_codeArray[i].mc_code_name+"</option>");
-	                    
-	                }
-	            }
-	        });
-	        
-	    });
-	    //*********** 1depth카테고리 선택 후 2depth 생성 END ***********
-	        
-	});
-	
-	function changeHtml()
-	{
-		var lc_code = document.getElementById("lc_code").value;
-		var mc_code = document.getElementById("mc_code").value;
-		if(lc_code == 1 && mc_code == 1){document.getElementById('selected_category').innerHTML="남성 > 운동화"}
-		if(lc_code == 1 && mc_code == 2){document.getElementById('selected_category').innerHTML="남성 > 구두"}
-		if(lc_code == 2 && mc_code == 1){document.getElementById('selected_category').innerHTML="여성 > 운동화"}
-		if(lc_code == 2 && mc_code == 2){document.getElementById('selected_category').innerHTML="여성 > 구두"}
-	}
-	</script>
-	-->
 
 	<div class="thirdContainner">
 		<div class="third_title">카테고리</div>

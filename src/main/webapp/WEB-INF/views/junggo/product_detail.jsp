@@ -53,7 +53,7 @@
 
 
 	</header>
-		
+		--------${jungGoNoh}------------
 		<section id="sec_con" class="inr product_view">
 		<div class="container">
 			<div class= "row">
@@ -62,38 +62,38 @@
 				<div class="slide">
 					<div class="mySlides">
 						<div class="numbertext">1&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image1}">
+						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image1_name}">
 					</div>
 
 					<div class="mySlides">
 						<div class="numbertext">2&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2}">
+						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2_name}">
 					</div>
 
 					<div class="mySlides">
 						<div class="numbertext">3&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3}">
+						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3_name}">
 					</div>
 
 					<div class="mySlides">
 						<div class="numbertext">4&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4}">
+						<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4_name}">
 					</div>
 					<a class="prev" onclick="plusSlides(-1)">❮</a> <a class="next" onclick="plusSlides(1)">❯</a>
 				</div>
 
 				<div class="G1">
 					<div class="column">
-						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image1}" onclick="currentSlide(1)">
+						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image1_name}" onclick="currentSlide(1)">
 					</div>
 					<div class="column">
-						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2}" onclick="currentSlide(2)">
+						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2_name}" onclick="currentSlide(2)">
 					</div>
 					<div class="column">
-						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3}" onclick="currentSlide(3)">
+						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3_name}" onclick="currentSlide(3)">
 					</div>
 					<div class="column">
-						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4}" onclick="currentSlide(4)">
+						<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4_name}" onclick="currentSlide(4)">
 					</div>
 				</div>
 			</div>
