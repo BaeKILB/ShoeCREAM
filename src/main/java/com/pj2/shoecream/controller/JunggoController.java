@@ -1370,11 +1370,20 @@ public class JunggoController {
 		jungGoNoh.setBuyier_idx(Integer.parseInt(buyier_idx));
 		jungGoNoh.setProduct_idx(product_idx);			
 		
+		
+		//수정할 리뷰 데이터 수집
+		JungGoNohVO jungGoNohPay = jungGoNohService.getPayInfo3(jungGoNoh);
+		model.addAttribute("jungGoNohPay", jungGoNohPay);
+		
+		
+		
 		//리뷰 작성할 상품 정보 세팅
 		JungGoNohVO jungGoNohReview = jungGoNohService.getProduct(product_idx);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
 		String buyier_nickname = mPrincipalDetails.getMember().getMem_nickname();
+//		String buyier_idx1 = mPrincipalDetails.getMember().getMem_idx();
+		jungGoNohReview.setBuyier_idx(Integer.parseInt(buyier_idx));
 		jungGoNohReview.setBuyier_nickname(buyier_nickname);
 		model.addAttribute("jungGoNohReview", jungGoNohReview);
 		
@@ -1429,22 +1438,82 @@ public class JunggoController {
 			System.out.println("&&&&&&&&&&ifReview?"+ifReview+"끝");
 			if(ifReview == null) { //조회 내역이 없을 때
 			
-					//입력 작업 시작	
-					int insertReview = jungGoNohService.registReview(jungGoNoh);
-				
-					if(insertReview < 0) {
-							model.addAttribute("msg", "신청 실패");
-							return "inc/fail_back";
-						} 	
-				
-				}  else 
-					{ //조회 내역이 있을때
-					
-							model.addAttribute("msg", "이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
-							return "inc/fail_back";
-					}
-
+				//입력 작업 시작	
+				/*int insertReview = jungGoNohService.registReview(jungGoNoh);
 			
+				if(insertReview < 0) {
+					model.addAttribute("msg", "신청 실패");
+					return "inc/fail_back";
+				}*/
+				
+				
+				// 기간 설정을 위한 현재 시간 저장
+		        LocalDate now = LocalDate.now();
+		        // 포맷 정의
+		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		        
+		        // 포맷 적용
+		        String formatedNow = now.format(formatter);
+		        System.out.println("formatedNow!!!!!!!!!!!!!!!!!!"+formatedNow);
+				java.sql.Timestamp trans_date = jungGoNoh.getTrans_date();
+				System.out.println("trans_date!!!!!!!!!"+trans_date);
+				String transDateFormat = new SimpleDateFormat("yyyy/MM/dd").format(trans_date);
+				System.out.println("transDateFormat!!!!!!!!!!!!!!!!!!"+transDateFormat);
+		        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		        
+		        //날짜 차이 구하기
+		        try {
+					Date a_parseDate = format.parse(formatedNow);
+					Date b_parseDate = format.parse(transDateFormat);
+					
+					System.out.println("a_parseDate!!!!!!!!!!!!!!!!!!" + a_parseDate);
+					System.out.println("b_parseDate!!!!!!!!!!!!!!!!!!" + b_parseDate);
+					System.out.println("a_parseDate.getTime()!!!!!!!!!!!!!!!!!!" + a_parseDate.getTime());
+					System.out.println("b_parseDate.getTime()!!!!!!!!!!!!!!!!!!" + b_parseDate.getTime());
+					
+					long resultTime = a_parseDate.getTime() - b_parseDate.getTime();
+					
+					System.out.println("resultTime !!!!!!!!!!!!!!!!!!: "+resultTime);
+					
+					System.out.println("초 : "+resultTime/1000);
+					System.out.println("분 : "+resultTime/(60*1000));
+					System.out.println("시 : "+resultTime/(60*60*1000));
+					System.out.println("일 : "+resultTime/(24*60*60*1000));
+					
+					long resultTimeDay = resultTime/(24*60*60*1000);
+				
+					// 날짜 차이 계산 후 리뷰 입력	
+					if(resultTimeDay < 3 )
+					{ // 리뷰 입력
+						int insertReview = jungGoNohService.registReview(jungGoNoh);
+						
+						if(insertReview < 0) {
+								model.addAttribute("msg", "입력 실패, 접속하신 아이디와 작성자가 다를 수 있으니 재확인 부탁드립니다.");
+								return "inc/fail_back";
+						} 	
+					}
+					else
+					{
+						model.addAttribute("msg", "거래완료 후 3일동안만 수정가능합니다.");
+						return "inc/fail_back";
+					}
+				
+		        } catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			
+			}  
+			else 
+			{ //조회 내역이 있을때
+			
+					model.addAttribute("msg", "이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
+					return "inc/fail_back";
+			}
+
+			model.addAttribute("msg", "리뷰가 작성 되었습니다.");
 			return "inc/close";
 		}
 	
@@ -1535,15 +1604,16 @@ public class JunggoController {
 	        // 포맷 적용
 	        String formatedNow = now.format(formatter);
 	        System.out.println("formatedNow!!!!!!!!!!!!!!!!!!"+formatedNow);
-			java.sql.Timestamp review_date = jungGoNoh.getReview_date();
-			String reviewDateFormat = new SimpleDateFormat("yyyy/MM/dd").format(review_date);
-			System.out.println("reviewDateFormat!!!!!!!!!!!!!!!!!!"+reviewDateFormat);
+			java.sql.Timestamp trans_date = jungGoNoh.getTrans_date();
+			System.out.println("trans_date!!!!!!!!!"+trans_date);
+			String transDateFormat = new SimpleDateFormat("yyyy/MM/dd").format(trans_date);
+			System.out.println("transDateFormat!!!!!!!!!!!!!!!!!!"+transDateFormat);
 	        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 	        
 	        //날짜 차이 구하기
 	        try {
 				Date a_parseDate = format.parse(formatedNow);
-				Date b_parseDate = format.parse(reviewDateFormat);
+				Date b_parseDate = format.parse(transDateFormat);
 				
 				System.out.println("a_parseDate!!!!!!!!!!!!!!!!!!" + a_parseDate);
 				System.out.println("b_parseDate!!!!!!!!!!!!!!!!!!" + b_parseDate);
@@ -1573,7 +1643,7 @@ public class JunggoController {
 				}
 				else
 				{
-					model.addAttribute("msg", "리뷰 수정 기간(3일)이 경과하였습니다.");
+					model.addAttribute("msg", "거래완료 후 3일동안만 수정가능합니다.");
 					return "inc/fail_back";
 				}
 				
@@ -1587,7 +1657,7 @@ public class JunggoController {
 			
 			
 					
-			
+	        model.addAttribute("msg", "리뷰가 수정되었습니다.");
 			return "inc/close";
 		}
 		

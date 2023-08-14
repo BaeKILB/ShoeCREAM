@@ -140,6 +140,13 @@ public class JungGoNohService {
 			return jungGoNohData;
 		}
 
+		
+		public JungGoNohVO getPayInfo3(JungGoNohVO jungGoNoh) {
+			JungGoNohVO pay = jungGoNohMapper.selectPayInfo3(jungGoNoh);
+			return pay;
+		}
+		
+		
 	}
 
 

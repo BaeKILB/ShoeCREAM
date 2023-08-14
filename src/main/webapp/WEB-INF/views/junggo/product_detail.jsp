@@ -281,7 +281,7 @@
 			<div class="seller_wrap more_wrap_box col-sm-12 col-lg-6">
 	
 				<div class="seller_profile_wrap">
-					<img class="seller_profile" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.mem_profileImageUrl}">
+					<img class="seller_profile" src="${pageContext.request.contextPath}/resources/upload/profile/${jungGoNoh.mem_profileImageUrl}">
 					<p class="seller_name">${jungGoNoh.mem_nickname}</p>
 					<p class="seller_Lv">${jungGoNoh.mem_rank}</p>
 				</div>
@@ -316,7 +316,7 @@
 						
 						<c:forEach var="moreReviewListSmall" items="${moreReviewListSmall}">
 						<div class="repeat">
-						<img class="buyer_profile" src="${pageContext.request.contextPath}/resources/upload/${moreReviewListSmall.mem_profileImageUrl}">
+						<img class="buyer_profile" src="${pageContext.request.contextPath}/resources/upload/profile/${moreReviewListSmall.mem_profileImageUrl}">
 							<span class="rev_name">${moreReviewListSmall.mem_nickname}</span>
 							<span class="rev_date">${moreReviewListSmall.review_date}</span>
 							<ul class=""> 

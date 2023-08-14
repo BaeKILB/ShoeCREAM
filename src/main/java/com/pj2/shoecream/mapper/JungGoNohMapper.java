@@ -73,7 +73,7 @@ public interface JungGoNohMapper {
 	//DB payinfo
 	JungGoNohVO selectPayInfo(String product_idx);
 	JungGoNohVO selectPayInfo2(JungGoNohVO jungGoNoh);
-	
+	JungGoNohVO selectPayInfo3(JungGoNohVO jungGoNoh);
 
 	
 	

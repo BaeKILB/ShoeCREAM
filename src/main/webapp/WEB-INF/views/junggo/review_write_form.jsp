@@ -60,6 +60,10 @@
 									<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNohReview.product_idx}"/>
 									<input type="hidden" name="buyier_idx" id="buyier_idx" value="${jungGoNohReview.buyier_idx}"/>
 									<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNohReview.mem_idx}"/>
+									<input type="hidden" name="trans_date" id="trans_date" value="${jungGoNohPay.trans_date}"/>
+									
+									
+									
 								</div>
 								<div class="mod_box">
 										<input type="submit" class="delete_btn" value="등록">
