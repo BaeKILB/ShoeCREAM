@@ -25,18 +25,17 @@
             </div>
         </div>
 		<hr>
-		<div class="container">
-		  <div class="row">
-			<!-- 인기순/최신순 라디오 버튼 -->
-			<div class="col-auto ms-auto">
-			    <input type="radio" class="btn-check" name="productSortCheck" id="productSortPopular" value="popular" autocomplete="off">
-			    <label class="btn btn-check-label" for="productSortPopular">인기순</label>
-			    <input type="radio" class="btn-check" name="productSortCheck" id="productSortLatest" value="latest" autocomplete="off" checked>
-			    <label class="btn btn-check-label" for="productSortLatest">최신순</label>
-			</div>
-		  </div>
-		</div>
-		<hr>
+<div class="container">
+  <div class="row">
+    <!-- 인기순/최신순 라디오 버튼 -->
+    <div class="col-auto ms-auto mb-3">
+        <input type="radio" class="btn-check" name="productSortCheck" id="productSortPopular" value="popular" autocomplete="off" checked>
+        <label class="btn btn-custom" for="productSortPopular"><b>인기순</b></label>
+        <input type="radio" class="btn-check" name="productSortCheck" id="productSortLatest" value="latest" autocomplete="off">
+        <label class="btn btn-custom" for="productSortLatest"><b>최신순</b></label>
+    </div>
+  </div>
+</div>
 		<!--인기게시글 갤러리(GRID배치)-->
 		<div class="popular-gallery row">
 

@@ -1,11 +1,10 @@
 $(document).ready(function() {
-  // 인기순/최신순 라디오 버튼 클릭 이벤트
   $('input[name="productSortCheck"]').on('change', function() {
     loadSortedPosts($(this).val());
   });
 
-  // 기본으로 최신순 게시물 로드
-  loadSortedPosts('latest');
+  // 기본으로 인기순 게시물 로드
+  loadSortedPosts('popular');
 });
 
 function loadSortedPosts(sortType) {

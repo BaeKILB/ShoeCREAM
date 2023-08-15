@@ -55,3 +55,24 @@
 	 height: 80px;
 	 border-radius: 50%;
 }
+
+.btn-custom {
+    background-color: white;
+    border: none;
+    color: grey;
+    font-size: 14px;
+}
+
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active,
+.btn-custom.active,
+.btn-custom-checked {
+    background-color: white;
+    border: none;
+    color: black;
+}
+
+.btn-custom:focus {
+    box-shadow: none;
+}
