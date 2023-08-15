@@ -44,10 +44,11 @@ public class SocialImageService {
 	    return socialImageMapper.selectAllInfo();
 	}
 	
-//	public List<SocialVO> popularImage() {
-//		return socialImageMapper.selectPopular();
-//	}
-
+	// 소셜 인기페이지 프로필 (팔로우 많은 순서)
+	@Transactional(readOnly = true)
+	public List<Map<String, Object>> getAllInfoWithFollows() {
+	  return socialImageMapper.selectAllInfoWithFollows();
+	}
 	
 //	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
 	@Transactional(readOnly = true)

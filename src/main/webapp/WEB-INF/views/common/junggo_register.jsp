@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <head>
-<!--  <link href="${pageContext.request.contextPath }/resources/css/common/auction_register.css" rel="stylesheet">-->
+
 </head>
 
 <div class="total_container col-sm-12 col-lg-12">

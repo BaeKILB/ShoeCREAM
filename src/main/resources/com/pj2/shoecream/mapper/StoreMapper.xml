@@ -160,27 +160,51 @@
 		    bl.mem_idx = #{mem_idx}
     </select>
     
-    <select id="selectCreamList" resultType="map">
+<!--     <select id="selectCreamList" resultType="map"> -->
 
-		 SELECT 
-		    request_idx 
-		    ,cream_idx 
-		    ,cream_title 
-		    ,cream_size 
-		    ,cream_price 
-		    ,request_time 
-		    ,image1 
-		    ,image_path 
-		  	,co.tracking_num
-		  	,co.delivery_status 
-		FROM 
-		    cream_item_request AS ci
-		JOIN 
-		    product_image AS pi ON ci.cream_idx = pi.product_idx
-		LEFT JOIN 
-		    courier_info AS co ON ci.request_idx = co.product_idx
-		WHERE 
-			ci.mem_idx = #{mem_idx};
-    </select>
+<!-- 		 SELECT  -->
+<!-- 		    request_idx  -->
+<!-- 		    ,cream_idx  -->
+<!-- 		    ,cream_title  -->
+<!-- 		    ,cream_size  -->
+<!-- 		    ,cream_price  -->
+<!-- 		    ,request_time  -->
+<!-- 		    ,image1  -->
+<!-- 		    ,image_path  -->
+<!-- 		  	,co.tracking_num -->
+<!-- 		  	,co.delivery_status  -->
+<!-- 		FROM  -->
+<!-- 		    cream_item_request AS ci -->
+<!-- 		JOIN  -->
+<!-- 		    product_image AS pi ON ci.cream_idx = pi.product_idx -->
+<!-- 		LEFT JOIN  -->
+<!-- 		    courier_info AS co ON ci.request_idx = co.product_idx -->
+<!-- 		WHERE  -->
+<!-- 			ci.mem_idx = #{mem_idx}; -->
+<!--     </select> -->
+
+<select id="selectCreamList" resultType="map">
+    SELECT    
+        cir.request_idx,
+        cir.mem_idx,
+        cir.cream_idx,
+        cir.cream_title,
+        cir.cream_size,
+        cir.cream_price,
+        cir.delivery_status,
+        cir.tracking_company,
+        cir.tracking_num,
+        cir.tracking_code,
+        cir.request_time,
+        ci.delivery_status as inbound_delivery_status,
+        ci.tracking_company as inbound_tracking_company,
+        ci.tracking_code as inbound_tracking_code,
+        ci.tracking_num as inbound_tracking_num,
+        pi.image1,
+        pi.image_path
+    FROM cream_item_request cir
+    LEFT JOIN courier_info ci ON cir.request_idx = ci.product_idx
+    LEFT JOIN product_image pi ON cir.cream_idx = pi.product_idx
+</select>
     
 </mapper>

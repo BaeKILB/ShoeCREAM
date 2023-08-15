@@ -15,6 +15,7 @@ public class CreamRequestVO {
 	private String delivery_status;
 	private String tracking_company;
 	private String tracking_num;
+	private String tracking_code;
 	private Date request_time;
 	
 	private String inbound_delivery_status;

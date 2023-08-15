@@ -71,6 +71,8 @@
 <!-- 		FROM cream_item -->
 <!-- 		JOIN product_image ON cream_item.ci_code = product_image.product_idx; -->
 <!-- 	</select> -->
+
+
 	<select id="selectCreamList" resultType="map">
 		SELECT 
 		    ci.cream_idx,
@@ -97,7 +99,6 @@
 			            #{startRow}
 			            , #{listLimit}
        	 </if>
-			
 	</select>
 	
 	
@@ -147,8 +148,6 @@
 	       and product_idx = #{cream_idx }
 	</delete>
 	
-
-	
 	<select id="selectDibsCount">
         SELECT 
             count(product_idx) 
@@ -159,7 +158,7 @@
 	</select>
 
 	<insert id="insertCreamItemRequest">
-	insert into
+	   insert into
 	       cream_item_request
 	   values(
 	   		null
@@ -177,9 +176,7 @@
 	   		,null
 	   		,null
 	   		,now()
-	   		
 	   )
-	
 	</insert>
 	
 	<insert id="insertTrackingNumber">
@@ -223,5 +220,7 @@
 	    request_idx = #{request_idx};
 		
 	</update>
+	
+
 
 </mapper>
