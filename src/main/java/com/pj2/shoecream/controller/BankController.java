@@ -462,30 +462,30 @@ public class BankController {
 	
 	// 2.2. 사용자/계좌 관리 
 	// - 2.2.1. 사용자정보조회 API
-	@GetMapping("bankUserInfo")
-	public String requestUserInfo(HttpSession session, Model model) {
-		// 세션에 저장된 엑세스토큰 및 사용자 번호를 변수에 저장
-		String access_token = (String)session.getAttribute("access_token");
-		String user_seq_no = (String)session.getAttribute("user_seq_no");
-		logger.info("●●●●● access_token : " + access_token);
-		logger.info("●●●●● user_seq_no : " + user_seq_no);
-		
-		// 엑세스토큰이 없을 경우 "계좌 인증 필수!" 메세지 출력 후 이전페이지로 돌아가기
-		if(access_token == null) {
-			model.addAttribute("msg", "계좌 인증 필수!");
-			return "fail_back";
-		}
-		
-		// BankApiService - requestUserInfo() 메서드 호출하여 핀테크 이용자 정보 조회
-		// => 파라미터 : 엑세스토큰, 사용자번호   리턴타입 : ResponseUserInfoVO(userInfo)
-		ResponseUserInfoVO userInfo = bankApiService.requestUserInfo(access_token, user_seq_no);
-		logger.info("●●●●● userInfo : " + userInfo);
-		
-		// Model 객체에 ResponseUserInfoVO 객체 저장
-		model.addAttribute("userInfo", userInfo);
-		
-		return "member/mypage/bank_user_info";
-	}
+//	@GetMapping("bankUserInfo")
+//	public String requestUserInfo(HttpSession session, Model model) {
+//		// 세션에 저장된 엑세스토큰 및 사용자 번호를 변수에 저장
+//		String access_token = (String)session.getAttribute("access_token");
+//		String user_seq_no = (String)session.getAttribute("user_seq_no");
+//		logger.info("●●●●● access_token : " + access_token);
+//		logger.info("●●●●● user_seq_no : " + user_seq_no);
+//		
+//		// 엑세스토큰이 없을 경우 "계좌 인증 필수!" 메세지 출력 후 이전페이지로 돌아가기
+//		if(access_token == null) {
+//			model.addAttribute("msg", "계좌 인증 필수!");
+//			return "fail_back";
+//		}
+//		
+//		// BankApiService - requestUserInfo() 메서드 호출하여 핀테크 이용자 정보 조회
+//		// => 파라미터 : 엑세스토큰, 사용자번호   리턴타입 : ResponseUserInfoVO(userInfo)
+//		ResponseUserInfoVO userInfo = bankApiService.requestUserInfo(access_token, user_seq_no);
+//		logger.info("●●●●● userInfo : " + userInfo);
+//		
+//		// Model 객체에 ResponseUserInfoVO 객체 저장
+//		model.addAttribute("userInfo", userInfo);
+//		
+//		return "member/mypage/bank_user_info";
+//	}
 	
 	// 2.3. 조회서비스(사용자) - 2.3.1. 잔액조회 API
 	// => 예금주명, 계좌번호(마스킹), 핀테크이용번호 파라미터 => Map 타입으로 처리
@@ -518,47 +518,47 @@ public class BankController {
 	// 출금이체? 나(사용자) -> 핀테크이용기관(핀테크에서의 출금이체) 또는 나 -> 상대방(일반적인 개념의 이체)
 	// 이 때, 나 -> 상대방의 경우 나 -> 핀테크이용기관 -> 상대방의 과정을 거쳐야하며
 	// 나 -> 핀테크이용기관은 출금이체, 핀테크이용기관 -> 상대방은 입금이체를 수행해서 이체가 완료된다.
-	@PostMapping("bankWithdraw")
-	public String requestWithdraw(@RequestParam Map<String, String> map, HttpSession session, Model model) {
-		// 미로그인 또는 엑세스토큰 없으면 "권한이 없습니다!" 출력 후 이전페이지로 돌아가기
-		if(session.getAttribute("sId") == null || session.getAttribute("access_token") == null) {
-			model.addAttribute("msg", "권한이 없습니다!");
-			return "fail_back";
-		}
-		
-		// Map 객체에 엑세스토큰 추가
-		map.put("access_token", (String)session.getAttribute("access_token"));
-		
-		// BankApiService - requestWithdraw() 메서드를 호출하여 출금이체 요청
-		// => 파라미터 : Map 객체   리턴타입 : ResponseWithdrawVO
-		ResponseWithdrawVO withdrawResult = bankApiService.requestWithdraw(map);
-		
-		// Model 객체에 ResponseWithdrawVO 객체 저장
-		model.addAttribute("withdrawResult", withdrawResult);
-		
-		return "bank/bank_withdraw_result";
-	}
+//	@PostMapping("bankWithdraw")
+//	public String requestWithdraw(@RequestParam Map<String, String> map, HttpSession session, Model model) {
+//		// 미로그인 또는 엑세스토큰 없으면 "권한이 없습니다!" 출력 후 이전페이지로 돌아가기
+//		if(session.getAttribute("sId") == null || session.getAttribute("access_token") == null) {
+//			model.addAttribute("msg", "권한이 없습니다!");
+//			return "fail_back";
+//		}
+//		
+//		// Map 객체에 엑세스토큰 추가
+//		map.put("access_token", (String)session.getAttribute("access_token"));
+//		
+//		// BankApiService - requestWithdraw() 메서드를 호출하여 출금이체 요청
+//		// => 파라미터 : Map 객체   리턴타입 : ResponseWithdrawVO
+//		ResponseWithdrawVO withdrawResult = bankApiService.requestWithdraw(map);
+//		
+//		// Model 객체에 ResponseWithdrawVO 객체 저장
+//		model.addAttribute("withdrawResult", withdrawResult);
+//		
+//		return "bank/bank_withdraw_result";
+//	}
 	
-	@PostMapping("bankDeposit")
-	public String requestDeposit(@RequestParam Map<String, String> map, HttpSession session, Model model) {
-		// 미로그인 또는 엑세스토큰 없으면 "권한이 없습니다!" 출력 후 이전페이지로 돌아가기
-		if(session.getAttribute("sId") == null || session.getAttribute("access_token") == null) {
-			model.addAttribute("msg", "권한이 없습니다!");
-			return "fail_back";
-		}
-		
-		// Map 객체에 엑세스토큰 추가
-		map.put("access_token", (String)session.getAttribute("access_token"));
-		
-		// BankApiService - requestDeposit() 메서드를 호출하여 입금이체 요청
-		// => 파라미터 : Map 객체   리턴타입 : ResponseDepositVO
-		ResponseDepositVO depositResult = bankApiService.requestDeposit(map);
-		
-		// Model 객체에 ResponseDepositVO 객체 저장
-		model.addAttribute("depositResult", depositResult);
-		
-		return "bank/bank_deposit_result";
-	}
+//	@PostMapping("bankDeposit")
+//	public String requestDeposit(@RequestParam Map<String, String> map, HttpSession session, Model model) {
+//		// 미로그인 또는 엑세스토큰 없으면 "권한이 없습니다!" 출력 후 이전페이지로 돌아가기
+//		if(session.getAttribute("sId") == null || session.getAttribute("access_token") == null) {
+//			model.addAttribute("msg", "권한이 없습니다!");
+//			return "fail_back";
+//		}
+//		
+//		// Map 객체에 엑세스토큰 추가
+//		map.put("access_token", (String)session.getAttribute("access_token"));
+//		
+//		// BankApiService - requestDeposit() 메서드를 호출하여 입금이체 요청
+//		// => 파라미터 : Map 객체   리턴타입 : ResponseDepositVO
+//		ResponseDepositVO depositResult = bankApiService.requestDeposit(map);
+//		
+//		// Model 객체에 ResponseDepositVO 객체 저장
+//		model.addAttribute("depositResult", depositResult);
+//		
+//		return "bank/bank_deposit_result";
+//	}
 	
 }
 
