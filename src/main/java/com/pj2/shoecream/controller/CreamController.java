@@ -39,10 +39,12 @@ import com.pj2.shoecream.service.AuctionService;
 import com.pj2.shoecream.service.CreamService;
 import com.pj2.shoecream.service.ImageService;
 import com.pj2.shoecream.service.JungGoNohService;
+import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.CreamVO;
 import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.JungGoNohVO;
+import com.pj2.shoecream.vo.PayInfoVO;
 import com.pj2.shoecream.vo.ProductImageVO;
 
 @Controller
@@ -62,6 +64,9 @@ public class CreamController {//크림 컨트롤러 입니다.
 	  
 	  @Autowired
 	  private JungGoNohService jungGoNohService;
+	  
+	  @Autowired
+	  private MemberService memService;
 	
 	@GetMapping("Cream")
 	public String creamMain(
@@ -226,10 +231,12 @@ public class CreamController {//크림 컨트롤러 입니다.
 		model.addAttribute("dibsCount", dibsCount);
 		
 		//연관상품
-//		List<Map<String, Object>> relatedProducts = service.getRelatedCreamList(cream);
-//		model.addAttribute("relatedProducts",relatedProducts);
-//		
-		//크림 판매물품
+		List<Map<String, Object>> relatedProducts = service.getRelatedCreamList(cream);
+		model.addAttribute("relatedProducts",relatedProducts);
+		
+		// 리뷰 정보
+		List<Map<String, Object>> reviewList = service.getReviewList(cream_idx);
+		model.addAttribute("reviewList",reviewList);
 		
        return "cream/cream_detail";
    }
@@ -689,13 +696,31 @@ public class CreamController {//크림 컨트롤러 입니다.
 		
 	//환불작업
 	@PostMapping("creamRefundPro")
-	public String creamRefundPro(@RequestParam Integer request_idx, @RequestParam String cream_idx, @RequestParam Integer mem_idx , Model model) {
+	public String creamRefundPro(
+//			@RequestParam Integer request_idx,
+			@RequestParam String cream_idx, @RequestParam Integer mem_idx , Model model) {
  
 		int mem_buyer_idx = mem_idx;
 		
-		payService.productCancelPayment(mem_buyer_idx, cream_idx);
+	   	try {Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			 PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		     mem_idx = mPrincipalDetails.getMember().getMem_idx();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+//		PayInfoVO payInfo = new PayInfoVO();
+//		payInfo.setMem_idx(buyer.getMem_idx());
+//		payInfo.setCharge_point(price);
+//		payInfo.setPoint_usage("결제사용");
+		int result = payService.productCancelPayment(mem_buyer_idx, cream_idx);
+		
+		System.out.println("!@#$" + result);
 		
 		
-		return "";
+		
+		model.addAttribute("msg", "환불이 요청 되었습니다.");
+		return "inc/close";
+		
 	}
 }

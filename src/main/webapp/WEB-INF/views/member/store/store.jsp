@@ -846,8 +846,8 @@ function payAuction(idx, price, id, title){
 											<input type="hidden" name="t_invoice" id="t_invoice" value="${creamList.tracking_num }">
 											<input  type="button" value="배송조회" class="btn btn-light btn-half-height tracker">
 										</c:when>
-										<c:when test="${creamList.delivery_status eq '배송완료' }"> 
-											<button type="button" class="btn btn-light btn-half-height" onclick="window.open('${pageContext.request.contextPath }/CreRegistReviewForm?product_idx=${creamList.cream_idx}&mem_idx=1234&buyer_idx=${creamList.mem_idx }','구매자정보', 'width=680, height=700, left=100, top=50')">구매후기 등록</button>
+										<c:when test="${creamList.jung_rev_idx eq null }"> 
+											<button type="button" class="btn btn-light btn-half-height" onclick="window.open('${pageContext.request.contextPath }/CreRegistReviewForm?product_idx=${creamList.cream_idx}&mem_idx=1234&buyer_idx=${creamList.mem_idx }','구매후기 등록', 'width=680, height=700, left=100, top=50')">구매후기 등록</button>
 										</c:when>
 <%-- 								       	 <c:when test="${creamList.seller_idx == 1234 }"> --%>
 <%-- 											<button type="button" class="btn btn-light btn-half-height" onclick="window.open('${pageContext.request.contextPath }/CreRegistReviewForm?product_idx=${creamList.cream_idx}&mem_idx=1234&buyer_idx=${creamList.mem_idx }','구매자정보', 'width=680, height=700, left=100, top=50')">구매후기 수정</button> --%>
