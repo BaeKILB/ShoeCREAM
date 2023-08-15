@@ -51,8 +51,6 @@ import com.pj2.shoecream.vo.PayInfoVO;
 import com.pj2.shoecream.vo.PointInoutVO;
 import com.pj2.shoecream.vo.ProductImageVO;
 
-import retrofit2.http.POST;
-
 
 @Controller
 public class AuctionController {
@@ -1129,6 +1127,20 @@ public class AuctionController {
 		}; 
 		
 		return "redirect:/store/"+buyer_idx;
+	}
+	
+	@ResponseBody
+    @RequestMapping(value= "auctionRestore", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
+	public String auctionRestore(
+			@RequestParam String auction_idx) {
+		int insertCount = service.updateCloseDate(auction_idx);
+		
+		if(insertCount > 0) {
+			return "재등록 성공";
+		} else {
+			return "재등록 실패";
+		}
+		
 	}
 	
 }

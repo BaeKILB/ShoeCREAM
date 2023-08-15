@@ -564,13 +564,13 @@ function payAuction(idx, price, id, title){
                                                 <c:when test="${auctionList.bid_price eq null }">
 									                <span class="bold">입찰 없음</span>
                                                     <p class="goods_date">경매 마감 시간 : ${auctionList.auc_close_date}
-<%--                                                         <fmt:formatDate value="${auctionList.auc_close_date}" pattern="yyyy-MM-dd HH:mm"/> --%>
+<%--                                                         <fmt:formatDate value="${auctionList.auc_close_date}" pattern="yyyy-MM-dd hh:00"/> --%>
                                                     </p>
                                                 </c:when>
                                                 <c:when test="${auctionList.bid_price ne null }">
 									                <span class="bold">현재 입찰가 : ${auctionList.bid_price}</span>원
                                                     <p class="goods_date">경매 마감 시간 : ${auctionList.auc_close_date}
-<%--                                                         <fmt:formatDate value="${auctionList.auc_close_date}" pattern="yyyy-MM-dd HH:mm"/> --%>
+<%--                                                         <fmt:formatDate value="${auctionList.auc_close_date}" pattern="yyyy-MM-dd hh:00"/> --%>
                                                     </p>
                                                 </c:when>
 					                       </c:choose>
@@ -630,7 +630,7 @@ function payAuction(idx, price, id, title){
 															</c:choose>
 														</c:when>
 														<c:when test="${auctionList.bid_price eq null }"> <!-- 입찰이 없을경우 -->
-															<!-- 재등록이나 기간연장으로 대체 -->
+															<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="auctionRestore(${auctionList.auction_idx})">재등록</button>
 														</c:when>
 													</c:choose>
 												</c:when>
@@ -1241,6 +1241,29 @@ const trackingInfo = (code,number) => {
 const confirmAcquisition = idx => {
     if(confirm("택배 상품 확인이 완료되었다면, 확인을 눌러주세요.")) {
     	location.href='${pageContext.request.contextPath }/acquisitionComplete?auction_idx='+idx;
+    } else {
+    	return false;
+    }
+};
+  
+const auctionRestore = idx => {
+    if(confirm("해당상품을 재등록 하시겠습니까?")) {
+    	$.ajax({
+    		type: 'GET'
+    		, url: '${pageContext.request.contextPath }/auctionRestore'
+    		, data: {
+    			'auction_idx':idx
+    		}
+    		, dataType: 'text'
+    		, success: function(result) {
+    			alert(result);
+    			location.reload();
+    		}
+    		, error: function(result) {
+    			alert("error");
+    			location.reload();
+    		} 
+    	});
     } else {
     	return false;
     }

@@ -95,4 +95,8 @@ public class AuctionService {
 		return mapper.selectReviewList(seller_idx);
 	}
 
+	public int updateCloseDate(String auction_idx) {
+		return mapper.updateAuctionDate(auction_idx);
+	}
+
 }

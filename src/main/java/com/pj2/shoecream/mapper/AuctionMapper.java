@@ -53,5 +53,7 @@ public interface AuctionMapper {
 
 	List<Map<String, Object>> selectReviewList(int seller_idx);
 
+	int updateAuctionDate(String auction_idx);
+
 
 }

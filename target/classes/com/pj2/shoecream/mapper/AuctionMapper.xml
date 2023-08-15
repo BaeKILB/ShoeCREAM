@@ -299,4 +299,13 @@
     	where
     		jr.seller_idx = #{seller_idx }
     </select>
+    <update id="updateAuctionDate">
+    	update
+    		auction_item
+    	set
+    		auc_close_date = (DATE_ADD(NOW(), INTERVAL 10 DAY))
+    		, auc_state = '진행'
+    	where
+    		auction_idx = #{auction_idx }
+    </update>
 </mapper>
