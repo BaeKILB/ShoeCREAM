@@ -223,6 +223,7 @@ public class MemberController {
 		kakaoMember.setMem_name(kakaoProfile.getProperties().getNickname());
 		kakaoMember.setMem_nickname(kakaoProfile.getProperties().getNickname());
 		kakaoMember.setMem_email(kakaoProfile.getKakao_account().getEmail());
+		kakaoMember.setMem_status("2"); // 2는 OAuth2 로그인 멤버 상태
 		
 		// 가입자 혹은 비가입자 체크 해서 처리
 		MemberVO originMember =  memberService.selectMember(kakaoMember.getMem_id());

@@ -76,7 +76,7 @@ public class MemberService {
         member.setMem_passwd(encPassword); // 암호화 비번
         member.setRole("ROLE_USER"); // 멤버 권한 디폴트
         member.setMem_account_auth("N"); // 계좌 디폴트
-        member.setMem_status("1"); // 멤버 상태 디폴트
+//        member.setMem_status("1"); // 멤버 상태 디폴트
         member.setMem_bio("반갑습니다."); // 멤버 상태 디폴트
         member.setMem_profileImageUrl("default_profile_image_url"); // 
 //        System.out.println(member.getMem_mtel());
