@@ -17,7 +17,14 @@ public class JungHandler {
 		String dibBtnStr = "";
 		String href = "onclick='location.href=\"./productDetail?product_idx=" + jProduct.get("product_idx") + "\"'";
 		
-		String date = ((LocalDateTime)jProduct.get("product_date")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+		String date = ((LocalDateTime)jProduct.get("product_date")).format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm"));
+		
+		String title = (String)jProduct.get("product_title");
+		
+		// 제목이 11자 초과면 ... 처리
+		if(title.length() > 11) {
+			title = title.substring(0, 11) + "...";
+		}
 		
 		if((int)jProduct.get("user_idx") != (int)jProduct.get("mem_idx")) {			
 			if(jProduct.get("favorite_check").equals("Y")) {
@@ -49,14 +56,14 @@ public class JungHandler {
 				;
 		
 		htmlStr = 
-				"<div class='col-lg-3 col-md-4 col-6'>"
+				"<div class='col-lg-3 col-md-4 col-6 mt-1'>"
 			     + "<div class='card itemWrap' >"
 			     + "  <div class='imgWrap' " + href + " >"
 			     + "    <img class='junggoImg' src='" + localURL + jProduct.get("image_path") + "/" + jProduct.get("image1") + "' />"
 			     + "  </div>"
 			     + "  <div class='itemSimpleInfoWrap'>"
 			     + "  	<div class='card-body'>"			     
-			     + "        <p class='card-title itemTitle'>" + jProduct.get("product_title") +"</p>"
+			     + "        <p class='card-title itemTitle'>" + title +"</p>"
 			     + "    </div>"
 			     + "	<ul class='list-group list-group-flush itemSimpleInfo'>"
 //			     + "      <li>"

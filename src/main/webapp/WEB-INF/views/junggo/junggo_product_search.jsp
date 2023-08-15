@@ -14,18 +14,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
-<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/css/junggo/junggo_product_search.css"	rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/css/junggo/inc/product_item_box.css"	rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/css/inc/side_category.css"	rel="stylesheet">
-<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
+<title>슈크림 - 중고</title>
 
 </head>
 <body>
-	<h1>junggo search</h1>
+		<!-- 헤더 시작 -->
+	<header>
+		<jsp:include page="../inc_ex/header.jsp" />
+	</header>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
+	<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/resources/css/junggo/junggo_product_search.css"	rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/resources/css/inc/side_category.css"	rel="stylesheet">
+	<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
+	
 	<main class="container" >	
 <%-- 		<c:if test="${!empty keyWord }"> --%>
 <%-- 			<section class="row"> --%>
@@ -38,49 +41,38 @@
 <%-- 		</c:if> --%>
 		<article class="row">
 
-				<aside class="sideCategoryWrap categoryTop ct_lc_list categoryList"> 
-				카테고리
-					<ul>
-<!-- 		                대분류 -->
-		                <c:forEach var="lc" items="${lc_list }">
-				            <li class="ct_lc_item" >
-				                <div class="ct_lc_item_btn">
-			                    	<input type="hidden" value="${lc.lc_code }">
-				                    <span class="">${lc.lc_name }</span>
-				                    <button class="ct_up_down_btn" onclick=""></button>
-				                </div>
-<!-- 				                중분류 -->
-							    <div id="${lc.lc_code }_mc_list" class="hidden">
-							        <ul>
-		                                 <c:forEach var="mc" items="${mc_list }">
-		                                    <c:if test="${lc.lc_code eq mc.parent_code }">
-									            <li class="ct_mc_item">
-									                <div class="ct_mc_item_btn">
-			                    						<input type="hidden" value="${mc.mc_code }">
-									                    <span>${mc.mc_name }</span>
-									                </div>
-									            </li>
-		                                    </c:if>
-							           </c:forEach>
-							        </ul>
-							    </div>
-<!-- 		                        중분류 -->
-				            </li>
-		                </c:forEach>
-<!-- 			            대분류 -->
-		            </ul>
-				</aside>
+				<section class="col-lg-2">
 				
-<!-- 				<ul> -->
-<%-- 					<c:forEach var="lc" items="${lc_list }" varStatus="i">	 --%>
-<%-- 						<jsp:include page="../inc/side_category_lc.jsp"> --%>
-<%-- 							<jsp:param value="lc" name="lc"/> --%>
-<%-- 							<jsp:param value="mc_list[${ i.index-1}]" name="mc"/> --%>
-<%-- 						</jsp:include> --%>
-<%-- 					</c:forEach> --%>
-<!-- 				</ul> -->
-
-			<section class="itemListWrap offset-md-3 col-md-9 col-sm-12  container" style="border:1px solid black">
+				<div class="ct_list_top">
+					<h3 onclick="reLoadInitItems();">카테고리</h3>
+					<button class="ct_up_down_btn d-block d-lg-none" onclick="hiddenCategory(this)"></button>
+				</div>
+				<aside class="sideCategoryWrap "> <!-- 카테고리 -->
+					<div class="accordion accordion-flush" id="sideCategoryWrap">
+						<c:forEach var="lc" items="${lc_list }">
+							<div class="accordion-item">
+							    <h2 class="accordion-header ct_lc_item_btn" id="${lc.lc_code }_header">
+									<input type="hidden" class="lc_code" value="${lc.lc_code }">
+									<button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#${lc.lc_code }_mc_list" aria-expanded="false" aria-controls="${lc.lc_code }_mc_list">
+										<span>${lc.lc_name }</span>
+									</button>
+							    </h2>
+							    <div id="${lc.lc_code }_mc_list" class="accordion-collapse collapse" aria-labelledby="${lc.lc_code }_header" data-bs-parent="#sideCategoryWrap">
+									<c:forEach var="mc" items="${mc_list }">
+										<c:if test="${lc.lc_code eq mc.parent_code }">
+											<div class="accordion-body ct_mc_item_btn">
+												<input type="hidden" class="mc_code" value="${mc.mc_code }">
+												<span>${mc.mc_name }</span>
+											</div>
+										</c:if>
+									</c:forEach>
+							    </div>
+					  		</div>
+						</c:forEach>
+					</div>
+				</aside>
+			</section>
+			<section class="itemListWrap  col-lg-10  container" >
 				<!-- 정렬 방식 -->
 				<article class="row">
 					<div class="offset-10 col-2">
@@ -104,7 +96,10 @@
 <!-- 			</div> -->
 <!-- 		</article> -->
 	</main>
-	
+		<!-- 풋터 시작 -->
+	<footer>
+		<jsp:include page="../inc_ex/footer.jsp" />
+	</footer>
 	<script type="text/javascript">
 		let localURL = "${pageContext.request.contextPath}";
 	</script>
