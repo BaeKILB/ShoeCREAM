@@ -61,11 +61,6 @@
 							</div>
 						</li>
 					</ul>
-					<div class="write_cont">
-						<p style="white-space: pre-line;">
-							${inquiry.qst_content }
-						</p>
-					</div>
 				</div>
 						<input type="hidden" name="mem_idx" value="${member.mem_idx }">
 							<div class="list_wrap modify">
