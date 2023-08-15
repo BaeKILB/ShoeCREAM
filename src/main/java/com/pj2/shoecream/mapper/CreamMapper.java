@@ -41,6 +41,8 @@ public interface CreamMapper {
 
 	List<Map<String, Object>> selectRelatedCreamList(Map<String, Object> map);
 
+	List<Map<String, Object>> selectReviewList(String cream_idx);
+
 
 
 }

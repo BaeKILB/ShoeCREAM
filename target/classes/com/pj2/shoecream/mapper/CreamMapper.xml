@@ -225,6 +225,29 @@
 		
 	</update>
 	
-
+    <select id="selectReviewList" resultType="map">
+    	select
+    		*
+    	from
+    		jung_reviews 
+    	where
+    		product_idx = #{cream_idx }
+    </select>
+    
+    <select id="selectRelatedCreamList" resultType="map">
+		SELECT
+		    ci.cream_idx 
+			, image_path
+			, image1
+			,ci.cream_title
+			,ci.size220
+		FROM
+			cream_item ci JOIN product_image pi 
+			ON ci.cream_idx = pi.product_idx 
+	        limit
+	        	4
+	</select>
+    
+    
 
 </mapper>
