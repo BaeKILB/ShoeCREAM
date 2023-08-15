@@ -19,6 +19,9 @@ public interface JungGoNohMapper {
 	int insertJungProduct(JungGoNohVO jungGoNoh);
 	int insertProductImage(JungGoNohVO jungGoNoh);
 	
+	//중고 수정
+	int modifyJunggo(JungGoNohVO jungGoNoh);
+	
 	// 등록된 상품 상세 폼
 	JungGoNohVO selectProduct(String product_idx);
 	
@@ -74,6 +77,8 @@ public interface JungGoNohMapper {
 	JungGoNohVO selectPayInfo(String product_idx);
 	JungGoNohVO selectPayInfo2(JungGoNohVO jungGoNoh);
 	JungGoNohVO selectPayInfo3(JungGoNohVO jungGoNoh);
+	
+
 
 	
 	
