@@ -21,7 +21,6 @@
         <jsp:include page="../../inc_ex/mem_sidebar.jsp"></jsp:include>
 	<section id="admin_cont">
 		<form action="${pageContext.request.contextPath }/QstMemberWritePro" method="post">
-		<h1 class="admin_tit">1:1 문의 조회</h1>
 		<hr class="tit_line">
 		<div class="question_cont">
 			<div class="mem_list_wrap">
@@ -78,7 +77,7 @@
 								</div>
 								<div class="mod_box">
 									<input type="submit" class="list_btn" value="등록하기">
-									<a class="list_btn" href="${pageContext.request.contextPath }/InquiryList?pageNum=${param.pageNum }">목록</a>
+									<a class="list_btn" href="${pageContext.request.contextPath }/mypage/questionList?pageNum=${param.pageNum }">목록</a>
 								</div>
 							</div>
 						</form>

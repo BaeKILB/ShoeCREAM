@@ -241,8 +241,10 @@ function payAuction(idx, price, id, title){
 					        <ul class="goods_cate">
 					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
 					              <option selected>전체</option>
-					              <option value="1">판매중</option>
-					              <option value="2">판매완료</option>
+					              <option value="대기중">대기중</option>
+					              <option value="예약중">예약중</option>
+					              <option value="거래대기중">거래대기중</option>
+					              <option value="거래완료">거래완료</option>
 					            </select>
 					        </ul>
 					    </div>
@@ -278,14 +280,12 @@ function payAuction(idx, price, id, title){
 					  <c:forEach items="${productSellList}" var="productSellList">
 					    <!--중고 후기 상품-->
 					<%--     <c:if test="${dibList.dibs_type eq '경매상품'}"> --%>
-					      <div class="goods mb-4">
-					        <div class="row no-gutters">
-					
-					          <div class="col-12 col-md-auto">
-					            <a href="${pageContext.request.contextPath}/productDetail?product_idx=${productSellList.product_idx}">
-					                <div class="goods_image" style="width: 94px; height: 94px;">
-					                    <!-- 실제 이미지 구현 부분 -->
-										<c:choose>
+               <div class="goods mb-4">
+                        <div class="row no-gutters align-items-end">
+                            <div class="col-12 col-md-auto">
+                                <a href="${pageContext.request.contextPath}/productDetail?product_idx=${productSellList.product_idx}">
+                                    <div class="goods_image" style="width: 94px; height: 94px;">
+					               		<c:choose>
 											<c:when test="${productSellList.product_sell_status eq '대기중' }">
 												<img src="${pageContext.request.contextPath}${productSellList.image_path }/${productSellList.image1}" alt="상품 이미지">
 											</c:when>
@@ -314,46 +314,56 @@ function payAuction(idx, price, id, title){
 					                </div>
 					            </a>
 					          </div>
-					          <div class="col-12 col-md-2">
-					            <div class="goods_info">
-					              <h2 class="goods_title">${productSellList.product_title}</h2>
-					              <p class="goods_price">
-					                <span class="bold">${productSellList.product_price}</span>원
-					              </p>
-					              <p class="goods_shop">${productSellList.mem_nickname}</p>
-					            </div>
-					          </div>
-					            <div class="col-12 col-md-7">
-					<%--               <p class="goods_date" style=" width: 400px;" >${productSellList.review_content}</p> --%>
-					          	</div>
-					            <div class="col-12 col-md-auto">
-					                <div class="ml-auto">
-					                    <div class="goods_date">
-										    <time datetime="${productSellList.product_date}">${productSellList.product_date}</time>
-										</div>
-										<c:choose>
-					                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
-							                    <div class="profile_btn_box mt-auto">
-							                    	<div class="goods_button">
-								                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-								                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
-								                	</div>
-							                    </div>                    	
-					                    	</c:when>
-					                    	<c:otherwise>
-					                    		<div class="profile_btn_box mt-auto">
-					                    				<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">찜하기</button>
-					                    				<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/productDetail?product_idx=${productSellList.product_idx}'">상세보기</button>
-					                    		</div> 
-					                    	</c:otherwise>
-					                    </c:choose>
-					                </div>
-					            </div>
-					        </div>
-					      </div>
-					<%--     </c:if> --%>
-					  </c:forEach>
-					</div>
+                            <div class="col-12 col-md-2">
+                                <div class="goods_info">
+                                    <h2 class="goods_title">${productSellList.product_title}</h2>
+                                    <p class="goods_price">
+                                        <span class="bold">${productSellList.product_price}</span>원
+                                    </p>
+                                    <p class="goods_shop">${productSellList.mem_nickname}</p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-7">
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <div class="ml-auto">
+                                    <div class="goods_date">
+                                        <time datetime="${productSellList.product_date}">${productSellList.product_date}</time>
+                                    </div>
+                                </div>
+								<c:choose>
+									    <c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
+									        <div class="profile_btn_box mt-auto">
+									            <div class="goods_button">
+									                <c:choose>
+									                    <c:when test="${productSellList.product_sell_status eq '대기중' }"> 
+									                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/junggoModifyForm?product_idx=${productSellList.product_idx }&mem_idx=${productSellList.mem_idx }&buyier_idx=${productSellList.mem_idx }'">수정</button>
+									                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/productDelete?product_idx=${productSellList.product_idx }&mem_idx=${productSellList.mem_idx }&buyier_idx=${productSellList.mem_idx }'">삭제</button>
+									                    </c:when>
+									                    <c:when test="${productSellList.product_sell_status eq '예약중' }">
+									                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/chatRooms?chat_area=0&chat_room_idx=${productSellList.chat_room_idx }'">채팅</button>
+									                    </c:when>
+									                    <c:when test="${productSellList.product_sell_status eq '거래대기중' }">
+									                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/chatRooms?chat_area=0&chat_room_idx=${productSellList.chat_room_idx }'">채팅</button>
+									                    </c:when>
+									                    <c:when test="${productSellList.product_sell_status eq '거래완료' }">
+									                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/productDelete?product_idx=${productSellList.product_idx }&mem_idx=${productSellList.mem_idx }&buyier_idx=${productSellList.mem_idx }'">삭제</button>
+									                    </c:when>
+									                </c:choose>
+									            </div>
+									        </div>                     
+									    </c:when>
+									    <c:otherwise>
+									        <div class="profile_btn_box mt-auto">
+									            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/productDetail?product_idx=${productSellList.product_idx}'">상세보기</button>
+									        </div> 
+									    </c:otherwise>
+									</c:choose>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </c:forEach>
+		            </div>
 				</div>
 				<!-- 판매 내역 끝 -->
 				
@@ -370,8 +380,10 @@ function payAuction(idx, price, id, title){
 					        <ul class="goods_cate">
 					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
 					              <option selected>전체</option>
-					              <option value="2">거래중</option>
-					              <option value="3">거래완료</option>
+					              <option value="결제완료">결제완료</option>
+					              <option value="거래완료">거래완료</option>
+					              <option value="결제취소">결제취소</option>
+					              <option value="거래취소">거래취소</option>
 					            </select>
 					        </ul>
 					    </div>
@@ -385,7 +397,7 @@ function payAuction(idx, price, id, title){
 									<div>전체</div>
 								</div>
 								<div class="col-8">
-									<div class="sc-bqjOQT kIgFPj"><b>2개</b></div>
+									<div class="sc-bqjOQT kIgFPj"><b>${productBuyList.size()}개</b></div>
 								</div>
 								<div class="col-auto" style="">
 							      <input type="radio" class="btn-check" name="productBuyCheck" id="productBuyLatest" autocomplete="off" checked>
@@ -448,58 +460,101 @@ function payAuction(idx, price, id, title){
 								</div>
 							</div>
 						</div>
-						<div id="main_content">
-							<!--필터-->
-							<!--상품 내용-->
-							<c:forEach items="${productBuyList }" var="productBuyList">
-								<div class="goods">
-									<div class="goods_one">
-										<a href="product_detail?product_idx=${productBuyList.product_idx }">
-											<div class="goods_image">
-												<c:forEach items="${fileList }" var="fileList">
-													<c:set var="length" value="${fn:length(fileList.file_name) }" />
-													<c:set var="index" value="${fn:indexOf(fileList.file_name, '_') }" />
-													<c:set var="file_name" value="${fn:substring(fileList.file_name, index + 1, length) }" />
-													<c:choose>
-														<c:when test="${fileList.file_num eq productBuyList.product_idx && productBuyList.buy_status eq '결제완료' }">
-															<img src="${pageContext.request.contextPath }/resources/fileUpload/${file_name}" alt="상품 이미지">
-														</c:when>
-														<c:when test="${fileList.file_num eq productBuyList.product_idx && productBuyList.buy_status eq '구매확정' }">
-															<img src="${pageContext.request.contextPath }/resources/fileUpload/${file_name}" alt="상품 이미지">
-															<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
-															거래완료
-															</span>
-														</c:when>
-													</c:choose>
-												</c:forEach>
-											</div>
-											<div class="goods_info">
-												<h2 class="goods_title">${productBuyList.buy_title }</h2>
-												<p class="goods_price">
-													<span class="bold">${productBuyList.buy_price }</span>원
-												</p>
-												<p class="goods_shop">${productBuyList.buy_sellr }</p>
-												<p class="goods_date">${productBuyList.buy_date }</p>
-											</div>
-										</a>
-										<c:choose>
-											<c:when test="${productBuyList.buy_status eq '결제완료' }">
-												<div class="btn_area">
-<%-- 													<button type="button" class="btn_buy_decide" value="${param.buy_price }">구매확정</button> <!-- 0613배하나 --> --%>
-<%-- 													<button type="button" value="${productBuyList.buy_price }" id="buyConfirm" >구매확정</button> <!-- 0613배하나 --> --%>
-<%-- 													<a href="buyConfirm?buy_price=${productBuyList.buy_price }&buy_seller=${productBuyList.buy_seller}&product_idx=${productBuyList.product_idx}">구매확정</a> --%>
-<%-- 													<input type="button" class="btn_confirm" value="구매확정" onclick="location.href='buyConfirm?buy_price=${productBuyList.buy_price }&buy_seller=${productBuyList.buy_seller}&product_idx=${productBuyList.product_idx}'"> --%>
-													<button type="button" onclick="location.href='buyConfirm?buy_price=${productBuyList.buy_price }&buy_seller=${productBuyList.buy_seller}&product_idx=${productBuyList.product_idx}'">구매확정</button>
-												</div>
+					<div class="container mt-4">
+					  <c:forEach items="${productBuyList}" var="productBuyList">
+					    <!--중고 후기 상품-->
+					<%--     <c:if test="${dibList.dibs_type eq '경매상품'}"> --%>
+					      <div class="goods mb-4">
+					        <div class="row no-gutters">
+					
+					          <div class="col-12 col-md-auto">
+					            <a href="${pageContext.request.contextPath}/productDetail?product_idx=${productBuyList.product_idx}">
+					                <div class="goods_image" style="width: 94px; height: 94px;">
+					                    <!-- 실제 이미지 구현 부분 -->
+											<c:choose>
+											<c:when test="${productBuyList.pay_status eq '결제완료' }">
+												<img src="${pageContext.request.contextPath}${productBuyList.image_path }/${productBuyList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												결제완료
+												</span>
 											</c:when>
-											<c:when test="${productBuyList.buy_status eq '구매확정' }">
-												<button type="button" onclick="location.href='review.me?review_seller=${productBuyList.buy_seller}'">후기작성</button>
+											<c:when
+												test="${productBuyList.pay_status eq '거래완료' }">
+												<img src="${pageContext.request.contextPath }${productBuyList.image_path }/${productBuyList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												거래완료
+												</span>
+											</c:when>
+											<c:when
+												test="${productBuyList.pay_status eq '결제취소' }">
+												<img src="${pageContext.request.contextPath }${productBuyList.image_path }/${productBuyList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												결제취소
+												</span>
+											</c:when>
+											<c:when
+												test="${productBuyList.pay_status eq '거래취소' }">
+												<img src="${pageContext.request.contextPath }${productBuyList.image_path }/${productBuyList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												거래취소
+												</span>
 											</c:when>
 										</c:choose>
-									</div>
-								</div>
-							</c:forEach>
-						</div>
+					                </div>
+					            </a>
+					          </div>
+					          <div class="col-12 col-md-2">
+					            <div class="goods_info">
+					              <h2 class="goods_title">${productBuyList.product_title}</h2>
+					              <p class="goods_price">
+					                <span class="bold">${productBuyList.product_price}</span>원
+					              </p>
+					              <p class="goods_shop">${productBuyList.seller_nickname}</p>
+					            </div>
+					          </div>
+					            <div class="col-12 col-md-7">
+					<%--               <p class="goods_date" style=" width: 400px;" >${productSellList.review_content}</p> --%>
+					          	</div>
+                            <div class="col-12 col-md-auto">
+                                <div class="ml-auto">
+                                    <div class="goods_date">
+                                        <time datetime="${productBuyList.product_date}">${productBuyList.product_date}</time>
+                                    </div>
+                                </div>
+								<c:choose>
+									    <c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
+									        <div class="profile_btn_box mt-auto">
+									            <div class="goods_button">
+									                <c:choose>
+														<c:when test="${productBuyList.pay_status eq '결제완료' }">
+									                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/chatRooms?chat_area=0&chat_room_idx=${productBuyList.chat_room_idx }'">채팅</button>
+									                    </c:when>
+									                    <c:when test="${productBuyList.pay_status eq '거래완료' }">
+									                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/chatRooms?chat_area=0&chat_room_idx=${productBuyList.chat_room_idx }'">채팅</button>
+									                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/productDelete?product_idx=${productBuyList.product_idx }&mem_idx=${productBuyList.mem_idx }&buyier_idx=${productBuyList.mem_idx }'">삭제</button>
+									                    </c:when>
+									                    <c:when test="${productBuyList.pay_status eq '결제취소' }">
+									                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/chatRooms?chat_area=0&chat_room_idx=${productBuyList.chat_room_idx }'">채팅</button>
+									                    </c:when>
+									                    <c:when test="${productBuyList.pay_status eq '거래취소' }">
+									                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/productDelete?product_idx=${productBuyList.product_idx }&mem_idx=${productBuyList.mem_idx }&buyier_idx=${productBuyList.mem_idx }'">삭제</button>
+									                    </c:when>
+									                </c:choose>
+									            </div>
+									        </div>                     
+									    </c:when>
+									    <c:otherwise>
+									        <div class="profile_btn_box mt-auto">
+									            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath}/productDetail?product_idx=${productBuyList.product_idx}'">상세보기</button>
+									        </div> 
+									    </c:otherwise>
+									</c:choose>
+		                            </div>
+					        </div>
+					      </div>
+					<%--     </c:if> --%>
+					  </c:forEach>
+					</div>
 					</div>
 				</div>
 				<!-- 구매 내역 끝 -->
@@ -564,13 +619,13 @@ function payAuction(idx, price, id, title){
                                                 <c:when test="${auctionList.bid_price eq null }">
 									                <span class="bold">입찰 없음</span>
                                                     <p class="goods_date">경매 마감 시간 : ${auctionList.auc_close_date}
-<%--                                                         <fmt:formatDate value="${auctionList.auc_close_date}" pattern="yyyy-MM-dd hh:00"/> --%>
+<%--                                                         <fmt:formatDate value="${auctionList.auc_close_date}" pattern="yyyy-MM-dd HH:mm"/> --%>
                                                     </p>
                                                 </c:when>
                                                 <c:when test="${auctionList.bid_price ne null }">
 									                <span class="bold">현재 입찰가 : ${auctionList.bid_price}</span>원
                                                     <p class="goods_date">경매 마감 시간 : ${auctionList.auc_close_date}
-<%--                                                         <fmt:formatDate value="${auctionList.auc_close_date}" pattern="yyyy-MM-dd hh:00"/> --%>
+<%--                                                         <fmt:formatDate value="${auctionList.auc_close_date}" pattern="yyyy-MM-dd HH:mm"/> --%>
                                                     </p>
                                                 </c:when>
 					                       </c:choose>
@@ -630,7 +685,7 @@ function payAuction(idx, price, id, title){
 															</c:choose>
 														</c:when>
 														<c:when test="${auctionList.bid_price eq null }"> <!-- 입찰이 없을경우 -->
-															<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="auctionRestore(${auctionList.auction_idx})">재등록</button>
+															<!-- 재등록이나 기간연장으로 대체 -->
 														</c:when>
 													</c:choose>
 												</c:when>
@@ -1241,29 +1296,6 @@ const trackingInfo = (code,number) => {
 const confirmAcquisition = idx => {
     if(confirm("택배 상품 확인이 완료되었다면, 확인을 눌러주세요.")) {
     	location.href='${pageContext.request.contextPath }/acquisitionComplete?auction_idx='+idx;
-    } else {
-    	return false;
-    }
-};
-  
-const auctionRestore = idx => {
-    if(confirm("해당상품을 재등록 하시겠습니까?")) {
-    	$.ajax({
-    		type: 'GET'
-    		, url: '${pageContext.request.contextPath }/auctionRestore'
-    		, data: {
-    			'auction_idx':idx
-    		}
-    		, dataType: 'text'
-    		, success: function(result) {
-    			alert(result);
-    			location.reload();
-    		}
-    		, error: function(result) {
-    			alert("error");
-    			location.reload();
-    		} 
-    	});
     } else {
     	return false;
     }

@@ -14,31 +14,48 @@
 	<!-- 내 중고 판매 내역-->
 	<select id="selectProductSellList" resultType="map">
 	  SELECT 
-	  mi.mem_idx,
-	  mi.mem_id,
-	  mi.mem_name,
-	  mi.mem_nickname,
-	  mi.mem_email,
-	  mi.mem_mtel,
-	  jp.product_idx,
-	  jp.product_title,
-	  jp.product_info,
-	  jp.product_price,
-	  jp.product_sell_status,
-	  jp.product_date,
-	  pi.product_idx,
-	  pi.image1,
-	  pi.image2,
-	  pi.image3,
-	  pi.image4,
-	  pi.image_path
-	FROM jung_product jp
-	  INNER JOIN mem_info mi ON jp.mem_idx = mi.mem_idx
+	    mi.mem_idx,
+	    mi.mem_id,
+	    mi.mem_name,
+	    mi.mem_nickname,
+	    mi.mem_email,
+	    mi.mem_mtel,
+	    jp.product_idx,
+	    jp.product_title,
+	    jp.product_info,
+	    jp.product_price,
+	    jp.product_sell_status,
+	    jp.product_date,
+	    pi.product_idx,
+	    pi.image1,
+	    pi.image2,
+	    pi.image3,
+	    pi.image4,
+	    pi.image_path,
+	    cr.chat_room_idx,
+	    cr.mem_seller_idx,
+	    cr.mem_buyer_idx,
+	    cr.chat_room_area
+	  FROM mem_info mi
+	  INNER JOIN jung_product jp ON mi.mem_idx = jp.mem_idx
 	  INNER JOIN product_image pi ON jp.product_idx = pi.product_idx
-	WHERE jp.mem_idx = #{mem_idx}
-	ORDER BY jp.product_date DESC;
+	  INNER JOIN chat_rooms cr ON jp.product_idx = cr.product_idx
+	  WHERE jp.mem_idx = #{mem_idx}
+	  ORDER BY jp.product_date DESC;
 	</select>
-
+	
+	<!-- 내 중고 구매내역 -->
+	<select id="selectProductBuyList" resultType="map">
+	SELECT pi.*, mi.*, jp.*, pimg.*, cr.*, ms.mem_nickname AS seller_nickname
+	FROM pay_info pi
+	JOIN mem_info mi ON pi.mem_idx = mi.mem_idx
+	JOIN jung_product jp ON pi.product_idx = jp.product_idx
+	JOIN product_image pimg ON jp.product_idx = pimg.product_idx
+	JOIN chat_rooms cr ON jp.product_idx = cr.product_idx
+	JOIN mem_info ms ON jp.mem_idx = ms.mem_idx
+	WHERE mi.mem_idx = #{mem_idx};
+	</select>
+	
 	<!-- 내 경매 전체 내역 select -->
 	<select id="selectAuctionList" resultType="map">
 		SELECT

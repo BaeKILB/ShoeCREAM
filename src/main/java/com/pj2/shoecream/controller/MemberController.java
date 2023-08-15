@@ -293,7 +293,6 @@ public class MemberController {
 		
 	    // 회원가입 유효성 검사 - 유효성 검사 에러 난 애들 한 곳에 모아서(bindingResult에 의해) 처리 errorMap에 담긴 메세지는 @Vaildation 에 의해서 자동으로 적절한게 간다.
 		if (bindingResult.hasErrors()) {
-			System.out.println("여기까지오긴 오니 ..?");
 		     Map<String, String> errorMap = new HashMap<>();
 		     for (FieldError error : bindingResult.getFieldErrors()) {
 		         errorMap.put(error.getField(), error.getDefaultMessage());

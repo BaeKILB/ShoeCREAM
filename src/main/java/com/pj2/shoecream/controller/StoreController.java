@@ -35,6 +35,12 @@ public class StoreController {
 		model.addAttribute("productSellList", productSellList);
 		System.out.println("스토어 중고거래 값들 :" + productSellList);
 		
+		// 중고거래 구매 내역
+		List<Map<String, Object>> productBuyList = storeService.selectProductBuyList(mem_idx);
+		model.addAttribute("productBuyList", productBuyList);
+		System.out.println("중고거래 구매내역 값들 :" + productBuyList);
+		
+		
 		// 경매 등록 내역
 		List<Map<String, Object>> auctionList = storeService.selectAuctionList(mem_idx); 
 		model.addAttribute("auctionList", auctionList);

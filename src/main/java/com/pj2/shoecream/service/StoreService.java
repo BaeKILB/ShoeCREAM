@@ -22,6 +22,12 @@ public class StoreService {
 	public List<Map<String, Object>> selectProductSellList(int mem_idx) {
 		return mapper.selectProductSellList(mem_idx);
 	}
+	
+	// 중고거래 구매내역
+	public List<Map<String, Object>> selectProductBuyList(int mem_idx) {
+		return mapper.selectProductBuyList(mem_idx);
+	}
+	
 
 	// 경매 등록 내역
 	public List<Map<String, Object>> selectAuctionList(int mem_idx) {
@@ -52,6 +58,8 @@ public class StoreService {
 	public List<CreamRequestVO> selectCreamList(int mem_idx) {
 		return mapper.selectCreamList(mem_idx);
 	}
+	
+
     
 
 }

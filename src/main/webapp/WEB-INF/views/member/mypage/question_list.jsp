@@ -32,7 +32,7 @@
 		<div class="question_cont">
 			<div class="mem_list_wrap">
 				<div class="search_wrap">
-					<form action="InquiryList" method="get" class="searchForm">
+					<form action="${pageContext.request.contextPath }/mypage/questionList" method="get" class="searchForm">
 						<select name="searchType" id="searchType">
 							<option value="" <c:if test="${param.searchType eq '' }">selected</c:if>>전체검색</option>			
 							<option value="거래신고" <c:if test="${param.searchType eq '거래신고' }">selected</c:if>>거래신고</option>			

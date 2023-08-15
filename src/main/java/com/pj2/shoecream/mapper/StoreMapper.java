@@ -16,6 +16,9 @@ public interface StoreMapper {
 	// 중고거래 판매 내역
 	List<Map<String, Object>> selectProductSellList(int mem_idx);
 	
+	// 중고 구매내역
+	List<Map<String, Object>> selectProductBuyList(int mem_idx);
+	
 	// 경매등록 내역
 	List<Map<String, Object>> selectAuctionList(int mem_idx);
 	
@@ -33,6 +36,8 @@ public interface StoreMapper {
 	
 	//크림 구매내역
 	List<CreamRequestVO> selectCreamList(int mem_idx);
+	
+
 
 
 }
