@@ -13,6 +13,19 @@
 <%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet"> --%>
 
 	<script src="${pageContext.request.contextPath }/resources/js/inc/jquery-3.7.0.js"></script>
+
+	<%-- 0815 경인 추가 팝업창 동작 --%>
+	<script type="text/javascript">
+		const goToMain = () => {
+			opener.location.href = "${pageContext.request.contextPath }";
+			window.close();
+		}
+		const goToStore = () => {
+			opener.location.href = "${pageContext.request.contextPath }/store/${jungGoNoh.buyier_idx}";
+			window.close();
+		}
+	</script>
+	
 </head>
 <body>
 	<header>
@@ -110,8 +123,9 @@
 				</ul>
 			</div>
 			<div class="finish_btn" align="center">
-				<a href="${pageContext.request.contextPath }"><button>메인으로</button></a>
-				<a href="${pageContext.request.contextPath }/store/${jungGoNoh.buyier_idx}"><button>나의 상점으로</button></a>
+				<a href="javascript:goToMain()"><button>메인으로</button></a>
+				<a href="javascript:goToStore()"><button>나의 상점으로</button></a>
+				<a href="javascript:window.close()"><button>닫기</button></a>
 			</div>
 			
 		</div>
@@ -120,7 +134,7 @@
 	<footer>
 		<jsp:include page="../inc_ex/footer.jsp" />
 	</footer>
-
+	
 
 </body>
 </html>

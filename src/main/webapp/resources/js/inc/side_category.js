@@ -10,7 +10,7 @@ $(function() { // onload
 		$("#orderMethod").val('');
 		// 동일 대분류 선택시
         if($(this).siblings().attr('class') == '') {
-            $(this).siblings().addClass('hidden');
+//            $(this).siblings().addClass('hidden');
         	dataObj.lc_code = $(this).children().val();
     		$("#itemList").empty();
 			if(!loadItems()){
@@ -21,11 +21,11 @@ $(function() { // onload
         
         // 초기 또는 다른 대분류 선택시
         $(".ct_lc_item_btn").each(function() {
-            $(this).siblings().addClass('hidden');
+//            $(this).siblings().addClass('hidden');
         });
         
         // 선택 대분류 보여주기
-        $(this).siblings().removeClass('hidden');
+//        $(this).siblings().removeClass('hidden');
         dataObj.lc_code = $(this).children().val();
 		$("#itemList").empty();
 		if(!loadItems()){
@@ -76,4 +76,15 @@ const allMcListHidden = (e) => {
 			t.classList.remove("ct_show")
 		}
 	});	
+}
+
+// 페이지 축소시 카테고리 리스트가 아이템 리스트보다 상단 인데
+// 이때 카테고리 접는 기능을 구현하기
+const hiddenCategory = (e) => {
+	
+	let ct_list = document.querySelector(".sideCategoryWrap");
+	ct_list.classList.toggle("hidden");
+	e.classList.toggle("ct_img_up");
+	
+	
 }

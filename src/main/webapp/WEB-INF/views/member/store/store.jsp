@@ -818,25 +818,44 @@ function payAuction(idx, price, id, title){
 					              <p class="goods_price">사이즈 : ${creamList.cream_size}</p>
 					              <p class="goods_price">결제금액 : ${creamList.cream_price} 원</p>
 					              <c:choose>
-					              	<c:when test="${creamList.tracking_num eq null }">
+					              	<c:when test="${creamList.inbound_tracking_num eq null }">
 						              <p class="goods_price">현재상태 : 입고대기중</p>
 					              	</c:when>
-					                <c:when test="${creamList.tracking_num ne null }"> <!-- 운송장 등록시 -->
+					                <c:when test="${creamList.inbound_delivery_status eq '배송중' }"> <!-- 운송장 등록시 -->
 					                  <p class="goods_price">현재상태 : 입고중</p>
+									</c:when>
+									<c:when test="${creamList.delivery_status eq '배송완료' }">
+									  <p class="goods_price">현재상태 : 상품준비중</p>
+									</c:when>
+									<c:when test="${creamList.delivery_status eq '배송중' }">
+									  <p class="goods_price">현재상태 : 배송중</p>
 									</c:when>
 					              </c:choose>
 					            </div>
 					          </div>
 					            <div class="col-12 col-md-auto">
+					            <!-- 진짜 시연용으로 굴러가게만 해놓음 야매임 수정반드시 해야함 seller_idx부분 반드시 -->
 									<c:choose>
-										<c:when test="${creamList.tracking_num eq null }"> <!-- 운송장 미등록시 -->
+										<c:when test="${creamList.inbound_tracking_num eq null }"> <!-- 운송장 미등록시 -->
                                             <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm2?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=580, height=360, left=100, top=50')">운송장 등록</button>
+                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/creamRefund?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=200, height=360, left=100, top=50')">환불 요청</button>
 										</c:when>
-										<c:when test="${creamList.tracking_num ne null }"> <!-- 운송장 등록시 -->
-	                                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">배송 조회</button>
+										<c:when test="${creamList.delivery_status eq '배송중' }"> <!-- 운송장 등록시 -->
+											<input type="hidden" name="t_key"  id="t_key" value="vmXicQZCzQaQetF3y0M0xg">
+											<input type="hidden" name="t_code" id="t_code" value="${creamList.tracking_code }">
+											<input type="hidden" name="t_invoice" id="t_invoice" value="${creamList.tracking_num }">
+											<input  type="button" value="배송조회" class="btn btn-light btn-half-height tracker">
 										</c:when>
+										<c:when test="${creamList.delivery_status eq '배송완료' }"> 
+											<button type="button" class="btn btn-light btn-half-height" onclick="window.open('${pageContext.request.contextPath }/CreRegistReviewForm?product_idx=${creamList.cream_idx}&mem_idx=1234&buyer_idx=${creamList.mem_idx }','구매자정보', 'width=680, height=700, left=100, top=50')">구매후기 등록</button>
+										</c:when>
+<%-- 								       	 <c:when test="${creamList.seller_idx == 1234 }"> --%>
+<%-- 											<button type="button" class="btn btn-light btn-half-height" onclick="window.open('${pageContext.request.contextPath }/CreRegistReviewForm?product_idx=${creamList.cream_idx}&mem_idx=1234&buyer_idx=${creamList.mem_idx }','구매자정보', 'width=680, height=700, left=100, top=50')">구매후기 수정</button> --%>
+<%-- <%-- 	                                        <button type="button" class="btn btn-light btn-half-height" onclick="location.href='${pageContext.request.contextPath }/AucModifyReviewForm?product_idx=${auctionList.auction_idx}&mem_idx=${auctionList.mem_idx }&buyer_idx=${auctionList.buyer_idx }'">구매후기 수정</button> --%> 
+<%-- 										</c:when> --%>
 									</c:choose>
 					       	     </div>
+					       	     
 					      </div>
 					      </div>
 				        </c:forEach>
@@ -859,6 +878,7 @@ function payAuction(idx, price, id, title){
 					              <option selected>전체</option>
 					              <option value="junggo">중고상품</option>
 					              <option value="action">경매상품</option>
+					              <option value="cream">커스텀상품</option>
 					            </select>
 					        </ul>
 					    </div>
@@ -1226,6 +1246,26 @@ const confirmAcquisition = idx => {
     }
 };
   
+</script>
+
+<script>
+ 	$('.tracker').click(function() {
+		let apikey = "vmXicQZCzQaQetF3y0M0xg";
+		
+		$.ajax({
+			type:"GET",
+			url: "http://info.sweettracker.co.kr/api/v1/companylist?t_key=" + apikey,
+			dataType: "JSON",
+			success: function(data) {
+				let t_key = $("#t_key").val();
+				let t_code = $("#t_code").val();
+				let t_invoice = $("#t_invoice").val();
+				window.open("http://info.sweettracker.co.kr/tracking/4?t_key="+t_key+"&t_code="+t_code+"&t_invoice="+t_invoice ,"popForm", "toolbar=no, width=540, height=800 left=700 top=100, directories=no, status=no, resizable=no");
+			}, error: function() {
+				
+			}
+		});
+	})
 </script>
 	<!-- 푸터 시작 -->
 	<jsp:include page="../../inc_ex/footer.jsp" />

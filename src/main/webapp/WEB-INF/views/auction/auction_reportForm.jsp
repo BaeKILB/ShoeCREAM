@@ -8,6 +8,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 function reportDiv(value){
 	if (value == "") {

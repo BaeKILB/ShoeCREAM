@@ -54,13 +54,13 @@ public class SocialController {
 	@GetMapping("/social/popular")
 	public String popular(Model model) {
 		
-		List<Map<String, Object>> images = socialImageService.getAllInfo();
-	    model.addAttribute("images", images);
-	    System.out.println("인기 페이지로 뭐 뭐 들고 가니 ? " + images);
-		
-//		List<SocialVO> images = socialImageService.popularImage();
-//		model.addAttribute("images", images);
-//		System.out.println("인기 페이지로 뭐 뭐 들고 가니 ? " + images);
+	List<Map<String, Object>> profileInfo = socialImageService.getAllInfoWithFollows();
+	model.addAttribute("profileInfo", profileInfo);
+	System.out.println("인기 페이지 프로필 값 : " + profileInfo);
+	
+	List<Map<String, Object>> images = socialImageService.getAllInfo();
+	model.addAttribute("images", images);
+	System.out.println("인기 페이지 이미지 값 : " + images);
 		
 		return "member/social/popular";
 	}

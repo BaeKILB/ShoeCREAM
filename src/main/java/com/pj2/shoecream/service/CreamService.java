@@ -77,9 +77,13 @@ public class CreamService {
 	}
 
 	public int updateTrackingNum(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return mapper.updateCIR(map);
 	}
+
+	public List<Map<String, Object>> getRelatedCreamList(Map<String, Object> map) {
+		return mapper.selectRelatedCreamList(map);
+	}
+
 
 
 

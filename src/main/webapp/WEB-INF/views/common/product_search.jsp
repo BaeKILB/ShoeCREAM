@@ -102,6 +102,9 @@
 			<section id="container">
 				<div class="fw-bold fs-5">인기경매상품</div>
 				<div class="row" id="auctionList"></div>
+				<div class="row">
+					<input type="button" class="offset-3 col-6 btn btn-dark" id="auctionMore" value="더보기" onclick="loadMoreAuction();">
+				</div>
 			</section>
             <!-- 크림리스트 -->
 			<section id="container">

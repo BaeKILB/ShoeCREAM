@@ -7,22 +7,22 @@
   color: black;
 }
 
-.categoryList {
-  display: none;
-  width: 150px;
-}
+/* .categoryList { */
+/*   display: none; */
+/*   width: 150px; */
+/* } */
 
 .categoryTop {
   display: inline-block;
 }
 
-.ct_lc_item_btn {
+.ct_list_top {
   display: flex;
   justify-content: space-between;
 }
-.ct_lc_item_btn button {
-  width: 24px;
-  height: 24px;
+.ct_list_top button {
+  width: 1.2rem;
+  height: 1.2rem;
   background-repeat: no-repeat;
   background-color: inherit;
   transition: all 0.5s;

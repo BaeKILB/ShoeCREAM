@@ -211,3 +211,13 @@ $(function() { // onload
 });
 
 
+// 페이지 처음 열었을때 나오는 초기 중고 리스트처럼
+// 현재 dataObj 다시 새로 init 후에 다시 리스트 받아와서 출력
+const reLoadInitItems = () => {
+	
+	dataObj = initAjax();
+	if(!loadItems()){
+		console.log("onload - loadItems() error !");
+	}
+	
+}

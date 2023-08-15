@@ -71,6 +71,8 @@
 <!-- 		FROM cream_item -->
 <!-- 		JOIN product_image ON cream_item.ci_code = product_image.product_idx; -->
 <!-- 	</select> -->
+
+
 	<select id="selectCreamList" resultType="map">
 		SELECT 
 		    ci.cream_idx,
@@ -86,6 +88,10 @@
 		    product_image pi ON ci.cream_idx = pi.product_idx
 		LEFT JOIN
 		    dibs d ON ci.cream_idx = d.product_idx
+		<if test="keyWord != null">
+		where
+			cream_title LIKE CONCAT('%', #{keyWord},'%')
+		</if>
 		GROUP BY
 		    ci.cream_idx, pi.image_path, pi.image1, ci.cream_title, ci.size220, ci.cream_readcount
 			<if test="!orderMethod.equals('')">
@@ -97,7 +103,6 @@
 			            #{startRow}
 			            , #{listLimit}
        	 </if>
-			
 	</select>
 	
 	
@@ -147,8 +152,6 @@
 	       and product_idx = #{cream_idx }
 	</delete>
 	
-
-	
 	<select id="selectDibsCount">
         SELECT 
             count(product_idx) 
@@ -159,7 +162,7 @@
 	</select>
 
 	<insert id="insertCreamItemRequest">
-	insert into
+	   insert into
 	       cream_item_request
 	   values(
 	   		null
@@ -177,9 +180,7 @@
 	   		,null
 	   		,null
 	   		,now()
-	   		
 	   )
-	
 	</insert>
 	
 	<insert id="insertTrackingNumber">
@@ -223,5 +224,7 @@
 	    request_idx = #{request_idx};
 		
 	</update>
+	
+
 
 </mapper>

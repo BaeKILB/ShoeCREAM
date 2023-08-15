@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
     <%-- 원본 파일 이름 sidebar --%>
 
 <link  href="${pageContext.request.contextPath }/resources/css/main_ex/inc/mem_sidebar.css" rel="stylesheet">
@@ -17,25 +19,20 @@
 		</div>
 
 		<ul class="side_menu">
-<!-- 			<li> -->
-<!-- 				<div class="menu_tit mt_car"> -->
-<!-- 					<span>MY 예약</span> -->
-<!-- 				</div> -->
-<!-- 				<ul class="side_sub"> -->
-<!-- 					<li><a href="MemberRes">예약 정보 조회</a></li> -->
-<!-- 				</ul> -->
-<!-- 			</li> -->
 			<li>
-				<div class="menu_tit mt_user">
-					<span>내 정보 관리</span>
-				</div>
-				<ul class="side_sub">
-					<li><a href="${pageContext.request.contextPath }/mypage/update">내 정보 관리</a></li>
-					<li><a href="${pageContext.request.contextPath }/mypage/updatePasswd">내 비밀먼호 변경</a></li>
-					<li><a href="${pageContext.request.contextPath }/mypage/profile">내 프로필 관리</a></li>
-					<li><a href="${pageContext.request.contextPath }/mypage/account">내 계좌</a></li>
-					<li><a href="${pageContext.request.contextPath }/mypage/delete">회원탈퇴</a></li>
-				</ul>
+			    <div class="menu_tit mt_user">
+			        <span>내 정보 관리</span>
+			    </div>
+			    <ul class="side_sub">
+			        <li><a href="${pageContext.request.contextPath}/mypage/update">내 정보 관리</a></li>
+			        <c:if test="${member.mem_status == null or member.mem_status == ''}">
+			            <li style="margin-top: 10px;"><a href="${pageContext.request.contextPath}/mypage/updatePasswd">내 비밀먼호 변경</a></li>
+			        </c:if>
+			        <li><a href="${pageContext.request.contextPath}/mypage/profile">내 프로필 관리</a></li>
+			        <li><a href="${pageContext.request.contextPath}/mypage/account">내 계좌</a></li>
+			        <li><a href="${pageContext.request.contextPath}/mypage/questionList">1:1 문의</a></li>
+			        <li><a href="${pageContext.request.contextPath}/mypage/delete">회원탈퇴</a></li>
+			    </ul>
 			</li>
 			<li>
 				<div class="menu_tit mt_call">

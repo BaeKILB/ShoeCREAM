@@ -1,0 +1,607 @@
+@charset "UTF-8";
+/* 공통 스타일 */
+.list_head, .list_cont {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* 각 항목별 스타일 */
+.list_car, .txt_prev, .writter_name, .readcount, .date, .writter {
+  flex-grow: 1;
+}
+
+/* 각 항목의 너비와 정렬 설정 */
+.list_car {
+  flex-basis: 100px;
+  text-align: center;
+}
+
+.txt_prev {
+/*   flex-basis: 400px; */
+/*   text-align: left; */
+  line-height: 30px; /* 조회수 위치와 높이를 똑같게 조정 */
+  
+}
+
+.writter_name {
+  flex-basis: 100px;
+  text-align: center;
+  
+}
+
+
+
+.readcount {
+  flex-basis: 100px;
+  text-align: center;
+}
+
+.date {
+  flex-basis: 200px;
+  text-align: center;
+}
+
+.main-content {
+    display: flex;
+}
+
+.adm_sidebar {
+    flex: 0 0 250px; /* 250px 대신 원하는 사이드바 너비로 변경할 수 있습니다. */
+}
+
+.board_section {
+    flex-grow: 1;
+/*     margin-left: 20px; 왼쪽 여백 추가, 필요한 경우 값을 조정하세요. */
+	margin-top: 60px; /* 상단 여백 추가 */
+}
+
+#buttonArea{
+    margin-right: 70px;
+}
+
+#buttonArea #searchType,
+#buttonArea #searchKeyword,
+#buttonArea #search { /* 검색 글자 크기를 조정하려면 이 부분을 수정하세요. */
+    font-size: 20px; /* 원하는 글자 크기로 변경할 수 있습니다. */
+}
+
+#pageList { /* 페이지 목록 글자 크기를 조정하려면 이 부분을 수정하세요. */
+    font-size: 20px; /* 원하는 글자 크기로 변경할 수 있습니다. */
+}
+
+#pageList, 
+ #pageList #begin, /* 맨처음 부분 글자 크기 조정 */
+ #pageList #previous, /* 이전 부분 글자 크기 조정 */
+ #pageList #next, /* 다음 부분 글자 크기 조정 */
+ #pageList #end  /* 맨끝 분 글자 크기 조정 */
+ #pageList #number { /* 맨끝 분 글자 크기 조정 */
+     font-size: 20px; /* 원하는 글자 크기로 변경할 수 있습니다. */
+ }
+
+
+
+
+
+
+
+#board_list {
+  padding: 0;
+}
+
+#board_list .wrapper {
+  display: block;
+}
+
+#board_list .list_wrap {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 70px;
+  
+  
+}
+
+#board_list .list {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid #222;
+  border-bottom: 2px solid #222;
+}
+
+#board_list .list li:not(:last-of-type) {
+  border-bottom: 1px solid #ddd;
+}
+
+#board_list .list .list_head {
+  display: flex;
+  gap: 35px;
+  align-items: center;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 20px 0;
+}
+
+#board_list .list .list_head .list_num {
+  width: 5%;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+#board_list .list .list_head .list_check {
+  width: 5%;
+}
+
+#board_list .list .list_head .list_scope {
+  font-size: 18px;
+  width: 10%;
+}
+
+#board_list .list .list_head .list_car {
+  width: 10%;
+  font-size: 18px;
+}
+
+#board_list .list .list_head .txt_prev {
+  width: 60%;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+#board_list .list .list_head .txt_prev h4 {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  width: 100%;
+}
+
+#board_list .list .list_head .writter {
+  width: 8%;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+#board_list .list .list_head .writter span {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+#board_list .list .list_head .date {
+  width: 8%;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+#board_list .list .list_cont {
+  font-size: 1.0625rem;
+  transition: 0.3s;
+}
+
+#board_list .list .list_cont:hover {
+  background-color: #f7f7f7;
+}
+
+#board_list .list .list_cont a {
+  display: flex;
+  gap: 35px;
+  align-items: center;
+  text-align: center;
+  padding: 20px 0;
+}
+
+#board_list .list .list_cont .list_num {
+  width: 5%;
+  font-weight: 500;
+  color: #ff6600;
+}
+
+#board_list .list .list_cont .list_check {
+  width: 5%;
+}
+
+#board_list .list .list_cont .list_scope {
+  width: 10%;
+}
+
+#board_list .list .list_cont .list_scope span {
+  font-size: 18px;
+  color: #ddd;
+}
+
+#board_list .list .list_cont .list_scope span.fill {
+  color: #ffc600;
+}
+
+#board_list .list .list_cont .list_car {
+  width: 10%;
+}
+
+#board_list .list .list_cont .txt_prev {
+  width: 60%;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 30px;
+}
+
+#board_list .list .list_cont .txt_prev h4 {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 400;
+}
+
+#board_list .list .list_cont .txt_prev p {
+  margin-top: 10px;
+  line-height: 1.8;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+#board_list .list .list_cont .writter {
+  width: 8%;
+  color: #adadad;
+}
+
+#board_list .list .list_cont .writter span {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+#board_list .list .list_cont .date {
+  width: 8%;
+  color: #adadad;
+}
+
+#board_list .only_member_btns {
+  margin-top: 70px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#board_list .only_member_btns li {
+  margin-left: 15px;
+}
+
+#board_list .only_member_btns li a {
+  display: flex;
+  padding: 10px 20px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+#board_list .only_member_btns .btn_del a {
+  color: var(--point-color01);
+  border: 2px solid var(--point-color01);
+}
+
+#board_list .only_member_btns .btn_write a {
+  background-color: var(--point-color01);
+  color: #fff;
+  border: 2px solid var(--point-color01);
+}
+
+#board_list .only_member_btns .btn_write a:hover {
+  background-color: #453fc7;
+}
+
+#board_list .only_member_btns .btn_write a i {
+  font-size: inherit;
+  color: inherit;
+  padding-right: 5px;
+}
+
+/* ############################################################
+###############################################################
+##############################################################*/
+
+@media screen and (max-width: 1280px) {
+  #board_list .list .list_cont .writter span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 912px) {
+  #board_list .list_wrap {
+    padding: 80px 60px;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  #board_list .list .list_head {
+    font-size: 1rem;
+  }
+  #board_list .list .list_cont {
+    font-size: 0.9375rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #board_list .list .list_head .list_num {
+    width: 10%;
+  }
+  #board_list .list .list_cont .list_num {
+    width: 10%;
+  }
+  #board_list .list .list_cont .list_num span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+  }
+  #board_list .list .list_head .txt_prev {
+    width: 55%;
+  }
+  #board_list .list .list_cont .txt_prev {
+    width: 55%;
+  }
+  #board_list .list .list_head .writter {
+    width: 10%;
+  }
+  #board_list .list .list_cont .writter {
+    width: 10%;
+  }
+  #board_list .list .list_head .date {
+    display: none;
+  }
+  #board_list .list .list_cont .date {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  #board_list {
+    padding: 60px 0 100px;
+  }
+  #board_list .list_wrap {
+    padding: 50px 40px;
+  }
+  #board_list .list .list_head {
+    font-size: 0.9375rem;
+  }
+  #board_list .list .list_cont {
+    font-size: 0.875rem;
+  }
+  #board_list .list .list_head .txt_prev {
+    width: 45%;
+  }
+  #board_list .list .list_cont .txt_prev {
+    width: 45%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #board_list .list_wrap {
+    padding: 45px 30px;
+  }
+  #board_list .list .list_head {
+    font-size: 0.75rem;
+    padding: 15px 0;
+  }
+  #board_list .list .list_cont {
+    font-size: 0.75rem;
+  }
+  #board_list .list .list_cont a {
+    padding: 15px 0;
+  }
+  #board_list .list .list_head .list_num {
+    width: 8%;
+  }
+  #board_list .list .list_cont .list_num {
+    width: 8%;
+  }
+  #board_list .list .list_head .writter {
+    width: 14%;
+  }
+  #board_list .list .list_cont .writter {
+    width: 14%;
+  }
+  #board_list .list .list_head .txt_prev {
+    width: 50%;
+  }
+  #board_list .list .list_cont .txt_prev {
+    width: 50%;
+  }
+  #board_list .list .list_head .date {
+    display: none;
+  }
+  #board_list .list .list_cont .date {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  #board_list {
+    padding: 45px 0 80px;
+  }
+}
+
+/* 페이징 */
+#board_list .list_pager_wrap {
+/*   margin-top: 50px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#board_list .list_pager_wrap > a {
+  display: inline-block;
+  width: 9px;
+  height: 13px;
+  margin: 0 15px;
+}
+
+#board_list .list_pager_wrap > a i {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: url(../../img/member/question/icn_pager_arrow.png) no-repeat;
+}
+
+#board_list .list_pager_wrap .pager_prev i {
+  background-position: top left;
+}
+
+#board_list .list_pager_wrap .pager_next i {
+  background-position: top right;
+}
+
+#board_list .list_pager_wrap .pager {
+  display: flex;
+}
+
+#board_list .list_pager_wrap .pager li {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#board_list .list_pager_wrap .pager li a {
+  font-size: 1.125rem;
+  font-weight: 300;
+  transition: 0.3s;
+}
+
+#board_list .list_pager_wrap .pager li:hover a {
+  color: var(--point-color02);
+}
+
+#board_list .list_pager_wrap .pager li.active {
+  background-color: #ff6600;
+  border-radius: 50%;
+}
+
+#board_list .list_pager_wrap .pager li.active a {
+  font-weight: 700;
+  color: #fff;
+}
+
+.pg_wrap {
+  clear: both;
+  float: left;
+  display: inline-block;
+}
+
+.pg_wrap:after {
+  display: block;
+  visibility: hidden;
+  clear: both;
+  content: "";
+}
+
+.pg {
+  text-align: center;
+}
+
+.pg_page,
+.pg_current {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pg a:focus,
+.pg a:hover {
+  text-decoration: none;
+}
+
+.pg_page {
+  font-size: 1.083em;
+  height: 30px;
+  line-height: 28px;
+  padding: 0 5px;
+  min-width: 30px;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.pg_page:hover {
+  background-color: #fafafa;
+}
+
+.pg_start {
+  text-indent: -999px;
+  overflow: hidden;
+  background: url(../../../img/member/question/btn_first.gif) no-repeat 50% 50%;
+  padding: 0;
+}
+
+.pg_prev {
+  text-indent: -999px;
+  overflow: hidden;
+  background: url(../../../img/member/question/btn_prev.gif) no-repeat 50% 50%;
+  padding: 0;
+}
+
+.pg_end {
+  text-indent: -999px;
+  overflow: hidden;
+  background: url(../../../img/member/question/btn_end.gif) no-repeat 50% 50%;
+  padding: 0;
+}
+
+.pg_next {
+  text-indent: -999px;
+  overflow: hidden;
+  background: url(../../../img/member/question/btn_next.gif) no-repeat 50% 50%;
+  padding: 0;
+}
+
+.pg_start:hover,
+.pg_prev:hover,
+.pg_end:hover,
+.pg_next:hover {
+  background-color: #fafafa;
+}
+
+.pg_current {
+  display: inline-block;
+  color: #fff;
+  font-weight: 700;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  min-width: 30px;
+  border-radius: 3px;
+  background-color: #ff6600;
+  border-radius: 50%;
+}
+
+.write_btn {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.write_btn a {
+  padding: 6px 15px;
+  background: rgb(10, 10, 49);
+  color: #fff;
+  border-radius: 3px;
+  transition: all 0.4s;
+}
+
+.write_btn a:hover {
+  background: #ff6600;
+}
+
+section#buttonArea {
+  float: right;
+}

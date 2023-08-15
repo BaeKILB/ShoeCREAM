@@ -67,6 +67,21 @@
 	    ORDER BY likeCount DESC
 	</select>
 	
+	<!-- 회원 정보 및 팔로우 관련 정보 -->
+	<select id="selectAllInfoWithFollows" resultType="map">
+		SELECT
+		  A.*,
+		  COUNT(DISTINCT B.followee_idx) AS followeeCount,
+		  COUNT(DISTINCT C.follower_idx) AS followerCount
+		FROM mem_info A
+		LEFT JOIN social_follows B ON A.mem_idx = B.follower_idx
+		LEFT JOIN social_follows C ON A.mem_idx = C.followee_idx
+		GROUP BY A.mem_idx
+		ORDER BY followerCount DESC
+		LIMIT 9
+	</select>
+
+	
 <!-- 	<select id="selectPopular" resultType="com.pj2.shoecream.vo.SocialVO"> -->
 <!-- 		SELECT * FROM social_posts  -->
 <!-- 		WHERE likeCount  -->

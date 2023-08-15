@@ -3,6 +3,7 @@ package com.pj2.shoecream.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,15 +42,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.BankHandler;
 import com.pj2.shoecream.handler.CustomValidationException;
+import com.pj2.shoecream.service.AdminService;
 import com.pj2.shoecream.service.BankService;
+import com.pj2.shoecream.service.BoardService;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.util.FindUtil;
 import com.pj2.shoecream.util.SendUtil;
+import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.KakaoProfile;
 import com.pj2.shoecream.vo.MemberUpdatePasswdVO;
 import com.pj2.shoecream.vo.MemberUpdateVO;
 import com.pj2.shoecream.vo.MemberVO;
 import com.pj2.shoecream.vo.OAuthToken;
+import com.pj2.shoecream.vo.PageInfoVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -65,7 +70,13 @@ public class MemberController {
 	private Map<String, String> codeMap; 
 	
 	@Autowired
+	private BoardService boardservice;
+	
+	@Autowired
 	private BankService bankService;
+	
+	@Autowired
+	private AdminService service;
 	
 	@Autowired
 	private BankHandler bankHandler;
@@ -223,6 +234,7 @@ public class MemberController {
 		kakaoMember.setMem_name(kakaoProfile.getProperties().getNickname());
 		kakaoMember.setMem_nickname(kakaoProfile.getProperties().getNickname());
 		kakaoMember.setMem_email(kakaoProfile.getKakao_account().getEmail());
+		kakaoMember.setMem_status("2"); // 2는 OAuth2 로그인 멤버 상태
 		
 		// 가입자 혹은 비가입자 체크 해서 처리
 		MemberVO originMember =  memberService.selectMember(kakaoMember.getMem_id());
@@ -564,6 +576,7 @@ public class MemberController {
     	return "member/mypage/profile";
     }
     
+    // 마이페이지 프로필 기능
     @PostMapping("ProfileUpdatePro")
     public String profileImagePro(MemberVO member, HttpSession session, Model model, BindingResult bindingResult) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -573,6 +586,82 @@ public class MemberController {
         return "redirect:/mypage/profile";
 
     }
+    
+    // 마이페이지 1:1 문의 리스트
+    @GetMapping("mypage/questionList")
+	public String inquiry(HttpSession session, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "") String searchType, Model model) {
+       		
+    		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+       		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
+       		
+			int listLimit = 10;
+			int startRow = (pageNum - 1) * listLimit;
+			
+			List<InquiryBoardVO> qstList = boardservice.getQstBoard(mem_idx, searchType, startRow, listLimit);
+			int listCount = boardservice.getQstListCount(searchType);
+			
+			int pageListLimit = 5;
+			
+			int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
+			int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+			int endPage = startPage + pageListLimit - 1;
+			if(endPage > maxPage) {
+				endPage = maxPage;
+			}
+			
+			PageInfoVO pageInfo = new PageInfoVO(listCount, pageListLimit, maxPage, startPage, endPage);
+			model.addAttribute("qstList", qstList);
+			model.addAttribute("pageInfo", pageInfo);
+			model.addAttribute("member", mPrincipalDetails.getMember());
+			return "member/mypage/question_list";
+		}
+    
+    // 마이페이지 - 1:1 문의 등록 폼
+    @GetMapping("/mypage/questionWrite")
+	public String qstWriteForm(Model model) {
+		
+//		InquiryBoardVO inquiry = service.selectQst(qst_idx);
+//		model.addAttribute("inquiry", inquiry);
+//		
+//		InquiryBoardVO inquiryAnswer = service.selectQstAns(qst_idx);
+//		model.addAttribute("inquiryAnswer", inquiryAnswer);
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		System.out.println("1:1 문의 정보 : " + mPrincipalDetails.getMember());
+		model.addAttribute("member", mPrincipalDetails.getMember());
+		return "member/mypage/question_write";
+	}
+    
+    // 마이페이지 - 1:1 문의 등록 폼
+    @PostMapping("QstMemberWritePro")
+	public String qstWritePro(@RequestParam int mem_idx, InquiryBoardVO inquiry, Model model) {
+    	int insertCount = boardservice.registBoard(inquiry);
+		if(insertCount > 0) {
+			return "redirect:/mypage/questionList?pageNum=";
+		} else {
+			model.addAttribute("msg", "글쓰기 실패");
+			return "inc/fail_back";
+		}
+	}
+    
+	// 마이페이지 - 1:1 문의 뷰디테일
+	@GetMapping("/mypage/questionDetail")
+	public String qstBoardDetail(@RequestParam int qst_idx, @RequestParam int pageNum, Model model) {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		
+		InquiryBoardVO inquiry = service.selectQst(qst_idx);
+		model.addAttribute("inquiry", inquiry);
+		
+		// 답장조회
+		InquiryBoardVO inquiryAnswer = service.selectQstAns(qst_idx);
+		model.addAttribute("inquiryAnswer", inquiryAnswer);
+		
+		System.out.println("1:1 문의 정보 : " + mPrincipalDetails.getMember());
+		model.addAttribute("member", mPrincipalDetails.getMember());
+		return "member/mypage/question_view";
+	}
     
     // 마이페이지 - 내 계좌 및 포인트
     // 0811 경인 수정 

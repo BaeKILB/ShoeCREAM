@@ -34,7 +34,6 @@
 					</form>
 				</div>
 				<div class="table_container">
-							${creamRequestList }
 					<table class="board_list_table table">
 						<thead>
 							<tr>
@@ -67,7 +66,6 @@
 											<c:otherwise>
 												<input type="hidden" name="t_key"  id="t_key" value="vmXicQZCzQaQetF3y0M0xg">
 												<input type="hidden" name="t_code" id="t_code" value="${requestList.inbound_tracking_code }">
-<%-- 												<input type="hidden" name="t_code" id="t_code" value="<c:if test="${requestList.inbound_tracking_company eq '대한통운' }">'04'</c:if>"> --%>
 												<input type="hidden" name="t_invoice" id="t_invoice" value="${requestList.inbound_tracking_num }">
 												<input  type="button" value="입고중" class="ins_ans moreBtn tracker">
 											</c:otherwise>
@@ -80,16 +78,18 @@
 <!-- 											<input id="tracker" type="button" value="배송조회" class="ins_ans moreBtn"> -->
 <!-- 									</td> -->
 									<td>
+									
 										<c:choose>
 											<c:when test="${requestList.inbound_tracking_num eq null}">입고전</c:when>
 											<c:when test="${requestList.inbound_delivery_status eq '배송완료' && requestList.delivery_status eq '상품준비중' }">
 											    <button type="button" class="ins_ans moreBtn" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm2?cream_idx=${requestList.cream_idx}&request_idx=${requestList.request_idx }', '운송장 등록', 'width=580, height=360, left=100, top=50')">상품 준비중</button>
 											</c:when>
 											<c:when test="${requestList.delivery_status eq '배송중'}">
-												<input type="hidden" name="t_key"  id="t_key" value="vmXicQZCzQaQetF3y0M0xg">
-												<input type="hidden" name="t_code" id="t_code" value="${requestList.tracking_code }">
-												<input type="hidden" name="t_invoice" id="t_invoice" value="${requestList.tracking_num }">
-												<input  type="button" value="배송중" class="ins_ans moreBtn tracker">
+												배송중
+<!-- 												<input type="hidden" name="t_key"  id="t_key" value="vmXicQZCzQaQetF3y0M0xg"> -->
+<%-- 												<input type="hidden" name="t_code" id="t_code" value="${requestList.tracking_code }"> --%>
+<%-- 												<input type="hidden" name="t_invoice" id="t_invoice" value="${requestList.tracking_num }"> --%>
+<!-- 												<input  type="button" value="배송중" class="ins_ans moreBtn tracker"> -->
 											</c:when>
 										</c:choose>
 									</td>

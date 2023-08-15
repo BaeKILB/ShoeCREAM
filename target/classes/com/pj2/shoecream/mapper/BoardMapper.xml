@@ -73,5 +73,51 @@
 			)
 	</insert>
 	
+	<!--      마이페이지        -->
+	<!-- 1:1 문의 작성 -->
+	<insert id="insertQstBoard">
+		<selectKey keyProperty="qst_idx" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(qst_idx), 0) FROM qst_board
+		</selectKey>
+			INSERT 
+				INTO qst_board
+				VALUES (
+					#{qst_idx} + 1
+					, #{mem_idx}
+					, #{mem_name}
+					, #{qst_pass}
+					, #{qst_subject}
+					, #{qst_content}
+					, #{qst_idx} + 1 -- qst_board_re_ref
+					, 0
+					, 0
+					, now()
+					, #{qst_type}
+					, 'N'
+				)
+	</insert>
+	<!-- 문의 리스트 -->
+		<!-- 일대일 문의 게시판 조회 -->
+	<select id="selectQstBoard" resultType="com.pj2.shoecream.vo.InquiryBoardVO">
+		SELECT *
+		    FROM qst_board
+		    WHERE mem_idx = #{mem_idx}
+		    <if test="!searchType.equals('')">
+		        AND qst_type = #{searchType}
+		    </if>
+		    ORDER BY
+		        qst_board_re_ref DESC
+		        , qst_board_re_seq ASC
+		    LIMIT
+		        #{startRow}
+		        , #{listLimit}
+	</select>
+	<select id="getQstListCount" resultType="int">
+		SELECT COUNT(*)
+			FROM qst_board
+				<if test="!searchType.equals('')">
+					WHERE qst_type = #{searchType}
+				</if>
+	</select>
 	
 </mapper>

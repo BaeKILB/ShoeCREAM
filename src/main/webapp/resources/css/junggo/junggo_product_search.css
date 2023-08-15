@@ -1,5 +1,27 @@
 
-.sideCategoryWrap{
-	position: absolute;
-	padding-top: 5px;
+/* .sideCategoryWrap{ */
+/* 	position: absolute; */
+/* 	padding-top: 5px; */
+/* } */
+
+main{
+	margin-top: 20px;
+}
+
+/* 중고 항목 리스트 영역 */
+.itemListWrap{
+	min-height: 500px;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+}
+
+/* 중고 항목 영역 */
+.itemWrap{
+	min-width: 170px;
+}
+
+
+/* 중고 항목 이미지 영역 */
+.imgWrap{
+	height: 100px;
 }

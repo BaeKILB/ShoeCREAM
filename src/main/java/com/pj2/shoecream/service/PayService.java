@@ -195,7 +195,7 @@ public class PayService {
 		// 포인트 환불 위한 PointInoutVO 만들기
 		PointInoutVO pointInout = new PointInoutVO();
 		
-		// 판매자 정보 불러오기
+		// 구매자 정보 불러오기
 		MemberVO member = null;
 		
 		try {

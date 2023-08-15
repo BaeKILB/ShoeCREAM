@@ -184,6 +184,7 @@
 			    cir.delivery_status,
 			    cir.tracking_company,
 			    cir.tracking_num,
+			    cir.tracking_code,
 			    cir.request_time,
 			    ci.delivery_status as inbound_delivery_status ,
 			    ci.tracking_company as inbound_tracking_company,

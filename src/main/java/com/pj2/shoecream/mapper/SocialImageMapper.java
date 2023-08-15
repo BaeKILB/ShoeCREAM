@@ -30,6 +30,10 @@ public interface SocialImageMapper {
 	List<Map<String, Object>> selectAllInfo();
 //	List<SocialVO> selectPopular();
 	
+	// 소셜 인기페이지 프로필 (팔로우 많은 순서)
+	List<Map<String, Object>> selectAllInfoWithFollows();
+	
+
 	// 소셜 디테일 (내가 클릭한 멤버의 게시물)
 	List<SocialVO> selectDetail(@Param("posts_idx") int posts_idx,
 			@Param("startRow") int startRow, 
