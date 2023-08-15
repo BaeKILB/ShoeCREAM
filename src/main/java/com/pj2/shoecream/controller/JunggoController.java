@@ -944,7 +944,9 @@ public class JunggoController {
 			
 			int resultCancel = payService.productCancelPayment(
 					(Integer)productEx.get("product_buyer_idx") 
-					, (String)productEx.get("product_idx"));
+					, (String)productEx.get("product_idx")
+					, 0
+					);
 			if(resultCancel != 1) {
 				jsonObj.put("msg","결제 취소중 오류가 발생했습니다! : " + resultCancel);
 				jsonObj.put("result","false"); 

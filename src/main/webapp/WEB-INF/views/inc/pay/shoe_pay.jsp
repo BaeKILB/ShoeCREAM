@@ -47,11 +47,16 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<input class="res_p"  type="button" value="취소" >
-				<input class="res_p"  type="button" value="충전" onclick="location.href = '${pageContext.request.contextPath }/chargePointForm'">
-				<c:if test="${member.charge_point >= map.product_price }">				
-					<input class="res_p"  type="button" value="결제"  onclick="payWithPoint()" >
-				</c:if>
+				<input class="btn btn-dark col-4"  type="button" value="취소" >
+				<input class="btn btn-dark col-4"  type="button" value="충전" onclick="location.href = '${pageContext.request.contextPath }/chargePointForm'">
+				<c:choose>
+					<c:when test="${member.charge_point >= map.product_price }">
+						<input class="btn btn-dark col-4"  type="button" value="결제"  onclick="payWithPoint()" >
+					</c:when>
+					<c:otherwise>
+						<input class="btn btn-dark col-4" disabled="disabled"  type="button" value="결제"  >
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</fieldset>

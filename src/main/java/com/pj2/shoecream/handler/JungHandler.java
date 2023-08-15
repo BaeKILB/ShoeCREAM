@@ -56,14 +56,16 @@ public class JungHandler {
 				;
 		
 		htmlStr = 
-				"<div class='col-lg-3 col-md-4 col-6 mt-1'>"
+				"<div class='col-lg-3 col-md-4 col-6 mt-2'>"
 			     + "<div class='card itemWrap' >"
-			     + "  <div class='imgWrap' " + href + " >"
-			     + "    <img class='junggoImg' src='" + localURL + jProduct.get("image_path") + "/" + jProduct.get("image1") + "' />"
-			     + "  </div>"
-			     + "  <div class='itemSimpleInfoWrap'>"
+//			     + "  <div class='imgWrap' " + href + " >"
+//			     + "    <img class='card-img-top' src='" + localURL + jProduct.get("image_path") + "/" + jProduct.get("image1") + "' />"
+//			     + "  </div>"
+//			     + "  <div class='itemSimpleInfoWrap'>"
+				 + "    <img class='card-img-top junggoImg' src='" + localURL + jProduct.get("image_path") + "/" + jProduct.get("image1") + "' alt='productImage'/>"
+
 			     + "  	<div class='card-body'>"			     
-			     + "        <p class='card-title itemTitle'>" + title +"</p>"
+			     + "        <h3 class='card-title itemTitle'>" + title +"</h3>"
 			     + "    </div>"
 			     + "	<ul class='list-group list-group-flush itemSimpleInfo'>"
 //			     + "      <li>"
@@ -86,7 +88,7 @@ public class JungHandler {
 //			     + "    <div class='itemSimpleInfoBtn'>"
 //			     + "      <input class='btn btn-primary' type='button' value='찜하기' onclick='event.stopPropagation(); location.href=\"#\";' />"
 //				 + "    </div>"
-			     + "  </div>"
+//			     + "  </div>"
 			     + "</div>"
 			     + "</div>";
 		
