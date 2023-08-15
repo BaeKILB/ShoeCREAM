@@ -11,6 +11,7 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
 <script	src="${pageContext.request.contextPath }/resources/js/etc/jquery.datetimepicker.full.min.js"></script>
+<link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 <%-- <script	src="${pageContext.request.contextPath }/resources/js/auction/auction_modify_form.js"></script> --%>
 <script type="text/javascript">
 //이미지 관련

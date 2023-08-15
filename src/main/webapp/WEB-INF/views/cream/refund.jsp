@@ -5,11 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 <body>
 <form action="creamRefundPro" method="post">
-
-
 
 	<main class="container bg-light">
 	    <div class="row mb-3">

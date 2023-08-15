@@ -21,9 +21,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/cream/cream_detail.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
+
 <!-- css파일  -->
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
-<%-- <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css"> --%>
+<link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 <script>
  $(document).ready(function() {
      $('select[name="inputSize"]').on('change', function() {
