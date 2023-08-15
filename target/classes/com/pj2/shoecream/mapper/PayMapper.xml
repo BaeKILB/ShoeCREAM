@@ -13,6 +13,19 @@
 		;
 	</select>
 	
+	<!-- 크림의 경우 사용 -->
+	<!-- 상품idx와 유저idx 동시에 사용 -->
+	<select id="selectGetPayInfoTop" resultType="PayInfoVO">
+		SELECT *
+		FROM pay_info
+		WHERE 
+			product_idx = #{product_idx}
+			AND mem_idx = #{mem_buyer_idx}
+		ORDER BY trans_date DESC
+		LIMIT 0, 1
+		;
+	</select>
+	
 	<update id="updateMemberPoint">
 		UPDATE mem_info
 		SET charge_point = #{charge_point}

@@ -165,6 +165,14 @@ public class PayService {
 
 	// 결제 환불
 	
+	//파라미터
+	// int mem_buyer_idx  : 구매자 idx
+	// String product_idx  : 상품 idx
+	// int product_selector : 어느영역에서 구매했는지( 중고, 경매, 크림)
+	// product_selector 에 들어가는 값
+	// 0: 중고, 1: 경매, 2: 크림
+	
+	
 	// 반환값은 int
 	// 1. 성공
 	// 2. 결제 정보 불러오기 실패
@@ -172,14 +180,26 @@ public class PayService {
 	// 4. 판매자 정보 불러오기 실패
 	// 5. 
 	// 6. 기타 실패
-	public int productCancelPayment(int mem_buyer_idx ,String product_idx) {
+	public int productCancelPayment(int mem_buyer_idx ,String product_idx , int product_selector) {
 		// 최근 거래정보 가져오기
 		PayInfoVO payInfo = null;
-		try {
-			payInfo = mapper.selectGetPayInfoTop(product_idx);
+		
+		// product_selector 따라서 다르게 들고오기(크림의경우 한 product idx로 여러개 구매 가능임으로)
+		if(product_selector == 2) {			
+			try {
+				payInfo = mapper.selectGetPayInfoIdx(product_idx, mem_buyer_idx);
+			}
+			catch(Exception e) {
+				return 2;
+			}
 		}
-		catch(Exception e) {
-			return 2;
+		else {
+			try {
+				payInfo = mapper.selectGetPayInfoTop(product_idx);
+			}
+			catch(Exception e) {
+				return 2;
+			}
 		}
 		
 		// 최근 거래정보에 해당 상품이 결제완료 상태인지 확인

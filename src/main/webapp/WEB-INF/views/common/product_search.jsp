@@ -24,6 +24,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/index.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/join.css">
 
+<!-- 중고 상품 css -->
+<link href="${pageContext.request.contextPath }/resources/css/junggo/junggo_product_search.css"	rel="stylesheet">
+
+
 <!-- js -->
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/market/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/market/menu_hover.js"></script>

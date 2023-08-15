@@ -29,7 +29,7 @@
 	<link href="${pageContext.request.contextPath }/resources/css/inc/side_category.css"	rel="stylesheet">
 	<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 	
-	<main class="container" >	
+	<main class="container jung_product_main" >	
 <%-- 		<c:if test="${!empty keyWord }"> --%>
 <%-- 			<section class="row"> --%>
 <!-- 				<div class="offset-md-3 col-md-9 col-sm-12 "> -->

@@ -4,7 +4,7 @@
 /* 	padding-top: 5px; */
 /* } */
 
-main{
+.jung_product_main{
 	margin-top: 20px;
 }
 
@@ -22,6 +22,9 @@ main{
 
 
 /* 중고 항목 이미지 영역 */
-.imgWrap{
-	height: 100px;
+
+
+.junggoImg{
+	height: 200px;
+	object-fit:cover;
 }
