@@ -39,6 +39,8 @@ public interface CreamMapper {
 
 	int updateCIR(Map<String, Object> map);
 
+	List<Map<String, Object>> selectRelatedCreamList(Map<String, Object> map);
+
 
 
 }

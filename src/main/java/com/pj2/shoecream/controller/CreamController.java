@@ -190,14 +190,14 @@ public class CreamController {//크림 컨트롤러 입니다.
    	
    	String cream_idx = (String)map.get("cream_idx");
    	
-   	// 조회수 카운트
+   		// 조회수 카운트
 		String readAuction = (String) session.getAttribute("readAuction");
 		if (readAuction == null || !readAuction.equals(cream_idx)) {
 			int updateCount = service.updateReadCount(cream_idx);
 			if (updateCount > 0)
 				session.setAttribute("readCream", cream_idx);
 		}
-	
+		//상품정보
 		Map<String, Object> cream = service.getCream(cream_idx);
 		cream.put("isLogin", sId);
 		model.addAttribute("cream", cream);
@@ -205,15 +205,17 @@ public class CreamController {//크림 컨트롤러 입니다.
 
 		 //찜
 		Map<String, Object> dibs = service.getCreamDibs(map);
-//		
-//		
 		model.addAttribute("dibs", dibs);
-//		
-		 //찜카운트
+
+		//찜카운트
 		int dibsCount = service.getDibsCount(map);
 		model.addAttribute("dibsCount", dibsCount);
 		
-
+		//연관상품
+//		List<Map<String, Object>> relatedProducts = service.getRelatedCreamList(cream);
+//		model.addAttribute("relatedProducts",relatedProducts);
+//		
+		//크림 판매물품
 		
        return "cream/cream_detail";
    }
@@ -419,6 +421,9 @@ public class CreamController {//크림 컨트롤러 입니다.
 		model.addAttribute("map",map);
 		return"cream/shipping_detail";
 	}
+	
+
+	//크림후기 컨트롤러 들어올곳
 		
 	
 }
