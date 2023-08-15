@@ -15,7 +15,7 @@
 	
 	<!-- 크림의 경우 사용 -->
 	<!-- 상품idx와 유저idx 동시에 사용 -->
-	<select id="selectGetPayInfoTop" resultType="PayInfoVO">
+	<select id="selectGetPayInfoIdx" resultType="PayInfoVO">
 		SELECT *
 		FROM pay_info
 		WHERE 
