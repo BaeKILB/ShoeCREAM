@@ -64,7 +64,7 @@
 	    <div class="mb-3 row">
 	        <label for="delivery_request" class="col-sm-2 col-form-label">요청사항</label>
 	        <div class="col-sm-10">
-	        	<span>${deliveryInfo.delivery_request }</span>
+	        	<span>${map.shipping_memo }</span>
 	        </div>
 	    </div>
 	    <br>

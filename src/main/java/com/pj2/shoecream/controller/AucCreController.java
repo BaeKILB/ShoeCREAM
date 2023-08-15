@@ -17,6 +17,7 @@ import com.pj2.shoecream.service.CreamService;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.MemberVO;
+import com.pj2.shoecream.vo.PayInfoVO;
 import com.pj2.shoecream.vo.PointInoutVO;
 
 @Controller
@@ -109,41 +110,91 @@ public class AucCreController {
 	   
 	   int charge_point = buyer.getCharge_point();
 	   
+	   System.out.println("^&*^&*"+charge_point);
+	   
 	   int price = Integer.parseInt((String) map.get("price"));
 	 
 	   System.out.println("★★★★"+map);
 	   
 	   //포인트 있는경우 없는경우 따져봐야함 
 	   int paymentResult = 0;
-
-	   if(charge_point > price) {
-		   PointInoutVO inVO = new PointInoutVO();
-			inVO.setMem_idx(buyer.getMem_idx());
-			inVO.setCharge_point(price);
-			inVO.setPoint_usage("결제사용");
-			paymentResult = payService.withdrawPoints(inVO); // 결제서비스.입출금메소드();
-			
-			if(paymentResult == 1) {
-				//결제가 성공하면 
-				//일단 크림 배송 정보 테이블 업데이트
+	   
+	   //새로운 마음으로 새롭게 시작하는 결제~^^ payService
+	   
+	   //포인트 출금 result 1
+	   //charge_point 뭐하는앤데?
+	   PointInoutVO pointInout = new PointInoutVO();
+	   pointInout.setMem_idx(mem_idx);
+	   pointInout.setCharge_point(price);
+	   pointInout.setPoint_usage("결제사용");
+	   
+	   paymentResult= payService.withdrawPoints(pointInout);
+	   
+	   System.out.println("%^&*"+paymentResult);
+	   
+	   //포인트 결제 result2
+	   //여기 왜 안되는지 모르겠다?
+	  
+	   PayInfoVO payInfo= new PayInfoVO();
+	   payInfo.setMem_idx(mem_idx);
+	   payInfo.setProduct_idx(product_idx);
+	   payInfo.setPay_method(2);
+	   payInfo.setPay_total(price);
+	   
+	   int paymentResult2 = payService.productPayment(payInfo, pointInout);
+	   
+	   System.out.println("%^&*"+paymentResult2);
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+//	   PointInoutVO pointInout = new PointInoutVO();
+//	   pointInout.setMem_idx(mem_idx);
+//	   pointInout.setCharge_point(price);
+//	   pointInout.setPoint_usage("결제사용");
+//	   
+//	   paymentResult = payService.withdrawPoints(pointInout); // 결제서비스.입출금메소드();
+//		
+//	   System.out.println("%^&*"+paymentResult);
+//
+//	   if(charge_point > price) {
+//		   PointInoutVO inVO = new PointInoutVO();
+//			inVO.setMem_idx(buyer.getMem_idx());
+//			inVO.setCharge_point(price);
+//			inVO.setPoint_usage("결제사용");
+//			paymentResult = payService.withdrawPoints(inVO); // 결제서비스.입출금메소드();
+//			System.out.println("%^&*"+paymentResult);
+//			if(paymentResult == 1) {
+//				//결제가 성공하면 
+//				//일단 크림 배송 정보 테이블 업데이트
 				creamService.insertCreamDelivery(map);
-				
-				
-		        
-		        return "redirect:/store/" + buyer.getMem_idx();
-			}else {
-				System.out.println("결제 실패함 왜??왜??");
-				
-				
-				return "";
-			}
-		   
-	   }else {
-//		   model.addAttribute("msg","포인트 충전하셈");
-		   
+//				
+//				
+//		        
+//		        return "redirect:/store/" + buyer.getMem_idx();
+//			}else {
+//				System.out.println("결제 실패함 왜??왜??");
+//				
+//				
+//				return "";
+//			}
+//		   
+//	   }else {
+////		   model.addAttribute("msg","포인트 충전하셈");
+//		   
 		   return "redirect:/mypage/update";
 	   }
-
-   }
 
 }

@@ -694,13 +694,14 @@ public class CreamController {//크림 컨트롤러 입니다.
 	}
 	
 		
-	//환불작업
+	//환불작업 오 안대는데?
 	@PostMapping("creamRefundPro")
 	public String creamRefundPro(
 //			@RequestParam Integer request_idx,
 			@RequestParam String cream_idx, @RequestParam Integer mem_idx , Model model) {
  
 		int mem_buyer_idx = mem_idx;
+		int product_selector = 2;
 		
 	   	try {Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			 PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -709,18 +710,13 @@ public class CreamController {//크림 컨트롤러 입니다.
 				e.printStackTrace();
 			}
 		
-//		PayInfoVO payInfo = new PayInfoVO();
-//		payInfo.setMem_idx(buyer.getMem_idx());
-//		payInfo.setCharge_point(price);
-//		payInfo.setPoint_usage("결제사용");
-		int result = payService.productCancelPayment(mem_buyer_idx, cream_idx);
-		
-		System.out.println("!@#$" + result);
-		
+	   	payService.productCancelPayment(mem_buyer_idx, cream_idx, product_selector);
 		
 		
 		model.addAttribute("msg", "환불이 요청 되었습니다.");
 		return "inc/close";
+		
+		
 		
 	}
 }

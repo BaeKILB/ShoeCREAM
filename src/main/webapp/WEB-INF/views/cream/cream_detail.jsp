@@ -294,9 +294,11 @@
 											051-803-0909<br>
 											상품을 보내신후 <a href="/ShoeCREAM/store/${cream.isLogin}">이곳</a> 을 눌러 운송장 번호를 등록해주세요</p>
 									</div>
+									<br><br>
 								</div>
-</div>
-		</section>
+			</div>
+			
+			</section>
 				<section class="row">
 			<c:if test="${fn:length(relatedProducts) > 0 }">
 		        <hr>
