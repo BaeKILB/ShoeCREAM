@@ -40,10 +40,7 @@ import com.pj2.shoecream.service.JungGoNohService;
 import com.pj2.shoecream.service.JungProductService;
 import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.service.PayService;
-import com.pj2.shoecream.vo.JungGoNohVO;
-import com.pj2.shoecream.vo.JungProductVO;
-import com.pj2.shoecream.vo.MemberVO;
-import com.pj2.shoecream.vo.PageInfoVO;
+import com.pj2.shoecream.vo.*;
 
 import lombok.RequiredArgsConstructor;
 
@@ -77,6 +74,9 @@ public class JunggoController {
 	
 	@Autowired
 	private PayService payService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	// 중고 항목 페이징 처리때 사용될 상수
 	// 중고 리스트 불러올때 최대 리미트
@@ -1022,7 +1022,6 @@ public class JunggoController {
 	@PostMapping("registProductPro")
 	public String writePro(JungGoNohVO jungGoNoh, HttpSession session, Model model, HttpServletRequest request) {
 
-
 		// 로그인 되어있는지 확인하기
 		try {			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -1040,6 +1039,8 @@ public class JunggoController {
 		int mem_idx = mPrincipalDetails.getMember().getMem_idx();
 		jungGoNoh.setMem_idx(mem_idx);
 		
+		//==========
+	
 		
 		// 파일관련=============================================================================================================================
 		
@@ -1238,6 +1239,8 @@ public class JunggoController {
 		jungGoNoh.setProduct_idx(Integer.toString(mem_idx) + localDateTime.format(dateTimeFormatter));
 		
 		//---------------------------------product_idx 생성---------------------------------------
+		
+		
 		//--------------------------------파일 및 물품 등록 작업 시작-----------------------------------------
 		
 		int insertProductImage = jungGoNohService.registProductImage(jungGoNoh);
@@ -1387,6 +1390,118 @@ public class JunggoController {
 		
 		
 	}
+	
+	
+//---------------------------중고 수정 폼 이동-----------------------------------
+	
+	@GetMapping("junggoModifyForm")
+	public String junggoModifyForm(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+		
+		if(mem_idx == null) //작성자 정보 유무 확인
+		{
+			if(buyier_idx == null) //로그인 한 아이디 정보 유무 확인
+			{
+				model.addAttribute("msg", "로그인 해주세요!");
+				return "inc/fail_back";
+			}
+			else
+			{
+				model.addAttribute("msg", "작성자와 수정 신청자가 다릅니다!");
+				return "inc/fail_back";
+			}
+		}
+		else
+		{
+			if(mem_idx.equals(buyier_idx))// 작성자와 삭제 신청자 동일 시 수정 폼 이동
+			{
+				JungGoNohVO product = jungGoNohService.getProduct(product_idx);
+				model.addAttribute("jungGoNoh", product);
+				List<Map<String, Object>> lc_category = categoryService.getLcList();
+				model.addAttribute("lc_category", lc_category);
+				return "common/junggo_modify";
+			}
+			else
+			{
+				model.addAttribute("msg", "잘못된 접근입니다.");
+				return "inc/fail_back";
+			}
+		}
+
+	}
+
+	
+	
+	@PostMapping("junggoModifyPro")
+	public String junggoModifyPro(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) int mem_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int buyier_idx = mPrincipalDetails.getMember().getMem_idx();
+		jungGoNoh.setBuyier_idx(buyier_idx);
+		
+		System.out.println("@@@@@@@@@@@mem_idx"+mem_idx);
+		System.out.println("@@@@@@@@@@@buyier_idx"+buyier_idx);
+		
+		//상품 정보, 찜정보, 판매자 정보===========================================	
+		JungGoNohVO product = jungGoNohService.getProduct(product_idx); //상품정보
+		
+		int select_mem_idx = product.getMem_idx();
+		System.out.println("@@@@@@@@@@@@@@@@select_mem_idx"+select_mem_idx);
+		String select_product_sell_status = product.getProduct_sell_status();
+		
+	
+		
+		if(buyier_idx == 0)
+		{
+			model.addAttribute("msg", "로그인 해주세요!");
+			return "inc/fail_back";
+		}
+		else
+		{
+			if(buyier_idx == select_mem_idx)
+			{
+				if(select_product_sell_status.equals("대기중"))
+				{
+					int ModifySuccess = jungGoNohService.modifyJunggo(jungGoNoh);
+					
+					if(ModifySuccess < 0) {
+							model.addAttribute("msg", "수정 실패");
+							return "inc/fail_back";
+							
+					}  else {
+						model.addAttribute("msg", "판매내용이 수정되었습니다.");
+						return  "redirect:/productDetail?product_idx="+product_idx; 
+					}
+				}
+				else
+				{
+					model.addAttribute("msg", "판매글 상태가 대기중일 때만 수정 가능합니다.");
+					return "inc/fail_back";
+				}
+				
+			}
+			else
+			{
+
+				model.addAttribute("msg", "작성자와 수정 신청자가 다릅니다!");
+				return "inc/fail_back";
+			}
+		}
+		
+	}
+		
+
+
+
+	
+	
+	
+	
+	
+	
+
+
+	
+	
 	
 	
 	//------------------ 물건 삭제 프로 -----------------------------
