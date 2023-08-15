@@ -201,10 +201,13 @@
         ci.tracking_code as inbound_tracking_code,
         ci.tracking_num as inbound_tracking_num,
         pi.image1,
-        pi.image_path
+        pi.image_path,
+        jr.jung_rev_idx,
+        jr.seller_idx
     FROM cream_item_request cir
     LEFT JOIN courier_info ci ON cir.request_idx = ci.product_idx
     LEFT JOIN product_image pi ON cir.cream_idx = pi.product_idx
+    LEFT JOIN jung_reviews jr ON cir.cream_idx  = jr.product_idx;
 </select>
     
 </mapper>
