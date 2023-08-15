@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj2.shoecream.config.PrincipalDetails;
@@ -207,4 +208,21 @@ public class ImageApiController {
 		System.out.println("댓글 답변 값:" + comment);
 		return new ResponseEntity<>(new CMRespDto<>(1,"댓글답변쓰기성공",comment),HttpStatus.CREATED);
 	}
+	
+	// 페이지 기반 인기순 게시물 조회
+	@GetMapping("/social/popular/popular")
+	@ResponseBody
+	public ResponseEntity<List<Map<String, Object>>> getSortedPopularPosts() {
+	  List<Map<String, Object>> images = socialImageService.getPopularLikeImage();
+	  return ResponseEntity.ok(images);
+	}
+
+	// 페이지 기반 최신순 게시물 조회
+	@GetMapping("/social/popular/latest")
+	@ResponseBody
+	public ResponseEntity<List<Map<String, Object>>> getSortedLatestPosts() {
+		List<Map<String, Object>> imagesLatest = socialImageService.getPopularLatestImage();
+	  return ResponseEntity.ok(imagesLatest);
+	}
+	
 }

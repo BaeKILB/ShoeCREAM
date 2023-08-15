@@ -27,8 +27,11 @@ public interface SocialImageMapper {
 			@Param("listLimit") int listLimit);
 	
 	// 소셜 인기페이지 (좋아요 많은 순서)
-	List<Map<String, Object>> selectAllInfo();
+	List<Map<String, Object>> selectPopularLikeImage();
 //	List<SocialVO> selectPopular();
+	
+	// 소셜 인기페이지 (최신순)
+	List<Map<String, Object>> selectPopularLatestImage();
 	
 	// 소셜 인기페이지 프로필 (팔로우 많은 순서)
 	List<Map<String, Object>> selectAllInfoWithFollows();
@@ -77,6 +80,8 @@ public interface SocialImageMapper {
 	SocialCommentVO findById(int comment_re_ref);
 
 	SocialCommentVO findCommentById(int comment_idx);
+
+	
 
 	
 	

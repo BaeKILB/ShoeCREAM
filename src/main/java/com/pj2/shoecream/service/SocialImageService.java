@@ -40,14 +40,19 @@ public class SocialImageService {
 	
 	// 소셜 인기페이지 (좋아요 많은 순서)
 	@Transactional(readOnly = true)
-	public List<Map<String, Object>> getAllInfo() {
-	    return socialImageMapper.selectAllInfo();
+	public List<Map<String, Object>> getPopularLikeImage() {
+	    return socialImageMapper.selectPopularLikeImage();
 	}
 	
 	// 소셜 인기페이지 프로필 (팔로우 많은 순서)
 	@Transactional(readOnly = true)
 	public List<Map<String, Object>> getAllInfoWithFollows() {
 	  return socialImageMapper.selectAllInfoWithFollows();
+	}
+	
+	// 소셜 인기페이지 (최신순)
+	public List<Map<String, Object>> getPopularLatestImage() {
+		return socialImageMapper.selectPopularLatestImage();
 	}
 	
 //	소셜 스토리 (팔로우한 mem_idx 만 게시글 보이기)
@@ -311,6 +316,8 @@ public class SocialImageService {
 		  socialCommentVO.setComment_re_ref(insertedComment.getComment_re_ref());
 		  return socialCommentVO;
 		}
+
+
 
 
 

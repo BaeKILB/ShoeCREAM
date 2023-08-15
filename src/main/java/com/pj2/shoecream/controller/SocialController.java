@@ -5,8 +5,6 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.CustomValidationException;
@@ -58,13 +58,16 @@ public class SocialController {
 	model.addAttribute("profileInfo", profileInfo);
 	System.out.println("인기 페이지 프로필 값 : " + profileInfo);
 	
-	List<Map<String, Object>> images = socialImageService.getAllInfo();
+	List<Map<String, Object>> images = socialImageService.getPopularLikeImage();
 	model.addAttribute("images", images);
-	System.out.println("인기 페이지 이미지 값 : " + images);
-		
+	System.out.println("인기 페이지 라이크 순 이미지 값 : " + images);
+	
+	List<Map<String, Object>> imagesLatest = socialImageService.getPopularLatestImage();
+	model.addAttribute("imagesLatest", imagesLatest);
+	System.out.println("인기 페이지 최신순 이미지 값 : " + imagesLatest);
 		return "member/social/popular";
 	}
-  
+	
 	// 소셜 개인 프로필 페이지
 	@GetMapping("/social/{mem_idx}")
 	public String profile(@PathVariable int mem_idx, Model model) {

@@ -115,7 +115,7 @@ function getStoryItem(image) {
 		</div>
 		    </div>
 		
-			<div class="sl__item__img" style="height: 850px;">
+			<div class="sl__item__img">
 				<img src="${contextPath}/resources/upload/social/${image.posts_image1}"/>
 			</div>
 		
