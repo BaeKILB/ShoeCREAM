@@ -19,7 +19,8 @@ public class MainController {
 //		System.out.println("세션 정보2 : " + mPrincipalDetails.getMember());
 //		
 //		model.addAttribute("member", mPrincipalDetails.getMember());
-		return "main_ex";
+//		return "main_ex";
+		return "main_new";
 	}
 	
 	// 헤더 검색창에 검색시 이동

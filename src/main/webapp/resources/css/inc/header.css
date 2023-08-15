@@ -1,0 +1,164 @@
+@charset "UTF-8";
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+		Roboto, helvetica neue, segoe ui, apple sd gothic neo, noto sans kr,
+		malgun gothic, apple color emoji, segoe ui emoji, segoe ui symbol,
+		sans-serif;
+}
+ol, ul {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+
+header {
+	max-width: 1280px;
+	margin: 0 auto;
+	height: 100%;
+}
+#header {
+	position: fixed;
+    z-index: 900;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 166px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: .3s;
+    background-color: #fff;
+}
+.header_util {
+	padding: 0.5rem 0;
+}
+.header_util ul {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+.header_util ul li:nth-child(n+2) {
+	margin-left: 0.5rem;
+}
+.header_util ul li a {
+	font-size: 1rem;
+	color: rgba(34,34,34,.8);
+	letter-spacing: -.06px;
+	transition: all 0.4s;
+}
+.header_util ul li a:hover {
+	color: black;
+}
+.header_util .user_name a {
+    display: flex;
+    align-items: center;
+	font-weight: 500;
+	color: black;
+}
+.header_util .user_name i {
+	margin-right: 3px;
+	font-weight: normal;
+	color: #666;
+}
+
+.header_main {
+	align-items: center;
+    display: flex;
+    padding: 0.6rem 0;
+    justify-content: space-between;
+    min-width: 320px;
+}
+.header_main h1 a {
+	display: flex;
+    height: 20px;
+    width: auto;
+}
+.header_main h1 img {
+	width: 100%;
+}
+.header_search {
+	width: 45%;
+    padding: 0.8rem 1.3rem;
+    border-radius: 0.4rem;
+    background: #f5f5f5;
+}
+.header_search span {
+	margin-right: 0.5rem;
+}
+.header_search input {
+	background: transparent;
+    font-size: 0.83rem;
+    width: 90%;
+    height: 20px;
+    outline: none;
+}
+.header_inn ul {
+	display: flex;
+}
+.header_inn ul li a {
+	font-size: 1.05rem;
+}
+.header_inn ul li:nth-child(n+2) {
+	margin-left: 15px;
+}
+
+.header_menu {
+    height: 42px;
+	padding: 0.5rem 0 1rem;
+    box-sizing: content-box;
+}
+.nav_item {
+	display: flex;
+	align-items: center;
+}
+.category_btn {
+	padding: 0.7rem 0.9rem;
+	background: #000;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+.category_btn i {
+	color: white;
+	font-size: 0.9rem;
+}
+.category_btn span {
+	color: white;
+	font-size: 0.9rem;
+	margin-left: 5px;
+}
+.nav_item nav {
+	margin-left: 1.7rem;
+	height: 42px;
+	line-height: 42px;
+}
+.nav_item nav ul {
+	display: flex;
+}
+.nav_item nav ul li:nth-child(n+2) {
+	margin-left: 1.5rem;
+}
+.nav_item nav ul li a {
+	display: inline-block;
+    width: 100%;
+    height: 100%;
+    transition: all 0.4s;
+}
+.nav_item nav ul li a:hover {
+	font-weight: 600;
+}
+
+
+
+
+
+
+
+
+
+
+

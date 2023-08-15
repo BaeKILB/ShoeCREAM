@@ -93,8 +93,8 @@
 		</section>
 		<script type="text/javascript">
 		$(document).ready(function() {
-			$('.cont_li_wrap.inqList').show();
-			$('.cont_item_list.inqList').addClass('active');
+			$('.cont_li_wrap.dwList').show();
+			$('.cont_item_list.pointList').addClass('active');
 		});
 	    $(document).on('click', '.toggle_wrap', function() {
 	    	if($('#admin_cont').css('margin-left') === '0px') {
