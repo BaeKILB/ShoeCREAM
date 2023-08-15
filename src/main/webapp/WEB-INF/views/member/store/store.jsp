@@ -800,7 +800,6 @@ function payAuction(idx, price, id, title){
 					<div>
 						<!--커스텀-->
 					<div class="container mt-4">
-					${creamList }
 					  <c:forEach items="${creamList }" var="creamList">
 						<input type="hidden" name="request_idx" value="${creamList.request_idx }">
 					      <div class="goods mb-4">
@@ -841,16 +840,18 @@ function payAuction(idx, price, id, title){
                                             <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/creamRefund?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=580, height=360, left=100, top=50')">환불 요청</button>
 										</c:when>
 										<c:when test="${creamList.delivery_status eq '배송중' }"> <!-- 운송장 등록시 -->
-<!-- 	                                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">배송 조회</button> -->
-										
-												<input type="hidden" name="t_key"  id="t_key" value="vmXicQZCzQaQetF3y0M0xg">
-												<input type="hidden" name="t_code" id="t_code" value="${creamList.tracking_code }">
-												<input type="hidden" name="t_invoice" id="t_invoice" value="${creamList.tracking_num }">
-												<input  type="button" value="배송조회" class="btn btn-light btn-half-height tracker">
-										
-										
-										
+											<input type="hidden" name="t_key"  id="t_key" value="vmXicQZCzQaQetF3y0M0xg">
+											<input type="hidden" name="t_code" id="t_code" value="${creamList.tracking_code }">
+											<input type="hidden" name="t_invoice" id="t_invoice" value="${creamList.tracking_num }">
+											<input  type="button" value="배송조회" class="btn btn-light btn-half-height tracker">
 										</c:when>
+										<c:when test="${creamList.delivery_status eq '배송완료' }"> 
+											<button type="button" class="btn btn-light btn-half-height" onclick="window.open('${pageContext.request.contextPath }/CreRegistReviewForm?product_idx=${creamList.cream_idx}&mem_idx=1234&buyer_idx=${creamList.mem_idx }','구매자정보', 'width=680, height=700, left=100, top=50')">구매후기 등록</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button" class="btn btn-light btn-half-height" onclick="window.open('${pageContext.request.contextPath }/CreRegistReviewForm?product_idx=${creamList.cream_idx}&mem_idx=1234&buyer_idx=${creamList.mem_idx }','구매자정보', 'width=680, height=700, left=100, top=50')">구매후기 수정</button>
+<%-- 	                                        <button type="button" class="btn btn-light btn-half-height" onclick="location.href='${pageContext.request.contextPath }/AucModifyReviewForm?product_idx=${auctionList.auction_idx}&mem_idx=${auctionList.mem_idx }&buyer_idx=${auctionList.buyer_idx }'">구매후기 수정</button> --%>
+	                                    </c:otherwise>
 									</c:choose>
 					       	     </div>
 					      </div>
