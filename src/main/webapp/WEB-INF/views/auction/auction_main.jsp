@@ -16,6 +16,8 @@
 <link href="${pageContext.request.contextPath }/resources/css/auction/auction_main.css"	rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/side_category.css"    rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
+<link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 	<header> <!-- header -->

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pj2.shoecream.mapper.BoardMapper;
 import com.pj2.shoecream.vo.Criteria;
+import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.NoticeVO;
 
 @Service
@@ -50,6 +51,20 @@ public class BoardService {
 		int maxIdx = mapper.selectMaxIdx();
 		notice.setBo_idx(maxIdx);
 		return mapper.insertNotice(notice);
+	}
+	
+	//================ 마이페이지 - 1:1 문의 =================
+	// 1:1 문의 작성
+	public int registBoard(InquiryBoardVO inquiry) {
+		return mapper.insertQstBoard(inquiry);
+	}
+	
+	// 1:1 문의 리스트
+	public List<InquiryBoardVO> getQstBoard(int mem_idx, String searchType, int startRow, int listLimit) {
+		return mapper.selectQstBoard(mem_idx, searchType, startRow, listLimit);
+	}
+	public int getQstListCount(String searchType) {
+		return mapper.getQstListCount(searchType);
 	}
 	
 	

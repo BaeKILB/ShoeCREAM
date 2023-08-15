@@ -1,0 +1,48 @@
+@charset "UTF-8";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+* {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Pretendard, sans-serif;
+}
+a {
+	text-decoration: none;
+	color: black;
+}
+ul, li {
+	list-style: none;
+}
+#admin_cont {
+/* 	margin-left: 15.625rem; */
+    padding: 1rem 1rem;
+/*     background: #F1F5F9; */
+	min-height: 100vh;
+	width: 980px;
+}
+@media screen and (max-width: 768px) {
+	#admin_cont {
+		margin-left: 0;
+	}
+}
+.admin_tit {
+	font-weight: 700;
+	font-size: 1.875rem;
+}
+.tit_line {
+	display: block;
+    width: 100%;
+    height: 1px;
+    background: #dfe3e8;
+    margin: 1.4rem 0;
+}
+textarea{
+	resize: none;
+	outline: 0;
+	
+}
+table, tbody, td, tfoot, th, thead, tr {
+	border-spacing: 0px;
+    border-color: inherit;
+}

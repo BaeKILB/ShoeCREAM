@@ -3,6 +3,8 @@ let maxPage = 1;
 let lcCode = '';
 let mcCode = '';
 
+let getParams = new URL(location.href).searchParams;
+
 // onload
 $(function() {
 	getAuctionList();
@@ -17,6 +19,7 @@ function getAuctionList() {
         , dataType: "json"
         , data: {
             'orderMethod': "popular"
+            , 'keyWord': getParams.get("product_search")
             , 'pageNum': pageNum
             , 'lc_code': lcCode
             , 'mc_code': mcCode
@@ -88,6 +91,8 @@ const doneAuctionResult = data => {
         $("#auctionList").append(result);
         index++;
     }
+    
+    if(pageNum == maxPage) $("#auctionMore").addClass('d-none');
 };
 
 const failAuctionResult = () => {
@@ -151,6 +156,7 @@ function getCreamList() {
         , dataType: "json"
         , data: {
              'pageNum': pageNum
+             , 'keyWord': getParams.get("product_search")
              , 'orderMethod':'1'
              , 'main': '1'
         } 
@@ -398,4 +404,10 @@ $(function() {
 		console.log("onload - loadItems() error !");
 	}
 })
+
+// 더보기 구현 - 경매
+const loadMoreAuction = () => {
+	pageNum++;
+	getAuctionList();
+}
 

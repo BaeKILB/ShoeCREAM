@@ -466,6 +466,7 @@ public class CreamController {//크림 컨트롤러 입니다.
 		
 		Map<String,Object> cream = service.getCream(product_idx);
 		model.addAttribute("cream",cream);
+		
 	
 		
 		model.addAttribute("buyer_idx",buyer_idx);
@@ -527,8 +528,9 @@ public class CreamController {//크림 컨트롤러 입니다.
 						System.out.println("^^^^^^^^^이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
 				}
 
-		
-		return "redirect:/store/" + jungGoNoh.getBuyier_idx();
+		model.addAttribute("msg", "리뷰가 작성 되었습니다.");
+		return "inc/close";
+//		return "redirect:/store/" + jungGoNoh.getBuyier_idx();
 	}
 
 

@@ -23,6 +23,7 @@
 <!-- css파일  -->
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
+<link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 
 
 <!-- 테스트용 css -->

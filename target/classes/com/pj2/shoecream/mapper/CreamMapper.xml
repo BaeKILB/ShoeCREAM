@@ -88,6 +88,10 @@
 		    product_image pi ON ci.cream_idx = pi.product_idx
 		LEFT JOIN
 		    dibs d ON ci.cream_idx = d.product_idx
+		<if test="keyWord != null">
+		where
+			cream_title LIKE CONCAT('%', #{keyWord},'%')
+		</if>
 		GROUP BY
 		    ci.cream_idx, pi.image_path, pi.image1, ci.cream_title, ci.size220, ci.cream_readcount
 			<if test="!orderMethod.equals('')">

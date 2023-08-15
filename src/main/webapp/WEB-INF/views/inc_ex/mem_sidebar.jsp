@@ -30,6 +30,7 @@
 			        </c:if>
 			        <li><a href="${pageContext.request.contextPath}/mypage/profile">내 프로필 관리</a></li>
 			        <li><a href="${pageContext.request.contextPath}/mypage/account">내 계좌</a></li>
+			        <li><a href="${pageContext.request.contextPath}/mypage/questionList">1:1 문의</a></li>
 			        <li><a href="${pageContext.request.contextPath}/mypage/delete">회원탈퇴</a></li>
 			    </ul>
 			</li>
