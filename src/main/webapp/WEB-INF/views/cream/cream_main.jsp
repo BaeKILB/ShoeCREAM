@@ -15,6 +15,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/auction/auction_main.css"	rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="stylesheet" >
+<link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<header> <!-- header -->

@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>입찰 팝업</title>
+<link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>

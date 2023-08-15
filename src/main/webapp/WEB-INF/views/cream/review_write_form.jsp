@@ -67,6 +67,7 @@
 									<input type="hidden" name="product_idx" id="product_idx" value="${cream.product_idx }"/>
 									<input type="hidden" name="buyier_idx" id="buyer_idx" value="${buyer_idx }"/>
 									<input type="hidden" name="mem_idx" id="mem_idx" value="1234"/>
+									
 								</div>
 								<div class="mod_box">
 										<input type="submit" class="delete_btn" value="등록">
