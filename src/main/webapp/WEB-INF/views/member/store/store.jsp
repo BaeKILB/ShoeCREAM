@@ -838,7 +838,7 @@ function payAuction(idx, price, id, title){
 									<c:choose>
 										<c:when test="${creamList.inbound_tracking_num eq null }"> <!-- 운송장 미등록시 -->
                                             <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm2?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=580, height=360, left=100, top=50')">운송장 등록</button>
-                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/creamRefund?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=580, height=360, left=100, top=50')">환불 요청</button>
+                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/creamRefund?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=200, height=360, left=100, top=50')">환불 요청</button>
 										</c:when>
 										<c:when test="${creamList.delivery_status eq '배송중' }"> <!-- 운송장 등록시 -->
 											<input type="hidden" name="t_key"  id="t_key" value="vmXicQZCzQaQetF3y0M0xg">
