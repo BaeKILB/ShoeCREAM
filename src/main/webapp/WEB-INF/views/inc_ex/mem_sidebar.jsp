@@ -31,6 +31,7 @@
 				</div>
 				<ul class="side_sub">
 					<li><a href="${pageContext.request.contextPath }/mypage/update">내 정보 관리</a></li>
+					<li><a href="${pageContext.request.contextPath }/mypage/updatePasswd">내 비밀먼호 변경</a></li>
 					<li><a href="${pageContext.request.contextPath }/mypage/profile">내 프로필 관리</a></li>
 					<li><a href="${pageContext.request.contextPath }/mypage/account">내 계좌</a></li>
 					<li><a href="${pageContext.request.contextPath }/mypage/delete">회원탈퇴</a></li>

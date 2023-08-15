@@ -169,6 +169,11 @@ public class AuctionController {
 		List<Map<String, Object>> relatedProducts = service.getRelatedAuctionList(auction);
 		model.addAttribute("relatedProducts",relatedProducts);
 		
+		// 리뷰 정보
+		int seller_idx = Integer.parseInt(String.valueOf(auction.get("mem_idx")));
+		List<Map<String, Object>> reviewList = service.getReviewList(seller_idx);
+		model.addAttribute("reviewList",reviewList);
+		
         return "auction/auction_detail";
     }
 

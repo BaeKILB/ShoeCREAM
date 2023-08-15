@@ -51,5 +51,7 @@ public interface AuctionMapper {
 
 	int insertTracking(Map<String, Object> map);
 
+	List<Map<String, Object>> selectReviewList(int seller_idx);
+
 
 }
