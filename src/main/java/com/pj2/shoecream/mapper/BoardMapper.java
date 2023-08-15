@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.pj2.shoecream.vo.Criteria;
+import com.pj2.shoecream.vo.InquiryBoardVO;
 import com.pj2.shoecream.vo.NoticeVO;
 
 @Mapper
@@ -34,5 +35,15 @@ public interface BoardMapper {
 
 	// 글 작성
 	int insertNotice(NoticeVO notice);
+	
+	//================ 마이페이지 - 1:1 문의 =================
+	// 1:1 문의 등록
+	int insertQstBoard(InquiryBoardVO inquiry);
+	// 문의 등록시 상태 바로 갱신
+	int updateQstStatus(int qst_idx);
+	// 1:1 문의 리스트
+	List<InquiryBoardVO> selectQstBoard(@Param("mem_idx") int mem_idx, @Param("searchType") String searchType, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
+
+	int getQstListCount(String searchType);
 
 }
