@@ -49,7 +49,8 @@
 	</script>
 	<!-- 헤더 시작 -->
 		<jsp:include page="../inc_ex/header.jsp" />
-
+	<link href="${pageContext.request.contextPath}/resources/css/junggo/product_detail.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
 
 
 	</header>
@@ -185,10 +186,10 @@
 						브랜드 : ${jungGoNoh.product_brand}<br>
 						거래지역 : ${jungGoNoh.product_location}<br>
 						거래 방법 : ${jungGoNoh.product_payment}<br>
-						접속한사람: ${principal.member.mem_id}
-						파는사람:	${jungGoNoh.mem_id}		
-						접속한 사람 idx: ${principal.member.mem_idx}
-						파는사람idx : ${jungGoNoh.mem_idx} 
+<%-- 						접속한사람: ${principal.member.mem_id} --%>
+<%-- 						파는사람:	${jungGoNoh.mem_id}		 --%>
+<%-- 						접속한 사람 idx: ${principal.member.mem_idx} --%>
+<%-- 						파는사람idx : ${jungGoNoh.mem_idx}  --%>
 								
 					</div>
 					<script>
@@ -215,8 +216,8 @@
 							<input type="hidden" name="favorite_check" id="favorite_check" value="${dibs.favorite_check}"/>
 							<input type="hidden" name="mem_id" id="mem_id" value="${jungGoNoh.mem_id}"/>
 							<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNoh.mem_idx}"/>
-							<a href="${pageContext.request.contextPath}/cancelOrComplete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message">임시 버튼</a>
-					
+<%-- 							<a href="${pageContext.request.contextPath}/cancelOrComplete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message">임시 버튼</a> --%>
+							
 							<!-- buyier_idx 미접속시 0으로 받아오게끔 하기-->
 							<c:choose>
 								<c:when test="${empty principal.member.mem_idx}">
@@ -231,7 +232,8 @@
 							
 							<c:choose>
 								<c:when test="${principal.member.mem_idx == jungGoNoh.mem_idx }">
-									<button type="button"  class="delete_btn" onclick="deleteConfirmPD()">삭제하기</button>
+									<a href="${pageContext.request.contextPath}/junggoModifyForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="modify_Btn">수정하기</a>
+									<button type="button"  class="delete_btn" onclick="deleteConfirmPD()">삭제하기</button>								
 								</c:when>
 								<c:otherwise>
 									<c:choose>
@@ -269,7 +271,7 @@
 						<br>
 						판매자가 별도의 메신저로 결제링크를 보내거나 <br>
 						직거래(직접송금)을 유도하는 경우<br> 사기일 가능성이 높으니 거래를 자제해 주시고<br>
-						<br><!-- a href="${pageContext.request.contextPath }/reviewList -->
+						<br>
 						<a href="${pageContext.request.contextPath}/registReportForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message" onclick="window.open(this.href, '_blank', 'width=800, height=400'); return false;">여기를 클릭하여 중고나라 고객센터로 신고해주시기 바랍니다.</a>
 					</div>
 				</div>
@@ -305,13 +307,13 @@
 					<div class="review_wrap more_wrap_box">
 						<div class="view_tit_sec">
 							<p class="view_tit">${jungGoNoh.mem_nickname}에 대한 고객 리뷰</p>
-							<a href="${pageContext.request.contextPath }/reviewList">더보기</a>
+							<a href="${pageContext.request.contextPath }/store/${jungGoNoh.mem_idx}">더보기</a>
 						</div>
 					</div>
 					<div class="more_cont">
-					<a class="modify_btn" href="${pageContext.request.contextPath}/registJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" onclick="window.open(this.href, '_blank', 'width=500, height=400'); return false;">임시작성</a>
-							<a class="modify_btn" href="${pageContext.request.contextPath}/modifyJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" onclick="window.open(this.href, '_blank', 'width=500, height=400'); return false;">임시수정</a>
-							<a class="modify_btn" onclick="deleteConfirmRV()">임시삭제</a>
+<%-- 					<a class="modify_btn" href="${pageContext.request.contextPath}/registJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" onclick="window.open(this.href, '_blank', 'width=500, height=400'); return false;">임시작성</a> --%>
+<%-- 							<a class="modify_btn" href="${pageContext.request.contextPath}/modifyJReviewForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" onclick="window.open(this.href, '_blank', 'width=500, height=400'); return false;">임시수정</a> --%>
+<!-- 							<a class="modify_btn" onclick="deleteConfirmRV()">임시삭제</a> -->
 						<div class="rev_cont">  
 						
 						<c:forEach var="moreReviewListSmall" items="${moreReviewListSmall}">

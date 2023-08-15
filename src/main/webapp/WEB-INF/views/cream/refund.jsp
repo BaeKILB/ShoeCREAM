@@ -11,6 +11,8 @@
 </head>
 <body>
 <form action="creamRefundPro" method="post">
+	<input type="hidden" name="cream_idx" value="${map.cream_idx }">
+	<input type="hidden" name="mem_idx" value="${map.mem_idx }">
 
 	<main class="container bg-light">
 	    <div class="row mb-3">

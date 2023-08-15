@@ -9,6 +9,14 @@
         where
             delivery_status NOT IN ('배송완료','인수')
     </select>
+    <select id="selectCreamList" resultType="map">
+    	select
+    		*
+    	from
+    		cream_item_request
+    	where
+    		delivery_status NOT IN ('배송완료')
+    </select>
     <update id="updateCourier">
         update
             courier_info
@@ -17,6 +25,14 @@
             , update_time = now()
         where
             tracking_num = #{trackingNumber }
+    </update>
+    <update id="updateCream">
+        update
+            cream_item_request
+        set
+            delivery_status = #{kind }
+        where
+            tracking_num = #{trackingNumber }    
     </update>
     <select id="selectCourier" resultType="map">
         select

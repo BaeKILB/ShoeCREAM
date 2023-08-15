@@ -47,6 +47,10 @@ public class JungGoNohService {
 			return jungGoNoh1;
 		}
 
+//-===============================중고수정========================================================
+		public int modifyJunggo(JungGoNohVO jungGoNoh) {
+			return jungGoNohMapper.modifyJunggo(jungGoNoh);
+		}
 		
 	//========================== 작성자 확인========================================
 			
@@ -145,7 +149,7 @@ public class JungGoNohService {
 			JungGoNohVO pay = jungGoNohMapper.selectPayInfo3(jungGoNoh);
 			return pay;
 		}
-		
+	
 		
 	}
 

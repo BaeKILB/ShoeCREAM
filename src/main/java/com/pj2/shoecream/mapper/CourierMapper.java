@@ -13,4 +13,8 @@ public interface CourierMapper {
 
 	Map<String, Object> selectCourier(String auction_idx);
 
+	List<Map<String, Object>> selectCreamList();
+
+	void updateCream(@Param("trackingNumber") String trackingNumber,@Param("kind") String kind);
+
 }

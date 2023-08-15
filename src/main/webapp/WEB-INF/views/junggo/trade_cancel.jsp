@@ -7,8 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>거래 취소</title>
-	<link href="${pageContext.request.contextPath }/resources/css/junggo/common.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath }/resources/css/junggo/trade_complete.css" rel="styleSheet">
+	
 <%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet"> --%>
 
@@ -17,6 +16,8 @@
 <body>
 	<header>
 		<jsp:include page="../inc_ex/header.jsp" />
+		<link href="${pageContext.request.contextPath }/resources/css/junggo/common.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/resources/css/junggo/trade_complete.css" rel="styleSheet">
 	</header>
 	<section id="sec_con" class="inr com_cont">
 		<div class="res_com_txt" align="center">

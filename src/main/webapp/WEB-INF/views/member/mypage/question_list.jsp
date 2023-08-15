@@ -27,7 +27,7 @@
 	</c:if>
 	
 	<section id="admin_cont">
-		<h1 class="admin_tit">1:1 문의 조회</h1>
+<!-- 		<h1 class="admin_tit">1:1 문의 조회</h1> -->
 		<hr class="tit_line">
 		<div class="question_cont">
 			<div class="mem_list_wrap">
@@ -65,7 +65,7 @@
 											<td>${qstItem.qst_idx }</td>
 											<td>${qstItem.mem_name }</td>
 											<td>
-												<a href="QstBoardDetail?qst_idx=${qstItem.qst_idx }&qst_board_re_ref=${qstItem.qst_board_re_ref }&pageNum=${pageNum }">
+												<a href="${pageContext.request.contextPath }/mypage/questionDetail?qst_idx=${qstItem.qst_idx }&qst_board_re_ref=${qstItem.qst_board_re_ref }&pageNum=${pageNum }">
 													<span>${qstItem.qst_subject }</span>
 												</a>
 											</td>
@@ -73,12 +73,12 @@
 											<td>${qstItem.qst_type }</td>
 											<td>
 												<c:if test="${qstItem.ans_status eq 'N'}">
-													<a href="QstWriteForm?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }" class="ins_ans moreBtn" readonly="readonly">
+													<a href="" class="ins_ans moreBtn" readonly="readonly">
 														답변중
 													</a> 
 												</c:if>
 												<c:if test="${qstItem.ans_status eq 'Y'}">
-													<a href="QstModifyForm?qst_idx=${qstItem.qst_idx }&pageNum=${pageNum }" class="mod_ans moreBtn" readonly="readonly">
+													<a href="" class="mod_ans moreBtn" readonly="readonly">
 														답변완료
 													</a> 
 												</c:if>
@@ -89,6 +89,11 @@
 							</c:forEach>
 						</tbody>
 					</table>
+				</div>
+				<div class="d-flex justify-content-end" style="margin-right: 50px;">
+				    <a href="${pageContext.request.contextPath }/mypage/questionWrite" class="mod_ans moreBtn" style="background: #171818;">
+				        문의작성
+				    </a>
 				</div>
 				<ul id="pageList">
 					<c:if test="${pageNum > 1 }">

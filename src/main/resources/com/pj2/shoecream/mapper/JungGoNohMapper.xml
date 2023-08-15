@@ -65,6 +65,22 @@ LEFT OUTER JOIN product_image pi
 	     WHERE jpd.product_idx = #{product_idx}
 	</select>
 	
+			<!-- 중고 수정 -->
+	<update id="modifyJunggo">
+		UPDATE jung_product
+			SET product_title = CONCAT(#{product_title},'(수정됨)') -- product_title
+				, product_info = #{product_info} -- product_info
+				, product_payment = #{product_payment} -- product_payment
+				, lc_code = #{lc_code} -- lc_code
+				, mc_code = #{mc_code} -- mc_code
+				, product_brand = #{product_brand} -- product_brand
+				, product_size = #{product_size} -- product_size
+				, product_price = #{product_price} -- product_price
+				, product_status = #{product_status} -- product_status
+				, product_location = #{product_location} -- product_location
+			WHERE product_idx = #{product_idx}
+	</update>
+	
 	<!-- 찜 검색 -->
 	<select id="selectDibs" resultType="com.pj2.shoecream.vo.JungGoNohVO">
 	    SELECT product_idx, favorite_check

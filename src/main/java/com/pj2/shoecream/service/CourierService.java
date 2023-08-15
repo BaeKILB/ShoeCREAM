@@ -67,6 +67,14 @@ public class CourierService {
 	public Map<String, Object> getCourier(String auction_idx) {
 		return mapper.selectCourier(auction_idx);
 	}
+
+	public List<Map<String, Object>> getCreamList() {
+		return mapper.selectCreamList();
+	}
+
+	public void modifyCream(String trackingNumber, String kind) {
+		mapper.updateCream(trackingNumber,kind);
+	}
 	
 	
 

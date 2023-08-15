@@ -613,7 +613,7 @@ public class MemberController {
 			PageInfoVO pageInfo = new PageInfoVO(listCount, pageListLimit, maxPage, startPage, endPage);
 			model.addAttribute("qstList", qstList);
 			model.addAttribute("pageInfo", pageInfo);
-			
+			model.addAttribute("member", mPrincipalDetails.getMember());
 			return "member/mypage/question_list";
 		}
     
@@ -638,11 +638,29 @@ public class MemberController {
 	public String qstWritePro(@RequestParam int mem_idx, InquiryBoardVO inquiry, Model model) {
     	int insertCount = boardservice.registBoard(inquiry);
 		if(insertCount > 0) {
-			return "redirect:/InquiryList?pageNum=";
+			return "redirect:/mypage/questionList?pageNum=";
 		} else {
 			model.addAttribute("msg", "글쓰기 실패");
 			return "inc/fail_back";
 		}
+	}
+    
+	// 마이페이지 - 1:1 문의 뷰디테일
+	@GetMapping("/mypage/questionDetail")
+	public String qstBoardDetail(@RequestParam int qst_idx, @RequestParam int pageNum, Model model) {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		
+		InquiryBoardVO inquiry = service.selectQst(qst_idx);
+		model.addAttribute("inquiry", inquiry);
+		
+		// 답장조회
+		InquiryBoardVO inquiryAnswer = service.selectQstAns(qst_idx);
+		model.addAttribute("inquiryAnswer", inquiryAnswer);
+		
+		System.out.println("1:1 문의 정보 : " + mPrincipalDetails.getMember());
+		model.addAttribute("member", mPrincipalDetails.getMember());
+		return "member/mypage/question_view";
 	}
     
     // 마이페이지 - 내 계좌 및 포인트

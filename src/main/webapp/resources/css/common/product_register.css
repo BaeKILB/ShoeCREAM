@@ -305,7 +305,7 @@ body {
 }
 
 .brand_box {
-	width:50%;
+	width:98%;
 	font-size: 20px;
 	font-weight: 600;
 	color: #333;
@@ -328,7 +328,7 @@ body {
 }
 
 .size {
-	width:65%;
+	width:60%;
 	height:30px;
 	font-size: 15px;
 	font-weight: 300;
@@ -341,7 +341,7 @@ body {
 
 
 .brand {
-	width:38%;
+	width:30%;
 	height:30px;
 	font-size: 15px;
 	font-weight: 300;
@@ -353,7 +353,7 @@ body {
 }
 
 #inputBrand {
-	width:45%;
+	width:40%;
 	height:30px;
 	font-size: 15px;
 	font-weight: 300;

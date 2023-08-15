@@ -84,6 +84,10 @@ public class CreamService {
 		return mapper.selectRelatedCreamList(map);
 	}
 
+	public List<Map<String, Object>> getReviewList(String cream_idx) {
+		return mapper.selectReviewList(cream_idx);
+	}
+
 
 
 
