@@ -26,34 +26,34 @@
 <body>
 
 	<header>
-	<%--top 탑 활성화시 css도 살려야함--%>
-<%-- <jsp:include page="../../../inc/top1.jsp"></jsp:include> --%>
+		
 
-<script type="text/javascript">
-	function deleteConfirmPD() {
-		if(!confirm("게시글을 삭제 하시겠습니까? 삭제하시면 네를 눌려주세요")) {
-			return false;
-		} else {
-			location.href="${pageContext.request.contextPath}/productDelete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}";
+	<script type="text/javascript">
+		function deleteConfirmPD() {
+			if(!confirm("게시글을 삭제 하시겠습니까? 삭제하시면 네를 눌려주세요")) {
+				return false;
+			} else {
+				location.href="${pageContext.request.contextPath}/productDelete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}";
+			}
 		}
-	}
+		
+		function deleteConfirmRV() {
+			if(!confirm("게시글을 삭제 하시겠습니까? 삭제하시면 네를 눌려주세요")) {
+				return false;
+			} else {
+				location.href="${pageContext.request.contextPath}/reviewDelete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}";
+			}
+		}
+		 
 	
-	function deleteConfirmRV() {
-		if(!confirm("게시글을 삭제 하시겠습니까? 삭제하시면 네를 눌려주세요")) {
-			return false;
-		} else {
-			location.href="${pageContext.request.contextPath}/reviewDelete?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}";
-		}
-	}
-	 
-
-</script>
-
+	</script>
+	<!-- 헤더 시작 -->
+		<jsp:include page="../inc_ex/header.jsp" />
 
 
 
 	</header>
-		--------${jungGoNoh}------------
+<%-- 		--------${jungGoNoh}------------ --%>
 		<section id="sec_con" class="inr product_view">
 		<div class="container">
 			<div class= "row">
@@ -385,8 +385,7 @@
 	 </div>
 	</section>
 	<footer>
-	<%--footer 풋터 활성화 시 css도 살려야함--%>
-<%-- 		<jsp:include page="../../../inc/footer.jsp"></jsp:include> --%>
+		<jsp:include page="../inc_ex/footer.jsp" />
 	</footer>
 </body>
 </html>

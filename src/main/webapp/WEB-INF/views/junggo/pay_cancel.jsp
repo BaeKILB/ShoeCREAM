@@ -16,7 +16,7 @@
 </head>
 <body>
 	<header>
-<%-- 		 <jsp:include page="../../inc/top1.jsp"></jsp:include> --%>
+		<jsp:include page="../inc_ex/header.jsp" />
 	</header>
 	<section id="sec_con" class="inr com_cont">
 		<div class="res_com_txt" align="center">
@@ -118,7 +118,7 @@
 	</section>
 	
 	<footer>
-<%-- 	<jsp:include page="../../inc/footer.jsp"></jsp:include>  --%>
+		<jsp:include page="../inc_ex/footer.jsp" />
 	</footer>
 
 
