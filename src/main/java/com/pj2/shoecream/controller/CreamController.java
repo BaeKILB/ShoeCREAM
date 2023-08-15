@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.service.AuctionService;
 import com.pj2.shoecream.service.CreamService;
 import com.pj2.shoecream.service.ImageService;
+import com.pj2.shoecream.service.PayService;
 import com.pj2.shoecream.vo.CreamVO;
 import com.pj2.shoecream.vo.Criteria;
 import com.pj2.shoecream.vo.ProductImageVO;
@@ -48,6 +50,9 @@ public class CreamController {//크림 컨트롤러 입니다.
 	  
 	  @Autowired
 	  private AuctionService aucService;
+	  
+	  @Autowired
+	  private PayService payService;
 	
 	@GetMapping("Cream")
 	public String creamMain(
@@ -414,7 +419,7 @@ public class CreamController {//크림 컨트롤러 입니다.
 		
 		
 	}
-	
+	//상세조회 버튼
 	@GetMapping("shippingDetail")
 	public String shippingDetail(@RequestParam Integer request_idx, @RequestParam String cream_idx, Model model) {
 		Map<String, Object> map = service.getCreamOrder(request_idx);
@@ -424,6 +429,27 @@ public class CreamController {//크림 컨트롤러 입니다.
 	
 
 	//크림후기 컨트롤러 들어올곳
+	//환불폼컨트롤러
+	@GetMapping("creamRefund")
+	public String creamReFund(
+			@RequestParam Integer request_idx, @RequestParam String cream_idx, Model model) {
 		
+		Map<String, Object> map = service.getCreamOrder(request_idx);
+		model.addAttribute("map",map);
+		
+		return "cream/refund";
+	}
 	
+		
+	//환불작업
+	@PostMapping("creamRefundPro")
+	public String creamRefundPro(@RequestParam Integer request_idx, @RequestParam String cream_idx, @RequestParam Integer mem_idx , Model model) {
+ 
+		int mem_buyer_idx = mem_idx;
+		
+		payService.productCancelPayment(mem_buyer_idx, cream_idx);
+		
+		
+		return "";
+	}
 }

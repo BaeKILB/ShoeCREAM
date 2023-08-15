@@ -800,6 +800,7 @@ function payAuction(idx, price, id, title){
 					<div>
 						<!--커스텀-->
 					<div class="container mt-4">
+					${creamList }
 					  <c:forEach items="${creamList }" var="creamList">
 						<input type="hidden" name="request_idx" value="${creamList.request_idx }">
 					      <div class="goods mb-4">
@@ -818,22 +819,37 @@ function payAuction(idx, price, id, title){
 					              <p class="goods_price">사이즈 : ${creamList.cream_size}</p>
 					              <p class="goods_price">결제금액 : ${creamList.cream_price} 원</p>
 					              <c:choose>
-					              	<c:when test="${creamList.tracking_num eq null }">
+					              	<c:when test="${creamList.inbound_tracking_num eq null }">
 						              <p class="goods_price">현재상태 : 입고대기중</p>
 					              	</c:when>
-					                <c:when test="${creamList.tracking_num ne null }"> <!-- 운송장 등록시 -->
+					                <c:when test="${creamList.inbound_delivery_status eq '배송중' }"> <!-- 운송장 등록시 -->
 					                  <p class="goods_price">현재상태 : 입고중</p>
+									</c:when>
+									<c:when test="${creamList.delivery_status eq '배송완료' }">
+									  <p class="goods_price">현재상태 : 상품준비중</p>
+									</c:when>
+									<c:when test="${creamList.delivery_status eq '배송중' }">
+									  <p class="goods_price">현재상태 : 배송중</p>
 									</c:when>
 					              </c:choose>
 					            </div>
 					          </div>
 					            <div class="col-12 col-md-auto">
 									<c:choose>
-										<c:when test="${creamList.tracking_num eq null }"> <!-- 운송장 미등록시 -->
+										<c:when test="${creamList.inbound_tracking_num eq null }"> <!-- 운송장 미등록시 -->
                                             <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm2?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=580, height=360, left=100, top=50')">운송장 등록</button>
+                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/creamRefund?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=580, height=360, left=100, top=50')">환불 요청</button>
 										</c:when>
-										<c:when test="${creamList.tracking_num ne null }"> <!-- 운송장 등록시 -->
-	                                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">배송 조회</button>
+										<c:when test="${creamList.delivery_status eq '배송중' }"> <!-- 운송장 등록시 -->
+<!-- 	                                        <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">배송 조회</button> -->
+										
+												<input type="hidden" name="t_key"  id="t_key" value="vmXicQZCzQaQetF3y0M0xg">
+												<input type="hidden" name="t_code" id="t_code" value="${creamList.tracking_code }">
+												<input type="hidden" name="t_invoice" id="t_invoice" value="${creamList.tracking_num }">
+												<input  type="button" value="배송조회" class="btn btn-light btn-half-height tracker">
+										
+										
+										
 										</c:when>
 									</c:choose>
 					       	     </div>
@@ -859,6 +875,7 @@ function payAuction(idx, price, id, title){
 					              <option selected>전체</option>
 					              <option value="junggo">중고상품</option>
 					              <option value="action">경매상품</option>
+					              <option value="cream">커스텀상품</option>
 					            </select>
 					        </ul>
 					    </div>
@@ -1226,6 +1243,26 @@ const confirmAcquisition = idx => {
     }
 };
   
+</script>
+
+<script>
+ 	$('.tracker').click(function() {
+		let apikey = "vmXicQZCzQaQetF3y0M0xg";
+		
+		$.ajax({
+			type:"GET",
+			url: "http://info.sweettracker.co.kr/api/v1/companylist?t_key=" + apikey,
+			dataType: "JSON",
+			success: function(data) {
+				let t_key = $("#t_key").val();
+				let t_code = $("#t_code").val();
+				let t_invoice = $("#t_invoice").val();
+				window.open("http://info.sweettracker.co.kr/tracking/4?t_key="+t_key+"&t_code="+t_code+"&t_invoice="+t_invoice ,"popForm", "toolbar=no, width=540, height=800 left=700 top=100, directories=no, status=no, resizable=no");
+			}, error: function() {
+				
+			}
+		});
+	})
 </script>
 	<!-- 푸터 시작 -->
 	<jsp:include page="../../inc_ex/footer.jsp" />
