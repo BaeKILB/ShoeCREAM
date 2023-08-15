@@ -25,11 +25,11 @@ public class MemberVO {
     @NotBlank(message = "아이디를 입력해 주세요")
 	private String mem_id;
     
-//    @Size(min = 2, max = 5, message = "이름은 2자 이상 5자 이내로 입력해주세요")
 //	@NotBlank
+    @Size(min = 2, max = 20, message = "이름은 2자 이상 10자 이내로 입력해주세요")
 	private String mem_name;
     
-    @Size(min = 2, max = 10, message = "별명은 2자 이상 10자 이내로 입력해주세요")
+    @Size(min = 2, max = 20, message = "별명은 2자 이상 10자 이내로 입력해주세요")
     private String mem_nickname;
     
 //    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$" ,message = "비밀번호는 8~20글자 이상 입력해주세요.")

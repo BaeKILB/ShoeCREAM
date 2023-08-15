@@ -5,11 +5,15 @@ import java.io.UnsupportedEncodingException;
 public class Script { // 벡엔드단 Script
 	
 	private static String processMessage(String msg) {
-	    if (msg.contains("mem_id=")) {
-	        String errorMessage = msg.substring(msg.indexOf('=') + 1);
-	        errorMessage = errorMessage.replace("}", "");
-	        return errorMessage;
+	    String[] fields = {"mem_id=", "mem_nickname=", "mem_passwd=", "mem_name=", "mem_mtel=", "mem_email="};
+
+	    for (String field : fields) {
+	        if (msg.contains(field)) {
+	            msg = msg.replace(field, "");
+	        }
 	    }
+	    
+	    msg = msg.replace("{", "").replace("}", "").replace(",", "").trim();
 	    return msg;
 	}
 	
