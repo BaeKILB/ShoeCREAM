@@ -18,7 +18,7 @@
    <header>
 		<jsp:include page="../../inc_ex/header.jsp" />
     </header>
-	<div class="inq_container">
+	<div class="inq_container"  style="margin-top: 200px;">
         <jsp:include page="../../inc_ex/mem_sidebar.jsp"></jsp:include>
 	
 	<c:set var="pageNum" value="1" />

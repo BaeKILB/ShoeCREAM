@@ -1,60 +1,60 @@
 @import "header.css";
 
-        /* 메인 */
-        .main {
-            padding-top: 54px;
-        }
-        
-                .no-vertical-margins {
+/* 메인 */
+.main {
+	padding-top: 200px;
+}
+
+.no-vertical-margins {
   margin-top: 0;
   margin-bottom: 0;
 }
-        
-        
-        /* 컨테이너 */
-        .main .container {
-            padding-top: 30px;
-            width: 935px;
-            display: flex;
-            flex-direction: column;
-            margin: 0 auto;
-        }
-        /* 게시물리스트 */
-        .main .container .story-list {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-        /* 게시물 리스트 아이템 */
-        .main .container .story-list .story-list__item {
-            margin-bottom: 30px;
-            border: 1px solid #dbdbdb;
-            border-radius: 4px;
-        }
-        /* 리스트 아이템 헤더부분 */
-        .main .container .story-list .story-list__item .sl__item__header {
-            width: 100%;
-            height: 60px;
-            display: flex;
-            align-items: center;
-        }
-        /* 리스트 아이템 헤더 div */
-        .main .container .story-list .story-list__item .sl__item__header div {
-            /*   margin-left: 10px; */
-            font-size: 16px;
-            /* 이 속성을 추가했습니다. */
-        }
-        /* 리스트 아이템 헤더 이미지영역 박스 */
-        .main
+
+/* 컨테이너 */
+.main .container {
+	padding-top: 30px;
+	width: 935px;
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto;
+}
+/* 게시물리스트 */
+.main .container .story-list {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+/* 게시물 리스트 아이템 */
+.main .container .story-list .story-list__item {
+	margin-bottom: 30px;
+	border: 1px solid #dbdbdb;
+	border-radius: 4px;
+}
+/* 리스트 아이템 헤더부분 */
+.main .container .story-list .story-list__item .sl__item__header {
+	width: 100%;
+	height: 60px;
+	display: flex;
+	align-items: center;
+}
+/* 리스트 아이템 헤더 div */
+.main .container .story-list .story-list__item .sl__item__header div {
+	/*   margin-left: 10px; */
+	font-size: 16px;
+	/* 이 속성을 추가했습니다. */
+}
+/* 리스트 아이템 헤더 이미지영역 박스 */
+.main
             .container
             .story-list
             .story-list__item
             .sl__item__header
-            div:nth-child(1) { width :40 px;
-        height: 40px;
-    padding :3 px;
-    border-radius:50%;
-    position:relative;
+            div:nth-child(1) {
+	width: 40 px;
+	height: 40px;
+	padding: 3 px;
+	border-radius: 50%;
+	position: relative;
 }
 
 /*리스트 아이템 헤더 실제이미지*/
@@ -225,9 +225,7 @@
 }
 
 .profile-image {
-  border: 2px solid #8a3ab8;
-  
-  
+/*   border: 2px solid #8a3ab8; */
 }
 
 #reply {
