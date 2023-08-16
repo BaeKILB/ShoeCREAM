@@ -46,7 +46,7 @@
 								+ "<td>"+ member.mem_nickname +"</td>"
 								+ "<td>"+ member.mem_mtel +"</td>"
 								+ "<td>"+ getFormatDate(birth) +"</td>"
-								+ "<td>"+ member.mem_rank +"</td>"
+// 								+ "<td>"+ member.mem_rank +"</td>"
 								+ "<td><button style='cursor: pointer;' class='moreBtn' onclick='openModal(" + member.mem_idx + ");'>상세정보</button></td>"
 								+ "</tr>"
 						);
@@ -280,7 +280,7 @@
 							<option value="mem_id" <c:if test="${param.searchType eq 'mem_id' }">selected</c:if>>아이디</option>			
 							<option value="mem_name" <c:if test="${param.searchType eq 'mem_name' }">selected</c:if>>이름</option>			
 							<option value="mem_nickname" <c:if test="${param.searchType eq 'mem_nickname' }">selected</c:if>>닉네임</option>			
-							<option value="mem_rank" <c:if test="${param.searchType eq 'mem_rank' }">selected</c:if>>등급</option>			
+<%-- 							<option value="mem_rank" <c:if test="${param.searchType eq 'mem_rank' }">selected</c:if>>등급</option>			 --%>
 						</select>
 						<input type="text" name="searchKeyword" value="${param.searchKeyword }" id="searchKeyword">
 						<input type="submit" value="검색" class="searchSubmit" style="cursor: pointer;">
@@ -296,7 +296,7 @@
 								<th scope="col">닉네임</th>
 								<th scope="col">연락처</th>
 								<th scope="col">생년월일</th>
-								<th scope="col">등급</th>
+<!-- 								<th scope="col">등급</th> -->
 								<th scope="col">상세정보</th>
 							</tr>
 						</thead>
@@ -352,10 +352,10 @@
 									<th>관심분야</th>
 									<td class="mem_interest"></td>
 								</tr>
-								<tr>
-									<th>등급</th>
-									<td class="mem_rank"></td>
-								</tr>
+<!-- 								<tr> -->
+<!-- 									<th>등급</th> -->
+<!-- 									<td class="mem_rank"></td> -->
+<!-- 								</tr> -->
 								<tr>
 									<th>가입일</th>
 									<td class="mem_sign_date"></td>
