@@ -272,10 +272,10 @@
 						판매자가 별도의 메신저로 결제링크를 보내거나 <br>
 						직거래(직접송금)을 유도하는 경우<br> 사기일 가능성이 높으니 거래를 자제해 주시고<br>
 						<br>
-						<a href="${pageContext.request.contextPath}/registReportForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message" onclick="window.open(this.href, '_blank', 'width=800, height=400'); return false;">여기를 클릭하여 중고나라 고객센터로 신고해주시기 바랍니다.</a>
+						<a href="${pageContext.request.contextPath}/registReportForm?product_idx=${jungGoNoh.product_idx}&mem_idx=${jungGoNoh.mem_idx}&buyier_idx=${principal.member.mem_idx}" class="warning_message" onclick="window.open(this.href, '_blank', 'width=800, height=400'); return false;">여기를 클릭하여 중고나라 고객센터로 <br>신고해주시기 바랍니다.</a>
 					</div>
 				</div>
-				<div class="product_content">
+				<div class="product_content" style="word-break:break-all;">
 					${jungGoNoh.product_info}
 				</div>
 			</div>
