@@ -104,6 +104,24 @@
 	
 }
 
+@media screen and (max-width: 670px) {
+	.pr_cont li {
+		width: calc(50% - 10px);
+	}
+	.pr_cont li:nth-child(n+4) {
+		margin-top: 0;
+	}
+	.pr_cont li:nth-child(n+3) {
+		margin-top: 1rem;
+	}
+	.pr_cont li:nth-child(n+2) {
+		margin-left: 10px;	
+	}
+	.pr_cont li:nth-child(3n) {
+		margin-left: 0;	
+	}
+}
+
 
 
 
