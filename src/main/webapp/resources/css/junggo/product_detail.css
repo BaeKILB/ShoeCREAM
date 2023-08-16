@@ -127,7 +127,7 @@
 .view_info {
 	width : 50%;
 	/*border: 1px solid red;*/
-	padding-top: 20px;
+	padding-top: 40px;
 	padding-bottom :20px;
 }
 
@@ -147,11 +147,13 @@
 
 .product_name h4 {
 	font-size: 25px;
+	margin-left: 2%;
 }
 
 .product_name p {
 	font-size: 35px;
 	font-weight: bold;
+	margin-left: 2%;
 }
 
 .product_progress {
@@ -275,7 +277,7 @@ width:15%;
 }
 .delete_btn {
 	display: inline-block;
-	width: 25%;
+	width: 35%;
 	padding: 5px 0;
 	font-size: 21px;
 	background: rgb(10, 10, 49);
@@ -289,7 +291,7 @@ width:15%;
 }
 .modify_Btn {
 	display: inline-block;
-	width: 25%;
+	width: 35%;
 	padding: 5px 0;
 	font-size: 21px;
 	background: rgb(10, 10, 49);
@@ -446,6 +448,11 @@ color: blue !important;
 .more_product_name {
 	margin-top: 5px;
 	font-size: 15px;
+	display:block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: bold;   
 }
 
 .more_product div span {

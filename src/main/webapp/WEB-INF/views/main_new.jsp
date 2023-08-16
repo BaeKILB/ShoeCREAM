@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/main_new.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/main_ex/main.js"></script>
 </head>
 <body>
 	<nav>
@@ -49,134 +51,36 @@
 		<div class="joonggo_list pr_list">
 			<h3 class="list_tit">중고 거래 상품</h3>
 			<div class="joonggo_cont pr_cont">
-				<ul>
-					<li>
-						<a href="#">
-							<div class="pro_img">
-								<img src="${pageContext.request.contextPath }/resources/img/junggo/NB2.jpg">
-							</div>
-							<div class="pro_txt">
-								<h4>
-									뉴발란스 530 Steel Grey
-								</h4>
-								<p>150,000원</p>
-								<span>부전동 | 23-08-16</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="pro_img">
-								<img src="${pageContext.request.contextPath }/resources/img/junggo/NB2.jpg">
-							</div>
-							<div class="pro_txt">
-								<h4>
-									뉴발란스 530 Steel Grey 뉴발란스 530 Steel Grey
-								</h4>
-								<p>150,000원</p>
-								<span>부전동 | 23-08-16</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="pro_img">
-								<img src="${pageContext.request.contextPath }/resources/img/junggo/NB2.jpg">
-							</div>
-							<div class="pro_txt">
-								<h4>
-									뉴발란스 530 Steel Grey
-								</h4>
-								<p>150,000원</p>
-								<span>부전동 | 23-08-16</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="pro_img">
-								<img src="${pageContext.request.contextPath }/resources/img/junggo/NB2.jpg">
-							</div>
-							<div class="pro_txt">
-								<h4>
-									뉴발란스 530 Steel Grey
-								</h4>
-								<p>150,000원</p>
-								<span>부전동 | 23-08-16</span>
-							</div>
-						</a>
-					</li>
+				<ul id="joongList">
+					
 				</ul>
 			</div>
 			<div class="more_btn">
-				<a href="#">더보기</a>
+				<a href="JunggoSearch">더보기</a>
 			</div>
 		</div>
 		
 		<div class="auction_list pr_list">
 			<h3 class="list_tit">경매 거래 상품</h3>
 			<div class="auction_cont pr_cont">
-				<ul>
-					<li>
-						<a href="#">
-							<div class="pro_img">
-								<img src="${pageContext.request.contextPath }/resources/img/junggo/NB2.jpg">
-							</div>
-							<div class="pro_txt">
-								<h4>
-									뉴발란스 530 Steel Grey
-								</h4>
-								<p>150,000원</p>
-								<span>부전동 | 23-08-16</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="pro_img">
-								<img src="${pageContext.request.contextPath }/resources/img/junggo/NB2.jpg">
-							</div>
-							<div class="pro_txt">
-								<h4>
-									뉴발란스 530 Steel Grey 뉴발란스 530 Steel Grey
-								</h4>
-								<p>150,000원</p>
-								<span>부전동 | 23-08-16</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="pro_img">
-								<img src="${pageContext.request.contextPath }/resources/img/junggo/NB2.jpg">
-							</div>
-							<div class="pro_txt">
-								<h4>
-									뉴발란스 530 Steel Grey
-								</h4>
-								<p>150,000원</p>
-								<span>부전동 | 23-08-16</span>
-							</div>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<div class="pro_img">
-								<img src="${pageContext.request.contextPath }/resources/img/junggo/NB2.jpg">
-							</div>
-							<div class="pro_txt">
-								<h4>
-									뉴발란스 530 Steel Grey
-								</h4>
-								<p>150,000원</p>
-								<span>부전동 | 23-08-16</span>
-							</div>
-						</a>
-					</li>
+				<ul id="auctionList">
+
 				</ul>
 			</div>
 			<div class="more_btn">
-				<a href="#">더보기</a>
+				<a href="Auction">더보기</a>
+			</div>
+		</div>
+		
+		<div class="cream_list pr_list">
+			<h3 class="list_tit">크림 커스텀 상품</h3>
+			<div class="cream_cont pr_cont">
+				<ul id="creamList">
+				
+				</ul>
+			</div>
+			<div class="more_btn">
+				<a href="Cream">더보기</a>
 			</div>
 		</div>
 

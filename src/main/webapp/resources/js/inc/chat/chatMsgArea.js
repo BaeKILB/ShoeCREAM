@@ -56,13 +56,7 @@ const loadChatMsgBar = () => {
 	}
 }
 
-// 만약 chat_room_idx 가 파라미터에 존재하면 처음 로드할때 데이터 받아오기
 
-if(getParams.get("chat_room_idx") != null && 
-	getParams.get("chat_room_idx") != undefined &&
-	getParams.get("chat_area") < 1){
-	loadChatMsgBar();
-}
 
 // 채팅방 나가기 신호 보내기
 // param = 0 : 일반 나가기
@@ -198,5 +192,23 @@ const allowCancelPay = () => {
 				
 			}
 		}
+}
+
+//onload
+
+
+// 만약 chat_room_idx 가 파라미터에 존재하면 처음 로드할때 데이터 받아오기
+
+if(getParams.get("chat_room_idx") != null && 
+	getParams.get("chat_room_idx") != undefined &&
+	getParams.get("chat_area") < 2){
+	loadChatMsgBar();
+}
+
+// chat_room_idx 가 파라미터에 있을때 자동 포커스 및 색 변경
+if(getParams.get("chat_room_idx") != null && 
+	getParams.get("chat_room_idx") != undefined){
+	let nowChatRooms = document.querySelector("#chat_room_" + getParams.get("chat_room_idx"));
+	nowChatRooms.classList.toggle("select_room");
 }
 

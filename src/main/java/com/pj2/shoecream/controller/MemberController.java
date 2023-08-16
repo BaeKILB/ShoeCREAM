@@ -149,7 +149,7 @@ public class MemberController {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
 		params.add("client_id", "29eee1b4771daa5dc16c4084cc6defc9");
-		params.add("redirect_uri", "http://localhost:8089/shoecream/auth/kakao/callback");
+		params.add("redirect_uri", "http://c5d2302t3.itwillbs.com/ShoeCREAM/auth/kakao/callback"); // 바꿔줘야함 
 		params.add("code", code);
 		
 		// HttpHeader와 HttpBody를 하나의 오브젝트에 담기

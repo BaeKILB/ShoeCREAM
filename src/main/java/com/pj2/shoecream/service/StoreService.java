@@ -44,7 +44,7 @@ public class StoreService {
         return mapper.selectStoreInfo(mem_idx);
     }
     
-    // 중고 리뷰 조회
+    // 모든 리뷰 조회
 	public List<Map<String, Object>> selectJungReivewList(int mem_idx) {
 	    return mapper.selectJungReviewList(mem_idx);
 	}
