@@ -62,7 +62,7 @@
 				</ul>
 			</div>
 			<div class="more_btn">
-				<a href="JunggoSearch">더보기</a>
+				<a href="${pageContext.request.contextPath }/JunggoSearch">더보기</a>
 			</div>
 		</div>
 		
@@ -74,7 +74,7 @@
 				</ul>
 			</div>
 			<div class="more_btn">
-				<a href="Auction">더보기</a>
+				<a href="${pageContext.request.contextPath }/Auction">더보기</a>
 			</div>
 		</div>
 		
@@ -86,7 +86,7 @@
 				</ul>
 			</div>
 			<div class="more_btn">
-				<a href="Cream">더보기</a>
+				<a href="${pageContext.request.contextPath }/Cream">더보기</a>
 			</div>
 		</div>
 	</section>

@@ -309,7 +309,7 @@ function addItems(obj){	// 만약 마지막 리스트까지 검색했으면 더�
 	
 	let limit = obj.jungListHtml.length;
 	
-	if(limit > 5){
+	if(limit >= 5){
 		limit = 4;
 	}
 	

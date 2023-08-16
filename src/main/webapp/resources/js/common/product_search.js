@@ -237,7 +237,7 @@ function loadItemAjax(obj) {
 	obj["keyWord"] = getParams.get("product_search");
 	
 	// 불러올 중고 검색 기록수 제한 커스텀
-	obj["limit"] = 8;
+	obj["limit"] = 4;
 	
 	let checkError = false;
 	

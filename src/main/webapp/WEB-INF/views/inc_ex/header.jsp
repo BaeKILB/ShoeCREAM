@@ -109,7 +109,7 @@ function show_name(e) {
 			</div>
 			<div class="header_menu">
 				<div class="nav_item">
-					<div class="category_btn">
+					<div class="category_btn" onclick="location.href='${pageContext.request.contextPath}/JunggoSearch'">
 						<i class="fa fa-bars" aria-hidden="true"></i>
 						<span>카테고리</span>
 					</div>
