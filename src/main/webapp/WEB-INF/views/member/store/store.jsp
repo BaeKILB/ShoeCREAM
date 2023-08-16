@@ -671,6 +671,7 @@ function payAuction(idx, price, id, title){
 										    <time datetime="${auctionList.auction_date}">${auctionList.auction_date}</time>
 										</div>
 										<div>
+										<c:if test="${principal.member.mem_idx == storeInfo.mem_idx }">
 											<c:choose>
 												<c:when test="${auctionList.auc_state eq '대기' }">
 							                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='${pageContext.request.contextPath }/AuctionModifyForm?auction_idx=${auctionList.auction_idx}'">수정</button>
@@ -709,6 +710,7 @@ function payAuction(idx, price, id, title){
 												</c:when>
 											
 											</c:choose>
+											</c:if>
 					                	</div>
 					                </div>
 					            </div>
