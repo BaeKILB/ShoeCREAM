@@ -14,6 +14,13 @@
 	margin-bottom: 5px;
 }
 
+#itemList > div:hover{
+    box-shadow: 0px 3px 10px #e6e6e6;
+}
+
+.itemWrap{
+	transition: all 0.4s;
+}
 
 /* 중고 이미지 */
 .pro_img {

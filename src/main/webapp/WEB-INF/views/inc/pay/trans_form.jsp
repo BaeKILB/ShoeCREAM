@@ -223,15 +223,15 @@
 				return true;
 			}
 			// 결제하기 버튼 누를떄 동작
-				function requestTrans() {
-					
-					// 결제 API 실행 전 유효성 검사
-					if(!validateForm()) {
-						return false;
-					}
-					tranSuccess();
-				}
+			function requestTrans() {
 				
+				// 결제 API 실행 전 유효성 검사
+				if(!validateForm()) {
+					return false;
+				}
+				tranSuccess();
+			}
+			
 
 			</script>
 			
