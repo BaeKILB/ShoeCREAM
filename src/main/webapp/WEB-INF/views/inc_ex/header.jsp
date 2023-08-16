@@ -118,9 +118,6 @@
 								<a href="${pageContext.request.contextPath}/Cream" style="color: black;">커스텀</a>
 							</li>
 							<li>
-								<a href="${pageContext.request.contextPath}/community" style="color: black;">커뮤니티</a>
-							</li>
-							<li>
 								<a href="${pageContext.request.contextPath }/chatRooms?chat_area=0" style="color: black;">중고채팅</a>
 							</li>
 						</ul>
@@ -129,109 +126,6 @@
 			</div>
 		</header>
 	</div>
-
-
-
-
-<!-- 	<header> -->
-<%-- 		<input type="hidden" id="principalId" value="${principal.member.mem_idx }"> --%>
-<!-- 		<div> -->
-<!-- 			<div> -->
-<!-- 				<div> -->
-<!-- 					<div> -->
-<!-- 						<div> -->
-<!-- 							<div> -->
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${empty principal}"> --%>
-<!-- 										<div> -->
-<!-- 											<a href="login">로그인</a> -->
-<!-- 										</div> -->
-<!-- 										<div> -->
-<!-- 											<a href="signup">회원가입</a> -->
-<!-- 										</div> -->
-<!-- 										<div> -->
-<!-- 											<a href="UserNotice">공지사항</a> -->
-<!-- 										</div> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<div> -->
-<%-- 											<a href="${pageContext.request.contextPath }/mypage/update">${principal.member.mem_id }님</a> --%>
-<!-- 										</div> -->
-<!-- 										<div> -->
-<%-- 											<a href="${pageContext.request.contextPath }/social/${principal.member.mem_idx}">내 소셜</a> --%>
-<!-- 										</div> -->
-<!-- 										<div> -->
-<%-- 											<a href="${pageContext.request.contextPath }/social/story">스토리</a> --%>
-<!-- 										</div> -->
-<!-- 										<div> -->
-<%-- 											<a href="${pageContext.request.contextPath }/logout" onclick="return confirmLogout()">로그아웃</a> --%>
-<!-- 										</div> -->
-<!-- 										<div> -->
-<!-- 											<a href="UserNotice">고객센터</a> -->
-<!-- 										</div> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</header> -->
-<!-- 	<div> -->
-<!-- 		<div> -->
-<!-- 			<div> -->
-<!-- 				<div> -->
-<!-- 					<div> -->
-<%-- 						<a href="${pageContext.request.contextPath }/"> --%>
-<%-- 							<img src="${pageContext.request.contextPath }/resources/img/main_ex/shoecream-logo.png" alt="슈크림 로고"> --%>
-<!-- 						</a> -->
-<!-- 					</div> -->
-<!-- 					<div> -->
-<%-- 						<c:choose> --%>
-<%-- 							<c:when test="${not empty product_search }"> --%>
-<!-- 								<div> -->
-<%-- 									<input type="text" value="${product_search }" id="product_search" name="product_search" placeholder="상품명 입력" onkeypress="show_name(event)"> --%>
-<!-- 									<img src="" alt="검색"> -->
-<!-- 								</div> -->
-<%-- 							</c:when> --%>
-<%-- 							<c:otherwise> --%>
-<!-- 								<div id="top_searh"> -->
-<!-- 									<input type="text" id="product_search" name="product_search" placeholder="상품명 입력" onkeypress="show_name(event)"> -->
-<!-- 								</div> -->
-<%-- 							</c:otherwise> --%>
-<%-- 						</c:choose> --%>
-<!-- 					</div> -->
-<!-- 					<div> -->
-<%-- 						<a href="${pageContext.request.contextPath }/mypage/update">마이페이지</a> --%>
-<!-- 					</div> -->
-<!-- 					<div> -->
-<%-- 						<a href="${pageContext.request.contextPath }/store/${principal.member.mem_idx}">상점</a> --%>
-<!-- 					</div> -->
-<!-- 					<div> -->
-<%-- 						<a href="${pageContext.request.contextPath }/social/popular"> --%>
-<!-- 							소셜 -->
-<!-- 						</a> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div> -->
-<!-- 					<div> -->
-<%-- 						<img id="menu" src="${pageContext.request.contextPath }/resources/img/main_ex/market/hamburger.png" alt="메뉴"> --%>
-<!-- 					</div> -->
-<!-- 					<div> -->
-<!-- 						<p> -->
-<!-- 							<a href="JunggoSearch">중고거래 </a>  -->
-<%-- 							<a href="${pageContext.request.contextPath }/Auction" style="color: black;">경매하기 </a>  --%>
-<%-- 							<a href="${pageContext.request.contextPath }/RegisterForm" style="color: black;">상품등록 </a>  --%>
-<!-- 							<a href="Cream">굿즈 스토어 </a>  -->
-<!-- 							<a href="community">커뮤니티 </a> -->
-<%-- 							<a href="${pageContext.request.contextPath }/chatRooms?chat_area=0" style="color: black;">중고채팅 </a> --%>
-<!-- 						</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
 	<!-- // header 영역 -->
 </body>
 </html>
