@@ -74,7 +74,7 @@ $(document).ready(function() {
 								<th class="code"><span class="auction_idx">상품 코드</span></th>
 								<th class="brand"><span class="product_brand">브랜드</span></th>
 								<th class="price">경매시작가</th>
-								<th class="price_dibs">경매입찰가</th>
+<!-- 								<th class="price_dibs">경매입찰가</th> -->
 								<th class="auction_title">상품제목</th>
 								<th class="image">상품이미지</th>
 								<th class="date">경매 등록일</th>
@@ -88,7 +88,7 @@ $(document).ready(function() {
 										<td class="code"><span class="product_code"> <span class="sv_member">${auctionmap.auction_idx}</span></span></td>
 										<td class="brand"> ${auctionmap.auction_brand}</td>
 										<td class="price">${auctionmap.auc_start_price}</td>
-										<td class="price_dibs">${auctionmap.bid_price}</td>
+<%-- 										<td class="price_dibs">${auctionmap.bid_price}</td> --%>
 										<td class="auction_title">${auctionmap.auction_info}</td>
 										<td>
 											<div class="img_wrap">											
