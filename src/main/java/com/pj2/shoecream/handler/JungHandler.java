@@ -70,30 +70,32 @@ public class JungHandler {
 		
 		htmlStr = 
 				"<div class='col-lg-3 col-md-4 col-6 mt-2'>"
-			     + "<div class='itemWrap' >"
+		
 //			     + "  <div class='imgWrap' " + href + " >"
 //			     + "    <img class='card-img-top' src='" + localURL + jProduct.get("image_path") + "/" + jProduct.get("image1") + "' />"
 //			     + "  </div>"
 //			     + "  <div class='itemSimpleInfoWrap'>"
-				 + "    <img class='card-img-top junggoImg' src='" + localURL + jProduct.get("image_path") + "/" + jProduct.get("image1") + "' alt='productImage'/>"
+			     + "  <div class='pro_img'>"
+				
+				 + "    <img  src='" + localURL + jProduct.get("image_path") + "/" + jProduct.get("image1") + "' alt='productImage'/>"
+				 + "  </div>"
+			     + "  	<div class='pro_txt'>"			     
+			     + "        <h4 class='itemTitle'>" + title +"</h4>"
 
-			     + "  	<div class='card-body'>"			     
-			     + "        <h3 class='card-title itemTitle'>" + title +"</h3>"
-			     + "    </div>"
 //			     + "	<ul class='list-group list-group-flush itemSimpleInfo'>"
 //			     + "      <li>"
 //			     + "        <p class='itemTitle'>" + jProduct.get("product_title") +"</p>"
 //			     + "      </li>"
-			     + "      <li class='list-group-item' " + href + ">"
+//			     + "      <li class='list-group-item' " + href + ">"
 			     + "        <p class='itemPrice'>" 
 			     + 			Integer.toString((Integer)jProduct.get("product_price")).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",") + "원</p>"
-			     + "      </li>"
-			     + "      <li class='list-group-item' " + href + ">"
-			     + "        <p class='itemPayment'>" + jProduct.get("product_payment") + "</p>"
-			     + "      </li>"
-			     + "      <li class='list-group-item' " + href + ">"
+//			     + "      </li>"
+//			     + "      <li class='list-group-item' " + href + ">"
+			     + "        <span class='itemPayment'>" + jProduct.get("product_payment") + "</span>"
+//			     + "      </li>"
+			     + "      <span " + href + ">"
 			     + 			date
-			     + "      </li>"
+			     + "      </span>"
 //			     + "      <li class='list-group-item'>"
 //			     + 			dibStr
 //			     + "      </li>"
@@ -102,7 +104,7 @@ public class JungHandler {
 //			     + "      <input class='btn btn-primary' type='button' value='찜하기' onclick='event.stopPropagation(); location.href=\"#\";' />"
 //				 + "    </div>"
 //			     + "  </div>"
-			     + "</div>"
+			     + "    </div>"
 			     + "</div>";
 		
 

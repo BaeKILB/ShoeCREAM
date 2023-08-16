@@ -13,12 +13,7 @@
 	padding-bottom: 5px;
 	margin-bottom: 5px;
 }
-/* 중고 항목 영역 */
-.itemWrap{
-    width: 25%;
-    transition: all 0.4s;
-    border-radius: 6px;
-}
+
 
 /* 중고 이미지 */
 .pro_img {
