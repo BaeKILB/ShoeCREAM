@@ -258,7 +258,7 @@ function payAuction(idx, price, id, title){
 					    </div>
 					    <div class="col-sm-2 justify-content-end">
 					        <ul class="goods_cate">
-					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+					            <select class="form-selljunggo form-select form-select-sm" aria-label=".form-select-sm example">
 					              <option selected>전체</option>
 					              <option value="대기중">대기중</option>
 					              <option value="예약중">예약중</option>
@@ -294,7 +294,6 @@ function payAuction(idx, price, id, title){
 							</div>
 						</div>
 					</div>
-					
 					<div class="container mt-4">
 					  <c:forEach items="${productSellList}" var="productSellList">
 					    <!--중고 후기 상품-->
@@ -397,8 +396,7 @@ function payAuction(idx, price, id, title){
 					    </div>
 					    <div class="">
 					        <ul class="goods_cate">
-					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-					              <option selected>전체</option>
+                                <select class="form-buyjunggo form-select form-select-sm" aria-label=".form-select-sm example">					              <option selected>전체</option>
 					              <option value="결제완료">결제완료</option>
 					              <option value="거래완료">거래완료</option>
 					              <option value="결제취소">결제취소</option>
@@ -589,10 +587,11 @@ function payAuction(idx, price, id, title){
 					    </div>
 					    <div class="">
 					        <ul class="goods_cate">
-					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+					            <select class="form-auction form-select form-select-sm" aria-label=".form-select-sm example">
 					              <option selected>전체</option>
-					              <option value="2">거래중</option>
-					              <option value="3">거래완료</option>
+					              <option value="대기">대기</option>
+					              <option value="진행">진행</option>
+					              <option value="마감">마감</option>
 					            </select>
 					        </ul>
 					    </div>
@@ -730,10 +729,12 @@ function payAuction(idx, price, id, title){
 					    </div>
 					    <div class="">
 					        <ul class="goods_cate">
-					            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+					            <select class="form buyAuction form-select form-select-sm" aria-label=".form-select-sm example">
 					              <option selected>전체</option>
-					              <option value="2">거래중</option>
-					              <option value="3">거래완료</option>
+					              <option value="입찰">입찰</option>
+					              <option value="낙찰">낙찰</option>
+					              <option value="유찰">유찰</option>
+					              <option value="즉시구매">즉시구매</option>
 					            </select>
 					        </ul>
 					    </div>
@@ -838,24 +839,16 @@ function payAuction(idx, price, id, title){
 					        </p>
 					        <!-- 생략된 주석 -->
 					    </div>
+				    	<div class="">
+					        <ul class="goods_cate">
+					            <select class="form-custom form-select form-select-sm" aria-label=".form-select-sm example">
+					              <option selected>전체</option>
+					              <option value="배송중">배송중</option>
+					              <option value="배송완료">배송완료</option>
+					            </select>
+					        </ul>
+					    </div>
 					</div>
-					    <div class="container">
-							<div class="row">
-								<div class="col-auto" style="">
-							        <input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off" checked>
-									<label class="btn btn-check-label" for="option9">최신순</label>
-									
-									<input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off">
-									<label class="btn btn-check-label" for="option10">인기순</label>
-									
-									<input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off" >
-									<label class="btn btn-check-label" for="option11">고가</label>
-									
-									<input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off">
-									<label class="btn btn-check-label" for="option12">저가</label>
-								</div>
-							</div>
-						</div>
 					<div>
 						<!--커스텀-->
 					<div class="container mt-4">
@@ -936,7 +929,7 @@ function payAuction(idx, price, id, title){
 					              <option selected>전체</option>
 					              <option value="junggo">중고상품</option>
 					              <option value="action">경매상품</option>
-					              <option value="cream">커스텀상품</option>
+					              <option value="cream">크림상품</option>
 					            </select>
 					        </ul>
 					    </div>
@@ -1043,17 +1036,31 @@ function payAuction(idx, price, id, title){
 							                <div class="goods_image" style="width: 94px; height: 94px;">
 							                    <!-- 실제 이미지 구현 부분 -->
 												<c:choose>
-													<c:when test="${dibList.product_sell_status eq '대기중' }">
-														<img src="${pageContext.request.contextPath}/resources/upload/${dibList.image1}" alt="상품 이미지">
-													</c:when>
-													<c:when
-														test="${dibList.product_sell_status eq '판매완료' }">
-														<img src="${pageContext.request.contextPath }/resources/upload/${dibList.image1}" alt="상품 이미지">
-														<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
-														거래완료
-														</span>
-													</c:when>
-												</c:choose>
+											<c:when test="${dibList.product_sell_status eq '대기중' }">
+												<img src="${pageContext.request.contextPath}${dibList.image_path }/${dibList.image1}" alt="상품 이미지">
+											</c:when>
+											<c:when
+												test="${dibList.product_sell_status eq '예약중' }">
+												<img src="${pageContext.request.contextPath }${dibList.image_path }/${dibList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												예약중
+												</span>
+											</c:when>
+											<c:when
+												test="${dibList.product_sell_status eq '거래대기중' }">
+												<img src="${pageContext.request.contextPath }${dibList.image_path }/${dibList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												거래대기중
+												</span>
+											</c:when>
+											<c:when
+												test="${dibList.product_sell_status eq '거래완료' }">
+												<img src="${pageContext.request.contextPath }${dibList.image_path }/${dibList.image1}" alt="상품 이미지">
+												<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
+												거래완료
+												</span>
+											</c:when>
+										</c:choose>
 							                </div>
 						                </a>
 						            </div>
@@ -1072,6 +1079,51 @@ function payAuction(idx, price, id, title){
 						                    <div class="goods_date">
 											    <time datetime="${dibList.product_date}">${dibList.product_date}</time>
 											</div>
+											<div>
+					                    		<c:choose>
+							                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
+									                    <div class="profile_btn_box mt-auto">
+									                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">찜취소</button>
+									                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">상세보기</button>
+									                    </div>                    	
+							                    	</c:when>
+							                    	<c:otherwise>
+							                    		<div class="profile_btn_box mt-auto">
+							                    		</div> 
+							                    	</c:otherwise>
+						                    	</c:choose>
+						                	</div>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</c:if>
+						<c:if test="${dibList.dibs_type eq '크림상품'}">
+						    <div class="goods mb-4" data-dib-type="크림상품">
+						        <div class="row no-gutters align-items-start">
+						            <div class="col-12 col-md-auto">
+					            		<a href="${pageContext.request.contextPath}/CreamDetail?cream_idx=${dibList.product_idx}">
+							                <div class="goods_image" style="width: 94px; height: 94px;">
+							                    <!-- 실제 이미지 구현 부분 -->
+												<img src="${pageContext.request.contextPath}${dibList.image_path }/${dibList.image1}" alt="상품 이미지">
+							                </div>
+						                </a>
+						            </div>
+						            <div class="col-12 col-md-9">
+										<div class="goods_info">
+											<h2 class="goods_title">${dibList.cream_title }</h2>
+<!-- 											<p class="goods_price"> -->
+<%-- 												<span class="bold">${dibList.product_price }</span>원 --%>
+<!-- 											</p> -->
+											<p class="goods_shop">커스텀 제작</p>
+						<%-- 					<p class="goods_date">${dibList.product_date }</p> --%>
+										</div>
+						            </div>
+						            <div class="col-12 col-md-auto">
+						                <div class="ml-auto">
+<!-- 						                    <div class="goods_date"> -->
+<%-- 											    <time datetime="${dibList.product_date}">${dibList.product_date}</time> --%>
+<!-- 											</div> -->
 											<div>
 					                    		<c:choose>
 							                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
@@ -1226,8 +1278,8 @@ function payAuction(idx, price, id, title){
 									    <time datetime="${jungReivewList.product_date}">${jungReivewList.review_date}</time>
 									</div>
 									<div>
-				                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button>
-				                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button>
+<!-- 				                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">수정</button> -->
+<!-- 				                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">삭제</button> -->
 				                	</div>
 				                </div>
 				            </div>
@@ -1244,28 +1296,32 @@ function payAuction(idx, price, id, title){
 </div>
 	<!-- main_content 영역 끝 -->
 <script>
-$(document).ready(function() {
-	  // 셀렉트 박스의 값을 변경할 때마다 실행되는 함수
-	  $('.form-dibselect').on('change', function() {
-	    const selectedValue = $(this).val();
-	    
-	    // 전체를 선택했을 경우 모든 찜 상품을 보여주고, 그렇지 않은 경우 필터링
-	    if (selectedValue === '전체') {
-	      $('.goods').show();
-	    } else {
-	      const dibTypeValue = selectedValue === 'junggo' ? '중고상품' : '경매상품';
+$(document).ready(function () {
+    // 셀렉트 박스의 값을 변경할 때마다 실행되는 함수
+    $('.form-dibselect').on('change', function () {
+      const selectedValue = $(this).val();
 
-	      $('.goods').each(function() {
-	        const dibType = $(this).data('dib-type');
-	        if (dibType === dibTypeValue) {
-	          $(this).show();
-	        } else {
-	          $(this).hide();
-	        }
-	      });
-	    }
-	  });
-	});
+      // 전체를 선택했을 경우 모든 찜 상품을 보여주고, 그렇지 않은 경우 필터링
+      if (selectedValue === '전체') {
+        $('.goods').show();
+      } else {
+        const dibTypeValue = selectedValue === 'junggo'
+          ? '중고상품'
+          : selectedValue === 'action'
+          ? '경매상품'
+          : '크림상품';
+
+        $('.goods').each(function () {
+          const dibType = $(this).data('dib-type');
+          if (dibType === dibTypeValue) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      }
+    });
+  });
   
 //   시간
   function formatTimeAgo(date) {
@@ -1334,6 +1390,122 @@ const confirmAcquisition = idx => {
 		});
 	})
 </script>
+
+<script>
+  document.querySelector('.form-auction').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var auctionItems = document.querySelectorAll('.goods');
+
+    auctionItems.forEach(function(item) {
+      var aucState = item
+                       .querySelector('.goods_image .goods_front')
+                       .innerText
+                       .trim();
+
+      if ((selectedValue === '전체') ||
+          (selectedValue === '대기' && aucState === '경매 대기 중') ||
+          (selectedValue === '진행' && aucState === '경매 진행 중') ||
+          (selectedValue === '마감' && aucState.includes('경매 마감'))) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+<script>
+  document.querySelector('.form-selljunggo').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var productItems = document.querySelectorAll('.goods');
+
+    productItems.forEach(function(item) {
+      var productStatus = item
+                          .querySelector('.goods_image .goods_front')
+                          .innerText
+                          .trim();
+
+      if ((selectedValue === '전체') ||
+          (selectedValue === '대기중' && productStatus === '대기중') ||
+          (selectedValue === '예약중' && productStatus === '예약중') ||
+          (selectedValue === '거래대기중' && productStatus === '거래대기중') ||
+          (selectedValue === '거래완료' && productStatus === '거래완료')) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+<script>
+  document.querySelector('.form-buyjunggo.form-select-sm').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var goodsItems = document.querySelectorAll('.goods');
+
+    goodsItems.forEach(function(item) {
+      var goodsState = item
+                       .querySelector('.goods_image .goods_front')
+                       .innerText
+                       .trim();
+
+      if ((selectedValue === '전체') ||
+          (selectedValue === '결제완료' && goodsState === '결제완료') ||
+          (selectedValue === '거래완료' && goodsState === '거래완료') ||
+          (selectedValue === '결제취소' && goodsState === '결제취소') ||
+          (selectedValue === '거래취소' && goodsState === '거래취소')) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+<script>
+  document.querySelector('.form.buyAuction').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var auctionItems = document.querySelectorAll('.goods');
+
+    auctionItems.forEach(function(item) {
+      var aucState = item
+                       .querySelector('.goods_image .goods_front')
+                       .innerText
+					   .replace(/\n/g, '')
+                       .trim();
+
+      if ((selectedValue === '전체') ||
+          (selectedValue === '입찰' && aucState === '입찰') ||
+          (selectedValue === '낙찰' && aucState.includes('낙찰')) ||
+          (selectedValue === '유찰' && aucState === '유찰') ||
+          (selectedValue === '즉시구매' && aucState.includes('즉시구매'))) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+</script>
+
+<script>
+  document.querySelector('.form-custom.form-select.form-select-sm').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var goodsItems = document.querySelectorAll('.goods');
+
+    goodsItems.forEach(function(item) {
+      var goodsState = item.querySelector('.goods_info .goods_price:last-child').innerText.trim();
+
+      if ((selectedValue === '전체') ||
+          (selectedValue === '배송중' && goodsState === '현재상태 : 배송중') ||
+          (selectedValue === '배송완료' && goodsState === '현재상태 : 거래완료')) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+</script>
+
 	<!-- 푸터 시작 -->
 	<jsp:include page="../../inc_ex/footer.jsp" />
 </body>
