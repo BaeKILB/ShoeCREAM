@@ -72,6 +72,7 @@ function connectWs() {
 function calculateGuaranteeAmount() {
     const bidPrice = parseFloat(document.getElementById("bid_price").value);
     const guaranteeAmount = bidPrice * 0.1; // 입찰 금액의 10%
+    $("#guarantee_amount2").val(numberWithCommas(guaranteeAmount)+"원") 
     document.getElementById("guarantee_amount").value = guaranteeAmount.toFixed(0);
 }
 
@@ -214,6 +215,11 @@ function refreshParentWindow() {
         window.opener.location.reload();
     }
 }
+
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 </script>
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -272,11 +278,16 @@ function refreshParentWindow() {
                <c:choose>
                 <c:when test="${bid eq null }">
                     <input type="hidden" id="nowPrice" value="${auction.auc_start_price }">
-                    <div class="fw-bold">${auction.auc_start_price }원</div>                 
+                    <div class="fw-bold">
+                    <script>document.write(numberWithCommas(${auction.auc_start_price }))</script>원
+                    </div>                 
                 </c:when>
                 <c:otherwise>
                     <input type="hidden" id="nowPrice" value="${bid.bid_price }">
-                    <div id="nowPrice" class="fw-bold">${bid.bid_price }원</div>
+                    
+                    <div id="nowPrice" class="fw-bold">
+                    	<script>document.write(numberWithCommas(${bid.bid_price }))</script>원
+                    </div>
                 </c:otherwise>
                </c:choose>
         </div>
@@ -286,7 +297,9 @@ function refreshParentWindow() {
             <div class="text-center">즉시구매가</div>
         </div>
         <div class="col-6">
-            <div class="fw-bold">${auction.auc_buy_instantly }원</div>
+            <div class="fw-bold">
+            	<script>document.write(numberWithCommas(${auction.auc_buy_instantly }))</script>원
+            </div>
         </div>
     </div>
     <div class="row">
@@ -294,7 +307,9 @@ function refreshParentWindow() {
             <div class="text-center">입찰 단위</div>
         </div>
         <div class="col-6">
-            <div class="fw-bold">${auction.auc_bid_unit}원</div>     
+            <div class="fw-bold">
+            	<script>document.write(numberWithCommas(${auction.auc_bid_unit }))</script>원
+            </div>     
         </div>
     </div>
     <hr>
@@ -324,7 +339,8 @@ function refreshParentWindow() {
             <div class="row">
                 <!-- 보증금 입찰 금액의 10퍼 -->
                 <label class="col-form-label col-3 text-center">보증금</label>
-                <input type="text" class="form-control-plaintext form-control col" id="guarantee_amount" name="deposit">
+                <input type="hidden"  id="guarantee_amount" name="deposit">
+                <input type="text" class="form-control-plaintext form-control col" id="guarantee_amount2" readonly>
             </div>
             <div class="row justify-content-center">
                 <div class="col-2">

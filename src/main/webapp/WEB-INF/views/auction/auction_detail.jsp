@@ -169,10 +169,10 @@
 							<div class="col-4 fw-bold">
 				    			<c:choose>
 									<c:when test="${bid eq null }">
-									    ${auction.auc_start_price }원
+										<script>document.write(numberWithCommas(${auction.auc_start_price }))</script>원
 									</c:when>
 									<c:otherwise>
-									    ${bid.bid_price }원
+										<script>document.write(numberWithCommas(${bid.bid_price }))</script>원
 									</c:otherwise>
 						     	</c:choose>
 							</div>
@@ -181,7 +181,7 @@
 					<div class="row">
 						<div class="col-3">즉시구매가</div>
 						<div class="col-4 fw-bold">
-							${auction.auc_buy_instantly }원
+							<script>document.write(numberWithCommas(${auction.auc_buy_instantly }))</script>원
 						</div>
 					</div>
 					<div class="row mb-2">

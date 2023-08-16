@@ -98,7 +98,7 @@ const bidResult = (data) => {
         let result =
 			"<div class='row'>"
 				+ "<div class='col-2 text-center'>"+item.mem_nickname+"</div>"
-				+ "<div class='col-3 text-center'>"+item.bid_price+"</div>"
+				+ "<div class='col-3 text-center'>"+numberWithCommas(item.bid_price)+"원</div>"
 				+ "<div class='col-5 text-center'>"+dateFormat(item.bid_date)+"</div>"
 				+ "<div class='col-2 text-center'>"+item.bid_state+"</div>"
 			+ "</div>";
@@ -214,3 +214,7 @@ $(function() {
 		$(this).text(fmdt);
 	});
 })
+
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
