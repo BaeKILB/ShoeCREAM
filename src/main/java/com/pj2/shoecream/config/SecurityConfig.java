@@ -29,8 +29,8 @@ public class SecurityConfig {
 			.antMatchers("/mypage/**","/social/**","/api/**" ,"/store/**", "/regist**", "/modify**", "/pay**", "/trade**", "/Jung**" , "/start**"
 					, "/trans**", "/shoe**", "/authorize**", "/charge**", "/withdraw**", "/Auction**", "/bidding**", "/auction**", "/Auc**", "/delivery**"
 					, "/tracking**" , "/acquisition", "/tracking**", "/shipping**").authenticated() // 인증(로그인)한 유저만 갈 수 있는 페이지
-			.antMatchers("/Admi**", "/Inquiry**", "/Qst**", "/creamInsert**", "/creamApply**" , "/AccountCheck**", "/noticeWriteForm**", "/NoticeList**"
-					, "/adminProduct", "/noticeDetail**" , "/noticeModify**", "/noticeDelete**", "/auctionProduct**", "/DeleteProAuction**", "/creamProduct**", "/auctionReport**", "/adminPointAccount**").hasRole("ADMIN") // "/AdminMain" 페이지는 ROLE_ADMIN 권한이 있는 사용자만 접근 가능
+			.antMatchers("/Admi**", "/Inquiry**", "/QstModifyForm", "/creamInsert**", "/creamApply**" , "/AccountCheck**", "/noticeWriteForm**", "/NoticeList**"
+					, "/adminProduct**", "/noticeDetail**" , "/noticeModify**", "/noticeDelete**", "/auctionProduct**", "/DeleteProAuction**", "/creamProduct**", "/auctionReport**", "/adminPointAccount**").hasRole("ADMIN") // "/AdminMain" 페이지는 ROLE_ADMIN 권한이 있는 사용자만 접근 가능
 			.anyRequest().permitAll()
 	    .and()
 	    .formLogin()
