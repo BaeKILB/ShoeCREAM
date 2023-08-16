@@ -40,8 +40,7 @@
 	
 					      <a href="chatRooms?chat_area=0&chat_room_idx=${chatRoom.chat_room_idx }" 
 					      id="chat_room_${chatRoom.chat_room_idx }" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
-					        <div class="d-flex align-items-center justify-content-between">
-					       	<c:choose>
+     					   	<c:choose>
 					          	<c:when test="${chatRoom.mem_seller_idx eq myIdx }">
 					          		<div class="chatSeller">판매</div>
 					          	</c:when>
@@ -51,7 +50,8 @@
 					          	<c:otherwise>
 					          		<div class="">일반</div>
 					          	</c:otherwise>
-				          	</c:choose>		
+				          	</c:choose>	
+					        <div class="d-flex align-items-center justify-content-between">	
 					          <strong id="chat_room_title_${chatRoom.chat_room_idx }" 
 					          class="mb-1">${chatRoom.product_title }</strong>
 					          <small>
@@ -123,7 +123,7 @@
 							</div>
 			    		</c:when>
 			    		<c:otherwise>
-			    			<p>현재 참여하고있는 채팅방이 없습니다</p>
+			    			<h4 class="no_chat_room">현재 참여하고있는 채팅방이 없습니다</h4>
 			    		</c:otherwise>
 			    	</c:choose>
 	

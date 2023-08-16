@@ -34,6 +34,7 @@
 		<section id="sec_con" class="register_view inr">
 	
 	<div class="titleContainner">
+
 		<p class="title_title">${jungGoNoh.mem_nickname}님의 신고내역</p>
 	</div>
 	<table border="1">

@@ -31,16 +31,16 @@
 		</div>
 		<form action="withdrawPointPro" method="post">
 			<input type="radio" class="btn-check" name="point_amount" id="option1" value="5000" >
-			<label class="btn btn-outline-light" for="option1">5,000원</label>
+			<label class="btn btn-outline-dark" for="option1">5,000원</label>
 			
 			<input type="radio" class="btn-check" name="point_amount" id="option2" value="10000" >
-			<label class="btn btn-outline-light" for="option2">10,000원</label>
+			<label class="btn btn-outline-dark" for="option2">10,000원</label>
 			
 			<input type="radio" class="btn-check" name="point_amount" id="option3" value="50000" >
-			<label class="btn btn-outline-light" for="option3">50,000원</label>
+			<label class="btn btn-outline-dark" for="option3">50,000원</label>
 			
 			<input type="radio" class="btn-check" name="point_amount" id="option4" value="100000" >
-			<label class="btn btn-outline-light" for="option4">100,000원</label>
+			<label class="btn btn-outline-dark" for="option4">100,000원</label>
 		
 
 		
