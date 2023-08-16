@@ -3,6 +3,14 @@
 	
 <%@ include file="../../inc_ex/header.jsp"%>
 
+<!-- 제이쿼리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/upload.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/style.css">
+
+
+
     <!--사진 업로드페이지 중앙배치-->
         <main class="uploadContainer">
            <!--사진업로드 박스-->
