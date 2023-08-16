@@ -48,6 +48,10 @@ const doneAuctionResult = data => {
             price = item.bid_price
         }
         
+	    function numberWithCommas(x) {
+  			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
+        
         let result = 
                 "<li>"
                 +"  <a href='AuctionDetail?auction_idx="+ item.auction_idx +"'>"
@@ -56,7 +60,7 @@ const doneAuctionResult = data => {
                 +"  	</div>"
                 +"      <div class='pro_txt'>"
                 +"        <h4>"+item.auction_title+"</h4>"
-                +"        <p>"+price+"원</p>"
+                +"        <p>"+numberWithCommas(price)+"원</p>"
                 +"        <span class='auction_date'>" 
                 +"              <div id='data"+index+"'>"
                 +"                  <input type=hidden name='auction_idx' value='"+item.auction_idx+"'>"
@@ -152,6 +156,10 @@ const doneCreamResult = data => {
     listCount = pageInfo.listCount;
     pageListLimit = pageInfo.pageListLimit;
     
+    function numberWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	}
+    
     for (let item of data) {
         // 입찰내역이 있을경우 가격을 입찰가로 바꿔야함 가져올때 bid_list 도 같이 가져오자
   
@@ -163,7 +171,7 @@ const doneCreamResult = data => {
                 +"  	</div>"
                 +"      <div class='pro_txt'>"
                 +"        <h4>"+item.cream_title+"</h4>"
-                +"        <p>"+item.size220+"원</p>"
+                +"        <p>"+numberWithCommas(item.size220)+"원</p>"
                 +"        <span>" 
                 +                   item.cream_readcount
                 +" | "			
