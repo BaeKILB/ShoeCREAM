@@ -113,19 +113,22 @@
 	    ai.auc_regist_date,
 	    ai.auc_state,
 	    ai.mem_idx as ai_mem_idx,
+	    ci.cream_title,
 	    CASE
 	        WHEN jp.product_idx IS NOT NULL THEN '중고상품'
 	        WHEN ai.auction_idx IS NOT NULL THEN '경매상품'
+	        WHEN ci.cream_idx IS NOT NULL AND ci.cream_idx LIKE '%c%' THEN '크림상품'
 	    END AS dibs_type,
 	    sell_member.mem_nickname as seller_nickname
 	FROM
 	    dibs AS d
 	JOIN mem_info AS mi ON mi.mem_idx = d.mem_idx
 	JOIN product_image AS pi ON pi.product_idx = d.product_idx
+	LEFT JOIN cream_item ci ON d.product_idx = ci.cream_idx
 	LEFT JOIN jung_product AS jp ON jp.product_idx = d.product_idx
 	LEFT JOIN auction_item AS ai ON ai.auction_idx = d.product_idx
 	LEFT JOIN mem_info AS sell_member ON sell_member.mem_idx = IFNULL(jp.mem_idx, ai.mem_idx)
-	WHERE d.mem_idx = #{mem_idx}
+	WHERE d.mem_idx = #{mem_idx};
 	</select>
 
 	

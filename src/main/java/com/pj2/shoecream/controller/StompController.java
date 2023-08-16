@@ -28,7 +28,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.handler.ChatHandler;
 import com.pj2.shoecream.service.ChatService;
+import com.pj2.shoecream.service.FollowService;
 import com.pj2.shoecream.service.JungProductService;
+import com.pj2.shoecream.service.MemberService;
 import com.pj2.shoecream.vo.ChatRoomVO;
 import com.pj2.shoecream.vo.JungProductVO;
 
@@ -48,6 +50,9 @@ public class StompController {
 
 	@Autowired
 	private ChatHandler chatHandler;
+	
+	@Autowired
+	private MemberService memService;
 	
 	// 웹 소켓(stomp) 받을 경로
 	// StompHandler 에서 설정한 setApplicationDestinationPrefixes 경로가 병합 
@@ -437,6 +442,17 @@ public class StompController {
     		}
         }
        System.out.println("checkChatRoomStatus : getchatroom");
+      
+       // 상대방 팔로워 수 가져오기
+       
+       int follow = 0;
+       if(idx != (Integer)chatMap.get("mem_buyer_idx")) {
+       // 파라미터 (현재 접속 idx, 찾고싶은 멤버 idx)
+    	   follow = memService.countFollow((Integer)chatMap.get("mem_buyer_idx"));
+       }
+       else {    	   
+    	   follow = memService.countFollow((Integer)chatMap.get("mem_seller_idx"));
+       }
        
 	   	// 아래 html 에 넣을 신고시 사용할 파라미터 문자열 셋업
 	   	String registReport = 
@@ -445,6 +461,9 @@ public class StompController {
 	   			+"," + idx
 	   			;
 	   	chatMap.put("registReport", registReport);
+	   	chatMap.put("follow", follow);
+	   	// 현재 매인 주소 넣기
+	   	chatMap.put("localURL", map.get("localURL"));
 	   	// 현재 상품 판매 상태 따라서 채팅창 정보바 레이아웃 설정
 		switch ((String)chatMap.get("product_sell_status")) {
 		case "대기중":

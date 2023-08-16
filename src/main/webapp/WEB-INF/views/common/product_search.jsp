@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/main_new.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
-<script src="${pageContext.request.contextPath }/resources/js/main_ex/main.js"></script>
+<%-- <script src="${pageContext.request.contextPath }/resources/js/main_ex/main.js"></script> --%>
 </head>
 <script type="text/javascript">
 	let localURL = "${pageContext.request.contextPath}";

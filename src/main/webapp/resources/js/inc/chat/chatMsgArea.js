@@ -18,7 +18,7 @@ const isParamsReady = () => {
 // 상품 정보와 유저 정보 및 버튼 불러오기
 const loadChatMsgBar = () => {
 	if(isParamsReady()){
-			
+
 			
 		let checkError = false;
 	
@@ -192,6 +192,24 @@ const allowCancelPay = () => {
 				
 			}
 		}
+}
+
+// 숨겨진 chatRoom 열기
+const openChatRoom = () => {
+	let chatRooms = document.querySelector("#chat-room-list-warp");
+	let chatMsgWarp = document.querySelector(".chat_msg_warp");
+	chatRooms.classList.toggle("d-none");
+	chatMsgWarp.classList.toggle("d-none");
+}
+
+// 상품 신고 창 열기
+const registReport = (productIdx, memReportIdx, nowUserIdx) => {
+	window.open(localURL + "/registReportForm?product_idx="
+	+ productIdx
+	+ "&mem_idx="
+	+ memReportIdx
+	+ "&buyier_idx="
+	+ nowUserIdx, '_blank', 'width=800, height=600'); return false;
 }
 
 //onload

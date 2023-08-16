@@ -11,6 +11,7 @@
 <script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/etc/common.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/pay/pay_form.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/inc/pay/point_charge.css" rel="stylesheet">
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet"> --%>
 <!-- jQuery -->
@@ -22,6 +23,7 @@
 <body>
 	
 	<fieldset class="img_sec_wrap">
+		<h3 class="chargeTitle">Shoe Pay</h3>
 		<div class="txt_sec_p">
 			<p>
 				<span>계정 포인트 잔액</span>
@@ -29,18 +31,21 @@
 			</p>
 
 		</div>
-		<form action="chargePointPro" method="post">
-			<input type="radio" class="btn-check" name="point_amount" id="option1" value="5000" >
-			<label class="btn btn-outline-dark" for="option1">5,000원</label>
-			
-			<input type="radio" class="btn-check" name="point_amount" id="option2" value="10000" >
-			<label class="btn btn-outline-dark" for="option2">10,000원</label>
-			
-			<input type="radio" class="btn-check" name="point_amount" id="option3" value="50000" >
-			<label class="btn btn-outline-dark" for="option3">50,000원</label>
-			
-			<input type="radio" class="btn-check" name="point_amount" id="option4" value="100000" >
-			<label class="btn btn-outline-dark" for="option4">100,000원</label>
+		<form action="chargePointPro" method="post" class="chargeFrom">
+			<h3>포인트 충전 금액 선택</h3>
+			<div class="radioWrap">
+				<input type="radio" class="btn-check" name="point_amount" id="option1" value="5000" >
+				<label class="btn btn-outline-dark" for="option1">5,000원</label>
+				
+				<input type="radio" class="btn-check" name="point_amount" id="option2" value="10000"  checked="checked">
+				<label class="btn btn-outline-dark" for="option2">10,000원</label>
+				
+				<input type="radio" class="btn-check" name="point_amount" id="option3" value="50000" >
+				<label class="btn btn-outline-dark" for="option3">50,000원</label>
+				
+				<input type="radio" class="btn-check" name="point_amount" id="option4" value="100000" >
+				<label class="btn btn-outline-dark" for="option4">100,000원</label>
+			</div>
 		
 
 		

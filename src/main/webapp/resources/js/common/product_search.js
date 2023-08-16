@@ -234,7 +234,7 @@ function initAjax() {
 // 중고 상품 항목 불러오기
 function loadItemAjax(obj) {
 	obj["localURL"] = localURL;
-	obj["keyWord"] = keyWord;
+	obj["keyWord"] = getParams.get("product_search");
 	
 	// 불러올 중고 검색 기록수 제한 커스텀
 	obj["limit"] = 8;
@@ -320,7 +320,7 @@ function addItems(obj){	// 만약 마지막 리스트까지 검색했으면 더�
 //	}
 	
 	
-	let itemListWrap = document.querySelector("#junggoList");
+	let itemListWrap = document.querySelector("#joongList");
 	
 	obj.jungListHtml.forEach((e) => {
 		itemListWrap.insertAdjacentHTML("beforeend", e);

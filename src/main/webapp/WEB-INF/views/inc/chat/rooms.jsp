@@ -28,7 +28,14 @@
 	   	<section class="side_chatroom_wrap container">
 		    <article class="chatroom_list row d-flex flex-column align-items-stretch flex-shrink-0 bg-white" >
 			    <!-- 채팅방 항목 -->
-			    <div class="col-md-4 col-lg-5 d-none d-md-block">
+			    <!-- 채팅방 펼치기 버튼 -->
+			    
+			    <div class="col-1 d-block d-md-none">
+			    	<button class="chatRoomBtn" onclick="openChatRoom();">
+			    		<i class="fa fa-bars" aria-hidden="true"></i>
+			    	</button>
+			    </div>
+			    <div class="col-md-4 col-lg-5 d-none d-md-block" id="chat-room-list-warp">
 				    <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
 	<!-- 			      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg> -->
 				      <span class="fs-5 fw-semibold">1:1 대화</span>
@@ -80,7 +87,7 @@
 			    
 			    
 			    <!-- 채팅 메시지 항목 -->
-			    <div class="col-sm-12 col-md-8 col-lg-7 chat_msg_warp">
+			    <div class="col-11 col-md-8 col-lg-7 chat_msg_warp">
 			    	<c:if test="${!empty room}">
 			    		<article class="chat_msg_info_wrap ">
 	

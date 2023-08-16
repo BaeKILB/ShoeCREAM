@@ -241,13 +241,13 @@ li.lic_num_inp select, li.lic_num_inp input{
 	border-radius: 5px;
 	font-size: 19px;
 	border: 1px solid #ddd;
-	color: #ff6600;
+	color: black;
 	font-weight: 600;
 	margin: 0 auto;
 }
 
 .payment_p.active {
-	background: #ff6600;
+	background: black;
 	color: #fff;
 	border: 0;
 }
@@ -337,7 +337,7 @@ li.lic_num_inp select, li.lic_num_inp input{
 	position: relative;
 	left: 50%;
 	transform: translateX(-50%);
-	background: #ff6600;
+	background: black;
 	height: 70px;
 	line-height: 70px;
 	color: #fff;
@@ -375,7 +375,15 @@ li.lic_num_inp select, li.lic_num_inp input{
 	display:none;
 }
 
-
+/* 유의사항 */
+.noticeText
+{	
+	width: 100%;
+    border: 1px solid #ddd;
+    height: 300px;
+    padding: 15px;
+    border-radius: 5px;
+}
 
 
 

@@ -33,6 +33,8 @@
 	<section id="sec_con" class="inr res_page">
 <!-- 		<form action="resInfoPro" method="post"> -->
 		
+		<h2 class="formTitle">중고 상품 결제</h2>
+		<button class="btn btn-dark mt-2 mb-2" onclick="history.back();">뒤로가기</button>
 		<form action="payPro" method="post">
 			<input type="hidden" name="product_selector" value="${map.product_selector }">
 			<input type="hidden" name="product_idx" value="${map.product_idx }">
@@ -45,7 +47,7 @@
 			<fieldset class="img_sec_wrap">
 				<div class="img_sec_p">
 					
-					<img src="${pageContext.request.contextPath}/${map.image_path}/${map.image1}" alt="">
+					<img src="${pageContext.request.contextPath}${map.image_path}/${map.image1}" alt="">
 				</div>
 				<div class="txt_sec_p">
 					<p>
@@ -256,7 +258,7 @@
 					let checkShoePay = document.getElementsByName("pay_method");
 					if(checkShoePay[0].checked){
 						window.open("shoePay?product_idx=" + ${map.product_idx } +"&product_selector=" + ${map.product_selector } + "&chat_room_idx=" + getParams.get("chat_room_idx")
-						,"shoePay",'width=700, height=700')
+						,"shoePay",'width=600, height=500')
 						return false;		
 					}
 					
