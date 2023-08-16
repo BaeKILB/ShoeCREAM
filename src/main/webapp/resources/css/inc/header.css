@@ -153,7 +153,11 @@ header {
 	font-weight: 600;
 }
 
-
+@media screen and (max-width: 1300px) {
+	header {
+		width: 97%;
+	}
+}
 
 
 

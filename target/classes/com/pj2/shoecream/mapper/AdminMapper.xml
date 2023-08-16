@@ -501,7 +501,8 @@
 	<select id="selectAdminPointList" >
 		SELECT *
 			FROM point_inout
-			WHERE point_usage = '관리자입출금';
+<!-- 			WHERE POINT_USAGE = '관리자입출금'; -->
+
 	</select>
 	<select id="selectAdminInfo">
 		SELECT * 

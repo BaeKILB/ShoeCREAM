@@ -55,7 +55,7 @@
 
 
 	</header>
-<div id="main_cont">
+
 <%-- 		--------${jungGoNoh}------------ --%>
 		<section id="main_cont">
 			<section id="sec_con" class="inr product_view">
@@ -395,7 +395,7 @@
 		 </div>
 		</section>
 	</section>
-</div>
+
 	<footer>
 		<jsp:include page="../inc_ex/footer.jsp" />
 	</footer>

@@ -28,7 +28,7 @@ public interface StoreMapper {
     // 상점 개인 페이지 정보 조회
 	Map<String, Object> selectStoreInfo(int mem_idx);
 	
-	// 중고 리뷰 조회
+	// 모든 리뷰 조회
 	List<Map<String, Object>> selectJungReviewList(int mem_idx);
 
 	// 경매 참여 내역
