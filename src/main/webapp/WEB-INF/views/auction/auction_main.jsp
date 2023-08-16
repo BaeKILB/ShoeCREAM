@@ -14,8 +14,6 @@
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/nav.css" rel="stylesheet" > --%>
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/auction/auction_main.css"	rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/css/inc/side_category.css"    rel="stylesheet">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 
 </head>
@@ -75,7 +73,7 @@
 								</select>
 				            </div>
 						</div>
-						<div id="itemList" class="row"></div>
+						<div id="itemList" class="row no-gutters"></div>
 	                </div>
 	    	    </div>
 		    </div>
