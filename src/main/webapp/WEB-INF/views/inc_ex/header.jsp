@@ -38,7 +38,7 @@
 									${principal.member.mem_id }님
 								</a>
 								<c:if test="${principal.member.mem_id == 'admin'}">
-                                    <a href="AdminMain">관리자페이지</a>
+                                    <a href="${pageContext.request.contextPath}/AdminMain">관리자페이지</a>
                                 </c:if>
 							</li>
 							<li>
@@ -106,7 +106,7 @@
 					<nav>
 						<ul>
 							<li>
-								<a href="JunggoSearch" style="color: black;">중고거래</a> 
+								<a href="${pageContext.request.contextPath}/JunggoSearch" style="color: black;">중고거래</a> 
 							</li>
 							<li>
 								<a href="${pageContext.request.contextPath }/Auction" style="color: black;">경매하기</a>
@@ -115,10 +115,10 @@
 								<a href="${pageContext.request.contextPath }/RegisterForm" style="color: black;">상품등록</a>
 							</li>
 							<li>
-								<a href="Cream" style="color: black;">커스텀</a>
+								<a href="${pageContext.request.contextPath}/Cream" style="color: black;">커스텀</a>
 							</li>
 							<li>
-								<a href="community" style="color: black;">커뮤니티</a>
+								<a href="${pageContext.request.contextPath}/community" style="color: black;">커뮤니티</a>
 							</li>
 							<li>
 								<a href="${pageContext.request.contextPath }/chatRooms?chat_area=0" style="color: black;">중고채팅</a>
