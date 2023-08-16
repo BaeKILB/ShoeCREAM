@@ -694,7 +694,7 @@ function payAuction(idx, price, id, title){
                                                                             <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm?auction_idx=${auctionList.auction_idx}', '운송장 등록', 'width=580, height=360, left=100, top=50')">운송장 등록</button>
 																		</c:when>
 																		<c:when test="${auctionList.tracking_num ne null }"> <!-- 운송장 등록시 -->
-                                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">뭘로하지</button>
+<!--                                                                             <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">뭘로하지</button> -->
 																		</c:when>
 																	</c:choose>
 																</c:when>
@@ -704,11 +704,10 @@ function payAuction(idx, price, id, title){
 															</c:choose>
 														</c:when>
 														<c:when test="${auctionList.bid_price eq null }"> <!-- 입찰이 없을경우 -->
-															<!-- 재등록이나 기간연장으로 대체 -->
+                                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="auctionRestore(${auctionList.auction_idx})">재등록</button>
 														</c:when>
 													</c:choose>
 												</c:when>
-											
 											</c:choose>
 											</c:if>
 					                	</div>
@@ -1560,6 +1559,29 @@ const dibsCheck2 = (product_idx) => {
         }
     })
 }
+
+const auctionRestore = idx => {
+    if(confirm("해당상품을 재등록 하시겠습니까?")) {
+        $.ajax({
+            type: 'GET'
+            , url: '${pageContext.request.contextPath }/auctionRestore'
+            , data: {
+                'auction_idx':idx
+            }
+            , dataType: 'text'
+            , success: function(result) {
+                alert(result);
+                location.reload();
+            }
+            , error: function(result) {
+                alert("error");
+                location.reload();
+            } 
+        });
+    } else {
+        return false;
+    }
+};
 </script>
 
 	<!-- 푸터 시작 -->
