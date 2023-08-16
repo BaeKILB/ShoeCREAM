@@ -187,8 +187,8 @@ LEFT OUTER JOIN product_image pi
 	
 		<!-- 신고 조회 -->
 	<select id="moreReportListSmall" resultType="map" parameterType="com.pj2.shoecream.vo.JungGoNohVO">
-	  SELECT jr.report_idx, jr.report_content, jr.product_idx, jr.seller_idx, jr.reporter_idx, jr.report_div, jr.report_detail, jr.report_date
-	  		, mi.mem_idx, mi.mem_nickname
+	  SELECT jr.report_idx, jr.report_content, jr.product_idx, jr.seller_idx, jr.reporter_idx, jr.report_div, jr.report_detail, Date_format(jr.report_date, '%Y-%m-%d') as report_date
+	  , mi.mem_idx, mi.mem_nickname
 	      FROM joonggo_report jr
 	      JOIN mem_info mi
 	       ON jr.seller_idx = mi.mem_idx

@@ -56,7 +56,6 @@
 
 // }
 </script>
-   
 </head>
 <body>
 <!--    <header> -->
@@ -66,7 +65,7 @@
 <form action="${pageContext.request.contextPath }/MemberPasswdUpdatePro" method="post" name="fr" onsubmit='return signUpCheck();'>
 	<input type="hidden" id="mem_id" name="mem_id" value="${member.mem_id }">
 <!--    <form id="memberUpdate" name="fr"> -->
-   <section id="sec_con">
+   <section id="sec_con" style="margin-top: 200px;">
 <!--       <h1 class="con_title">내 정보 수정</h1> -->
       <div class="inq_container">
       <!-- Sidebar -->
