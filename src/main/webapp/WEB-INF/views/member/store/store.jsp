@@ -125,6 +125,18 @@
 	font-size: 14px;
 }
 
+  .my_store_menu_content_wrapper {
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .menu_bar {
+    margin: 0 auto;
+  }
+  
+   
+
+ }
 </style>
 
 
@@ -235,7 +247,7 @@ function payAuction(idx, price, id, title){
 					</div>
 				</div>
 			</div>
-			
+			<div class="container">
 			<div id="my_store_menu_content">
 				<div id="sales_menu_area" class="common_menu">
 					<div class="row" style="display: flex; justify-content: space-between; align-items: center;">

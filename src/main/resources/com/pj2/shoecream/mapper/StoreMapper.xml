@@ -32,14 +32,26 @@
 	    pi.image3,
 	    pi.image4,
 	    pi.image_path,
-	    cr.chat_room_idx,
-	    cr.mem_seller_idx,
-	    cr.mem_buyer_idx,
-	    cr.chat_room_area
+	    CASE
+	      WHEN jp.product_sell_status != 'product_sell_status' THEN cr.chat_room_idx
+	      ELSE NULL
+	    END AS chat_room_idx,
+	    CASE
+	      WHEN jp.product_sell_status != 'product_sell_status' THEN cr.mem_seller_idx
+	      ELSE NULL
+	    END AS mem_seller_idx,
+	    CASE
+	      WHEN jp.product_sell_status != 'product_sell_status' THEN cr.mem_buyer_idx
+	      ELSE NULL
+	    END AS mem_buyer_idx,
+	    CASE
+	      WHEN jp.product_sell_status != 'product_sell_status' THEN cr.chat_room_area
+	      ELSE NULL
+	    END AS chat_room_area
 	  FROM mem_info mi
 	  INNER JOIN jung_product jp ON mi.mem_idx = jp.mem_idx
 	  INNER JOIN product_image pi ON jp.product_idx = pi.product_idx
-	  INNER JOIN chat_rooms cr ON jp.product_idx = cr.product_idx
+	  LEFT JOIN chat_rooms cr ON jp.product_idx = cr.product_idx
 	  WHERE jp.mem_idx = #{mem_idx}
 	  ORDER BY jp.product_date DESC;
 	</select>
