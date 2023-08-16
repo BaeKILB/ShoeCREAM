@@ -842,12 +842,6 @@ function payAuction(idx, price, id, title){
 					</div>
 					    <div class="container">
 							<div class="row">
-								<div class="col-1">
-									<div>전체</div>
-								</div>
-								<div class="col-8">
-									<div class=""><b>2개</b></div>
-								</div>
 								<div class="col-auto" style="">
 							        <input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off" checked>
 									<label class="btn btn-check-label" for="option9">최신순</label>
