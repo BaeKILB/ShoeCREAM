@@ -72,3 +72,29 @@ const dibsResult = (data) => {
         $("#dibsBox").children().append(result);
     }
 }
+
+
+  function formatTimeAgo(date) {
+      const now = new Date();
+      const diffSeconds = Math.floor((now - date) / 1000);
+      const diffMinutes = Math.floor(diffSeconds / 60);
+      const diffHours = Math.floor(diffMinutes / 60);
+      const diffDays = Math.floor(diffHours / 24);
+      const diffMonths = Math.floor(diffDays / 30);
+      const diffYears = Math.floor(diffDays / 365);
+
+      if (diffYears > 0) return diffYears + '년 전';
+      if (diffMonths > 0) return diffMonths + '달 전';
+      if (diffDays > 0) return diffDays + '일 전';
+      if (diffHours > 0) return diffHours + '시간 전';
+      if (diffMinutes > 0) return diffMinutes + '분 전';
+      return '방금 전';
+  }
+
+$(function() {
+	$("time").each(function() {
+		const od = new Date($(this).val());
+		const fmdt = formatTimeAgo(od);
+		$(this).text(fmdt);
+	});
+})

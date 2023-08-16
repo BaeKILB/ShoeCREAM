@@ -157,6 +157,17 @@ function submitCheck() {
  	color: #000;
  }
  
+.goods_date {
+  font-size:13px; 
+  color:#6c757d;
+}
+
+.profileImage {
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+}
+ 
 </style>
 
 </head>
@@ -351,55 +362,72 @@ function submitCheck() {
 		</section>
 		<hr>
 		<section class="row"> <!-- 상품정보 & 판매자정보 -->
-			<div class="col-xl-4 col-xs-12"> <!-- 판매자 정보 & 판매 물품 -->
-				<div class="container h-100">
+			<div class="col-xl-6 col-xs-12"> <!-- 판매자 정보 & 판매 물품 -->
+				<div class="container">
 					<div class="row h-50"> 
 						<div class="col">
 							<div class="fs-5 fw-bold">상품정보</div>
 							<p class="bg-light rounded fs-6">${cream.cream_content }</p>
 						</div>
 					</div>
-				<div class="container">
-					<div class="row">
-						<div class="col-8 fw-bold fs-5 fw-bold">${cream.cream_title } 구매후기</div>
-					</div>
-					<c:forEach items="${reviewList }" var="review" varStatus="status"> <!-- 후기가져오면 여기 바꾸면됨 -->
-						<c:if test="${status.index < 4}">
-							<div class="row h-75">
-								<div class="col-8">
-									<div class="container">
-										<div class="row">
-											<div class="col">
-												<span>
-													<c:forEach begin="0" end="4" step="1" varStatus="status">
-														<c:choose>
-															<c:when test="${status.index < review.review_star }">
-																<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-	  																<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-																</svg>
-															</c:when>
-															<c:otherwise>
-																<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-																  <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-																</svg>
-															</c:otherwise>
-														</c:choose>
-													</c:forEach>
-												</span>
-											</div>
+				</div>
+			</div>
+			<div class="col-xl-6 col-xs-12">
+				<div class="row">
+					<div class="col">
+						<div class="container">
+							<div class="row">
+								<div class="col-8 fw-bold fs-5 fw-bold">${cream.cream_title } 구매후기</div>
+							</div>
+							<c:forEach items="${reviewList }" var="review" varStatus="status"> <!-- 후기가져오면 여기 바꾸면됨 -->
+								<c:if test="${status.index < 4}">
+									<div class="row h-75">
+										<div class="col-2">
+											<img src="${pageContext.request.contextPath }/resources/upload/profile/${review.mem_profileImageUrl }" class="profileImage" onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/memProfile.jpg'">
 										</div>
-										<div class="row">
-											<div class="col">
-												<b class="fs-6">${review.review_content }</b>
+										<div class="col-10">
+											<div class="container">
+												<div class="row">
+													<div class="col">
+														<span>
+															<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }">
+																<span>${review.mem_nickname }</span>
+															</a>
+														</span>
+														<span class="goods_date">
+															<time datetime="${review.review_date }">${review.review_date }</time>
+														</span>
+														<div>
+															<c:forEach begin="0" end="4" step="1" varStatus="status">
+																<c:choose>
+																	<c:when test="${status.index < review.review_star }">
+																		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+			  																<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+																		</svg>
+																	</c:when>
+																	<c:otherwise>
+																		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+																		  <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+																		</svg>
+																	</c:otherwise>
+																</c:choose>
+															</c:forEach>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col">
+														<p>${review.review_content }</p>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-						</c:if>
-					</c:forEach>
+								</c:if>
+							</c:forEach>
+						</div>
+					</div>
 				</div>
-			</div>
 			</div>
         </section>
 	</main>
