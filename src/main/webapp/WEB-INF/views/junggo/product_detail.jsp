@@ -63,44 +63,141 @@
 				<div class= "row">
 			<%-- 슬라이드 쇼 --%>
 				<div class="slide_wrap col-sm-12 col-lg-6">
+					
 					<div class="slide">
 						<div class="mySlides">
 							<div class="numbertext">1&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
 							<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image1_name}">
 						</div>
 	
-						<div class="mySlides">
-							<div class="numbertext">2&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-							<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2_name}">
-						</div>
+						<c:choose>
+							<c:when test="${jungGoNoh.image2_name != ''}">
+								<div class="mySlides">
+									<div class="numbertext">2&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
+									<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2_name}">
+								</div>							
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
 	
-						<div class="mySlides">
-							<div class="numbertext">3&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-							<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3_name}">
-						</div>
-	
-						<div class="mySlides">
-							<div class="numbertext">4&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
-							<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4_name}">
-						</div>
-						<a class="prev" onclick="plusSlides(-1)">❮</a> <a class="next" onclick="plusSlides(1)">❯</a>
+						<c:choose>
+							<c:when test="${jungGoNoh.image3_name != ''}">
+								<div class="mySlides">
+									<div class="numbertext">2&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
+									<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3_name}">
+								</div>							
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+						
+						<c:choose>
+							<c:when test="${jungGoNoh.image4_name != ''}">
+								<div class="mySlides">
+									<div class="numbertext">2&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
+									<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4_name}">
+								</div>							
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+						
+						
+						
+						<c:choose>
+							<c:when test="${jungGoNoh.image2_name != ''}">
+								<a class="prev" onclick="plusSlides(-1)">❮</a> <a class="next" onclick="plusSlides(1)">❯</a>						
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+						
+						
+						
+						
+						
 					</div>
 	
 					<div class="G1">
 						<div class="column">
 							<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image1_name}" onclick="currentSlide(1)">
 						</div>
-						<div class="column">
-							<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2_name}" onclick="currentSlide(2)">
-						</div>
-						<div class="column">
-							<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3_name}" onclick="currentSlide(3)">
-						</div>
-						<div class="column">
-							<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4_name}" onclick="currentSlide(4)">
-						</div>
+						<c:choose>
+							<c:when test="${jungGoNoh.image2_name != ''}">
+								<div class="column">
+									<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2_name}" onclick="currentSlide(2)">
+								</div>							
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${jungGoNoh.image3_name != ''}">
+								<div class="column">
+									<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3_name}" onclick="currentSlide(3)">
+								</div>							
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${jungGoNoh.image4_name != ''}">
+								<div class="column">
+									<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4_name}" onclick="currentSlide(4)">
+								</div>							
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>
 					</div>
+					
+					
+					
+					
+					
+					
+					
+<!-- 					<div class="slide"> -->
+<!-- 						<div class="mySlides"> -->
+<!-- 							<div class="numbertext">1&nbsp;&nbsp;/&nbsp;&nbsp;4</div> -->
+<%-- 							<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image1_name}"> --%>
+<!-- 						</div> -->
+	
+<!-- 						<div class="mySlides"> -->
+<!-- 							<div class="numbertext">2&nbsp;&nbsp;/&nbsp;&nbsp;4</div> -->
+<%-- 							<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2_name}"> --%>
+<!-- 						</div> -->
+	
+<!-- 						<div class="mySlides"> -->
+<!-- 							<div class="numbertext">3&nbsp;&nbsp;/&nbsp;&nbsp;4</div> -->
+<%-- 							<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3_name}"> --%>
+<!-- 						</div> -->
+	
+<!-- 						<div class="mySlides"> -->
+<!-- 							<div class="numbertext">4&nbsp;&nbsp;/&nbsp;&nbsp;4</div> -->
+<%-- 							<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4_name}"> --%>
+<!-- 						</div> -->
+<!-- 						<a class="prev" onclick="plusSlides(-1)">❮</a> <a class="next" onclick="plusSlides(1)">❯</a> -->
+<!-- 					</div> -->
+	
+<!-- 					<div class="G1"> -->
+<!-- 						<div class="column"> -->
+<%-- 							<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image1_name}" onclick="currentSlide(1)"> --%>
+<!-- 						</div> -->
+<!-- 						<div class="column"> -->
+<%-- 							<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image2_name}" onclick="currentSlide(2)"> --%>
+<!-- 						</div> -->
+<!-- 						<div class="column"> -->
+<%-- 							<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3_name}" onclick="currentSlide(3)"> --%>
+<!-- 						</div> -->
+<!-- 						<div class="column"> -->
+<%-- 							<img class="demo cursor" src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4_name}" onclick="currentSlide(4)"> --%>
+<!-- 						</div> -->
+<!-- 					</div> -->
+					
 				</div>
+				
 				<script>
 				let slideIndex = 1;
 				showSlides(slideIndex);
