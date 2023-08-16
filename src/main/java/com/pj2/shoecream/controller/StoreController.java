@@ -55,7 +55,7 @@ public class StoreController {
 		Map<String, Object> storeInfo = storeService.selectStoreInfo(mem_idx);
         model.addAttribute("storeInfo", storeInfo);
 		
-        // 중고 후기 조회
+        // 모든 후기 조회
         List<Map<String, Object>> jungReivewList = storeService.selectJungReivewList(mem_idx);
         model.addAttribute("jungReivewList", jungReivewList);
 		System.out.println("내 후기 값들 :" + jungReivewList);
