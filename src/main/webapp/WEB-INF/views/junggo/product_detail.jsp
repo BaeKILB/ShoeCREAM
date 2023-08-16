@@ -84,7 +84,7 @@
 						<c:choose>
 							<c:when test="${jungGoNoh.image3_name != ''}">
 								<div class="mySlides">
-									<div class="numbertext">2&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
+									<div class="numbertext">3&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
 									<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image3_name}">
 								</div>							
 							</c:when>
@@ -95,7 +95,7 @@
 						<c:choose>
 							<c:when test="${jungGoNoh.image4_name != ''}">
 								<div class="mySlides">
-									<div class="numbertext">2&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
+									<div class="numbertext">4&nbsp;&nbsp;/&nbsp;&nbsp;4</div>
 									<img src="${pageContext.request.contextPath}/resources/upload/${jungGoNoh.image4_name}">
 								</div>							
 							</c:when>
