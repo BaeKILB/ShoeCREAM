@@ -892,6 +892,7 @@ function payAuction(idx, price, id, title){
 					          </div>
 					            <div class="col-12 col-md-auto">
 					            <!-- 진짜 시연용으로 굴러가게만 해놓음 야매임 수정반드시 해야함 seller_idx부분 반드시 -->
+					            <c:if test="${principal.member.mem_idx == storeInfo.mem_idx }">
 									<c:choose>
 										<c:when test="${creamList.inbound_tracking_num eq null }"> <!-- 운송장 미등록시 -->
                                             <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm2?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=580, height=800, left=100, top=50')">운송장 등록</button>
@@ -907,7 +908,8 @@ function payAuction(idx, price, id, title){
 											<button type="button" class="btn btn-light btn-half-height" onclick="window.open('${pageContext.request.contextPath }/CreRegistReviewForm?product_idx=${creamList.cream_idx}&mem_idx=1234&buyer_idx=${creamList.mem_idx }','구매후기 등록', 'width=680, height=700, left=100, top=50')">구매후기 등록</button>
 										</c:when>
 									</c:choose>
-					       	     </div>
+								</c:if>
+				       	     </div>
 					      </div>
 					      </div>
 				        </c:forEach>
