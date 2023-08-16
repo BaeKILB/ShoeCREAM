@@ -1,18 +1,30 @@
 @charset "UTF-8";
 
-/* 채팅방 본인이 판매자인지 구매자인지 구분 */
+/*채팅방 전체 css*/
+.side_chatroom_wrap {
+    min-width: 500px;
+    width: 85%;
+    max-width: 850px;
+    height: 600px;
+	box-shadow:  0  0 10px rgba(0, 0, 0, .1);
+	border-radius: 5px;
+}
 
+/* 채팅방 본인이 판매자인지 구매자인지 구분 */
 .chatSeller{	
-	background-color: orange;
+	border: 3px solid orange;
+	border-radius: 3px;
 }
 
 .chatBuyer{
-	background-color: aqua;
+	border: 3px solid aqua;
+	border-radius: 3px;
 }
 
 /* 채팅 메시지 창 */
 .chat_msg_warp{
 	height: 100%;
+	padding: 0px;
 }
 
 .chat_msg_info_wrap {
@@ -21,11 +33,23 @@
 
 .product_info_wrap, .chat_member_wrap {
 	height: 100px;
-	border: 1px solid gray;
+	border-bottom: 2px solid lightgray;
 	display:flex;
 	justify-content: space-between;
 	align-items: center;
-	
+	padding: 0 5px
+}
+
+/* 채팅 상품 정보창 이미지*/
+.product_info_wrap img, .chat_member_wrap img{
+	width: 90px;
+	height: 90px;
+	border-bottom: 2px solid lightgray;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    background: #f5f5f5;
+    margin-bottom: 0.1rem;
 }
 
 #chatHiddenBtn{
@@ -33,8 +57,21 @@
 }
 
 #msgArea {
-	width: 500px;
 	height: 350px;
 	overflow: auto;
 }
+
+/* 채팅 레이아웃 */
+
+.chat_msg_l > div , .chat_msg_r > div{
+	width:90%;
+}
+
+
+.chat_msg_r{
+	display:flex;
+	justify-content: end;
+}
+
+
 

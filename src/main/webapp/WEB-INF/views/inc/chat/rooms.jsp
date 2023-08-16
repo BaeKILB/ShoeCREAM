@@ -25,14 +25,13 @@
 		<jsp:include page="../../inc_ex/header.jsp" />
 	</nav>
 	<main id="main_cont">
-		<h1>1:1대화</h1>
 	   	<section class="side_chatroom_wrap container">
 		    <article class="chatroom_list row d-flex flex-column align-items-stretch flex-shrink-0 bg-white" >
 			    <!-- 채팅방 항목 -->
-			    <div class="col-6">
+			    <div class="col-md-4 col-lg-5 d-none d-md-block">
 				    <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
 	<!-- 			      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg> -->
-				      <span class="fs-5 fw-semibold">chat group</span>
+				      <span class="fs-5 fw-semibold">1:1 대화</span>
 				    </div>
 				    <div class="list-group list-group-flush border-bottom scrollarea">
 			    	<c:if test="${!empty list}">
@@ -40,24 +39,19 @@
 	
 	
 					      <a href="chatRooms?chat_area=0&chat_room_idx=${chatRoom.chat_room_idx }" 
-					      id="chat_room_${chatRoom.chat_room_idx }" 
-					      
-					      
-	    			       	<c:choose>
+					      id="chat_room_${chatRoom.chat_room_idx }" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
+					        <div class="d-flex align-items-center justify-content-between">
+					       	<c:choose>
 					          	<c:when test="${chatRoom.mem_seller_idx eq myIdx }">
-					          		class="list-group-item list-group-item-action py-3 lh-tight chatSeller" 
+					          		<div class="chatSeller">판매</div>
 					          	</c:when>
 					          	<c:when test="${chatRoom.mem_buyer_idx eq myIdx }">
-					          		class="list-group-item list-group-item-action py-3 lh-tight chatBuyer" 
+					          		<div class="chatBuyer">구매</div>
 					          	</c:when>	
 					          	<c:otherwise>
-					          		class="list-group-item list-group-item-action py-3 lh-tight" 
+					          		<div class="">일반</div>
 					          	</c:otherwise>
-				          	</c:choose>				      
-					      
-					      aria-current="true">
-					        <div class="d-flex w-100 align-items-center justify-content-between">
-					        
+				          	</c:choose>		
 					          <strong id="chat_room_title_${chatRoom.chat_room_idx }" 
 					          class="mb-1">${chatRoom.product_title }</strong>
 					          <small>
@@ -86,28 +80,28 @@
 			    
 			    
 			    <!-- 채팅 메시지 항목 -->
-			    <div class="col-6 chat_msg_warp">
+			    <div class="col-sm-12 col-md-8 col-lg-7 chat_msg_warp">
 			    	<c:if test="${!empty room}">
-			    		<article class="chat_msg_info_wrap container">
+			    		<article class="chat_msg_info_wrap ">
 	
 			    		</article>
 			    	</c:if>
 			    	<c:choose>
 			    		<c:when test="${!empty room}">
 			    			<div class="chatArea">		
-								<div id="msgArea" class="col">
+								<div id="msgArea" >
 									<c:if test="${!empty chatList }">
 										<c:forEach var="chat" items="${chatList }">
 											<c:choose>
 												<c:when test="${chat.chat_msg_writer eq myIdx}">
-													<div class='col-6'>
+													<div class='chat_msg_l'>
 														<div class='alert alert-primary'>
 															<b>${chat.mem_nickname} : ${chat.chat_msg_content}</b>
 														</div>
 													</div>
 												</c:when>
 												<c:otherwise>
-													<div class='col-6'>
+													<div class='chat_msg_r'>
 														<div class='alert alert-warning'>
 															<b>${chat.mem_nickname} : ${chat.chat_msg_content}</b>
 														</div>
@@ -190,14 +184,14 @@
 				   
 				   
 				   if(chat_writer === userId){
-				       str = "<div class='col-6'>";
+				       str = "<div class='chat_msg_l'>";
 				       str += "<div class='alert alert-primary'>";
 				       str += "<b>" + chat_nicname + " : " + content.chat_msg_content + "</b>";
 				       str += "</div></div>";
 				       $("#msgArea").append(str);
 				   }
 				   else{
-				       str = "<div class='col-6'>";
+				       str = "<div class='chat_msg_r'>";
 				       str += "<div class='alert alert-warning'>";
 				       str += "<b>" + chat_nicname + " : " + content.chat_msg_content + "</b>";
 				       str += "</div></div>";

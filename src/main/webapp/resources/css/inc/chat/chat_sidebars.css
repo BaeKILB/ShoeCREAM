@@ -1,16 +1,14 @@
 
-.side_chatroom_wrap {
-    min-width: 500px;
-    width: 70%;
-    max-width: 850px;
-    height: 600px;
-	box-shadow:  0  0 10px rgba(0, 0, 0, .1);
-	border-radius: 5px;
+/* 현재 선택된 채팅방 강조 */
+
+.select_room{
+	background-color: rgb(240, 240, 240);
 }
 
 .chatroom_list{
     height: 100%;
    	border-radius: 5px;
+   	padding: 0px;
 }
 
 .b-example-divider {
