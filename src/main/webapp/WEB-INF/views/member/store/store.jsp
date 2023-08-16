@@ -900,19 +900,19 @@ function payAuction(idx, price, id, title){
 						        <a href="${pageContext.request.contextPath}/AuctionDetail?auction_idx=${dibList.product_idx}">
 					              <div class="goods_image" style=" width: 94px; height: 94px;">
 									<c:choose>
-										<c:when	test="${dibList.auc_state eq '입찰' }">
+										<c:when	test="${dibList.auc_state eq '대기' }">
 											<img src="${pageContext.request.contextPath }${dibList.image_path }/${dibList.image1}" alt="상품 이미지">
 											<span class="goods_front"> 경매 대기 중 </span>
 										</c:when>
-										<c:when	test="${dibList.auc_state eq '낙찰' }">
+										<c:when	test="${dibList.auc_state eq '진행' }">
 											<img src="${pageContext.request.contextPath }${dibList.image_path }/${dibList.image1}" alt="상품 이미지">
 											<span class="goods_front"> 경매 진행 중 </span>
 										</c:when>
-										<c:when	test="${dibList.auc_state eq '유찰' }">
+										<c:when	test="${dibList.auc_state eq '낙찰' }">
 											<img src="${pageContext.request.contextPath }${dibList.image_path}/${dibList.image1}" alt="상품 이미지">
 											<span class="goods_front"> 경매 낙찰 중 </span>
 										</c:when>
-										<c:when test="${dibList.auction_status eq '마감' }">
+										<c:when test="${dibList.auc_state eq '마감' }">
 											<img src="${pageContext.request.contextPath }${dibList.image_path}/${dibList.image1}" alt="상품 이미지">
 											<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
 											경매 마감
