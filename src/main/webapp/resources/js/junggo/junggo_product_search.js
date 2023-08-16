@@ -217,6 +217,7 @@ $(function() { // onload
 const reLoadInitItems = () => {
 	
 	dataObj = initAjax();
+	$("#itemList").empty();
 	if(!loadItems()){
 		console.log("onload - loadItems() error !");
 	}
