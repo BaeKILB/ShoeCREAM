@@ -7,14 +7,12 @@
 .jung_product_main{
 	margin-top: 20px;
 }
-
 /* 중고 항목 리스트 영역 */
 .itemListWrap{
 	min-height: 500px;
 	padding-bottom: 5px;
 	margin-bottom: 5px;
 }
-
 /* 중고 항목 영역 */
 .itemWrap{
     width: 25%;
@@ -95,9 +93,18 @@
 
 
 /* 중고 항목 이미지 영역 */
-
-
 .junggoImg{
 	height: 200px;
 	object-fit:cover;
+}
+
+.category_wrap {
+	padding-left: 0 !important;
+}
+.justify_cont {
+	display: flex;
+    justify-content: flex-end;
+}
+.justify_cont > div {
+	text-align: right;
 }

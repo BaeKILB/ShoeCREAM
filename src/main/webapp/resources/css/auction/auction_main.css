@@ -1,9 +1,9 @@
 @charset "UTF-8";
 
-img {
-	width: 240px;
-	height: 300px;
-}
+/* img { */
+/* 	width: 240px; */
+/* 	height: 300px; */
+/* } */
 
 a {
 	text-decoration: none;
@@ -17,4 +17,9 @@ a {
 .card-body {
 	height: 130px;
 }
-
+.category_wrap {
+	padding-left: 0 !important;
+}
+.justify_cont {
+	padding-right: 0 !important;
+}
