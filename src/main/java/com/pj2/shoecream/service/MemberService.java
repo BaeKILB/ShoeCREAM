@@ -297,7 +297,10 @@ public class MemberService {
 		return memberMapper.updatePointAmount(mem_idx,pointAmount) > 0;
 	}
 	
-	
+	// 해당 idx 팔로우수만 가져오기
+	public int countFollow(int mem_idx) {
+		return followMapper.mfollowCount(mem_idx);
+	}
 
 	// 카카오 로그인 회원가입 있으면 업데이트
 //	@Transactional

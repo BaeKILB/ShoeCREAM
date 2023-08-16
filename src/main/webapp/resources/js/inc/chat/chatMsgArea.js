@@ -18,7 +18,7 @@ const isParamsReady = () => {
 // 상품 정보와 유저 정보 및 버튼 불러오기
 const loadChatMsgBar = () => {
 	if(isParamsReady()){
-			
+
 			
 		let checkError = false;
 	
@@ -192,6 +192,14 @@ const allowCancelPay = () => {
 				
 			}
 		}
+}
+
+// 숨겨진 chatRoom 열기
+const openChatRoom = () => {
+	let chatRooms = document.querySelector("#chat-room-list-warp");
+	let chatMsgWarp = document.querySelector(".chat_msg_warp");
+	chatRooms.classList.toggle("d-none");
+	chatMsgWarp.classList.toggle("d-none");
 }
 
 //onload
