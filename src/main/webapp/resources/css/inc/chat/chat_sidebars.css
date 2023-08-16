@@ -11,6 +11,15 @@
    	padding: 0px;
 }
 
+/* 채팅방 줄어들었을때 줄 3개 마크 */
+.chatRoomBtn{
+	width:100%;
+	margin-top:50px;
+	background-color: black;
+	color: white;
+	border-radius: 3px;
+}
+
 .b-example-divider {
   flex-shrink: 0;
   width: 1.5rem;

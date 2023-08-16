@@ -133,7 +133,6 @@ const setImages = (e) => {
 					<input type="hidden" name="cream_idx" value=${cream.cream_idx }>
 					<div class="firstContainner">
 						<div class="first_title">상품 이미지	
-						${cream }
 							<div class="image_box">
 							    <div>
 							        이미지 등록

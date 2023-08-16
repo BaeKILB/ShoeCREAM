@@ -22,14 +22,20 @@ public class ChatHandler {
 		if(!isBuyer) {			
 			userStr = 
 					"	<section>"
-					+ "		<img src='" + map.get("mem_buyer_img") + "' alt=''>"
+					+ "<a "
+					+ " href='social/"
+					+ map.get("mem_buyer_idx")
+					+ "'>"
+					+ "		<img src='" + map.get("localURL") + "/resources/upload/profile/" + map.get("mem_buyer_img") + "' "
+							+ " alt='' "
+							+ " href='social/"
+							+ map.get("mem_buyer_idx")
+							+ "'>"
+					+ "</a>"
 					+ "	</section>"
 					+ "	<section>"
-					+ "		<p>" + map.get("mem_buyer_nickname") + "</p>"
-					+ "		<p>" + map.get("mem_buyer_rank") + "</p>"
-					+ "	</section>"
-					+ "	<section>"
-					+ "		<p></p>"
+					+ "		<p class='nickname'>" + map.get("mem_buyer_nickname") + "</p>"
+					+ "		<p class='follow'>" + map.get("follow") + " 팔로우</p>"
 					+ "	</section>"
 					+ "	<section>"
 					+	user_btn
@@ -38,14 +44,20 @@ public class ChatHandler {
 		else {
 			userStr = 
 					"	<section>"
-							+ "		<img src='" + map.get("mem_seller_img") + "' alt=''>"
+							+"<a "
+							+ " href='social/"
+							+ map.get("mem_seller_idx")
+							+ "'>"
+							+ "		<img src='" + map.get("localURL") + "/resources/upload/profile/" + map.get("mem_seller_img") + "' "
+							+ " alt='' "
+							+ " href='social/"
+							+ map.get("mem_seller_idx")
+							+ "'>"
+							+ "</a>"
 							+ "	</section>"
 							+ "	<section>"
-							+ "		<p>" + map.get("mem_seller_nickname") + "</p>"
-							+ "		<p>" + map.get("mem_seller_rank") + "</p>"
-							+ "	</section>"
-							+ "	<section>"
-							+ "		<p></p>"
+							+ "		<p class='nickname'>" + map.get("mem_seller_nickname") + "</p>"
+							+ "		<p class='follow'>" + map.get("follow") + " 팔로우</p>"
 							+ "	</section>"
 							+ "	<section>"
 							+	user_btn
@@ -56,26 +68,34 @@ public class ChatHandler {
 		String htmlStr = 
 				"<div class='product_info_wrap'>"
 						+ "	<section>"
-						+ "		<img src='" 
+						+ "<a"
+						+ " href='productDetail?product_idx="
+						+ map.get("product_idx")
+						+ "'>"
+						+ "		<img src='"
+						+	map.get("localURL")
 						+ 		map.get("image_path")  
+						+ 		"/"
 						+		map.get("image1")  
 						+ " ' alt=''>"
+						+ "</a>"
 						+ "	</section>"
 						+ "	<section>"
-						+ "		<p>" + map.get("product_title") + "</p>"
-						+ "		<p>" + map.get("product_price") + "원</p>"
+						+ "		<p class='productTitle'>" + map.get("product_title") + "</p>"
+						+ "		<p class='productPrice'>" + map.get("product_price") + "원</p>"
 						+ "	</section>"
 						+ "	<section>"
-						+ "		<p>거래상태 : " + map.get("product_sell_status") + "</p>"
-						+ "		<p>상품상태 : " + map.get("product_status") + "</p>"
+						+ "		<p><span>" + map.get("product_sell_status") + "</span></p>"
+						+ "		<p><span>" + map.get("product_status") + "</span></p>"
 						+ "	</section>"
-						+ "	<section>"
+						+ "	<section class='productBtn'>"
 						+ 		product_btn				    		
 						+ "	</section>"
 						+ "</div>"
 						+ "<div class='chat_member_wrap'>"
 						+ 	userStr
-						+ "</div>";
+						+ "</div>"
+					+ "</div>";
 		
 		return htmlStr;
 	}
@@ -180,7 +200,7 @@ public class ChatHandler {
 		}
 		else {
 			product_btn = 
-					"<input type='button' class='btn btn-primary' value='인수 분쟁 신고'/>";	
+					"<input type='button' class='btn btn-primary' value='인수 분쟁 신고' onclick='registReport(" + map.get("registReport") + ")' />";	
 		}
 		
 		String user_btn = 
@@ -198,7 +218,7 @@ public class ChatHandler {
 	public String buyerCompleteHtml(Map<String,Object> map) {
 		
 		String product_btn = 
-				"<input type='button' class='btn btn-primary' value='인수 분쟁 신고'/>";	
+				"<input type='button' class='btn btn-primary' value='인수 분쟁 신고' onclick='registReport(" + map.get("registReport") + ")'/>";	
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		
@@ -209,7 +229,7 @@ public class ChatHandler {
 	}
 	public String sellerCompleteHtml(Map<String,Object> map) {
 		String product_btn = 
-				"<input type='button' class='btn btn-primary' value='인수 분쟁 신고'/>";	
+				"<input type='button' class='btn btn-primary' value='인수 분쟁 신고' onclick='registReport(" + map.get("registReport") + ")'/>";	
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		

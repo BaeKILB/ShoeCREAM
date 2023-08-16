@@ -1306,6 +1306,13 @@ public class JunggoController {
 		JungGoNohVO product = jungGoNohService.getProduct(product_idx); //상품정보
 		
 		
+		//========== 0817 경인추가 ===========
+		// 상품 불러오지 못했을때 error
+		if(product == null) {
+			model.addAttribute("msg", "상품을 불러오지 못했습니다! 관리자에게 문의해주세요 상품번호 : " + product_idx);
+			return "inc/fail_back";
+		}
+		
 		// -----------------------------필터링-------------------------------------------
 		String product_info = product.getProduct_info();
 		

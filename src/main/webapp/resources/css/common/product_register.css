@@ -1,7 +1,18 @@
 @charset "UTF-8";
 
-body {
-	width:600px;
+.registerTitle{
+	text-align: center;
+}
+
+/* 중고 경매 선택 버튼 */
+#MethodBox{
+    display: flex;
+    justify-content: center;	
+}
+
+#MethodBox span{
+	display:inline-block;
+	margin: 10px;
 }
 
 #sec_con.register_view {
@@ -121,7 +132,7 @@ body {
 }
 
 .category_box {
-	width:980px;
+	width:100%;
 	height:170px;
 	margin-bottom:5px;
 }
@@ -150,7 +161,7 @@ body {
 
 
 .selected_category {
-	width:900px;
+	width:500px;
 	font-size:15px;
 	font-weight:300;
 	color: purple;
@@ -240,7 +251,7 @@ body {
 }
 
 .brand_label {
-  width:200%;
+  width:90%;
   font-size: 18px;
   line-height: 2rem;
   padding: 0.2em 0.4em;
@@ -593,4 +604,13 @@ body {
 
 .hidden {
 	display: none;
+}
+
+
+/* 0817 경인 수정 */
+/* 수정 폼 구역 정렬하기 */
+
+.registerWrap{
+	display:flex;
+	align-items: center;
 }

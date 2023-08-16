@@ -13,6 +13,16 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/inc/header.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 </head>
+<script>
+function show_name(e) {
+	var code = e.code;
+	let search = $("#product_search").val();
+	console.log('검색');
+	if (code == 'Enter') {
+		location.href = 'productSearch?product_search=' + search;
+	}
+}
+</script>
 <body>
 	<div id="header">
 		<header>
@@ -99,7 +109,7 @@
 			</div>
 			<div class="header_menu">
 				<div class="nav_item">
-					<div class="category_btn">
+					<div class="category_btn" onclick="location.href='${pageContext.request.contextPath}/JunggoSearch'">
 						<i class="fa fa-bars" aria-hidden="true"></i>
 						<span>카테고리</span>
 					</div>

@@ -11,6 +11,7 @@
 <script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <link href="${pageContext.request.contextPath }/resources/css/etc/common.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/pay/pay_form.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/css/inc/pay/shoe_pay.css" rel="stylesheet">
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet"> --%>
 <!-- jQuery -->
@@ -22,6 +23,7 @@
 <body>
 	
 	<fieldset class="img_sec_wrap">
+		<h3 class="payTitle">Shoe Pay</h3>
 		<div class="txt_sec_p">
 			<p>
 				<span>계정 포인트 잔액</span>
@@ -45,16 +47,16 @@
 				</span>
 			</p>
 		</div>
-		<div class="container">
+		<div class="container mt-4">
 			<div class="row">
-				<input class="btn btn-dark col-4"  type="button" value="취소" >
-				<input class="btn btn-dark col-4"  type="button" value="충전" onclick="location.href = '${pageContext.request.contextPath }/chargePointForm'">
+				<input class="btn btn-dark col"  type="button" value="취소" >
+				<input class="btn btn-dark col"  type="button" value="충전" onclick="location.href = '${pageContext.request.contextPath }/chargePointForm'">
 				<c:choose>
 					<c:when test="${member.charge_point >= map.product_price }">
-						<input class="btn btn-dark col-4"  type="button" value="결제"  onclick="payWithPoint()" >
+						<input class="btn btn-dark col"  type="button" value="결제"  onclick="payWithPoint()" >
 					</c:when>
 					<c:otherwise>
-						<input class="btn btn-dark col-4" disabled="disabled"  type="button" value="결제"  >
+						<input class="btn btn-dark col" disabled="disabled"  type="button" value="결제"  >
 					</c:otherwise>
 				</c:choose>
 			</div>

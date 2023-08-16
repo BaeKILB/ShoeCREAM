@@ -16,34 +16,43 @@
 <%--주소 관련 코드--%>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	
-	<link href="${pageContext.request.contextPath }/resources/css/junggo/common.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath }/resources/css/common/product_register.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath }/resources/css/etc/jquery.datetimepicker.min.css" rel="stylesheet">
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
 </head>
-<body>
-	<header>
-	<%--top 탑 활성화시 css도 살려야함--%>
-<%-- <jsp:include page="../../../inc/top1.jsp"></jsp:include> --%>
-	</header>
+<body id="main_cont">
+	
+	<nav>
+		<jsp:include page="../inc_ex/header.jsp" />
+	</nav>
 	<%--입력하지 않은 자료 보낼 때--%>
 <%-- 		<input type="hidden" name="car_model" value="${map.car_info.car_model}"/> --%>
-	<main>
-		<div id="MethodBox">
-			<span class="methodSpan"><input type="hidden" value="junggo">중고</span>
-			<span class="methodSpan"><input type="hidden" value="auction">경매</span>
-		</div>
-		<section id="sec_con" class="register_view inr">
-			<c:if test="${!empty param.page }">
-				<jsp:include page="${param.page }_register.jsp" />
-			</c:if>
-		</section>
+	<main class="registerWrap" >
+		<article class="registerForm">
+			<div class="registerTitle">
+				<h3>상품 등록</h3>
+			</div>
+			<div id="MethodBox">
+				<span class="methodSpan">
+					<input type="radio" class="btn-check" name="methodSpan" id="option1" value="junggo" >
+					<label class="btn btn-outline-dark" for="option1">중고</label>
+				</span>
+				<span class="methodSpan">
+					<input type="radio" class="btn-check" name="methodSpan" id="option2" value="auction" >
+					<label class="btn btn-outline-dark" for="option2">경매</label>
+				</span>
+			</div>
+			<section id="sec_con" class="register_view inr">
+				<c:if test="${!empty param.page }">
+					<jsp:include page="${param.page }_register.jsp" />
+				</c:if>
+			</section>
+		</article>
 	</main>
 	<footer>
-	<%--footer 풋터 활성화 시 css도 살려야함--%>
-<%-- 		<jsp:include page="../../../inc/footer.jsp"></jsp:include> --%>
+		<jsp:include page="../inc_ex/footer.jsp" />
 	</footer>
 </body>
 </html>

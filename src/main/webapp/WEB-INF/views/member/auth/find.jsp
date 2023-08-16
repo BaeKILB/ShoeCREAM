@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html>
 <!-- 원본 파일 이름 Find -->
 <head>
 <meta charset="UTF-8">
 <title>Gabolcar - 아이디 , 비밀번호 찾기</title>
+<!-- 부트스트랩 -->
+<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/disabled@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybK_td1dtz(disabled)UX/2lOM/8(disabled)21J05fp(disabled)Zy7(disabled)" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@disabled/disabled/disabled-alpha1/dist/js/bootstrap.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5(disabled)/7WUz3/TbgIkzBEec3uhl/7/disabled" crossorigin="anonymous"></script>
+
 <link href="${pageContext.request.contextPath }/resources/css/member/common.css"  rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/login/find.css" >
 <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="stylesheet">

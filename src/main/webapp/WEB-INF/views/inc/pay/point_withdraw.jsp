@@ -33,7 +33,7 @@
 			<input type="radio" class="btn-check" name="point_amount" id="option1" value="5000" >
 			<label class="btn btn-outline-dark" for="option1">5,000원</label>
 			
-			<input type="radio" class="btn-check" name="point_amount" id="option2" value="10000" >
+			<input type="radio" class="btn-check" name="point_amount" id="option2" value="10000" checked="checked" >
 			<label class="btn btn-outline-dark" for="option2">10,000원</label>
 			
 			<input type="radio" class="btn-check" name="point_amount" id="option3" value="50000" >
