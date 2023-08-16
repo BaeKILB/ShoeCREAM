@@ -499,7 +499,8 @@ public class JunggoController {
 			
 			rttr.addAttribute("chat_room_idx",(String)map.get("chat_room_idx"));
 			rttr.addAttribute("chat_area",(String)map.get("chat_area"));
-			return "redirect:chatRooms";
+			rttr.addAttribute("product_idx",(String)productEx.get("product_idx"));
+			return "redirect:tradeComplete";
 		} 
 		// 만약 다른 거래 상황이면 ...
 		else if(product_sell_status.equals("대기중")){

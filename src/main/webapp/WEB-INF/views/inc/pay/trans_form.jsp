@@ -187,54 +187,8 @@
 							</li>
 					</ul>
 				</li>
-				
-
 			</ul>
-			<script>
-				
-				// 결제 금액 계산
-				var totalAmount = 0; // 총 결제 금액 초기값
-				
-// 				if(weekdayRent == '0' || weekdayRent == '6') {
-// 					totalAmount = Math.ceil((${carInfo.car_weekend} * (hours / 24)) + ${carInfo.car_weekend} * days);
-// 				} else {
-// 					totalAmount = Math.ceil((${carInfo.car_weekdays} * (hours / 24)) + ${carInfo.car_weekdays} * days);
-// 				}
-				
-				document.addEventListener('DOMContentLoaded', function() {
-					  totalAmount = ${map.product_price};
-				});
 
-			</script>
-			
-			<script>
-			// 유효성 검사 함수
-			function validateForm() {
-	
-				var agreeBtn = document.querySelector('input[name="agreeBtn"]');
-
-				// 이용 약관
-				if (!agreeBtn.checked) {
-				   alert('이용약관에 동의해야 합니다.');
-				   agreeBtn.checked = true;
-				   return false;
-				}
-
-				return true;
-			}
-			// 결제하기 버튼 누를떄 동작
-			function requestTrans() {
-				
-				// 결제 API 실행 전 유효성 검사
-				if(!validateForm()) {
-					return false;
-				}
-				tranSuccess();
-			}
-			
-
-			</script>
-			
 
 			<input type="button" class="res_p" value="거래완료" onclick="requestTrans()">
 <!-- 			<button class="res_p" onclick="requestPay()">결제하기</button> -->
@@ -243,25 +197,63 @@
 			<input type="button" id="btnHidden" name="btnHidden" onclick="tranSuccess()"/>
 	</section>
 	
-	<script>
-		$('.menu_tit').click(function() {
-			$(this).children('span').addClass('on');
-			if ($(this).siblings('.side_sub').is(':hidden')) {
-				$(this).siblings('.side_sub').slideDown();
-				$(this).children('span').removeClass('on');
-			} else {
-				$(this).siblings('.side_sub').slideUp();
-			}
-		});
-	</script>
 	<script type="text/javascript">
-		let getParams = new URL(location.href).searchParams;
-		let chat_area = ${map.product_selector } 
-		
-		const tranSuccess = () => {
-			location.href = '${pageContext.request.contextPath }/tradeComplete' + "?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx") + "&product_idx=${map.product_idx }";
-// 			location.href = "transComPro?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx");
+	
+	
+	// url 에서 파라미터 받아오기
+	let getParams = new URL(location.href).searchParams;
+	let chat_area = ${map.product_selector } 
+	
+	$('.menu_tit').click(function() {
+		$(this).children('span').addClass('on');
+		if ($(this).siblings('.side_sub').is(':hidden')) {
+			$(this).siblings('.side_sub').slideDown();
+			$(this).children('span').removeClass('on');
+		} else {
+			$(this).siblings('.side_sub').slideUp();
 		}
+	});
+	
+	// 결제 금액 계산
+	var totalAmount = 0; // 총 결제 금액 초기값
+	
+	
+	document.addEventListener('DOMContentLoaded', function() {
+		  totalAmount = ${map.product_price};
+	});
+
+
+	// 유효성 검사 함수
+	function validateForm() {
+
+		var agreeBtn = document.querySelector('input[name="agreeBtn"]');
+
+		// 이용 약관
+		if (!agreeBtn.checked) {
+		   alert('이용약관에 동의해야 합니다.');
+		   agreeBtn.checked = true;
+		   return false;
+		}
+
+		return true;
+	}
+	// 결제하기 버튼 누를떄 동작
+	function requestTrans() {
+		
+		// 결제 API 실행 전 유효성 검사
+		if(!validateForm()) {
+			return false;
+		}
+		location.href = "${pageContext.request.contextPath }/transComPro?chat_room_idx="
+				+ getParams.get("chat_room_idx")
+				+ "&chat_area=" 
+				+ getParams.get("chat_area");
+	}
+	
+
+	const tranSuccess = () => {
+		location.href = '${pageContext.request.contextPath }/tradeComplete' + "?chat_area=" + chat_area + "&chat_room_idx=" + getParams.get("chat_room_idx") + "&product_idx=${map.product_idx }";
+	}
 	</script>
 
 	<!-- footer 추가 -->
