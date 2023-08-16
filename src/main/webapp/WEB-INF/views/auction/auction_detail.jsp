@@ -24,6 +24,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
 <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 
 
 <!-- 테스트용 css -->
@@ -49,7 +50,10 @@
 </style>
 </head>
 <body>
-	<hr>
+	<nav>
+		<jsp:include page="../inc_ex/header.jsp" />
+	</nav>
+
 	<input type="hidden" value="${auction.auction_idx }" id="auction_idx">
 	<input type="hidden" value="${auction.auc_close_date }" id="auc_close_date">
 	<input type="hidden" value="${auction.mem_idx }" id="mem_idx">
@@ -68,6 +72,7 @@
 -->
    <!--    좌측 상품 사진 옆으로 넘기는 형태 -->
    <!-- Slideshow container -->
+  <section id="main_cont">
 	<main class="container">
 		<section class="row">
 			<div class="col-xl-6 col-xs-12">
@@ -434,6 +439,7 @@
 			</div>
         </section>
 	</main>
+	</section>
 	<footer>
         <jsp:include page="../inc_ex/footer.jsp" />
 	</footer>

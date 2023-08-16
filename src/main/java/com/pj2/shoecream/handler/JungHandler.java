@@ -10,7 +10,7 @@ import com.pj2.shoecream.vo.JungProductVO;
 
 @Component
 public class JungHandler {
-	public String makeProductHtml(Map<String,Object> jProduct, String localURL) {
+	public String makeProductHtml(Map<String,Object> jProduct, String localURL, boolean isUseBootstrap) {
 		
 		// 날짜 기입 위한 객체
 		LocalDateTime productDate = (LocalDateTime)jProduct.get("product_date");
@@ -68,47 +68,39 @@ public class JungHandler {
 				+"</form>"
 				;
 		
-		htmlStr = 
-				"<div class='col-lg-3 col-md-4 col-6 mt-2'>"
 		
-//			     + "  <div class='imgWrap' " + href + " >"
-//			     + "    <img class='card-img-top' src='" + localURL + jProduct.get("image_path") + "/" + jProduct.get("image1") + "' />"
-//			     + "  </div>"
-//			     + "  <div class='itemSimpleInfoWrap'>"
+		htmlStr = 
+				 "<a " + href + " >"
 			     + "  <div class='pro_img'>"
-				
 				 + "    <img  src='" + localURL + jProduct.get("image_path") + "/" + jProduct.get("image1") + "' alt='productImage'/>"
 				 + "  </div>"
 			     + "  	<div class='pro_txt'>"			     
 			     + "        <h4 class='itemTitle'>" + title +"</h4>"
-
-//			     + "	<ul class='list-group list-group-flush itemSimpleInfo'>"
-//			     + "      <li>"
-//			     + "        <p class='itemTitle'>" + jProduct.get("product_title") +"</p>"
-//			     + "      </li>"
-//			     + "      <li class='list-group-item' " + href + ">"
 			     + "        <p class='itemPrice'>" 
-			     + 			Integer.toString((Integer)jProduct.get("product_price")).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",") + "원</p>"
-//			     + "      </li>"
-//			     + "      <li class='list-group-item' " + href + ">"
+			     + 			Integer.toString((Integer)jProduct.get("product_price")).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",") 
+			     + 			"원</p>"
 			     + "        <span class='itemPayment'>" + jProduct.get("product_payment") + "</span>"
-//			     + "      </li>"
-			     + "      <span " + href + ">"
+			     + "      <span>"
 			     + 			date
 			     + "      </span>"
-//			     + "      <li class='list-group-item'>"
-//			     + 			dibStr
-//			     + "      </li>"
-//			     + "    </ul>"
-//			     + "    <div class='itemSimpleInfoBtn'>"
-//			     + "      <input class='btn btn-primary' type='button' value='찜하기' onclick='event.stopPropagation(); location.href=\"#\";' />"
-//				 + "    </div>"
-//			     + "  </div>"
 			     + "    </div>"
-			     + "</div>";
+			     + "	</a>";
 		
-
+		String htmlWrap = "";
 		
-		return htmlStr;
+		// li 사용 여부에 따라 감싸주는 코드
+		if(isUseBootstrap) {
+			htmlWrap = "<div class='itemWrap col-lg-3 col-md-4 col-6 mt-2'>"
+					+ htmlStr
+					+ "</div>";
+		}
+		else {
+			htmlWrap = "<li>"
+					+ htmlStr
+					+ "</li>";
+		}
+		
+		
+		return htmlWrap;
 	}
 }
