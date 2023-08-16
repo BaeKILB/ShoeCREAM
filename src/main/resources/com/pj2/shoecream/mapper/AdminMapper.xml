@@ -499,10 +499,9 @@
 	
 	<!-- 포인트 입출금 -->
 	<select id="selectAdminPointList" >
-		SELECT *
-			FROM point_inout
-<!-- 			WHERE POINT_USAGE = '관리자입출금'; -->
-
+			SELECT *
+				FROM point_inout p
+				JOIN mem_account m ON m.mem_idx = p.mem_idx
 	</select>
 	<select id="selectAdminInfo">
 		SELECT * 
