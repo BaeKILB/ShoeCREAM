@@ -1512,47 +1512,98 @@ public class JunggoController {
 	//------------------ 물건 삭제 프로 -----------------------------
 	
 	@GetMapping("productDelete")
-	public String delete(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, @RequestParam(value="buyier_idx", required=false) String buyier_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
+	public String delete(@RequestParam String product_idx, @RequestParam(value="mem_idx", required=false) String mem_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
 	
-		if(mem_idx == null) //작성자 정보 유무 확인
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+		int buyier_idx = mPrincipalDetails.getMember().getMem_idx();
+		jungGoNoh.setBuyier_idx(buyier_idx);
+		
+		System.out.println("@@@@@@@@@@@mem_idx"+mem_idx);
+		System.out.println("@@@@@@@@@@@buyier_idx"+buyier_idx);
+		
+		//상품 정보, 찜정보, 판매자 정보===========================================	
+		JungGoNohVO product = jungGoNohService.getProduct(product_idx); //상품정보
+		
+		int select_mem_idx = product.getMem_idx();
+		System.out.println("@@@@@@@@@@@@@@@@select_mem_idx"+select_mem_idx);
+		String select_product_sell_status = product.getProduct_sell_status();
+		
+		if(buyier_idx == 0)
 		{
-			if(buyier_idx == null) //로그인 한 아이디 정보 유무 확인
+			model.addAttribute("msg", "로그인 해주세요!");
+			return "inc/fail_back";
+		}
+		else
+		{
+			if(buyier_idx == select_mem_idx)
 			{
-				model.addAttribute("msg", "로그인 해주세요!");
-				return "inc/fail_back";
+				if(select_product_sell_status.equals("대기중"))
+				{
+					
+					int deleteCount = jungGoNohService.removeProduct(product_idx);
+					
+					if(deleteCount < 0) {
+							model.addAttribute("msg", "삭제 실패");
+							return "inc/fail_back";
+							
+					}  else {
+						model.addAttribute("msg", "판매내용이 삭제되었습니다.");
+						return "redirect:/JunggoSearch"; 
+					}
+				}
+				else
+				{
+					model.addAttribute("msg", "판매글 상태가 대기중일 때만 삭제 가능합니다.");
+					return "inc/fail_back";
+				}
+				
 			}
 			else
 			{
+
 				model.addAttribute("msg", "작성자와 삭제 신청자가 다릅니다!");
 				return "inc/fail_back";
 			}
 		}
-		else
-		{
-			if(mem_idx.equals(buyier_idx))// 작성자와 삭제 신청자 동일 시 삭제 시작
-			{
-				int deleteCount = jungGoNohService.removeProduct(product_idx);
-				
-				// 삭제 실패 시 "삭제 실패!" 처리 후 이전페이지 이동
-				// 아니면, BoardList 서블릿 요청(파라미터 : 페이지번호)
-				if(deleteCount == 0) {
-					model.addAttribute("msg", "삭제 실패!");
-					return "inc/fail_back";
-				} 
-				
-				return "redirect:/JunggoSearch";
-			}
-			else
-			{
-				model.addAttribute("msg", "null");
-				return "inc/fail_back";
-			}
-		}
-		
-		
 		
 	}
-	
+		
+//		if(mem_idx == null) //작성자 정보 유무 확인
+//		{
+//			if(buyier_idx == null) //로그인 한 아이디 정보 유무 확인
+//			{
+//				model.addAttribute("msg", "로그인 해주세요!");
+//				return "inc/fail_back";
+//			}
+//			else
+//			{
+//				model.addAttribute("msg", "작성자와 삭제 신청자가 다릅니다!");
+//				return "inc/fail_back";
+//			}
+//		}
+//		else
+//		{
+//			if(mem_idx.equals(buyier_idx))// 작성자와 삭제 신청자 동일 시 삭제 시작
+//			{
+//				int deleteCount = jungGoNohService.removeProduct(product_idx);
+//				
+//				// 삭제 실패 시 "삭제 실패!" 처리 후 이전페이지 이동
+//				// 아니면, BoardList 서블릿 요청(파라미터 : 페이지번호)
+//				if(deleteCount == 0) {
+//					model.addAttribute("msg", "삭제 실패!");
+//					return "inc/fail_back";
+//				} 
+//				
+//				return "redirect:/JunggoSearch";
+//			}
+//			else
+//			{
+//				model.addAttribute("msg", "null");
+//				return "inc/fail_back";
+//			}
+//		}
+
 	
 	
 	

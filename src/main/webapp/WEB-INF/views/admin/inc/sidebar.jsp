@@ -70,17 +70,17 @@
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
 								<i class="fa fa-star" aria-hidden="true"></i>
-								크림 관리
+								커스텀 관리
 							</a>
 							<ul class="cont_li_wrap creamList">
 								<li class="cont_item_b">
-									<a class="cont_item_list creamIns" href="creamInsert">크림 상품 등록</a>
+									<a class="cont_item_list creamIns" href="creamInsert">커스텀 상품 등록</a>
 								</li>
 								<li class="cont_item_b">
-									<a class="cont_item_list creamPro" href="creamProduct">크림 상품 관리</a>
+									<a class="cont_item_list creamPro" href="creamProduct">커스텀 상품 관리</a>
 								</li>
 								<li class="cont_item_b">
-									<a class="cont_item_list creamApp" href="creamApply">크림 상품 신청 내역</a>
+									<a class="cont_item_list creamApp" href="creamApply">커스텀 상품 신청 내역</a>
 								</li>
 							</ul>
 						</li>

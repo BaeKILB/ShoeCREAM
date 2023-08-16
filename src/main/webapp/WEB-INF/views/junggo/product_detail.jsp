@@ -146,7 +146,12 @@
 			<div class="view_info col-sm-12 col-lg-6">
 
 				<div class="view_cont">
-					<p class="product_catrgory">&nbsp;&nbsp;&nbsp;&nbsp;HOME > ${jungGoNoh.lc_name} > ${jungGoNoh.mc_name}
+					<p class="product_catrgory">&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="${pageContext.request.contextPath}">HOME</a> 
+						> 
+					<a href="${pageContext.request.contextPath}/JunggoSearch?lc_code=${jungGoNoh.lc_code}">${jungGoNoh.lc_name}</a> 
+						> 
+					<a href="${pageContext.request.contextPath}/JunggoSearch?lc_code=${jungGoNoh.lc_code}&mc_code=${jungGoNoh.mc_code}">${jungGoNoh.mc_name}</a>
 <%-- 						<c:choose> --%>
 <%-- 							<c:when test="${jungGoNoh.lc_code == '1'}"> --%>
 <!-- 								남성 > -->
