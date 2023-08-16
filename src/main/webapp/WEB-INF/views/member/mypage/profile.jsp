@@ -11,8 +11,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>마이페이지</title>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/update.css"> --%>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/upload.css"> --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/mem_page/profile.css">
 
 <link href="${pageContext.request.contextPath }/resources/css/member/common.css" rel="stylesheet">
@@ -20,9 +18,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
 
-<!--    <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
-
-<%-- <script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script> --%>
+<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 
