@@ -7,6 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>SHOECREAM</title>
+	<%-- 상품정보 불러올 ajax --%>
+	<%-- root 주소값 불러오기 --%>
+<script type="text/javascript">
+	let localURL = "${pageContext.request.contextPath}";
+</script>
 <%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css"> --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/main_new.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
