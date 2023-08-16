@@ -72,7 +72,6 @@ const setImages = (e) => {
 </head>
 <form action="AuctionModifyPro" method="post" enctype="multipart/form-data">
 	<h1>경매 상품등록</h1>
-	${auction }
 	<div class="titleContainner">
 		<p class="title_title">기본 정보</p>
 	</div>

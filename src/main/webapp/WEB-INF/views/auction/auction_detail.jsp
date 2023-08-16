@@ -309,7 +309,7 @@
 							<c:forEach var="rp" items="${relatedProducts }" varStatus="status">
 								<c:if test="${status.index < 4}">
 									<div class="card col-xs-6 col-3">
-										<a href="AuctionDetail?auction_idx${rp.auction_idx }">
+										<a href="AuctionDetail?auction_idx=${rp.auction_idx }">
 											<img src="${pageContext.request.contextPath }${rp.image_path }/${rp.image1 }" class="card-img-top img-fluid rounded">
 											<div class="card-body d-none d-md-block">
 												<h5 class="card-title">${rp.auction_title }</h5>
@@ -339,7 +339,14 @@
 							<p class="fs-5 fw-bold text-danger">⚠️거래시 주의 사항</p>
 							<p>판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<p>
 							<p>유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<p>
-							<p class="fs-6 fw-bold cursorPoint" onclick="window.open('auctionReportForm?auction_idx=${auction.auction_idx}', 'auctionReport', 'width=800, height=640')">여기를 클릭하여 고객센터로 신고해주시기 바랍니다.</p>
+							<c:choose>
+                                <c:when test="${principal eq null }">
+									<p class="fs-6 fw-bold cursorPoint" onclick="location.href='login'">여기를 클릭하여 고객센터로 신고해주시기 바랍니다.</p>
+                                </c:when>
+                                <c:otherwise>
+									<p class="fs-6 fw-bold cursorPoint" onclick="window.open('auctionReportForm?auction_idx=${auction.auction_idx}', 'auctionReport', 'width=800, height=640')">여기를 클릭하여 고객센터로 신고해주시기 바랍니다.</p>
+                                </c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 					<div class="row h-auto mb-3 mt-1"> 

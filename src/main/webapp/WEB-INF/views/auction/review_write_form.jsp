@@ -13,7 +13,12 @@
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
 	<script src="${pageContext.request.contextPath}/resources/js/inc/jquery-3.7.0.js"></script>
 <title>리뷰 게시글 작성</title>
-
+<style>
+#reviewImage {
+    height: 460px;
+    width: 460px;
+}
+</style>
 </head>
 <body>
 	<header>
@@ -29,7 +34,7 @@
 								<ul class="list">
 									<li>
 										<div class="subject">
-											<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1}" alt="사진나온나">
+											<img src="${pageContext.request.contextPath }${auction.image_path }/${auction.image1}" alt="사진나온나" id="reviewImage">
 												상품명 :${auction.auction_title }<br>
 												판매자 :${seller.mem_nickname }
 										</div>
