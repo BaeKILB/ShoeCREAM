@@ -190,7 +190,7 @@ public class BankController {
 		model.addAttribute("targetURL", "/mypage/update");
 		model.addAttribute("isClose", true); // true : 창 닫기, false : 창 닫기 X(이전페이지로 돌아가기)
 		
-		return "inc/success_forward";
+		return "inc/close";
 	}
 	
 	

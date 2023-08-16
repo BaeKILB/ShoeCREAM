@@ -2,7 +2,7 @@
 /* 현재 선택된 채팅방 강조 */
 
 .select_room{
-	background-color: rgb(240, 240, 240);
+	 box-shadow: inset 0 0em 0em lightgray, inset 0 0.125em 0.5em lightgray;
 }
 
 .chatroom_list{

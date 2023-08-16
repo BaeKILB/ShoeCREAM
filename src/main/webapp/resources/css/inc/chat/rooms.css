@@ -4,21 +4,26 @@
 .side_chatroom_wrap {
     min-width: 500px;
     width: 85%;
-    max-width: 850px;
+    max-width: 900px;
     height: 600px;
 	box-shadow:  0  0 10px rgba(0, 0, 0, .1);
 	border-radius: 5px;
 }
 
 /* 채팅방 본인이 판매자인지 구매자인지 구분 */
+.chatSeller, .chatBuyer{	
+	text-align:center;
+	max-width: 70px;
+	background-color: white;
+	border-radius: 5px;
+}
 .chatSeller{	
 	border: 3px solid orange;
-	border-radius: 3px;
 }
 
 .chatBuyer{
 	border: 3px solid aqua;
-	border-radius: 3px;
+	
 }
 
 /* 채팅 메시지 창 */
@@ -73,5 +78,7 @@
 	justify-content: end;
 }
 
-
-
+/* 채팅방 비어있을때 */
+.no_chat_room{
+	margin-top: 50%;
+}

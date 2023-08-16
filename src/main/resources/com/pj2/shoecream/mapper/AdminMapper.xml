@@ -22,6 +22,8 @@
 						</when>
 					</choose>
 				</if>
+			ORDER BY
+				mem_idx DESC
 			LIMIT
 				#{startRow}
 				, #{listLimit}
@@ -507,6 +509,11 @@
 		SELECT * 
 				FROM mem_info
 				WHERE mem_id = 'admin'
+	</select>
+	
+	<select id="selectmem">
+		SELECT * 
+				FROM mem_account
 	</select>
 	<select id="selectMemAccount">
 	select * from mem_account;
