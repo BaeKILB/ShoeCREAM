@@ -11,15 +11,28 @@ import com.pj2.shoecream.vo.JungProductVO;
 @Component
 public class JungHandler {
 	public String makeProductHtml(Map<String,Object> jProduct, String localURL) {
+		
+		// 날짜 기입 위한 객체
+		LocalDateTime productDate = (LocalDateTime)jProduct.get("product_date");
+		LocalDateTime nowDate = LocalDateTime.now();
+		
 		String htmlStr = "";
 		String dibStr = "";
 		
 		String dibBtnStr = "";
 		String href = "onclick='location.href=\"./productDetail?product_idx=" + jProduct.get("product_idx") + "\"'";
 		
-		String date = ((LocalDateTime)jProduct.get("product_date")).format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm"));
+		String date = productDate.format(DateTimeFormatter.ofPattern("yy-MM-dd"));
 		
 		String title = (String)jProduct.get("product_title");
+		
+
+		// 만약 오늘 올린 글이라면 시간만 나오기
+		if(productDate.getMonthValue() == nowDate.getMonthValue()
+				&& productDate.getDayOfMonth() == nowDate.getDayOfMonth()
+				&& productDate.getYear() == nowDate.getYear()) {
+			date = productDate.format(DateTimeFormatter.ofPattern("HH:mm"));
+		}
 		
 		// 제목이 11자 초과면 ... 처리
 		if(title.length() > 11) {
@@ -57,7 +70,7 @@ public class JungHandler {
 		
 		htmlStr = 
 				"<div class='col-lg-3 col-md-4 col-6 mt-2'>"
-			     + "<div class='card itemWrap' >"
+			     + "<div class='itemWrap' >"
 //			     + "  <div class='imgWrap' " + href + " >"
 //			     + "    <img class='card-img-top' src='" + localURL + jProduct.get("image_path") + "/" + jProduct.get("image1") + "' />"
 //			     + "  </div>"
@@ -67,7 +80,7 @@ public class JungHandler {
 			     + "  	<div class='card-body'>"			     
 			     + "        <h3 class='card-title itemTitle'>" + title +"</h3>"
 			     + "    </div>"
-			     + "	<ul class='list-group list-group-flush itemSimpleInfo'>"
+//			     + "	<ul class='list-group list-group-flush itemSimpleInfo'>"
 //			     + "      <li>"
 //			     + "        <p class='itemTitle'>" + jProduct.get("product_title") +"</p>"
 //			     + "      </li>"
@@ -81,10 +94,10 @@ public class JungHandler {
 			     + "      <li class='list-group-item' " + href + ">"
 			     + 			date
 			     + "      </li>"
-			     + "      <li class='list-group-item'>"
-			     + 			dibStr
-			     + "      </li>"
-			     + "    </ul>"
+//			     + "      <li class='list-group-item'>"
+//			     + 			dibStr
+//			     + "      </li>"
+//			     + "    </ul>"
 //			     + "    <div class='itemSimpleInfoBtn'>"
 //			     + "      <input class='btn btn-primary' type='button' value='찜하기' onclick='event.stopPropagation(); location.href=\"#\";' />"
 //				 + "    </div>"
