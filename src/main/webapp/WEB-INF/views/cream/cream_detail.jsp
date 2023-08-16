@@ -30,13 +30,18 @@
      $('select[name="inputSize"]').on('change', function() {
          var selectedSize = $(this).val();
          var creamSizeValue = $('input[name="cream.size' + selectedSize + '"]').val();
-         var formattedPrice = creamSizeValue + '원';
+         var formattedPrice = numberWithCommas(creamSizeValue) + '원';
       // .value()를 사용한 방식
 //          var creamSizeValue = $('#creamSize' + selectedSize).val();
         
          $('#priceSpan').text(formattedPrice);
      });
  });
+ 
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+ 
 </script>
 
 

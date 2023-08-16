@@ -175,6 +175,10 @@ function Confirmation(event) {
        });
    }
 }
+
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
 </script>
 
 
@@ -212,7 +216,11 @@ function Confirmation(event) {
 					</p>
 					<p>
 						<span>금액</span>
-						<span><b class="resTotalAmount">${price }</b>원</span>
+						<span>
+							<b class="resTotalAmount">
+								<script>document.write(numberWithCommas(${price }))</script>원
+							</b>
+						</span>
 
 					</p>
 				</div>
