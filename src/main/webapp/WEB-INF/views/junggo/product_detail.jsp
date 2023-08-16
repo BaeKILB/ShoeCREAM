@@ -14,9 +14,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 	<link href="${pageContext.request.contextPath}/resources/css/junggo/product_detail.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
 	<%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
 	<%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
 	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
@@ -54,6 +53,7 @@
 
 
 	</header>
+<div id="main_cont">
 <%-- 		--------${jungGoNoh}------------ --%>
 		<section id="sec_con" class="inr product_view">
 		<div class="container">
@@ -391,6 +391,7 @@
 		</div>
 	 </div>
 	</section>
+</div>
 	<footer>
 		<jsp:include page="../inc_ex/footer.jsp" />
 	</footer>

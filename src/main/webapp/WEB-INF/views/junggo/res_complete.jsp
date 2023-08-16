@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>예약 완료</title>
-	<link href="${pageContext.request.contextPath }/resources/css/junggo/common.css" rel="stylesheet">
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 	<link href="${pageContext.request.contextPath }/resources/css/junggo/trade_complete.css" rel="styleSheet">
 <%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- 	<link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet"> --%>
@@ -18,6 +18,7 @@
 	<header>
 <%-- 		 <jsp:include page="../../inc/top1.jsp"></jsp:include> --%>
 	</header>
+<div id="main_cont">	
 	<section id="sec_con" class="inr com_cont">
 		<div class="res_com_txt" align="center">
 			<img alt="" src = "${pageContext.request.contextPath }/resources/img/junggo/yes.png" width ="70px"/>
@@ -78,7 +79,7 @@
 			
 		</div>
 	</section>
-	
+</div>
 	<footer>
 <%-- 	<jsp:include page="../../inc/footer.jsp"></jsp:include>  --%>
 	</footer>

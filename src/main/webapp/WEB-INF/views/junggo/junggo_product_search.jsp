@@ -23,7 +23,7 @@
 		<jsp:include page="../inc_ex/header.jsp" />
 	</nav>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
-	<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 	<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath }/resources/css/junggo/junggo_product_search.css"	rel="stylesheet">
 	<link href="${pageContext.request.contextPath }/resources/css/inc/side_category.css"	rel="stylesheet">
