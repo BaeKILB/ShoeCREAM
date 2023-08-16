@@ -21,13 +21,13 @@
 <!-- 제이쿼리 -->
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 <!-- Style -->
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/style.css"> --%>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/story.css"> --%>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/popular.css"> --%>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/profile.css"> --%>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/upload.css"> --%>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/update.css"> --%>
-<%-- <link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/img/member/social/insta.svg"> --%>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/story.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/popular.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/profile.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/upload.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/update.css">
+<link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/img/member/social/insta.svg">
 
 <!-- Fontawesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
@@ -35,10 +35,10 @@
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
 <!-- 공통 CSS -->
-<!-- <link rel="stylesheet" -->
-<%-- 	href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css"> --%>
-<!-- <link rel="stylesheet" -->
-<%-- 	href="${pageContext.request.contextPath }/resources/css/main_ex/font/font.css"> --%>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath }/resources/css/main_ex/font/font.css">
 
 <!-- 햄버거 메뉴 호버시 -->
 <script
