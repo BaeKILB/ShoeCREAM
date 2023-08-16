@@ -52,7 +52,7 @@
 							</a>
 							<ul class="cont_li_wrap categoryPro">
 								<li class="cont_item_b">
-									<a class="cont_item_list categoryPro" href="categoryInsert">카테고리 추가</a>
+									<a class="cont_item_list categoryPro" href="adminAddCategoryForm">카테고리 추가</a>
 								</li>
 							</ul>
 						</li>
