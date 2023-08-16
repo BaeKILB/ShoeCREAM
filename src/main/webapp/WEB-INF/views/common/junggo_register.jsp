@@ -80,7 +80,7 @@
 <!-- 		</div> -->
 <!-- 	</div>	 -->
 	<div class="secondContainner">
-		<div class="second_title">제목</div>
+		<div class="second_title">품명</div>
 		<div class="second_content">
 			<input type="text" class="product_name" name="product_title"
 				placeholder="품목을 입력해주세요." required="required" onfocus="this.select()" />
