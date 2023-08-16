@@ -21,7 +21,6 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	
 	<script type="text/javascript">
-		
 	</script>
 </head>
 <body>
@@ -44,19 +43,8 @@
 			
 			<td>🔔${moreReportList.report_content}</td>
 			<td>사유 : ${moreReportList.report_div}</td>
-			<td>🕐&nbsp;<span id="rpt_date"></span></td>
-			<script>
-					function removeSecond(){
-						let rptIDate = document.querySelector('#rpt_date');
-						
-						
-						let rptID = "${jungGoNoh.product_date}";
-						
-						rptIDate.innerText = rptID.slice(0,rptID.length-2);
-						
-					}
-					removeSecond();
-					</script>
+			<td>🕐&nbsp;<span>${moreReportList.report_date}</span></td>
+			
 		</tr>
 	</c:forEach>
 	
