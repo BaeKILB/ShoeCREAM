@@ -200,7 +200,7 @@ public class ChatHandler {
 		}
 		else {
 			product_btn = 
-					"<input type='button' class='btn btn-primary' value='인수 분쟁 신고'/>";	
+					"<input type='button' class='btn btn-primary' value='인수 분쟁 신고' onclick='registReport(" + map.get("registReport") + ")' />";	
 		}
 		
 		String user_btn = 
@@ -218,7 +218,7 @@ public class ChatHandler {
 	public String buyerCompleteHtml(Map<String,Object> map) {
 		
 		String product_btn = 
-				"<input type='button' class='btn btn-primary' value='인수 분쟁 신고'/>";	
+				"<input type='button' class='btn btn-primary' value='인수 분쟁 신고' onclick='registReport(" + map.get("registReport") + ")'/>";	
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		
@@ -229,7 +229,7 @@ public class ChatHandler {
 	}
 	public String sellerCompleteHtml(Map<String,Object> map) {
 		String product_btn = 
-				"<input type='button' class='btn btn-primary' value='인수 분쟁 신고'/>";	
+				"<input type='button' class='btn btn-primary' value='인수 분쟁 신고' onclick='registReport(" + map.get("registReport") + ")'/>";	
 		
 		String user_btn = 
 				"		<input type='button' class='btn btn-dark' value='신고하기' onclick='registReport(" + map.get("registReport") + ")'/>		"	    		

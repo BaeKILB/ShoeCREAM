@@ -45,7 +45,7 @@
 			<fieldset class="img_sec_wrap">
 				<div class="img_sec_p">
 					
-					<img src="${pageContext.request.contextPath}/${map.image_path}/${map.image1}" alt="">
+					<img src="${pageContext.request.contextPath}${map.image_path}/${map.image1}" alt="">
 				</div>
 				<div class="txt_sec_p">
 					<p>
@@ -87,7 +87,7 @@
 					</div>
 									<ul class="side_sub">
 						<li>
-							<textarea name="tos">
+							<textarea class="noticeText">
 1. 중고 물품을 받으셨나요? 
 중고 물품을 받지않고 거래 완료시 문제가 발생하게되면 처리가 어려울 수 있습니다
 

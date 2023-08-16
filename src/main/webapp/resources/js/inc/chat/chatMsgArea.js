@@ -202,6 +202,16 @@ const openChatRoom = () => {
 	chatMsgWarp.classList.toggle("d-none");
 }
 
+// 상품 신고 창 열기
+const registReport = (productIdx, memReportIdx, nowUserIdx) => {
+	window.open(localURL + "/registReportForm?product_idx="
+	+ productIdx
+	+ "&mem_idx="
+	+ memReportIdx
+	+ "&buyier_idx="
+	+ nowUserIdx, '_blank', 'width=800, height=600'); return false;
+}
+
 //onload
 
 

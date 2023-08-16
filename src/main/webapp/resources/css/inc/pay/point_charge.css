@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.chargeTitle{
+	color: white;
+	background-color: black;
+	border-radius: 3px;
+}
+
+.chargeFrom{
+	margin-top: 10px;
+}
+.chargeFrom h3{
+	margin: 20px;
+}
+
+.radioWrap{
+	display:flex;
+	justify-content: space-evenly;
+}
