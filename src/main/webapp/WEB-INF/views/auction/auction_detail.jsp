@@ -55,8 +55,8 @@
 
 .profileImage {
 	border-radius: 50%;
-	height: 94px;
-	width: 94px;
+	height: 50px;
+	width: 50px;
 }
 </style>
 </head>
@@ -334,15 +334,15 @@
 		<section class="row"> <!-- 상품정보 & 판매자정보 -->
 			<div class="col-xl-8 col-xs-12">
 				<div class="container h-100">
-					<div class="row"> <!-- 높이조절해야됨 -->
-						<div class="col text-center bg-light rounded">
+					<div class="row mb-6 h-25 align-middle"> <!-- 높이조절해야됨 -->
+						<div class="col text-center bg-light rounded align-self-center">
 							<p class="fs-5 fw-bold text-danger">⚠️거래시 주의 사항</p>
 							<p>판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<p>
 							<p>유도하는 경우 사기일 가능성이 높으니 거래를 자제해 주시고<p>
 							<p class="fs-6 fw-bold cursorPoint" onclick="window.open('auctionReportForm?auction_idx=${auction.auction_idx}', 'auctionReport', 'width=800, height=640')">여기를 클릭하여 고객센터로 신고해주시기 바랍니다.</p>
 						</div>
 					</div>
-					<div class="row h-50"> 
+					<div class="row h-auto mb-3"> 
 						<div class="col">
 							<div class="fs-5 fw-bold">상품정보</div>
 							<p class="bg-light rounded fs-6">${auction.auction_info }</p>
@@ -359,11 +359,20 @@
 									<div class="col fs-5 fw-bold">판매자 정보</div>
 		                		</div>
 		                		<div class="row">
-		                			<div class="col" id="sellerInfo">
-										<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }"> <!-- 판매자 상점 URL 입력필요 -->
+		                			<div class="col-4" id="sellerInfo">
+										<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }">
 											<img src="${pageContext.request.contextPath }/resources/upload/profile/${sellerInfo.mem_profileImageUrl}" class="profileImage" onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/memProfile.jpg'">
-											<span>${sellerInfo.mem_nickname }</span>
 										</a>
+		                			</div>
+		                			<div class="col-8">
+										<div>
+											<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }">																				
+												${sellerInfo.mem_nickname }
+											</a>
+										</div>
+										<div>
+											상품 ${fn:length(sellerItemList) }
+										</div>											
 		                			</div>
 		                		</div>
 		                	</div>
@@ -373,7 +382,7 @@
 						<div class="col-8 fw-bold fs-5 fw-bold">${sellerInfo.mem_nickname }님의 판매상품</div>
 						<div class="col-4 text-end text-xl-center">
 							<c:if test="${fn:length(sellerItemList) >= 5 }">
-								<input type="button" class="btn" onclick="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }'" value="더보기 >"> <!-- 기능구현 필요 -->
+								<input type="button" class="btn" onclick="location.href='${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }'" value="더보기 >">
 	               			</c:if>
 						</div>
 					</div>
@@ -383,7 +392,7 @@
 								<c:if test="${status.index < 4}">
 									<div class="col-3 col-xl-6 mb-2">
 										<a href="AuctionDetail?auction_idx=${sil.auction_idx }" >
-											<img src="${pageContext.request.contextPath }${sil.image_path }/${sil.image1 }" class="img-fluid rounded"> <!-- 사진사이즈 줄여야됨 -->
+											<img src="${pageContext.request.contextPath }${sil.image_path }/${sil.image1 }" class="img-fluid rounded">
 										</a>
 									</div>
 								</c:if>
@@ -405,15 +414,15 @@
 						<c:forEach items="${reviewList }" var="review" varStatus="status"> <!-- 후기가져오면 여기 바꾸면됨 -->
 							<c:if test="${status.index < 4}">
 								<div class="row h-75">
-									<div class="col-4">
+									<div class="col-2">
 										<img src="${pageContext.request.contextPath }/resources/upload/profile/${review.mem_profileImageUrl }" class="profileImage" onerror="this.src='${pageContext.request.contextPath }/resources/img/member/social/memProfile.jpg'">
 									</div>
-									<div class="col-8">
+									<div class="col-10">
 										<div class="container">
 											<div class="row">
 												<div class="col">
 													<span>
-														<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }" class="fw-bold fs-5">
+														<a href="${pageContext.request.contextPath }/store/${sellerInfo.mem_idx }">
 															<span>${review.mem_nickname }</span>
 														</a>
 													</span>
@@ -440,7 +449,7 @@
 											</div>
 											<div class="row">
 												<div class="col">
-													<b class="fs-6">${review.review_content }</b>
+													<p>${review.review_content }</p>
 												</div>
 											</div>
 										</div>
