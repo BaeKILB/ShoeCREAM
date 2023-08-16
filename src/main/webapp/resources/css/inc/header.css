@@ -55,6 +55,12 @@ header {
 .header_util ul li a:hover {
 	color: black;
 }
+.header_util .user_name {
+	display: flex;
+}
+.header_util .user_name > a:nth-child(n+2) {
+	margin-left: 3px;
+}
 .header_util .user_name a {
     display: flex;
     align-items: center;
