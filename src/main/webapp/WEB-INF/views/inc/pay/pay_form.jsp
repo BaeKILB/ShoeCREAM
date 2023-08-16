@@ -13,11 +13,11 @@
 <title>결제하기</title>
 <!-- 부트스트랩 -->
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
-<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
-<link href="${pageContext.request.contextPath }/resources/css/etc/common.css" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 <link href="${pageContext.request.contextPath }/resources/css/inc/pay/pay_form.css" rel="stylesheet">
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet"> --%>
+<script	src="${pageContext.request.contextPath }/resources/js/etc/bootstrap.bundle.min.js"></script>
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <!-- 아임포트 -->
@@ -29,10 +29,10 @@
 </head>
 <body>
 	<header>
-<%-- 		<jsp:include page="../../inc/top1.jsp"></jsp:include> --%>
 	</header>
 	<section id="sec_con" class="inr res_page">
 <!-- 		<form action="resInfoPro" method="post"> -->
+		
 		<form action="payPro" method="post">
 			<input type="hidden" name="product_selector" value="${map.product_selector }">
 			<input type="hidden" name="product_idx" value="${map.product_idx }">
@@ -58,7 +58,11 @@
 					</p>
 					<p>
 						<span>상품 설명</span>
-						<span class="resTotalAmount">${map.product_info}</span>
+						<span class="productnfo">
+						<p>
+							${map.product_info}
+						</p>
+						</span>
 					</p>
 				</div>
 			</fieldset>

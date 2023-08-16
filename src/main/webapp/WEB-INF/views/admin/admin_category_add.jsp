@@ -19,10 +19,10 @@
 <div class="total_container col-sm-12 col-lg-12">
 <form action="adminCategoryAddPro" method="post" enctype="multipart/form-data">
 	<input type="radio" class="btn-check" name="categoryCheck" id="option1" value="0"  checked="checked">
-	<label class="btn btn-outline-light" for="option1">대분류</label>
+	<label class="btn btn-outline-dark" for="option1">대분류</label>
 	
 	<input type="radio" class="btn-check" name="categoryCheck" id="option2" value="1" >
-	<label class="btn btn-outline-light" for="option2">중분류</label>
+	<label class="btn btn-outline-dark" for="option2">중분류</label>
 	
 
 	<div class="thirdContainner">

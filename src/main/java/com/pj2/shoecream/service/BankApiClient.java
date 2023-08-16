@@ -51,7 +51,7 @@ public class BankApiClient {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BankApiClient.class);
 
-	static final String REDIRCT_URI = "http://localhost:8088/shoecream/callback";
+	static final String REDIRCT_URI = "http://c5d2302t3.itwillbs.com/ShoeCREAM/callback";
 	
 	
 	// 인증코드 요청
