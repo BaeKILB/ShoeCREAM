@@ -1012,7 +1012,7 @@ function payAuction(idx, price, id, title){
 						                    <c:choose>
 						                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
 								                    <div class="profile_btn_box mt-auto">
-								                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">찜취소</button>
+														<button type="button" class="btn btn-light btn-half-height btn-dib-cancel" style="width: 53px; height:30px; margin-top:40px;" data-product-idx="${dibList.product_idx}" >찜취소</button>
 								                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">상세보기</button>
 								                    </div>                    	
 						                    	</c:when>
@@ -1083,7 +1083,7 @@ function payAuction(idx, price, id, title){
 					                    		<c:choose>
 							                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
 									                    <div class="profile_btn_box mt-auto">
-									                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">찜취소</button>
+									                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href=''">찜취소</button>
 									                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">상세보기</button>
 									                    </div>                    	
 							                    	</c:when>
@@ -1128,7 +1128,7 @@ function payAuction(idx, price, id, title){
 					                    		<c:choose>
 							                    	<c:when test="${principal.member.mem_idx == storeInfo.mem_idx }">
 									                    <div class="profile_btn_box mt-auto">
-									                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">찜취소</button>
+															<button type="button" class="btn btn-light btn-half-height btn-dib-cancel2" style="width: 53px; height:30px; margin-top:40px;" data-product-idx="${dibList.product_idx}" >찜취소</button>
 									                    	<button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="location.href='myChatting'">상세보기</button>
 									                    </div>                    	
 							                    	</c:when>
@@ -1504,6 +1504,58 @@ const confirmAcquisition = idx => {
       }
     });
   });
+  
+  // 경매 찜 취소
+  $('.btn-dib-cancel').click(function () {
+	  // 찜 취소 버튼의 data-product-idx 속성 값을 사용하여 product_idx 인자를 전달
+	  let product_idx = $(this).data('product-idx');
+	  dibsCheck(product_idx);
+	});
+  // 커스텀 찜 취소
+  $('.btn-dib-cancel2').click(function () {
+	  // 찜 취소 버튼의 data-product-idx 속성 값을 사용하여 product_idx 인자를 전달
+	  let product_idx = $(this).data('product-idx');
+	  dibsCheck2(product_idx);
+	});
+  
+  
+// 경매 찜 취소
+const dibsCheck = (product_idx) => {
+	let context = "${pageContext.request.contextPath}";
+    $.ajax({
+        type: "post"
+        , url: context + "/dibsEvent"
+        , data: {
+            auction_idx: product_idx
+        }
+        , dataType: "json"
+        , success: function(data) {
+            location.reload(true);
+        }
+        ,error: function() {
+            console.log("error");
+        }
+    })
+}
+
+// 커스텀 찜 취소
+const dibsCheck2 = (product_idx) => {
+	let context = "${pageContext.request.contextPath}";
+    $.ajax({
+        type: "post"
+        , url: context + "/dibsEvent2"
+        , data: {
+        	cream_idx: product_idx
+        }
+        , dataType: "json"
+        , success: function(data) {
+            location.reload(true);
+        }
+        ,error: function() {
+            console.log("error");
+        }
+    })
+}
 </script>
 
 	<!-- 푸터 시작 -->
