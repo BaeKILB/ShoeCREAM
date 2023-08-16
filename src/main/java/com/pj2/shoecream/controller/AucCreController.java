@@ -130,8 +130,15 @@ public class AucCreController {
 	   
 	   paymentResult= payService.withdrawPoints(pointInout);
 	   
+	   
+	   
 	   System.out.println("%^&*"+paymentResult);
 	   
+	   
+	   
+	    if(paymentResult==1) {
+	    	creamService.insertCreamDelivery(map);
+	    }
 	   //포인트 결제 result2
 	   //여기 왜 안되는지 모르겠다?
 	  
@@ -144,20 +151,6 @@ public class AucCreController {
 	   int paymentResult2 = payService.productPayment(payInfo, pointInout);
 	   
 	   System.out.println("%^&*"+paymentResult2);
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
 	   
 	   
 //	   PointInoutVO pointInout = new PointInoutVO();
@@ -179,7 +172,7 @@ public class AucCreController {
 //			if(paymentResult == 1) {
 //				//결제가 성공하면 
 //				//일단 크림 배송 정보 테이블 업데이트
-				creamService.insertCreamDelivery(map);
+//				creamService.insertCreamDelivery(map);
 //				
 //				
 //		        
@@ -194,7 +187,7 @@ public class AucCreController {
 //	   }else {
 ////		   model.addAttribute("msg","포인트 충전하셈");
 //		   
-		   return "redirect:/mypage/update";
+	   	return "redirect:/store/" + buyer.getMem_idx();
 	   }
 
 }

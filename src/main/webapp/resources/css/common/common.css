@@ -18,3 +18,9 @@ ul, li {
 	max-width: 1280px;
 	margin: 13rem auto 3rem;
 }
+
+@media screen and (max-width: 1300px) {
+	#main_cont {
+		width: 97%;
+	}
+}

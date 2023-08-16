@@ -43,7 +43,7 @@
 							<c:forEach var="adminPointAccount" items="${pointList}">
 								<tr>
 										<td class="mem_id">${adminPointAccount.mem_idx}</td>
-										<td class="mem_id">${adminPointAccount.charge_point_amount}</td>
+										<td class="mem_id">${adminPointAccount.charge_point_amount}원</td>
 										<td class="amount"> ${adminPointAccount.charge_point}원 ${adminPointAccount.point_status }</td>
 										<td class="date"><fmt:formatDate value="${adminPointAccount.point_date}" pattern="YYYY-MM-dd" /></td>
 										<td class="point_usage">${adminPointAccount.point_usage}</td>
