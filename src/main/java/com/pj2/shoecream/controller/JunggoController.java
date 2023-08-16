@@ -1212,22 +1212,6 @@ public class JunggoController {
 		System.out.println("실제 업로드 파일명3 : " + jungGoNoh.getImage3_name());
 		System.out.println("실제 업로드 파일명3 : " + jungGoNoh.getImage4_name());
 	
-	
-		// -----------------------------필터링-------------------------------------------
-		String product_info = jungGoNoh.getProduct_info();
-		
-		String trashArr[] = jungGoNoh.getTrashArr();
-
-		int len = trashArr.length;   
-		System.out.println("=====================trashArr.length"+trashArr.length);
-		
-		int i=0;
-		for (i=0;i<=len-1;i++)
-		{
-			product_info = product_info.replaceAll(trashArr[i], "*");
-		}
-		jungGoNoh.setProduct_info(product_info);
-		System.out.println("==========================================product_info" + product_info);
 		
 		//---------------------------------product_idx 생성---------------------------------------
 	
@@ -1293,8 +1277,6 @@ public class JunggoController {
 		
 	}
 	
-			
-	
 	//------------------ 물건 상세 안내 폼 이동---------------------
 	@GetMapping("productDetail")
 	public String productDetail(@RequestParam String product_idx, HttpSession session, Model model, JungGoNohVO jungGoNoh) {
@@ -1316,6 +1298,26 @@ public class JunggoController {
 		
 		//상품 정보, 찜정보, 판매자 정보===========================================	
 		JungGoNohVO product = jungGoNohService.getProduct(product_idx); //상품정보
+		
+		
+		// -----------------------------필터링-------------------------------------------
+		String product_info = product.getProduct_info();
+		
+		String trashArr[] = product.getTrashArr();
+
+		int len = trashArr.length;   
+		System.out.println("=====================trashArr.length"+trashArr.length);
+		
+		int i=0;
+		for (i=0;i<=len-1;i++)
+		{
+			product_info = product_info.replaceAll(trashArr[i], "*");
+		}
+		jungGoNoh.setProduct_info(product_info);
+		System.out.println("==========================================product_info" + product_info);
+		//----------------------------------------------------------------------------------
+		
+		
 	
 		System.out.println("+++++++++++++++++++++++jungGoNoh" + jungGoNoh);
 		JungGoNohVO dibs = jungGoNohService.getDibs(jungGoNoh); //찜정보
@@ -1463,6 +1465,7 @@ public class JunggoController {
 			{
 				if(select_product_sell_status.equals("대기중"))
 				{
+					
 					int ModifySuccess = jungGoNohService.modifyJunggo(jungGoNoh);
 					
 					if(ModifySuccess < 0) {

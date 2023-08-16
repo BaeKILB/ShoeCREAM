@@ -12,6 +12,7 @@
 	<link href="${pageContext.request.contextPath }/resources/css/member/login/signup.css" rel="styleSheet">
 	<link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
 	<link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 	
 	<%-- js --%>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
@@ -21,7 +22,8 @@
 	<jsp:include page="../../inc_ex/header.jsp" />	
 
 <body>
-	<div id="contents">
+	<section id="main_cont">
+		<div id="contents">
 		<form action="MemberJoinPro" method="post" name="fr" id="fr" onsubmit="return combinePhoneNumbers();">
 			<section id="sec_con" class="inr signup_wrap">
 <!-- 			 	<h1 class="con_title">ShoeCream 회원가입</h1> -->
@@ -186,7 +188,7 @@
 			 	</div>
 			</section>
 		</form>
-				    </div>
-
+		</div>
+	</section>
 </body>
 </html>
