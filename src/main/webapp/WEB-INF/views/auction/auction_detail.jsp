@@ -334,7 +334,7 @@
 		<section class="row"> <!-- 상품정보 & 판매자정보 -->
 			<div class="col-xl-8 col-xs-12">
 				<div class="container h-100">
-					<div class="row mb-6 h-25 align-middle"> <!-- 높이조절해야됨 -->
+					<div class="row mb-6 h-25 align-middle d-none d-xl-block"> <!-- 높이조절해야됨 -->
 						<div class="col text-center bg-light rounded align-self-center">
 							<p class="fs-5 fw-bold text-danger">⚠️거래시 주의 사항</p>
 							<p>판매자가 별도의 메신저로 결제링크를 보내거나 직거래(직접송금)을<p>
@@ -342,7 +342,7 @@
 							<p class="fs-6 fw-bold cursorPoint" onclick="window.open('auctionReportForm?auction_idx=${auction.auction_idx}', 'auctionReport', 'width=800, height=640')">여기를 클릭하여 고객센터로 신고해주시기 바랍니다.</p>
 						</div>
 					</div>
-					<div class="row h-auto mb-3"> 
+					<div class="row h-auto mb-3 mt-1"> 
 						<div class="col">
 							<div class="fs-5 fw-bold">상품정보</div>
 							<p class="bg-light rounded fs-6">${auction.auction_info }</p>

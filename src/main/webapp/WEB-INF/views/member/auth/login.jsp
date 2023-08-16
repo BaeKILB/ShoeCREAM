@@ -27,11 +27,13 @@
 </head>
 <body>
 
-	<jsp:include page="../../inc_ex/header.jsp" />	
+	<nav>
+		<jsp:include page="../../inc_ex/header.jsp" />
+	</nav>
+	<section id="main_cont">
+ 		<div id="contents" class="subPage">
+        	<div id="sign">
 	
- <div id="contents" class="subPage">
-        <div id="sign">
-
             <!-- 서브컨텐츠 -->
             <article class="sign_in">
 
@@ -41,7 +43,7 @@
                     <div class="layout2">
                         <div class="wrap_box">
                             <div class="inner600">
-                                <img src="${pageContext.request.contextPath }/resources/img/member/social/ShoeCreamLogo.png" alt="">
+                                <img src="${pageContext.request.contextPath }/resources/img/main_ex/shoecream_logo.png" alt="">
 								<!-- 아이디 -->
                                 <div class="login_input">
                                     <div class="inp_bundle">
@@ -99,7 +101,10 @@
             </article>
             <!--[E] 서브컨텐츠 -->
         </div>
-    </div>
-
+   	 </div>
+    </section>
+	<footer>
+		<jsp:include page="../../inc_ex/footer.jsp" />
+	</footer>
 </body>
 </html>

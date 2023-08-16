@@ -1032,14 +1032,18 @@ public class AuctionController {
 	}
 	
 	@PostMapping("registAuctionReport")
-	public String registAuctionReport(@RequestParam Map<String, Object> map) {
+	public String registAuctionReport(
+			@RequestParam Map<String, Object> map
+			, Model model) {
 		
 		int insertCount = 0;
 		insertCount = reportService.registAuctionReport(map);
 		if (insertCount > 0) {
 			logger.info("신고 성공");
+			model.addAttribute("msg","신고 완료");
 		} else {
 			logger.info("신고 실패");
+			model.addAttribute("msg","신고 실패");
 		}
 		return "inc/close";
 	}
