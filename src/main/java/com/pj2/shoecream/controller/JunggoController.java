@@ -1319,7 +1319,7 @@ public class JunggoController {
 		{
 			product_info = product_info.replaceAll(trashArr[i], "*");
 		}
-		jungGoNoh.setProduct_info(product_info);
+		product.setProduct_info(product_info);
 		System.out.println("==========================================product_info" + product_info);
 		//----------------------------------------------------------------------------------
 		

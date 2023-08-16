@@ -9,7 +9,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>해당 품목 상세보기</title>
-	<link href="${pageContext.request.contextPath}/resources/css/junggo/common.css" rel="stylesheet">
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 	<link href="${pageContext.request.contextPath}/resources/css/junggo/junggo_report_table.css" rel="stylesheet">
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
@@ -31,7 +31,7 @@
 	</header>
 	<%--입력하지 않은 자료 보낼 때--%>
 <%-- 		<input type="hidden" name="car_model" value="${map.car_info.car_model}"/> --%>
-	<main>
+	<main id="main_cont">
 		<section id="sec_con" class="register_view inr">
 	
 	<div class="titleContainner">

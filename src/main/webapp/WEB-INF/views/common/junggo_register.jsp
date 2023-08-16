@@ -4,9 +4,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <head>
-
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 </head>
-
+<div id="main_cont">
 <div class="total_container col-sm-12 col-lg-12">
 <form action="registProductPro" method="post" enctype="multipart/form-data">
 	<div class="titleContainner" >
@@ -241,4 +241,5 @@
 		<button type="button" class="back_btn" onclick="history.back()">돌아가기</button>
 	</div>
 </form>
+</div>
 </div>
