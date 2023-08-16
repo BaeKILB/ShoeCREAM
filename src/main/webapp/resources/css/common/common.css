@@ -14,3 +14,7 @@ a {
 ul, li {
 	list-style: none;
 }
+#main_cont {
+	max-width: 1280px;
+	margin: 13rem auto 3rem;
+}
