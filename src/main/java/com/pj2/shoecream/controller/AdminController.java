@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pj2.shoecream.config.PrincipalDetails;
 import com.pj2.shoecream.service.AdminService;
 import com.pj2.shoecream.service.BoardService;
+import com.pj2.shoecream.service.CategoryService;
 import com.pj2.shoecream.vo.AuctionVO;
 import com.pj2.shoecream.vo.BankAccountVO;
 import com.pj2.shoecream.vo.CreamRequestVO;
@@ -43,6 +47,8 @@ public class AdminController {
 	private BoardService boardservice;
 	@Autowired
 	private AdminService service;
+	@Autowired
+	private CategoryService categoryService;
 //	@Autowired
 //	private ReportService reportservice;
 	
@@ -648,8 +654,92 @@ public class AdminController {
 
 			
 			return "admin/admin_point";
-				}
+		}
 				
-		}	
+		
+
+		
+		
+		
+		
+		// =================================
+		
+		// 0816 경인추가 
+		
+		// 카테고리 추가 폼
+		@GetMapping("adminAddCategoryForm")
+		public String adminAddCategoryForm(Model model){
+			
+		   	List<Map<String, Object>> lc_category = categoryService.getLcList();
+		   	model.addAttribute("lc_category",lc_category);
+			
+		   	
+		   	return "admin/admin_category_add";
+		}
+		
+		
+		@PostMapping("adminCategoryAddPro")
+		public String adminCategoryAddPro(@RequestParam Map<String,Object> map , Model model) {
+			
+			// 파라미터
+			String categoryCheck = (String)map.get("categoryCheck");
+			
+			
+			// 로그인 & admin 으로 로그인 되어있는지 확인하기
+			try {			
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+				
+				if(!mPrincipalDetails.getMember().getMem_id().equals("admin")) {
+					model.addAttribute("msg","권한이 없습니다 !");
+					return "inc/fail_back";
+				}
+			}
+			catch(Exception e) {
+				// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
+				model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
+				model.addAttribute("targetURL","login"); 
+				return "inc/fail_forward";
+			}
+			
+			// 카테고리 추가 시작
+			
+			// 추가할 카테고리 이름 있는지 확인
+			if((String)map.get("categoryName") == null) {
+				model.addAttribute("msg","카테고리 명을 입력해주세요!");
+				return "inc/fail_back";
+			}
+			
+			
+			// 대분류
+			if(categoryCheck.equals("0")) {	
+				if(!categoryService.addLc((String)map.get("categoryName"))) {
+					model.addAttribute("msg"
+							,"카테고리 추가가 실패했습니다! 문제가 일어났습니다");
+					return "inc/fail_back";
+				}
+			}
+			// 중분류
+			else {				
+				if(map.get("lc_code") != null) {
+					if(!categoryService.addMc((String)map.get("categoryName"),Integer.parseInt((String)map.get("lc_code")))) 
+					{
+						model.addAttribute("msg"
+								,"카테고리 추가가 실패했습니다! 해당되는 대분류 코드가 없거나 문제가 일어났습니다");
+						return "inc/fail_back";
+					}
+				}
+				else {
+					model.addAttribute("msg"
+							,"대분류를 선택해 주세요!");
+					return "inc/fail_back";
+				}
+			}
+	
+			return "redirect:adminAddCategoryForm";
+		}
+}	
+
+
 
 

@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pj2.shoecream.mapper.CategoryMapper">
+	
+	<!-- 경인 추가  -->
+	<!-- 카테고리 추가 -->
+
+	<!-- 대분류 추가 -->
+	<insert id="insertLc">
+		INSERT INTO large_category
+		VALUES(
+			null
+			, #{lc_name} 
+		)
+		;
+	</insert>
+	
+	<!-- 소분류 추가 -->
+	<insert id="insertMc">
+		INSERT INTO middle_category
+		VALUES(
+			null
+			, #{mc_name}
+			, #{parent_code}
+		)
+		;
+	</insert>
+	
+	<select id="selectLc">
+        select
+            *
+        from
+            large_category
+        where
+        	lc_code = #{lc_code}
+        ;
+	</select>
+
+
     <select id="selectLcList" resultType="map">
         select
             *

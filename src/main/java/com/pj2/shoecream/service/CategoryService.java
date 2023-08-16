@@ -14,6 +14,17 @@ public class CategoryService {
 	@Autowired
 	private CategoryMapper mapper;
 
+ public boolean addLc(String lc_name) {
+	 return mapper.insertLc(lc_name) > 0;
+ }
+ 
+ public boolean addMc(String mc_name, int parent_code) {
+	 if(mapper.selectLc(parent_code) == null) {
+		 return false;
+	 }
+	 return mapper.insertMc(mc_name, parent_code) > 0;
+ }
+
   public List<Map<String, Object>> getLcList() {
     return mapper.selectLcList();
   }
