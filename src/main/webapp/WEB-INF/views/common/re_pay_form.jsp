@@ -230,6 +230,11 @@ function Confirmation(event) {
 		})
     } 
 }
+
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 </script>
 <script type="text/javascript">
 let socket = null;
@@ -310,8 +315,11 @@ function connectWs() {
 					</p>
 					<p>
 						<span>결제금액</span>
-						<span><b class="resTotalAmount">${price }</b>원</span>
-
+						<span>
+							<b class="resTotalAmount">
+								<script>document.write(numberWithCommas(${price }))</script>원
+							</b>
+						</span>
 					</p>
 				</div>
 			</fieldset>
