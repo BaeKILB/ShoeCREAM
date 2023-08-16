@@ -4,6 +4,13 @@ $(function() { // onload
     
 	// 대분류 카테고리
 	$(".ct_lc_item_btn").on("click",function() {
+		
+		// 버튼들 활성화 상태 초기화 위해서 객채들 불러오기
+		let mcItemBtns = document.querySelectorAll(".ct_mc_item_btn");
+		// 객체 초기화
+		mcItemBtns.forEach((e) => {
+			e.classList.remove("mcBtnActive");
+		});
 		// 변수 초기화
 		dataObj = initAjax();
 		console.log(".ct_lc_item_btn.on - dataObj init" + JSON.stringify(dataObj))
@@ -37,8 +44,17 @@ $(function() { // onload
     });
     
     $(".ct_mc_item_btn").on("click",function() {
+		// 버튼들 활성화 상태 초기화 위해서 객채들 불러오기
+		let mcItemBtns = document.querySelectorAll(".ct_mc_item_btn");
 		// 변수 초기화
 		let lc_temp = dataObj.lc_code;
+		
+		// 객체 초기화
+		mcItemBtns.forEach((e) => {
+			e.classList.remove("mcBtnActive");
+		});
+		this.classList.toggle("mcBtnActive");
+		
 		dataObj = initAjax();
 		dataObj.lc_code = lc_temp;
 		console.log(".ct_lc_item_btn.on - dataObj init" + JSON.stringify(dataObj))
@@ -51,6 +67,8 @@ $(function() { // onload
 		}
 		console.log("lc : " + dataObj.lc_code);
 		console.log("mc : " + dataObj.mc_code);
+		
+
 	});
 	
 }); // onload

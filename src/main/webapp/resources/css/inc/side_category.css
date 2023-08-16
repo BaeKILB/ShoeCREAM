@@ -52,3 +52,8 @@
 .hidden {
     display: none;
 }
+
+/* 중분류 클릭시 활성화 */
+.mcBtnActive{
+	background-color: rgb(233, 241, 255);
+}
