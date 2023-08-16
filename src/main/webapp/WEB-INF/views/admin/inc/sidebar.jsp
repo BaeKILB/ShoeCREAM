@@ -47,6 +47,17 @@
 					<ul class="cont_item_ul">
 						<li class="cont_item_wrap">
 							<a class="cont_item_a sub" href="#">
+								<i class="fa fa-bars" aria-hidden="true"></i>
+								카테고리 관리
+							</a>
+							<ul class="cont_li_wrap categoryPro">
+								<li class="cont_item_b">
+									<a class="cont_item_list categoryPro" href="adminAddCategoryForm">카테고리 추가</a>
+								</li>
+							</ul>
+						</li>
+						<li class="cont_item_wrap">
+							<a class="cont_item_a sub" href="#">
 								<i class="fa fa-gavel" aria-hidden="true"></i>
 								경매 관리
 							</a>

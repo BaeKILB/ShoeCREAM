@@ -282,3 +282,57 @@ i.fa.pgi {
 	width: 100%;
 	min-width: 845px;
 }
+
+
+
+.cat_check {
+	padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.btn-check {
+	margin-right: 3px;
+	font-size: 1.2rem;
+}
+.btn-check.ls {
+	margin-left: 10px;
+}
+.category_content {
+	margin-top: 1rem;
+}
+.cat_tit {
+	width: 118px;
+    height: 40px;
+    line-height: 40px;
+	text-align: center;
+	background: #624bff;
+	border-radius: 5px;
+	color: white;
+}
+.lcList {
+	border: 1px solid #ddd;
+	padding: 0.7rem 0.5rem;
+	border-radius: 5px;
+	margin-top: 0.5rem;
+}
+.lcList li {
+	cursor: pointer;
+}
+.lcList li:nth-child(n+2) {
+	margin-top: 5px;
+}
+.selected_category {
+	margin-top: 1rem;
+}
+.categoryName {
+	margin-top: 0.5rem;
+	border: 1px solid #ddd;
+	padding: 0.7rem 0.5rem;
+	border-radius: 5px;
+}
+.lastContainner .list_btn {
+	margin-top: 0.5rem;
+}
+
+
+

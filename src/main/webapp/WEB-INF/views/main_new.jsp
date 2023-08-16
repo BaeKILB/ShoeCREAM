@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>SHOECREAM</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css"> --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/main_new.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>

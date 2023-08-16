@@ -1624,14 +1624,13 @@ public class JunggoController {
 		catch(Exception e) {
 			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
 			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
-			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
-			return "inc/fail_forward";
+			return "inc/close";
 		}
 		
 		// product_idx 는 무조건 받아와야함
 		if(product_idx == null) {
 			model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
-			return "inc/fail_back";
+			return "inc/close";
 		}
 		// 필요한 값 세팅
 		jungGoNoh.setMem_idx(Integer.parseInt(mem_idx));
@@ -1660,8 +1659,7 @@ public class JunggoController {
 		catch(Exception e) {
 			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
 			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
-			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
-			return "inc/fail_forward";
+			return "inc/close";
 		}
 		// 신고 신청자 idx 가져옴
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -1692,12 +1690,12 @@ public class JunggoController {
 	
 		if(insertReport < 0) {
 				model.addAttribute("msg", "신청 실패");
-				return "inc/fail_back";
+				return "inc/close";
 				} 	
 			} 
 		else { //조회 내역이 있을때
 				model.addAttribute("msg", "이미 해당 건에 대해 신고 신청하신 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
-				return "inc/fail_back";
+				return "inc/close";
 		}
 		
 		model.addAttribute("msg", "신청 성공");
@@ -1717,13 +1715,13 @@ public class JunggoController {
 			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
 			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
 			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
-			return "inc/fail_forward";
+			return "inc/close";
 		}
 		
 		// product_idx 는 무조건 받아와야함
 		if(product_idx == null) {
 			model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
-			return "inc/fail_back";
+			return "inc/close";
 		}
 		
 		//관련 idx 세팅
@@ -1764,14 +1762,13 @@ public class JunggoController {
 		catch(Exception e) {
 			// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
 			model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
-			model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
-			return "inc/fail_forward";
+			return "inc/close";
 		}
 		
 		// product_idx 는 무조건 받아와야함
 		if(product_idx == null) {
 			model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
-			return "inc/fail_back";
+			return "inc/close";
 		}
 		
 		
@@ -1812,8 +1809,7 @@ public class JunggoController {
 			catch(Exception e) {
 				// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
 				model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
-				model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
-				return "inc/fail_forward";
+				return "inc/close";
 			}
 			
 			//리뷰 작성자 idx 세팅
@@ -1899,13 +1895,13 @@ public class JunggoController {
 						
 						if(insertReview < 0) {
 								model.addAttribute("msg", "입력 실패, 접속하신 아이디와 작성자가 다를 수 있으니 재확인 부탁드립니다.");
-								return "inc/fail_back";
+								return "inc/close";
 						} 	
 					}
 					else
 					{
 						model.addAttribute("msg", "거래완료 후 3일동안만 수정가능합니다.");
-						return "inc/fail_back";
+						return "inc/close";
 					}
 				
 		        } catch (ParseException e) {
@@ -1920,7 +1916,7 @@ public class JunggoController {
 			{ //조회 내역이 있을때
 			
 					model.addAttribute("msg", "이미 해당 건에 대해 리뷰작성 기록이 있습니다. 고객센터를 통해 1:1 문의를 넣어주세요.");
-					return "inc/fail_back";
+					return "inc/close";
 			}
 
 			model.addAttribute("msg", "리뷰가 작성 되었습니다.");
@@ -1941,14 +1937,13 @@ public class JunggoController {
 			catch(Exception e) {
 				// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
 				model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
-				model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
-				return "inc/fail_forward";
+				return "inc/close";
 			}
 			
 			// product_idx 는 무조건 받아와야함
 			if(product_idx == null) {
 				model.addAttribute("msg", "상품 정보가 없습니다. 해당 판매글에서 다시 시도해주세요 !");
-				return "inc/fail_back";
+				return "inc/close";
 			}
 			
 			//관련 idx 세팅
@@ -1987,8 +1982,7 @@ public class JunggoController {
 			catch(Exception e) {
 				// 로그인 안되어있으면 로그인 화면으로 되돌려 보내기
 				model.addAttribute("msg","권한이 없습니다 ! 로그인 해주세요");
-				model.addAttribute("targetURL","login"); // 로그인 페이지 넘어갈 때 리다이렉트 할수있는거 있어야 될듯?
-				return "inc/fail_forward";
+				return "inc/close";
 			}
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
@@ -2048,13 +2042,13 @@ public class JunggoController {
 					
 					if(ModifySuccess < 0) {
 							model.addAttribute("msg", "수정 실패, 접속하신 아이디와 작성자가 다를 수 있으니 재확인 부탁드립니다.");
-							return "inc/fail_back";
+							return "inc/close";
 					} 	
 				}
 				else
 				{
 					model.addAttribute("msg", "거래완료 후 3일동안만 수정가능합니다.");
-					return "inc/fail_back";
+					return "inc/close";
 				}
 				
 				
@@ -2086,7 +2080,7 @@ public class JunggoController {
 				// 글쓰기 작업 성공 시 글목록(BoardList)으로 리다이렉트
 				return "redirect:/productDetail?product_idx="+product_idx; 
 			} else { // 실패
-				model.addAttribute("msg", "글 쓰기 실패!");
+				model.addAttribute("msg", "글 삭제 실패!");
 				return "inc/fail_back";
 			}
 		}

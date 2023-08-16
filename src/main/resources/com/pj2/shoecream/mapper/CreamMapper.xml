@@ -229,9 +229,10 @@
     	select
     		*
     	from
-    		jung_reviews 
+    		jung_reviews jr
+    		join mem_info mi on jr.writer_idx = mi.mem_idx
     	where
-    		product_idx = #{cream_idx }
+    		jr.product_idx = #{cream_idx }
     </select>
     
     <select id="selectRelatedCreamList" resultType="map">

@@ -105,6 +105,7 @@ public interface AdminMapper {
 	// 관리자 정보조회
 	List<Map<String, Object>> selectAdminInfo();
 	List<MemAccountVO> selectMemAccount();
+	
 		
 }
 	
