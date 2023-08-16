@@ -225,7 +225,6 @@ function initAjax() {
 // 중고 상품 항목 불러오기
 function loadItemAjax(obj) {
 	obj["localURL"] = localURL;
-	obj[""]
 	let checkError = false;
 	
 	let data =  $.ajax({

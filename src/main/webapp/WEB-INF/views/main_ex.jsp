@@ -7,6 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>ShoeCream - 임시메인</title>
+	<%-- 상품정보 불러올 ajax --%>
+	<%-- root 주소값 불러오기 --%>
+<script type="text/javascript">
+	let localURL = "${pageContext.request.contextPath}";
+</script>
 <link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/img/main_ex/shoecream-logo.png">
 
 <!--아이콘-->
@@ -31,11 +36,7 @@
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/market/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/market/menu_hover.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/market/login_modal.js"></script>
-	<%-- 상품정보 불러올 ajax --%>
-	<%-- root 주소값 불러오기 --%>
-<script type="text/javascript">
-	let localURL = "${pageContext.request.contextPath}";
-</script>
+
 <script src="${pageContext.request.contextPath }/resources/js/main_ex/main.js"></script>
 </head>
 <body>
