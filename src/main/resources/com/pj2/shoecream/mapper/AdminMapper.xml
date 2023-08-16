@@ -22,6 +22,8 @@
 						</when>
 					</choose>
 				</if>
+			ORDER BY
+				mem_idx DESC
 			LIMIT
 				#{startRow}
 				, #{listLimit}
