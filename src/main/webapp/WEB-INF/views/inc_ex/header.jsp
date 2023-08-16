@@ -37,6 +37,9 @@
 									<i class="fa fa-cog" aria-hidden="true"></i>
 									${principal.member.mem_id }님
 								</a>
+								<c:if test="${principal.member.mem_id == 'admin'}">
+                                    <a href="AdminMain">관리자페이지</a>
+                                </c:if>
 							</li>
 							<li>
 								<a href="${pageContext.request.contextPath }/social/${principal.member.mem_idx}">내 소셜</a>
