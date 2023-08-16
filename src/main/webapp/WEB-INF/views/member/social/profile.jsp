@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../../inc_ex/header.jsp"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
+<c:set var="principal" value="${null}" />
+
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <!-- 부트스트랩 -->
 <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/7(disabled)WUz3/TbgIkzBEec3uhl/7/disabled" crossorigin="anonymous"> -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/disabled@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybK_td1dtz(disabled)UX/2lOM/8(disabled)21J05fp(disabled)Zy7(disabled)" crossorigin="anonymous"></script>
@@ -10,6 +19,14 @@
 
 <%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css"> --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/profile.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/style.css">
+<link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/img/member/social/insta.svg">
+
+<!-- Fontawesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
 <style>
 .likeHeart{
 	width: 400px;
@@ -19,7 +36,6 @@
     padding-bottom: 140px;
     padding-right: 100px;
 }  
-
 </style>
 <!--프로필 섹션-->
 <section class="profile" style="margin-top: 200px;">
@@ -75,9 +91,11 @@
 						<button class="cta" onclick="location.href='${pageContext.request.contextPath }/store/${dto.member.mem_idx}'">${dto.member.mem_nickname}상점</button>
 					</c:otherwise>
 				</c:choose>
-				<button class="modi" onclick="popup('.modal-info')">
-					<i class="fas fa-cog"></i>
-				</button>
+<%-- 				<c:if test="${principal.member.mem_idx eq social.member.mem_idx }"> --%>
+<!-- 				<button class="modi" onclick="popup('.modal-info')"> -->
+<!-- 					<i class="fas fa-cog"></i> -->
+<!-- 				</button> -->
+<%-- 				</c:if> --%>
 			</div>
 
 			<div class="subscribe">
@@ -125,6 +143,7 @@
 </section>
 
 <!--로그아웃, 회원정보변경 모달-->
+
 <div class="modal-info" onclick="modalInfo()">
 	<div class="modal">
 		<!-- 		<button onclick="location.href='/user/1/update'">회원정보 변경</button> -->
@@ -136,6 +155,7 @@
 		<button onclick="closePopup('.modal-info')">취소</button>
 	</div>
 </div>
+
 <!--로그아웃, 회원정보변경 모달 end-->
 
 <!--프로필사진 바꾸기 모달-->

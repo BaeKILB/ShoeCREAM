@@ -13,10 +13,11 @@
 }
 .pr_cont ul {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 }
 .pr_cont li {
-	width: 25%;
+	width: calc(25% - 10px);
 	transition: all 0.4s;
 	border-radius: 6px;
 }
@@ -87,6 +88,21 @@
     display: inline-block;
 }
 
+@media screen and (max-width: 860px) {
+	.pr_cont li {
+		width: calc(33.33% - 10px);
+	}
+	.pr_cont li:nth-child(n+4) {
+		margin-top: 1rem;
+	}
+	.pr_cont li:nth-child(4n) {
+		margin-left: 0;	
+	}
+	.header_search {
+		display: none;
+	}
+	
+}
 
 
 

@@ -399,7 +399,6 @@
 							</c:forEach>
 						</c:if>
 					</div>
-
 				</div>
 				<c:if test="${fn:length(reviewList) > 0 }">
 					<div class="container">

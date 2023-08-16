@@ -409,7 +409,7 @@ public class MemberController {
     
     // 회원수정 정보 폼 (마이페이지 메인)
 //    @GetMapping("mypage/{mem_idx}/update")
-    @GetMapping("mypage/update")
+    @GetMapping("/mypage/update")
     public String updateForm(Model model) {//@AuthenticationPrincipal 이녀석을 통해 시큐리티가 저장한 세션을 접근할 수 있다.
 //    	public String updateForm(@PathVariable int mem_idx, @AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {//@AuthenticationPrincipal 이녀석을 통해 시큐리티가 저장한 세션을 접근할 수 있다.
     	// 1. 실패..

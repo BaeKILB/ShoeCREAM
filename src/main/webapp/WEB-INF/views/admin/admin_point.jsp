@@ -33,8 +33,8 @@
 						<thead>
 							<tr>
 								<th class="mem_id">회원번호</th>
-								<th class="charge_point_amount">충전/출금 전 잔액</th>
 								<th class="amount">금액</th>
+								<th class="charge_point_amount">충전/출금 후 잔액</th>
 								<th class="date">입금일</th>
 								<th class="point_usage">포인트 사용처</th>
 							</tr>
@@ -43,8 +43,8 @@
 							<c:forEach var="adminPointAccount" items="${pointList}">
 								<tr>
 										<td class="mem_id">${adminPointAccount.mem_idx}</td>
-										<td class="mem_id">${adminPointAccount.charge_point_amount}원</td>
-										<td class="amount"> ${adminPointAccount.charge_point}원 ${adminPointAccount.point_status }</td>
+										<td class="mem_id">${adminPointAccount.balance_amt} 원</td>
+										<td class="amount"> ${adminPointAccount.charge_point} 원 ${adminPointAccount.point_status }</td>
 										<td class="date"><fmt:formatDate value="${adminPointAccount.point_date}" pattern="YYYY-MM-dd" /></td>
 										<td class="point_usage">${adminPointAccount.point_usage}</td>
 								</tr>
