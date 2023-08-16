@@ -192,7 +192,6 @@ function payAuction(idx, price, id, title){
 		                    	</c:when>
 		                    	<c:otherwise>
 		                    		<div class="profile_btn_box mt-auto">
-		                    			<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/mypage/profile'">뭘로 하지</button>
 				                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='${pageContext.request.contextPath }/social/${mem_idx}'">${storeInfo.mem_nickname }님 소셜</button>
 		                    		</div> 
 		                    	</c:otherwise>
@@ -209,7 +208,7 @@ function payAuction(idx, price, id, title){
 		                <div class="col-md-2">
 		                    <div class="member_point d-flex flex-column align-items-center justify-content-center">
 		                        <a class="membership_item" style="text-decoration: none;">
-		                            <strong class="info" style="color: black;"> 0P </strong>
+		                            <strong class="info" style="color: black;">${storeInfo.mem_point }</strong>
 		                            <p class="title" style="color: gray;">포인트</p>
 		                        </a>
 		                    </div>

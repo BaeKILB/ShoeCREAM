@@ -27,10 +27,10 @@ public class SecurityConfig {
 		http.csrf().disable(); // 이제 csrf 토큰 검사 안함
 		http.authorizeRequests()
 			.antMatchers("/mypage/**","/social/**","/api/**" ,"/store/**", "/regist**", "/modify**", "/pay**", "/trade**", "/start**" ,"/JungChat**", "/JunggoPay**" ,"/transForm**" ,"/transComPro**" , "/chatRooms**" , "/makeJung**"
-					, "/trans**", "/shoePay**", "/authorize**", "/charge**", "/withdraw**", "/AuctionModify**", "/AuctionDelete**", "/bidding**", "/auctionReport**", "/delivery**" ,"/AucRegist**" , "/AucReview**" , "/RegisterForm**"
+					, "/trans**", "/shoePay**", "/authorize**", "/charge**", "/withdraw**", "/AuctionModify**", "/AuctionDelete**", "/bidding**", "/auctionReport**", "/delivery**" ,"/AucRegist**" , "/AucReview**" , "/RegisterForm**" ,"/auctionReport**"
 					, "/tracking**" , "/acquisition", "/tracking**", "/shipping**").authenticated() // 인증(로그인)한 유저만 갈 수 있는 페이지
 			.antMatchers("/Admi**", "/Inquiry**", "/QstModifyForm", "/creamInsert**", "/creamApply**" , "/AccountCheck**", "/noticeWriteForm**", "/NoticeList**"
-					, "/adminProduct**", "/noticeDetail**" , "/noticeModify**", "/noticeDelete**", "/auctionProduct**", "/DeleteProAuction**", "/creamProduct**", "/auctionReport**", "/adminPointAccount**").hasRole("ADMIN") // "/AdminMain" 페이지는 ROLE_ADMIN 권한이 있는 사용자만 접근 가능
+					, "/adminProduct**", "/noticeDetail**" , "/noticeModify**", "/noticeDelete**", "/auctionProduct**", "/DeleteProAuction**", "/creamProduct**",  "/adminPointAccount**").hasRole("ADMIN") // "/AdminMain" 페이지는 ROLE_ADMIN 권한이 있는 사용자만 접근 가능
 			.anyRequest().permitAll()
 	    .and()
 	    .formLogin()
