@@ -18,6 +18,7 @@
 	<script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script>
    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
    <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
+   <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 <script type="text/javascript">
 // $(function(){
 //      const passWd = document.getElementById("mem_passwd");
@@ -59,170 +60,172 @@
    
 </head>
 <body>
-<!--    <header> -->
+	<nav>
 		<jsp:include page="../../inc_ex/header.jsp" />
-<!--    </header> -->
+	</nav>
 
-   <form action="${pageContext.request.contextPath }/MemberUpdatePro" method="post" name="fr" onsubmit='return signUpCheck();'>
-<!--    <form id="memberUpdate" name="fr"> -->
-   <section id="sec_con">
-<!--       <h1 class="con_title">내 정보 수정</h1> -->
-      <div class="inq_container">
-      <!-- Sidebar -->
-         <jsp:include page="../../inc_ex/mem_sidebar.jsp"></jsp:include>
-
-         <div class="member-update-cont">
-            <ul>
-               <li>
-                  <label for="name">아이디</label>
-                  <div class="form-input border-bottom">
-                     <input type="text" name="mem_id"  class="form-control" readonly="readonly"  value="${member.mem_id }">
-                  </div>
-               </li>
-               <li>
-                  <label for="name">이름</label>
-                  <div class="form-input border-bottom">
-                     <input type="text" name="mem_name" id="name" class="form-control" value="${member.mem_name }">
-                  </div>
-               </li>
-               <li>
-                  <label for="name">닉네임</label>
-                  <div class="form-input border-bottom">
-                     <input type="text" name="mem_nickname" id="nickname" class="form-control" value="${member.mem_nickname }" >
-                  </div>
-               </li>
-<!--                <li> -->
-<!--                   <label for="name">현재 비밀번호</label> -->
-<!--                   <div class="form-input border-bottom"> -->
-<!--                      <input type="password" name="mem_passwd"  class="form-control" > -->
-<!--                   </div> -->
-<!--                </li> -->
-<!--                <li> -->
-<!--                   <label for="name">비밀번호 변경</label> -->
-<!--                   <div class="form-input border-bottom"> -->
-<!--                      <input type="password"  name="newPasswd" id="mem_passwd"  autoComplete="off" class="form-control"  placeholder="비밀변호 변경 시 입력하세요" oninput="checkPassword()"> -->
-<!--                     <div id="passwordError" class="error"></div> -->
-<!--                   </div> -->
-<!--                </li> -->
-<!--                <li> -->
-<!--                   <label for="name">비밀번호 변경 확인</label> -->
-<!--                   <div class="form-input border-bottom"> -->
-<!--                      <input type="password" name="newPasswd1" oninput='validatePassword()'  id="passwordCheck" class="form-control" placeholder="비밀변호 변경 시 입력하세요"> -->
-<!--                       <div id="passwordCheckError" class="error"></div> -->
-<!--                   </div> -->
-<!--                </li>  -->
-               <li id="ad">
-                  <label for="name">주소</label>
-                    <div class="addr border-bottom">
-                        <input class="border-bottom" id="sample6_postcode" name="sample6_postcode" type="text" placeholder="우편번호" value="${member.sample6_postcode}" >
-                        <input type="button" class="border-bottom" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-                        <input type="text" class="border-bottom" id="sample6_address" name="sample6_address" placeholder="주소"  value="${member.sample6_address}"><br>
-                     <input type="text" class="border-bottom" id="sample6_detailAddress"  name="sample6_detailAddress" placeholder="상세주소"  value="${member.sample6_detailAddress}">
-                     <input type="text" class="border-bottom" id="sample6_extraAddress"  name="sample6_extraAddress"  placeholder="참고항목" value="${member.sample6_extraAddress}">
-                        <div id="nameError" class="error"></div>
-                    </div>
-               </li>  
-               <li id="mem_birthday"><label for="name">생년월일</label>
-                  <div class="form-input">
-                     <div class="form-select">
-                           <select name="mem_bir1" class="form-control birthYear1 border-bottom"  id="birthYear">
-                              <option value="" >생년</option>
-                              <c:forEach var="i" begin="1943" end="2023">
-                                 <option value="${i}"class="border-bottom"<c:if test="${member.mem_bir1 eq i }">selected</c:if>>${i}</option>
-                              </c:forEach>
-                           </select>
-                           -
-                           <select name="mem_bir2" title="월" class="form-control birthMonth border-bottom"" id="birthMonth">
-                           <option value="">월</option>
-                              <c:forEach var="i" begin="1" end="12">
-                                 <option value="${i}" <c:if test="${member.mem_bir2 eq i }">selected</c:if>>${i}</option>
-                              </c:forEach>
-                           </select>
-                           -
-                           <select name="mem_bir3"  title="일" class="form-control birthMonth border-bottom"" id="birthDay">
-                              <option value="">일</option>
-                              <c:forEach var="i" begin="1" end="31">
-                                 <option value="${i}" <c:if test="${member.mem_bir3 eq i }">selected</c:if>>${i}</option>
-                              </c:forEach>
-                           </select>
-                     </div>
-                  </div>
-               </li>
-<!--        				<div class="name"> -->
-<!--     					<tr> -->
-<!-- 					        <td class="col1">관심카테고리</td> -->
-<!-- 					        <td class="col2"><select name="mem_interest" id="mem_interest"> -->
-<!-- 					            <option value="slc1" selected>선택</option> -->
-<!-- 					            <option value="여성의류">여성의류</option> -->
-<!-- 					            <option value="남성의류">남성의류</option> -->
-<!-- 					            <option value="언더웨어">언더웨어</option> -->
-<!-- 					            <option value="신발">신발</option> -->
-<!-- 					            <option value="가방/잡화">가방/잡화</option> -->
-<!-- 					            <option value="쥬얼리/시계">쥬얼리/시계</option> -->
-<!-- 					            <option value="반려동물용품">반려동물용품</option> -->
-<!-- 					            <option value="악기/취미">악기/취미</option> -->
-<!-- 					            <option value="문구/사무용품">문구/사무용품</option> -->
-<!-- 					            <option value="PC주변기기">PC주변기기</option> -->
-<!-- 					            <option value="화장품/향수">화장품/향수</option> -->
-<!-- 					            <option value="스포츠용품">스포츠용품</option> -->
-<!-- 					            <option value="생활용품">생활용품</option> -->
-<!-- 					            <option value="자동차용품">자동차용품</option> -->
-<!-- 					        </select> -->
-<!-- 					    </tr> -->
-<!-- 			        </div> -->
-               <li>
-                  <label for="name">이메일</label>
-                  <div class="form-input ">
-                     <input type="text" name="mem_email"  class="form-control border-bottom" readonly="readonly"  value="${member.mem_email }">
-                  </div>
-               </li>
-               <li id="call_num">
-                  <label for="name">휴대폰번호</label>
-                  <div class="form-input">
-                     <div class="form-select">
-                        <select name="phone1" title="월" id="phoneType" class="form-phone" value="${member.phone1}"  readonly="readonly">
-                           <option value="010">010</option>
-                           <option value="011">011</option>
-                           <option value="016">016</option>
-                           <option value="017">017</option>
-                           <option value="018">018</option>
-                           <option value="019">019</option>
-                        </select>
-                        -
-                        <input type="text" name="phone2" id="phone2" type="text" maxlength="4" class="form-phone1" value="${member.phone2}" readonly="readonly">
-                        -
-                        <input type="text" name="phone3" id="phone3" type="text" maxlength="4" class="form-phone1" value="${member.phone3}" readonly="readonly">
-                     </div>
-                  </div>
-               </li>
-               <li>
-               	<label>사용자 계좌</label>
-               		<div class="form-input">
-               		<c:choose>
-               			<c:when test='${member.mem_account_auth eq "Y"}'>								
-               			   <input type="button" value="계좌정보" 
-               			   id="btnAccountinfo" class="form-control btn btn-dark" 
-               			   onclick="location.href='${pageContext.request.contextPath }/mypage/account'">
-               			</c:when>
-               			<c:otherwise>
-               			   <input type="button" value="계좌인증" id="btnAccountAuth" class="form-control btn btn-dark" >
-               			</c:otherwise>
-               		</c:choose>
-               		</div>
-               </li>
-            </ul>
-            <div class="btn_info_update cr">
-<!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
-				           <button class="upd_btn" >수정하기</button>
-<%-- 			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button> --%>
-            </div>
-         </div>
-      </div>
+   <section id="main_cont">
+	   <form action="${pageContext.request.contextPath }/MemberUpdatePro" method="post" name="fr" onsubmit='return signUpCheck();'>
+	<!--    <form id="memberUpdate" name="fr"> -->
+	   <section id="sec_con">
+	<!--       <h1 class="con_title">내 정보 수정</h1> -->
+	      <div class="inq_container">
+	      <!-- Sidebar -->
+	         <jsp:include page="../../inc_ex/mem_sidebar.jsp"></jsp:include>
+	
+	         <div class="member-update-cont">
+	            <ul>
+	               <li>
+	                  <label for="name">아이디</label>
+	                  <div class="form-input border-bottom">
+	                     <input type="text" name="mem_id"  class="form-control" readonly="readonly"  value="${member.mem_id }">
+	                  </div>
+	               </li>
+	               <li>
+	                  <label for="name">이름</label>
+	                  <div class="form-input border-bottom">
+	                     <input type="text" name="mem_name" id="name" class="form-control" value="${member.mem_name }">
+	                  </div>
+	               </li>
+	               <li>
+	                  <label for="name">닉네임</label>
+	                  <div class="form-input border-bottom">
+	                     <input type="text" name="mem_nickname" id="nickname" class="form-control" value="${member.mem_nickname }" >
+	                  </div>
+	               </li>
+	<!--                <li> -->
+	<!--                   <label for="name">현재 비밀번호</label> -->
+	<!--                   <div class="form-input border-bottom"> -->
+	<!--                      <input type="password" name="mem_passwd"  class="form-control" > -->
+	<!--                   </div> -->
+	<!--                </li> -->
+	<!--                <li> -->
+	<!--                   <label for="name">비밀번호 변경</label> -->
+	<!--                   <div class="form-input border-bottom"> -->
+	<!--                      <input type="password"  name="newPasswd" id="mem_passwd"  autoComplete="off" class="form-control"  placeholder="비밀변호 변경 시 입력하세요" oninput="checkPassword()"> -->
+	<!--                     <div id="passwordError" class="error"></div> -->
+	<!--                   </div> -->
+	<!--                </li> -->
+	<!--                <li> -->
+	<!--                   <label for="name">비밀번호 변경 확인</label> -->
+	<!--                   <div class="form-input border-bottom"> -->
+	<!--                      <input type="password" name="newPasswd1" oninput='validatePassword()'  id="passwordCheck" class="form-control" placeholder="비밀변호 변경 시 입력하세요"> -->
+	<!--                       <div id="passwordCheckError" class="error"></div> -->
+	<!--                   </div> -->
+	<!--                </li>  -->
+	               <li id="ad">
+	                  <label for="name">주소</label>
+	                    <div class="addr border-bottom">
+	                        <input class="border-bottom" id="sample6_postcode" name="sample6_postcode" type="text" placeholder="우편번호" value="${member.sample6_postcode}" >
+	                        <input type="button" class="border-bottom" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+	                        <input type="text" class="border-bottom" id="sample6_address" name="sample6_address" placeholder="주소"  value="${member.sample6_address}"><br>
+	                     <input type="text" class="border-bottom" id="sample6_detailAddress"  name="sample6_detailAddress" placeholder="상세주소"  value="${member.sample6_detailAddress}">
+	                     <input type="text" class="border-bottom" id="sample6_extraAddress"  name="sample6_extraAddress"  placeholder="참고항목" value="${member.sample6_extraAddress}">
+	                        <div id="nameError" class="error"></div>
+	                    </div>
+	               </li>  
+	               <li id="mem_birthday"><label for="name">생년월일</label>
+	                  <div class="form-input">
+	                     <div class="form-select">
+	                           <select name="mem_bir1" class="form-control birthYear1 border-bottom"  id="birthYear">
+	                              <option value="" >생년</option>
+	                              <c:forEach var="i" begin="1943" end="2023">
+	                                 <option value="${i}"class="border-bottom"<c:if test="${member.mem_bir1 eq i }">selected</c:if>>${i}</option>
+	                              </c:forEach>
+	                           </select>
+	                           -
+	                           <select name="mem_bir2" title="월" class="form-control birthMonth border-bottom"" id="birthMonth">
+	                           <option value="">월</option>
+	                              <c:forEach var="i" begin="1" end="12">
+	                                 <option value="${i}" <c:if test="${member.mem_bir2 eq i }">selected</c:if>>${i}</option>
+	                              </c:forEach>
+	                           </select>
+	                           -
+	                           <select name="mem_bir3"  title="일" class="form-control birthMonth border-bottom"" id="birthDay">
+	                              <option value="">일</option>
+	                              <c:forEach var="i" begin="1" end="31">
+	                                 <option value="${i}" <c:if test="${member.mem_bir3 eq i }">selected</c:if>>${i}</option>
+	                              </c:forEach>
+	                           </select>
+	                     </div>
+	                  </div>
+	               </li>
+	<!--        				<div class="name"> -->
+	<!--     					<tr> -->
+	<!-- 					        <td class="col1">관심카테고리</td> -->
+	<!-- 					        <td class="col2"><select name="mem_interest" id="mem_interest"> -->
+	<!-- 					            <option value="slc1" selected>선택</option> -->
+	<!-- 					            <option value="여성의류">여성의류</option> -->
+	<!-- 					            <option value="남성의류">남성의류</option> -->
+	<!-- 					            <option value="언더웨어">언더웨어</option> -->
+	<!-- 					            <option value="신발">신발</option> -->
+	<!-- 					            <option value="가방/잡화">가방/잡화</option> -->
+	<!-- 					            <option value="쥬얼리/시계">쥬얼리/시계</option> -->
+	<!-- 					            <option value="반려동물용품">반려동물용품</option> -->
+	<!-- 					            <option value="악기/취미">악기/취미</option> -->
+	<!-- 					            <option value="문구/사무용품">문구/사무용품</option> -->
+	<!-- 					            <option value="PC주변기기">PC주변기기</option> -->
+	<!-- 					            <option value="화장품/향수">화장품/향수</option> -->
+	<!-- 					            <option value="스포츠용품">스포츠용품</option> -->
+	<!-- 					            <option value="생활용품">생활용품</option> -->
+	<!-- 					            <option value="자동차용품">자동차용품</option> -->
+	<!-- 					        </select> -->
+	<!-- 					    </tr> -->
+	<!-- 			        </div> -->
+	               <li>
+	                  <label for="name">이메일</label>
+	                  <div class="form-input ">
+	                     <input type="text" name="mem_email"  class="form-control border-bottom" readonly="readonly"  value="${member.mem_email }">
+	                  </div>
+	               </li>
+	               <li id="call_num">
+	                  <label for="name">휴대폰번호</label>
+	                  <div class="form-input">
+	                     <div class="form-select">
+	                        <select name="phone1" title="월" id="phoneType" class="form-phone" value="${member.phone1}"  readonly="readonly">
+	                           <option value="010">010</option>
+	                           <option value="011">011</option>
+	                           <option value="016">016</option>
+	                           <option value="017">017</option>
+	                           <option value="018">018</option>
+	                           <option value="019">019</option>
+	                        </select>
+	                        -
+	                        <input type="text" name="phone2" id="phone2" type="text" maxlength="4" class="form-phone1" value="${member.phone2}" readonly="readonly">
+	                        -
+	                        <input type="text" name="phone3" id="phone3" type="text" maxlength="4" class="form-phone1" value="${member.phone3}" readonly="readonly">
+	                     </div>
+	                  </div>
+	               </li>
+	               <li>
+	               	<label>사용자 계좌</label>
+	               		<div class="form-input">
+	               		<c:choose>
+	               			<c:when test='${member.mem_account_auth eq "Y"}'>								
+	               			   <input type="button" value="계좌정보" 
+	               			   id="btnAccountinfo" class="form-control btn btn-dark" 
+	               			   onclick="location.href='${pageContext.request.contextPath }/mypage/account'">
+	               			</c:when>
+	               			<c:otherwise>
+	               			   <input type="button" value="계좌인증" id="btnAccountAuth" class="form-control btn btn-dark" >
+	               			</c:otherwise>
+	               		</c:choose>
+	               		</div>
+	               </li>
+	            </ul>
+	            <div class="btn_info_update cr">
+	<!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
+					           <button class="upd_btn" >수정하기</button>
+	<%-- 			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button> --%>
+	            </div>
+	         </div>
+	      </div>
+	   </section>
+	   </form>
    </section>
-   </form>
-<!--    <footer> -->
-<%--       <jsp:include page="../../../inc/footer.jsp"></jsp:include> --%>
-<!--    </footer> -->
+	<footer>
+		<jsp:include page="../../inc_ex/footer.jsp" />
+	</footer>
 <!-- 	<script type="text/javascript"> -->
 	   
 <!-- // 	function signUpCheck() { -->

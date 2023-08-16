@@ -1,5 +1,5 @@
-@import "header.css";
-@import "footer.css";
+/* @import "header.css"; */
+/* @import "footer.css"; */
 
 .exploreContainer {
   width: 1200px;
@@ -9,7 +9,7 @@
 
 .popular {
   width: 100%;
-  padding-top: 84px;
+  padding-top: 200px;
   padding-bottom: 30px;
 }
 .popular .exploreContainer {

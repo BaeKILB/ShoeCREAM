@@ -37,6 +37,9 @@
 									<i class="fa fa-cog" aria-hidden="true"></i>
 									${principal.member.mem_id }님
 								</a>
+								<c:if test="${principal.member.mem_id == 'admin'}">
+                                    <a href="AdminMain">관리자페이지</a>
+                                </c:if>
 							</li>
 							<li>
 								<a href="${pageContext.request.contextPath }/social/${principal.member.mem_idx}">내 소셜</a>
@@ -83,13 +86,13 @@
 				<div class="header_inn">
 					<ul>
 						<li>
-							<a href="${pageContext.request.contextPath }/mypage/update">마이페이지</a>
+							<a href="${pageContext.request.contextPath }/mypage/update" style="color: black;">마이페이지</a>
 						</li>
 						<li>
-							<a href="${pageContext.request.contextPath }/store/${principal.member.mem_idx}">내 상점</a>
+							<a href="${pageContext.request.contextPath }/store/${principal.member.mem_idx}" style="color: black;">내 상점</a>
 						</li>
 						<li>
-							<a href="${pageContext.request.contextPath }/social/popular">소셜</a>					
+							<a href="${pageContext.request.contextPath }/social/popular" style="color: black;">소셜</a>					
 						</li>
 					</ul>
 				</div>
@@ -103,22 +106,22 @@
 					<nav>
 						<ul>
 							<li>
-								<a href="JunggoSearch">중고거래</a> 
+								<a href="JunggoSearch" style="color: black;">중고거래</a> 
 							</li>
 							<li>
-								<a href="${pageContext.request.contextPath }/Auction">경매하기</a>
+								<a href="${pageContext.request.contextPath }/Auction" style="color: black;">경매하기</a>
 							</li>
 							<li>
-								<a href="${pageContext.request.contextPath }/RegisterForm">상품등록</a>
+								<a href="${pageContext.request.contextPath }/RegisterForm" style="color: black;">상품등록</a>
 							</li>
 							<li>
-								<a href="Cream">커스텀</a>
+								<a href="Cream" style="color: black;">커스텀</a>
 							</li>
 							<li>
-								<a href="community">커뮤니티</a>
+								<a href="community" style="color: black;">커뮤니티</a>
 							</li>
 							<li>
-								<a href="${pageContext.request.contextPath }/chatRooms?chat_area=0">중고채팅 </a>
+								<a href="${pageContext.request.contextPath }/chatRooms?chat_area=0" style="color: black;">중고채팅</a>
 							</li>
 						</ul>
 					</nav>

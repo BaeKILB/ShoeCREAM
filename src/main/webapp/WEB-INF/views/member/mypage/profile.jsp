@@ -11,8 +11,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>마이페이지</title>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/update.css"> --%>
-<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/upload.css"> --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/mem_page/profile.css">
 
 <link href="${pageContext.request.contextPath }/resources/css/member/common.css" rel="stylesheet">
@@ -20,9 +18,7 @@
 <link href="${pageContext.request.contextPath }/resources/css/inc/top.css" rel="styleSheet">
 <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="styleSheet">
 
-<!--    <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
-
-<%-- <script src="${pageContext.request.contextPath }/resources/js/member/login/signup.js"></script> --%>
+<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 
@@ -32,9 +28,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <!-- Fonts -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 .profile_thumb img.thumb_img {
   border-radius: 50%;
@@ -58,72 +52,76 @@
  </script>
 </head>
 <body>
-	<!--    <header> -->
-<%-- 	<jsp:include page="../../inc_ex/header.jsp" /> --%>
-	<!--    </header> -->
-
-	<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" >
-		<!--    <form id="memberUpdate" name="fr"> -->
-		<section id="sec_con">
-			<!--       <h1 class="con_title">내 정보 수정</h1> -->
-			<div class="inq_container">
-				<jsp:include page="../../inc_ex/mem_sidebar.jsp"></jsp:include>
-
-				<div class="member-update-cont">
-					<!--프로필 섹션-->
-					<ul>
-<!-- <form action="ProfileImgePro" method="post" id="ProfileImage" name="ProfileImage" enctype="multipart/form-data"> -->
-						    <div class="container">
-						        <div class="row">
-						            <div class="col-md-12">
-						                <div class="d-flex my-3" >
-						                    <div class="col-md-2">
-						                        <div class="profile_thumb">
-<!-- 						                        <input type="file" id="profileImageFile" onchange="submitForm()" hidden> -->
-						                
-						                            <input type="file" id="profileImageFile" name="file" accept="image/jpeg,image/png" hidden="hidden" onchange="handleImageChange(event)">
-<%-- 						                            <img src="${pageContext.request.contextPath }/social//upload/profile/${member.mem_profileImageUrl }"  alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;"> --%>
-						                        		<img src="${pageContext.request.contextPath}/resources/upload/profile/${member.mem_profileImageUrl}" alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
-						                        	</div>
-						                    </div>
-						                    <div class="col-md-10 d-flex flex-column">
-						                        <div class="profile_detail">
-						                            <strong class="name">${member.mem_nickname }</strong>
-						                        </div>
-						                        <div class="profile_btn_box mt-auto">
-						                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('profileImageFile').click()">이미지 변경</button>
-						                            <button type="button" class="btn btn-outline-secondary btn-sm">삭제</button>
-						                        </div>
-						                    </div>
-						                </div>
-						            </div>
-						        </div>
-						    </div>
-<!-- 						</form> -->
-					</ul>
-<%-- 				<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" onsubmit='return signUpCheck();'> --%>
-					<ul>
-						<li><label for="name">프로필 이름</label>
-							<div class="form-input border-bottom">
-								<input type="text" name="mem_nickname" class="form-control"
-									value="${member.mem_nickname }">
-							</div></li>
-						<li><label for="name">소개</label>
-							<div class="form-input border-bottom">
-								<input type="text" name="mem_bio" id="name"
-									class="form-control" value="${member.mem_bio }"
-									>
-							</div></li>
-					</ul>
-					<div class="btn_info_update cr">
-						<!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
-						<button type="submit" class="upd_btn">수정하기</button>
-						<%-- 			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button> --%>
+	<nav>
+		<jsp:include page="../../inc_ex/header.jsp" />
+	</nav>
+	<section id="main_cont">
+		<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" >
+			<!--    <form id="memberUpdate" name="fr"> -->
+			<section id="sec_con">
+				<!--       <h1 class="con_title">내 정보 수정</h1> -->
+				<div class="inq_container">
+					<jsp:include page="../../inc_ex/mem_sidebar.jsp"></jsp:include>
+	
+					<div class="member-update-cont">
+						<!--프로필 섹션-->
+						<ul>
+	<!-- <form action="ProfileImgePro" method="post" id="ProfileImage" name="ProfileImage" enctype="multipart/form-data"> -->
+							    <div class="container">
+							        <div class="row">
+							            <div class="col-md-12">
+							                <div class="d-flex my-3" >
+							                    <div class="col-md-2">
+							                        <div class="profile_thumb">
+	<!-- 						                        <input type="file" id="profileImageFile" onchange="submitForm()" hidden> -->
+							                
+							                            <input type="file" id="profileImageFile" name="file" accept="image/jpeg,image/png" hidden="hidden" onchange="handleImageChange(event)">
+	<%-- 						                            <img src="${pageContext.request.contextPath }/social//upload/profile/${member.mem_profileImageUrl }"  alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;"> --%>
+							                        		<img src="${pageContext.request.contextPath}/resources/upload/profile/${member.mem_profileImageUrl}" alt="사용자 이미지" class="thumb_img rounded-circle" onerror="this.src='https://kream.co.kr/_nuxt/img/blank_profile.4347742.png'" style="object-fit: cover; width: 100px; height: 100px;">
+							                        	</div>
+							                    </div>
+							                    <div class="col-md-10 d-flex flex-column">
+							                        <div class="profile_detail">
+							                            <strong class="name">${member.mem_nickname }</strong>
+							                        </div>
+							                        <div class="profile_btn_box mt-auto">
+							                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('profileImageFile').click()">이미지 변경</button>
+							                            <button type="button" class="btn btn-outline-secondary btn-sm">삭제</button>
+							                        </div>
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </div>
+	<!-- 						</form> -->
+						</ul>
+	<%-- 				<form action="${pageContext.request.contextPath }/ProfileUpdatePro" method="post" name="fr" enctype="multipart/form-data" onsubmit='return signUpCheck();'> --%>
+						<ul>
+							<li><label for="name">프로필 이름</label>
+								<div class="form-input border-bottom">
+									<input type="text" name="mem_nickname" class="form-control"
+										value="${member.mem_nickname }">
+								</div></li>
+							<li><label for="name">소개</label>
+								<div class="form-input border-bottom">
+									<input type="text" name="mem_bio" id="name"
+										class="form-control" value="${member.mem_bio }"
+										>
+								</div></li>
+						</ul>
+						<div class="btn_info_update cr">
+							<!--                <input type="submit" alt="회원정보수정" value="수정하기" class="upd_btn" > -->
+							<button type="submit" class="upd_btn">수정하기</button>
+							<%-- 			<button type="button" onclick="update('${member.mem_idx}')" alt="회원정보수정" class="upd_btn">수정하기</button> --%>
+						</div>
 					</div>
 				</div>
-			</div>
-		</section>
-	</form>
+			</section>
+		</form>
+	</section>
+	<footer>
+		<jsp:include page="../../inc_ex/footer.jsp" />
+	</footer>
 	<!--    <footer> -->
 	<%--       <jsp:include page="../../../inc/footer.jsp"></jsp:include> --%>
 	<!--    </footer> -->

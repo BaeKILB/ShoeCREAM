@@ -34,7 +34,6 @@
 		<div id="MethodBox">
 			<span class="methodSpan"><input type="hidden" value="junggo">중고</span>
 			<span class="methodSpan"><input type="hidden" value="auction">경매</span>
-			<span class="methodSpan"><input type="hidden" value="cream">크림</span>
 		</div>
 		<section id="sec_con" class="register_view inr">
 			<c:if test="${!empty param.page }">

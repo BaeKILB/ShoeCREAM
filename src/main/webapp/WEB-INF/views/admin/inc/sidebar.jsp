@@ -108,10 +108,6 @@
 							<ul class="cont_li_wrap dwList">
 								<li class="cont_item_b">
 									<a class="cont_item_list pointList" href="adminPointAccount">포인트 입출금 내역</a>
-								</li>
-								<li class="cont_item_b">
-									<a class="cont_item_list dealList" href="DealList">거래 입출금 내역</a>
-								</li>
 							</ul>
 						</li>
 					</ul>
