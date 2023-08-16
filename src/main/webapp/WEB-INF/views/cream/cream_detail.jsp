@@ -339,7 +339,7 @@ function submitCheck() {
 							<c:forEach var="rp" items="${relatedProducts }" varStatus="status">
 								<c:if test="${status.index < 4}">
 									<div class="card col-xs-6 col-3">
-										<a href="CreamDetail?cream_idx${rp.cream_idx }">
+										<a href="CreamDetail?cream_idx=${rp.cream_idx }">
 											<img src="${pageContext.request.contextPath }${rp.image_path }/${rp.image1 }" class="card-img-top img-fluid rounded">
 											<div class="card-body d-none d-md-block">
 												<h5 class="card-title">${rp.cream_title }</h5>
