@@ -101,14 +101,14 @@
 										<c:forEach var="chat" items="${chatList }">
 											<c:choose>
 												<c:when test="${chat.chat_msg_writer eq myIdx}">
-													<div class='chat_msg_l'>
+													<div class='chat_msg_r'>
 														<div class='alert alert-primary'>
 															<b>${chat.mem_nickname} : ${chat.chat_msg_content}</b>
 														</div>
 													</div>
 												</c:when>
 												<c:otherwise>
-													<div class='chat_msg_r'>
+													<div class='chat_msg_l'>
 														<div class='alert alert-warning'>
 															<b>${chat.mem_nickname} : ${chat.chat_msg_content}</b>
 														</div>
@@ -191,14 +191,14 @@
 				   
 				   
 				   if(chat_writer === userId){
-				       str = "<div class='chat_msg_l'>";
+				       str = "<div class='chat_msg_r'>";
 				       str += "<div class='alert alert-primary'>";
 				       str += "<b>" + chat_nicname + " : " + content.chat_msg_content + "</b>";
 				       str += "</div></div>";
 				       $("#msgArea").append(str);
 				   }
 				   else{
-				       str = "<div class='chat_msg_r'>";
+				       str = "<div class='chat_msg_l'>";
 				       str += "<div class='alert alert-warning'>";
 				       str += "<b>" + chat_nicname + " : " + content.chat_msg_content + "</b>";
 				       str += "</div></div>";

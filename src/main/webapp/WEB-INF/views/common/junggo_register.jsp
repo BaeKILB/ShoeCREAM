@@ -6,7 +6,7 @@
 <head>
 	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 </head>
-<div id="main_cont">
+<div >
 <div class="total_container col-sm-12 col-lg-12">
 <form action="registProductPro" method="post" enctype="multipart/form-data">
 	<div class="titleContainner" >

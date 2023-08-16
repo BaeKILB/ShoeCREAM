@@ -69,11 +69,13 @@
 /* 채팅 정보창 간격 */
 .product_info_wrap p{
 	margin: 4px 0;
+	font-weight: bold;
 }
 
 /* 채팅 세부 레이아웃 */
 .productBtn{
 	width: auto;
+	text-align: center;
 }
 
 .productTitle{

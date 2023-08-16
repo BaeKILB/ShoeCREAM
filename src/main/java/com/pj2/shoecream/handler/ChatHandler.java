@@ -85,8 +85,8 @@ public class ChatHandler {
 						+ "		<p class='productPrice'>" + map.get("product_price") + "원</p>"
 						+ "	</section>"
 						+ "	<section>"
-						+ "		<p>거래상태 | <span>" + map.get("product_sell_status") + "</span></p>"
-						+ "		<p>상품상태 | <span>" + map.get("product_status") + "</span></p>"
+						+ "		<p><span>" + map.get("product_sell_status") + "</span></p>"
+						+ "		<p><span>" + map.get("product_status") + "</span></p>"
 						+ "	</section>"
 						+ "	<section class='productBtn'>"
 						+ 		product_btn				    		
