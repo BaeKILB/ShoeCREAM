@@ -830,7 +830,7 @@ function payAuction(idx, price, id, title){
 				</div>				
 				<!-- 경매낙찰내역 시작 -->
 			
-				<!-- 커스텀 시작 -->
+<!-- 커스텀 시작 -->
 				<div id="secondhandLike_menu_area" class="common_menu">
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 					    <div>
@@ -839,6 +839,91 @@ function payAuction(idx, price, id, title){
 					        </p>
 					        <!-- 생략된 주석 -->
 					    </div>
+					</div>
+					    <div class="container">
+							<div class="row">
+								<div class="col-1">
+									<div>전체</div>
+								</div>
+								<div class="col-8">
+									<div class=""><b>2개</b></div>
+								</div>
+								<div class="col-auto" style="">
+							        <input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off" checked>
+									<label class="btn btn-check-label" for="option9">최신순</label>
+									
+									<input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off">
+									<label class="btn btn-check-label" for="option10">인기순</label>
+									
+									<input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off" >
+									<label class="btn btn-check-label" for="option11">고가</label>
+									
+									<input type="radio" class="btn-check" name="customCheck" id="" autocomplete="off">
+									<label class="btn btn-check-label" for="option12">저가</label>
+								</div>
+							</div>
+						</div>
+					<div>
+						<!--커스텀-->
+					<div class="container mt-4">
+					  <c:forEach items="${creamList }" var="creamList">
+						<input type="hidden" name="request_idx" value="${creamList.request_idx }">
+					      <div class="goods mb-4">
+					        <div class="row no-gutters">
+					          <div class="col-12 col-md-auto"> <!-- 이미지랑 하이퍼링크 섹션 -->
+					              <div class="goods_image" style=" width: 94px; height: 94px;">
+					            <a href="${pageContext.request.contextPath }/CreamDetail?cream_idx=${creamList.cream_idx}">
+									<img src="${pageContext.request.contextPath }${creamList.image_path }/${creamList.image1}" alt="상품 이미지">
+					            </a>
+									</div>
+					          </div>
+					          
+					          <div class="col-12 col-md-9">
+					            <div class="goods_info">
+					              <h2 class="goods_title">상품명 : ${creamList.cream_title}</h2>
+					              <p class="goods_price">사이즈 : ${creamList.cream_size}</p>
+					              <p class="goods_price">결제금액 : ${creamList.cream_price} 원</p>
+					              <c:choose>
+					              	<c:when test="${creamList.inbound_tracking_num eq null }">
+						              <p class="goods_price">현재상태 : 입고대기중</p>
+					              	</c:when>
+					                <c:when test="${creamList.inbound_tracking_num ne null && creamList.inbound_delivery_status ne '배송완료'}"> <!-- 운송장 등록시 -->
+					                  <p class="goods_price">현재상태 : 입고중</p>
+									</c:when>
+									<c:when test="${creamList.inbound_delivery_status eq '배송완료' && creamList.tracking_num eq null}">
+									  <p class="goods_price">현재상태 : 상품준비중</p>
+									</c:when>
+									<c:when test="${creamList.tracking_num ne null && creamList.delivery_status eq '배송완료'}">
+										<p class="goods_price">현재상태 : 거래완료</p>
+									</c:when>
+									<c:otherwise>
+										<p class="goods_price">현재상태 : 배송중</p>
+									</c:otherwise>
+					              </c:choose>
+					            </div>
+					          </div>
+					            <div class="col-12 col-md-auto">
+					            <!-- 진짜 시연용으로 굴러가게만 해놓음 야매임 수정반드시 해야함 seller_idx부분 반드시 -->
+									<c:choose>
+										<c:when test="${creamList.inbound_tracking_num eq null }"> <!-- 운송장 미등록시 -->
+                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/trackingRegisterForm2?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=580, height=800, left=100, top=50')">운송장 등록</button>
+                                            <button type="button" class="btn btn-light btn-half-height" style="width: 53px; height:30px; margin-top:40px;" onclick="window.open('${pageContext.request.contextPath }/creamRefund?cream_idx=${creamList.cream_idx}&request_idx=${creamList.request_idx }', '구매자정보', 'width=200, height=360, left=100, top=50')">환불 요청</button>
+										</c:when>
+										<c:when test="${creamList.tracking_num ne null && creamList.delivery_status eq '배송중'}"> <!-- 운송장 등록시 -->
+											<input type="hidden" name="t_key"  id="t_key" value="vmXicQZCzQaQetF3y0M0xg">
+											<input type="hidden" name="t_code" id="t_code" value="${creamList.tracking_code }">
+											<input type="hidden" name="t_invoice" id="t_invoice" value="${creamList.tracking_num }">
+											<input  type="button" value="배송조회" class="btn btn-light btn-half-height tracker">
+										</c:when>
+										<c:when test="${creamList.delivery_status eq '배송완료' }"> 
+											<button type="button" class="btn btn-light btn-half-height" onclick="window.open('${pageContext.request.contextPath }/CreRegistReviewForm?product_idx=${creamList.cream_idx}&mem_idx=1234&buyer_idx=${creamList.mem_idx }','구매후기 등록', 'width=680, height=700, left=100, top=50')">구매후기 등록</button>
+										</c:when>
+									</c:choose>
+					       	     </div>
+					      </div>
+					      </div>
+				        </c:forEach>
+				    </div>
 				    </div>
 				</div>
 				<!-- 커스텀 끝 -->
@@ -900,19 +985,19 @@ function payAuction(idx, price, id, title){
 						        <a href="${pageContext.request.contextPath}/AuctionDetail?auction_idx=${dibList.product_idx}">
 					              <div class="goods_image" style=" width: 94px; height: 94px;">
 									<c:choose>
-										<c:when	test="${dibList.auc_state eq '입찰' }">
+										<c:when	test="${dibList.auc_state eq '대기' }">
 											<img src="${pageContext.request.contextPath }${dibList.image_path }/${dibList.image1}" alt="상품 이미지">
 											<span class="goods_front"> 경매 대기 중 </span>
 										</c:when>
-										<c:when	test="${dibList.auc_state eq '낙찰' }">
+										<c:when	test="${dibList.auc_state eq '진행' }">
 											<img src="${pageContext.request.contextPath }${dibList.image_path }/${dibList.image1}" alt="상품 이미지">
 											<span class="goods_front"> 경매 진행 중 </span>
 										</c:when>
-										<c:when	test="${dibList.auc_state eq '유찰' }">
+										<c:when	test="${dibList.auc_state eq '낙찰' }">
 											<img src="${pageContext.request.contextPath }${dibList.image_path}/${dibList.image1}" alt="상품 이미지">
 											<span class="goods_front"> 경매 낙찰 중 </span>
 										</c:when>
-										<c:when test="${dibList.auction_status eq '마감' }">
+										<c:when test="${dibList.auc_state eq '마감' }">
 											<img src="${pageContext.request.contextPath }${dibList.image_path}/${dibList.image1}" alt="상품 이미지">
 											<span class="goods_front"> <i class="far fa-check-circle"></i><br> 
 											경매 마감

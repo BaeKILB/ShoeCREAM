@@ -26,20 +26,31 @@
 <link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/admin/common.css" rel="stylesheet" type="text/css">
 <script>
- $(document).ready(function() {
-     $('select[name="inputSize"]').on('change', function() {
-         var selectedSize = $(this).val();
-         var creamSizeValue = $('input[name="cream.size' + selectedSize + '"]').val();
-         var formattedPrice = numberWithCommas(creamSizeValue) + '원';
-      // .value()를 사용한 방식
-//          var creamSizeValue = $('#creamSize' + selectedSize).val();
-        
-         $('#priceSpan').text(formattedPrice);
-     });
- });
+$(document).ready(function() {
+    $('select[name="inputSize"]').on('change', function() {
+        $("#selectedSize").val($(this).val());
+        var selectedSize = $(this).val();
+        var creamSizeValue = $('input[name="cream.size' + selectedSize + '"]').val();
+        var formattedPrice = numberWithCommas(creamSizeValue) + '원';
+     // .value()를 사용한 방식
+//         var creamSizeValue = $('#creamSize' + selectedSize).val();
+
+        $('#priceSpan').text(formattedPrice);
+    });
+});
  
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function submitCheck() {
+	if ($('select[name="inputSize"]').val() == '') {
+		alert('사이즈를 선택해주세요.');
+		return false
+	}
+	
+	$("form").submit();
+	
 }
  
 </script>
@@ -152,9 +163,6 @@ function numberWithCommas(x) {
 <body>
 
 	<hr>
-	<input type="hidden" value="${cream.cream_idx }" id="cream_idx">
-	<input type="hidden" value="${cream.mem_idx }" id="mem_idx">
-  
 	<main class="container">
 		<section class="row">
 			<div class="col-xl-6 col-xs-12">
@@ -225,6 +233,7 @@ function numberWithCommas(x) {
 						    <div class="col-md-6">사이즈</div>
 						    <div  class="col-md-6">
 						        <select name="inputSize" id="inputSizeSelect">
+						        	<option value=''>사이즈를 선택해주세요.</option>
 						            <c:forEach begin="220" step="5" end="310" varStatus="status">
 						                <option value="${status.index}">${status.index}</option>
 						            </c:forEach>
@@ -284,11 +293,13 @@ function numberWithCommas(x) {
 									    	<button id="applyButton2" class="btn btn-light w-100" onclick="location.href='login'">로그인</button>
 										</div>
 				    				</c:when>
-				    				<c:otherwise>
-					    				<div class="col-12">
-				    	 			 	 <button id="applyButton" class="btn btn-light w-100">결제하기</button>
-				    	            	</div>
-				    				</c:otherwise>
+									<c:otherwise>
+                                        <form action="payForm2" method="get">
+                                            <input type="hidden" name="cream_idx" value="${cream.cream_idx }" id="cream_idx">
+                                            <input type="hidden" name="selectedSize" id="selectedSize">
+                                            <button type="button" onclick="submitCheck()" class="btn btn-light w-100">결제하기</button>
+                                        </form>
+                                    </c:otherwise>
 								</c:choose>
 			    	            <br>
 								<br>
@@ -388,29 +399,10 @@ function numberWithCommas(x) {
 						</c:if>
 					</c:forEach>
 				</div>
-				</div>
-				</div>
-					
-					
-			
+			</div>
+			</div>
         </section>
 	</main>
-<script>
-    const selectElement = document.getElementById('inputSizeSelect');
-    const applyButton = document.getElementById('applyButton');
-
-    applyButton.addEventListener('click', function () {
-        const selectedValue = selectElement.value;
-        const creamIdx = "${cream.cream_idx}"; 
-        const url = new URL('http://localhost:8089/ShoeCREAM/payForm2'); 
-        
-        url.searchParams.set('cream_idx', creamIdx); // 파라미터 이름 수정
-        url.searchParams.set('selectedSize', selectedValue);
-        
-        location.href = url; // URL로 이동
-    });
-</script>
-
 	<footer>
         <jsp:include page="../inc_ex/footer.jsp" />
 	</footer>
