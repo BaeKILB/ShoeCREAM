@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 	<link href="${pageContext.request.contextPath}/resources/css/junggo/review_write_form.css" rel="stylesheet">
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/top.css" rel="styleSheet"> --%>
 <%-- 	<link href="${pageContext.request.contextPath}/resources/css/inc/footer.css" rel="styleSheet"> --%>
@@ -19,6 +19,7 @@
 	<header>
 <%-- 		<jsp:include page="../../../inc/top1.jsp"></jsp:include> --%>
 	</header>
+<div id="main_cont">
 	<div id="notice_cont">
 		<section id="sec_con" class="inr">
 			<form action="${pageContext.request.contextPath}/registJReviewPro" method="post" enctype="multipart/form-data">
@@ -75,6 +76,7 @@
 			</form>
 		</section>
 	</div>
+</div>	
 	<footer>
 <%-- 		<jsp:include page="../../../inc/footer.jsp"></jsp:include> --%>
 	</footer>

@@ -16,9 +16,10 @@
 <body>
 	<header>
 		<jsp:include page="../inc_ex/header.jsp" />
-		<link href="${pageContext.request.contextPath }/resources/css/junggo/common.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath }/resources/css/junggo/trade_complete.css" rel="styleSheet">
+		<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
+		<link href="${pageContext.request.contextPath }/resources/css/junggo/trade_complete.css" rel="styleSheet">
 	</header>
+<div id="main_cont">	
 	<section id="sec_con" class="inr com_cont">
 		<div class="res_com_txt" align="center">
 			<img alt="" src = "${pageContext.request.contextPath }/resources/img/junggo/no.png" width ="70px"/>
@@ -123,7 +124,7 @@
 			</div>
 		</div>
 	</section>
-	
+</div>
 	<footer>
 		<jsp:include page="../inc_ex/footer.jsp" />
 	</footer>

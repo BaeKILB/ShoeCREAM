@@ -6,7 +6,7 @@
 <head>
 <link href="${pageContext.request.contextPath }/resources/css/common/auction_register.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/common/product_register.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/css/junggo/common.css" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css">
 
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
@@ -216,6 +216,7 @@ $(function() {
 
 
 </head>
+<div id="main_cont">
 <form action="junggoModifyPro" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="product_idx" id="product_idx" value="${jungGoNoh.product_idx}"/>
 	<input type="hidden" name="mem_idx" id="mem_idx" value="${jungGoNoh.mem_idx}"/>
@@ -474,3 +475,4 @@ function sellectBrand(selBrand){
 		<button type="button" class="back_btn" onclick="history.back()">돌아가기</button>
 	</div>
 </form>
+</div>

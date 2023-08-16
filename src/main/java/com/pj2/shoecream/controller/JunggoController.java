@@ -693,7 +693,12 @@ public class JunggoController {
 			else {
 				e.put("favorite_check", "N");				
 			}
-			joJungList.put(jungHandler.makeProductHtml(e,localURL));
+			if(map.get("isUseBootstrap") != null) {				
+				joJungList.put(jungHandler.makeProductHtml(e,localURL, true));
+			}
+			else {
+				joJungList.put(jungHandler.makeProductHtml(e,localURL, false));				
+			}
 		});
 		// for 문 활용하여 jsonObj에 값 넣어주기
 			
@@ -1313,7 +1318,7 @@ public class JunggoController {
 		{
 			product_info = product_info.replaceAll(trashArr[i], "*");
 		}
-		jungGoNoh.setProduct_info(product_info);
+		product.setProduct_info(product_info);
 		System.out.println("==========================================product_info" + product_info);
 		//----------------------------------------------------------------------------------
 		
