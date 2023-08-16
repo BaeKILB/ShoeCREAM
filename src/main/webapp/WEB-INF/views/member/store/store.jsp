@@ -16,17 +16,25 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
 <!-- 부트스트랩 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<link href="${pageContext.request.contextPath }/resources/css/etc/bootstrap.min.css" rel="stylesheet">
 
 <!-- 부트스트랩 icon -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> -->
 
 <!--CSS-->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/market/common.css">
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/market/common.css"> --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/market/index.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/goods/goods_comon.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css">
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/goods/goods_comon.css"> --%>
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/market/common.css"> --%>
+
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/style.css"> --%>
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/story.css"> --%>
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/popular.css"> --%>
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/profile.css"> --%>
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/upload.css"> --%>
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/social/update.css"> --%>
+<%-- <link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/img/member/social/insta.svg"> --%>
+
 
 <link href="${pageContext.request.contextPath }/resources/css/member/common.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/member/mem_page/mem_info_update.css" rel="stylesheet">
@@ -36,7 +44,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/goods/goods_history.css">
 
 <!-- js -->
-<script	src="${pageContext.request.contextPath }/resources/js/member/market/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/jquery-3.7.0.js"></script>
 <script	src="${pageContext.request.contextPath }/resources/js/member/market/menu_hover.js"></script>
 <script	src="${pageContext.request.contextPath }/resources/js/member/store/store_menu.js"></script>
 <script	src="${pageContext.request.contextPath }/resources/js/member/goods/goods_history_common.js"></script>
@@ -146,7 +154,7 @@ function payAuction(idx, price, id, title){
 	<!-- main_content 영역 -->
 	<div id="main_content">
 		<!-- 프로필 영역 -->
-		<div class="container">
+		<div class="container" style="margin-top: 200px;">
 		    <div class="row">
 		        <div class="col-md-12">
 		            <div class="d-flex my-3">
