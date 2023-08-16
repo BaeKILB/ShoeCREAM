@@ -125,7 +125,7 @@ const setImages = (e) => {
 		<jsp:include page="inc/sidebar.jsp" ></jsp:include>
 	</aside>
 	<section id="admin_cont">
-		<h1 class="admin_tit">크림 상품 수정</h1>
+		<h1 class="admin_tit">커스텀 상품 수정</h1>
 		<hr class="tit_line">
 		<div class="board_cont">	
 			<div class="board_list_wrap">
