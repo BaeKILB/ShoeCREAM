@@ -446,6 +446,11 @@ color: blue !important;
 .more_product_name {
 	margin-top: 5px;
 	font-size: 15px;
+	display:block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: bold;   
 }
 
 .more_product div span {
