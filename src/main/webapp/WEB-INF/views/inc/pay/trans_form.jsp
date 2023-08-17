@@ -58,7 +58,11 @@
 					</p>
 					<p>
 						<span>상품 설명</span>
-						<span class="resTotalAmount">${map.product_info}</span>
+						<span class="productnfo">
+						<p>
+							${map.product_info}
+						</p>
+						</span>
 					</p>
 				</div>
 			</fieldset>
