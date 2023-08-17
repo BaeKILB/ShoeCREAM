@@ -27,12 +27,12 @@ public interface JungProductMapper {
 		@Param("startCount") int startCount,
 		@Param("setPageListLimit") int setPageListLimit,
 		
-		// 거래 완료된 항목 볼지 여부
-		// 볼려면 "Y" 아니면 아무 문자나 null
-		@Param("isSearchCloseItem") String isSearchCloseItem, 
 		
 		// 항목 정렬 방식
 		@Param("orderMethod") String orderMethod,
+		// 거래 완료된 항목 볼지 여부
+		// 볼려면 "Y" 아니면 아무 문자나 null
+		@Param("isSearchCloseItem") String isSearchCloseItem, 
 		
 		// 키워드 검색시 사용할 변수
 		@Param("keyWord") String keyWord

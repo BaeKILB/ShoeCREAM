@@ -37,7 +37,7 @@ public class JungProductService {
 		if(keyWord != null) {
 			keyWordParam = "%" + keyWord + "%";
 		}
-		
+
 		return mapper.selectJungProductExList(jproduct
 				,startCount
 				,pageInfo.getPageListLimit()

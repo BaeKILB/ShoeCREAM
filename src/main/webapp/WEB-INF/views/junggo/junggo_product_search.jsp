@@ -79,7 +79,7 @@
 					        <select id="orderMethod" name="orderMethod">
 					            <option value="" selected="selected" >정렬방식</option>
 					            <option value="newest">최신순</option>
-					            <option value="steamed">찜순</option>
+<!-- 					            <option value="steamed">찜순</option> -->
 					            <option value="view">조회순</option>
 					        </select>
 						</div>
