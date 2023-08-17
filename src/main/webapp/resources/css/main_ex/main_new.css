@@ -98,10 +98,6 @@
 	.pr_cont li:nth-child(4n) {
 		margin-left: 0;	
 	}
-	.header_search {
-		display: none;
-	}
-	
 }
 
 @media screen and (max-width: 670px) {
