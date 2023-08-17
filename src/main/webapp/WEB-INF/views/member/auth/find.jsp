@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <!-- 원본 파일 이름 Find -->
@@ -18,6 +18,12 @@
 <link href="${pageContext.request.contextPath }/resources/css/inc/footer.css" rel="stylesheet">
 
 <script src="${pageContext.request.contextPath }/resources/js/inc/jquery-3.7.0.js"></script>
+
+<!-- 햄버거 메뉴 호버시 -->
+<script
+	src="${pageContext.request.contextPath }/resources/js/main_ex/market/jquery-3.6.0.min.js"></script>
+<script
+	src="${pageContext.request.contextPath }/resources/js/main_ex/market/menu_hover.js?ver=1"></script>
 </head>
 
 <script type="text/javascript">
