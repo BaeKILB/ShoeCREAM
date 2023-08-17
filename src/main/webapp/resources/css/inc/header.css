@@ -104,6 +104,13 @@ header {
     height: 20px;
     outline: none;
 }
+
+@media screen and (max-width: 860px) {
+	.header_search {
+		display: none;
+	}
+}
+
 .header_inn ul {
 	display: flex;
 }
