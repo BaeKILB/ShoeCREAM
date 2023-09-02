@@ -88,6 +88,36 @@
     display: inline-block;
 }
 
+/* 
+	======== 0902 경인 추가 =========
+	매인 페이지 슬라이드 이미지 추가
+*/
+.mySwiper{
+	width: 80%;
+	height: 7%;
+	max-height: 300px;
+	min-height: 200px;
+}
+.swiper-wrapper, .swiper-slide, .main_slide_img, .main_slide_logo{	
+	max-height: 300px;
+	min-height: 200px;
+}
+.main_slide_logo{
+	width: 90%;
+	height: 90%;
+	object-fit: scale-down;
+}
+.main_slide_img{
+	width: 90%;
+	height: 90%;
+	object-fit: cover;
+}
+
+
+/*
+	media 
+*/
+
 @media screen and (max-width: 860px) {
 	.pr_cont li {
 		width: calc(33.33% - 10px);

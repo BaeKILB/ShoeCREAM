@@ -14,9 +14,11 @@
 </script>
 <%-- <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/common/common.css"> --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/main_ex/main_new.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.0.js"></script>
-<script src="${pageContext.request.contextPath }/resources/js/main_ex/main.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main_ex/main.js"></script>
 </head>
 <body>
 	<nav>
@@ -24,7 +26,28 @@
 	</nav>
 	
 	<section id="main_cont">
-		<div class="main_slide">
+	  	<div class="swiper mySwiper">
+		    <div class="swiper-wrapper">
+			    <div class="swiper-slide">
+					<a href="${pageContext.request.contextPath}/">
+						<img class="main_slide_logo" src="${pageContext.request.contextPath }/resources/img/main_ex/shoecream_logo_L.png" alt="">
+					</a>
+				</div>
+			    <div class="swiper-slide">
+					<a href="${pageContext.request.contextPath}/JunggoSearch">
+						<img class="main_slide_img" src="${pageContext.request.contextPath }/resources/img/main_ex/shoes_main_1.jpg" alt="">
+					</a>
+				</div>
+			</div>
+	  	</div>
+  		
+  		<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+		<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+		
+	  	<script>
+    		var swiper = new Swiper(".mySwiper", {});
+  		</script>
+<!-- 		<div class="main_slide"> -->
 <!-- 			<div> -->
 <!-- 				<div class="swiper-container"> -->
 <!-- 				    <div class="swiper-wrapper"> -->
@@ -39,20 +62,19 @@
 				    
 <!-- 				</div> -->
 <!-- 			</div> -->
-			<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-		    <script>
-		        const swiper = new Swiper('.swiper-container', {
-		                loop: true,
-		                pagination: {
-		                    el: '.swiper-pagination'
-		                },
-		                navigation: {
-		                    nextEl: '.swiper-next',
-		                    prevEl: '.swiper-prev'
-		                }
-		            })
-		    </script>
-		</div>
+<!-- 		    <script> -->
+<!-- // 		        const swiper = new Swiper('.swiper-container', { -->
+<!-- // 		                loop: true, -->
+<!-- // 		                pagination: { -->
+<!-- // 		                    el: '.swiper-pagination' -->
+<!-- // 		                }, -->
+<!-- // 		                navigation: { -->
+<!-- // 		                    nextEl: '.swiper-next', -->
+<!-- // 		                    prevEl: '.swiper-prev' -->
+<!-- // 		                } -->
+<!-- // 		            }) -->
+<!-- 		    </script> -->
+<!-- 		</div> -->
 		<div class="joonggo_list pr_list">
 			<h3 class="list_tit">중고 거래 상품</h3>
 			<div class="joonggo_cont pr_cont">
