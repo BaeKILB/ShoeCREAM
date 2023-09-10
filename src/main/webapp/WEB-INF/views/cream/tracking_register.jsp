@@ -14,7 +14,7 @@ $(function() {
 	companyList();
 })
 
-const apiKey = 'uIHsZSYtgUJ8qn8YkWBIkw';
+const apiKey = 'U0pjDTd6JAAZAtgvTEJPsQ';
 
 const companyList = () => {
 	$.ajax({
